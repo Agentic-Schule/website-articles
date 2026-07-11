@@ -3,9 +3,6 @@ name: Build Article Data
 on:
   push:
     branches: [main]
-  schedule:
-    # täglich — zieht neue AI-Posts von angular-schule/website-articles nach
-    - cron: '17 5 * * *'
   workflow_dispatch:
 
 permissions:
@@ -28,9 +25,6 @@ jobs:
           cd build
           npm install
           npm run build
-
-      - name: Merge angular-schule AI articles
-        run: node scripts/merge-angular-articles.mjs
 
       - name: Deploy to gh-pages
         env:

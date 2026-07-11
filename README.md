@@ -13,16 +13,12 @@ Markdown-Quellen für den Blog auf [agentic.schule](https://agentic.schule/blog)
 
 ## Besonderheit: Zwei Quellen
 
-Nach dem regulären Build läuft `scripts/merge-angular-articles.mjs` und mischt
-zusätzlich alle Blogposts von `angular-schule/website-articles` hinein, bei denen
-
-1. **Johannes Hoppe** als `author` oder `author2` eingetragen ist **und**
-2. das Keyword **`AI`** in den Frontmatter-`keywords` vorkommt.
-
-Bilder dieser übernommenen Artikel werden nicht kopiert, sondern absolut von
-`angular-schule.github.io` verlinkt. Bei Slug-Kollisionen gewinnt der lokale
-Artikel aus diesem Repo. Der tägliche Cron sorgt dafür, dass neue AI-Posts
-der angular.schule automatisch auftauchen.
+Der Zwei-Quellen-Merge lebt in der **Website** (agentic-schule-website,
+`BlogService`): Sie lädt dieses Repo komplett UND zusätzlich die
+`list.json` von `angular-schule/website-articles`, gefiltert auf Artikel
+mit **Johannes Hoppe** als `author`/`author2` und dem Keyword **`AI`**
+(die keywords stehen dafür seit Build-Tool-Commit `190223c` in der
+Light-Liste). Dieses Repo baut also nur die eigenen Artikel.
 
 ## Lokal bauen
 
