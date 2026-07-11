@@ -1,0 +1,38 @@
+name: Build Article Data
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # täglich — zieht neue AI-Posts von angular-schule/website-articles nach
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build
+        run: |
+          cd build
+          npm install
+          npm run build
+
+      - name: Merge angular-schule AI articles
+        run: node scripts/merge-angular-articles.mjs
+
+      - name: Deploy to gh-pages
+        run: |
+          npm install angular-cli-ghpages@2
+          npx angular-cli-ghpages --no-notfound --dir=dist --branch="gh-pages" --name="The Buildbot" --email="buildbot@agentic.schule"
