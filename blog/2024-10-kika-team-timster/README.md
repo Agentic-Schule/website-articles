@@ -42,7 +42,10 @@ Aus einem Spiel wird Medienkompetenz.
 
 **Direkt anschauen:**
 
-<iframe src="https://www.kika.de/team-timster/extras/magische-tiere-erstellen-schule-mit-ki-100" title="KiKA Team Timster: Magische Tiere erstellen — Schule mit KI (Video, 3:57 Min.)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
+<!-- KiKA hat keinen dedizierten Player-Embed; wir rahmen die Video-Seite so,
+     dass genau die Player-Karte sichtbar ist (vermessen: Karten-Ende bei
+     Ratio 2,05 mobil bis 2,28 Desktop — 2,05 zeigt sie überall komplett). -->
+<iframe src="https://www.kika.de/team-timster/extras/magische-tiere-erstellen-schule-mit-ki-100" title="KiKA Team Timster: Magische Tiere erstellen — Schule mit KI (Video, 3:57 Min.)" style="width: 100%; aspect-ratio: 2.05; border: 0; border-radius: 8px;" scrolling="no" allowfullscreen loading="lazy"></iframe>
 
 <small>Video: KiKA „Team Timster", 3:57 Min. Falls der Player nicht lädt:
 [Beitrag direkt in der KiKA-Mediathek ansehen](https://www.kika.de/team-timster/extras/magische-tiere-erstellen-schule-mit-ki-100).</small>
