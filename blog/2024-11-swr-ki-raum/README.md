@@ -42,9 +42,12 @@ die Lehrerin. Die nimmt es sportlich — und freut sich darüber, wie
 konzentriert und begeistert die Elfjährigen mit den Chatbots arbeiten und
 dabei jede Menge über Europa lernen.
 
-**Direkt anschauen:** Der Beitrag ist beim SWR verfügbar:
-[„Waldparkschule in Heidelberg: Neuer KI-Raum für Künstliche Intelligenz im Unterricht"](https://www.swr.de/swraktuell/baden-wuerttemberg/mannheim/waldparkschule-in-heidelberg-neuer-ki-raum-fuer-kuenstliche-intelligenz-im-unterricht-100.html)
-(Video, ca. 3 Minuten).
+**Direkt anschauen:**
+
+<iframe src="https://www.swr.de/~embed/swraktuell/baden-wuerttemberg/mannheim/ki-raum-fuer-schule-100.html" title="SWR Aktuell: Heidelberger Schule bekommt einen KI-Raum (Video, 2:43 Min.)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
+
+<small>Video: SWR Aktuell, 2:43 Min. Falls der Player nicht lädt:
+[Beitrag direkt beim SWR ansehen](https://www.swr.de/swraktuell/baden-wuerttemberg/mannheim/waldparkschule-in-heidelberg-neuer-ki-raum-fuer-kuenstliche-intelligenz-im-unterricht-100.html).</small>
 
 ## Kritisch bleiben gehört zum Konzept
 

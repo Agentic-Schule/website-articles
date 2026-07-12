@@ -40,9 +40,12 @@ soll, übt sich in klarem Formulieren, vergleicht Ergebnis und Erwartung und
 merkt sehr schnell, dass die Maschine nur so gut ist wie die eigene Eingabe.
 Aus einem Spiel wird Medienkompetenz.
 
-**Direkt anschauen:** Der Beitrag ist in der KiKA-Mediathek verfügbar:
-[„Magische Tiere erstellen: Schule mit KI" bei Team Timster](https://www.kika.de/team-timster/extras/magische-tiere-erstellen-schule-mit-ki-100)
-(Video, ca. 4 Minuten).
+**Direkt anschauen:**
+
+<iframe src="https://www.kika.de/team-timster/extras/magische-tiere-erstellen-schule-mit-ki-100" title="KiKA Team Timster: Magische Tiere erstellen — Schule mit KI (Video, 3:57 Min.)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
+
+<small>Video: KiKA „Team Timster", 3:57 Min. Falls der Player nicht lädt:
+[Beitrag direkt in der KiKA-Mediathek ansehen](https://www.kika.de/team-timster/extras/magische-tiere-erstellen-schule-mit-ki-100).</small>
 
 ## Warum das mehr ist als ein hübscher Fernsehbeitrag
 
