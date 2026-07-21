@@ -15,6 +15,7 @@ keywords:
   - Chatbots
   - Digitale Bildung
 language: de
+header: header.jpg
 ---
 
 **Ein Raum, zwei große Monitore, Tablets, ein 3D-Drucker — und eine sichere
