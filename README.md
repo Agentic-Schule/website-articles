@@ -13,10 +13,11 @@ Markdown-Quellen für den Blog auf [agentic.schule](https://agentic.schule/blog)
 ## Besonderheit: Zwei Quellen
 
 Der Zwei-Quellen-Merge lebt in der **Website** (agentic-schule-website,
-`BlogService`): Sie lädt dieses Repo komplett UND zusätzlich die `list.json` von
-`angular-schule/website-articles`, gefiltert auf Artikel mit dem Keyword **`AI`**,
-außer wenn **Danny Koppenhagen** `author` oder `author2` ist. Die keywords stehen
-dafür in der Light-Liste. Dieses Repo baut also nur die eigenen Artikel.
+`BlogService`): Sie lädt dieses Repo komplett UND zusätzlich die
+`list.json` von `angular-schule/website-articles`, gefiltert auf Artikel
+mit **Johannes Hoppe** als `author`/`author2` und dem Keyword **`AI`**
+(die keywords stehen dafür seit Build-Tool-Commit `190223c` in der
+Light-Liste). Dieses Repo baut also nur die eigenen Artikel.
 
 ## Lokal bauen
 
