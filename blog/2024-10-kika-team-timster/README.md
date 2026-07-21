@@ -15,7 +15,7 @@ keywords:
   - Medienkompetenz
   - Digitale Bildung
 language: de
-header: header.jpg
+header: header.webp
 ---
 
 **Künstliche Intelligenz im Klassenzimmer — wie sieht das konkret aus?** Das
