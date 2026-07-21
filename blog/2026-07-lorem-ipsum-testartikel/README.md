@@ -3,6 +3,7 @@ title: 'Lorem Ipsum — der Testartikel'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2026-07-11
+hidden: true
 keywords:
   - Test
   - Lorem Ipsum
