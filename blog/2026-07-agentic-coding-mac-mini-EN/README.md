@@ -227,7 +227,7 @@ That was a deliberately simplified example. The real work only begins with **man
 
 ## When You Do Have to Work Locally
 
-Not every session can be run remotely – some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a certain (rather magical) USB cable has to connect my laptop **physically to the caravan**. Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
+Not every session can be run remotely – some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a "magical" USB cable has to connect my laptop **physically to the caravan**. (I call it [the magic cable](https://wohnfunke.app/kabel) because you can't buy a cable like this off the shelf.) Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
 
 And here the procedure is really nice: I end the session on the mini with `/exit`, wait until the `~/.claude` directory has finished syncing, and restart Claude on the laptop with `--resume` – and I'm right back in **the same conversation**. Then I simply say: "You're in the caravan now, connect to the light controller." Claude carries on obediently and from there uses my **local peripherals**.
 

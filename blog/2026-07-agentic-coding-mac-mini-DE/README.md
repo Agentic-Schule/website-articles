@@ -228,7 +228,7 @@ Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt näml
 
 ## Wenn man doch mal lokal arbeiten muss
 
-Nicht jede Session lässt sich remote fahren – einige funktionieren nur lokal. Bei mir vor allem **[wohnfunke.app](https://wohnfunke.app)**: Die kann nicht im Kabelschrank laufen, denn das (durchaus magische) USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. Ohne diese Verbindung komme ich nicht an den **CI-Bus** und kann das Lichtsteuergerät nicht ansprechen.
+Nicht jede Session lässt sich remote fahren – einige funktionieren nur lokal. Bei mir vor allem **[wohnfunke.app](https://wohnfunke.app)**: Die kann nicht im Kabelschrank laufen, denn das „magische" USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. (Ich nenne es [das magische Kabel](https://wohnfunke.app/kabel), weil es dieses Kabel so nicht im Handel gibt.) Ohne diese Verbindung komme ich nicht an den **CI-Bus** und kann das Lichtsteuergerät nicht ansprechen.
 
 Und hier ist das Vorgehen richtig nice: Ich beende die Session auf dem mini mit `/exit`, warte, bis das `~/.claude`-Verzeichnis durchgesynct ist, und starte Claude auf dem Laptop mit `--resume` neu – schon bin ich wieder in **derselben Unterhaltung**. Dann sage ich einfach: „Du bist jetzt im Wohnwagen, verbinde dich mit dem Lichtsteuergerät." Claude macht artig weiter und nutzt ab da meine **lokale Peripherie**.
 
