@@ -45,7 +45,7 @@ On the laptop, though, this is what happens:
 - I fold it shut → the process goes to sleep, the agent freezes mid-run.
 - In the evening I just want to *quickly* check from the couch how far it's gotten – and would have to boot the laptop back up.
 
-The first problem can be worked around with `caffeinate -s`: the laptop simply stays awake with the lid open instead of sleeping when closed. That's exactly how I worked in winter and spring. But at summer temperatures the thing quickly gets far too hot – and I'd like to keep it for a good while longer. A laptop running hot for months with its lid open is not a good permanent solution.
+The first problem can be worked around with `caffeinate -s`: the laptop simply stays on even with the lid closed and no power connected. That's exactly how I worked in winter and spring. But at summer temperatures the thing quickly gets far too hot – and I'd like to keep it for a good while longer. A laptop running hot for months is not a good permanent solution.
 
 On top of that, there's a pattern I notice in myself: my best ideas rarely come at the desk, but on the go – while walking the dog, for example. That's exactly when I want to quickly toss the agent something or check on its progress, without first heading home to the laptop.
 

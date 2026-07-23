@@ -46,7 +46,7 @@ Auf dem Laptop passiert aber Folgendes:
 - Ich klappe ihn zu → der Prozess schläft ein, der Agent friert mitten im Lauf ein.
 - Ich will abends vom Sofa aus nur *kurz* nachsehen, wie weit er ist – und müsste den Laptop wieder hochfahren.
 
-Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt mit offenem Deckel einfach wach, statt beim Zuklappen einzuschlafen. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß – und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang mit offenem Deckel durchheizt, ist keine gute Dauerlösung.
+Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt einfach an, auch wenn der Deckel zugeklappt ist und keine Stromversorgung angeschlossen ist. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß – und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang durchheizt, ist keine gute Dauerlösung.
 
 Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe ich selten am Schreibtisch, sondern unterwegs – beim Gassigehen zum Beispiel. Genau dann will ich dem Agenten kurz etwas zurufen oder nachsehen können, wie er vorankommt, ohne erst nach Hause an den Laptop zurückzukehren.
 
