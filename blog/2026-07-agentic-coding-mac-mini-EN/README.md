@@ -51,6 +51,8 @@ On top of that, there's a pattern I notice in myself: my best ideas rarely come 
 
 The solution is conceptually simple: **The agent doesn't run on the device in my hand, but on a machine that never goes off.** The device in my hand is just a window onto it.
 
+Claude Code (and other tools) have basically already solved this: remote control from the phone. But that's not enough for me.
+
 Which device that window is becomes a side note: the big 16-inch MacBook Pro at the desk, the small MacBook for the man-purse (lugging a giant machine around at conferences is uncool), or the phone. I want to stay flexible – and the ground station always stays the same.
 
 ## The Architecture: Ground Station and Mobile Mirror

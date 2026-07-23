@@ -52,6 +52,8 @@ Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe 
 
 Die Lösung ist konzeptionell simpel: **Der Agent läuft nicht auf dem Gerät in meiner Hand, sondern auf einer Maschine, die nie ausgeht.** Das Gerät in meiner Hand ist nur noch ein Fenster darauf.
 
+Das hat Claude Code (und andere Tools) im Prinzip schon gut gelöst: Remote Control per Handy. Aber mir reicht das nicht.
+
 Welches Gerät dieses Fenster ist, wird damit zur Nebensache: das große 16-Zoll-MacBook Pro am Schreibtisch, das kleine MacBook für die Herrenhandtasche (auf Konferenzen einen Riesen-Rechner herumschleppen ist uncool) oder das Handy. Ich will flexibel bleiben – und die Bodenstation bleibt dabei immer dieselbe.
 
 ## Die Architektur: Bodenstation und mobiler Spiegel
