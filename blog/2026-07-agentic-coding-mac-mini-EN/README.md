@@ -217,7 +217,7 @@ What does it feel like day to day? Roughly like this:
 
 **Midday on the move.** I fold the MacBook shut and head off. The agent? Keeps running – it sits on the mini, not in the laptop. On the train I pull out the phone, open the **Claude app**, and keep working on the small screen: the agent has three of five modules done and is waiting for a decision – I answer the question with my thumb, it carries on. The sense of control is lower here, for the diff view you have to tap specifically, but you have to pick your poison.
 
-**Afternoon at the café.** The MacBook is open again; thanks to sync, all files and the session history are up to date. I open the rebuilt frontend in the browser via the dev proxy and take a look – on a real screen, not in the terminal. Just kidding: I'm not in a café like some AI influencer. I've long been back in the basement – it's nice and cool there, and I have three monitors.
+**Afternoon at the café.** The MacBook is open again; thanks to sync, all files and the session history are up to date. I open the rebuilt frontend in the browser via the dev proxy and take a look – on a real screen, not in the terminal. And I'm sipping an iced matcha latte … Just kidding: I'm not in a café like some AI influencer. I've long been back in the basement – it's nice and cool there, and I have three monitors.
 
 **Evening on the couch.** A quick glance from the phone to see whether CI has passed. It has. Merge.
 

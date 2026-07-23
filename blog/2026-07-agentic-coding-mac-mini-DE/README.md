@@ -218,7 +218,7 @@ Wie fühlt sich das im Alltag an? Ungefähr so:
 
 **Mittags unterwegs.** Ich klappe das MacBook zu und fahre los. Der Agent? Läuft weiter – er sitzt ja auf dem mini, nicht im Laptop. In der Bahn hole ich das Handy raus, öffne die **Claude-App** und arbeite auf dem kleinen Bildschirm weiter: Der Agent hat drei von fünf Modulen durch und wartet auf eine Entscheidung – ich beantworte die Rückfrage mit dem Daumen, er macht weiter. Das Kontrollgefühl ist hier geringer, für die Diff-Ansicht muss man eigens drauftippen, aber irgendeinen Tod muss man sterben.
 
-**Nachmittags im Café.** Das MacBook ist wieder auf, dank Sync sind alle Dateien und die Session-Historie auf dem aktuellen Stand. Ich öffne das umgebaute Frontend im Browser über den Dev-Proxy und schaue es mir an – auf dem echten Bildschirm, nicht im Terminal. Kleiner Scherz: Ich bin doch nicht im Café wie so ein AI-Influencer. Ich sitze längst wieder im Keller – dort ist es schön kühl, und ich habe drei Monitore.
+**Nachmittags im Café.** Das MacBook ist wieder auf, dank Sync sind alle Dateien und die Session-Historie auf dem aktuellen Stand. Ich öffne das umgebaute Frontend im Browser über den Dev-Proxy und schaue es mir an – auf dem echten Bildschirm, nicht im Terminal. Dabei trinke ich einen Iced Matcha Latte … Kleiner Scherz: Ich bin doch nicht im Café wie so ein AI-Influencer. Ich sitze längst wieder im Keller – dort ist es schön kühl, und ich habe drei Monitore.
 
 **Abends auf dem Sofa.** Kurzer Blick vom Handy, ob die CI durch ist. Ist sie. Merge.
 
