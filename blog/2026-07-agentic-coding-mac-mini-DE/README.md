@@ -246,6 +246,12 @@ Und der Preis? Das Setup ist vor allem **erstaunlich günstig** und kommt profes
 
 Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe, mich bewege, das Gerät wechsle. Die Bodenstation steht, die Rakete dockt an und ab. *Ground Control to Major Tom* – und der Bodenkontakt reißt nie ab.
 
+Übrigens: Beim Schreiben dieses Artikels hatte ich den Song permanent im Ohr. Bitte sehr, hier ist dein neuer Ohrwurm:
+
+<iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="Der Song zu diesem Artikel (YouTube)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
+
+<small>Falls der Player nicht lädt: [direkt auf YouTube ansehen](https://youtu.be/iYYRH4apXDo).</small>
+
 ---
 
 *Neugierig auf agentisches Arbeiten in der Praxis? In den Workshops von [agentic.schule](https://agentic.schule) und [angular.schule](https://angular.schule) zeigen wir, wie moderne KI-Agenten die tägliche Entwicklung verändern.*

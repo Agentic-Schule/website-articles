@@ -245,6 +245,12 @@ And the price? Above all, the setup is **surprisingly cheap** and still comes cl
 
 For me the gain clearly outweighs it: agents that keep working while I live, move around, switch devices. The ground station stands, the rocket docks and lifts off. *Ground Control to Major Tom* – and the ground contact never drops.
 
+By the way: while writing this article, I had the song stuck in my head the whole time. Here you go, your new earworm:
+
+<iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="The song behind this article (YouTube)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
+
+<small>If the player doesn't load: [watch directly on YouTube](https://youtu.be/iYYRH4apXDo).</small>
+
 ---
 
 *Curious about agentic work in practice? In the workshops at [agentic.schule](https://agentic.schule) and [angular.schule](https://angular.schule) we show how modern AI agents are changing everyday development.*
