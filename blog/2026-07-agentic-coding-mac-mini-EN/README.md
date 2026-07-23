@@ -225,6 +225,14 @@ Not once did the agent have to "start over". No folded-shut lid killed it. That'
 
 That was a deliberately simplified example. The real work only begins with **many parallel sessions** and just as many parallel **git worktrees**. Because a frontier model with all its sub-agents can be damn slow (commands like `/simplify` or `/code-review` with a good dose of `/effort` can run absurdly long), you parallelize almost inevitably. The constant context switching and the mental load involved shouldn't be underestimated – but that has nothing to do with the setup; you'd have the same on a single machine.
 
+## When You Do Have to Work Locally
+
+Not every session can be run remotely – some only work locally. For me that's mainly **wohnfunke.app**: it can't run in the cable cabinet, because a certain (rather magical) USB cable has to connect my laptop **physically to the caravan**. Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
+
+And here the procedure is really nice: I end the session on the mini with `/exit`, wait until the `~/.claude` directory has finished syncing, and restart Claude on the laptop with `--resume` – and I'm right back in **the same conversation**. Then I simply say: "You're in the caravan now, connect to the light controller." Claude carries on obediently and from there uses my **local peripherals**.
+
+The entire context stays intact, only the substrate switches from the mini to the laptop – the ground station hands the session over to the rocket, this time because the rocket has to be tethered to a cable.
+
 ## A Principle: Never Tell the Agents About the Pink Elephant
 
 ![A pink elephant standing in a savanna landscape.](rosa-elefant.png "No matter what you do, just don't think of the pink elephant!")

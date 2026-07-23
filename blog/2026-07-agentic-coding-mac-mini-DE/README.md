@@ -226,6 +226,14 @@ Kein einziges Mal musste der Agent „von vorne anfangen". Kein zugeklappter Dec
 
 Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees**. Weil ein Frontier-Modell mit all seinen Unter-Agenten verdammt langsam sein kann (Kommandos wie `/simplify` oder `/code-review` mit ordentlich `/effort` laufen schon mal absurd lange), parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen – aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
 
+## Wenn man doch mal lokal arbeiten muss
+
+Nicht jede Session lässt sich remote fahren – einige funktionieren nur lokal. Bei mir vor allem **wohnfunke.app**: Die kann nicht im Kabelschrank laufen, denn das (durchaus magische) USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. Ohne diese Verbindung komme ich nicht an den **CI-Bus** und kann das Lichtsteuergerät nicht ansprechen.
+
+Und hier ist das Vorgehen richtig nice: Ich beende die Session auf dem mini mit `/exit`, warte, bis das `~/.claude`-Verzeichnis durchgesynct ist, und starte Claude auf dem Laptop mit `--resume` neu – schon bin ich wieder in **derselben Unterhaltung**. Dann sage ich einfach: „Du bist jetzt im Wohnwagen, verbinde dich mit dem Lichtsteuergerät." Claude macht artig weiter und nutzt ab da meine **lokale Peripherie**.
+
+Der ganze Kontext bleibt erhalten, nur der Unterbau wechselt vom mini auf den Laptop – die Bodenstation reicht die Session an die Rakete weiter, diesmal weil die Rakete am Kabel hängen muss.
+
 ## Ein Prinzip: Erzähl den Agenten nie vom rosa Elefanten
 
 ![Ein pinkfarbener Elefant steht in einer Savannenlandschaft.](rosa-elefant.png "Egal was du tust, denke bloß nicht an den rosa Elefanten!")
