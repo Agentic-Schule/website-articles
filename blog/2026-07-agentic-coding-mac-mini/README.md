@@ -52,6 +52,8 @@ Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe 
 
 Die Lösung ist konzeptionell simpel: **Der Agent läuft nicht auf dem Gerät in meiner Hand, sondern auf einer Maschine, die nie ausgeht.** Das Gerät in meiner Hand ist nur noch ein Fenster darauf.
 
+Welches Gerät dieses Fenster ist, wird damit zur Nebensache: das große 16-Zoll-MacBook Pro am Schreibtisch, das kleine MacBook für die Herrenhandtasche (auf Konferenzen einen Riesen-Rechner herumschleppen ist uncool) oder das Handy. Ich will flexibel bleiben – und die Bodenstation bleibt dabei immer dieselbe.
+
 ## Die Architektur: Bodenstation und mobiler Spiegel
 
 Zwei Maschinen, ein gemeinsamer Nenner:
@@ -63,6 +65,8 @@ Zwei Maschinen, ein gemeinsamer Nenner:
 | Benutzer | derselbe Account, dasselbe Home | derselbe Account, dasselbe Home |
 
 Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys – und, wie wir gleich sehen, alle Agenten-Sessions – liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang nahtlos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook.
+
+Streng genommen kommt eine dritte Rolle dazu: **Peripherie, die nur als Terminal arbeitet** – allen voran das Handy. Kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das MacBook kann beides – eigenständig arbeiten *oder* bloß als Fenster dienen; das Handy ist reines Terminal.
 
 Der mini steht im Regal, ohne Monitor, ohne Tastatur. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was headless läuft, läuft auch, wenn niemand eingeloggt ist.
 
