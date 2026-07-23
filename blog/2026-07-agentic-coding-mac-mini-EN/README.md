@@ -221,7 +221,7 @@ What does it feel like day to day? Roughly like this:
 
 **Evening on the couch.** A quick glance from the phone to see whether CI has passed. It has. Merge.
 
-Not once did the agent have to "start over". No folded-shut lid killed it. That's the real win: **the work is decoupled from the device in my hand.**
+Not once did the agent have to "start over" because the battery ran out. No folded-shut lid paused it. That's the real win: **the work is decoupled from the device in my hand.**
 
 That was a deliberately simplified example. The real work only begins with **many parallel sessions** and just as many parallel **git worktrees**. Because a frontier model with all its sub-agents can be damn slow (commands like `/simplify` or `/code-review` with a good dose of `/effort` can run absurdly long), you parallelize almost inevitably. The constant context switching and the mental load involved shouldn't be underestimated – but that has nothing to do with the setup; you'd have the same on a single machine.
 

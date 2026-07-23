@@ -222,7 +222,7 @@ Wie fühlt sich das im Alltag an? Ungefähr so:
 
 **Abends auf dem Sofa.** Kurzer Blick vom Handy, ob die CI durch ist. Ist sie. Merge.
 
-Kein einziges Mal musste der Agent „von vorne anfangen". Kein zugeklappter Deckel hat ihn gekillt. Das ist der eigentliche Gewinn: **Die Arbeit ist entkoppelt vom Gerät in meiner Hand.**
+Kein einziges Mal musste der Agent „von vorne anfangen", weil der Akku alle war. Kein zugeklappter Deckel hat ihn pausiert. Das ist der eigentliche Gewinn: **Die Arbeit ist entkoppelt vom Gerät in meiner Hand.**
 
 Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees**. Weil ein Frontier-Modell mit all seinen Unter-Agenten verdammt langsam sein kann (Kommandos wie `/simplify` oder `/code-review` mit ordentlich `/effort` laufen schon mal absurd lange), parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen – aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
 
