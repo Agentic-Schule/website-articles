@@ -26,7 +26,7 @@ Agentic Coding works differently from a chat window: you set the direction, and 
 
 **That's why I turned a Mac mini into a "ground station": an always-running machine on which my agents keep working – while I watch and step in from the MacBook, the browser, or even my phone.**
 
-To be honest, the box was initially sitting on the shelf for a completely different reason: a current Mac mini M4 with 32 GB that I had actually bought to join the **Clawdbot** hype (today *OpenClaw*) – controlling your own agent from your phone via **Signal**, that had something to it. It was cool exactly as long as that remote control was the main appeal. Since Claude Code can do the same out of the box with **`/remote-control`**, the Clawdbot has lost much of its charm for me, and the mini was getting a bit bored anyway (maybe more on that another time). So it got a new, permanent job.
+To be honest, the box was initially sitting on the shelf for a completely different reason: a current Mac mini M4 with 32 GB that I had actually bought to join the **Clawdbot** hype (today *[OpenClaw](https://openclaw.ai)*) – controlling your own agent from your phone via **[Signal](https://signal.org)**, that had something to it. It was cool exactly as long as that remote control was the main appeal. Since [Claude Code](https://claude.com/claude-code) can do the same out of the box with **`/remote-control`**, the Clawdbot has lost much of its charm for me, and the mini was getting a bit bored anyway (maybe more on that another time). So it got a new, permanent job.
 
 This article shows the idea, the building blocks, and – in how-to boxes – how to build it yourself.
 
@@ -73,7 +73,7 @@ The mini sits without a monitor and without a keyboard among the rest of my home
 
 ## Sessions That Survive Connection Drops
 
-Moving to a remote machine does, however, introduce a problem that never existed locally: the connection to it can drop – a Wi-Fi switch (office → train → home) is enough, and a normal SSH terminal is dead. The answer to that is **tmux**, a terminal multiplexer. Instead of starting my programs directly in the SSH session, they run *inside* tmux on the mini. If the connection drops, tmux – and everything in it – simply keeps running. On the next dock-in I reattach as if nothing had happened. Honestly, **tmux is the game changer** in this setup – only through it do the agent runs survive everything that can go wrong between me and the mini.
+Moving to a remote machine does, however, introduce a problem that never existed locally: the connection to it can drop – a Wi-Fi switch (office → train → home) is enough, and a normal SSH terminal is dead. The answer to that is **[tmux](https://github.com/tmux/tmux)**, a terminal multiplexer. Instead of starting my programs directly in the SSH session, they run *inside* tmux on the mini. If the connection drops, tmux – and everything in it – simply keeps running. On the next dock-in I reattach as if nothing had happened. Honestly, **tmux is the game changer** in this setup – only through it do the agent runs survive everything that can go wrong between me and the mini.
 
 Two things make it comfortable:
 
@@ -93,13 +93,13 @@ Important to understand: tmux saves the **connection**, not the power. A reboot 
 
 ## Docking In From Anywhere – All the Way to the Phone
 
-For access I rely entirely on **mosh** (Mobile Shell) – at home as on the road, always the same command. That way I never have to think about or switch between `ssh` and `mosh`.
+For access I rely entirely on **[mosh](https://mosh.org)** (Mobile Shell) – at home as on the road, always the same command. That way I never have to think about or switch between `ssh` and `mosh`.
 
 And mosh is genuinely great. It's the better SSH for everything that isn't on a fixed cable: if the network changes or briefly drops, the connection lives on **roaming-proof** – no frozen terminal, no "broken pipe". Typed characters appear instantly via local echo, even with lousy latency on the train. Network gone, network back – mosh just keeps going without reconnecting. Underneath it's a completely normal SSH login with key auth, no password.
 
-And how does the phone even reach the box back home from the road? I started with the Fritzbox's **WireGuard** VPN; these days everything runs over **Tailscale** (a mesh VPN based on WireGuard). The reason: Tailscale also copes wonderfully with **IPv6** and constantly changing connections – you reach the ground station reliably, no matter which network you're on. You really always get home.
+And how does the phone even reach the box back home from the road? I started with the Fritzbox's **[WireGuard](https://www.wireguard.com)** VPN; these days everything runs over **[Tailscale](https://tailscale.com)** (a mesh VPN based on WireGuard). The reason: Tailscale also copes wonderfully with **IPv6** and constantly changing connections – you reach the ground station reliably, no matter which network you're on. You really always get home.
 
-And the pièce de résistance: **From the phone.** On Android the terminal app *Termux* runs, inside it mosh, inside that tmux, inside that the agent. That way I can reach the raw session from anywhere if need be.
+And the pièce de résistance: **From the phone.** On Android the terminal app *[Termux](https://termux.dev)* runs, inside it mosh, inside that tmux, inside that the agent. That way I can reach the raw session from anywhere if need be.
 
 I rarely use that direct terminal route, though. Most of the time I work more comfortably on the phone via the **Remote Control feature of the Claude app**. Getting in involves a little ritual: open a new tmux window (`Ctrl-b c`), start `claude`, release remote control with `/rc`, and name the session with `/rename` – *only then* do I switch to the app and keep typing there. Fiddly the first time, but you get used to it.
 
@@ -122,7 +122,7 @@ I rarely use that direct terminal route, though. Most of the time I work more co
 
 Up to here I could *access* the mini from anywhere. But the real kicker is that my big MacBook Pro is not a mere terminal, but a **true mirror**: it has the same files and can take over the mini's work at any time – offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down – the big Mac and the mini are always in sync. As a nice side effect, this mirror is a permanent, second-by-second backup. Damn, that's good.
 
-This is handled by **Syncthing**, a peer-to-peer sync with no cloud in between. It mirrors bidirectionally:
+This is handled by **[Syncthing](https://syncthing.net)**, a peer-to-peer sync with no cloud in between. It mirrors bidirectionally:
 
 - `~/Work` – all projects and repos
 - `~/.claude` – **and here it gets interesting: the agent sessions themselves.** Claude Code stores its conversation logs under `~/.claude/projects/`. If those are synced along, I can continue a session I started on the mini over on the MacBook – context, history, everything there.
@@ -148,15 +148,15 @@ What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `bui
 
 ## Headless Services That Just Run
 
-An agent is only as good as the environment it's allowed to work in. On the mini it should find a **complete dev stack** – database, Docker, browser – and that without anyone logging in at a screen. Because the mini has no logged-in desktop at all.
+An agent is only as good as the environment it's allowed to work in. On the mini it should find a **complete dev stack** – database, [Docker](https://www.docker.com), browser – and that without anyone logging in at a screen. Because the mini has no logged-in desktop at all.
 
 Three building blocks:
 
-**FileVault with remote unlock.** The disk is encrypted (as it should be). After a restart the mini hangs in the pre-boot lock, before there's even a network. The trick: a second admin user with "SecureToken" is allowed to unlock the disk via SSH – after that the mini boots through and all services start. For planned restarts there's even `sudo fdesetup authrestart`: it unlocks automatically on reboot without locking yourself out. And `pmset autorestart 1` makes sure the mini comes back up on its own after a power outage. For the very worst case, a **JetKVM** is also attached to the box – a small KVM-over-IP device that gives me picture and keyboard remotely, all the way down to the firmware/boot screen. Even if no operating system is running anymore or a reboot hangs at the pre-boot lock, I can still get in. Bottom line, the machine has several staggered rescue lines so I *always* get back to it – and yet everything stays encrypted, every single one of my devices.
+**FileVault with remote unlock.** The disk is encrypted (as it should be). After a restart the mini hangs in the pre-boot lock, before there's even a network. The trick: a second admin user with "SecureToken" is allowed to unlock the disk via SSH – after that the mini boots through and all services start. For planned restarts there's even `sudo fdesetup authrestart`: it unlocks automatically on reboot without locking yourself out. And `pmset autorestart 1` makes sure the mini comes back up on its own after a power outage. For the very worst case, a **[JetKVM](https://jetkvm.com)** is also attached to the box – a small KVM-over-IP device that gives me picture and keyboard remotely, all the way down to the firmware/boot screen. Even if no operating system is running anymore or a reboot hangs at the pre-boot lock, I can still get in. Bottom line, the machine has several staggered rescue lines so I *always* get back to it – and yet everything stays encrypted, every single one of my devices.
 
-**Docker without Docker Desktop.** Docker Desktop needs a GUI login – on a headless machine a deal-breaker. Instead, **colima** runs as a system service (LaunchDaemon) that starts at boot. Under the hood the same technology as Docker Desktop (Apple's Virtualization.framework), with Rosetta for **Intel images** – that is, for the old SQL Server that sadly was never ported to ARM. Thanks, Microsoft. So the agent gets a `docker` and `docker compose` that's simply there.
+**Docker without Docker Desktop.** Docker Desktop needs a GUI login – on a headless machine a deal-breaker. Instead, **[colima](https://github.com/abiosoft/colima)** runs as a system service (LaunchDaemon) that starts at boot. Under the hood the same technology as Docker Desktop (Apple's Virtualization.framework), with Rosetta for **Intel images** – that is, for the old SQL Server that sadly was never ported to ARM. Thanks, Microsoft. So the agent gets a `docker` and `docker compose` that's simply there.
 
-**A real browser for the agent.** Via a self-built headless Playwright MCP server, the agent can drive a real Chrome instance – open pages, click, fill in forms, take screenshots. "Headless" here means: no visible window, no GPU/display context needed (`--disable-gpu`), so it runs stably on the monitorless box.
+**A real browser for the agent.** Via a self-built headless [Playwright MCP](https://github.com/microsoft/playwright-mcp) server, the agent can drive a real Chrome instance – open pages, click, fill in forms, take screenshots. "Headless" here means: no visible window, no GPU/display context needed (`--disable-gpu`), so it runs stably on the monitorless box.
 
 > **🛠️ Build it yourself — colima as an autostart service**
 > Create the VM once (keeping it lean is enough for most cases):
@@ -176,7 +176,7 @@ Three building blocks:
 
 The agent has rebuilt the frontend – now I want to *see* it, in a real browser, from my laptop or phone. But the dev server runs on the mini and dutifully listens only on `localhost` there.
 
-My solution is an **nginx reverse proxy** on the mini that elegantly solves exactly one problem: it makes every local dev server visible on the network – **without configuring anything per project.** nginx binds the mini's LAN IP and rewrites the `Host` header to `localhost`. That way the host checks of modern dev servers (Angular, Vite) don't kick in, and I neither have to set `--host 0.0.0.0` nor fiddle with `allowedHosts`. In the browser I simply type `http://mac-mini.fritz.box:4200` – done.
+My solution is an **[nginx](https://nginx.org) reverse proxy** on the mini that elegantly solves exactly one problem: it makes every local dev server visible on the network – **without configuring anything per project.** nginx binds the mini's LAN IP and rewrites the `Host` header to `localhost`. That way the host checks of modern dev servers ([Angular](https://angular.dev), [Vite](https://vite.dev)) don't kick in, and I neither have to set `--host 0.0.0.0` nor fiddle with `allowedHosts`. In the browser I simply type `http://mac-mini.fritz.box:4200` – done.
 
 > **🛠️ Build it yourself — nginx dev proxy (core)**
 > ```nginx
@@ -227,7 +227,7 @@ That was a deliberately simplified example. The real work only begins with **man
 
 ## When You Do Have to Work Locally
 
-Not every session can be run remotely – some only work locally. For me that's mainly **wohnfunke.app**: it can't run in the cable cabinet, because a certain (rather magical) USB cable has to connect my laptop **physically to the caravan**. Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
+Not every session can be run remotely – some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a certain (rather magical) USB cable has to connect my laptop **physically to the caravan**. Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
 
 And here the procedure is really nice: I end the session on the mini with `/exit`, wait until the `~/.claude` directory has finished syncing, and restart Claude on the laptop with `--resume` – and I'm right back in **the same conversation**. Then I simply say: "You're in the caravan now, connect to the light controller." Claude carries on obediently and from there uses my **local peripherals**.
 
