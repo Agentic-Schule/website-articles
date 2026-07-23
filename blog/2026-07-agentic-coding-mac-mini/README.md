@@ -44,8 +44,11 @@ Ein typischer Ablauf beim Agentic Coding: Ich beschreibe ein Refactoring, der Ag
 Auf dem Laptop passiert aber Folgendes:
 
 - Ich klappe ihn zu → der Prozess schläft ein, der Agent friert mitten im Lauf ein.
-- Ich wechsle das WLAN (Büro → Bahn → Zuhause) → die SSH-Verbindung reißt, das Terminal ist tot.
 - Ich will abends vom Sofa aus nur *kurz* nachsehen, wie weit er ist – und müsste den Laptop wieder hochfahren.
+
+Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt mit offenem Deckel einfach wach, statt beim Zuklappen einzuschlafen. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß – und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang mit offenem Deckel durchheizt, ist keine gute Dauerlösung.
+
+Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe ich selten am Schreibtisch, sondern unterwegs – beim Gassigehen zum Beispiel. Genau dann will ich dem Agenten kurz etwas zurufen oder nachsehen können, wie er vorankommt, ohne erst nach Hause an den Laptop zurückzukehren.
 
 Die Lösung ist konzeptionell simpel: **Der Agent läuft nicht auf dem Gerät in meiner Hand, sondern auf einer Maschine, die nie ausgeht.** Das Gerät in meiner Hand ist nur noch ein Fenster darauf.
 
@@ -65,7 +68,7 @@ Der mini steht im Regal, ohne Monitor, ohne Tastatur. Erreichbar ist er nur übe
 
 ## Sessions, die Verbindungsabbrüche überleben
 
-Das Fundament ist **tmux**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux – und alles darin – einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen.
+Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen – ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **tmux**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux – und alles darin – einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen.
 
 Zwei Dinge machen das komfortabel:
 
