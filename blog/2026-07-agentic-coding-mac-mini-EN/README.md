@@ -255,7 +255,7 @@ I want to stay honest, too:
 - **Security is a must, not a bonus.** Access exclusively via the VPN, key auth, FileVault on. An always-on machine is only as trustworthy as its access.
 - **Reboots cost running processes.** tmux saves the layout, not the state mid-run. For long runs I plan restarts accordingly.
 
-And the price? Above all, the setup is **surprisingly cheap** and still comes close to professional solutions: I had the hardware anyway, and the only running cost is the **Max subscription for Claude** – nothing else. Because the agent is now reachable around the clock and from anywhere, I've been ruthlessly maxing out its generous limits. That hardly works as well when you're tied to a physical location.
+And the price? Above all, the setup is **surprisingly cheap** and still comes close to commercial offerings – cloud dev environments like [GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com) or [Google Cloud Workstations](https://cloud.google.com/workstations), and hosted agent services like [Devin](https://devin.ai) or [Google Jules](https://jules.google). Except there you pay continuously for compute or seats; for me it's just the **Max subscription for Claude** plus hardware I already had – nothing else. Because the agent is now reachable around the clock and from anywhere, I've been ruthlessly maxing out its generous limits. That hardly works as well when you're tied to a physical location.
 
 For me the gain clearly outweighs it: agents that keep working while I live, move around, switch devices. The ground station stands, the rocket docks and lifts off. *Ground Control to Major Tom* – and the ground contact never drops.
 
