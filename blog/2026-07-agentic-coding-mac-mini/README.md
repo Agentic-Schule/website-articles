@@ -222,6 +222,14 @@ Kein einziges Mal musste der Agent „von vorne anfangen". Kein zugeklappter Dec
 
 Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees**. Weil ein Frontier-Modell mit all seinen Unter-Agenten verdammt langsam sein kann, parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen – aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
 
+## Ein Prinzip: Erzähl den Agenten nie vom rosa Elefanten
+
+Ein Kniff, der sich mit der Zeit herausgeschält hat: Ich halte **genau eine** Session, die das ganze Setup kennt – meine *Ground-Control-Session*. Sie hilft bei Problemen, nimmt die Meldungen der anderen Sessions entgegen (etwa wenn wirklich mal etwas durch den Wechsel der Arbeitsstation passiert ist) und kennt als Einzige die volle Wahrheit.
+
+Alle **normalen** Arbeits-Sessions wissen davon nichts. Sie merken nicht, dass sie eben noch auf Rechner A liefen und jetzt auf Rechner B – dank identischem Home und identischen Pfaden sieht für sie alles exakt gleich aus. Und das ist volle Absicht.
+
+Denn: **Erzähl den Agenten nie vom rosa Elefanten.** Sobald eine Session weiß, dass sie auf einem exotischen Setup sitzt, erklärt sie sich jedes kleine E2E-Problem zuerst genau damit – „liegt bestimmt am Sync", „bestimmt der Proxy", „bestimmt die entfernte Maschine". Weiß sie nichts davon, sucht sie die Ursache wieder dort, wo sie meistens sitzt: im Code. Den Elefanten sehen darf nur Ground Control.
+
 ## Fazit: Lohnt sich das?
 
 Ein Mac mini im Regal, ein bisschen Unix-Handwerk – und plötzlich hat man eine persönliche, immer laufende Basis für agentisches Arbeiten, die man von überall bedient. Die Bausteine sind alle Standard und quelloffen: tmux, mosh, Syncthing, colima, nginx. Nichts davon ist exotisch; das Besondere ist die Kombination.
@@ -233,6 +241,8 @@ Ehrlich bleiben will ich auch:
 - **Es braucht Pflege.** Headless-Betrieb, FileVault-Remote-Unlock, Autostart-Dienste – das ist einmal Einrichtungsaufwand und gelegentlich Debugging.
 - **Sicherheit ist Pflicht, kein Bonus.** Zugriff ausschließlich übers VPN, Key-Auth, FileVault an. Ein always-on Rechner ist nur so vertrauenswürdig wie sein Zugang.
 - **Reboots kosten laufende Prozesse.** tmux rettet das Layout, nicht den Zustand mitten im Lauf. Für lange Läufe plane ich Neustarts entsprechend.
+
+Und der Preis? Das Setup ist vor allem **erstaunlich günstig** und kommt professionellen Lösungen trotzdem nahe: Die Hardware hatte ich ohnehin, laufende Kosten sind allein die **Max-Subscription von Claude** – sonst nichts. Weil der Agent jetzt rund um die Uhr und von überall erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus. Das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
 
 Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe, mich bewege, das Gerät wechsle. Die Bodenstation steht, der Späher dockt an und ab. *Ground Control to Major Tom* – und der Bodenkontakt reißt nie ab.
 
