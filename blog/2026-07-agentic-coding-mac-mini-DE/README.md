@@ -228,6 +228,8 @@ Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt näml
 
 ## Ein Prinzip: Erzähl den Agenten nie vom rosa Elefanten
 
+![Ein pinkfarbener Elefant steht in einer Savannenlandschaft.](rosa-elefant.png "Egal was du tust, denke bloß nicht an den rosa Elefanten!")
+
 Ein Kniff, der sich mit der Zeit herausgeschält hat: Ich halte **genau eine** Session, die das ganze Setup kennt – meine *Ground-Control-Session*. Sie hilft bei Problemen, nimmt die Meldungen der anderen Sessions entgegen (etwa wenn wirklich mal etwas durch den Wechsel der Arbeitsstation passiert ist) und kennt als Einzige die volle Wahrheit.
 
 Alle **normalen** Arbeits-Sessions wissen davon nichts. Sie merken nicht, dass sie eben noch auf Rechner A liefen und jetzt auf Rechner B – dank identischem Home und identischen Pfaden sieht für sie alles exakt gleich aus. Und das ist volle Absicht.

@@ -227,6 +227,8 @@ That was a deliberately simplified example. The real work only begins with **man
 
 ## A Principle: Never Tell the Agents About the Pink Elephant
 
+![A pink elephant standing in a savanna landscape.](rosa-elefant.png "No matter what you do, just don't think of the pink elephant!")
+
 A trick that crystallized over time: I keep **exactly one** session that knows the whole setup – my *Ground Control session*. It helps with problems, takes in the reports from the other sessions (for instance when something really did happen because of the change of workstation), and is the only one that knows the full truth.
 
 All the **normal** working sessions know nothing about it. They don't notice that they were just running on machine A and are now on machine B – thanks to identical home and identical paths, everything looks exactly the same to them. And that's fully intentional.
