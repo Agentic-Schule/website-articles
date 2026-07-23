@@ -212,6 +212,8 @@ Manche Apps rufen ihr Backend allerdings **fest auf `http://localhost:PORT`** �
 
 Wie fühlt sich das im Alltag an? Ungefähr so:
 
+**Gottlos früh, beim Gassigehen.** Schlaftrunken mit dem Hund unterwegs lese ich die Mails – und sehe, dass irgendein Nightly Build rot ist. Mist. „Claude, bitte fixen!" Am Ende der Runde ist der Build grün. Erstes Erfolgserlebnis des Tages. Schön.
+
 **Morgens am Schreibtisch.** Ich docke vom MacBook per `mosh mini` an, lande in tmux, starte in einem Projekt einen Agenten mit einer größeren Aufgabe – sagen wir, eine Testabdeckung nachziehen. Er legt los. Am großen Monitor arbeite ich übrigens immer noch am liebsten: Die Diffs, die Claude Code ständig zeigt, geben einen guten Überblick, was gerade passiert – man hat das Gefühl, die Kontrolle zu behalten.
 
 **Mittags unterwegs.** Ich klappe das MacBook zu und fahre los. Der Agent? Läuft weiter – er sitzt ja auf dem mini, nicht im Laptop. In der Bahn hole ich das Handy raus, öffne die **Claude-App** und arbeite auf dem kleinen Bildschirm weiter: Der Agent hat drei von fünf Modulen durch und wartet auf eine Entscheidung – ich beantworte die Rückfrage mit dem Daumen, er macht weiter. Das Kontrollgefühl ist hier geringer, für die Diff-Ansicht muss man eigens drauftippen, aber irgendeinen Tod muss man sterben.

@@ -211,6 +211,8 @@ Some apps, however, call their backend **hardcoded at `http://localhost:PORT`** 
 
 What does it feel like day to day? Roughly like this:
 
+**Ungodly early, walking the dog.** Half asleep, out with the dog, I read my email – and see that some nightly build is red. Damn. "Claude, please fix it!" By the end of the loop, the build is green. First win of the day. Nice.
+
 **Morning at the desk.** I dock in from the MacBook via `mosh mini`, land in tmux, and start an agent on a bigger task in some project – say, filling in test coverage. Off it goes. By the way, I still like working at the big monitor most: the diffs that Claude Code constantly shows give a good overview of what's happening – you feel like you're staying in control.
 
 **Midday on the move.** I fold the MacBook shut and head off. The agent? Keeps running – it sits on the mini, not in the laptop. On the train I pull out the phone, open the **Claude app**, and keep working on the small screen: the agent has three of five modules done and is waiting for a decision – I answer the question with my thumb, it carries on. The sense of control is lower here, for the diff view you have to tap specifically, but you have to pick your poison.
