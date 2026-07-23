@@ -68,7 +68,7 @@ Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und dami
 
 Streng genommen kommt eine dritte Rolle dazu: **Peripherie, die nur als Terminal arbeitet** – allen voran das Handy. Kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das MacBook kann beides – eigenständig arbeiten *oder* bloß als Fenster dienen; das Handy ist reines Terminal.
 
-Der mini steht im Regal, ohne Monitor, ohne Tastatur. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was headless läuft, läuft auch, wenn niemand eingeloggt ist.
+Der mini steht ohne Monitor und ohne Tastatur bei meiner übrigen Haustechnik – neben NAS, Fritzbox, dem dicken Switch und dem ganzen Kabelsalat, den man sonst so im Netz hängen hat. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was headless läuft, läuft auch, wenn niemand eingeloggt ist.
 
 ## Sessions, die Verbindungsabbrüche überleben
 
