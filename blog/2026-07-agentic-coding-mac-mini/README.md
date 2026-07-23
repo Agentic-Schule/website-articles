@@ -23,7 +23,7 @@ language: de
 header: header.jpg
 ---
 
-Agentische KI-Agenten arbeiten anders als ein Chatfenster: Man gibt die Richtung vor, und der Agent liest Code, schreibt Dateien, führt Tests aus und plant selbstständig die nächsten Schritte. Solche Läufe dauern – Minuten, manchmal Stunden. Und genau da beißt sich das mit einem Laptop, den man zuklappt, ins Café trägt oder im Zug in den Ruhemodus schickt.
+Agentic Coding funktioniert anders als ein Chatfenster: Man gibt die Richtung vor, und der Agent liest Code, schreibt Dateien, führt Tests aus und plant selbstständig die nächsten Schritte. Solche Läufe dauern – Minuten, manchmal Stunden. Und genau da beißt sich das mit einem Laptop, den man zuklappt, ins Café trägt oder im Zug in den Ruhemodus schickt.
 
 **Ich habe deshalb einen Mac mini zur „Bodenstation" umgebaut: eine immer laufende Maschine, auf der meine Agenten weiterarbeiten – während ich vom MacBook, aus dem Browser oder sogar vom Handy aus zusehe und eingreife.**
 
@@ -94,13 +94,13 @@ Wichtig zu verstehen: tmux rettet die **Verbindung**, nicht den Strom. Ein Reboo
 
 Für den Zugriff setze ich durchgehend auf **mosh** (Mobile Shell) – zu Hause wie unterwegs, immer derselbe Befehl. So muss ich nie zwischen `ssh` und `mosh` überlegen oder umschalten.
 
-Und mosh ist wirklich großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz (Büro → Bahn → Zuhause) oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter – kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da – mosh macht weiter, als hätte es nie ausgesetzt. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
+Und mosh ist wirklich großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter – kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da – mosh macht ohne Neuverbinden einfach weiter. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
 
 Und wie kommt das Handy von unterwegs überhaupt an die Kiste zu Hause? Angefangen habe ich mit dem **WireGuard**-VPN der Fritzbox, inzwischen läuft alles über **Tailscale** (ein Mesh-VPN auf WireGuard-Basis). Der Grund: Tailscale kommt auch mit **IPv6** und ständig wechselnden Anschlüssen bestens klar – du erreichst die Bodenstation zuverlässig, egal aus welchem Netz. Man kommt wirklich immer nach Hause.
 
-Und die Kür: **Vom Handy.** Auf Android läuft die Terminal-App *Termux*, darin mosh, darin tmux, darin der Agent. So kann ich auf dem Bahnsteig einen Blick auf einen laufenden Refactoring-Agenten werfen – oder ihm eine Rückfrage beantworten.
+Und die Kür: **Vom Handy.** Auf Android läuft die Terminal-App *Termux*, darin mosh, darin tmux, darin der Agent. Damit komme ich notfalls von überall an die rohe Session heran.
 
-Den rohen Terminal-Blick nutze ich aber selten. Regelmäßig arbeite ich auf dem Handy bequemer über die **Remote-Control-Funktion der Claude-App**. Bis man drin ist, gehört ein kleines Ritual dazu: ein neues tmux-Fenster öffnen (`Ctrl-b c`), `claude` starten, die Remote-Steuerung freigeben und der Session einen Namen geben – *dann* erst wechsle ich in die App und tippe dort weiter. Beim ersten Mal fummelig, aber man gewöhnt sich dran.
+Diesen direkten Terminal-Weg nutze ich aber selten. Meist arbeite ich auf dem Handy bequemer über die **Remote-Control-Funktion der Claude-App**. Bis man drin ist, gehört ein kleines Ritual dazu: ein neues tmux-Fenster öffnen (`Ctrl-b c`), `claude` starten, die Remote-Steuerung freigeben und der Session einen Namen geben – *dann* erst wechsle ich in die App und tippe dort weiter. Beim ersten Mal fummelig, aber man gewöhnt sich dran.
 
 > **🛠️ Selbst nachbauen — ein Kurzname, immer mosh**
 > In `~/.ssh/config` einen Alias anlegen (mosh nutzt ihn genauso wie ssh):
