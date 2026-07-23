@@ -31,7 +31,7 @@ Ehrlich gesagt stand die Kiste zunächst aus einem ganz anderen Grund im Regal: 
 
 Dieser Artikel zeigt die Idee, die Bausteine und – in How-to-Kästen – wie man sie selbst nachbaut.
 
-> 🛰️ Der Spitzname für das Setup war schnell gefunden: *Ground Control to Major Tom*. Der Mac mini ist die Bodenstation, das MacBook der mobile Späher, der andockt und wieder abhebt.
+> 🛰️ Der Spitzname für das Setup war schnell gefunden: *Ground Control to Major Tom*. Der Mac mini ist die Bodenstation, das MacBook die mobile Rakete, die andockt und wieder abhebt.
 
 ## Inhalt
 
@@ -61,7 +61,7 @@ Zwei Maschinen, ein gemeinsamer Nenner:
 | | **Bodenstation** | **mobiler Spiegel** |
 |---|---|---|
 | Gerät | Mac mini (Apple Silicon), always-on | MacBook Pro 16″ (Apple Silicon) |
-| Rolle | Hauptmaschine, hier laufen die Agenten | Späher, dockt von überall an |
+| Rolle | Hauptmaschine, hier laufen die Agenten | Rakete, dockt von überall an |
 | Benutzer | derselbe Account, dasselbe Home | derselbe Account, dasselbe Home |
 
 Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys – und, wie wir gleich sehen, alle Agenten-Sessions – liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang nahtlos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook Pro.
@@ -244,7 +244,7 @@ Ehrlich bleiben will ich auch:
 
 Und der Preis? Das Setup ist vor allem **erstaunlich günstig** und kommt professionellen Lösungen trotzdem nahe: Die Hardware hatte ich ohnehin, laufende Kosten sind allein die **Max-Subscription von Claude** – sonst nichts. Weil der Agent jetzt rund um die Uhr und von überall erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus. Das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
 
-Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe, mich bewege, das Gerät wechsle. Die Bodenstation steht, der Späher dockt an und ab. *Ground Control to Major Tom* – und der Bodenkontakt reißt nie ab.
+Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe, mich bewege, das Gerät wechsle. Die Bodenstation steht, die Rakete dockt an und ab. *Ground Control to Major Tom* – und der Bodenkontakt reißt nie ab.
 
 ---
 

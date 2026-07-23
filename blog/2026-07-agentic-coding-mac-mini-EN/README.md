@@ -30,7 +30,7 @@ To be honest, the box was initially sitting on the shelf for a completely differ
 
 This article shows the idea, the building blocks, and – in how-to boxes – how to build it yourself.
 
-> 🛰️ The nickname for the setup was found quickly: *Ground Control to Major Tom*. The Mac mini is the ground station, the MacBook the mobile scout that docks and lifts off again.
+> 🛰️ The nickname for the setup was found quickly: *Ground Control to Major Tom*. The Mac mini is the ground station, the MacBook the mobile rocket that docks and lifts off again.
 
 ## Contents
 
@@ -60,7 +60,7 @@ Two machines, one common denominator:
 | | **Ground station** | **mobile mirror** |
 |---|---|---|
 | Device | Mac mini (Apple Silicon), always-on | MacBook Pro 16″ (Apple Silicon) |
-| Role | main machine, the agents run here | scout, docks from anywhere |
+| Role | main machine, the agents run here | rocket, docks from anywhere |
 | User | same account, same home | same account, same home |
 
 The crucial trick: **Both machines use the same username and therefore the same home directory `/Users/<name>`.** All paths, all repos, all keys – and, as we'll see shortly, all agent sessions – live under identical paths on both machines. That makes the transition seamless: what applies on the mini applies one-to-one on the MacBook Pro.
@@ -243,7 +243,7 @@ I want to stay honest, too:
 
 And the price? Above all, the setup is **surprisingly cheap** and still comes close to professional solutions: I had the hardware anyway, and the only running cost is the **Max subscription for Claude** – nothing else. Because the agent is now reachable around the clock and from anywhere, I've been ruthlessly maxing out its generous limits. That hardly works as well when you're tied to a physical location.
 
-For me the gain clearly outweighs it: agents that keep working while I live, move around, switch devices. The ground station stands, the scout docks and lifts off. *Ground Control to Major Tom* – and the ground contact never drops.
+For me the gain clearly outweighs it: agents that keep working while I live, move around, switch devices. The ground station stands, the rocket docks and lifts off. *Ground Control to Major Tom* – and the ground contact never drops.
 
 ---
 
