@@ -247,7 +247,7 @@ For me the gain clearly outweighs it: agents that keep working while I live, mov
 
 By the way: while writing this article, I had the song stuck in my head the whole time. Here you go, your new earworm:
 
-<iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="The song behind this article (YouTube)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
+<iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="David Bowie – Space Oddity (Official Video)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
 
 <small>If the player doesn't load: [watch directly on YouTube](https://youtu.be/iYYRH4apXDo).</small>
 

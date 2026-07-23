@@ -248,7 +248,7 @@ Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während 
 
 Übrigens: Beim Schreiben dieses Artikels hatte ich den Song permanent im Ohr. Bitte sehr, hier ist dein neuer Ohrwurm:
 
-<iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="Der Song zu diesem Artikel (YouTube)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
+<iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="David Bowie – Space Oddity (Official Video)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
 
 <small>Falls der Player nicht lädt: [direkt auf YouTube ansehen](https://youtu.be/iYYRH4apXDo).</small>
 
