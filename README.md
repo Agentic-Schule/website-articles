@@ -15,9 +15,22 @@ Markdown-Quellen für den Blog auf [agentic.schule](https://agentic.schule/blog)
 Der Zwei-Quellen-Merge lebt in der **Website** (agentic-schule-website,
 `BlogService`): Sie lädt dieses Repo komplett UND zusätzlich die
 `list.json` von `angular-schule/website-articles`, gefiltert auf Artikel
-mit **Johannes Hoppe** als `author`/`author2` und dem Keyword **`AI`**
-(die keywords stehen dafür seit Build-Tool-Commit `190223c` in der
-Light-Liste). Dieses Repo baut also nur die eigenen Artikel.
+mit dem Keyword **`AI`**, bei denen Johannes Hoppe oder einer der
+Team-Accounts (Co-)Autor ist (Details: `BlogService` in der Website). Dieses Repo baut also nur die eigenen Artikel.
+
+## Übersetzungen (-DE/-EN-Konvention)
+
+Ein Artikel darf in zwei Sprachfassungen vorliegen. Dann enden die
+Ordnernamen mit Suffix, exakt in Großbuchstaben:
+
+- `blog/2026-08-mein-artikel-DE/` (deutsche Fassung, `language: de`)
+- `blog/2026-08-mein-artikel-EN/` (englische Fassung, `language: en`)
+
+Die Website zeigt im deutschen Build nur die -DE-Fassung, im englischen
+nur die -EN-Fassung. In der URL erscheint der Slug ohne Suffix, beide
+Sprachen teilen sich dieselbe Adresse. Bilder referenzieren wie immer
+relativ, sie liegen im jeweiligen Ordner (der echte Slug mit Suffix
+bleibt intern erhalten). Artikel ohne Suffix gelten für beide Sprachen.
 
 ## Lokal bauen
 
