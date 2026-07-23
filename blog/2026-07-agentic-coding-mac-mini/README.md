@@ -60,19 +60,19 @@ Zwei Maschinen, ein gemeinsamer Nenner:
 
 | | **Bodenstation** | **mobiler Spiegel** |
 |---|---|---|
-| Gerät | Mac mini (Apple Silicon), always-on | MacBook (Apple Silicon) |
+| Gerät | Mac mini (Apple Silicon), always-on | MacBook Pro 16″ (Apple Silicon) |
 | Rolle | Hauptmaschine, hier laufen die Agenten | Späher, dockt von überall an |
 | Benutzer | derselbe Account, dasselbe Home | derselbe Account, dasselbe Home |
 
-Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys – und, wie wir gleich sehen, alle Agenten-Sessions – liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang nahtlos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook.
+Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys – und, wie wir gleich sehen, alle Agenten-Sessions – liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang nahtlos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook Pro.
 
-Streng genommen kommt eine dritte Rolle dazu: **Peripherie, die nur als Terminal arbeitet** – allen voran das Handy. Kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das MacBook kann beides – eigenständig arbeiten *oder* bloß als Fenster dienen; das Handy ist reines Terminal.
+Streng genommen kommt eine dritte Rolle dazu: **Geräte, die nur als Terminal arbeiten** – kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das ist einerseits das Handy (per Termux), andererseits ein kleines MacBook, das ich ausschließlich zum Reinmoshen dabeihabe – ich nenne es schlicht **„Mac Terminal"**. Voller Spiegel ist damit nur das große MacBook Pro: Es kann beides – eigenständig arbeiten *oder* bloß als Fenster dienen. Alles andere ist reines Terminal.
 
 Der mini steht ohne Monitor und ohne Tastatur bei meiner übrigen Haustechnik – neben NAS, Fritzbox, dem dicken Switch und dem ganzen Kabelsalat, den man sonst so im Netz hängen hat. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was headless läuft, läuft auch, wenn niemand eingeloggt ist.
 
 ## Sessions, die Verbindungsabbrüche überleben
 
-Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen – ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **tmux**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux – und alles darin – einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen.
+Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen – ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **tmux**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux – und alles darin – einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen. Ehrlich gesagt ist **tmux der Gamechanger** in diesem Setup – erst dadurch überstehen die Agentenläufe alles, was zwischen mir und dem mini passieren kann.
 
 Zwei Dinge machen das komfortabel:
 
@@ -92,30 +92,34 @@ Wichtig zu verstehen: tmux rettet die **Verbindung**, nicht den Strom. Ein Reboo
 
 ## Andocken von überall – bis hin zum Handy
 
-Für den Zugriff nutze ich zwei Ebenen:
+Für den Zugriff setze ich durchgehend auf **mosh** (Mobile Shell) – zu Hause wie unterwegs, immer derselbe Befehl. So muss ich nie zwischen `ssh` und `mosh` überlegen oder umschalten.
 
-- **SSH** im heimischen Netz und über das VPN des Routers (die meisten Consumer-Router können WireGuard). Key-Auth, kein Passwort.
-- **mosh** (Mobile Shell) für unterwegs. mosh ist das bessere SSH im Zug: Es übersteht Verbindungswechsel und Latenz, ohne dass die Sitzung einfriert. Netz weg, Netz wieder da – mosh macht einfach weiter.
+Und mosh ist wirklich großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz (Büro → Bahn → Zuhause) oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter – kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da – mosh macht weiter, als hätte es nie ausgesetzt. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
+
+Und wie kommt das Handy von unterwegs überhaupt an die Kiste zu Hause? Angefangen habe ich mit dem **WireGuard**-VPN der Fritzbox, inzwischen läuft alles über **Tailscale** (ein Mesh-VPN auf WireGuard-Basis). Der Grund: Tailscale kommt auch mit **IPv6** und ständig wechselnden Anschlüssen bestens klar – du erreichst die Bodenstation zuverlässig, egal aus welchem Netz. Man kommt wirklich immer nach Hause.
 
 Und die Kür: **Vom Handy.** Auf Android läuft die Terminal-App *Termux*, darin mosh, darin tmux, darin der Agent. So kann ich auf dem Bahnsteig einen Blick auf einen laufenden Refactoring-Agenten werfen – oder ihm eine Rückfrage beantworten.
 
-> **🛠️ Selbst nachbauen — bequemer SSH-Alias + mosh**
-> In `~/.ssh/config` einen Kurznamen anlegen, dann tippt man nur noch `ssh mini`:
+Den rohen Terminal-Blick nutze ich aber selten. Regelmäßig arbeite ich auf dem Handy bequemer über die **Remote-Control-Funktion der Claude-App**. Bis man drin ist, gehört ein kleines Ritual dazu: ein neues tmux-Fenster öffnen (`Ctrl-b c`), `claude` starten, die Remote-Steuerung freigeben und der Session einen Namen geben – *dann* erst wechsle ich in die App und tippe dort weiter. Beim ersten Mal fummelig, aber man gewöhnt sich dran.
+
+> **🛠️ Selbst nachbauen — ein Kurzname, immer mosh**
+> In `~/.ssh/config` einen Alias anlegen (mosh nutzt ihn genauso wie ssh):
 > ```ssh-config
 > Host mini
->   HostName mac-mini.fritz.box   # oder die feste LAN-IP
+>   HostName mini    # LAN-Name oder der Tailscale-Name des mini
 >   User deinbenutzer
 > ```
-> Von unterwegs erst das Router-VPN (WireGuard) aktivieren, dann:
+> Dann genügt von überall derselbe Befehl:
 > ```bash
 > mosh mini
 > ```
+> Von außen sorgt ein Mesh-VPN wie **Tailscale** dafür, dass `mini` immer erreichbar ist – auch über IPv6.
 
-> **📱 Handy-Kniff (Termux):** Termux hat keine Strg-Taste. Sie liegt auf **Leiser (Volume-Down)** – also `Vol-Down + C` für `Ctrl-C`, `Vol-Down + R` für `Ctrl-R`. Die Extra-Tastenzeile (ESC/CTRL/TAB/Pfeile) blendet man mit einem Wisch nach oben ein.
+> **📱 Handy-Kniff (Termux):** Termux hat keine Strg-Taste. Sie liegt auf **Leiser (Volume-Down)** – also `Vol-Down + C` für `Ctrl-C`, `Vol-Down + R` für `Ctrl-R`. Die Extra-Tastenzeile (ESC/CTRL/TAB/Pfeile) blendet man mit einem Wisch nach oben ein. Dankt mir später! 😄
 
 ## Alles doppelt, immer synchron
 
-Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein MacBook kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen – auch offline.
+Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein großes MacBook Pro kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen – auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen – großer Mac und mini sind ja immer synchron. Ganz nebenbei ist dieser Spiegel ein permanentes, sekundenscharfes Backup. Geiler Scheiß.
 
 Dafür sorgt **Syncthing**, ein Peer-to-Peer-Sync ohne Cloud dazwischen. Es spiegelt bidirektional:
 
