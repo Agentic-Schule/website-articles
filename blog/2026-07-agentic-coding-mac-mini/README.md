@@ -100,7 +100,7 @@ Und wie kommt das Handy von unterwegs überhaupt an die Kiste zu Hause? Angefang
 
 Und die Kür: **Vom Handy.** Auf Android läuft die Terminal-App *Termux*, darin mosh, darin tmux, darin der Agent. Damit komme ich notfalls von überall an die rohe Session heran.
 
-Diesen direkten Terminal-Weg nutze ich aber selten. Meist arbeite ich auf dem Handy bequemer über die **Remote-Control-Funktion der Claude-App**. Bis man drin ist, gehört ein kleines Ritual dazu: ein neues tmux-Fenster öffnen (`Ctrl-b c`), `claude` starten, die Remote-Steuerung freigeben und der Session einen Namen geben – *dann* erst wechsle ich in die App und tippe dort weiter. Beim ersten Mal fummelig, aber man gewöhnt sich dran.
+Diesen direkten Terminal-Weg nutze ich aber selten. Meist arbeite ich auf dem Handy bequemer über die **Remote-Control-Funktion der Claude-App**. Bis man drin ist, gehört ein kleines Ritual dazu: ein neues tmux-Fenster öffnen (`Ctrl-b c`), `claude` starten, mit `/rc` die Remote-Steuerung freigeben und die Session mit `/rename` benennen – *dann* erst wechsle ich in die App und tippe dort weiter. Beim ersten Mal fummelig, aber man gewöhnt sich dran.
 
 > **🛠️ Selbst nachbauen — ein Kurzname, immer mosh**
 > In `~/.ssh/config` einen Alias anlegen (mosh nutzt ihn genauso wie ssh):
@@ -220,7 +220,7 @@ Wie fühlt sich das im Alltag an? Ungefähr so:
 
 Kein einziges Mal musste der Agent „von vorne anfangen". Kein zugeklappter Deckel hat ihn gekillt. Das ist der eigentliche Gewinn: **Die Arbeit ist entkoppelt vom Gerät in meiner Hand.**
 
-Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees**. Weil ein Frontier-Modell mit all seinen Unter-Agenten verdammt langsam sein kann, parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen – aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
+Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees**. Weil ein Frontier-Modell mit all seinen Unter-Agenten verdammt langsam sein kann (Kommandos wie `/simplify` oder `/code-review` mit ordentlich `/effort` laufen schon mal absurd lange), parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen – aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
 
 ## Ein Prinzip: Erzähl den Agenten nie vom rosa Elefanten
 
