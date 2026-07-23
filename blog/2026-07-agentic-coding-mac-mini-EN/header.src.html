@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(60% 55% at 74% 42%, rgba(217,119,87,0.30), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(126,96,196,0.12), transparent 60%),
+      linear-gradient(155deg,#221a16 0%,#160f0c 58%,#0d0908 100%);
+    color:#fff; position:relative;
+  }
+  /* dezenter Punkt-Grid (Ground-Control-Vibe) */
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:600px; }
+  .kicker { font-size:20px; letter-spacing:6px; font-weight:700; color:#e0916f; text-transform:uppercase; }
+  .kicker .dot { color:#d97757; }
+  h1 { font-size:74px; line-height:1.02; font-weight:800; letter-spacing:-1.5px; margin:22px 0 0; }
+  h1 .accent { color:#e58a68; }
+  .sub { margin-top:24px; font-size:27px; font-weight:500; color:#c3b7ae; letter-spacing:-.2px; }
+  .by { margin-top:40px; font-size:19px; color:#8c8079; }
+  .by b { color:#cbbfb6; font-weight:600; }
+  .art { position:absolute; right:44px; top:0; height:675px; width:520px; display:flex; align-items:center; justify-content:center; }
+  /* offizielles Claude-Logo (dein Asset), via CSS-mask in Claude-Coral eingefärbt */
+  .logo { position:absolute; left:176px; top:189px; width:168px; height:168px;
+    background:#d97757;
+    -webkit-mask:url("claude.svg") center/contain no-repeat;
+    mask:url("claude.svg") center/contain no-repeat;
+    filter:drop-shadow(0 0 26px rgba(217,119,87,0.55)); }
+  /* echter Mac mini M4 (CC0-SVG, Wikimedia/LoMit), inline injiziert */
+  .mini { position:absolute; left:140px; top:436px; width:242px;
+    filter:drop-shadow(0 16px 20px rgba(0,0,0,0.5)); }
+  .mini svg { width:100%; height:auto; display:block; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="left">
+      <div class="kicker">agentic<span class="dot">.</span>schule</div>
+      <h1>Agentic&nbsp;Coding<br><span class="accent">Around the Clock</span></h1>
+      <div class="sub">The Mac mini as a Ground Station for AI Agents</div>
+      <div class="by">by <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <div class="art">
+    <svg width="520" height="520" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.55"/>
+          <stop offset="55%" stop-color="#d97757" stop-opacity="0.16"/>
+          <stop offset="100%" stop-color="#d97757" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="alu" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#565459"/>
+          <stop offset="45%" stop-color="#3a383d"/>
+          <stop offset="100%" stop-color="#242227"/>
+        </linearGradient>
+        <linearGradient id="aluTop" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#6f6d74"/>
+          <stop offset="50%" stop-color="#87858d"/>
+          <stop offset="100%" stop-color="#5c5a61"/>
+        </linearGradient>
+        <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f2b79f"/>
+          <stop offset="100%" stop-color="#d97757"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Orbit (Ground Control) -->
+      <g transform="rotate(-20 260 262)" opacity="0.5">
+        <ellipse cx="260" cy="262" rx="212" ry="96" stroke="#7c6f66" stroke-width="1.5" stroke-dasharray="2 9" fill="none"/>
+      </g>
+      <!-- Satellit auf dem Orbit -->
+      <g transform="rotate(-20 260 262)">
+        <circle cx="70" cy="262" r="4.5" fill="#e0916f"/>
+      </g>
+
+      <!-- Glow hinter dem Sunburst -->
+      <circle cx="260" cy="196" r="150" fill="url(#glow)"/>
+
+      <!-- offizielles Claude-Logo wird als HTML-Overlay (.logo) ueber dieser Stelle gerendert -->
+
+
+      <!-- Signal-Punkte: Agent steigt aus dem mini auf -->
+      <circle cx="260" cy="348" r="5" fill="#d97757" opacity="0.9"/>
+      <circle cx="260" cy="326" r="4" fill="#d97757" opacity="0.55"/>
+      <circle cx="260" cy="305" r="3" fill="#d97757" opacity="0.32"/>
+
+      <!-- echter Mac mini M4 (CC0-SVG) wird als HTML-Overlay (.mini) gerendert -->
+    </svg>
+    <div class="logo"></div>
+    <div class="mini"></div>
+  </div>
+</body>
+</html>
