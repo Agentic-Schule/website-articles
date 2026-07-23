@@ -50,7 +50,7 @@ Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt ein
 
 Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe ich selten am Schreibtisch, sondern unterwegs – beim Gassigehen zum Beispiel. Genau dann will ich dem Agenten kurz etwas zurufen oder nachsehen können, wie er vorankommt, ohne erst nach Hause an den Laptop zurückzukehren.
 
-Die Lösung ist konzeptionell simpel: **Der Agent läuft nicht auf dem Gerät in meiner Hand, sondern auf einer Maschine, die nie ausgeht.** Das Gerät in meiner Hand ist nur noch ein Fenster darauf.
+Die Lösung ist konzeptionell simpel: **Der Agent läuft nicht auf dem Gerät in meiner Nähe, sondern auf einer dedizierten Maschine, die nie ausgeht und immer an ist.** Das Gerät in meiner Hand ist nur noch ein Fenster darauf.
 
 Das hat Claude Code (und andere Tools) im Prinzip schon gut gelöst: Remote Control per Handy. Aber mir reicht das nicht.
 

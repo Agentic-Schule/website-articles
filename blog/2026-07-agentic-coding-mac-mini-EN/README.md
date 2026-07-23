@@ -49,7 +49,7 @@ The first problem can be worked around with `caffeinate -s`: the laptop simply s
 
 On top of that, there's a pattern I notice in myself: my best ideas rarely come at the desk, but on the go – while walking the dog, for example. That's exactly when I want to quickly toss the agent something or check on its progress, without first heading home to the laptop.
 
-The solution is conceptually simple: **The agent doesn't run on the device in my hand, but on a machine that never goes off.** The device in my hand is just a window onto it.
+The solution is conceptually simple: **The agent doesn't run on the device near me, but on a dedicated machine that never goes off and is always on.** The device in my hand is just a window onto it.
 
 Claude Code (and other tools) have basically already solved this: remote control from the phone. But that's not enough for me.
 
