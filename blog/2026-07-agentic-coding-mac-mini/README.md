@@ -25,7 +25,11 @@ header: header.jpg
 
 Agentische KI-Agenten arbeiten anders als ein Chatfenster: Man gibt die Richtung vor, und der Agent liest Code, schreibt Dateien, führt Tests aus und plant selbstständig die nächsten Schritte. Solche Läufe dauern – Minuten, manchmal Stunden. Und genau da beißt sich das mit einem Laptop, den man zuklappt, ins Café trägt oder im Zug in den Ruhemodus schickt.
 
-**Ich habe deshalb einen alten Mac mini zur „Bodenstation" umgebaut: eine immer laufende Maschine, auf der meine Agenten weiterarbeiten – während ich vom MacBook, aus dem Browser oder sogar vom Handy aus zusehe und eingreife.** Dieser Artikel zeigt die Idee, die Bausteine und – in How-to-Kästen – wie man sie selbst nachbaut.
+**Ich habe deshalb einen Mac mini zur „Bodenstation" umgebaut: eine immer laufende Maschine, auf der meine Agenten weiterarbeiten – während ich vom MacBook, aus dem Browser oder sogar vom Handy aus zusehe und eingreife.**
+
+Ehrlich gesagt stand die Kiste zunächst aus einem ganz anderen Grund im Regal: ein aktueller Mac mini M4 mit 32 GB, den ich mir eigentlich für den **Clawdbot**-Hype (heute *OpenClaw*) geholt hatte – den eigenen Agenten per **Signal** vom Handy steuern, das hatte was. Cool war es genau so lange, wie diese Fernsteuerung der eigentliche Reiz war. Seit Claude Code das mit **`/remote-control`** von Haus aus kann, hat der Clawdbot für mich viel von seinem Charme verloren, und der mini langweilte sich ohnehin ein wenig (dazu vielleicht ein andermal mehr). Also bekam er eine neue, dauerhafte Aufgabe.
+
+Dieser Artikel zeigt die Idee, die Bausteine und – in How-to-Kästen – wie man sie selbst nachbaut.
 
 > 🛰️ Der Spitzname für das Setup war schnell gefunden: *Ground Control to Major Tom*. Der Mac mini ist die Bodenstation, das MacBook der mobile Späher, der andockt und wieder abhebt.
 
@@ -207,7 +211,7 @@ Kein einziges Mal musste der Agent „von vorne anfangen". Kein zugeklappter Dec
 
 ## Fazit: Lohnt sich das?
 
-Ein alter Mac mini, ein bisschen Unix-Handwerk – und plötzlich hat man eine persönliche, immer laufende Basis für agentisches Arbeiten, die man von überall bedient. Die Bausteine sind alle Standard und quelloffen: tmux, mosh, Syncthing, colima, nginx. Nichts davon ist exotisch; das Besondere ist die Kombination.
+Ein Mac mini im Regal, ein bisschen Unix-Handwerk – und plötzlich hat man eine persönliche, immer laufende Basis für agentisches Arbeiten, die man von überall bedient. Die Bausteine sind alle Standard und quelloffen: tmux, mosh, Syncthing, colima, nginx. Nichts davon ist exotisch; das Besondere ist die Kombination.
 
 Ehrlich bleiben will ich auch:
 
