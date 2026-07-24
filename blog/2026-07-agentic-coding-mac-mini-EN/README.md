@@ -71,7 +71,7 @@ Strictly speaking, a third role joins in: **devices that only work as a terminal
 
 The mini sits without a monitor and without a keyboard among the rest of my home tech – next to the NAS, the router, the fat switch, and all the cabling you tend to have hanging on your network. It's reachable only over the network. That sounds like a limitation, but it's half the trick: what runs headless also runs when nobody is logged in.
 
-Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon delivers a lot of performance for the money, the box is **tiny** and fits in any corner, runs **absolutely silently** (I never hear the fan in everyday use), and sips so little **power** that running it 24/7 barely shows up on the bill – at idle it draws just a handful of watts. Exactly what you want from a machine that never turns off.
+Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon delivers a lot of performance for the money, the box is **tiny** and fits in any corner, runs **absolutely silently** (I never hear the fan in everyday use), and sips so little **power** that running it 24/7 barely shows up on the bill. At idle it draws just a handful of watts. Exactly what you want from a machine that never turns off.
 
 ## Sessions That Survive Connection Drops
 
