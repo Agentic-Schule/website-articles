@@ -72,6 +72,8 @@ Streng genommen kommt eine dritte Rolle dazu: **Geräte, die nur als Terminal ar
 
 Der mini steht ohne Monitor und ohne Tastatur bei meiner übrigen Haustechnik – neben NAS, Fritzbox, dem dicken Switch und dem ganzen Kabelsalat, den man sonst so im Netz hängen hat. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was headless läuft, läuft auch, wenn niemand eingeloggt ist.
 
+Warum ausgerechnet ein Mac mini? Für diese Rolle ist er fast perfekt: Apple Silicon liefert richtig viel Leistung fürs Geld, die Kiste ist **winzig** und passt in jede Ecke, läuft **absolut leise** (den Lüfter höre ich im Alltag nie) und ist so **stromsparend**, dass 24/7-Betrieb kaum auf der Rechnung auffällt – im Leerlauf zieht sie nur eine Handvoll Watt. Genau das, was man für eine Maschine will, die nie ausgeht.
+
 ## Sessions, die Verbindungsabbrüche überleben
 
 Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen – ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **[tmux](https://github.com/tmux/tmux)**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux – und alles darin – einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen. Ehrlich gesagt ist **tmux der Gamechanger** in diesem Setup – erst dadurch überstehen die Agentenläufe alles, was zwischen mir und dem mini passieren kann.

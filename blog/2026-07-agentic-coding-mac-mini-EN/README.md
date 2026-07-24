@@ -71,6 +71,8 @@ Strictly speaking, a third role joins in: **devices that only work as a terminal
 
 The mini sits without a monitor and without a keyboard among the rest of my home tech – next to the NAS, the router, the fat switch, and all the cabling you tend to have hanging on your network. It's reachable only over the network. That sounds like a limitation, but it's half the trick: what runs headless also runs when nobody is logged in.
 
+Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon delivers a lot of performance for the money, the box is **tiny** and fits in any corner, runs **absolutely silently** (I never hear the fan in everyday use), and sips so little **power** that running it 24/7 barely shows up on the bill – at idle it draws just a handful of watts. Exactly what you want from a machine that never turns off.
+
 ## Sessions That Survive Connection Drops
 
 Moving to a remote machine does, however, introduce a problem that never existed locally: the connection to it can drop – a Wi-Fi switch (office → train → home) is enough, and a normal SSH terminal is dead. The answer to that is **[tmux](https://github.com/tmux/tmux)**, a terminal multiplexer. Instead of starting my programs directly in the SSH session, they run *inside* tmux on the mini. If the connection drops, tmux – and everything in it – simply keeps running. On the next dock-in I reattach as if nothing had happened. Honestly, **tmux is the game changer** in this setup – only through it do the agent runs survive everything that can go wrong between me and the mini.
