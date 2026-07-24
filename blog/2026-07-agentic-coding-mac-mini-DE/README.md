@@ -39,16 +39,16 @@ Dieser Artikel zeigt die Idee, die Bausteine und – in How-to-Kästen – wie m
 
 ## Das Problem: Agenten wollen laufen, ich will weg
 
-Ein typischer Ablauf beim Agentic Coding: Ich beschreibe ein Refactoring, der Agent legt los, arbeitet eine Aufgabenliste ab, lässt Tests laufen, korrigiert sich selbst. Das ist großartig – solange die Maschine an bleibt und die Session lebt.
+Ein typischer Ablauf beim Agentic Coding: Ich beschreibe ein Refactoring, der Agent legt los, arbeitet eine Aufgabenliste ab, lässt Tests laufen, korrigiert sich selbst. Das ist großartig, solange die Maschine an bleibt und die Session lebt.
 
 Auf dem Laptop passiert aber Folgendes:
 
 - Ich klappe ihn zu → der Prozess schläft ein, der Agent friert mitten im Lauf ein.
-- Ich will abends vom Sofa aus nur *kurz* nachsehen, wie weit er ist – und müsste den Laptop wieder hochfahren.
+- Ich will abends vom Sofa aus nur *kurz* nachsehen, wie weit er ist, und müsste den Laptop wieder hochfahren.
 
 Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt einfach an, auch wenn der Deckel zugeklappt ist und keine Stromversorgung angeschlossen ist. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß – und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang durchheizt, ist keine gute Dauerlösung.
 
-Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe ich selten am Schreibtisch, sondern unterwegs – beim Gassigehen zum Beispiel. Genau dann will ich dem Agenten kurz etwas zurufen oder nachsehen können, wie er vorankommt, ohne erst nach Hause an den Laptop zurückzukehren.
+Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe ich selten am Schreibtisch, sondern unterwegs, beim Gassigehen zum Beispiel. Genau dann will ich dem Agenten kurz etwas zurufen oder nachsehen können, wie er vorankommt, ohne erst nach Hause an den Laptop zurückzukehren.
 
 Die Lösung ist konzeptionell simpel: **Der Agent läuft nicht auf dem Gerät in meiner Nähe, sondern auf einer dedizierten Maschine, die nie ausgeht und immer an ist.** Das Gerät in meiner Hand ist nur noch ein Fenster darauf.
 
@@ -83,7 +83,7 @@ Zwei Dinge machen das komfortabel:
 - **Auto-attach beim Login:** Jede interaktive Anmeldung landet automatisch in derselben Session (`main`). Ich muss nichts von Hand starten.
 - **`tmux-continuum`** speichert das Layout alle 15 Minuten und stellt es nach einem Reboot wieder her.
 
-Wichtig zu verstehen: tmux rettet die **Verbindung**, nicht den Strom. Ein Reboot beendet die laufenden Prozesse trotzdem – aber das Layout und die Fenster kommen zurück, und die Agenten-Session lässt sich fortsetzen (dazu gleich mehr).
+Wichtig zu verstehen: tmux rettet die **Verbindung**, nicht den Strom. Ein Reboot beendet die laufenden Prozesse trotzdem, aber das Layout und die Fenster kommen zurück, und die Agenten-Session lässt sich fortsetzen (dazu gleich mehr).
 
 > **🛠️ Selbst nachbauen — Auto-attach in `~/.zshrc`**
 > ```bash
@@ -96,7 +96,7 @@ Wichtig zu verstehen: tmux rettet die **Verbindung**, nicht den Strom. Ein Reboo
 
 ## Andocken von überall – bis hin zum Handy
 
-Für den Zugriff setze ich durchgehend auf **[mosh](https://mosh.org)** (Mobile Shell) – zu Hause wie unterwegs, immer derselbe Befehl. So muss ich nie zwischen `ssh` und `mosh` überlegen oder umschalten.
+Für den Zugriff setze ich durchgehend auf **[mosh](https://mosh.org)** (Mobile Shell), zu Hause wie unterwegs, immer derselbe Befehl. So muss ich nie zwischen `ssh` und `mosh` überlegen oder umschalten.
 
 Und mosh ist wirklich großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter – kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da – mosh macht ohne Neuverbinden einfach weiter. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
 
@@ -177,7 +177,7 @@ Drei Bausteine:
 
 ## Die Arbeit des Agenten im Browser ansehen
 
-Der Agent hat das Frontend umgebaut – jetzt will ich es *sehen*, in einem echten Browser, von meinem Laptop oder Handy aus. Der Dev-Server läuft aber auf dem mini und lauscht dort brav nur auf `localhost`.
+Der Agent hat das Frontend umgebaut, jetzt will ich es *sehen*, in einem echten Browser, von meinem Laptop oder Handy aus. Der Dev-Server läuft aber auf dem mini und lauscht dort brav nur auf `localhost`.
 
 Meine Lösung ist ein **[nginx](https://nginx.org)-Reverse-Proxy** auf dem mini, der genau ein Problem elegant löst: Er macht jeden lokalen Dev-Server im Netz sichtbar – **ohne pro Projekt etwas zu konfigurieren.** nginx bindet die LAN-IP des mini und schreibt den `Host`-Header auf `localhost` um. Dadurch greifen die Host-Prüfungen moderner Dev-Server ([Angular](https://angular.dev), [Vite](https://vite.dev)) nicht, und ich muss weder `--host 0.0.0.0` setzen noch an `allowedHosts` herumschrauben. Im Browser tippe ich einfach `http://mac-mini.fritz.box:4200` – fertig.
 
@@ -208,17 +208,17 @@ Manche Apps rufen ihr Backend allerdings **fest auf `http://localhost:PORT`** �
 > ssh -N -L 4200:localhost:4200 -L 5001:localhost:5001 mini
 > # Browser: http://localhost:4200  (nicht die Hostname-Variante)
 > ```
-> Aus Sicht des Browsers ist dann alles `localhost` – genau wie es die App erwartet.
+> Aus Sicht des Browsers ist dann alles `localhost`, genau wie es die App erwartet.
 
 ## Ein Tag mit der Bodenstation
 
 Wie fühlt sich das im Alltag an? Ungefähr so:
 
-**Gottlos früh, beim Gassigehen.** Schlaftrunken mit dem Hund unterwegs lese ich die Mails – und sehe, dass irgendein Nightly Build rot ist. Mist. „Claude, bitte fixen!" Am Ende der Runde ist der Build grün. Erstes Erfolgserlebnis des Tages. Schön.
+**Gottlos früh, beim Gassigehen.** Schlaftrunken mit dem Hund unterwegs lese ich die Mails und sehe, dass irgendein Nightly Build rot ist. Mist. „Claude, bitte fixen!" Am Ende der Runde ist der Build grün. Erstes Erfolgserlebnis des Tages. Schön.
 
-**Morgens am Schreibtisch.** Ich docke vom MacBook per `mosh mini` an, lande in tmux, starte in einem Projekt einen Agenten mit einer größeren Aufgabe – sagen wir, eine Testabdeckung nachziehen. Er legt los. Am großen Monitor arbeite ich übrigens immer noch am liebsten: Die Diffs, die Claude Code ständig zeigt, geben einen guten Überblick, was gerade passiert – man hat das Gefühl, die Kontrolle zu behalten.
+**Morgens am Schreibtisch.** Ich docke vom MacBook per `mosh mini` an, lande in tmux, starte in einem Projekt einen Agenten mit einer größeren Aufgabe, sagen wir, eine Testabdeckung nachziehen. Er legt los. Am großen Monitor arbeite ich übrigens immer noch am liebsten: Die Diffs, die Claude Code ständig zeigt, geben einen guten Überblick, was gerade passiert – man hat das Gefühl, die Kontrolle zu behalten.
 
-**Mittags unterwegs.** Ich klappe das MacBook zu und fahre los. Der Agent? Läuft weiter – er sitzt ja auf dem mini, nicht im Laptop. In der Bahn hole ich das Handy raus, öffne die **Claude-App** und arbeite auf dem kleinen Bildschirm weiter: Der Agent hat drei von fünf Modulen durch und wartet auf eine Entscheidung – ich beantworte die Rückfrage mit dem Daumen, er macht weiter. Das Kontrollgefühl ist hier geringer, für die Diff-Ansicht muss man eigens drauftippen, aber irgendeinen Tod muss man sterben.
+**Mittags unterwegs.** Ich klappe das MacBook zu und fahre los. Der Agent? Läuft weiter, er sitzt ja auf dem mini, nicht im Laptop. In der Bahn hole ich das Handy raus, öffne die **Claude-App** und arbeite auf dem kleinen Bildschirm weiter: Der Agent hat drei von fünf Modulen durch und wartet auf eine Entscheidung – ich beantworte die Rückfrage mit dem Daumen, er macht weiter. Das Kontrollgefühl ist hier geringer, für die Diff-Ansicht muss man eigens drauftippen, aber irgendeinen Tod muss man sterben.
 
 **Nachmittags im Café.** Das MacBook ist wieder auf, dank Sync sind alle Dateien und die Session-Historie auf dem aktuellen Stand. Ich öffne das umgebaute Frontend im Browser über den Dev-Proxy und schaue es mir an – auf dem echten Bildschirm, nicht im Terminal. Dabei trinke ich einen Iced Matcha Latte … Kleiner Scherz: Ich bin doch nicht im Café wie so ein AI-Influencer. Ich sitze längst wieder im Keller – dort ist es schön kühl, und ich habe drei Monitore.
 
@@ -230,11 +230,11 @@ Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt näml
 
 ## Wenn man doch mal lokal arbeiten muss
 
-Nicht jede Session lässt sich remote fahren – einige funktionieren nur lokal. Bei mir vor allem **[wohnfunke.app](https://wohnfunke.app)**: Die kann nicht im Kabelschrank laufen, denn das „magische" USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. (Ich nenne es [das magische Kabel](https://wohnfunke.app/kabel), weil es dieses Kabel so nicht im Handel gibt.) Ohne diese Verbindung komme ich nicht an den **CI-Bus** und kann das Lichtsteuergerät nicht ansprechen.
+Nicht jede Session lässt sich remote fahren, einige funktionieren nur lokal. Bei mir vor allem **[wohnfunke.app](https://wohnfunke.app)**: Die kann nicht im Kabelschrank laufen, denn das „magische" USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. (Ich nenne es [das magische Kabel](https://wohnfunke.app/kabel), weil es dieses Kabel so nicht im Handel gibt.) Ohne diese Verbindung komme ich nicht an den **CI-Bus** und kann das Lichtsteuergerät nicht ansprechen.
 
 Und hier ist das Vorgehen richtig nice: Ich beende die Session auf dem mini mit `/exit`, warte, bis das `~/.claude`-Verzeichnis durchgesynct ist, und starte Claude auf dem Laptop mit `--resume` neu – schon bin ich wieder in **derselben Unterhaltung**. Dann sage ich einfach: „Du bist jetzt im Wohnwagen, verbinde dich mit dem Lichtsteuergerät." Claude macht artig weiter und nutzt ab da meine **lokale Peripherie**.
 
-Der ganze Kontext bleibt erhalten, nur der Unterbau wechselt vom mini auf den Laptop – die Bodenstation reicht die Session an die Rakete weiter, diesmal weil die Rakete am Kabel hängen muss.
+Der ganze Kontext bleibt erhalten, nur der Unterbau wechselt vom mini auf den Laptop, die Bodenstation reicht die Session an die Rakete weiter, diesmal weil die Rakete am Kabel hängen muss.
 
 ## Ein Prinzip: Erzähl den Agenten nie vom rosa Elefanten
 
@@ -248,11 +248,11 @@ Denn: **Erzähl den Agenten nie vom rosa Elefanten.** Sobald eine Session weiß,
 
 ## Fazit: Lohnt sich das?
 
-Ein Mac mini im Regal, ein bisschen Unix-Handwerk – und plötzlich hat man eine persönliche, immer laufende Basis für agentisches Arbeiten, die man von überall bedient. Die Bausteine sind alle Standard und quelloffen: tmux, mosh, Syncthing, colima, nginx. Nichts davon ist exotisch; das Besondere ist die Kombination.
+Ein Mac mini im Regal, ein bisschen Unix-Handwerk, und plötzlich hat man eine persönliche, immer laufende Basis für agentisches Arbeiten, die man von überall bedient. Die Bausteine sind alle Standard und quelloffen: tmux, mosh, Syncthing, colima, nginx. Nichts davon ist exotisch; das Besondere ist die Kombination.
 
 Ein Nebeneffekt, den ich unterschätzt hatte: Ein **dedizierter Rechner ohne GUI und ohne sonstige Prozesse** hat spürbar mehr nutzbare Power. Auf meinem normalen Arbeitsrechner kratzte der Arbeitsspeicher bei gleicher RAM-Bestückung ständig am Limit – Swapping ohne Ende. Super nervig, wenn man überlegen muss, welchen Prozess man jetzt abschießt; den Agenten will man ja ganz sicher nicht unterbrechen. Auf dem mini ist dieses Problem einfach weg.
 
-Und die Sicherheit ist fast nebenbei gestiegen: Auf der Bodenstation läuft nur, was für die Arbeit nötig ist – sonst bin ich dort nirgends eingeloggt, nicht einmal mein üblicher Passwort-Manager ist installiert. Damit ist der ganze Mac mini im Grunde eine **Sandbox**: Was ein Agent dort anrichten könnte, bleibt eng begrenzt.
+Und die Sicherheit ist fast nebenbei gestiegen: Auf der Bodenstation läuft nur, was für die Arbeit nötig ist, sonst bin ich dort nirgends eingeloggt, nicht einmal mein üblicher Passwort-Manager ist installiert. Damit ist der ganze Mac mini im Grunde eine **Sandbox**: Was ein Agent dort anrichten könnte, bleibt eng begrenzt.
 
 Ehrlich bleiben will ich auch:
 
@@ -260,7 +260,7 @@ Ehrlich bleiben will ich auch:
 - **Sicherheit ist Pflicht, kein Bonus.** Zugriff ausschließlich übers VPN, Key-Auth, FileVault an. Ein always-on Rechner ist nur so vertrauenswürdig wie sein Zugang.
 - **Reboots kosten laufende Prozesse.** tmux rettet das Layout, nicht den Zustand mitten im Lauf. Für lange Läufe plane ich Neustarts entsprechend.
 
-Und wie machen es eigentlich alle anderen? Meist gar nicht so – sie lassen ihren Agenten (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) einfach lokal auf dem Laptop laufen. Kein Keller, kein Server. Für die meisten ist das genau richtig.
+Und wie machen es eigentlich alle anderen? Meist gar nicht so, sie lassen ihren Agenten (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) einfach lokal auf dem Laptop laufen. Kein Keller, kein Server. Für die meisten ist das genau richtig.
 
 Mein Setup zielt auf den Sonderfall: **immer an, von überall**. Kommerziell bekommt man das als gemietete Cloud-Dev-Umgebung ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) oder als gehosteten Agenten-Dienst ([Devin](https://devin.ai), [Google Jules](https://jules.google)) – abgerechnet laufend pro Compute-Stunde oder Seat. Bei mir sind es allein die **Max-Subscription von Claude** und Hardware, die ich ohnehin hatte. Und weil der Agent jederzeit erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus – das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
 

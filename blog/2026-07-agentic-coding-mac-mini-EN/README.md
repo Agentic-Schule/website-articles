@@ -38,16 +38,16 @@ This article shows the idea, the building blocks, and – in how-to boxes – ho
 
 ## The Problem: Agents Want to Run, I Want to Leave
 
-A typical flow in agentic coding: I describe a refactoring, the agent gets going, works through a task list, runs tests, corrects itself. That's great – as long as the machine stays on and the session lives.
+A typical flow in agentic coding: I describe a refactoring, the agent gets going, works through a task list, runs tests, corrects itself. That's great, as long as the machine stays on and the session lives.
 
 On the laptop, though, this is what happens:
 
 - I fold it shut → the process goes to sleep, the agent freezes mid-run.
-- In the evening I just want to *quickly* check from the couch how far it's gotten – and would have to boot the laptop back up.
+- In the evening I just want to *quickly* check from the couch how far it's gotten, and would have to boot the laptop back up.
 
 The first problem can be worked around with `caffeinate -s`: the laptop simply stays on even with the lid closed and no power connected. That's exactly how I worked in winter and spring. But at summer temperatures the thing quickly gets far too hot – and I'd like to keep it for a good while longer. A laptop running hot for months is not a good permanent solution.
 
-On top of that, there's a pattern I notice in myself: my best ideas rarely come at the desk, but on the go – while walking the dog, for example. That's exactly when I want to quickly toss the agent something or check on its progress, without first heading home to the laptop.
+On top of that, there's a pattern I notice in myself: my best ideas rarely come at the desk, but on the go, while walking the dog, for example. That's exactly when I want to quickly toss the agent something or check on its progress, without first heading home to the laptop.
 
 The solution is conceptually simple: **The agent doesn't run on the device near me, but on a dedicated machine that never goes off and is always on.** The device in my hand is just a window onto it.
 
@@ -82,7 +82,7 @@ Two things make it comfortable:
 - **Auto-attach on login:** every interactive login lands automatically in the same session (`main`). I don't have to start anything by hand.
 - **`tmux-continuum`** saves the layout every 15 minutes and restores it after a reboot.
 
-Important to understand: tmux saves the **connection**, not the power. A reboot still ends the running processes – but the layout and the windows come back, and the agent session can be resumed (more on that shortly).
+Important to understand: tmux saves the **connection**, not the power. A reboot still ends the running processes, but the layout and the windows come back, and the agent session can be resumed (more on that shortly).
 
 > **🛠️ Build it yourself — auto-attach in `~/.zshrc`**
 > ```bash
@@ -95,7 +95,7 @@ Important to understand: tmux saves the **connection**, not the power. A reboot 
 
 ## Docking In From Anywhere – All the Way to the Phone
 
-For access I rely entirely on **[mosh](https://mosh.org)** (Mobile Shell) – at home as on the road, always the same command. That way I never have to think about or switch between `ssh` and `mosh`.
+For access I rely entirely on **[mosh](https://mosh.org)** (Mobile Shell), at home as on the road, always the same command. That way I never have to think about or switch between `ssh` and `mosh`.
 
 And mosh is genuinely great. It's the better SSH for everything that isn't on a fixed cable: if the network changes or briefly drops, the connection lives on **roaming-proof** – no frozen terminal, no "broken pipe". Typed characters appear instantly via local echo, even with lousy latency on the train. Network gone, network back – mosh just keeps going without reconnecting. Underneath it's a completely normal SSH login with key auth, no password.
 
@@ -176,7 +176,7 @@ Three building blocks:
 
 ## Viewing the Agent's Work in the Browser
 
-The agent has rebuilt the frontend – now I want to *see* it, in a real browser, from my laptop or phone. But the dev server runs on the mini and dutifully listens only on `localhost` there.
+The agent has rebuilt the frontend, now I want to *see* it, in a real browser, from my laptop or phone. But the dev server runs on the mini and dutifully listens only on `localhost` there.
 
 My solution is an **[nginx](https://nginx.org) reverse proxy** on the mini that elegantly solves exactly one problem: it makes every local dev server visible on the network – **without configuring anything per project.** nginx binds the mini's LAN IP and rewrites the `Host` header to `localhost`. That way the host checks of modern dev servers ([Angular](https://angular.dev), [Vite](https://vite.dev)) don't kick in, and I neither have to set `--host 0.0.0.0` nor fiddle with `allowedHosts`. In the browser I simply type `http://mac-mini.fritz.box:4200` – done.
 
@@ -207,17 +207,17 @@ Some apps, however, call their backend **hardcoded at `http://localhost:PORT`** 
 > ssh -N -L 4200:localhost:4200 -L 5001:localhost:5001 mini
 > # Browser: http://localhost:4200  (not the hostname variant)
 > ```
-> From the browser's point of view everything is then `localhost` – exactly as the app expects.
+> From the browser's point of view everything is then `localhost`, exactly as the app expects.
 
 ## A Day With the Ground Station
 
 What does it feel like day to day? Roughly like this:
 
-**Ungodly early, walking the dog.** Half asleep, out with the dog, I read my email – and see that some nightly build is red. Damn. "Claude, please fix it!" By the end of the loop, the build is green. First win of the day. Nice.
+**Ungodly early, walking the dog.** Half asleep, out with the dog, I read my email and see that some nightly build is red. Damn. "Claude, please fix it!" By the end of the loop, the build is green. First win of the day. Nice.
 
-**Morning at the desk.** I dock in from the MacBook via `mosh mini`, land in tmux, and start an agent on a bigger task in some project – say, filling in test coverage. Off it goes. By the way, I still like working at the big monitor most: the diffs that Claude Code constantly shows give a good overview of what's happening – you feel like you're staying in control.
+**Morning at the desk.** I dock in from the MacBook via `mosh mini`, land in tmux, and start an agent on a bigger task in some project, say, filling in test coverage. Off it goes. By the way, I still like working at the big monitor most: the diffs that Claude Code constantly shows give a good overview of what's happening – you feel like you're staying in control.
 
-**Midday on the move.** I fold the MacBook shut and head off. The agent? Keeps running – it sits on the mini, not in the laptop. On the train I pull out the phone, open the **Claude app**, and keep working on the small screen: the agent has three of five modules done and is waiting for a decision – I answer the question with my thumb, it carries on. The sense of control is lower here, for the diff view you have to tap specifically, but you have to pick your poison.
+**Midday on the move.** I fold the MacBook shut and head off. The agent? Keeps running, it sits on the mini, not in the laptop. On the train I pull out the phone, open the **Claude app**, and keep working on the small screen: the agent has three of five modules done and is waiting for a decision – I answer the question with my thumb, it carries on. The sense of control is lower here, for the diff view you have to tap specifically, but you have to pick your poison.
 
 **Afternoon at the café.** The MacBook is open again; thanks to sync, all files and the session history are up to date. I open the rebuilt frontend in the browser via the dev proxy and take a look – on a real screen, not in the terminal. And I'm sipping an iced matcha latte … Just kidding: I'm not in a café like some AI influencer. I've long been back in the basement – it's nice and cool there, and I have three monitors.
 
@@ -229,11 +229,11 @@ That was a deliberately simplified example. The real work only begins with **man
 
 ## When You Do Have to Work Locally
 
-Not every session can be run remotely – some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a "magical" USB cable has to connect my laptop **physically to the caravan**. (I call it [the magic cable](https://wohnfunke.app/kabel) because you can't buy a cable like this off the shelf.) Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
+Not every session can be run remotely, some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a "magical" USB cable has to connect my laptop **physically to the caravan**. (I call it [the magic cable](https://wohnfunke.app/kabel) because you can't buy a cable like this off the shelf.) Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
 
 And here the procedure is really nice: I end the session on the mini with `/exit`, wait until the `~/.claude` directory has finished syncing, and restart Claude on the laptop with `--resume` – and I'm right back in **the same conversation**. Then I simply say: "You're in the caravan now, connect to the light controller." Claude carries on obediently and from there uses my **local peripherals**.
 
-The entire context stays intact, only the substrate switches from the mini to the laptop – the ground station hands the session over to the rocket, this time because the rocket has to be tethered to a cable.
+The entire context stays intact, only the substrate switches from the mini to the laptop, the ground station hands the session over to the rocket, this time because the rocket has to be tethered to a cable.
 
 ## A Principle: Never Tell the Agents About the Pink Elephant
 
@@ -247,11 +247,11 @@ Because: **never tell the agents about the pink elephant.** As soon as a session
 
 ## Conclusion: Is It Worth It?
 
-A Mac mini on a shelf, a bit of Unix craftsmanship – and suddenly you have a personal, always-running base for agentic work that you operate from anywhere. The building blocks are all standard and open source: tmux, mosh, Syncthing, colima, nginx. None of it is exotic; the special thing is the combination.
+A Mac mini on a shelf, a bit of Unix craftsmanship, and suddenly you have a personal, always-running base for agentic work that you operate from anywhere. The building blocks are all standard and open source: tmux, mosh, Syncthing, colima, nginx. None of it is exotic; the special thing is the combination.
 
 A side effect I had underestimated: a **dedicated machine with no GUI and no other processes** has noticeably more usable power. On my normal work machine, with the same amount of RAM, memory was constantly scraping the limit – endless swapping. Super annoying when you have to think about which process to kill now; you definitely don't want to interrupt the agent. On the mini that problem is simply gone.
 
-And security went up almost as a side effect: on the ground station, only what's needed for work runs – I'm not logged in anywhere else there, not even my usual password manager is installed. That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained.
+And security went up almost as a side effect: on the ground station, only what's needed for work runs, I'm not logged in anywhere else there, not even my usual password manager is installed. That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained.
 
 I want to stay honest, too:
 
@@ -259,7 +259,7 @@ I want to stay honest, too:
 - **Security is a must, not a bonus.** Access exclusively via the VPN, key auth, FileVault on. An always-on machine is only as trustworthy as its access.
 - **Reboots cost running processes.** tmux saves the layout, not the state mid-run. For long runs I plan restarts accordingly.
 
-And how does everyone else actually do it? Mostly not like this at all – they just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) locally on the laptop. No basement, no server. For most people that's exactly right.
+And how does everyone else actually do it? Mostly not like this at all, they just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) locally on the laptop. No basement, no server. For most people that's exactly right.
 
 My setup targets the special case: **always on, from anywhere**. Commercially you buy that as a rented cloud dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)) – billed continuously per compute-hour or seat. For me it's just the **Max subscription for Claude** plus hardware I already had. And because the agent is reachable at any time, I've been ruthlessly maxing out its generous limits – which hardly works as well when you're tied to a physical location.
 
