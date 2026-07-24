@@ -259,7 +259,7 @@ I want to stay honest, too:
 - **Security is a must, not a bonus.** Access exclusively via the VPN, key auth, FileVault on. An always-on machine is only as trustworthy as its access.
 - **Reboots cost running processes.** tmux saves the layout, not the state mid-run. For long runs I plan restarts accordingly.
 
-And how does everyone else actually do it? Mostly not like this at all – they just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot)) locally on the laptop. No basement, no server. For most people that's exactly right.
+And how does everyone else actually do it? Mostly not like this at all – they just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) locally on the laptop. No basement, no server. For most people that's exactly right.
 
 My setup targets the special case: **always on, from anywhere**. Commercially you buy that as a rented cloud dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)) – billed continuously per compute-hour or seat. For me it's just the **Max subscription for Claude** plus hardware I already had. And because the agent is reachable at any time, I've been ruthlessly maxing out its generous limits – which hardly works as well when you're tied to a physical location.
 
