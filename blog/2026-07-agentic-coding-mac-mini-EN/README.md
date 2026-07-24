@@ -249,13 +249,17 @@ A Mac mini on a shelf, a bit of Unix craftsmanship – and suddenly you have a p
 
 A side effect I had underestimated: a **dedicated machine with no GUI and no other processes** has noticeably more usable power. On my normal work machine, with the same amount of RAM, memory was constantly scraping the limit – endless swapping. Super annoying when you have to think about which process to kill now; you definitely don't want to interrupt the agent. On the mini that problem is simply gone.
 
+And security went up almost as a side effect: on the ground station, only what's needed for work runs – I'm not logged in anywhere else there, not even my usual password manager is installed. That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained.
+
 I want to stay honest, too:
 
 - **It needs maintenance.** Headless operation, FileVault remote unlock, autostart services – that's a one-time setup effort and occasional debugging.
 - **Security is a must, not a bonus.** Access exclusively via the VPN, key auth, FileVault on. An always-on machine is only as trustworthy as its access.
 - **Reboots cost running processes.** tmux saves the layout, not the state mid-run. For long runs I plan restarts accordingly.
 
-And the price? Above all, the setup is **surprisingly cheap** and still comes close to commercial offerings – cloud dev environments like [GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com) or [Google Cloud Workstations](https://cloud.google.com/workstations), and hosted agent services like [Devin](https://devin.ai) or [Google Jules](https://jules.google). Except there you pay continuously for compute or seats; for me it's just the **Max subscription for Claude** plus hardware I already had – nothing else. Because the agent is now reachable around the clock and from anywhere, I've been ruthlessly maxing out its generous limits. That hardly works as well when you're tied to a physical location.
+And how does everyone else actually do it? Mostly not like this at all – they just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot)) locally on the laptop. No basement, no server. For most people that's exactly right.
+
+My setup targets the special case: **always on, from anywhere**. Commercially you buy that as a rented cloud dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)) – billed continuously per compute-hour or seat. For me it's just the **Max subscription for Claude** plus hardware I already had. And because the agent is reachable at any time, I've been ruthlessly maxing out its generous limits – which hardly works as well when you're tied to a physical location.
 
 For me the gain clearly outweighs it: agents that keep working while I live, move around, switch devices. The ground station stands, the rocket docks and lifts off. *Ground Control to Major Tom* – and the ground contact never drops.
 

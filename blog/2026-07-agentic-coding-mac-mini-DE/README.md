@@ -250,13 +250,17 @@ Ein Mac mini im Regal, ein bisschen Unix-Handwerk – und plötzlich hat man ein
 
 Ein Nebeneffekt, den ich unterschätzt hatte: Ein **dedizierter Rechner ohne GUI und ohne sonstige Prozesse** hat spürbar mehr nutzbare Power. Auf meinem normalen Arbeitsrechner kratzte der Arbeitsspeicher bei gleicher RAM-Bestückung ständig am Limit – Swapping ohne Ende. Super nervig, wenn man überlegen muss, welchen Prozess man jetzt abschießt; den Agenten will man ja ganz sicher nicht unterbrechen. Auf dem mini ist dieses Problem einfach weg.
 
+Und die Sicherheit ist fast nebenbei gestiegen: Auf der Bodenstation läuft nur, was für die Arbeit nötig ist – sonst bin ich dort nirgends eingeloggt, nicht einmal mein üblicher Passwort-Manager ist installiert. Damit ist der ganze Mac mini im Grunde eine **Sandbox**: Was ein Agent dort anrichten könnte, bleibt eng begrenzt.
+
 Ehrlich bleiben will ich auch:
 
 - **Es braucht Pflege.** Headless-Betrieb, FileVault-Remote-Unlock, Autostart-Dienste – das ist einmal Einrichtungsaufwand und gelegentlich Debugging.
 - **Sicherheit ist Pflicht, kein Bonus.** Zugriff ausschließlich übers VPN, Key-Auth, FileVault an. Ein always-on Rechner ist nur so vertrauenswürdig wie sein Zugang.
 - **Reboots kosten laufende Prozesse.** tmux rettet das Layout, nicht den Zustand mitten im Lauf. Für lange Läufe plane ich Neustarts entsprechend.
 
-Und der Preis? Das Setup ist vor allem **erstaunlich günstig** und kommt kommerziellen Angeboten trotzdem nahe – Cloud-Dev-Umgebungen wie [GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com) oder [Google Cloud Workstations](https://cloud.google.com/workstations) und gehosteten Agenten-Diensten wie [Devin](https://devin.ai) oder [Google Jules](https://jules.google). Nur zahlt man dort laufend für Compute oder Seats; bei mir sind es allein die **Max-Subscription von Claude** und Hardware, die ich ohnehin hatte – sonst nichts. Weil der Agent jetzt rund um die Uhr und von überall erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus. Das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
+Und wie machen es eigentlich alle anderen? Meist gar nicht so – sie lassen ihren Agenten (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot)) einfach lokal auf dem Laptop laufen. Kein Keller, kein Server. Für die meisten ist das genau richtig.
+
+Mein Setup zielt auf den Sonderfall: **immer an, von überall**. Kommerziell bekommt man das als gemietete Cloud-Dev-Umgebung ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) oder als gehosteten Agenten-Dienst ([Devin](https://devin.ai), [Google Jules](https://jules.google)) – abgerechnet laufend pro Compute-Stunde oder Seat. Bei mir sind es allein die **Max-Subscription von Claude** und Hardware, die ich ohnehin hatte. Und weil der Agent jederzeit erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus – das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
 
 Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe, mich bewege, das Gerät wechsle. Die Bodenstation steht, die Rakete dockt an und ab. *Ground Control to Major Tom* – und der Bodenkontakt reißt nie ab.
 
