@@ -23,13 +23,13 @@ language: de
 header: header.jpg
 ---
 
-Agentic Coding funktioniert anders als ein Chatfenster: Man gibt die Richtung vor, und der Agent liest Code, schreibt Dateien, führt Tests aus und plant selbstständig die nächsten Schritte. Solche Läufe dauern – Minuten, manchmal Stunden. Und genau da beißt sich das mit einem Laptop, den man zuklappt, ins Café trägt oder im Zug in den Ruhemodus schickt.
+Agentic Coding funktioniert anders als ein Chatfenster: Man gibt die Richtung vor, und der Agent liest Code, schreibt Dateien, führt Tests aus und plant selbstständig die nächsten Schritte. Solche Läufe dauern: Minuten, manchmal Stunden. Und genau da beißt sich das mit einem Laptop, den man zuklappt, ins Café trägt oder im Zug in den Ruhemodus schickt.
 
-**Ich habe deshalb einen Mac mini zur „Bodenstation" umgebaut: eine immer laufende Maschine, auf der meine Agenten weiterarbeiten – während ich vom MacBook, aus dem Browser oder sogar vom Handy aus zusehe und eingreife.**
+**Ich habe deshalb einen Mac mini zur „Bodenstation" umgebaut: eine immer laufende Maschine, auf der meine Agenten weiterarbeiten, während ich vom MacBook, aus dem Browser oder sogar vom Handy aus zusehe und eingreife.**
 
-Ehrlich gesagt stand die Kiste zunächst aus einem ganz anderen Grund im Regal: ein aktueller Mac mini M4 mit 32 GB, den ich mir eigentlich für den **Clawdbot**-Hype (heute *[OpenClaw](https://openclaw.ai)*) geholt hatte – den eigenen Agenten per **[Signal](https://signal.org)** vom Handy steuern, das hatte was. Cool war es genau so lange, wie diese Fernsteuerung der eigentliche Reiz war. Seit [Claude Code](https://claude.com/claude-code) das mit **`/remote-control`** von Haus aus kann, hat der Clawdbot für mich viel von seinem Charme verloren, und der mini langweilte sich ohnehin ein wenig (dazu vielleicht ein andermal mehr). Also bekam er eine neue, dauerhafte Aufgabe.
+Ehrlich gesagt stand die Kiste zunächst aus einem ganz anderen Grund im Regal: ein aktueller Mac mini M4 mit 32 GB, den ich mir eigentlich für den **Clawdbot**-Hype (heute *[OpenClaw](https://openclaw.ai)*) geholt hatte, den eigenen Agenten per **[Signal](https://signal.org)** vom Handy steuern, das hatte was. Cool war es genau so lange, wie diese Fernsteuerung der eigentliche Reiz war. Seit [Claude Code](https://claude.com/claude-code) das mit **`/remote-control`** von Haus aus kann, hat der Clawdbot für mich viel von seinem Charme verloren, und der mini langweilte sich ohnehin ein wenig (dazu vielleicht ein andermal mehr). Also bekam er eine neue, dauerhafte Aufgabe.
 
-Dieser Artikel zeigt die Idee, die Bausteine und – in How-to-Kästen – wie man sie selbst nachbaut.
+Dieser Artikel zeigt die Idee, die Bausteine und, in How-to-Kästen, wie man sie selbst nachbaut.
 
 > 🛰️ Der Spitzname für das Setup war schnell gefunden: *Ground Control to Major Tom*. Der Mac mini ist die Bodenstation, das MacBook die mobile Rakete, die andockt und wieder abhebt.
 
@@ -46,7 +46,7 @@ Auf dem Laptop passiert aber Folgendes:
 - Ich klappe ihn zu → der Prozess schläft ein, der Agent friert mitten im Lauf ein.
 - Ich will abends vom Sofa aus nur *kurz* nachsehen, wie weit er ist, und müsste den Laptop wieder hochfahren.
 
-Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt einfach an, auch wenn der Deckel zugeklappt ist und keine Stromversorgung angeschlossen ist. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß – und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang durchheizt, ist keine gute Dauerlösung.
+Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt einfach an, auch wenn der Deckel zugeklappt ist und keine Stromversorgung angeschlossen ist. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß, und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang durchheizt, ist keine gute Dauerlösung.
 
 Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe ich selten am Schreibtisch, sondern unterwegs, beim Gassigehen zum Beispiel. Genau dann will ich dem Agenten kurz etwas zurufen oder nachsehen können, wie er vorankommt, ohne erst nach Hause an den Laptop zurückzukehren.
 
@@ -54,7 +54,7 @@ Die Lösung ist konzeptionell simpel: **Der Agent läuft nicht auf dem Gerät in
 
 Das hat Claude Code (und andere Tools) im Prinzip schon gut gelöst: Remote Control per Handy. Aber mir reicht das nicht.
 
-Welches Gerät dieses Fenster ist, wird damit zur Nebensache: das große 16-Zoll-MacBook Pro am Schreibtisch, das kleine MacBook für die Herrenhandtasche (auf Konferenzen einen Riesen-Rechner herumschleppen ist uncool) oder das Handy. Ich will flexibel bleiben – und die Bodenstation bleibt dabei immer dieselbe.
+Welches Gerät dieses Fenster ist, wird damit zur Nebensache: das große 16-Zoll-MacBook Pro am Schreibtisch, das kleine MacBook für die Herrenhandtasche (auf Konferenzen einen Riesen-Rechner herumschleppen ist uncool) oder das Handy. Ich will flexibel bleiben, und die Bodenstation bleibt dabei immer dieselbe.
 
 ## Die Architektur: Bodenstation und mobiler Spiegel
 
@@ -66,17 +66,17 @@ Zwei Maschinen, ein gemeinsamer Nenner:
 | Rolle | Hauptmaschine, hier laufen die Agenten | Rakete, dockt von überall an |
 | Benutzer | derselbe Account, dasselbe Home | derselbe Account, dasselbe Home |
 
-Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys – und, wie wir gleich sehen, alle Agenten-Sessions – liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang nahtlos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook Pro.
+Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys und, wie wir gleich sehen, alle Agenten-Sessions liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang nahtlos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook Pro.
 
-Streng genommen kommt eine dritte Rolle dazu: **Geräte, die nur als Terminal arbeiten** – kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das ist einerseits das Handy (per Termux), andererseits ein kleines MacBook, das ich ausschließlich zum Reinmoshen dabeihabe – ich nenne es schlicht **„Mac Terminal"**. Voller Spiegel ist damit nur das große MacBook Pro: Es kann beides – eigenständig arbeiten *oder* bloß als Fenster dienen. Alles andere ist reines Terminal.
+Streng genommen kommt eine dritte Rolle dazu: **Geräte, die nur als Terminal arbeiten**, kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das ist einerseits das Handy (per Termux), andererseits ein kleines MacBook, das ich ausschließlich zum Reinmoshen dabeihabe, ich nenne es schlicht **„Mac Terminal"**. Voller Spiegel ist damit nur das große MacBook Pro: Es kann beides, eigenständig arbeiten *oder* bloß als Fenster dienen. Alles andere ist reines Terminal.
 
-Der mini steht ohne Monitor und ohne Tastatur bei meiner übrigen Haustechnik – neben NAS, Fritzbox, dem dicken Switch und dem ganzen Kabelsalat, den man sonst so im Netz hängen hat. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was headless läuft, läuft auch, wenn niemand eingeloggt ist.
+Der mini steht ohne Monitor und ohne Tastatur bei meiner übrigen Haustechnik, neben NAS, Fritzbox, dem dicken Switch und dem ganzen Kabelsalat, den man sonst so im Netz hängen hat. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was headless läuft, läuft auch, wenn niemand eingeloggt ist.
 
 Warum ausgerechnet ein Mac mini? Für diese Rolle ist er fast perfekt: Apple Silicon liefert richtig viel Leistung fürs Geld, er ist **winzig** und passt in jede Ecke, läuft **absolut leise** (den Lüfter höre ich im Alltag nie) und ist so **stromsparend**, dass der Dauerbetrieb kaum auf der Rechnung auffällt. Im Leerlauf zieht er nur eine Handvoll Watt. Genau das, was man für eine Maschine will, die nie ausgeht.
 
 ## Sessions, die Verbindungsabbrüche überleben
 
-Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen – ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **[tmux](https://github.com/tmux/tmux)**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux – und alles darin – einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen. Ehrlich gesagt ist **tmux der Gamechanger** in diesem Setup – erst dadurch überstehen die Agentenläufe alles, was zwischen mir und dem mini passieren kann.
+Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen. Ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **[tmux](https://github.com/tmux/tmux)**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux, und alles darin, einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen. Ehrlich gesagt ist **tmux der Gamechanger** in diesem Setup, erst dadurch überstehen die Agentenläufe alles, was zwischen mir und dem mini passieren kann.
 
 Zwei Dinge machen das komfortabel:
 
@@ -92,15 +92,15 @@ Wichtig zu verstehen: tmux rettet die **Verbindung**, nicht den Strom. Ein Reboo
 >   tmux attach -t main 2>/dev/null || tmux new -s main
 > fi
 > ```
-> Der wichtigste Reflex danach: mit **`Ctrl-b d`** *detachen* (läuft weiter!), **nie mit `exit`** raus – das killt das Fenster.
+> Der wichtigste Reflex danach: mit **`Ctrl-b d`** *detachen* (läuft weiter!), **nie mit `exit`** raus, das killt das Fenster.
 
 ## Andocken von überall – bis hin zum Handy
 
 Für den Zugriff setze ich durchgehend auf **[mosh](https://mosh.org)** (Mobile Shell), zu Hause wie unterwegs, immer derselbe Befehl. So muss ich nie zwischen `ssh` und `mosh` überlegen oder umschalten.
 
-Und mosh ist wirklich großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter – kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da – mosh macht ohne Neuverbinden einfach weiter. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
+Und mosh ist wirklich großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter, kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da, mosh macht ohne Neuverbinden einfach weiter. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
 
-Und wie kommt das Handy von unterwegs überhaupt an die Kiste zu Hause? Angefangen habe ich mit dem **[WireGuard](https://www.wireguard.com)**-VPN der Fritzbox, inzwischen läuft alles über **[Tailscale](https://tailscale.com)** (ein Mesh-VPN auf WireGuard-Basis). Der Grund: Tailscale kommt auch mit **IPv6** und ständig wechselnden Anschlüssen bestens klar – du erreichst die Bodenstation zuverlässig, egal aus welchem Netz. Man kommt wirklich immer nach Hause.
+Und wie kommt das Handy von unterwegs überhaupt an die Kiste zu Hause? Angefangen habe ich mit dem **[WireGuard](https://www.wireguard.com)**-VPN der Fritzbox, inzwischen läuft alles über **[Tailscale](https://tailscale.com)** (ein Mesh-VPN auf WireGuard-Basis). Der Grund: Tailscale kommt auch mit **IPv6** und ständig wechselnden Anschlüssen bestens klar, du erreichst die Bodenstation zuverlässig, egal aus welchem Netz. Man kommt wirklich immer nach Hause.
 
 Und die Kür: **Vom Handy.** Auf Android läuft die Terminal-App *[Termux](https://termux.dev)*, darin mosh, darin tmux, darin der Agent. Damit komme ich notfalls von überall an die rohe Session heran.
 
@@ -117,13 +117,13 @@ Diesen direkten Terminal-Weg nutze ich aber selten. Meist arbeite ich auf dem Ha
 > ```bash
 > mosh mini
 > ```
-> Von außen sorgt ein Mesh-VPN wie **Tailscale** dafür, dass `mini` immer erreichbar ist – auch über IPv6.
+> Von außen sorgt ein Mesh-VPN wie **Tailscale** dafür, dass `mini` immer erreichbar ist, auch über IPv6.
 
-> **📱 Handy-Kniff (Termux):** Termux hat keine Strg-Taste. Sie liegt auf **Leiser (Volume-Down)** – also `Vol-Down + C` für `Ctrl-C`, `Vol-Down + R` für `Ctrl-R`. Die Extra-Tastenzeile (ESC/CTRL/TAB/Pfeile) blendet man mit einem Wisch nach oben ein. Dankt mir später! 😄
+> **📱 Handy-Kniff (Termux):** Termux hat keine Strg-Taste. Sie liegt auf **Leiser (Volume-Down)**, also `Vol-Down + C` für `Ctrl-C`, `Vol-Down + R` für `Ctrl-R`. Die Extra-Tastenzeile (ESC/CTRL/TAB/Pfeile) blendet man mit einem Wisch nach oben ein. Dankt mir später! 😄
 
 ## Alles doppelt, immer synchron
 
-Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein großes MacBook Pro kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen – auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen – großer Mac und mini sind ja immer synchron. Ganz nebenbei ist dieser Spiegel ein permanentes, sekundenscharfes Backup. Geiler Scheiß.
+Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein großes MacBook Pro kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen, auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen, großer Mac und mini sind ja immer synchron. Ganz nebenbei ist dieser Spiegel ein permanentes, sekundenscharfes Backup. Geiler Scheiß.
 
 Dafür sorgt **[Syncthing](https://syncthing.net)**, ein Peer-to-Peer-Sync ohne Cloud dazwischen. Es spiegelt bidirektional:
 
@@ -131,7 +131,7 @@ Dafür sorgt **[Syncthing](https://syncthing.net)**, ein Peer-to-Peer-Sync ohne 
 - `~/.claude` – **und hier wird es spannend: die Agenten-Sessions selbst.** Claude Code legt seine Gesprächsprotokolle unter `~/.claude/projects/` ab. Werden die mitgesynct, kann ich eine Session, die ich auf dem mini begonnen habe, auf dem MacBook fortsetzen – Kontext, Verlauf, alles da.
 - `~/Shots` – Screenshots (praktisch, gleich mehr dazu)
 
-Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `target` und Caches stehen in `.stignore` und werden pro Maschine neu gebaut (`npm ci`, `cargo build`). Kompilierte Binaries über Rechner zu kopieren bricht sowieso irgendwann am Library-Linking – lieber sauber neu bauen.
+Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `target` und Caches stehen in `.stignore` und werden pro Maschine neu gebaut (`npm ci`, `cargo build`). Kompilierte Binaries über Rechner zu kopieren bricht sowieso irgendwann am Library-Linking, lieber sauber neu bauen.
 
 > **🛠️ Selbst nachbauen — Artefakte vom Sync ausschließen (`.stignore`)**
 > ```gitignore
@@ -145,19 +145,19 @@ Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `t
 > ```
 > Faustregel: Was ein `npm ci` oder `cargo build` in Sekunden wiederherstellt, gehört nicht in den Sync.
 
-**Der Screenshot-Trick als Bonus:** Weil beide Macs dasselbe Home haben, liegt ein Screenshot unter demselben Pfad auf *beiden* Rechnern. Ich stelle den macOS-Screenshot-Ordner auf `~/Shots` (`defaults write com.apple.screencapture location ~/Shots`), mache am MacBook einen Screenshot und ziehe ihn in eine **remote** laufende Agenten-Session auf dem mini. Der Pfad existiert dort dank Sync ebenfalls – der Agent liest das Bild, obwohl es „auf dem anderen Rechner" entstand.
+**Der Screenshot-Trick als Bonus:** Weil beide Macs dasselbe Home haben, liegt ein Screenshot unter demselben Pfad auf *beiden* Rechnern. Ich stelle den macOS-Screenshot-Ordner auf `~/Shots` (`defaults write com.apple.screencapture location ~/Shots`), mache am MacBook einen Screenshot und ziehe ihn in eine **remote** laufende Agenten-Session auf dem mini. Der Pfad existiert dort dank Sync ebenfalls, der Agent liest das Bild, obwohl es „auf dem anderen Rechner" entstand.
 
-> **⚠️ Die eine Disziplin:** Vor dem Gerätewechsel „auf grün warten". Wechselt man die Maschine, während Syncthing noch überträgt, riskiert man Konfliktdateien. Kurz prüfen, dass der Sync `idle` ist – dann ist der Übergang sauber.
+> **⚠️ Die eine Disziplin:** Vor dem Gerätewechsel „auf grün warten". Wechselt man die Maschine, während Syncthing noch überträgt, riskiert man Konfliktdateien. Kurz prüfen, dass der Sync `idle` ist, dann ist der Übergang sauber.
 
 ## Headless-Dienste, die einfach laufen
 
-Ein Agent ist nur so gut wie die Umgebung, in der er arbeiten darf. Auf dem mini soll er einen **vollständigen Dev-Stack** vorfinden – Datenbank, [Docker](https://www.docker.com), Browser – und zwar ohne dass sich jemand am Bildschirm anmeldet. Denn der mini hat gar keinen angemeldeten Desktop.
+Ein Agent ist nur so gut wie die Umgebung, in der er arbeiten darf. Auf dem mini soll er einen **vollständigen Dev-Stack** vorfinden – Datenbank, [Docker](https://www.docker.com), Browser, und zwar ohne dass sich jemand am Bildschirm anmeldet. Denn der mini hat gar keinen angemeldeten Desktop.
 
 Drei Bausteine:
 
-**FileVault mit Remote-Entsperrung.** Die Platte ist verschlüsselt (soll sie auch sein). Nach einem Neustart hängt der mini im Pre-Boot-Lock, bevor überhaupt Netzwerk da ist. Der Kniff: Ein zweiter Admin-Benutzer mit „SecureToken" darf die Platte per SSH entsperren – danach bootet der mini durch und alle Dienste starten. Für geplante Neustarts gibt es sogar `sudo fdesetup authrestart`: entsperrt beim Reboot automatisch, ohne sich auszusperren. Und `pmset autorestart 1` sorgt dafür, dass der mini nach einem Stromausfall von selbst wieder hochkommt. Für den allergrößten Notfall hängt außerdem ein **[JetKVM](https://jetkvm.com)** an der Kiste – ein kleines KVM-over-IP-Gerät, das mir Bild und Tastatur aus der Ferne gibt, bis hinunter zum Firmware-/Boot-Bildschirm. Selbst wenn kein Betriebssystem mehr läuft oder ein Reboot am Pre-Boot-Lock hängt, komme ich also noch dran. Unterm Strich hat der Rechner mehrere gestaffelte Rettungslinien, damit ich ihn *immer* wieder angebunden bekomme – und trotzdem bleibt alles verschlüsselt, jedes einzelne meiner Geräte.
+**FileVault mit Remote-Entsperrung.** Die Platte ist verschlüsselt (soll sie auch sein). Nach einem Neustart hängt der mini im Pre-Boot-Lock, bevor überhaupt Netzwerk da ist. Der Kniff: Ein zweiter Admin-Benutzer mit „SecureToken" darf die Platte per SSH entsperren, danach bootet der mini durch und alle Dienste starten. Für geplante Neustarts gibt es sogar `sudo fdesetup authrestart`: entsperrt beim Reboot automatisch, ohne sich auszusperren. Und `pmset autorestart 1` sorgt dafür, dass der mini nach einem Stromausfall von selbst wieder hochkommt. Für den allergrößten Notfall hängt außerdem ein **[JetKVM](https://jetkvm.com)** an der Kiste, ein kleines KVM-over-IP-Gerät, das mir Bild und Tastatur aus der Ferne gibt, bis hinunter zum Firmware-/Boot-Bildschirm. Selbst wenn kein Betriebssystem mehr läuft oder ein Reboot am Pre-Boot-Lock hängt, komme ich also noch dran. Unterm Strich hat der Rechner mehrere gestaffelte Rettungslinien, damit ich ihn *immer* wieder angebunden bekomme, und trotzdem bleibt alles verschlüsselt, jedes einzelne meiner Geräte.
 
-**Docker ohne Docker Desktop.** Docker Desktop braucht einen GUI-Login – auf einer headless Maschine ein K.-o.-Kriterium. Stattdessen läuft **[colima](https://github.com/abiosoft/colima)** als System-Dienst (LaunchDaemon), der schon beim Booten startet. Unter der Haube dieselbe Technik wie Docker Desktop (Apples Virtualization.framework), mit Rosetta für **Intel-Images** – also für den ollen SQL Server, der leider nie nach ARM portiert wurde. Danke, Microsoft. So bekommt der Agent ein `docker` und `docker compose`, das einfach da ist.
+**Docker ohne Docker Desktop.** Docker Desktop braucht einen GUI-Login, auf einer headless Maschine ein K.-o.-Kriterium. Stattdessen läuft **[colima](https://github.com/abiosoft/colima)** als System-Dienst (LaunchDaemon), der schon beim Booten startet. Unter der Haube dieselbe Technik wie Docker Desktop (Apples Virtualization.framework), mit Rosetta für **Intel-Images**, also für den ollen SQL Server, der leider nie nach ARM portiert wurde. Danke, Microsoft. So bekommt der Agent ein `docker` und `docker compose`, das einfach da ist.
 
 **Ein echter Browser für den Agenten.** Über einen selbstgebastelten headless [Playwright-MCP](https://github.com/microsoft/playwright-mcp)-Server kann der Agent eine echte Chrome-Instanz fahren – Seiten öffnen, klicken, Formulare ausfüllen, Screenshots machen. „Headless" heißt hier: kein sichtbares Fenster, kein GPU-/Display-Kontext nötig (`--disable-gpu`), damit es auf der monitorlosen Kiste stabil läuft.
 
@@ -179,7 +179,7 @@ Drei Bausteine:
 
 Der Agent hat das Frontend umgebaut, jetzt will ich es *sehen*, in einem echten Browser, von meinem Laptop oder Handy aus. Der Dev-Server läuft aber auf dem mini und lauscht dort brav nur auf `localhost`.
 
-Meine Lösung ist ein **[nginx](https://nginx.org)-Reverse-Proxy** auf dem mini, der genau ein Problem elegant löst: Er macht jeden lokalen Dev-Server im Netz sichtbar – **ohne pro Projekt etwas zu konfigurieren.** nginx bindet die LAN-IP des mini und schreibt den `Host`-Header auf `localhost` um. Dadurch greifen die Host-Prüfungen moderner Dev-Server ([Angular](https://angular.dev), [Vite](https://vite.dev)) nicht, und ich muss weder `--host 0.0.0.0` setzen noch an `allowedHosts` herumschrauben. Im Browser tippe ich einfach `http://mac-mini.fritz.box:4200` – fertig.
+Meine Lösung ist ein **[nginx](https://nginx.org)-Reverse-Proxy** auf dem mini, der genau ein Problem elegant löst: Er macht jeden lokalen Dev-Server im Netz sichtbar – **ohne pro Projekt etwas zu konfigurieren.** nginx bindet die LAN-IP des mini und schreibt den `Host`-Header auf `localhost` um. Dadurch greifen die Host-Prüfungen moderner Dev-Server ([Angular](https://angular.dev), [Vite](https://vite.dev)) nicht, und ich muss weder `--host 0.0.0.0` setzen noch an `allowedHosts` herumschrauben. Im Browser tippe ich einfach `http://mac-mini.fritz.box:4200`, fertig.
 
 > **🛠️ Selbst nachbauen — nginx-Dev-Proxy (Kern)**
 > ```nginx
@@ -198,9 +198,9 @@ Meine Lösung ist ein **[nginx](https://nginx.org)-Reverse-Proxy** auf dem mini,
 >   location @ipv6 { proxy_pass http://[::1]:$server_port$request_uri; proxy_set_header Host localhost:$server_port; }
 > }
 > ```
-> Zwei Fallen aus der Praxis: Es muss **`localhost`** im Host-Header stehen (Vite lehnt die nackte IP mit HTTP 400 ab), und neuere Dev-Server binden `localhost` manchmal nur auf IPv6 (`::1`) – daher der `@ipv6`-Fallback.
+> Zwei Fallen aus der Praxis: Es muss **`localhost`** im Host-Header stehen (Vite lehnt die nackte IP mit HTTP 400 ab), und neuere Dev-Server binden `localhost` manchmal nur auf IPv6 (`::1`), daher der `@ipv6`-Fallback.
 
-Manche Apps rufen ihr Backend allerdings **fest auf `http://localhost:PORT`** – aus dem Browser heraus zeigt „localhost" dann auf *mein Gerät*, nicht auf den mini, und die API-Calls laufen ins Leere. Für diesen Sonderfall gibt es keinen Proxy-Zauber, aber einen sauberen Trick: einen SSH-Tunnel, der die betreffenden Ports auf den mini spiegelt. Dann stimmt die `localhost`-Annahme der App wieder.
+Manche Apps rufen ihr Backend allerdings **fest auf `http://localhost:PORT`**, aus dem Browser heraus zeigt „localhost" dann auf *mein Gerät*, nicht auf den mini, und die API-Calls laufen ins Leere. Für diesen Sonderfall gibt es keinen Proxy-Zauber, aber einen sauberen Trick: einen SSH-Tunnel, der die betreffenden Ports auf den mini spiegelt. Dann stimmt die `localhost`-Annahme der App wieder.
 
 > **🛠️ Selbst nachbauen — App mit hartcodiertem `localhost`-Backend**
 > ```bash
@@ -216,23 +216,23 @@ Wie fühlt sich das im Alltag an? Ungefähr so:
 
 **Gottlos früh, beim Gassigehen.** Schlaftrunken mit dem Hund unterwegs lese ich die Mails und sehe, dass irgendein Nightly Build rot ist. Mist. „Claude, bitte fixen!" Am Ende der Runde ist der Build grün. Erstes Erfolgserlebnis des Tages. Schön.
 
-**Morgens am Schreibtisch.** Ich docke vom MacBook per `mosh mini` an, lande in tmux, starte in einem Projekt einen Agenten mit einer größeren Aufgabe, sagen wir, eine Testabdeckung nachziehen. Er legt los. Am großen Monitor arbeite ich übrigens immer noch am liebsten: Die Diffs, die Claude Code ständig zeigt, geben einen guten Überblick, was gerade passiert – man hat das Gefühl, die Kontrolle zu behalten.
+**Morgens am Schreibtisch.** Ich docke vom MacBook per `mosh mini` an, lande in tmux, starte in einem Projekt einen Agenten mit einer größeren Aufgabe, sagen wir, eine Testabdeckung nachziehen. Er legt los. Am großen Monitor arbeite ich übrigens immer noch am liebsten: Die Diffs, die Claude Code ständig zeigt, geben einen guten Überblick, was gerade passiert, man hat das Gefühl, die Kontrolle zu behalten.
 
-**Mittags unterwegs.** Ich klappe das MacBook zu und fahre los. Der Agent? Läuft weiter, er sitzt ja auf dem mini, nicht im Laptop. In der Bahn hole ich das Handy raus, öffne die **Claude-App** und arbeite auf dem kleinen Bildschirm weiter: Der Agent hat drei von fünf Modulen durch und wartet auf eine Entscheidung – ich beantworte die Rückfrage mit dem Daumen, er macht weiter. Das Kontrollgefühl ist hier geringer, für die Diff-Ansicht muss man eigens drauftippen, aber irgendeinen Tod muss man sterben.
+**Mittags unterwegs.** Ich klappe das MacBook zu und fahre los. Der Agent? Läuft weiter, er sitzt ja auf dem mini, nicht im Laptop. In der Bahn hole ich das Handy raus, öffne die **Claude-App** und arbeite auf dem kleinen Bildschirm weiter: Der Agent hat drei von fünf Modulen durch und wartet auf eine Entscheidung, ich beantworte die Rückfrage mit dem Daumen, er macht weiter. Das Kontrollgefühl ist hier geringer, für die Diff-Ansicht muss man eigens drauftippen, aber irgendeinen Tod muss man sterben.
 
-**Nachmittags im Café.** Das MacBook ist wieder auf, dank Sync sind alle Dateien und die Session-Historie auf dem aktuellen Stand. Ich öffne das umgebaute Frontend im Browser über den Dev-Proxy und schaue es mir an – auf dem echten Bildschirm, nicht im Terminal. Dabei trinke ich einen Iced Matcha Latte … Kleiner Scherz: Ich bin doch nicht im Café wie so ein AI-Influencer. Ich sitze längst wieder im Keller – dort ist es schön kühl, und ich habe drei Monitore.
+**Nachmittags im Café.** Das MacBook ist wieder auf, dank Sync sind alle Dateien und die Session-Historie auf dem aktuellen Stand. Ich öffne das umgebaute Frontend im Browser über den Dev-Proxy und schaue es mir an, auf dem echten Bildschirm, nicht im Terminal. Dabei trinke ich einen Iced Matcha Latte … Kleiner Scherz: Ich bin doch nicht im Café wie so ein AI-Influencer. Ich sitze längst wieder im Keller, dort ist es schön kühl, und ich habe drei Monitore.
 
 **Abends auf dem Sofa.** Kurzer Blick vom Handy, ob die CI durch ist. Ist sie. Merge.
 
 Kein einziges Mal musste der Agent „von vorne anfangen", weil der Akku alle war. Kein zugeklappter Deckel hat ihn pausiert. Das ist der eigentliche Gewinn: **Die Arbeit ist entkoppelt vom Gerät in meiner Hand.**
 
-Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees**. Weil ein Frontier-Modell mit all seinen Unter-Agenten verdammt langsam sein kann (Kommandos wie `/simplify` oder `/code-review` mit ordentlich `/effort` laufen schon mal absurd lange), parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen – aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
+Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees**. Weil ein Frontier-Modell mit all seinen Unter-Agenten verdammt langsam sein kann (Kommandos wie `/simplify` oder `/code-review` mit ordentlich `/effort` laufen schon mal absurd lange), parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen, aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
 
 ## Wenn man doch mal lokal arbeiten muss
 
 Nicht jede Session lässt sich remote fahren, einige funktionieren nur lokal. Bei mir vor allem **[wohnfunke.app](https://wohnfunke.app)**: Die kann nicht im Kabelschrank laufen, denn das „magische" USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. (Ich nenne es [das magische Kabel](https://wohnfunke.app/kabel), weil es dieses Kabel so nicht im Handel gibt.) Ohne diese Verbindung komme ich nicht an den **CI-Bus** und kann das Lichtsteuergerät nicht ansprechen.
 
-Und hier ist das Vorgehen richtig nice: Ich beende die Session auf dem mini mit `/exit`, warte, bis das `~/.claude`-Verzeichnis durchgesynct ist, und starte Claude auf dem Laptop mit `--resume` neu – schon bin ich wieder in **derselben Unterhaltung**. Dann sage ich einfach: „Du bist jetzt im Wohnwagen, verbinde dich mit dem Lichtsteuergerät." Claude macht artig weiter und nutzt ab da meine **lokale Peripherie**.
+Und hier ist das Vorgehen richtig nice: Ich beende die Session auf dem mini mit `/exit`, warte, bis das `~/.claude`-Verzeichnis durchgesynct ist, und starte Claude auf dem Laptop mit `--resume` neu, schon bin ich wieder in **derselben Unterhaltung**. Dann sage ich einfach: „Du bist jetzt im Wohnwagen, verbinde dich mit dem Lichtsteuergerät." Claude macht artig weiter und nutzt ab da meine **lokale Peripherie**.
 
 Der ganze Kontext bleibt erhalten, nur der Unterbau wechselt vom mini auf den Laptop, die Bodenstation reicht die Session an die Rakete weiter, diesmal weil die Rakete am Kabel hängen muss.
 
@@ -240,9 +240,9 @@ Der ganze Kontext bleibt erhalten, nur der Unterbau wechselt vom mini auf den La
 
 ![Ein pinkfarbener Elefant steht in einer Savannenlandschaft.](rosa-elefant.png "Egal was du tust, denke bloß nicht an den rosa Elefanten!")
 
-Ein Kniff, der sich mit der Zeit herausgeschält hat: Ich halte **genau eine** Session, die das ganze Setup kennt – meine *Ground-Control-Session*. Sie hilft bei Problemen, nimmt die Meldungen der anderen Sessions entgegen (etwa wenn wirklich mal etwas durch den Wechsel der Arbeitsstation passiert ist) und kennt als Einzige die volle Wahrheit.
+Ein Kniff, der sich mit der Zeit herausgeschält hat: Ich halte **genau eine** Session, die das ganze Setup kennt, meine *Ground-Control-Session*. Sie hilft bei Problemen, nimmt die Meldungen der anderen Sessions entgegen (etwa wenn wirklich mal etwas durch den Wechsel der Arbeitsstation passiert ist) und kennt als Einzige die volle Wahrheit.
 
-Alle **normalen** Arbeits-Sessions wissen davon nichts. Sie merken nicht, dass sie eben noch auf Rechner A liefen und jetzt auf Rechner B – dank identischem Home und identischen Pfaden sieht für sie alles exakt gleich aus. Und das ist volle Absicht.
+Alle **normalen** Arbeits-Sessions wissen davon nichts. Sie merken nicht, dass sie eben noch auf Rechner A liefen und jetzt auf Rechner B, dank identischem Home und identischen Pfaden sieht für sie alles exakt gleich aus. Und das ist volle Absicht.
 
 Denn: **Erzähl den Agenten nie vom rosa Elefanten.** Sobald eine Session weiß, dass sie auf einem exotischen Setup sitzt, erklärt sie sich jedes kleine E2E-Problem zuerst genau damit – „liegt bestimmt am Sync", „bestimmt der Proxy", „bestimmt die entfernte Maschine". Weiß sie nichts davon, sucht sie die Ursache wieder dort, wo sie meistens sitzt: im Code. Den Elefanten sehen darf nur Ground Control.
 
@@ -256,15 +256,15 @@ Und die Sicherheit ist fast nebenbei gestiegen: Auf der Bodenstation läuft nur,
 
 Ehrlich bleiben will ich auch:
 
-- **Es braucht Pflege.** Headless-Betrieb, FileVault-Remote-Unlock, Autostart-Dienste – das ist einmal Einrichtungsaufwand und gelegentlich Debugging.
+- **Es braucht Pflege.** Headless-Betrieb, FileVault-Remote-Unlock, Autostart-Dienste, das ist einmal Einrichtungsaufwand und gelegentlich Debugging.
 - **Sicherheit ist Pflicht, kein Bonus.** Zugriff ausschließlich übers VPN, Key-Auth, FileVault an. Ein always-on Rechner ist nur so vertrauenswürdig wie sein Zugang.
 - **Reboots kosten laufende Prozesse.** tmux rettet das Layout, nicht den Zustand mitten im Lauf. Für lange Läufe plane ich Neustarts entsprechend.
 
 Und wie machen es eigentlich alle anderen? Meist gar nicht so, sie lassen ihren Agenten (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) einfach lokal auf dem Laptop laufen. Kein Keller, kein Server. Für die meisten ist das genau richtig.
 
-Mein Setup zielt auf den Sonderfall: **immer an, von überall**. Kommerziell bekommt man das als gemietete Cloud-Dev-Umgebung ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) oder als gehosteten Agenten-Dienst ([Devin](https://devin.ai), [Google Jules](https://jules.google)) – abgerechnet laufend pro Compute-Stunde oder Seat. Bei mir sind es allein die **Max-Subscription von Claude** und Hardware, die ich ohnehin hatte. Und weil der Agent jederzeit erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus – das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
+Mein Setup zielt auf den Sonderfall: **immer an, von überall**. Kommerziell bekommt man das als gemietete Cloud-Dev-Umgebung ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) oder als gehosteten Agenten-Dienst ([Devin](https://devin.ai), [Google Jules](https://jules.google)), abgerechnet laufend pro Compute-Stunde oder Seat. Bei mir sind es allein die **Max-Subscription von Claude** und Hardware, die ich ohnehin hatte. Und weil der Agent jederzeit erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus, das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
 
-Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe, mich bewege, das Gerät wechsle. Die Bodenstation steht, die Rakete dockt an und ab. *Ground Control to Major Tom* – und der Bodenkontakt reißt nie ab.
+Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe, mich bewege, das Gerät wechsle. Die Bodenstation steht, die Rakete dockt an und ab. *Ground Control to Major Tom*, und der Bodenkontakt reißt nie ab.
 
 Übrigens: Beim Schreiben dieses Artikels hatte ich den Song permanent im Ohr. Bitte sehr, hier ist dein neuer Ohrwurm:
 
