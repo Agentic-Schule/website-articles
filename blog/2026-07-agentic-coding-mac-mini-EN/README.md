@@ -271,6 +271,8 @@ By the way: while writing this article, I had the song stuck in my head the whol
 
 <small>If the player doesn't load: [watch directly on YouTube](https://youtu.be/iYYRH4apXDo).</small>
 
+**Questions, feedback, your own tinkering?** Bring it on, I'm happy to hear from you. And if there's enough interest, I'll make the **Ground Control repo** with the complete configuration public. One word from you is enough.
+
 ---
 
 *Curious about agentic work in practice? In the workshops at [agentic.schule](https://agentic.schule) and [angular.schule](https://angular.schule) we show how modern AI agents are changing everyday development.*

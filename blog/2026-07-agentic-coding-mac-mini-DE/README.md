@@ -272,6 +272,8 @@ Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während 
 
 <small>Falls der Player nicht lädt: [direkt auf YouTube ansehen](https://youtu.be/iYYRH4apXDo).</small>
 
+**Fragen, Feedback, eigene Basteleien?** Immer her damit, ich freue mich über jede Nachricht. Und wenn genug Interesse besteht, mache ich das **Ground-Control-Repo** mit der kompletten Konfiguration öffentlich. Ein Wort von dir genügt.
+
 ---
 
 *Neugierig auf agentisches Arbeiten in der Praxis? In den Workshops von [agentic.schule](https://agentic.schule) und [angular.schule](https://angular.schule) zeigen wir, wie moderne KI-Agenten die tägliche Entwicklung verändern.*
