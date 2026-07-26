@@ -56,7 +56,7 @@ Ein [git worktree](https://git-scm.com/docs/git-worktree) ist ein zusätzliches 
 
 Das hat zwei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angelegt und ebenso schnell wieder entsorgt, es wird ja kein Repository kopiert, sondern nur ein Checkout erzeugt. Zweitens sehen sich die Worktrees gegenseitig: Ein Commit auf Spur A ist auf Spur B sofort im Log sichtbar, ein `git fetch` versorgt alle gemeinsam.
 
-> **🛠️ Selbst nachbauen — die vier Kommandos, die man braucht**
+> **🛠️ Selbst nachbauen: die vier Kommandos, die man braucht**
 > ```bash
 > # Neues Arbeitsverzeichnis als Nachbarordner anlegen, mit neuem Branch
 > git worktree add ../app-frontend-checkout -b feature/checkout
@@ -86,14 +86,14 @@ Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotf
 claude --worktree feature-auth     # kurz: claude -w feature-auth
 ```
 
-Das legt unterhalb des Repos ein Worktree `.claude/worktrees/feature-auth/` auf einem neuen Branch `worktree-feature-auth` an und startet Claude direkt darin. Im zweiten Terminal dasselbe mit anderem Namen, und schon laufen zwei sauber isolierte Sessions. Lässt man den Namen weg, würfelt Claude selbst einen, etwa `bright-running-fox`. Beim Beenden räumt Claude auf: Ein unverändertes Worktree verschwindet automatisch, bei echter Arbeit fragt es nach, ob Verzeichnis und Branch bleiben sollen.
+Das legt unterhalb des Repos einen Worktree `.claude/worktrees/feature-auth/` auf einem neuen Branch `worktree-feature-auth` an und startet Claude direkt darin. Im zweiten Terminal dasselbe mit anderem Namen, und schon laufen zwei sauber isolierte Sessions. Lässt man den Namen weg, würfelt Claude selbst einen, etwa `bright-running-fox`. Beim Beenden räumt Claude auf: Einen unveränderten Worktree einer unbenannten Session entfernt er automatisch, sonst fragt er nach, ob Verzeichnis und Branch bleiben sollen.
 
-Genauso gut geht es mitten in der Session: Auf die Bitte „arbeite dafür bitte in einem Worktree" legt Claude selbst eins an und wechselt hinein (hinter den Kulissen erledigt das ein Tool namens `EnterWorktree`).
+Genauso gut geht es mitten in der Session: Auf die Bitte „arbeite dafür bitte in einem Worktree" legt Claude selbst einen an und wechselt hinein (hinter den Kulissen erledigt das ein Tool namens `EnterWorktree`).
 
 Richtig elegant wird es bei [Subagenten](https://code.claude.com/docs/en/sub-agents), also den Helfer-Agenten, an die Claude Teilaufgaben delegiert:
 
-> **🛠️ Selbst nachbauen — Subagenten automatisch isolieren**
-> Eine Datei `.claude/agents/refactorer.md` mit `isolation: worktree` im Frontmatter genügt, und jeder Lauf dieses Subagenten bekommt ein eigenes, temporäres Worktree:
+> **🛠️ Selbst nachbauen: Subagenten automatisch isolieren**
+> Eine Datei `.claude/agents/refactorer.md` mit `isolation: worktree` im Frontmatter genügt, und jeder Lauf dieses Subagenten bekommt einen eigenen, temporären Worktree:
 > ```markdown
 > ---
 > name: refactorer
@@ -104,11 +104,11 @@ Richtig elegant wird es bei [Subagenten](https://code.claude.com/docs/en/sub-age
 > Führe das gewünschte Refactoring über alle betroffenen Dateien aus,
 > lass danach die Tests laufen und berichte das Ergebnis.
 > ```
-> Endet der Subagent ohne Änderungen, entfernt Claude Code das Worktree automatisch. Mit Änderungen bleibt es liegen, bis ein periodischer Sweep es abräumen kann, ohne Arbeit zu verlieren.
+> Endet der Subagent ohne Änderungen, entfernt Claude Code den Worktree automatisch. Mit Änderungen bleibt er liegen, bis ein periodischer Sweep ihn abräumen kann, ohne Arbeit zu verlieren.
 
-Ein Detail aus der Praxis: Ein frischer Worktree ist, wie gesagt, ein frischer Checkout, `.env` und andere gitignorierte Dateien fehlen dort. Dafür gibt es `.worktreeinclude`, eine Datei im Projektstamm in `.gitignore`-Syntax. Was dort steht, kopiert Claude Code beim Anlegen automatisch in jedes neue Worktree.
+Ein Detail aus der Praxis: Ein frischer Worktree ist, wie gesagt, ein frischer Checkout, `.env` und andere gitignorierte Dateien fehlen dort. Dafür gibt es `.worktreeinclude`, eine Datei im Projektstamm in `.gitignore`-Syntax. Was dort steht und selbst gitignored ist, kopiert Claude Code beim Anlegen automatisch in jeden neuen Worktree (getrackte Dateien dupliziert es bewusst nie).
 
-In der Desktop-App ist das Prinzip übrigens schon Standard: Dort bekommt jede neue parallele Session automatisch ihr eigenes Worktree. Und falls du wie ich zuerst danach suchst: Einen Slash-Command `/worktree` gibt es nicht, das Flag beim Start und der Zuruf in der Session decken alles ab. Die offizielle Doku führt Worktrees ausdrücklich als das Pattern für [parallele Sessions](https://code.claude.com/docs/en/common-workflows#run-parallel-sessions-with-worktrees).
+In der Desktop-App ist das Prinzip übrigens schon Standard: Dort bekommt jede neue parallele Session automatisch ihren eigenen Worktree. Und falls du wie ich zuerst danach suchst: Einen Slash-Command `/worktree` gibt es nicht, das Flag beim Start und der Zuruf in der Session decken alles ab. Die offizielle Doku führt Worktrees ausdrücklich als das Pattern für [parallele Sessions](https://code.claude.com/docs/en/common-workflows#run-parallel-sessions-with-worktrees).
 
 ## Was die anderen Tools bieten
 
@@ -124,7 +124,7 @@ Die spannendste Erkenntnis meiner Recherche: Das ist kein Claude-Code-Ding. Prak
 | [OpenAI Codex](https://developers.openai.com/codex/app/worktrees) | mehrere unabhängige Chats im selben Projekt (Desktop-App), Cloud-Tasks parallel | git worktrees „under the hood", in der Cloud Container pro Task |
 | [Devin](https://docs.devin.ai/onboard-devin/environment) | viele Sessions parallel, orchestriert als „MultiDevin" (Manager plus Worker) | eigene VM pro Session, gebootet aus einem Snapshot |
 | [Google Jules](https://jules.google/docs/environment/) | mehrere Tasks gleichzeitig, Limit je nach Plan | frische VM pro Task |
-| [Aider](https://aider.chat/docs/faq.html) | offiziell keine Parallel-Story („one repo at a time") | Community-Praxis: von Hand ein Worktree pro Instanz |
+| [Aider](https://aider.chat/docs/faq.html) | offiziell keine Parallel-Story, Worktrees kommen in der Doku nicht vor | Community-Praxis: von Hand ein Worktree pro Instanz |
 
 (Stand: Juli 2026. Die Feature-Lage ändert sich in diesem Feld gefühlt wöchentlich, die Links führen jeweils zur offiziellen Doku.)
 
@@ -136,9 +136,9 @@ So weit die heile Welt der Ein-Repo-Demos. Die Realität in gewachsenen Systemla
 
 Nehmen wir ein neutrales Beispiel: ein Angular-Frontend im Repo `app-frontend`, eine .NET-API im Repo `app-backend`. Das Feature „Checkout" braucht neue Endpunkte **und** neue Komponenten. Der Branch soll in beiden Repos gleich heißen, bei uns nach dem Ticket, sagen wir `shop-4711-checkout`. So finden Review, CI und alle Beteiligten die zusammengehörigen Stände auf einen Blick.
 
-Und jetzt die Preisfrage: Was macht `claude --worktree` daraus? Genau, **ein** Worktree, im aktuellen Repo. Alle eingebauten Worktree-Features, die mir bei der Recherche begegnet sind, denken in einem Repository. Antigravity kann immerhin mehrere Ordner zu einem Project bündeln, aber eine Worktree-Automatik, die einen Feature-Branch synchron über zwei Repos aufspannt, habe ich nirgends gefunden. (Falls es sie doch irgendwo gibt: Schreib mir, ich trage sie hier gerne nach.)
+Und jetzt die Preisfrage: Was macht `claude --worktree` daraus? Genau, **einen** Worktree, im aktuellen Repo. Fast alle eingebauten Worktree-Features denken in einem Repository. Die rühmliche Ausnahme ist Antigravity: Dort bündelt ein Project mehrere Ordner, und der „New Worktree Mode" legt laut Doku Worktrees für alle aktiven Git-Checkouts des Projects an, also durchaus über Frontend- und Backend-Repo hinweg. Was ich aber auch dort nicht dokumentiert finde: ein gemeinsamer, frei wählbarer Feature-Branch-Name über beide Repos, plus alles, was nach dem Auschecken kommt (Abhängigkeiten, Lizenzen, Projektregeln).
 
-Heißt: selbst bauen. Die gute Nachricht: In Claude Code ist das erstaunlich wenig Arbeit.
+Für meinen Workflow heißt das: selbst bauen. Die gute Nachricht: In Claude Code ist das erstaunlich wenig Arbeit.
 
 ## Mein Init-Command: ein Kommando, zwei Repos, zwei Worktrees
 
@@ -146,14 +146,14 @@ Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude C
 
 1. **Feature-Name abfragen.** Er wird der Branch-Name, identisch in beiden Repos.
 2. **Beide Repos aktualisieren:** `git fetch origin`, links und rechts.
-3. **Prüfen, ob der Branch schon existiert**, lokal oder remote. Wenn ja, wird er ausgecheckt (vielleicht hat gestern schon jemand angefangen). Wenn nein, entsteht er frisch vom neuesten `origin/main`.
+3. **Prüfen, ob der Branch schon existiert**, in beiden Repos, lokal oder remote. Wo ja, wird er ausgecheckt (vielleicht hat gestern schon jemand angefangen). Wo nein, entsteht er frisch vom neuesten `origin/main`.
 4. **Pro Repo ein Worktree**, als Nachbarordner mit sprechendem Namen: `app-frontend-shop-4711-checkout/` neben `app-frontend/`.
 5. **Abhängigkeiten installieren**, pro Worktree: `npm install` im Frontend, `dotnet restore` im Backend.
 6. **Kendo-Lizenz aktivieren**, ebenfalls pro Worktree (warum, erkläre ich gleich).
 7. **Projektregeln einlesen:** die `CLAUDE.md` beider Worktrees.
 8. **Die eiserne Regel:** Gearbeitet wird ausschließlich in den Worktrees. Die Hauptverzeichnisse bleiben unangetastet.
 
-**🛠️ Selbst nachbauen — die komplette Command-Datei `~/.claude/commands/feature-init.md`:**
+**🛠️ Selbst nachbauen: die komplette Command-Datei `~/.claude/commands/feature-init.md`**
 
 ````markdown
 # Feature-Worktrees für Frontend und Backend anlegen
@@ -172,21 +172,26 @@ git -C ~/Work/shop/app-backend fetch origin
 git -C ~/Work/shop/app-frontend fetch origin
 ```
 
-Prüfe dann, ob der Branch bereits existiert (lokal oder remote):
+Prüfe dann in BEIDEN Repos, ob der Branch bereits existiert (lokal oder remote):
 
 ```bash
-git -C ~/Work/shop/app-backend branch --list <feature-name>
-git -C ~/Work/shop/app-backend branch --list -r "origin/<feature-name>"
+git -C ~/Work/shop/app-backend  branch --list <feature-name>
+git -C ~/Work/shop/app-backend  branch --list -r "origin/<feature-name>"
+git -C ~/Work/shop/app-frontend branch --list <feature-name>
+git -C ~/Work/shop/app-frontend branch --list -r "origin/<feature-name>"
 ```
 
-**Branch existiert NICHT:** neuen Branch vom neuesten `origin/main` erstellen:
+Entscheide PRO Repo (die Fälle können sich unterscheiden, etwa wenn bisher
+nur in einem der beiden Repos gearbeitet wurde):
+
+**Branch existiert in diesem Repo NICHT:** neuen Branch vom neuesten `origin/main` erstellen:
 
 ```bash
 git -C ~/Work/shop/app-backend  worktree add ~/Work/shop/app-backend-<feature-name>  -b <feature-name> origin/main
 git -C ~/Work/shop/app-frontend worktree add ~/Work/shop/app-frontend-<feature-name> -b <feature-name> origin/main
 ```
 
-**Branch existiert bereits** (lokal oder remote): vorhandenen Branch auschecken:
+**Branch existiert in diesem Repo bereits** (lokal oder remote): vorhandenen Branch auschecken:
 
 ```bash
 git -C ~/Work/shop/app-backend  worktree add ~/Work/shop/app-backend-<feature-name>  <feature-name>
@@ -202,7 +207,7 @@ Direkt nach dem Anlegen der Worktrees:
 - **Frontend, Kendo-Lizenz:** nach `npm install` einmalig `npm run kendo-license-activate`
   im Frontend-Worktree ausführen. Die Aktivierung patcht Dateien unter
   `node_modules/@progress/kendo-licensing/` und ist daher PRO Worktree nötig.
-  Ohne Aktivierung erscheint im Browser eine Kendo-Trial-Warnung.
+  Ohne Aktivierung rendern die Komponenten mit Wasserzeichen und Lizenz-Warnung.
 
 ## PFLICHT: Projektregeln einlesen
 
@@ -234,7 +239,7 @@ Die Worktrees stehen, zwei Agenten arbeiten auf zwei Spuren. Bleiben die Kollisi
 
 **Abhängigkeiten sind pro Worktree fällig.** `node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also alles pro Worktree neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Es ist aber kein Bug, sondern der Sinn der Übung: Jede Spur hat exakt die Abhängigkeiten ihres Branches, nichts leakt zwischen den Features. Deshalb gehört die Installation in den Init-Command, nicht in die Kategorie „mache ich später von Hand".
 
-**Kommerzielle Lizenzen, die `node_modules` patchen.** Der Fallstrick, der uns wirklich erwischt hat: [Kendo UI](https://www.telerik.com/kendo-angular-ui) legt seine Lizenz-Aktivierung als gepatchte Dateien unter `node_modules/@progress/kendo-licensing/` ab (bei uns kapselt das npm-Script `kendo-license-activate` den Aufruf des offiziellen Aktivierungs-Tools). Die Aktivierung lebt also im Installationsartefakt, nicht im Repo. Konsequenz: nach jedem `npm install` in jedem Worktree neu aktivieren, sonst grüßt im Browser das Trial-Banner. Das Muster gilt für jede Lizenzierung, die Artefakte in `node_modules` ablegt: Was ein frisches `npm install` überschreibt, muss der Init-Command pro Worktree wiederherstellen.
+**Kommerzielle Lizenzen, die `node_modules` patchen.** Der Fallstrick, der uns wirklich erwischt hat: [Kendo UI](https://www.telerik.com/kendo-angular-ui) legt seine Lizenz-Aktivierung als gepatchte Dateien unter `node_modules/@progress/kendo-licensing/` ab. Die Aktivierung lebt also im Installationsartefakt, nicht im Repo, und ein frischer Worktree beginnt bei null. Fairerweise: Findet Telerik den License-Key von selbst (als `telerik-license.txt` oder Umgebungsvariable), aktiviert ein Postinstall-Script die Lizenz automatisch beim `npm install`. Ist der Key aber anders hinterlegt (bei uns kapselt ihn das npm-Script `kendo-license-activate`), heißt es: nach jedem `npm install` in jedem Worktree neu aktivieren, sonst rendern die Komponenten mit Wasserzeichen und Lizenz-Warnung. Die Lehre verallgemeinert sich gut: Was ein frisches `npm install` überschreibt oder vergisst, muss der Init-Command pro Worktree wiederherstellen.
 
 **Ports.** Spätestens wenn zwei Spuren gleichzeitig *laufen* sollen, wird es eng: Beide Angular-Dev-Server wollen Port 4200, beide APIs denselben Port, beide Datenbank-Container sowieso. Meine Lösung ist unspektakulär, ein festes Port-Schema pro Spur:
 
@@ -248,7 +253,7 @@ Technisch ist das schnell verdrahtet: beim Frontend `ng serve --port 4201`, beim
 
 **Parallele E2E-Läufe.** Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren sich gegenseitig: Der eine räumt gerade die Testdaten ab, auf die der andere wartet. Wer parallel testen will, braucht getrennte Datenbank-Instanzen pro Spur, oder wenigstens sauber getrennte Daten-Buckets innerhalb einer Instanz. Mit dem Port-Schema von oben ist die getrennte Instanz meist der einfachere Weg: zweiten Container hochziehen, Port eintragen, fertig.
 
-> **⚠️ Die eine Disziplin:** Ein Worktree ist billig, sein Inhalt nicht. `git worktree remove` fragt nicht nach ungepushten Commits auf dem Branch. Vor dem Aufräumen also kurz prüfen: alles committet, alles gepusht? Dann weg mit der Spur.
+> **⚠️ Aufräumen ohne Angst:** `git worktree remove` verweigert den Dienst, solange im Worktree uncommittete Änderungen oder unversionierte Dateien liegen (erst `--force` überstimmt das). Und committete Arbeit hängt nicht am Worktree: Der Branch samt aller Commits, auch ungepushter, lebt im gemeinsamen Repo weiter. Verlieren kann man beim Aufräumen also nur, was nie committet wurde. Deshalb vor dem `remove` kurz committen oder bewusst verwerfen, dann weg mit der Spur.
 
 ## Fazit: Isolation ist die Eintrittskarte
 
