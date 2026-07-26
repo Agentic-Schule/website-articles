@@ -32,6 +32,19 @@ Sprachen teilen sich dieselbe Adresse. Bilder referenzieren wie immer
 relativ, sie liegen im jeweiligen Ordner (der echte Slug mit Suffix
 bleibt intern erhalten). Artikel ohne Suffix gelten für beide Sprachen.
 
+## Header-Bilder
+
+Artikel-Header entstehen aus einer `header.src.html` (1200×675, Assets relativ
+daneben) im jeweiligen Artikel-Ordner und werden zentral gerendert:
+
+```bash
+node tools/render-header.mjs blog/<artikel-ordner>
+```
+
+Ergebnis ist `header.jpg` (2400×1350). Voraussetzung: einmalig `cd tools && npm install`
+(holt `playwright-core`) und ein installierter Google Chrome. Achtung: Der Build kopiert Artikel-Ordner komplett nach `dist/`,
+die Quelldateien werden also mit veröffentlicht (harmlos, aber gut zu wissen).
+
 ## Lokal bauen
 
 ```bash
