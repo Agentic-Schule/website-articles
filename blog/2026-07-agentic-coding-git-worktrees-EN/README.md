@@ -21,7 +21,7 @@ language: en
 header: header.jpg
 ---
 
-Every coding agent takes it for granted that the working directory belongs to it alone: it reads files, changes them, runs builds and tests, and its subagents do the same in parallel. That assumption is baked in, and it only holds as long as a single session is working in the repository. The moment a second one believes the same thing, you quickly end up in a tangled mess: two agents editing the same files, tests checking states that never existed, and in the end nobody knows which diff came from whom.
+Every coding agent takes it for granted that the working directory belongs to it alone: it reads files, changes them, runs builds and tests, and its subagents do the same in parallel. In classical development, that assumption was automatically true, one developer, one personal computer, one checkout: isolation came for free. But now many agentic developers romp around on the same computer at the same time, and as soon as two of them claim the same directory for themselves, you quickly end up in a tangled mess: two agents editing the same files, tests checking states that never existed, and in the end nobody knows which diff came from whom.
 
 **The solution is an unassuming git built-in that is currently rising to become one of the most important tools of agentic work: git worktrees. Every agent gets its own working directory on its own branch, the sole-ownership assumption holds again, and suddenly three or four sessions run in parallel without getting in each other's way.**
 
@@ -45,7 +45,7 @@ With a classic single checkout, I now have three bad options:
 
 Even without an emergency, the classic context switch is a pain: stash, checkout, `npm install` because the other branch has different dependencies, the IDE re-indexes. If you work like this, you switch less often than would be good for you.
 
-On top of that comes a luxury problem: frontier models with plenty of reasoning are thorough, but leisurely. Commands like `/code-review` sometimes run absurdly long for me. The natural reaction: parallelize. While session one runs the review, session two should start on the next feature. Except: two agents in the same working directory are not parallelism, they are a race for the same files.
+On top of that comes a luxury problem: frontier models with plenty of reasoning are thorough, but leisurely. Commands like `/code-review` sometimes run absurdly long for me. The natural reaction: parallelize. While session one runs the review, session two should start on the next feature. Except: two agents in the same working directory are not parallelism, they are a race for the same files. And the race isn't even the whole problem: some features are mutually exclusive, others may only land in a specific order. Two half-finished features in the same directory produce a mixed state that will never exist in the finished product, and that's exactly what builds and tests then run against.
 
 The naive way out would be to simply clone the repo several times. That works, but it's wasteful (every copy drags its own `.git` along, and you fetch multiple times, too) and above all unnecessary: git has had a built-in for exactly this case for years.
 
@@ -75,7 +75,7 @@ Two more things worth knowing:
 - **Things you don't immediately see are shared, too.** Hooks (`.git/hooks`) and the local repo configuration apply to all worktrees together. A pre-commit hook is in effect everywhere.
 - **Everything that's gitignored is NOT shared.** `node_modules`, `.env`, build caches: a fresh worktree is a fresh checkout, all of that is missing there at first. That's a curse (installation per worktree, more on that later) and a blessing at the same time (no half-built artifacts from the wrong branch).
 
-Worktrees existed long before the AI agents. Classically, you use them for the hotfix next to the running feature, or to check out a pull request without touching your own state. But the feature is only now hitting top form, because agents turn the special case into the normal case: suddenly there's a good reason to permanently run three or four checkouts.
+Worktrees existed long before the AI agents. Classically, you use them for the hotfix next to the running feature, or to check out a pull request without touching your own state. But the feature is only now hitting top form, because agents turn the special case into the normal case: the personal computer, formerly the workplace of exactly one developer, suddenly hosts a whole team, and every team member needs its own permanent checkout.
 
 ## What the Tools Make of It
 
@@ -236,7 +236,7 @@ Three remarks:
 
 ## Ports, Licenses, Databases: The Pitfalls of Parallelism
 
-The worktrees are in place, two agents are working on two branches. What remains are the collisions that don't happen in the file system.
+The worktrees are in place, two agents are working on two branches. What remains are the collisions that don't happen in the file system, because even with separate directories, all agents still share one computer: its ports, its databases, its licenses.
 
 ### Dependencies Are Due per Worktree
 
@@ -274,17 +274,17 @@ Back to the morning from the beginning, this time with worktrees:
 
 **Shortly before ten.** The fix is in, the tests are green, a quick look at port 4202: the prices are right again. Commit, push, review, merge. The refactoring on branch one is still running, undisturbed.
 
-**Half past ten.** The refactoring is done and waiting for review. I could now start the next feature on a third branch. Honestly, though, I read diffs first: sprouting branches has become cheap, owning them has not.
+**Half past ten.** The refactoring is done, picks up the merged price fix via rebase, and waits for review. I could now start the next feature on a third branch. Honestly, though, I read diffs first: sprouting branches has become cheap, owning them has not.
 
 ## Conclusion: Isolation Is the Ticket
 
-In retrospect, the insight is almost banal: **parallelism doesn't start with the agent, it starts with the working directory.** As long as two sessions share one checkout, everything else is cosmetics. git worktrees solve exactly this problem, with built-in means, in seconds, and the whole industry has recognized it: locally via worktree, in the cloud via throwaway VM.
+In retrospect, the insight is almost banal: **parallelism doesn't start with the agent, it starts with the working directory.** Classical development barely knew this problem; isolation came for free with the personal computer. With many agents on one machine, you have to create it explicitly, because as long as two sessions share one checkout, everything else is cosmetics. git worktrees solve exactly this problem, with built-in means, in seconds, and the whole industry has recognized it: locally via worktree, in the cloud via throwaway VM.
 
 Where the built-in features end, namely at the repo boundary, a self-built init command begins: one command, two repos, one branch name, two worktrees, dependencies and license included. That's no big engineering, just a Markdown file. But it turns the most tedious part of everyday multi-repo work into a single question: "What's the feature called?"
 
 I want to stay honest this time, too:
 
-- **Parallelism is not an end in itself.** Three agents produce three times as many diffs, and somebody (me) has to read them all. The review becomes the bottleneck, not the compute.
+- **Parallelism is not an end in itself.** Three agents produce three times as many diffs, and somebody (me) has to read them all. On top of that, not all features get along: some are mutually exclusive, others have to land in a fixed order. Worktrees keep the states cleanly apart, but what gets merged when remains headwork. The review becomes the bottleneck, not the compute.
 - **The mental load stays.** Hopping from branch to branch is harder in your head than on disk. That's why I rarely allow myself more than two or three branches at a time. Not because the technology couldn't handle more, but because my head can't review more in any meaningful way.
 - **Discipline is part of it.** Install the deps, activate the license, assign the ports, clean up at the end. That's exactly why all of it lives in the init command and not in my memory.
 

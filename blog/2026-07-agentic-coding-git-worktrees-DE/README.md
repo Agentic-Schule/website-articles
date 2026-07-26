@@ -22,7 +22,7 @@ language: de
 header: header.jpg
 ---
 
-Jeder Coding-Agent geht wie selbstverständlich davon aus, dass ihm das Arbeitsverzeichnis allein gehört: Er liest Dateien, ändert sie, lässt Builds und Tests laufen, und seine Subagenten tun parallel das Gleiche. Diese Annahme ist fest eingebaut, und sie stimmt nur, solange wirklich eine einzige Session im Repository arbeitet. Sobald eine zweite dasselbe glaubt, gibt es schnell Kuddelmuddel: Zwei Agenten editieren dieselben Dateien, Tests prüfen Stände, die es so nie gegeben hat, und am Ende weiß niemand mehr, welcher Diff von wem stammt.
+Jeder Coding-Agent geht wie selbstverständlich davon aus, dass ihm das Arbeitsverzeichnis allein gehört: Er liest Dateien, ändert sie, lässt Builds und Tests laufen, und seine Subagenten tun parallel das Gleiche. In der klassischen Entwicklung war diese Annahme automatisch erfüllt, ein Entwickler, ein persönlicher Rechner, ein Checkout: Isolation gab es gratis. Jetzt aber tummeln sich viele agentische Entwickler gleichzeitig auf demselben Computer, und sobald zwei von ihnen dasselbe Verzeichnis für sich beanspruchen, gibt es Kuddelmuddel: Zwei Agenten editieren dieselben Dateien, Tests prüfen Stände, die es so nie gegeben hat, und am Ende weiß niemand mehr, welcher Diff von wem stammt.
 
 **Die Lösung ist ein unscheinbares git-Bordmittel, das gerade zum wichtigsten Werkzeug der agentischen Arbeit aufsteigt: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, die Alleinbesitz-Annahme stimmt wieder, und plötzlich laufen drei, vier Sessions parallel, ohne sich in die Quere zu kommen.**
 
@@ -46,7 +46,7 @@ Mit einem klassischen Einzel-Checkout habe ich jetzt drei schlechte Optionen:
 
 Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, wechselt seltener, als gut wäre.
 
-Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Zwei Agenten im selben Arbeitsverzeichnis sind keine Parallelität, sondern ein Wettrennen um dieselben Dateien.
+Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Zwei Agenten im selben Arbeitsverzeichnis sind keine Parallelität, sondern ein Wettrennen um dieselben Dateien. Und das Wettrennen ist nicht einmal das ganze Problem: Manche Features schließen sich gegenseitig aus, andere dürfen nur in einer bestimmten Reihenfolge einfließen. Zwei halbfertige Features im selben Verzeichnis ergeben einen Mischzustand, den es im fertigen Produkt nie geben wird, und genau gegen den laufen dann Builds und Tests.
 
 Der naive Ausweg wäre, das Repo einfach mehrfach zu klonen. Das funktioniert, ist aber verschwenderisch (jede Kopie schleppt ihr eigenes `.git` mit, und gefetcht wird auch mehrfach) und vor allem unnötig: git hat für genau diesen Fall seit Jahren ein Bordmittel.
 
@@ -76,7 +76,7 @@ Zwei Dinge sollte man außerdem wissen:
 - **Geteilt wird auch, was man nicht sofort sieht.** Hooks (`.git/hooks`) und die lokale Repo-Konfiguration gelten für alle Worktrees gemeinsam. Ein pre-commit-Hook wirkt also überall.
 - **Nicht geteilt wird alles, was gitignored ist.** `node_modules`, `.env`, Build-Caches: Ein frischer Worktree ist ein frischer Checkout, all das fehlt dort erst einmal. Das ist Fluch (Installation pro Worktree, dazu später mehr) und Segen zugleich (keine halb gebauten Artefakte vom falschen Branch).
 
-Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotfix neben dem laufenden Feature oder um einen Pull Request auszuchecken, ohne den eigenen Stand anzufassen. Zur Höchstform läuft das Feature aber erst jetzt auf, denn Agenten machen aus dem Sonderfall den Normalfall: Es gibt plötzlich einen guten Grund, dauerhaft drei, vier Checkouts zu betreiben.
+Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotfix neben dem laufenden Feature oder um einen Pull Request auszuchecken, ohne den eigenen Stand anzufassen. Zur Höchstform läuft das Feature aber erst jetzt auf, denn Agenten machen aus dem Sonderfall den Normalfall: Der persönliche Rechner, früher Arbeitsplatz genau eines Entwicklers, beherbergt auf einmal ein ganzes Team, und jedes Teammitglied braucht dauerhaft seinen eigenen Checkout.
 
 ## Was die Tools daraus machen
 
@@ -237,7 +237,7 @@ Drei Anmerkungen dazu:
 
 ## Ports, Lizenzen, Datenbanken: die Fallstricke der Parallelität
 
-Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisionen, die nicht im Dateisystem passieren.
+Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisionen, die nicht im Dateisystem passieren, denn auch mit getrennten Verzeichnissen teilen sich alle Agenten weiterhin einen Computer: seine Ports, seine Datenbanken, seine Lizenzen.
 
 ### Abhängigkeiten sind pro Worktree fällig
 
@@ -275,17 +275,17 @@ Zurück zu dem Vormittag vom Anfang, diesmal mit Worktrees:
 
 **Kurz vor zehn.** Der Fix ist da, die Tests sind grün, kurzer Blick auf Port 4202: Die Preise stimmen wieder. Commit, Push, Review, Merge. Das Refactoring auf Ast 1 läuft immer noch, ungestört.
 
-**Halb elf.** Das Refactoring ist durch und wartet auf Review. Ich könnte jetzt auf einem dritten Ast das nächste Feature starten. Ehrlicherweise lese ich stattdessen erst einmal Diffs: Äste austreiben ist billig geworden, Äste verantworten nicht.
+**Halb elf.** Das Refactoring ist durch, holt sich den gemergten Preis-Fix per Rebase dazu und wartet auf Review. Ich könnte jetzt auf einem dritten Ast das nächste Feature starten. Ehrlicherweise lese ich stattdessen erst einmal Diffs: Äste austreiben ist billig geworden, Äste verantworten nicht.
 
 ## Fazit: Isolation ist die Eintrittskarte
 
-Rückblickend ist die Erkenntnis fast banal: **Parallelität beginnt nicht beim Agenten, sondern beim Arbeitsverzeichnis.** Solange sich zwei Sessions einen Checkout teilen, ist alles andere Kosmetik. git worktrees lösen genau dieses Problem, mit Bordmitteln, in Sekunden, und die gesamte Branche hat das erkannt: lokal per Worktree, in der Cloud per Wegwerf-VM.
+Rückblickend ist die Erkenntnis fast banal: **Parallelität beginnt nicht beim Agenten, sondern beim Arbeitsverzeichnis.** Die klassische Entwicklung hat dieses Problem kaum gekannt, die Isolation kam mit dem persönlichen Rechner gratis. Mit vielen Agenten auf einer Maschine muss man sie explizit herstellen, denn solange sich zwei Sessions einen Checkout teilen, ist alles andere Kosmetik. git worktrees lösen genau dieses Problem, mit Bordmitteln, in Sekunden, und die gesamte Branche hat das erkannt: lokal per Worktree, in der Cloud per Wegwerf-VM.
 
 Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Äste, Abhängigkeiten und Lizenz inklusive. Das ist kein großes Engineering, nur eine Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
 
 Ehrlich bleiben will ich auch diesmal:
 
-- **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Das Review wird zum Flaschenhals, nicht die Rechenzeit.
+- **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Dazu vertragen sich nicht alle Features: Manche schließen sich gegenseitig aus, andere müssen in einer festen Reihenfolge einfließen. Worktrees halten die Stände sauber auseinander, aber was wann gemergt wird, bleibt Kopfarbeit. Das Review wird zum Flaschenhals, nicht die Rechenzeit.
 - **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengender als auf der Platte. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Nicht weil die Technik nicht mehr hergäbe, sondern weil mein Kopf sonst nicht mehr sinnvoll reviewen kann.
 - **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Genau deshalb steckt all das im Init-Command und nicht in meinem Gedächtnis.
 
