@@ -22,9 +22,9 @@ language: de
 header: header.jpg
 ---
 
-Agentic Coding hat einen eingebauten Widerspruch: Der Agent arbeitet selbstständig, aber das Repository gehört ihm ganz allein. Solange ein Lauf dauert, und moderne Frontier-Modelle lassen sich Zeit, ist das Arbeitsverzeichnis blockiert. Branch wechseln? Würde dem Agenten die Dateien unter den Händen wegziehen. Warten? Dann sitze ich daneben und schaue zu, wie eine Maschine tippt.
+Jeder Coding-Agent geht wie selbstverständlich davon aus, dass ihm das Arbeitsverzeichnis allein gehört: Er liest Dateien, ändert sie, lässt Builds und Tests laufen, und seine Subagenten tun parallel das Gleiche. Diese Annahme ist fest eingebaut, und sie stimmt nur, solange wirklich eine einzige Session im Repository arbeitet. Sobald eine zweite dasselbe glaubt, gibt es schnell Kuddelmuddel: Zwei Agenten editieren dieselben Dateien, Tests prüfen Stände, die es so nie gegeben hat, und am Ende weiß niemand mehr, welcher Diff von wem stammt.
 
-**Die Lösung ist ein unscheinbares git-Bordmittel, das gerade zum wichtigsten Werkzeug der agentischen Arbeit aufsteigt: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, und plötzlich laufen drei, vier Sessions parallel, ohne sich in die Quere zu kommen.**
+**Die Lösung ist ein unscheinbares git-Bordmittel, das gerade zum wichtigsten Werkzeug der agentischen Arbeit aufsteigt: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, die Alleinbesitz-Annahme stimmt wieder, und plötzlich laufen drei, vier Sessions parallel, ohne sich in die Quere zu kommen.**
 
 Dieser Artikel zeigt die Technik dahinter, den eingebauten Worktree-Support der agentischen Tools und den Init-Command, mit dem ich einen Feature-Branch samt Worktrees über zwei Repos aufspanne.
 

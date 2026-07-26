@@ -21,9 +21,9 @@ language: en
 header: header.jpg
 ---
 
-Agentic coding has a built-in contradiction: the agent works autonomously, but the repository belongs to it alone. For as long as a run takes, and modern frontier models take their time, the working directory is blocked. Switch branches? That would pull the files out from under the agent's hands. Wait? Then I sit next to it and watch a machine type.
+Every coding agent takes it for granted that the working directory belongs to it alone: it reads files, changes them, runs builds and tests, and its subagents do the same in parallel. That assumption is baked in, and it only holds as long as a single session is working in the repository. The moment a second one believes the same thing, you quickly end up in a tangled mess: two agents editing the same files, tests checking states that never existed, and in the end nobody knows which diff came from whom.
 
-**The solution is an unassuming git built-in that is currently rising to become one of the most important tools of agentic work: git worktrees. Every agent gets its own working directory on its own branch, and suddenly three or four sessions run in parallel without getting in each other's way.**
+**The solution is an unassuming git built-in that is currently rising to become one of the most important tools of agentic work: git worktrees. Every agent gets its own working directory on its own branch, the sole-ownership assumption holds again, and suddenly three or four sessions run in parallel without getting in each other's way.**
 
 This article shows the technique behind it, the built-in worktree support of today's agentic tools, and the init command I use to span a feature branch with worktrees across two repos.
 
