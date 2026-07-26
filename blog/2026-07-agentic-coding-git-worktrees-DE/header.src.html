@@ -30,7 +30,6 @@
   /* offizielles Claude-Logo (Asset aus dem Bodenstation-Artikel), via CSS-mask in
      Claude-Coral eingefaerbt: ein kleiner Agent pro Terminal-Spur */
   .agent { position:absolute; width:28px; height:28px; background:#d97757;
-    -webkit-mask:url("claude.svg") center/contain no-repeat;
     mask:url("claude.svg") center/contain no-repeat;
     filter:drop-shadow(0 0 10px rgba(217,119,87,0.65)); }
   .agent.a1 { left:39px;  top:191px; }
@@ -74,9 +73,9 @@
       <circle cx="260" cy="480" r="5" fill="#a08f82"/>
 
       <!-- drei Spuren zweigen ab -->
-      <path d="M260 430 C260 355, 105 355, 105 267" stroke="url(#branch)" stroke-width="3" stroke-linecap="round" fill="none"/>
-      <path d="M260 430 L260 187"                   stroke="url(#branch)" stroke-width="3" stroke-linecap="round" fill="none"/>
-      <path d="M260 430 C260 380, 415 400, 415 337" stroke="url(#branch)" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M260 430 C260 355, 105 355, 105 267" stroke="url(#branch)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M260 430 L260 187"                   stroke="url(#branch)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M260 430 C260 380, 415 400, 415 337" stroke="url(#branch)" stroke-width="3" stroke-linecap="round"/>
 
       <!-- Verzweigungspunkt + Branch-Spitzen -->
       <circle cx="260" cy="430" r="7"   fill="#d97757"/>
@@ -85,8 +84,7 @@
       <circle cx="415" cy="337" r="4.5" fill="#e58a68"/>
 
       <!-- Terminal 1 (links) -->
-      <g>
-        <rect x="25" y="155" width="160" height="110" rx="10" fill="#1d1713" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+      <rect x="25" y="155" width="160" height="110" rx="10" fill="#1d1713" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
         <circle cx="41" cy="169" r="3.5" fill="rgba(255,255,255,0.18)"/>
         <circle cx="53" cy="169" r="3.5" fill="rgba(255,255,255,0.18)"/>
         <circle cx="65" cy="169" r="3.5" fill="rgba(255,255,255,0.18)"/>
@@ -94,11 +92,9 @@
         <rect x="77" y="209" width="88" height="7" rx="3.5" fill="rgba(255,255,255,0.18)"/>
         <rect x="39" y="231" width="112" height="7" rx="3.5" fill="rgba(255,255,255,0.12)"/>
         <rect x="157" y="230" width="7" height="9" fill="#d97757" opacity="0.9"/>
-      </g>
 
       <!-- Terminal 2 (Mitte, oben) -->
-      <g>
-        <rect x="180" y="75" width="160" height="110" rx="10" fill="#1d1713" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+      <rect x="180" y="75" width="160" height="110" rx="10" fill="#1d1713" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
         <circle cx="196" cy="89" r="3.5" fill="rgba(255,255,255,0.18)"/>
         <circle cx="208" cy="89" r="3.5" fill="rgba(255,255,255,0.18)"/>
         <circle cx="220" cy="89" r="3.5" fill="rgba(255,255,255,0.18)"/>
@@ -106,11 +102,9 @@
         <rect x="232" y="129" width="80" height="7" rx="3.5" fill="rgba(255,255,255,0.18)"/>
         <rect x="194" y="151" width="112" height="7" rx="3.5" fill="rgba(255,255,255,0.12)"/>
         <rect x="312" y="150" width="7" height="9" fill="#d97757" opacity="0.9"/>
-      </g>
 
       <!-- Terminal 3 (rechts) -->
-      <g>
-        <rect x="335" y="225" width="160" height="110" rx="10" fill="#1d1713" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+      <rect x="335" y="225" width="160" height="110" rx="10" fill="#1d1713" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
         <circle cx="351" cy="239" r="3.5" fill="rgba(255,255,255,0.18)"/>
         <circle cx="363" cy="239" r="3.5" fill="rgba(255,255,255,0.18)"/>
         <circle cx="375" cy="239" r="3.5" fill="rgba(255,255,255,0.18)"/>
@@ -118,7 +112,6 @@
         <rect x="387" y="279" width="92" height="7" rx="3.5" fill="rgba(255,255,255,0.18)"/>
         <rect x="349" y="301" width="112" height="7" rx="3.5" fill="rgba(255,255,255,0.12)"/>
         <rect x="467" y="300" width="7" height="9" fill="#d97757" opacity="0.9"/>
-      </g>
     </svg>
     <div class="agent a1"></div>
     <div class="agent a2"></div>
