@@ -1,0 +1,9 @@
+{
+  "name": "agentic-website-articles-tools",
+  "private": true,
+  "type": "module",
+  "description": "Werkzeuge rund um die Artikel (Header-Rendering)",
+  "dependencies": {
+    "playwright-core": "^1.50.0"
+  }
+}

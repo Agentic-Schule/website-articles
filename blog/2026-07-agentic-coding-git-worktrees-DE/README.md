@@ -1,5 +1,5 @@
 ---
-title: 'Agentic Coding auf mehreren Spuren: git worktrees für parallele Agenten'
+title: 'Ein Stamm, viele Äste: git worktrees für parallele KI-Agenten'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -26,9 +26,9 @@ Agentic Coding hat einen eingebauten Widerspruch: Der Agent arbeitet selbststän
 
 **Die Lösung ist ein unscheinbares git-Bordmittel, das gerade zum wichtigsten Werkzeug der agentischen Arbeit aufsteigt: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, und plötzlich laufen drei, vier Sessions parallel, ohne sich in die Quere zu kommen.**
 
-Dieser Artikel ist das Begleitstück zu [„Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation"](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini). Dort ging es darum, **wo** meine Agenten laufen: auf einer Maschine, die nie ausgeht. Diesmal geht es darum, **wie viele** gleichzeitig laufen können. Der Bodenstation-Artikel endete genau hier, mit dem Geständnis, dass die eigentliche Arbeit erst bei vielen parallelen Sessions mit ebenso vielen git worktrees beginnt.
+Dieser Artikel zeigt die Technik dahinter, den eingebauten Worktree-Support der agentischen Tools und den Init-Command, mit dem ich einen Feature-Branch samt Worktrees über zwei Repos aufspanne.
 
-> 🛣️ Das Bild dazu ist simpel: Das Repository ist die Straße, jeder Worktree eine eigene Fahrspur. Auf jeder Spur fährt genau ein Agent, und keiner schert aus.
+> 🌳 Das Bild dazu ist simpel: Das Repository ist der Stamm, jeder Worktree ein eigener Ast. Auf jedem Ast arbeitet genau ein Agent, und keiner sägt am Ast des anderen.
 
 ## Inhalt
 
@@ -46,7 +46,7 @@ Mit einem klassischen Einzel-Checkout habe ich jetzt drei schlechte Optionen:
 
 Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, wechselt seltener, als gut wäre.
 
-Dazu kommt das Luxusproblem aus dem Bodenstation-Artikel: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Zwei Agenten im selben Arbeitsverzeichnis sind keine Parallelität, sondern ein Wettrennen um dieselben Dateien.
+Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Zwei Agenten im selben Arbeitsverzeichnis sind keine Parallelität, sondern ein Wettrennen um dieselben Dateien.
 
 Der naive Ausweg wäre, das Repo einfach mehrfach zu klonen. Das funktioniert, ist aber verschwenderisch (jede Kopie schleppt ihr eigenes `.git` mit, und gefetcht wird auch mehrfach) und vor allem unnötig: git hat für genau diesen Fall seit Jahren ein Bordmittel.
 
@@ -54,7 +54,7 @@ Der naive Ausweg wäre, das Repo einfach mehrfach zu klonen. Das funktioniert, i
 
 Ein [git worktree](https://git-scm.com/docs/git-worktree) ist ein zusätzliches Arbeitsverzeichnis desselben Repositories. Die git-Doku nennt den Checkout, den man beim Klonen bekommt, den *main worktree*. Alles, was man mit `git worktree add` dazustellt, sind *linked worktrees*. Alle teilen sich dasselbe `.git`, also die komplette Historie, alle Branches, alle Remotes und die Objektdatenbank. Eigenständig ist an jedem Worktree genau das, was den Arbeitszustand ausmacht: die ausgecheckten Dateien, ein eigener `HEAD` und ein eigener Index.
 
-Das hat zwei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angelegt und ebenso schnell wieder entsorgt, es wird ja kein Repository kopiert, sondern nur ein Checkout erzeugt. Zweitens sehen sich die Worktrees gegenseitig: Ein Commit auf Spur A ist auf Spur B sofort im Log sichtbar, ein `git fetch` versorgt alle gemeinsam.
+Das hat zwei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angelegt und ebenso schnell wieder entsorgt, es wird ja kein Repository kopiert, sondern nur ein Checkout erzeugt. Zweitens sehen sich die Worktrees gegenseitig: Ein Commit auf Ast A ist auf Ast B sofort im Log sichtbar, ein `git fetch` versorgt alle gemeinsam.
 
 > **🛠️ Selbst nachbauen: die vier Kommandos, die man braucht**
 > ```bash
@@ -69,7 +69,7 @@ Das hat zwei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angele
 > git worktree prune     # Verwaltungsreste von Hand gelöschter Worktrees aufräumen
 > ```
 
-Eine Regel muss man kennen: **Ein Branch kann immer nur in einem Worktree ausgecheckt sein.** Versucht man denselben Branch in zwei Worktrees zu öffnen, verweigert git das Kommando (wer es mit `--force` erzwingt, weiß hoffentlich, was er tut). Das ist keine Schikane, sondern Schutz: Zwei Checkouts desselben Branches würden sich gegenseitig Commits und Index zerschießen. Für unser Agenten-Szenario ist die Regel sogar ein Feature, denn sie erzwingt exakt das Modell, das wir wollen: eine Spur, ein Branch, ein Agent.
+Eine Regel muss man kennen: **Ein Branch kann immer nur in einem Worktree ausgecheckt sein.** Versucht man denselben Branch in zwei Worktrees zu öffnen, verweigert git das Kommando (wer es mit `--force` erzwingt, weiß hoffentlich, was er tut). Das ist keine Schikane, sondern Schutz: Zwei Checkouts desselben Branches würden sich gegenseitig Commits und Index zerschießen. Für unser Agenten-Szenario ist die Regel sogar ein Feature, denn sie erzwingt exakt das Modell, das wir wollen: ein Worktree, ein Branch, ein Agent.
 
 Zwei Dinge sollte man außerdem wissen:
 
@@ -237,59 +237,57 @@ Drei Anmerkungen dazu:
 
 ## Ports, Lizenzen, Datenbanken: die Fallstricke der Parallelität
 
-Die Worktrees stehen, zwei Agenten arbeiten auf zwei Spuren. Bleiben die Kollisionen, die nicht im Dateisystem passieren.
+Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisionen, die nicht im Dateisystem passieren.
 
 ### Abhängigkeiten sind pro Worktree fällig
 
-`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Es ist aber kein Bug, sondern der Sinn der Übung: Jede Spur hat exakt die Abhängigkeiten ihres Branches, nichts leakt zwischen den Features.
+`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Es ist aber kein Bug, sondern der Sinn der Übung: Jeder Ast hat exakt die Abhängigkeiten seines Branches, nichts leakt zwischen den Features.
 
 ### Kommerzielle Lizenzen, die node_modules patchen
 
 Der Fallstrick, der uns wirklich erwischt hat: [Kendo UI](https://www.telerik.com/kendo-angular-ui) legt seine Lizenz-Aktivierung als gepatchte Dateien unter `node_modules/@progress/kendo-licensing/` ab. Die Aktivierung lebt also im Installationsartefakt, nicht im Repo, und ein frischer Worktree beginnt bei null. Fairerweise: Findet Telerik den Key von selbst (als `telerik-license.txt` oder Umgebungsvariable), erledigt ein Postinstall-Script das gleich beim `npm install`. Bei uns kapselt ihn ein eigenes npm-Script, also heißt es: nach jedem `npm install` in jedem Worktree neu aktivieren, sonst rendern die Komponenten mit Wasserzeichen und Lizenz-Warnung. Die Lehre verallgemeinert sich gut: Was ein frisches `npm install` überschreibt oder vergisst, muss der Init-Command pro Worktree wiederherstellen.
 
-### Eigene Ports für jede Spur
+### Eigene Ports für jeden Ast
 
-Spätestens wenn zwei Spuren gleichzeitig *laufen* sollen, wird es eng: Beide Angular-Dev-Server wollen Port 4200, beide APIs denselben Port, beide Datenbank-Container sowieso. Meine Lösung ist unspektakulär, ein festes Port-Schema pro Spur:
+Spätestens wenn zwei Äste gleichzeitig *in Betrieb* sind, wird es eng: Beide Angular-Dev-Server wollen Port 4200, beide APIs denselben Port, beide Datenbank-Container sowieso. Meine Lösung ist unspektakulär, ein festes Port-Schema pro Ast:
 
-| Dienst | Hauptrepo | Spur 1 | Spur 2 |
+| Dienst | Hauptrepo | Ast 1 | Ast 2 |
 |---|---|---|---|
 | Angular Dev-Server | 4200 | 4201 | 4202 |
 | Backend-API | 5001 | 5011 | 5021 |
 | Datenbank | 1433 | 1434 | 1435 |
 
-Technisch ist das schnell verdrahtet: beim Frontend `ng serve --port 4201`, beim Backend die URL per Umgebungsvariable (`ASPNETCORE_URLS`), beim Datenbank-Container das Port-Mapping im Compose-File. Wichtig ist nur Konsequenz: Das Frontend einer Spur muss auch auf die API **derselben** Spur zeigen (Proxy-Konfiguration beziehungsweise environment-Datei), sonst testet man fröhlich gegen das falsche Backend und wundert sich über Geisterdaten. Und wer eine Spur bequem im Browser begutachten will: Der [nginx-Dev-Proxy aus dem Bodenstation-Artikel](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini#die-arbeit-des-agenten-im-browser-ansehen) bindet jeden dieser Ports ohne Projekt-Konfiguration ins LAN.
+Technisch ist das schnell verdrahtet: beim Frontend `ng serve --port 4201`, beim Backend die URL per Umgebungsvariable (`ASPNETCORE_URLS`), beim Datenbank-Container das Port-Mapping im Compose-File. Wichtig ist nur Konsequenz: Das Frontend eines Astes muss auch auf die API **desselben** Astes zeigen (Proxy-Konfiguration beziehungsweise environment-Datei), sonst testet man fröhlich gegen das falsche Backend und wundert sich über Geisterdaten.
 
 ### Parallele E2E-Läufe
 
-Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren sich gegenseitig: Der eine räumt gerade die Testdaten ab, auf die der andere wartet. Wer parallel testen will, braucht getrennte Datenbank-Instanzen pro Spur, oder wenigstens sauber getrennte Daten-Buckets innerhalb einer Instanz. Mit dem Port-Schema von oben ist die getrennte Instanz meist der einfachere Weg: zweiten Container hochziehen, Port eintragen, fertig.
+Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren sich gegenseitig: Der eine räumt gerade die Testdaten ab, auf die der andere wartet. Wer parallel testen will, braucht getrennte Datenbank-Instanzen pro Ast, oder wenigstens sauber getrennte Daten-Buckets innerhalb einer Instanz. Mit dem Port-Schema von oben ist die getrennte Instanz meist der einfachere Weg: zweiten Container hochziehen, Port eintragen, fertig.
 
-> **⚠️ Aufräumen ohne Angst:** `git worktree remove` verweigert den Dienst, solange im Worktree uncommittete Änderungen oder unversionierte Dateien liegen (erst `--force` überstimmt das). Und committete Arbeit hängt nicht am Worktree: Der Branch samt aller Commits, auch ungepushter, lebt im gemeinsamen Repo weiter. Verlieren kann man beim Aufräumen also nur, was nie committet wurde: vor dem `remove` kurz committen oder bewusst verwerfen, dann weg mit der Spur.
+> **⚠️ Aufräumen ohne Angst:** `git worktree remove` verweigert den Dienst, solange im Worktree uncommittete Änderungen oder unversionierte Dateien liegen (erst `--force` überstimmt das). Und committete Arbeit hängt nicht am Worktree: Der Branch samt aller Commits, auch ungepushter, lebt im gemeinsamen Repo weiter. Verlieren kann man beim Aufräumen also nur, was nie committet wurde: vor dem `remove` kurz committen oder bewusst verwerfen, dann weg mit dem Ast.
 
-## Ein Vormittag auf drei Spuren
+## Ein Vormittag auf drei Ästen
 
 Zurück zu dem Vormittag vom Anfang, diesmal mit Worktrees:
 
-**Neun Uhr.** Claude Code startet das große Refactoring auf Spur 1, im Worktree `app-frontend-shop-4708-refactor`. Vierzig Dateien, Tests laufen mit, geschätzte Dreiviertelstunde.
+**Neun Uhr.** Claude Code startet das große Refactoring auf Ast 1, im Worktree `app-frontend-shop-4708-refactor`. Vierzig Dateien, Tests laufen mit, geschätzte Dreiviertelstunde.
 
-**Zehn nach neun.** Der Bug-Report: Produktion, falsche Preise im Warenkorb, sollte heute noch raus. Früher der Moment der drei schlechten Optionen. Heute tippe ich in einem neuen Terminal `/feature-init`, nenne das Feature `shop-4711-hotfix-prices`, und ein paar Minuten später stehen zwei frische Worktrees samt Abhängigkeiten und Lizenz bereit. Eine zweite Session bekommt den Bug. Spur 1 merkt davon nichts.
+**Zehn nach neun.** Der Bug-Report: Produktion, falsche Preise im Warenkorb, sollte heute noch raus. Früher der Moment der drei schlechten Optionen. Heute tippe ich in einem neuen Terminal `/feature-init`, nenne das Feature `shop-4711-hotfix-prices`, und ein paar Minuten später stehen zwei frische Worktrees samt Abhängigkeiten und Lizenz bereit. Eine zweite Session bekommt den Bug. Ast 1 merkt davon nichts.
 
-**Kurz vor zehn.** Der Fix ist da, die Tests sind grün, kurzer Blick auf Port 4202: Die Preise stimmen wieder. Commit, Push, Review, Merge. Das Refactoring auf Spur 1 läuft immer noch, ungestört.
+**Kurz vor zehn.** Der Fix ist da, die Tests sind grün, kurzer Blick auf Port 4202: Die Preise stimmen wieder. Commit, Push, Review, Merge. Das Refactoring auf Ast 1 läuft immer noch, ungestört.
 
-**Halb elf.** Das Refactoring ist durch und wartet auf Review. Ich könnte jetzt auf Spur 3 das nächste Feature starten. Ehrlicherweise lese ich stattdessen erst einmal Diffs: Spuren aufmachen ist billig geworden, Spuren verantworten nicht.
+**Halb elf.** Das Refactoring ist durch und wartet auf Review. Ich könnte jetzt auf einem dritten Ast das nächste Feature starten. Ehrlicherweise lese ich stattdessen erst einmal Diffs: Äste austreiben ist billig geworden, Äste verantworten nicht.
 
 ## Fazit: Isolation ist die Eintrittskarte
 
 Rückblickend ist die Erkenntnis fast banal: **Parallelität beginnt nicht beim Agenten, sondern beim Arbeitsverzeichnis.** Solange sich zwei Sessions einen Checkout teilen, ist alles andere Kosmetik. git worktrees lösen genau dieses Problem, mit Bordmitteln, in Sekunden, und die gesamte Branche hat das erkannt: lokal per Worktree, in der Cloud per Wegwerf-VM.
 
-Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Spuren, Abhängigkeiten und Lizenz inklusive. Das ist kein großes Engineering, nur eine Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
+Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Äste, Abhängigkeiten und Lizenz inklusive. Das ist kein großes Engineering, nur eine Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
 
 Ehrlich bleiben will ich auch diesmal:
 
 - **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Das Review wird zum Flaschenhals, nicht die Rechenzeit.
-- **Der Mental Load bleibt.** Spurwechsel im Kopf sind anstrengender als Spurwechsel auf der Platte. Ich fahre selten mehr als zwei, drei Spuren gleichzeitig. Nicht weil die Technik nicht mehr hergäbe, sondern weil mein Kopf sonst nicht mehr sinnvoll reviewen kann.
+- **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengender als auf der Platte. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Nicht weil die Technik nicht mehr hergäbe, sondern weil mein Kopf sonst nicht mehr sinnvoll reviewen kann.
 - **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Genau deshalb steckt all das im Init-Command und nicht in meinem Gedächtnis.
-
-Und wo laufen all diese Spuren am besten? Auf einer Maschine, die nie ausgeht. Wie meine Bodenstation aussieht, ein always-on Mac mini, an dem MacBook und Handy nur noch andocken, steht im Begleitartikel [„Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation"](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini). Die Bodenstation liefert die Rechenzeit, die Worktrees liefern die Spuren. Zusammen ergibt das ein Setup, in dem Agenten wirklich rund um die Uhr arbeiten.
 
 **Fragen, Feedback, eigene Worktree-Tricks?** Immer her damit, ich freue mich über jede Nachricht. Und wenn dir der Init-Command gefällt: Bau ihn nach. Er ist absichtlich so generisch gehalten, dass er in jedes Zwei-Repo-Setup passt.
 

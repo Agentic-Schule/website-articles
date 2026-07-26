@@ -41,8 +41,8 @@ daneben) im jeweiligen Artikel-Ordner und werden zentral gerendert:
 node tools/render-header.mjs blog/<artikel-ordner>
 ```
 
-Ergebnis ist `header.jpg` (2400×1350). Voraussetzung: `playwright-core` und
-Google Chrome. Achtung: Der Build kopiert Artikel-Ordner komplett nach `dist/`,
+Ergebnis ist `header.jpg` (2400×1350). Voraussetzung: einmalig `cd tools && npm install`
+(holt `playwright-core`) und ein installierter Google Chrome. Achtung: Der Build kopiert Artikel-Ordner komplett nach `dist/`,
 die Quelldateien werden also mit veröffentlicht (harmlos, aber gut zu wissen).
 
 ## Lokal bauen
