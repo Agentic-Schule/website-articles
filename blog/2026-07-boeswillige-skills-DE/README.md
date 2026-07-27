@@ -125,6 +125,12 @@ Und damit möchte ich einem naheliegenden Reflex zuvorkommen: auf den Prüfer zu
 
 Damit ist der Angriff komplett. Er lässt sich in einem Satz zusammenfassen: **Geprüft wird der Skill. Ausgeführt wird, was zum Zeitpunkt der Ausführung hinter dem Link liegt.** Zwischen diesen beiden Momenten liegen Wochen. In diesen Wochen gehört der Inhalt dem Angreifer.
 
+Zwei Details machen die Sache noch fieser, und sie erklären, warum beim Lesen niemand stutzt.
+
+**Der Link steht an einer ganz anderen Stelle.** Nirgends heißt es „führe das hier aus". Die Adresse taucht erst weit hinten in einem sachlichen Abschnitt „Stitch Documentation" auf, als schlichter Quellenverweis, so wie man ihn in jeder ordentlichen Anleitung erwartet. Zur Anweisung wird sie durch einen Satz ganz vorne in Phase 0. Zwischen der Anweisung und der Adresse liegen über zweihundert Zeilen. Wer die Datei liest, müsste beide Stellen im Kopf zusammenbringen, und genau das tut man beim Überfliegen nicht.
+
+**Und wer den Link prüft, wird beruhigt.** Ich habe die Adresse angesehen, allerdings nur die HTTP-Antwortkopfzeilen, ohne den Inhalt zu laden. Das Ergebnis, Stand 27. Juli 2026: Die Domain der Angreifer antwortet mit einer Weiterleitung auf `stitch.withgoogle.com`, also auf Googles echte Dokumentation. Wer den Link heute anklickt, landet beim Original und hakt die Prüfung zufrieden ab. Genau dieser Schalter wurde in dem Experiment umgelegt, und er lässt sich jederzeit wieder umlegen. Ein Klick auf den Link beweist deshalb überhaupt nichts, außer dem Zustand von genau diesem Augenblick.
+
 Das Muster ist aus der klassischen Software-Lieferkette bekannt und heißt dort Rug Pull. Invariant Labs, heute Teil von Snyk, hat es [schon im April 2025 für MCP beschrieben](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks). Ein bösartiger Server könne die Beschreibung eines Werkzeugs ändern, *nachdem* der Client sie freigegeben hat. Neu ist nicht die Idee. Neu ist, wie billig sie geworden ist, seit die Nutzlast reiner Text sein darf.
 
 Anthropic beschreibt genau diese Gefahr in der eigenen Dokumentation, in erfreulicher Deutlichkeit:
