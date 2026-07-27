@@ -64,8 +64,9 @@ Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angele
 >
 > git worktree list      # was liegt wo, auf welchem Branch?
 > git worktree remove ../app-frontend-checkout
-> git worktree prune     # Verwaltungsreste von Hand gelöschter Worktrees aufräumen
+> git worktree prune
 > ```
+> Die letzten beiden verwechselt man leicht: `remove` ist der saubere Rückbau, es entsorgt das Verzeichnis mitsamt der internen Verwaltungsdaten. `prune` repariert dagegen nur: Wer einen Worktree-Ordner einfach per `rm -rf` löscht, hinterlässt im Repository verwaiste Verwaltungsdaten, und die räumt `prune` ab.
 
 Eine Regel muss man kennen: **Ein Branch kann immer nur in einem Worktree ausgecheckt sein.** Versucht man denselben Branch in zwei Worktrees zu öffnen, verweigert git das Kommando (wer es mit `--force` erzwingt, weiß hoffentlich, was er tut). Die Regel hat einen guten Grund: Zwei Checkouts desselben Branches würden sich gegenseitig Commits und Index zerschießen. Für unser Agenten-Szenario ist die Regel sogar ein Feature, denn sie erzwingt exakt das Modell, das wir wollen: ein Worktree, ein Branch, ein Agent.
 
