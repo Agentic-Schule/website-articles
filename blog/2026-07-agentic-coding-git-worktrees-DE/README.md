@@ -286,7 +286,7 @@ Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbs
 Ehrlich bleiben will ich auch diesmal:
 
 - **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Dazu vertragen sich nicht alle Features: Manche schließen sich gegenseitig aus, andere müssen in einer festen Reihenfolge einfließen. Worktrees halten die Stände sauber auseinander, aber was wann gemergt wird, bleibt Kopfarbeit. Der Flaschenhals ist das Review.
-- **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengender als auf der Platte. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Die Technik gäbe locker mehr her. Mein Kopf kommt beim Review vorher an seine Grenze.
+- **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengend. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Die Technik gäbe locker mehr her. Mein Kopf kommt beim Review vorher an seine Grenze.
 - **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Deshalb steckt all das im Init-Command statt in meinem Gedächtnis.
 
 **Fragen, Feedback, eigene Worktree-Tricks?** Immer her damit, ich freue mich über jede Nachricht. Und wenn dir der Init-Command gefällt: Bau ihn nach. Er ist absichtlich so generisch gehalten, dass er in jedes Zwei-Repo-Setup passt.

@@ -285,7 +285,7 @@ Where the built-in features end, namely at the repo boundary, a self-built init 
 I want to stay honest this time, too:
 
 - **Parallelism is not an end in itself.** Three agents produce three times as many diffs, and somebody (me) has to read them all. On top of that, not all features get along: some are mutually exclusive, others have to land in a fixed order. Worktrees keep the states cleanly apart, but what gets merged when remains headwork. The bottleneck is the review.
-- **The mental load stays.** Hopping from branch to branch is harder in your head than on disk. That's why I rarely allow myself more than two or three branches at a time. The technology could easily handle more. My head hits its limit at review time well before that.
+- **The mental load stays.** Hopping from branch to branch is hard work in your head. That's why I rarely allow myself more than two or three branches at a time. The technology could easily handle more. My head hits its limit at review time well before that.
 - **Discipline is part of it.** Install the deps, activate the license, assign the ports, clean up at the end. That's why all of it lives in the init command instead of my memory.
 
 **Questions, feedback, worktree tricks of your own?** Bring them on, I'm happy to hear from you. And if you like the init command: rebuild it. It is deliberately kept so generic that it fits any two-repo setup.
