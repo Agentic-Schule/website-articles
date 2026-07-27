@@ -243,7 +243,7 @@ An dieser Stelle noch eine Beobachtung, die man kennen sollte. AIRs Bericht ende
 
 Das entwertet ihre Recherche nicht, sie ist gründlich und lehrreich. Ich ziehe aus demselben Material nur eine andere Konsequenz. Ein weiterer Marktplatz, diesmal mit besserem Scanner, hilft hier nämlich nicht weiter, denn **das Problem an sich ist der Marktplatz.** Seine ganze Funktion besteht darin, Vertrauen zu übertragen: von einem Fremden, den du nie geprüft hast, über einen Katalog, den du nie geprüft hast, in dein Projekt. Genau diese Kette hat der Angriff benutzt. Sie funktioniert nicht besser, wenn man ein weiteres Glied einzieht.
 
-**Mein Rat bleibt deshalb: Verlasse dich auf gar keinen Marktplatz.** Das Risiko ist zu groß, und der Aufwand, es selbst zu schreiben, ist zu klein.
+**Mein Rat bleibt deshalb: Verlasse dich auf gar keinen Marktplatz.** Das Risiko ist zu groß, und der Aufwand, es selbst zu schreiben, ist gering.
 
 Damit bleibt für Marktplätze eine sehr nützliche Rolle. Sie sind ein exzellenter Ideenkatalog. Dort sieht man, welche Arbeitsschritte sich lohnend automatisieren lassen und wie andere ein Problem zerlegen. Nur sollte man von dort Ideen mitnehmen, keine Dateien.
 
