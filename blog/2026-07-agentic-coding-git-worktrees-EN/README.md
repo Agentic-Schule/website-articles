@@ -153,7 +153,7 @@ For my workflow, that means: build it yourself. Luckily, in Claude Code that's s
 
 ## My Init Command: One Command, Two Repos, Two Worktrees
 
-Custom [slash commands](https://code.claude.com/docs/en/skills) in Claude Code are simply Markdown files, the current docs group them under the umbrella term "skills": a file `~/.claude/commands/feature-init.md` creates the command `/feature-init`. The content is a work instruction for the agent: prose with a few commands in it. Such a command creates my worktree pairs. The procedure it enforces:
+Custom slash commands in Claude Code are made available through a [skill file](https://code.claude.com/docs/en/skills), simply a Markdown file: `~/.claude/commands/feature-init.md` creates the command `/feature-init`. Claude used to call these files "commands"; by now they are called "skills" everywhere. It's the same thing, and this article uses both terms interchangeably. The content is a work instruction for the agent: prose with a few commands in it. Such a command creates my worktree pairs. The procedure it enforces:
 
 1. **Ask for the feature name.** It becomes the branch name, identical in both repos.
 2. **Update both repos and check whether the branch already exists**, locally or on the remote. The decision is made per repo: if the branch already exists there, it gets checked out (maybe someone already started yesterday, or it was me and the feature has once again been sitting around for too long). If not, it's created fresh from the latest `origin/main`.

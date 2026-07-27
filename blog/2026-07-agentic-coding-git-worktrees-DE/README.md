@@ -154,7 +154,7 @@ Für meinen Workflow heißt das: selbst bauen. Zum Glück ist das in Claude Code
 
 ## Mein Init-Command: ein Kommando, zwei Repos, zwei Worktrees
 
-Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude Code schlicht Markdown-Dateien, die aktuelle Doku führt sie unter dem Oberbegriff „Skills": Eine Datei `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Der Inhalt ist eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. So ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
+Eigene Slash-Commands werden in Claude Code über eine [Skill-Datei](https://code.claude.com/docs/en/skills) verfügbar gemacht, schlicht eine Markdown-Datei: `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Früher nannte Claude diese Dateien „Commands", inzwischen heißen sie überall „Skills". Gemeint ist dasselbe, und auch in diesem Artikel meinen beide Begriffe dasselbe. Der Inhalt ist eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. So ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
 
 1. **Feature-Name abfragen.** Er wird der Branch-Name, identisch in beiden Repos.
 2. **Beide Repos aktualisieren und prüfen, ob der Branch schon existiert**, lokal oder remote. Die Entscheidung fällt pro Repo: Existiert der Branch dort schon, wird er ausgecheckt (vielleicht hat gestern schon jemand angefangen, oder ich wars und das Feature ist mal wieder zu lange liegen geblieben). Falls nicht, entsteht er frisch vom neuesten `origin/main`.
