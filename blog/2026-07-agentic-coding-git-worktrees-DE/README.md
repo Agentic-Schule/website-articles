@@ -40,7 +40,7 @@ Mit einem klassischen Einzel-Checkout haben wir jetzt drei schlechte Optionen:
 
 - **Es drauf ankommen lassen.** Schnell einen zweiten Agenten starten: stash, Branch wechseln, fixen, pushen und zurück, bevor der laufende Agent etwas merkt. Nur liest und schreibt der erste genau in diesem Verzeichnis. Wenn wir schnell waren und kein Pech hatten, kann das vielleicht klappen.
 - **Warten.** Der Bugfix bleibt liegen, bis das Refactoring durch ist. Der einzige Grund: Das Arbeitsverzeichnis ist gerade belegt.
-- **Den Agenten abbrechen.** Die halbe Arbeit ist getan, der Kontext aufgebaut, alles für die Tonne.
+- **Den Agenten abbrechen.** Bei einer komplexen Orchestrierung wird das teuer: Die Zwischenergebnisse sind wahrscheinlich verloren, und der neue Anlauf kostet dieselben Token gleich noch einmal.
 
 Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, hat wenig Komfort.
 
