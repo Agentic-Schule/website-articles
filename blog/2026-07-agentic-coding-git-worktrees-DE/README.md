@@ -75,7 +75,7 @@ Zwei Dinge sollte man außerdem wissen:
 - **Geteilt wird auch, was man nicht sofort sieht.** Hooks (`.git/hooks`) und die lokale Repo-Konfiguration gelten für alle Worktrees gemeinsam. Ein pre-commit-Hook wirkt also überall.
 - **Nicht geteilt wird alles, was gitignored ist.** `node_modules`, `.env`, Build-Caches: Ein frischer Worktree ist ein frischer Checkout, all das fehlt dort erst einmal. Das ist Fluch (Installation pro Worktree, dazu später mehr) und Segen zugleich (keine halb gebauten Artefakte vom falschen Branch).
 
-Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotfix neben dem laufenden Feature oder um einen Pull Request auszuchecken, ohne den eigenen Stand anzufassen. Zur Höchstform läuft das Feature aber erst jetzt auf, denn Agenten machen aus dem Sonderfall den Normalfall: Der persönliche Rechner, früher Arbeitsplatz genau eines Entwicklers, beherbergt auf einmal ein ganzes Team, und jedes Teammitglied braucht dauerhaft seinen eigenen Checkout.
+Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotfix neben dem laufenden Feature oder um einen Pull Request auszuchecken, ohne den eigenen Stand anzufassen. Mit Agenten kommt ein neuer Dauerzustand dazu: Der persönliche Rechner beherbergt auf einmal ein ganzes Team, und jedes Teammitglied braucht seinen eigenen Checkout.
 
 ## Was die Tools daraus machen
 
