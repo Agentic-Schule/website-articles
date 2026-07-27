@@ -20,7 +20,7 @@ header: header.jpg
 
 Ein Skill ist eine Textdatei. Das macht ihn so praktisch und leider auch so gefährlich. Wer einen Skill installiert, gibt seinem Agenten eine Anweisung, die er mit deinen Rechten ausführt. Und sie darf auch lauten: „Lade dir die restlichen Instruktionen von dieser Adresse."
 
-**Genau dort setzt eine Angriffsklasse an, die im Juni 2026 eindrucksvoll vorgeführt wurde. Eine Sicherheitsfirma baute einen harmlos aussehenden Skill, brachte ihn in populäre Marktplätze und schaltete Werbung dafür. Alle Prüfungen bestand er. Und dann tauschte sie aus, was hinter dem Link lag.**
+**Genau dort setzt eine Angriffsklasse an, die im Juni 2026 eindrucksvoll vorgeführt wurde. Eine Sicherheitsfirma baute einen harmlos aussehenden Skill, brachte ihn in populäre Marktplätze und schaltete Werbung dafür. Alle Prüfungen bestand er. Und dann tauschte sie aus, was hinter dem Link lag. Dabei gingen sie ausgesprochen clever vor.**
 
 Dieser Artikel erzählt den Fall anhand der Originalquelle und der Spuren, die er auf GitHub hinterlassen hat: der Pull Request, das Review, die Datei selbst. Er zeigt, warum die üblichen Scanner den Angriff prinzipbedingt nicht sehen konnten und was das für alle bedeutet, die Skills aus dem Netz installieren. Am Ende stehen eine Prüfliste und die Konsequenz, die ich daraus gezogen habe.
 
