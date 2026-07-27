@@ -112,7 +112,7 @@ It works just as well mid-session: ask Claude to "please work in a worktree for 
 It gets really elegant with [subagents](https://code.claude.com/docs/en/sub-agents), the helper agents Claude delegates subtasks to:
 
 > **🛠️ Build it yourself: isolate subagents automatically**
-> A file `.claude/agents/refactorer.md` with `isolation: worktree` in the frontmatter is all it takes, and every run of this subagent gets its own temporary worktree:
+> A file `.claude/agents/refactorer.md` with [`isolation: worktree`](https://code.claude.com/docs/en/worktrees) in the frontmatter is all it takes, and every run of this subagent gets its own temporary worktree (example from the official docs):
 > ```markdown
 > ---
 > name: refactorer

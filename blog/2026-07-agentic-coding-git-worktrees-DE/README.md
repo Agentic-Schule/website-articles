@@ -113,7 +113,7 @@ Genauso gut geht es mitten in der Session: Auf die Bitte „arbeite dafür bitte
 Richtig elegant wird es bei [Subagenten](https://code.claude.com/docs/en/sub-agents), also den Helfer-Agenten, an die Claude Teilaufgaben delegiert:
 
 > **🛠️ Selbst nachbauen: Subagenten automatisch isolieren**
-> Eine Datei `.claude/agents/refactorer.md` mit `isolation: worktree` im Frontmatter genügt, und jeder Lauf dieses Subagenten bekommt einen eigenen, temporären Worktree:
+> Eine Datei `.claude/agents/refactorer.md` mit [`isolation: worktree`](https://code.claude.com/docs/en/worktrees) im Frontmatter genügt, und jeder Lauf dieses Subagenten bekommt einen eigenen, temporären Worktree (Beispiel aus der offiziellen Doku):
 > ```markdown
 > ---
 > name: refactorer
