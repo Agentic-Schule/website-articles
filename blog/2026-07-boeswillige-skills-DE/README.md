@@ -46,6 +46,8 @@ Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffe
 
 Danach kam der Teil, den ich für den eigentlich interessanten halte. AIR schaltete eine Instagram-Anzeige. Nicht für Entwickler, sondern für Leute aus Marketing, Vertrieb und Design. Also für die Zielgruppe, die heute Agenten benutzt, ohne Code zu lesen.
 
+Dass die Tarnung überhaupt so gut funktionierte, liegt auch am Umfeld. Rund um Google Stitch und Claude Code gibt es seit Monaten eine kleine Industrie aus Tutorials, Blogposts und „So baust du deine Landing Page in zehn Minuten"-Anleitungen. In diesem Rauschen fällt ein weiterer Skill mit genau diesem Versprechen niemandem auf. Er sieht schlicht aus wie das, was gerade alle machen.
+
 Und die Prüfungen? AIR gibt an, den Skill gegen die Scanner von Cisco, NVIDIA und skills.sh getestet zu haben. Alle stuften ihn als sicher ein.
 
 Der Rest ist schnell erzählt. Nach der Verbreitung tauschte AIR den Inhalt hinter einer im Skill hinterlegten Adresse aus. Ab diesem Moment wies der Skill die Agenten an, ein Skript zu laden und auszuführen. Die Nutzlast hielten die Autoren bewusst harmlos: Sie sammelte die E-Mail-Adresse des Opfers ein und schickte sie an AIR. Betroffen waren nach ihren Angaben mehrere zehntausend Agenten, darunter solche in Firmenkonten.
@@ -64,6 +66,10 @@ Vermutlich wird der Skill früher oder später entfernt. Deshalb habe ich eine [
 
 Hat es denn wirklich noch niemand gemeldet? Ich habe die Issues und Pull Requests des Repositories durchsucht, nach dem Namen des Skills, nach „Stitch", nach „malicious". Das Ergebnis: **keine einzige Meldung.** Die einzigen Treffer zum Skill sind der ursprüngliche Pull Request und spätere Umbauten, die ihn beiläufig mitgezogen haben. Und mitgezogen wurde er tatsächlich: Am 22. Mai wanderte er im Zuge eines größeren Umbaus in das neue Multi-Harness-Format. Der Skill lag also nicht vergessen in einer Ecke, er wurde gepflegt. Im Katalog des Marktplatzes steht er bis heute als installierbares Plugin in Version 1.0.1.
 
+Noch unangenehmer wird es eine Ebene darüber. Rund um die Marktplätze ist ein Ring von Verzeichnis-Seiten entstanden, die deren Inhalte automatisch einsammeln und neu präsentieren. Und dort ist unser Skill natürlich auch gelandet. Auf einer dieser Seiten steht er unter den Kategorien „Frontend Development" und „Marketing & SEO", also exakt bei der Zielgruppe, auf die der Angriff gemünzt war. Dazu gibt es eine einzeilige Installationsanweisung zum Kopieren, daneben die Sternezahl des Repositories als Vertrauenssignal. Einen Sicherheitshinweis sucht man vergebens, und der Inhalt der `SKILL.md` wird nicht angezeigt. Die Verweise auf die fremde Domain sieht dort also niemand.
+
+Besonders bemerkenswert ist ein zweiter dieser Kataloge: **skills.sh**, dessen Scanner den Skill laut AIR seinerzeit als sicher durchgewinkt hat, listet ihn bis heute. Dort steht er, ganz ohne Sicherheits-Kennzeichnung, mit **31.200 Installationen**.
+
 Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Weil AIR den Marktplatz im Bericht anonymisiert hat, hat er von seiner Rolle in der Geschichte womöglich nie erfahren. Eine Meldung an ihn oder eine Entfernung des Skills erwähnt der Bericht jedenfalls nicht. Genau das ist der Punkt: **Ein bösartiger Beitrag verschwindet nicht von selbst, nur weil jemand darüber geschrieben hat.** Zwischen „ist öffentlich bekannt" und „ist bereinigt" liegt in diesem Ökosystem noch sehr viel Luft.
 
 Aber ist das wirklich der Skill aus dem Bericht? AIR verlinkt ihn nicht, sondern beschreibt ihn nur. Denkbar wäre auch, dass ich einen Nachahmer gefunden habe, der die Masche nach der Veröffentlichung kopiert hat.
@@ -76,7 +82,7 @@ Damit passt ein Nachahmer nicht mehr ins Bild. Wer die Masche kopiert, kann das 
 
 Ein Beweis im strengen Sinn ist das nicht, dafür müsste jemand den Anonymisierungsdienst lüften. Für die Frage, ob man diesen Skill installieren möchte, spielt es ohnehin keine Rolle. Ob Original oder Kopie: Die Datei weist den Agenten weiterhin an, eine fremde Adresse als verbindliche Wahrheit zu behandeln und stillschweigend zu installieren, was von dort kommt.
 
-Nicht nachprüfen lässt sich die Reichweite. Sie beruht auf den zurückgeschickten E-Mails und damit auf der Buchführung derjenigen, die den Angriff gefahren haben. Wichtig ist das ohnehin nicht. Ob es ein paar hundert oder ein paar zehntausend Agenten waren, ändert nichts an dem, was hier vorgeführt wurde. Der Mechanismus ist der Punkt, und der ist zweifelsfrei belegt.
+Bleibt die Frage nach der Reichweite. Wie viele Agenten den Payload tatsächlich ausgeführt haben, weiß nur AIR, denn diese Zahl beruht auf den zurückgeschickten E-Mails. Die Installationszahlen der Verzeichnisse sind dagegen unabhängig einsehbar, und sie liegen in derselben Größenordnung. Genau nachrechnen lässt sich das nicht, und es ist auch nicht der Punkt. Entscheidend ist der Mechanismus, und der ist zweifelsfrei belegt.
 
 ## Der Trick: Prüfung und Ausführung sind zwei verschiedene Momente
 
@@ -106,6 +112,18 @@ Zwei weitere Formulierungen der Datei zahlen auf dasselbe Konto ein. „Never di
 Das ist perfektes Social Engineering, nur eben gegen eine Maschine gerichtet. Alles klingt nach guter Ingenieurspraxis: Schau in die aktuelle Doku statt in veraltete Beispiele, belästige den Nutzer nicht mit Installationskram, gib keine Schlüssel aus.
 
 Die Adresse selbst war der zweite Teil des Tricks. Google Stitch liegt in Wahrheit unter `stitch.withgoogle.com`. Der Skill verwies stattdessen auf eine Domain, die den Produktnamen im Titel führte und den Angreifern gehörte. Kaum jemand weiß auswendig, unter welcher Adresse Googles Werkzeug wirklich residiert. Wer es nicht weiß, hat keine Chance, den Unterschied zu bemerken. Der Agent übrigens auch nicht.
+
+### Die Pointe steht im Review
+
+Der Pull Request wurde nicht wortlos durchgewinkt. Es gibt ein ausführliches, fachlich kluges Review, das dem Beitrag mehrere Qualitäten bescheinigt: saubere progressive disclosure, gut kalibrierter Geltungsbereich, wohlgeformter Marktplatz-Eintrag. Und dann diesen Punkt:
+
+> „**Phase 0 hygiene.** Verifying the Stitch SDK and API key before starting the interview is the right call".
+
+Das ist exakt der Teil, in dem der Angriff steckt. Er wurde nicht übersehen, er wurde ausdrücklich **gelobt**, und zwar als gute Praxis. Das Review endet mit „Welcome aboard. Going to squash-merge."
+
+Unter dem Kommentar steht der Hinweis „Generated by Claude Code". Die Prüfung, die den Angriff als Hygiene abnickte, kam also selbst von einem Agenten. Zwischen der Einreichung des Reviews und dem Merge lagen ausweislich der Zeitstempel vier Sekunden.
+
+Und damit möchte ich einem naheliegenden Reflex zuvorkommen: auf den Prüfer zu zeigen. Ich habe die Datei mehrfach gelesen, mit dem Wissen, dass darin ein Angriff steckt, und ich habe eine ganze Weile gebraucht, um ihn zu benennen. Hätte mir jemand diesen Pull Request kommentarlos zum Review vorgelegt, ich hätte ihn durchgewunken. Ohne jede Chance. Genau das ist die eigentliche Nachricht dieses Falls.
 
 Damit ist der Angriff komplett. Er lässt sich in einem Satz zusammenfassen: **Geprüft wird der Skill. Ausgeführt wird, was zum Zeitpunkt der Ausführung hinter dem Link liegt.** Zwischen diesen beiden Momenten liegen Wochen. In diesen Wochen gehört der Inhalt dem Angreifer.
 
@@ -233,7 +251,7 @@ Das ist keine exotische Einzelmeinung. Snyk gibt Skill-Entwicklern im eigenen Be
 
 ### Warum mir „review" allein nicht reicht
 
-An dieser Stelle möchte ich einen Schritt weiter gehen als Snyk. Denn genau das ist doch die Lehre aus dem geschilderten Fall: **Kein Review kann sicherstellen, dass nicht doch irgendwo ein schadhaftes Fragment steckt.**
+An dieser Stelle möchte ich einen Schritt weiter gehen als Snyk. Denn genau das ist doch die Lehre aus dem geschilderten Fall: **Kein Review kann sicherstellen, dass nicht doch irgendwo ein schadhaftes Fragment steckt.** In unserem Fall hat das Review den Angriff nicht nur übersehen, es hat ihn gelobt.
 
 Prompt Injection ist eine Disziplin für sich. Sie entwickelt sich schneller, als eine Prüfliste mitwachsen kann. Diesmal war es eine URL, die man beim Lesen immerhin sehen konnte. Beim nächsten Mal ist es etwas, das man als Mensch gar nicht als Anweisung erkennt. Ausdenken muss man sich das nicht, es ist längst dokumentiert. Snyk führt einen eigenen Befund-Code für **versteckte Unicode-Zeichen**. Dessen Beschreibung liest sich wie eine Warnung an alle, die auf sorgfältiges Lesen vertrauen:
 
