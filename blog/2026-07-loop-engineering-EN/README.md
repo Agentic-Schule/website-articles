@@ -80,7 +80,7 @@ The [documentation](https://code.claude.com/docs/en/scheduled-tasks) describes t
 | Prompt only | `/loop check the deploy` | Claude picks the delay itself |
 | Interval only, or nothing | `/loop` | built-in maintenance prompt |
 
-In self-paced mode, Claude decides after each iteration how long to wait. The docs describe it like this: short waits while a build is finishing or a pull request is active, longer ones when nothing is pending. One minute is the floor, one hour the ceiling. As long as something is actually happening the delays stay short, and the hour is the exception for a loop running into nothing. The chosen delay and the reason for it are printed at the end of each iteration.
+In self-paced mode, Claude decides after each iteration how long to wait. The docs describe it like this: short waits while a build is finishing or a pull request is active, longer ones when nothing is pending. As long as something is actually happening the delays stay short. The chosen delay and the reason for it are printed at the end of each iteration.
 
 A bare `/loop` with nothing else starts a built-in maintenance prompt. It works in a fixed order: first continue unfinished work from the conversation, then tend to the current branch's pull request, meaning review comments, red CI and merge conflicts, and when none of that is pending, run cleanup passes such as bug hunts or simplification. It starts no new initiatives. Irreversible actions such as pushing or deleting only happen when they continue something the transcript already authorized.
 
@@ -89,6 +89,41 @@ You can replace that default. A `.claude/loop.md` file in the project, or `~/.cl
 A few limits are worth knowing. The loop lives in the session and ends with it. A `--resume` brings it back, but after seven days it expires for good. Esc cancels a pending iteration. And in self-paced mode Claude can call it a day on its own once it considers the work done. If it forgets both, meaning it neither reschedules nor stops, Claude Code schedules a single straggler about twenty minutes later and ends the loop then.
 
 > ⚠️ On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform and Microsoft Foundry none of this applies. There, a prompt without an interval runs on a fixed ten-minute schedule, and `loop.md` is not read at all.
+
+## A look from the inside
+
+Everything up to here was in the public documentation. The rest of this section is not. It comes from a measurement I made myself, and from what the agent has in front of it while a loop is running.
+
+Self-pacing is not an automatism in the program. The model is handed a tool called `ScheduleWakeup` and sets the next wakeup itself. On the range, its description says plainly:
+
+> Clamped to [60, 3600] by the runtime.
+
+Sixty seconds to an hour, then. The interesting question is what the model picks within that range. It is given three cases for that. When waiting on something external that the environment cannot report on its own, the delay is supposed to fit the thing:
+
+> A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
+
+That matches what I see in practice. While a CI run is going, the agent waits roughly as long as my CI usually takes.
+
+When something else triggers the wakeup anyway, a long fallback heartbeat from 1200 seconds is intended, so that quiet wakeups stay rare. And when there is nothing specific to watch, the guidance is 1200 to 1800 seconds. Polling for its own sake is explicitly ruled out:
+
+> Do NOT schedule a short-interval wakeup to poll for background work you started, when harness-tracked work finishes, you are re-invoked automatically, so polling is wasted.
+
+That explains why a loop feels brisker in practice than the range suggests. While something is running, the wait is short. The long delays are reserved for the case where nothing is happening.
+
+Then I measured, deliberately requesting a delay below the floor: thirty seconds. The reply:
+
+```text
+Next wakeup scheduled for 22:41:00 (in 119s)
+(clamped to 60s from your requested value)
+```
+
+Two things happen here in sequence. First the request is raised to sixty seconds, which is the hard floor. Then the appointment slides to the next full minute, because cron only knows minute granularity. Thirty requested seconds became **119 seconds of actual waiting**. Worth knowing if you plan very short cadences.
+
+Finally the exit. A loop does not only end when you press Esc. The model can end it itself, using the same tool:
+
+> To end the loop, call this tool with `stop: true`
+
+That is exactly what I triggered in the test once the question was answered. The response was `Loop stopped, cancelled 1 pending wakeup(s)`.
 
 ## `/loop`, `/goal` or a hook
 
@@ -144,7 +179,7 @@ The pleasant part first. Anthropic extends the prompt cache automatically [when 
 
 > On a Claude subscription, Claude Code requests the one-hour TTL automatically.
 
-One hour is also the ceiling for the self-chosen delay. On a subscription the cached context therefore stays warm across every pause, even the longest one possible. The pause costs you nothing.
+On a subscription the cached context therefore stays warm across any pause a loop can choose. The pause costs you nothing.
 
 Now the edge. As soon as you work past your allowance and start drawing on usage credits, Claude Code drops to five minutes automatically, according to the same page. On an API key and with the cloud providers, five minutes is the default anyway. And then this applies:
 
