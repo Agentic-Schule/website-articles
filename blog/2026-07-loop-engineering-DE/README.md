@@ -80,7 +80,7 @@ Die [Dokumentation](https://code.claude.com/docs/en/scheduled-tasks) beschreibt 
 | nur Prompt | `/loop check the deploy` | Claude wählt den Abstand selbst |
 | nur Intervall oder nichts | `/loop` | eingebauter Wartungs-Prompt |
 
-Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie lange er wartet. Die Doku beschreibt das so: kurze Abstände, solange ein Build läuft oder ein Pull Request in Bewegung ist, längere, wenn nichts ansteht. Eine Minute ist die Untergrenze, eine Stunde die Obergrenze. Solange tatsächlich etwas passiert, bleiben die Abstände kurz, die Stunde ist der Ausnahmefall für eine Schleife, die ins Leere läuft. Der gewählte Abstand und die Begründung dafür werden am Ende jedes Durchlaufs ausgegeben.
+Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie lange er wartet. Die Doku beschreibt das so: kurze Abstände, solange ein Build läuft oder ein Pull Request in Bewegung ist, längere, wenn nichts ansteht. Solange tatsächlich etwas passiert, bleiben die Abstände kurz. Der gewählte Abstand und die Begründung dafür werden am Ende jedes Durchlaufs ausgegeben.
 
 Ein bloßes `/loop` ohne alles startet einen eingebauten Wartungs-Prompt. Der arbeitet in fester Reihenfolge: erst unerledigte Arbeit aus dem Gespräch fortsetzen, dann den Pull Request des aktuellen Branch pflegen, also Review-Kommentare, rote CI und Merge-Konflikte, und wenn nichts davon ansteht, Aufräumdurchgänge wie Bug-Jagd oder Vereinfachung. Neue Initiativen startet er nicht. Irreversible Aktionen wie Pushen oder Löschen führt er nur aus, wenn sie etwas fortsetzen, das im Transkript schon genehmigt wurde.
 
@@ -89,6 +89,41 @@ Diesen Standard kannst du ersetzen. Eine Datei `.claude/loop.md` im Projekt oder
 Ein paar Grenzen sollte man kennen. Die Schleife lebt in der Sitzung und endet mit ihr. Ein `--resume` holt sie zurück, aber nach sieben Tagen verfällt sie endgültig. Esc bricht einen wartenden Durchlauf ab. Und im selbstgetakteten Modus kann Claude von sich aus Schluss machen, wenn er die Arbeit für erledigt hält. Vergisst er beides, also weder neu planen noch stoppen, plant Claude Code einen einzigen Nachzügler nach etwa zwanzig Minuten und beendet die Schleife dann.
 
 > ⚠️ Auf Amazon Bedrock, Claude Platform on AWS, Google Clouds Agent Platform und Microsoft Foundry gilt das nicht. Dort läuft ein Prompt ohne Intervall in einem festen Zehn-Minuten-Takt, und `loop.md` wird gar nicht erst gelesen.
+
+## Ein Blick von innen
+
+Bis hierhin stand alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus einer Messung, die ich selbst gemacht habe, und aus dem, was der Agent während einer laufenden Schleife vor sich hat.
+
+Denn die Selbsttaktung ist kein Automatismus im Programm. Das Modell bekommt dafür ein Werkzeug namens `ScheduleWakeup` in die Hand und setzt den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
+
+> Clamped to [60, 3600] by the runtime.
+
+Sechzig Sekunden bis eine Stunde also. Die interessante Frage ist, wonach das Modell innerhalb dieser Spanne wählt. Dazu bekommt es drei Fälle vorgegeben. Beim Warten auf etwas Fremdes, das die Umgebung nicht von sich aus melden kann, soll der Abstand zur Sache passen:
+
+> A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
+
+In der Praxis deckt sich das. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht.
+
+Wenn ohnehin etwas anderes das Aufwachen auslöst, ist ein langer Sicherungs-Herzschlag ab 1200 Sekunden vorgesehen, damit stille Aufwachvorgänge selten bleiben. Und wenn es gar nichts Bestimmtes zu beobachten gibt, lautet die Vorgabe 1200 bis 1800 Sekunden. Ausdrücklich verboten ist dagegen das Pollen um des Pollens willen:
+
+> Do NOT schedule a short-interval wakeup to poll for background work you started, when harness-tracked work finishes, you are re-invoked automatically, so polling is wasted.
+
+Das erklärt, warum sich eine Schleife im Alltag flotter anfühlt, als die Spanne vermuten lässt. Solange etwas läuft, wird kurz gewartet. Die langen Abstände sind für den Fall reserviert, dass gerade nichts passiert.
+
+Dann habe ich nachgemessen und bewusst einen zu kurzen Abstand angefordert, nämlich dreißig Sekunden. Die Antwort:
+
+```text
+Next wakeup scheduled for 22:41:00 (in 119s)
+(clamped to 60s from your requested value)
+```
+
+Zwei Dinge passieren hier nacheinander. Erst wird der Wunsch auf sechzig Sekunden hochgesetzt, das ist die harte Untergrenze. Dann rutscht der Termin auf die nächste volle Minute, weil Cron nur Minutengranularität kennt. Aus dreißig angeforderten Sekunden wurden so **119 Sekunden echte Wartezeit**. Wer sehr kurze Takte plant, sollte das wissen.
+
+Zuletzt der Ausstieg. Eine Schleife endet nicht nur, wenn du Esc drückst. Das Modell kann sie selbst beenden, mit demselben Werkzeug:
+
+> To end the loop, call this tool with `stop: true`
+
+Genau das habe ich im Test ausgelöst, als die Frage beantwortet war. Die Rückmeldung lautete `Loop stopped, cancelled 1 pending wakeup(s)`.
 
 ## `/loop`, `/goal` oder Hook
 
@@ -144,7 +179,7 @@ Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [we
 
 > On a Claude subscription, Claude Code requests the one-hour TTL automatically.
 
-Eine Stunde ist zugleich die Obergrenze für den selbstgewählten Abstand. Im Abo bleibt der zwischengespeicherte Kontext deshalb über jede Pause hinweg warm, selbst über die längstmögliche. Die Pause kostet dich nichts.
+Im Abo bleibt der zwischengespeicherte Kontext damit über jede Pause hinweg warm, die eine Schleife überhaupt wählen kann. Die Pause kostet dich nichts.
 
 Jetzt die Kante. Sobald du über dein Kontingent hinaus arbeitest und Usage Credits verbrauchst, schaltet Claude Code laut derselben Seite automatisch auf fünf Minuten herunter. Auf einem API-Schlüssel und bei den Cloud-Anbietern sind fünf Minuten ohnehin der Standard. Und dann gilt:
 
