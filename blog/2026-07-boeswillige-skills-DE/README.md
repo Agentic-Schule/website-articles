@@ -74,7 +74,7 @@ Und, das ist der unangenehmste Teil, die Datei wird benutzt. Wie oft, lässt sic
 
 Ein bösartiger Skill lässt sich also nicht zurückrufen. Er wird kopiert, gespiegelt, in Kataloge übernommen und in Projekte eingecheckt. Selbst wenn der ursprüngliche Marktplatz ihn morgen löschte, bliebe er an Dutzenden Stellen verfügbar.
 
-Das ist ausdrücklich kein Vorwurf an den Betreiber des ersten betroffenen Marktplatzes. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Zu einer Benachrichtigung oder einer Entfernung des Skills macht der Bericht keine Angaben.
+Das ist ausdrücklich kein Vorwurf an den Betreiber des ersten betroffenen Marktplatzes. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Zu einer Benachrichtigung oder einer Entfernung des Skills macht der Bericht keine Angaben. Passiert ist auf jeden Fall nichts.
 
 Bleibt eine Erkenntnis, die über diesen Einzelfall hinausreicht: **Ein bösartiger Beitrag verschwindet nicht von selbst, nur weil jemand darüber geschrieben hat.** Zwischen „ist öffentlich bekannt" und „ist bereinigt" liegt in diesem Ökosystem noch sehr viel Luft. Der Bericht wurde vielfach zitiert, der Skill steht trotzdem unverändert im Katalog.
 
