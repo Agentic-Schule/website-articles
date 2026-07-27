@@ -96,7 +96,7 @@ Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition (und viele weitere) h
 
 (Stand: Juli 2026. Die Feature-Lage ändert sich in diesem Feld gefühlt wöchentlich, die Links führen jeweils zur offiziellen Doku.)
 
-Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Allen gemeinsam ist die Isolation: **Kein Tool lässt zwei Agenten unbeaufsichtigt im selben Verzeichnis arbeiten.** Wie das konkret aussieht, zeigen die folgenden Abschnitte, zuerst beim Werkzeug meiner Wahl.
+Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Blind verlassen sollte man sich auf die Isolation trotzdem nicht: Claude Code etwa nutzt Worktrees nicht immer von allein, mal kommt der Agent selbst auf die Idee, mal nicht. Wie so vieles beim Vibe Coding lässt sich die Wahrscheinlichkeit aber gezielt erhöhen: **Einfach dazusagen, dass Worktrees eingesetzt werden sollen.** Wie das konkret aussieht, zeigen die folgenden Abschnitte, zuerst beim Werkzeug meiner Wahl.
 
 ### Der Claude-Code-Weg
 

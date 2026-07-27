@@ -95,7 +95,7 @@ Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition (and many others) no
 
 (As of July 2026. The feature landscape in this field seems to change weekly; each link leads to the official docs.)
 
-The local tools bet on worktrees, the cloud services on throwaway VMs, where a dedicated VM is the most obvious route anyway. What they all share is the isolation: **no tool lets two agents work unsupervised in the same directory.** The following sections show what this looks like in practice, starting with my tool of choice.
+The local tools bet on worktrees, the cloud services on throwaway VMs, where a dedicated VM is the most obvious route anyway. Still, don't rely on the isolation blindly: Claude Code, for example, doesn't always use worktrees on its own; sometimes the agent comes up with the idea by itself, sometimes it doesn't. Like so much in vibe coding, you can deliberately raise the probability: **simply say that worktrees should be used.** The following sections show what this looks like in practice, starting with my tool of choice.
 
 ### The Claude Code Way
 
