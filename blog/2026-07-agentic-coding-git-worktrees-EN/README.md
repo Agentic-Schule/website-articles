@@ -78,7 +78,7 @@ Worktrees existed long before the AI agents. Classically, you use them for the h
 
 ## What the Tools Make of It
 
-Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition noticed this long ago. **Locally, isolation means git worktree; in the cloud, it means a dedicated VM or container.**
+Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition (and many others) noticed this long ago. **Locally, isolation means git worktree; in the cloud, it means a dedicated VM or container.**
 
 | Tool | Parallel work | Isolation |
 |---|---|---|

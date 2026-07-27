@@ -79,7 +79,7 @@ Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotf
 
 ## Was die Tools daraus machen
 
-Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition haben das längst erkannt. **Lokal heißt Isolation git worktree, in der Cloud heißt sie eigene VM oder eigener Container.**
+Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition (und viele weitere) haben das längst erkannt. **Lokal heißt Isolation git worktree, in der Cloud heißt sie eigene VM oder eigener Container.**
 
 | Tool | Paralleles Arbeiten | Isolation |
 |---|---|---|
