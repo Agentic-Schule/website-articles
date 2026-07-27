@@ -129,7 +129,13 @@ Zwei Details machen die Sache noch fieser, und sie erklären, warum beim Lesen n
 
 **Der Link steht an einer ganz anderen Stelle.** Nirgends heißt es „führe das hier aus". Die Adresse taucht erst weit hinten in einem sachlichen Abschnitt „Stitch Documentation" auf, als schlichter Quellenverweis, so wie man ihn in jeder ordentlichen Anleitung erwartet. Zur Anweisung wird sie durch einen Satz ganz vorne in Phase 0. Zwischen der Anweisung und der Adresse liegen über zweihundert Zeilen. Wer die Datei liest, müsste beide Stellen im Kopf zusammenbringen, und genau das tut man beim Überfliegen nicht.
 
-**Und wer den Link prüft, wird beruhigt.** Ich habe die Adresse angesehen, allerdings nur die HTTP-Antwortkopfzeilen, ohne den Inhalt zu laden. Das Ergebnis, Stand 27. Juli 2026: Die Domain der Angreifer antwortet mit einer Weiterleitung auf `stitch.withgoogle.com`, also auf Googles echte Dokumentation. Wer den Link heute anklickt, landet beim Original und hakt die Prüfung zufrieden ab. Genau dieser Schalter wurde in dem Experiment umgelegt, und er lässt sich jederzeit wieder umlegen. Ein Klick auf den Link beweist deshalb überhaupt nichts, außer dem Zustand von genau diesem Augenblick.
+**Und wer den Link prüft, wird beruhigt.** Im Normalzustand leitet die Angreifer-Domain nämlich auf Googles echte Dokumentation weiter. Die Autoren beschreiben das als den entscheidenden Kniff:
+
+> „Once we configured our domain to redirect to the real one, there's no way for either a standard user or an LLM scanner to tell something's off."
+
+Bösartig wird die Adresse nur, wenn jemand den Schalter umlegt. Für den Angriff haben sie den Inhalt ausgetauscht, danach ging es zurück in den Ruhezustand. Ich habe die Adresse geprüft, allerdings nur die HTTP-Antwortkopfzeilen, ohne den Inhalt zu laden. Stand 27. Juli 2026 antwortet sie mit einer Weiterleitung auf `stitch.withgoogle.com`. Wer den Link heute anklickt, landet beim Original und hakt die Prüfung zufrieden ab.
+
+Ein Klick auf den Link beweist deshalb überhaupt nichts. Er zeigt den Zustand von genau diesem Augenblick, und dieser Zustand gehört jemand anderem.
 
 Das Muster ist aus der klassischen Software-Lieferkette bekannt und heißt dort Rug Pull. Invariant Labs, heute Teil von Snyk, hat es [schon im April 2025 für MCP beschrieben](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks). Ein bösartiger Server könne die Beschreibung eines Werkzeugs ändern, *nachdem* der Client sie freigegeben hat. Neu ist nicht die Idee. Neu ist, wie billig sie geworden ist, seit die Nutzlast reiner Text sein darf.
 
