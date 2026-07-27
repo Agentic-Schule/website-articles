@@ -105,8 +105,6 @@ Und trotzdem, vielleicht sogar deswegen, ist dieser Angriff **extrem schwer zu e
 
 **Und wer den Link prüft, wird beruhigt.** Im Normalzustand leitet die Angreifer-Domain nämlich auf Googles echte Dokumentation weiter. Die Autoren beschreiben das als den entscheidenden Kniff:
 
-
-
 > „Once we configured our domain to redirect to the real one, there's no way for either a standard user or an LLM scanner to tell something's off."
 
 Bösartig wird die Adresse nur, wenn jemand den Schalter umlegt. Für den Angriff haben sie den Inhalt ausgetauscht, danach ging es zurück in den Ruhezustand. Stand 27. Juli 2026 antwortet die Domain mit einer Weiterleitung auf `stitch.withgoogle.com`. Wer den Link heute anklickt, landet beim Original und hakt die Prüfung zufrieden ab.
