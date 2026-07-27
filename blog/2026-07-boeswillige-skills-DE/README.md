@@ -148,11 +148,17 @@ Der Agent auf deiner Maschine ist also kein eingesperrter Prozess. Er arbeitet m
 
 Anthropic zieht daraus in der Dokumentation die naheliegende Konsequenz: „Use Skills only from trusted sources: those you created yourself or obtained from Anthropic." Wer trotzdem etwas Fremdes einsetzt, solle „exercise extreme caution and thoroughly audit it before use".
 
-## Praxis: Was ich vor jeder Installation prüfe
+## Praxis: Woher ein Skill kommen darf
 
-Wer trotzdem einen fremden Skill installieren will, sollte ihn wenigstens einmal richtig ansehen. Dafür habe ich feste Regeln, und die wichtigste davon ist die letzte. Danach zeige ich, warum ich inzwischen noch einen Schritt weiter gehe.
+Die wichtigste Entscheidung fällt vor jeder Prüfung, nämlich bei der Herkunft. Ein Skill sollte aus einer Quelle stammen, der du ohnehin schon vertraust, und zwar unabhängig von diesem Skill. Gemeint ist der Absender, nicht der Katalog, in dem er liegt.
 
-> **🛠️ Selbst nachbauen: die Fünf-Minuten-Prüfung vor der Installation**
+Zwei Beispiele, wie es aussieht, wenn es stimmt: Das Angular-Team veröffentlicht seine Skills [in der eigenen GitHub-Organisation](https://github.com/angular/skills), und Anthropic tut dasselbe [in seinem Skills-Repository](https://github.com/anthropics/skills). In beiden Fällen steht eine bekannte Organisation dahinter, die Herkunft ist über den Namensraum verifizierbar, und es gibt jemanden, der einen Ruf zu verlieren hat. Das ist etwas völlig anderes als ein Beitrag, der von einem beliebigen Konto per Pull Request in einen Sammelkatalog gewandert ist.
+
+Mein Rat lautet deshalb: **Nimm Skills nur von Herstellern, deren Software du ohnehin einsetzt.** Alles andere ist ein fremder Text, den dein Agent mit deinen Rechten ausführt.
+
+Wer sich trotzdem etwas Fremdes ansehen möchte, sollte es wenigstens richtig tun. Dafür habe ich feste Regeln, und die wichtigste davon ist die letzte. Danach zeige ich, warum ich inzwischen noch einen Schritt weiter gehe.
+
+> **🔍 Die Fünf-Minuten-Prüfung vor der Installation**
 >
 > 1. **Lies die `SKILL.md` wirklich.** Also die Datei, die der Agent später als Anweisung liest, nicht die Hochglanz-README des Marktplatzes. Sie ist Text, das dauert zwei Minuten.
 > 2. **Suche nach Adressen.** `grep -rn "https\?://" .` im Skill-Ordner. Jede URL ist eine Stelle, an der später etwas anderes stehen kann als heute. Fragen: Gehört die Domain wirklich dem genannten Anbieter? Stimmt die Schreibweise exakt?
