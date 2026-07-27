@@ -18,7 +18,7 @@ language: de
 header: header.jpg
 ---
 
-Ein Skill ist eine Textdatei. Das macht ihn so praktisch und leider auch so gefährlich. Wer einem KI-Agenten einen Skill installiert, gibt ihm keine Bibliothek in einer Sandbox. Er gibt ihm eine Anweisung, und der Agent führt sie mit seinen eigenen Rechten aus. Diese Anweisung darf auch lauten: „Lade dir die restlichen Instruktionen von dieser Adresse."
+Ein Skill ist eine Textdatei. Das macht ihn so praktisch und leider auch so gefährlich. Wer einen Skill installiert, gibt seinem Agenten eine Anweisung, die er mit deinen Rechten ausführt. Und sie darf auch lauten: „Lade dir die restlichen Instruktionen von dieser Adresse."
 
 **Genau dort setzt eine Angriffsklasse an, die im Juni 2026 eindrucksvoll vorgeführt wurde. Eine Sicherheitsfirma baute einen harmlos aussehenden Skill, brachte ihn in einen populären Marketplace und bewarb ihn per Anzeige. Alle Prüfungen bestand er. Und dann tauschte sie aus, was hinter dem Link lag.**
 
