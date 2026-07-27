@@ -44,7 +44,7 @@ Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffe
 
 Nach eigener Darstellung dauerte es „a few anxious days", dann wurde der Pull Request angenommen. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
 
-Danach warben sie für ihn. Im Bericht steht dazu ein einziger Satz: Man habe den Skill „as an advertisement on Instagram" veröffentlicht, gerichtet an Leute aus Marketing, Vertrieb und Design. Also an Menschen, die heute Agenten benutzen, ohne Code zu lesen. Welche Form diese Werbung genau hatte, was sie kostete und wie viele Menschen sie erreichte, bleibt offen. Der Bericht schweigt dazu, und damit bleibt auch offen, wie viele der späteren Installationen darauf zurückgehen.
+Danach warben sie für ihn. Im Bericht steht dazu ein einziger Satz: Man habe den Skill „as an advertisement on Instagram" veröffentlicht, gerichtet an Leute aus Marketing, Vertrieb und Design. Also an Menschen, die heute Agenten benutzen, ohne Code zu lesen. Zur genauen Form dieser Werbung, zu den Kosten und zur Reichweite macht der Bericht keine Angaben. Damit bleibt auch offen, wie viele der späteren Installationen darauf zurückgehen.
 
 Dass die Tarnung überhaupt so gut funktionierte, liegt auch am Umfeld. Rund um Google Stitch und Claude Code gibt es seit Monaten eine kleine Industrie aus Tutorials, Blogposts und „So baust du deine Landing Page in zehn Minuten"-Anleitungen. In diesem Rauschen fällt ein weiterer Skill mit genau diesem Versprechen niemandem auf. Er sieht schlicht aus wie das, was gerade alle machen.
 
@@ -70,7 +70,7 @@ Und damit ist die Sache endgültig aus der Kontrolle geraten. AIR schreibt selbs
 
 Ein bösartiger Skill lässt sich also nicht zurückrufen. Er wird kopiert, gespiegelt, in Kataloge übernommen und in Projekte eingecheckt. Selbst wenn der ursprüngliche Marktplatz ihn morgen löschte, bliebe er an Dutzenden Stellen verfügbar.
 
-Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Eine Meldung an ihn oder eine Entfernung des Skills erwähnt der Bericht jedenfalls nicht.
+Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Zu einer Benachrichtigung oder einer Entfernung des Skills macht der Bericht keine Angaben.
 
 Bleibt eine Erkenntnis, die über diesen Einzelfall hinausreicht: **Ein bösartiger Beitrag verschwindet nicht von selbst, nur weil jemand darüber geschrieben hat.** Zwischen „ist öffentlich bekannt" und „ist bereinigt" liegt in diesem Ökosystem noch sehr viel Luft. Der Bericht wurde vielfach zitiert, der Skill steht trotzdem unverändert im Katalog.
 
