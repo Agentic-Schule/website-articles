@@ -83,6 +83,7 @@ Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition haben das längst erk
 
 | Tool | Paralleles Arbeiten | Isolation |
 |---|---|---|
+| [Claude Code](https://code.claude.com/docs/en/worktrees) | parallele Sessions per `--worktree`, isolierte Subagenten | git worktrees unter `.claude/worktrees/`, Desktop-App: automatisch pro Session |
 | [Cursor](https://cursor.com/docs/configuration/worktrees) | bis zu acht Agenten auf einen Prompt | automatisch verwaltete git worktrees oder Remote-Maschinen |
 | [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | parallele Cloud-Sessions, je ein Draft-PR | ephemere GitHub-Actions-Umgebung pro Session |
 | [VS Code](https://code.visualstudio.com/docs/copilot/agents/background-agents) | Background-Agents (Copilot CLI, Claude, Codex) | automatisch ein git worktree pro Session |
@@ -95,7 +96,7 @@ Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition haben das längst erk
 
 (Stand: Juli 2026. Die Feature-Lage ändert sich in diesem Feld gefühlt wöchentlich, die Links führen jeweils zur offiziellen Doku.)
 
-Zwei Schulen also: Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs. Der gemeinsame Nenner ist wichtiger als der Unterschied: **Kein ernstzunehmendes Tool lässt zwei Agenten unbeaufsichtigt im selben Verzeichnis arbeiten.** Isolation pro Agent ist keine Kür, sie ist die Eintrittskarte in die Parallelität. Zeit, sich das beim Werkzeug meiner Wahl im Detail anzusehen.
+Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Allen gemeinsam ist die Isolation: **Kein Tool lässt zwei Agenten unbeaufsichtigt im selben Verzeichnis arbeiten.** Wie das bei Claude Code konkret aussieht, zeigt das nächste Kapitel.
 
 ## Der Claude-Code-Weg
 
