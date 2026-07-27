@@ -162,7 +162,7 @@ Custom [slash commands](https://code.claude.com/docs/en/skills) in Claude Code a
 5. **Read the project rules:** the `CLAUDE.md` of both worktrees.
 6. **The iron rule:** work happens exclusively in the worktrees. The main directories remain untouched.
 
-**🛠️ Build it yourself: the complete command file `~/.claude/commands/feature-init.md`.** It is deliberately prose instead of a shell script, and deliberately loud. Why, the three remarks afterwards explain; if you already got the flow from above, jump straight there.
+**🛠️ Build it yourself: the complete command file `~/.claude/commands/feature-init.md`.** It is deliberately prose instead of a shell script, and deliberately loud. Why, the remarks afterwards explain; if you already got the flow from above, jump straight there.
 
 ````markdown
 # Create feature worktrees for frontend and backend
@@ -240,11 +240,13 @@ NEVER edit files in the main directories. All file operations
 The main repos (`app-backend/` and `app-frontend/`) must NOT be modified.
 ````
 
-Three remarks:
+A few remarks:
 
 - **Why prose instead of a shell script?** Because an agent can react to surprises: a half-existing branch, an already occupied folder name, a failed installation. A bash script fails at the first deviation or steamrolls right over it. The agent reads the situation and decides in the spirit of the instruction.
 - **Why the capital letters?** The rules look dramatic, but the emphasis works. The last rule matters most: the main directories stay permanently clean on `main` and only serve as the base for `fetch` and `worktree add`. That way, two sessions can never accidentally share a working directory.
+- **Why the `CLAUDE.md` from the worktree and not from the main repo?** The rules have to match the state the agent is actually working on: build commands, test commands, conventions. And if the branch is so old that `main` has different rules by now, the answer is a rebase, which brings the `CLAUDE.md` up to date as well.
 - **The "one branch, one worktree" rule works for us here:** if a second session tries to initialize the same feature, git refuses to create the second worktree. Duplicate work on the same feature becomes visible immediately instead of colliding silently.
+- **And does everyone stick to it?** Sadly, no. In my experience, subagents of all things sometimes ignore the rule entirely and happily work in the main directory. The main conversation would probably have to write the rule explicitly into every subagent's auto-generated prompt. At least the problem repairs itself for me: the main conversation always notices that the subagent went to work in the wrong directory and sends it off once more. It's still annoying, because it burns tokens for nothing.
 
 ## Ports, Licenses, Databases: The Pitfalls of Parallelism
 

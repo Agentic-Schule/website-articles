@@ -163,7 +163,7 @@ Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude C
 5. **Projektregeln einlesen:** die `CLAUDE.md` beider Worktrees.
 6. **Die eiserne Regel:** Gearbeitet wird ausschließlich in den Worktrees. Die Hauptverzeichnisse bleiben unangetastet.
 
-**🛠️ Selbst nachbauen: die komplette Command-Datei `~/.claude/commands/feature-init.md`.** Sie ist absichtlich Prosa statt Shell-Skript und absichtlich laut. Warum, erklären die drei Anmerkungen im Anschluss; wer den Ablauf oben schon hat, springt direkt dorthin.
+**🛠️ Selbst nachbauen: die komplette Command-Datei `~/.claude/commands/feature-init.md`.** Sie ist absichtlich Prosa statt Shell-Skript und absichtlich laut. Warum, erklären die Anmerkungen im Anschluss; wer den Ablauf oben schon hat, springt direkt dorthin.
 
 ````markdown
 # Feature-Worktrees für Frontend und Backend anlegen
@@ -241,11 +241,13 @@ NIEMALS Dateien in den Hauptverzeichnissen bearbeiten. Alle Dateioperationen
 Die Hauptrepos (`app-backend/` und `app-frontend/`) dürfen NICHT verändert werden.
 ````
 
-Drei Anmerkungen dazu:
+Ein paar Anmerkungen dazu:
 
 - **Warum Prosa statt Shell-Skript?** Weil ein Agent auf Überraschungen reagieren kann: ein halb existierender Branch, ein schon belegter Ordnername, eine fehlgeschlagene Installation. Ein Bash-Skript scheitert an der ersten Abweichung oder überfährt sie. Der Agent liest die Situation und entscheidet im Sinne der Anweisung.
 - **Warum die Großbuchstaben?** Die Regeln sehen dramatisch aus, aber der Nachdruck wirkt. Vor allem die letzte Regel ist wichtig: Die Hauptverzeichnisse bleiben dauerhaft sauber auf `main` und dienen nur noch als Basis für `fetch` und `worktree add`. Damit können sich zwei Sessions niemals versehentlich ein Arbeitsverzeichnis teilen.
+- **Warum die `CLAUDE.md` aus dem Worktree und nicht aus dem Hauptrepo?** Die Regeln müssen zum Stand passen, den der Agent gerade bearbeitet: Baubefehle, Testkommandos, Konventionen. Und ist der Branch so alt, dass `main` inzwischen andere Regeln hat, ist die Antwort ein Rebase, der bringt auch die `CLAUDE.md` auf Stand.
 - **Die Regel „ein Branch, ein Worktree" arbeitet hier für uns:** Versucht eine zweite Session dasselbe Feature zu initialisieren, verweigert git das Anlegen des zweiten Worktrees. Doppelarbeit am selben Feature fällt sofort auf, statt still zu kollidieren.
+- **Und halten sich alle daran?** Leider nein. Nach meiner Erfahrung ignorieren ausgerechnet Subagenten die Regel manchmal komplett und arbeiten munter im Hauptverzeichnis. Vermutlich müsste die Hauptunterhaltung die Regel jedem Subagenten explizit in den automatisch erzeugten Prompt schreiben. Immerhin repariert sich das Problem bei mir von allein: Die Hauptunterhaltung erkennt stets, dass der Subagent im falschen Verzeichnis unterwegs war, und schickt ihn ein neues Mal los. Ärgerlich bleibt es trotzdem, denn dabei verbrennen unnötig Token.
 
 ## Ports, Lizenzen, Datenbanken: die Fallstricke der Parallelität
 
