@@ -52,7 +52,11 @@ Dass die Tarnung überhaupt so gut funktionierte, liegt auch am Umfeld. Rund um 
 
 Warum ausgerechnet Instagram? Die Antwort liefert AIR selbst, mit einer Bildstrecke im Bericht, überschrieben mit „Skills Are Going Viral on Instagram". Darauf zu sehen: ein Dutzend Posts **fremder Accounts**, die Claude-Skills bewerben wie Nahrungsergänzungsmittel. „6 new claude skills for designers". „24 Things to Install in Claude." „TOP 5 Claude Code Front-End Skills". „42 Claude Skills to Automate Your Creative Workflow".
 
-Wichtig zum Verständnis: Diese Posts stammen nicht von AIR und bewerben auch nicht deren Skill. Sie dokumentieren das Umfeld, in das die Anzeige gestellt wurde. Ich habe ausdrücklich danach gesucht, ob einer dieser Accounts `brand-landingpage` aufgegriffen hat, und nichts gefunden. Auch AIRs Bericht erwähnt so etwas nicht. Verbreitet wurde der Skill durch eine bezahlte Anzeige und später durch die Verzeichnis-Seiten, nicht durch Influencer.
+An dieser Stelle wird AIRs Bericht allerdings unscharf, und man sollte genau hinsehen. Die Collage steht unkommentiert im Text. Zu Influencern findet sich nur ein allgemeiner Satz über das Ökosystem, Skills würden „posted in reels by influencers with real followings". Über die eigene Aktion steht dort genau ein Satz: „we went ahead and published our skill as an advertisement on Instagram, targeting marketers, salespersons and designers."
+
+Übersetzt heißt das: Es war eine **gekaufte Anzeige**. Das Wort „targeting" stammt aus dem Anzeigenmanager. Von Influencern hat AIR niemanden angesprochen oder bezahlt, jedenfalls steht davon nichts im Bericht. Ich habe zusätzlich gesucht, ob einer dieser Accounts `brand-landingpage` aufgegriffen hat, und nichts gefunden.
+
+Weil beides unmittelbar nebeneinander steht, entsteht beim Lesen trotzdem der Eindruck, der Skill sei in dieser viralen Welle mitgeschwommen. Tatsächlich wurde die Reichweite eingekauft, und wie viel sie gekostet hat oder wie viele Menschen die Anzeige sahen, verrät der Bericht nicht. Das ist unbefriedigend, denn an genau dieser Reichweite hängt die Zahl der betroffenen Agenten. Verbreitet wurde der Skill also durch eine bezahlte Anzeige und später durch die Verzeichnis-Seiten.
 
 Trotzdem lohnt der Blick auf diese Bildstrecke, denn sie erklärt, warum die Anzeige überhaupt funktionieren konnte. Unter den Posts steht nämlich, jedes Mal, derselbe Köder:
 
