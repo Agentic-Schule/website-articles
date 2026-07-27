@@ -131,6 +131,8 @@ Dafür sorgt **[Syncthing](https://syncthing.net)**, ein Peer-to-Peer-Sync ohne 
 - `~/.claude` – **und hier wird es spannend: die Agenten-Sessions selbst.** Claude Code legt seine Gesprächsprotokolle unter `~/.claude/projects/` ab. Werden die mitgesynct, kann ich eine Session, die ich auf dem mini begonnen habe, auf dem MacBook fortsetzen – Kontext, Verlauf, alles da.
 - `~/Shots` – Screenshots (praktisch, gleich mehr dazu)
 
+> **⚠️ Unbedingt anpassen: `cleanupPeriodDays`.** Claude Code räumt die Gesprächsprotokolle unter `~/.claude/projects/` standardmäßig nach 30 Tagen weg. Wer sie, wie hier, syncen und als Nachschlage-Fundus behalten will, setzt in `~/.claude/settings.json` den Wert `cleanupPeriodDays` deutlich höher, bei mir auf 365. Sonst löscht ein aufgeräumter Rechner die Historie, und der Sync trägt das Löschen brav auf den anderen.
+
 Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `target` und Caches stehen in `.stignore` und werden pro Maschine neu gebaut (`npm ci`, `cargo build`). Kompilierte Binaries über Rechner zu kopieren bricht sowieso irgendwann am Library-Linking, lieber sauber neu bauen.
 
 > **🛠️ Selbst nachbauen — Artefakte vom Sync ausschließen (`.stignore`)**

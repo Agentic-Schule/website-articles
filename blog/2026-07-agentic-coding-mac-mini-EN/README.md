@@ -130,6 +130,8 @@ This is handled by **[Syncthing](https://syncthing.net)**, a peer-to-peer sync w
 - `~/.claude` – **and here it gets interesting: the agent sessions themselves.** Claude Code stores its conversation logs under `~/.claude/projects/`. If those are synced along, I can continue a session I started on the mini over on the MacBook – context, history, everything there.
 - `~/Shots` – screenshots (handy, more on that in a moment)
 
+> **⚠️ Definitely adjust `cleanupPeriodDays`.** By default Claude Code clears the conversation logs under `~/.claude/projects/` after 30 days. If you want to sync them, as here, and keep them as a reference, set `cleanupPeriodDays` in `~/.claude/settings.json` much higher, in my case to 365. Otherwise a tidied-up machine deletes the history, and the sync dutifully carries that deletion over to the other one.
+
 What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `build`, `target`, and caches are in `.stignore` and get rebuilt per machine (`npm ci`, `cargo build`). Copying compiled binaries across machines breaks at library linking sooner or later anyway, better to rebuild cleanly.
 
 > **🛠️ Build it yourself — exclude artifacts from the sync (`.stignore`)**
