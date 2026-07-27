@@ -11,8 +11,6 @@ keywords:
   - Supply Chain
   - Prompt Injection
   - Claude Code
-  - MCP
-  - Model Context Protocol
   - AI Security
   - Agentic Coding
   - KI-Agent
@@ -24,7 +22,7 @@ Ein Skill ist eine Textdatei. Das macht ihn so praktisch und leider auch so gef�
 
 **Genau dort setzt eine Angriffsklasse an, die im Juni 2026 eindrucksvoll vorgeführt wurde. Eine Sicherheitsfirma baute einen harmlos aussehenden Skill, brachte ihn in einen populären Marketplace und bewarb ihn per Anzeige. Alle Prüfungen bestand er. Und dann tauschte sie aus, was hinter dem Link lag.**
 
-Dieser Artikel erzählt den Fall anhand der Originalquelle. Er zeigt, warum die üblichen Scanner ihn prinzipbedingt nicht sehen konnten und was das für alle bedeutet, die Skills, Plugins oder MCP-Server aus dem Netz installieren. Am Ende stehen eine Prüfliste und die Konsequenz, die ich daraus gezogen habe.
+Dieser Artikel erzählt den Fall anhand der Originalquelle. Er zeigt, warum die üblichen Scanner ihn prinzipbedingt nicht sehen konnten und was das für alle bedeutet, die Skills aus dem Netz installieren. Am Ende stehen eine Prüfliste und die Konsequenz, die ich daraus gezogen habe.
 
 > ⚠️ Vorweg, weil es zum Thema passt: Der Bericht stammt von einer Firma, die Sicherheitsprodukte verkauft. Ich kennzeichne im Text, was Selbstauskunft ist und was ich unabhängig nachprüfen konnte.
 
@@ -167,7 +165,7 @@ Bei den Skills stehen wir am Anfang derselben Strecke, nur mit deutlich höherem
 
 ## Warum Scanner das Problem nicht lösen
 
-Es liegt nahe, nach einem Werkzeug zu rufen, das den Mist einfach findet. Es gibt inzwischen mehrere, und sie sind auch nicht schlecht. Cisco betreibt einen [MCP-Scanner](https://github.com/cisco-ai-defense/mcp-scanner). NVIDIA hat mit [SkillSpector](https://github.com/NVIDIA/SkillSpector) seit März 2026 einen Scanner speziell für Agent-Skills. Und Snyks [Agent Scan](https://github.com/snyk/agent-scan), hervorgegangen aus Invariants `mcp-scan`, prüft Skills und MCP-Server auf eine ganze Reihe riskanter Muster.
+Es liegt nahe, nach einem Werkzeug zu rufen, das den Mist einfach findet. Es gibt inzwischen mehrere, und sie sind auch nicht schlecht. Cisco betreibt einen [MCP-Scanner](https://github.com/cisco-ai-defense/mcp-scanner). NVIDIA hat mit [SkillSpector](https://github.com/NVIDIA/SkillSpector) seit März 2026 einen Scanner speziell für Agent-Skills. Und Snyks [Agent Scan](https://github.com/snyk/agent-scan) prüft Skills auf eine ganze Reihe riskanter Muster.
 
 Nur sollte man wissen, was diese Werkzeuge leisten können und was nicht.
 
@@ -193,16 +191,6 @@ Die ehrliche Antwort steht im Kleingedruckten der Anbieter. Sie ist überall äh
 
 An gleicher Stelle steht der Satz, der die Einordnung liefert: Plugins und Marktplätze seien „highly trusted components that can execute arbitrary code on your machine with your user privileges".
 
-**Das offizielle MCP-Register** wird noch deutlicher und reicht die Zuständigkeit ausdrücklich weiter:
-
-> „The MCP Registry focuses on namespace authentication and metadata hosting, **while relying on the broader ecosystem for security scanning of actual server code.**"
->
-> ([About the MCP Registry](https://modelcontextprotocol.io/registry/about))
-
-Das Register prüft also, ob ein Name legitim beansprucht wurde, nicht was der Code tut.
-
-**OpenAI** warnt in der [Dokumentation zu MCP und Connectors](https://developers.openai.com/api/docs/guides/tools-connectors-mcp) vor beidem. Vor versteckten Instruktionen: „Malicious MCP servers may include hidden instructions (prompt injections)". Und vor genau unserem Rug Pull: „MCP servers may update tool behavior unexpectedly, potentially leading to unintended or malicious behavior."
-
 Das ist keine Nachlässigkeit der Anbieter, sondern eine ökonomische Realität. Wie schnell diese Kataloge wachsen, zeigt der ClawHub-Fall von oben. In den zwei Wochen zwischen Koi-Bericht und Nachtrag wuchs der Marktplatz von 2.857 auf über 10.700 Skills. Bei diesem Tempo kann niemand jeden Beitrag manuell auditieren. Snyk zieht in seinem [technischen Bericht](https://github.com/snyk/agent-scan/blob/main/.github/reports/skills-report.pdf) vom 5. Februar 2026 deshalb einen Vergleich, den ich treffend finde. Das heutige Agenten-Ökosystem gleiche der „Wild West"-Ära früher Paketmanager wie npm und PyPI, „a time of explosive growth shadowed by significant security growing pains".
 
 Dass das keine theoretische Sorge ist, zeigt eine Nebenbemerkung desselben Berichts. Zum Zeitpunkt der Veröffentlichung waren nach Angaben der Autoren „at least 8 manually confirmed malicious skills" auf ClawHub weiterhin öffentlich verfügbar. Von 3.984 untersuchten Skills stuften sie 76 als eindeutig bösartig ein. 13,4 Prozent enthielten mindestens einen kritischen Befund.
@@ -226,7 +214,7 @@ Anthropic zieht daraus in der Dokumentation die naheliegende Konsequenz: „Use 
 
 ## Praxis: Was ich vor jeder Installation prüfe
 
-Manches muss man nun einmal installieren. Einen fremden MCP-Server etwa kann man nicht mal eben selbst nachschreiben. Für diese Fälle habe ich feste Regeln, und die wichtigste davon ist die letzte. Für Skills gehe ich inzwischen noch einen Schritt weiter, dazu gleich mehr.
+Wer trotzdem einen fremden Skill installieren will, sollte ihn wenigstens einmal richtig ansehen. Dafür habe ich feste Regeln, und die wichtigste davon ist die letzte. Danach zeige ich, warum ich inzwischen noch einen Schritt weiter gehe.
 
 > **🛠️ Selbst nachbauen: die Fünf-Minuten-Prüfung vor der Installation**
 >
@@ -246,32 +234,19 @@ Und dann die wichtigste Regel: **Ein Skill, der Inhalte aus dem Netz nachlädt u
 
 ## Der beste Schutz: schreib deine Skills selbst
 
-Nach all dem komme ich zu einer Konsequenz, die zunächst nach Mehrarbeit klingt und in Wahrheit welche spart: **Nimm fremde Skills als Vorlage, nicht als Abhängigkeit.**
+Nach all dem komme ich zu einer Konsequenz, die zunächst nach Mehrarbeit klingt und in Wahrheit welche spart: **Nimm fremde Skills als Vorlage, niemals als Abhängigkeit.**
 
-Anders als bei einem MCP-Server ist das hier tatsächlich realistisch. Ein Skill ist Prosa mit ein paar Kommandos darin. Er ist kein Framework, das man nachbauen müsste, sondern eine Arbeitsanweisung. Die schreibt man in einer halben Stunde selbst, oft genug schreibt sie der Agent auf Zuruf. Wer einen fremden Skill ohnehin gründlich liest, wie es die Prüfliste oben verlangt, hat die Arbeit fast schon getan. Der Schritt von „ich habe verstanden, was der macht" zu „ich habe das für mein Projekt aufgeschrieben" ist klein.
+Anders als bei einer Bibliothek ist das hier tatsächlich realistisch. Ein Skill ist Prosa mit ein paar Kommandos darin. Er ist kein Framework, das man nachbauen müsste, sondern eine Arbeitsanweisung. Die schreibt man in einer halben Stunde selbst, oft genug schreibt sie der Agent auf Zuruf. Wer einen fremden Skill ohnehin gründlich liest, hat die Arbeit fast schon getan. Der Schritt von „ich habe verstanden, was der macht" zu „ich habe das für mein Projekt aufgeschrieben" ist klein. Und man gewinnt dabei zweimal: Was man selbst geschrieben hat, kann hinter dem Rücken nicht ausgetauscht werden, und es passt genauer. Fremde Skills müssen für alle funktionieren. Dein eigener kennt deine Ordnerstruktur, deine Konventionen und deine Test-Kommandos.
 
-Dabei gewinnt man gleich zweimal:
+Snyk gibt Skill-Entwicklern im eigenen Bericht dieselbe Richtung vor. Man solle Skills als „fully self-contained packages" bauen und alles vermeiden, was Selbstaktualisierung bedeutet oder regelmäßig eine URL nach weiteren Agenten-Anweisungen abfragt. Für Nutzer lautet die Empfehlung dort: „not to install agent skills without prior review".
 
-- **Kein Vertrauensproblem mehr.** Was man selbst geschrieben hat, kann hinter dem Rücken nicht ausgetauscht werden. Damit verschwindet das gesamte Problem dieses Artikels. Es gibt keine fremde Adresse mehr, von der Anweisungen nachgeladen werden.
-- **Deutlich bessere Passgenauigkeit.** Fremde Skills sind notgedrungen generisch, sie müssen für alle funktionieren. Dein eigener Skill kennt deine Ordnerstruktur, deine Konventionen, deine Test-Kommandos und die Eigenheiten deines Projekts. Er ist deshalb sicherer und schlicht besser.
-
-Das ist keine exotische Einzelmeinung. Snyk gibt Skill-Entwicklern im eigenen Bericht dieselbe Richtung vor. Man solle Skills als „fully self-contained packages" bauen und alles vermeiden, was Selbstaktualisierung bedeutet oder regelmäßig eine URL nach weiteren Agenten-Anweisungen abfragt. Für Nutzer lautet die Empfehlung schlicht: „not to install agent skills without prior review".
-
-### Warum mir „review" allein nicht reicht
-
-An dieser Stelle möchte ich einen Schritt weiter gehen als Snyk. Die Lehre aus dem geschilderten Fall lautet doch: **Kein Review kann sicherstellen, dass nirgendwo ein schadhaftes Fragment steckt.** In unserem Fall hat das Review den Angriff nicht nur übersehen, es hat ihn gelobt.
-
-Prompt Injection ist eine Disziplin für sich. Sie entwickelt sich schneller, als eine Prüfliste mitwachsen kann. Diesmal war es eine URL, die man beim Lesen immerhin sehen konnte. Beim nächsten Mal ist es etwas, das man als Mensch gar nicht als Anweisung erkennt. Ausdenken muss man sich das nicht, es ist längst dokumentiert. Snyk führt einen eigenen Befund-Code für **versteckte Unicode-Zeichen**. Dessen Beschreibung liest sich wie eine Warnung an alle, die auf sorgfältiges Lesen vertrauen:
+An dieser Stelle gehe ich einen Schritt weiter als Snyk, denn die Lehre aus dem geschilderten Fall lautet doch: **Kein Review kann sicherstellen, dass nirgendwo ein schadhaftes Fragment steckt.** Hier hat das Review den Angriff nicht einmal übersehen, es hat ihn gelobt. Und Prompt Injection entwickelt sich schneller, als eine Prüfliste mitwachsen kann. Diesmal war es eine URL, die man beim Lesen immerhin sehen konnte. Beim nächsten Mal ist es etwas, das man als Mensch gar nicht als Anweisung erkennt. Ausdenken muss man sich das nicht, Snyk führt dafür einen eigenen Befund-Code:
 
 > „These characters are invisible when rendered but are still processed by AI models. Attackers use them to smuggle instructions past human review."
 >
-> ([Agent Scan, Befund W021](https://github.com/snyk/agent-scan/blob/main/docs/issue-codes.md))
+> ([Agent Scan, Befund W021 zu versteckten Unicode-Zeichen](https://github.com/snyk/agent-scan/blob/main/docs/issue-codes.md))
 
-Genannt werden dort Zero-Width-Spaces, Richtungs-Umschalter und Unicode-Tag-Zeichen, die eine **komplette versteckte Botschaft** kodieren können. Für uns sieht das aus wie nichts oder wie eine sinnlose Zeichenfolge, die man beim Lesen achselzuckend überspringt. Der Agent liest sie mit.
-
-Damit kippt die Logik des Prüfens. Die Frage lautet ja längst nicht mehr bloß: Steht im Text etwas Böses? Sie lautet: Steht dort etwas, das ich überhaupt sehen kann?
-
-### Die Konsequenz: immer mit einem weißen Blatt anfangen
+Genannt werden dort Zero-Width-Spaces, Richtungs-Umschalter und Unicode-Tag-Zeichen, die eine komplette versteckte Botschaft kodieren können. Für uns sieht das aus wie nichts. Der Agent liest es mit. Damit kippt die Logik des Prüfens. Die Frage lautet längst nicht mehr bloß: Steht im Text etwas Böses? Sie lautet: Steht dort überhaupt etwas, das ich sehen kann?
 
 Deshalb lautet mein Rat, und der geht bewusst über „gründlich lesen" hinaus:
 
@@ -279,16 +254,14 @@ Deshalb lautet mein Rat, und der geht bewusst über „gründlich lesen" hinaus:
 >
 > 1. **Niemals eine fremde Datei herüberkopieren und anpassen.** Auch nicht „nur zum Anfangen". Was einmal in deinem Verzeichnis liegt, wird irgendwann vom Agenten gelesen, inklusive dem, was du beim Überfliegen nicht gesehen hast.
 > 2. **Mit einer leeren Datei starten.** Erst dann die Ideen und Konzepte einzeln herübertragen, eines nach dem anderen.
-> 3. **Den Agenten neu formulieren lassen.** Er soll den fremden Text lesen, verstehen und **in eigenen Worten** neu aufschreiben. Was dabei entsteht, enthält keine unsichtbaren Zeichen mehr, denn sie überleben die Neuformulierung nicht.
+> 3. **Den Agenten neu formulieren lassen.** Er soll den fremden Text lesen, verstehen und **in eigenen Worten** neu aufschreiben. Was dabei entsteht, enthält keine unsichtbaren Zeichen mehr, denn die überleben die Neuformulierung nicht.
 > 4. **Für Code gilt dasselbe.** Niemals übernehmen, immer nacherzählen lassen.
 
-Der dritte Punkt ist der entscheidende. Er hat noch einen angenehmen Nebeneffekt, denn die Neuformulierung ist zugleich ein Verständnistest. Was der Agent nicht in eigenen Worten wiedergeben kann, hat er nicht verstanden. Und dann willst du es ohnehin nicht in deinem Projekt haben.
+Der dritte Punkt ist der entscheidende, und er hat einen angenehmen Nebeneffekt. Die Neuformulierung ist zugleich ein Verständnistest. Was der Agent nicht in eigenen Worten wiedergeben kann, hat er nicht verstanden, und dann willst du es ohnehin nicht in deinem Projekt haben. Beim Code bekommt man diese Neu-Interpretation geschenkt, sobald ohnehin ein Bruch nötig ist. Portiert man ein Python-Skript nach TypeScript, erzwingt allein die Übersetzung, dass jemand Zeile für Zeile versteht, was da passiert. Versteckte Fracht überlebt das nicht.
 
-Beim Code bekommt man diese Neu-Interpretation geschenkt, sobald ohnehin ein Bruch nötig ist. Nehmen wir ein Python-Skript, in dem man selbst nicht so versiert ist, und portieren es nach TypeScript. Allein die Portierung **erzwingt** eine vollständige Neu-Interpretation. Zeile für Zeile muss jemand verstehen, was da eigentlich passiert. Versteckte Fracht überlebt so einen Übersetzungsvorgang nicht. Und man versteht am Ende sein eigenes Werkzeug.
+Ganz zum Schluss, wenn alles steht, hat ein `/security-review` noch nie geschadet. Der [eingebaute Befehl](https://code.claude.com/docs/en/commands) prüft die anstehenden Änderungen auf Sicherheitsprobleme. Er ersetzt keinen der Schritte davor, aber er ist die letzte Gelegenheit, etwas zu bemerken.
 
-Ganz zum Schluss, wenn alles steht, hat ein `/security-review` noch nie geschadet. Der [eingebaute Befehl](https://code.claude.com/docs/en/commands) prüft die anstehenden Änderungen auf Sicherheitsprobleme. Er ersetzt keinen der Schritte davor. Aber er ist die letzte Gelegenheit, etwas zu bemerken, bevor es dauerhaft in deinem Projekt wohnt.
-
-Für Marktplätze bleibt damit eine sehr nützliche Rolle. Sie sind ein exzellenter Ideenkatalog. Dort sieht man, welche Arbeitsschritte sich überhaupt lohnend automatisieren lassen und wie andere ein Problem zerlegen. Nur sollte man von dort Ideen mitnehmen, keine Dateien.
+Für Marktplätze bleibt damit eine sehr nützliche Rolle. Sie sind ein exzellenter Ideenkatalog. Dort sieht man, welche Arbeitsschritte sich lohnend automatisieren lassen und wie andere ein Problem zerlegen. Nur sollte man von dort Ideen mitnehmen, keine Dateien.
 
 ## Fazit: Das Vertrauen liegt bei dir
 
