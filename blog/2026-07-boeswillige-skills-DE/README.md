@@ -22,9 +22,7 @@ Ein Skill ist eine Textdatei. Das macht ihn so praktisch und leider auch so gef�
 
 **Genau dort setzt eine Angriffsklasse an, die im Juni 2026 eindrucksvoll vorgeführt wurde. Eine Sicherheitsfirma baute einen harmlos aussehenden Skill, brachte ihn in populäre Marktplätze und schaltete Werbung dafür. Alle Prüfungen bestand er. Und dann tauschte sie aus, was hinter dem Link lag. Dabei gingen sie ausgesprochen clever vor.**
 
-Dieser Artikel erzählt den Fall anhand der Originalquelle und der Spuren, die er auf GitHub hinterlassen hat: der Pull Request, das Review, die Datei selbst. Er zeigt, warum die üblichen Scanner den Angriff prinzipbedingt nicht sehen konnten und was das für alle bedeutet, die Skills aus dem Netz installieren. Am Ende stehen eine Prüfliste und die Konsequenz, die ich daraus gezogen habe.
-
-> ⚠️ Vorweg, weil es zum Thema passt: Der Bericht stammt von einer Firma, die Sicherheitsprodukte verkauft. Ich kennzeichne im Text, was Selbstauskunft ist und was ich unabhängig nachprüfen konnte.
+Dieser Artikel erzählt den Fall anhand der Originalquelle und der Spuren, die er auf GitHub hinterlassen hat: der Pull Request, das Review, die Datei selbst. Er zeigt, warum die üblichen Scanner den Angriff prinzipbedingt nicht sehen konnten und was das für alle bedeutet, die Skills aus dem Netz installieren. Am Ende stehen eine Prüfliste und die Konsequenz, die ich daraus gezogen habe. Vorweg: Der zitierte Bericht stammt von einer Firma, die Sicherheitsprodukte verkauft. Ich kennzeichne im Text, was Selbstauskunft ist und was ich unabhängig nachprüfen konnte.
 
 ## Inhalt
 
@@ -77,7 +75,7 @@ Das Muster ist aus der klassischen Software-Lieferkette bekannt und heißt dort 
 
 Der letzte Halbsatz ist der wichtigste des ganzen Themas. Ein Skill kann heute vertrauenswürdig sein und morgen nicht mehr, ohne dass sich an ihm eine einzige Zeile ändert.
 
-### Die Pointe steht im Review
+## Die Pointe steht im Review
 
 Der Pull Request wurde nicht wortlos durchgewinkt. Es gibt ein ausführliches, fachlich kluges Review, das dem Beitrag mehrere Qualitäten bescheinigt: saubere progressive disclosure, gut kalibrierter Geltungsbereich, wohlgeformter Marktplatz-Eintrag. Und dann diesen Punkt:
 

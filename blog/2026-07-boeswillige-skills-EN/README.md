@@ -22,9 +22,7 @@ A skill is a text file. That is what makes it so useful and, unfortunately, so d
 
 **That is exactly where an attack class comes in that was demonstrated impressively in June 2026. A security firm built a harmless-looking skill, got it into popular marketplaces and advertised it. It passed every check. And then they swapped out what was behind the link. They went about it remarkably cleverly.**
 
-This article tells the story from the original source and from the traces it left on GitHub: the pull request, the review, the file itself. It shows why the usual scanners could not possibly catch the attack, and what that means for anyone who installs skills off the internet. At the end you get a checklist and the conclusion I have drawn from all this.
-
-> ⚠️ Up front, because it fits the topic: the report comes from a company that sells security products. Throughout the text I mark what is self-reported and what I was able to verify independently.
+This article tells the story from the original source and from the traces it left on GitHub: the pull request, the review, the file itself. It shows why the usual scanners could not possibly catch the attack, and what that means for anyone who installs skills off the internet. At the end you get a checklist and the conclusion I have drawn from all this. Up front: the report quoted here comes from a company that sells security products. Throughout the text I mark what is self-reported and what I was able to verify independently.
 
 ## Contents
 
@@ -77,7 +75,7 @@ The pattern is well known from the classic software supply chain, where it is ca
 
 That last clause is the most important sentence on this whole topic. A skill can be trustworthy today and not tomorrow, without a single line of it changing.
 
-### The Punchline Is in the Review
+## The Punchline Is in the Review
 
 The pull request was not waved through in silence. There is a detailed, technically astute review that credits the contribution with several qualities: clean progressive disclosure, well-calibrated scope, a well-formed marketplace entry. And then this point:
 
