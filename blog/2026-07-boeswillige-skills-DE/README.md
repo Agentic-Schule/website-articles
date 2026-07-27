@@ -201,7 +201,7 @@ Das entwertet ihre Recherche nicht, sie ist gründlich und lehrreich. Ich ziehe 
 
 ## Fazit: Das Vertrauen liegt bei dir
 
-Skills sind großartig, und sie sind ein Ökosystem im Wildwuchs. Fünf Dinge nehme ich aus diesem Fall mit:
+Skills sind großartig. Aber sie sind ein Ökosystem im Wildwuchs. Fünf Dinge nehme ich aus diesem Fall mit:
 
 - **Der Prüfzeitpunkt ist nicht der Ausführungszeitpunkt.** Alles, was ein Skill erst zur Laufzeit holt, ist ungeprüft. Egal wie grün das Häkchen beim Download war.
 - **Vertrauen wird geerbt, Sicherheit nicht.** Sterne, Downloadzahlen und ein akzeptierter Pull Request sagen nichts über den Inhalt einer einzelnen Datei.
