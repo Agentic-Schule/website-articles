@@ -96,9 +96,9 @@ Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition haben das längst erk
 
 (Stand: Juli 2026. Die Feature-Lage ändert sich in diesem Feld gefühlt wöchentlich, die Links führen jeweils zur offiziellen Doku.)
 
-Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Allen gemeinsam ist die Isolation: **Kein Tool lässt zwei Agenten unbeaufsichtigt im selben Verzeichnis arbeiten.** Wie das bei Claude Code konkret aussieht, zeigt das nächste Kapitel.
+Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Allen gemeinsam ist die Isolation: **Kein Tool lässt zwei Agenten unbeaufsichtigt im selben Verzeichnis arbeiten.** Wie das konkret aussieht, zeigen die folgenden Abschnitte, zuerst beim Werkzeug meiner Wahl.
 
-## Der Claude-Code-Weg
+### Der Claude-Code-Weg
 
 [Claude Code](https://claude.com/claude-code) hat Worktrees inzwischen fest eingebaut und ihnen eine [eigene Doku-Seite](https://code.claude.com/docs/en/worktrees) spendiert. Der wichtigste Einstieg ist ein CLI-Flag:
 
@@ -130,11 +130,23 @@ Ein Detail aus der Praxis: Weil ein frischer Worktree ohne die gitignorierten Da
 
 In der Desktop-App ist das Prinzip übrigens schon Standard: Dort bekommt jede neue parallele Session automatisch ihren eigenen Worktree. Und falls du wie ich zuerst danach suchst: Einen Slash-Command `/worktree` gibt es nicht, das Flag beim Start und der Zuruf in der Session decken alles ab.
 
+### Der Antigravity-Weg
+
+Google baut die Isolation direkt in die IDE ein. [Antigravity](https://antigravity.google/docs/projects) verwaltet Agenten über einen eigenen Agent Manager: eine Übersicht, in der mehrere Agenten parallel laufen und beobachtet werden. Beim Start einer Konversation lässt sich der „New Worktree Mode" wählen, dann legt Antigravity im Hintergrund einen frischen git worktree an und die Konversation arbeitet dort, das aktive Arbeitsverzeichnis bleibt unberührt. Subagenten kennen dieselbe Wahl: Sie erben den Workspace ihres Eltern-Agenten oder bekommen einen eigenen, isolierten Worktree. Ein Detail sticht heraus: Ein Antigravity-„Project" darf mehrere Ordner umfassen, und der Worktree-Modus legt Worktrees für alle Git-Checkouts des Projects an. Dazu gleich mehr.
+
+### Der Copilot-Weg
+
+Microsoft fährt zweigleisig. In [VS Code](https://code.visualstudio.com/docs/copilot/agents/background-agents) laufen Background-Agents (die Copilot CLI, auf Wunsch auch Claude oder Codex), und für jede dieser Sessions legt VS Code automatisch einen git worktree an. Die Änderungen bleiben dort isoliert, bis man sie prüft und in den Workspace übernimmt oder gleich als Pull Request abschickt. Der zweite Weg verlässt den Rechner ganz: Der [Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) übernimmt Aufgaben aus einem GitHub Issue oder dem Chat, arbeitet in einer ephemeren GitHub-Actions-Umgebung und meldet sich mit einem Draft-Pull-Request zurück. Mehrere solcher Sessions laufen parallel, und nach getaner Arbeit wird die Umgebung entsorgt.
+
+### Der Codex-Weg
+
+OpenAI spannt denselben Bogen. In der ChatGPT-Desktop-App kann [Codex](https://developers.openai.com/codex/app/worktrees) mehrere unabhängige Chats im selben Projekt fahren, und unter der Haube stecken git worktrees: Jeder Chat bekommt standardmäßig einen leichtgewichtigen, von Codex verwalteten Worktree. Wer länger an einem Stand arbeiten will, legt stattdessen einen permanenten Worktree an. Das Feature setzt ein Git-Repository voraus. In der Cloud läuft es wie bei den anderen: Jeder Task bekommt einen eigenen, isolierten Container, mehrere davon parallel.
+
 ## Und wenn das Feature zwei Repos berührt?
 
-So weit die heile Welt der Ein-Repo-Demos. Die Realität in gewachsenen Systemlandschaften sieht anders aus: Ein System verteilt sich auf diverse Repositories. Frontend hier, Backend dort, dazu ein paar Services. Der Monorepo-Ansatz löst das auf dem Papier, ist aber längst nicht immer umsetzbar: getrennte Teams und Berechtigungen, unterschiedliche Build- und Deploy-Welten, gewachsene Historie. Man arbeitet mit dem Schnitt, den man hat.
+So weit die heile Welt der Ein-Repo-Demos. Die Realität in gewachsenen Systemlandschaften sieht anders aus: Ein System verteilt sich auf diverse Repositories. Frontend hier, Backend dort, dazu ein paar Services. Der Monorepo-Ansatz löst das auf dem Papier, ist aber längst nicht immer umsetzbar: getrennte Teams und Berechtigungen, unterschiedliche Build- und Deploy-Welten, gewachsene Historie. Man arbeitet mit der Systemlandschaft, die nun mal vorliegt.
 
-Nehmen wir ein neutrales Beispiel: ein Angular-Frontend im Repo `app-frontend`, eine .NET-API im Repo `app-backend`. Das Feature „Checkout" braucht neue Endpunkte **und** neue Komponenten. Der Branch soll in beiden Repos gleich heißen, bei uns nach dem Ticket, sagen wir `shop-4711-checkout`. So finden Review, CI und alle Beteiligten die zusammengehörigen Stände auf einen Blick.
+Nehmen wir ein vereinfachtes Beispiel: ein Angular-Frontend im Repo `app-frontend`, eine .NET-API im Repo `app-backend`. Das Feature „Checkout" braucht neue Endpunkte **und** neue Komponenten. Der Branch soll in beiden Repos gleich heißen, bei uns nach dem Ticket, sagen wir `shop-4711-checkout`. So finden Review, CI und alle Beteiligten die zusammengehörigen Stände auf einen Blick.
 
 Und jetzt die Preisfrage: Was macht `claude --worktree` daraus? Genau, **einen** Worktree, im aktuellen Repo. Fast alle eingebauten Worktree-Features denken in einem Repository. Die rühmliche Ausnahme ist Antigravity, dessen „New Worktree Mode" Worktrees für alle Git-Checkouts eines Projects anlegt, aber ohne frei wählbaren gemeinsamen Branch-Namen und ohne alles, was nach dem Auschecken kommt: Abhängigkeiten, Lizenzen, Projektregeln.
 
