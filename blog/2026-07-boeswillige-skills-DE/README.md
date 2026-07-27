@@ -107,6 +107,10 @@ Das ist perfektes Social Engineering, nur eben gegen eine Maschine gerichtet. Al
 
 Die Adresse selbst war der zweite Teil des Tricks. Google Stitch liegt in Wahrheit unter `stitch.withgoogle.com`. Der Skill verwies stattdessen auf eine Domain, die den Produktnamen im Titel führte und den Angreifern gehörte. Kaum jemand weiß auswendig, unter welcher Adresse Googles Werkzeug wirklich residiert. Wer es nicht weiß, hat keine Chance, den Unterschied zu bemerken. Der Agent übrigens auch nicht.
 
+Meine Einschätzung nach mehrfachem Lesen: **Dieser Angriff ist extrem schwer zu erkennen.** AIR schreibt, kein getesteter Scanner habe etwas beanstandet, und das glaube ich sofort. In dieser Datei gibt es schlicht nichts zu finden. Jede einzelne Anweisung darin lässt sich mit guter Absicht erklären, und in neunundneunzig von hundert Skills wäre sie auch genau so gemeint.
+
+Man darf auch nicht darauf hoffen, dass die Scanner aus diesem Fall lernen. Angenommen, sie schlagen künftig an, sobald ein Skill fremde Dokumentation zur „ground truth" erklärt. Dann formuliert man es beim nächsten Mal eben anders. „Folge der offiziellen Anleitung unter", „halte dich an die Angaben des Herstellers", „die aktuellen Schritte findest du hier". Die Zahl der Umschreibungen für „lies das dort und tu, was dort steht" ist unbegrenzt. Wir reden über natürliche Sprache, und die lässt sich nicht mit Signaturen erschlagen. Für jede erkannte Variante gibt es ein Dutzend ebenso wirksame.
+
 ### Die Pointe steht im Review
 
 Der Pull Request wurde nicht wortlos durchgewinkt. Es gibt ein ausführliches, fachlich kluges Review, das dem Beitrag mehrere Qualitäten bescheinigt: saubere progressive disclosure, gut kalibrierter Geltungsbereich, wohlgeformter Marktplatz-Eintrag. Und dann diesen Punkt:
