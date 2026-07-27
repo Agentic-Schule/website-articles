@@ -143,41 +143,17 @@ Anthropic beschreibt genau diese Gefahr in der eigenen Dokumentation, in erfreul
 
 Der letzte Halbsatz ist der wichtigste des ganzen Themas. Ein Skill kann heute vertrauenswürdig sein und morgen nicht mehr, ohne dass sich an ihm eine einzige Zeile ändert.
 
-## Ein Muster, kein Einzelfall
+## Warum das niemand findet
 
-Der AIR-Fall war ein kontrolliertes Experiment. Die unkontrollierten gibt es auch, und sie sind älter.
+Der AIR-Fall war ein kontrolliertes Experiment. Bösartige Skills in freier Wildbahn gibt es aber auch, und zwar reichlich. Koi Security prüfte Anfang Februar 2026 einen Marktplatz und fand unter 2.857 Skills [341 bösartige](https://www.koi.ai/blog/clawhavoc-341-malicious-clawedbot-skills-found-by-the-bot-they-were-targeting). Zwei Wochen später war der Katalog auf über 10.700 Skills gewachsen und die Zahl der Funde auf 824 gestiegen.
 
-**Der erste bösartige MCP-Server in freier Wildbahn** war laut [Koi Security](https://www.koi.ai/blog/postmark-mcp-npm-malicious-backdoor-email-theft) das npm-Paket `postmark-mcp`, entdeckt im September 2025. Der Autor hatte den legitimen Code geklont und unter gleichem Namen veröffentlicht. Fünfzehn Versionen lang funktionierte alles einwandfrei. In Version 1.0.16 kam dann eine einzige Zeile dazu. Sie schickte jede versendete E-Mail still als Blindkopie an einen fremden Server: Passwort-Resets, Rechnungen, interne Memos. Der Autor war kein anonymer Account, sondern ein Entwickler mit Klarnamen und gepflegtem GitHub-Profil.
+Es liegt nahe, nach einem Werkzeug zu rufen, das den Mist einfach findet. Es gibt inzwischen mehrere, und sie sind auch nicht schlecht: NVIDIA hat mit [SkillSpector](https://github.com/NVIDIA/SkillSpector) einen Scanner speziell für Agent-Skills, Snyks [Agent Scan](https://github.com/snyk/agent-scan) prüft auf eine ganze Reihe riskanter Muster, und Cisco betreibt einen [eigenen Scanner](https://github.com/cisco-ai-defense/mcp-scanner).
 
-**Die größte Kampagne, die mir bei der Recherche begegnet ist,** lief im OpenClaw-Umfeld. Koi Security prüfte Anfang Februar 2026 insgesamt 2.857 Skills eines Marktplatzes und fand [341 bösartige](https://www.koi.ai/blog/clawhavoc-341-malicious-clawedbot-skills-found-by-the-bot-they-were-targeting), davon 335 aus einer einzigen Kampagne. Beim Update zwei Wochen später war der Marktplatz auf über 10.700 Skills gewachsen und die Zahl der Funde auf 824 gestiegen. Die Skills gaben vor, ein „Prerequisite" zu benötigen, und installierten in Wahrheit einen Datendieb aus der Familie des Atomic macOS Stealer.
+Nur haben diese Werkzeuge genau dort ihre Grenze, wo unser Angriff sitzt. Sie sehen nicht, was hinter einem Link liegt. Das ist keine Unterstellung, das schreibt Snyk in die [eigene Befund-Dokumentation](https://github.com/snyk/agent-scan/blob/main/docs/issue-codes.md): Der Scanner „cannot verify the full behavior of a skill (analysis is limited to the skill's own content, not externally referenced dependencies)". Ein zweiter Befund beschreibt die Folge: Nachgeladene Instruktionen ändern das Verhalten des Agenten, ohne dass jemand den Skill anfassen müsste, und setzen damit „any form of version pinning" außer Kraft.
 
-Wie diese Kampagne die Prüfung überlebte, beschreibt [Snyk](https://snyk.io/articles/clawdhub-malicious-campaign-ai-agent-skills/) in einem Satz, der wie eine Blaupause des AIR-Falls klingt: Der Angriff umgehe die statische Analyse des Marktplatzes, „by keeping the malicious logic entirely external to the `SKILL.md` file".
+Dazu kommt, dass die Scanner sich untereinander erstaunlich uneinig sind. Eine Untersuchung von 67.453 Skill-Versionen ([arXiv 2606.01494](https://arxiv.org/abs/2606.01494)) verglich drei Prüfverfahren. Das Ergebnis: **81,9 Prozent aller Funde stammen von genau einem einzigen Scanner.** Nur 0,69 Prozent der Skills werden von allen dreien markiert. Wer sich auf ein Werkzeug verlässt, sieht also bestenfalls einen Ausschnitt.
 
-**Und wenn Scanner doch hinsehen, macht man die Datei einfach zu groß.** Palo Altos Unit 42 fand im Juni 2026 [fünf bösartige Skills](https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/), die nicht blockiert wurden. Eine der Techniken war denkbar schlicht: Die README-Datei wurde mit 22 MB Füllmaterial aufgebläht, bis sie die Größenschwellen der Prüfer sprengte.
-
-Dass Marktplätze grundsätzlich täuschbar sind, ist übrigens keine Eigenheit der KI-Welt. Koi fand im Januar 2026 zwei KI-Erweiterungen im offiziellen VS-Code-Marktplatz mit zusammen [rund 1,5 Millionen Installationen](https://www.koi.ai/blog/maliciouscorgi-the-cute-looking-ai-extensions-leaking-code-from-1-5-million-developers), die Dateiinhalte an einen fremden Server schickten. Der Kernsatz dort gilt eins zu eins für Skills:
-
-> „The marketplace approved them. The reviews were positive. The functionality is real."
-
-Dieser Fall ist die unbequeme Nachricht. Der VS-Code-Marktplatz ist keine Wildwuchs-Plattform von vorgestern. Er ist das seit Jahren betriebene Verzeichnis eines der größten Softwarehäuser der Welt. Auch npm und PyPI kämpfen nach über einem Jahrzehnt weiter mit untergeschobenen Paketen. Der selbstreplizierende npm-Wurm vom September 2025 war so gravierend, dass sogar die US-Behörde CISA eine [eigene Warnung](https://www.cisa.gov/news-events/alerts/2025/09/23/widespread-supply-chain-compromise-impacting-npm-ecosystem) herausgab. Wer also hofft, dass die Skill-Marktplätze das Problem in ein, zwei Releases wegkuratieren, sollte einen Blick auf die etablierten Marktplätze werfen. Dort hat es Jahre gedauert, das Problem einigermaßen einzudämmen. Gelöst ist es bis heute nicht.
-
-Bei den Skills stehen wir am Anfang derselben Strecke, nur mit deutlich höherem Tempo und ohne die Bremsen, die npm und PyPI sich über die Jahre eingebaut haben.
-
-## Warum Scanner das Problem nicht lösen
-
-Es liegt nahe, nach einem Werkzeug zu rufen, das den Mist einfach findet. Es gibt inzwischen mehrere, und sie sind auch nicht schlecht. Cisco betreibt einen [MCP-Scanner](https://github.com/cisco-ai-defense/mcp-scanner). NVIDIA hat mit [SkillSpector](https://github.com/NVIDIA/SkillSpector) seit März 2026 einen Scanner speziell für Agent-Skills. Und Snyks [Agent Scan](https://github.com/snyk/agent-scan) prüft Skills auf eine ganze Reihe riskanter Muster.
-
-Nur sollte man wissen, was diese Werkzeuge leisten können und was nicht.
-
-**Erstens sehen sie nicht, was hinter einem Link liegt.** Das ist keine Unterstellung, das schreiben die Hersteller selbst. Snyk vergibt für genau diesen Fall [einen eigenen Befund-Code](https://github.com/snyk/agent-scan/blob/main/docs/issue-codes.md) und formuliert die Grenze glasklar. Der Scanner „cannot verify the full behavior of a skill (analysis is limited to the skill's own content, not externally referenced dependencies)". Ein zweiter Befund-Code beschreibt die Konsequenz: Nachgeladene Instruktionen ändern das Verhalten des Agenten, ohne dass jemand den Skill anfassen müsste. Das setzt „any form of version pinning" außer Kraft.
-
-**Zweitens sind sie sich untereinander erstaunlich uneinig.** Eine Untersuchung von 67.453 Skill-Versionen ([arXiv 2606.01494](https://arxiv.org/abs/2606.01494), Mai 2026) verglich drei Prüfverfahren miteinander. Das Ergebnis ist ernüchternd. Zwei beliebige Scanner überschneiden sich bei höchstens 10,4 Prozent ihrer Treffer. Nur 0,69 Prozent der Skills werden von allen dreien markiert. Und **81,9 Prozent aller Funde stammen von genau einem einzigen Scanner**. Bei den tatsächlich bösartigen Skills erkannte SkillSpector in dieser Auswertung 6,8 Prozent.
-
-**Drittens schlagen sie auch zu oft Alarm.** Eine zweite Arbeit über 238.180 Skills ([arXiv 2603.16572](https://arxiv.org/abs/2603.16572)) fand, dass Marktplatz-Scanner bis zu 46,8 Prozent der Skills als bösartig einstufen. Bezieht man den Kontext des Repositories mit ein, bleiben 0,52 Prozent verdächtig. Ein Scanner, der die Hälfte des Katalogs rot färbt, erzieht seine Nutzer dazu, die Farbe zu ignorieren.
-
-NVIDIA schreibt die Grenze selbst in die [Dokumentation von SkillSpector](https://github.com/NVIDIA/SkillSpector). Der Satz sollte über jeder Diskussion zu diesem Thema stehen: Der Scanner sei „defense-in-depth, not a sandbox". Er markiere riskante Muster vor der Installation, halte aber keinen Skill auf, den man trotzdem installiert. Dazu kommt: „Static analysis only, no dynamic execution."
-
-Die statische Prüfung eines Artefakts, dessen eigentlicher Inhalt erst zur Laufzeit von einem fremden Server kommt, kann gar nicht funktionieren. Schuld daran sind keine schlechten Scanner. Das zu prüfende Objekt existiert zum Prüfzeitpunkt schlicht noch nicht. Snyk formuliert es in seinem [technischen Bericht zum Skill-Ökosystem](https://github.com/snyk/agent-scan/blob/main/.github/reports/skills-report.pdf) vom Februar 2026 präzise. Der veröffentlichte Skill wirke bei der Prüfung harmlos, aber Angreifer könnten sein Verhalten jederzeit ändern, indem sie den nachgeladenen Inhalt austauschen. Die Erkennung hänge damit vom Zustand des entfernten Endpunkts in genau dem Moment ab, in dem der Agent den Skill benutzt.
+Statische Prüfung kann dieses Problem gar nicht lösen. Das zu prüfende Objekt existiert zum Prüfzeitpunkt noch nicht, es kommt erst zur Laufzeit von einem fremden Server. Snyk formuliert es in seinem [technischen Bericht](https://github.com/snyk/agent-scan/blob/main/.github/reports/skills-report.pdf) so: Der veröffentlichte Skill wirke bei der Prüfung harmlos, aber Angreifer könnten sein Verhalten jederzeit ändern, indem sie den nachgeladenen Inhalt austauschen. Die Erkennung hänge damit vom Zustand des entfernten Endpunkts in genau dem Moment ab, in dem der Agent den Skill benutzt.
 
 ## Wer prüft eigentlich die Marktplätze?
 
@@ -191,9 +167,7 @@ Die ehrliche Antwort steht im Kleingedruckten der Anbieter. Sie ist überall äh
 
 An gleicher Stelle steht der Satz, der die Einordnung liefert: Plugins und Marktplätze seien „highly trusted components that can execute arbitrary code on your machine with your user privileges".
 
-Das ist keine Nachlässigkeit der Anbieter, sondern eine ökonomische Realität. Wie schnell diese Kataloge wachsen, zeigt der ClawHub-Fall von oben. In den zwei Wochen zwischen Koi-Bericht und Nachtrag wuchs der Marktplatz von 2.857 auf über 10.700 Skills. Bei diesem Tempo kann niemand jeden Beitrag manuell auditieren. Snyk zieht in seinem [technischen Bericht](https://github.com/snyk/agent-scan/blob/main/.github/reports/skills-report.pdf) vom 5. Februar 2026 deshalb einen Vergleich, den ich treffend finde. Das heutige Agenten-Ökosystem gleiche der „Wild West"-Ära früher Paketmanager wie npm und PyPI, „a time of explosive growth shadowed by significant security growing pains".
-
-Dass das keine theoretische Sorge ist, zeigt eine Nebenbemerkung desselben Berichts. Zum Zeitpunkt der Veröffentlichung waren nach Angaben der Autoren „at least 8 manually confirmed malicious skills" auf ClawHub weiterhin öffentlich verfügbar. Von 3.984 untersuchten Skills stuften sie 76 als eindeutig bösartig ein. 13,4 Prozent enthielten mindestens einen kritischen Befund.
+Das ist keine Nachlässigkeit der Anbieter, sondern eine ökonomische Realität. Bei Katalogen, die binnen zwei Wochen von 2.857 auf über 10.700 Einträge wachsen, kann niemand jeden Beitrag manuell auditieren. Snyk vergleicht das heutige Agenten-Ökosystem in seinem [technischen Bericht](https://github.com/snyk/agent-scan/blob/main/.github/reports/skills-report.pdf) deshalb mit der „Wild West"-Ära früher Paketmanager wie npm und PyPI.
 
 Ein Trugschluss verdient noch eine eigene Warnung, denn er war im AIR-Fall der eigentliche Türöffner: **Popularität ist kein Sicherheitsmerkmal.** Der Skill erbte die Sterne eines fremden Repositories, ohne selbst je geprüft worden zu sein. Im selben Bericht steht der passende Satz: „Skill popularity is currently not a safe proxy for security, as download metrics can be artificially inflated."
 
@@ -208,7 +182,7 @@ Der Unterschied liegt in den Rechten. Anthropic beschreibt in der [Skills-Dokume
 
 Der Agent auf deiner Maschine ist also kein eingesperrter Prozess. Er arbeitet mit deinen Rechten. Was du darfst, darf er. Und was er darf, darf ein Skill, der ihn belügt. Anthropic benennt die möglichen Folgen ungeschminkt: „data exfiltration, unauthorized system access, or other security risks".
 
-Unit 42 beschreibt das Ergebnis besonders nüchtern. Weil Skill-Logik und Vollmacht des Agenten nicht getrennt seien, bedeute eine Installation „complete control over the agent's identity". Über die Identität des Agenten also, wohlgemerkt, und nicht bloß über den Rechner. Diese Identität ist im Zweifel mehr wert als ein Passwort. Sie gilt überall dort, wo der Agent ohnehin schon angemeldet ist.
+Palo Altos Sicherheitsabteilung [Unit 42](https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/) beschreibt das Ergebnis besonders nüchtern. Weil Skill-Logik und Vollmacht des Agenten nicht getrennt seien, bedeute eine Installation „complete control over the agent's identity". Über die Identität des Agenten also, wohlgemerkt, und nicht bloß über den Rechner. Diese Identität ist im Zweifel mehr wert als ein Passwort. Sie gilt überall dort, wo der Agent ohnehin schon angemeldet ist.
 
 Anthropic zieht daraus in der Dokumentation die naheliegende Konsequenz: „Use Skills only from trusted sources: those you created yourself or obtained from Anthropic." Wer trotzdem etwas Fremdes einsetzt, solle „exercise extreme caution and thoroughly audit it before use".
 
