@@ -156,7 +156,7 @@ For my workflow, that means: build it yourself. Luckily, in Claude Code that's s
 Custom [slash commands](https://code.claude.com/docs/en/skills) in Claude Code are simply Markdown files: a file `~/.claude/commands/feature-init.md` creates the command `/feature-init`. The content is a work instruction for the agent: prose with a few commands in it. Such a command creates my worktree pairs. The procedure it enforces:
 
 1. **Ask for the feature name.** It becomes the branch name, identical in both repos.
-2. **Update both repos and check whether the branch already exists**, locally or on the remote. Where it does, it gets checked out (maybe someone already started yesterday). Where it doesn't, it's created fresh from the latest `origin/main`.
+2. **Update both repos and check whether the branch already exists**, locally or on the remote. The decision is made per repo: if the branch already exists there, it gets checked out (maybe someone already started yesterday, or it was me and the feature has once again been sitting around for too long). If not, it's created fresh from the latest `origin/main`.
 3. **One worktree per repo**, as a sibling folder with a speaking name: `app-frontend-shop-4711-checkout/` next to `app-frontend/`.
 4. **Install dependencies and activate the Kendo license**, per worktree: `npm install` in the frontend, `dotnet restore` in the backend (more on the license in a moment).
 5. **Read the project rules:** the `CLAUDE.md` of both worktrees.
