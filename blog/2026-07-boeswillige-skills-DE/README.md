@@ -66,7 +66,7 @@ Und es bleibt nicht beim Marktplatz. Rund um diese Kataloge ist ein Ring von Ver
 
 Besonders bemerkenswert ist ein zweiter dieser Kataloge: [skills.sh](https://www.skills.sh/wshobson/agents), dessen Scanner den Skill laut AIR seinerzeit als sicher durchgewinkt hat, listet ihn bis heute, mit **31.200 Installationen**.
 
-Und damit ist die Sache endgültig aus der Kontrolle geraten. AIR schreibt selbst, der Skill sei „uploaded to multiple marketplaces" worden. Eine Suche über GitHub zeigt, wie weit er inzwischen gewandert ist: Die Datei liegt, byte-identisch samt der Angreifer-Domain, in weiteren Skill-Registern, in Spiegel-Repositories und in Sammlungen mit Namen wie „awesome-skills" oder „TOP-SKILLS". Und, das ist der unangenehmste Teil, sie liegt in ganz normalen Projekten. Ein Ernährungsrechner, eine Firmen-Website, ein Demo-Agent: alle haben den Skill in ihr `.claude`-Verzeichnis übernommen und mit eingecheckt.
+Und damit ist die Sache endgültig aus der Kontrolle geraten. AIR schreibt selbst, der Skill sei in mehrere Marktplätze hochgeladen worden. Eine Suche über GitHub zeigt, wie weit er inzwischen gewandert ist: Die Datei liegt, byte-identisch samt der Angreifer-Domain, in weiteren Skill-Registern, in Spiegel-Repositories und in Sammlungen mit Namen wie „awesome-skills" oder „TOP-SKILLS". Und, das ist der unangenehmste Teil, sie liegt in ganz normalen Projekten. Ein Ernährungsrechner, eine Firmen-Website, ein Demo-Agent: alle haben den Skill in ihr `.claude`-Verzeichnis übernommen und mit eingecheckt.
 
 Ein bösartiger Skill lässt sich also nicht zurückrufen. Er wird kopiert, gespiegelt, in Kataloge übernommen und in Projekte eingecheckt. Selbst wenn der ursprüngliche Marktplatz ihn morgen löschte, bliebe er an Dutzenden Stellen verfügbar.
 
