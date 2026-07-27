@@ -91,9 +91,6 @@ Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition (and many others) no
 | [OpenAI Codex](https://developers.openai.com/codex/app/worktrees) | multiple chats per project, parallel cloud tasks | git worktrees "under the hood", cloud: isolated environment per task |
 | [Devin](https://docs.devin.ai/onboard-devin/environment) | orchestrates "managed Devins" in parallel | fresh copy of a snapshot per session |
 | [Google Jules](https://jules.google/docs/environment/) | parallel tasks, limit depends on plan | fresh VM per task |
-| [Aider](https://aider.chat/docs/faq.html) | officially no parallel story | community practice: one worktree per instance, by hand |
-
-(As of July 2026. The feature landscape in this field seems to change weekly; each link leads to the official docs.)
 
 The local tools bet on worktrees, the cloud services on throwaway VMs, where a dedicated VM is the most obvious route anyway. Still, don't rely on the isolation blindly: Claude Code, for example, doesn't always use worktrees on its own; sometimes the agent comes up with the idea by itself, sometimes it doesn't. Like so much in vibe coding, you can deliberately raise the probability: **simply say that worktrees should be used.** The following sections show what this looks like in practice, starting with my tool of choice.
 

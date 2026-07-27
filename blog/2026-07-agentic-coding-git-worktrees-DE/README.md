@@ -92,9 +92,6 @@ Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition (und viele weitere) h
 | [OpenAI Codex](https://developers.openai.com/codex/app/worktrees) | mehrere Chats pro Projekt, Cloud-Tasks parallel | git worktrees „under the hood", Cloud: isolierte Umgebung pro Task |
 | [Devin](https://docs.devin.ai/onboard-devin/environment) | orchestriert „Managed Devins" parallel | frische Kopie eines Snapshots pro Session |
 | [Google Jules](https://jules.google/docs/environment/) | parallele Tasks, Limit je nach Plan | frische VM pro Task |
-| [Aider](https://aider.chat/docs/faq.html) | offiziell keine Parallel-Story | Community-Praxis: von Hand ein Worktree pro Instanz |
-
-(Stand: Juli 2026. Die Feature-Lage ändert sich in diesem Feld gefühlt wöchentlich, die Links führen jeweils zur offiziellen Doku.)
 
 Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Blind verlassen sollte man sich auf die Isolation trotzdem nicht: Claude Code etwa nutzt Worktrees nicht immer von allein, mal kommt der Agent selbst auf die Idee, mal nicht. Wie so vieles beim Vibe Coding lässt sich die Wahrscheinlichkeit aber gezielt erhöhen: **Einfach dazusagen, dass Worktrees eingesetzt werden sollen.** Wie das konkret aussieht, zeigen die folgenden Abschnitte, zuerst beim Werkzeug meiner Wahl.
 
