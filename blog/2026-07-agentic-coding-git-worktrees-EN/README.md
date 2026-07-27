@@ -37,7 +37,7 @@ Let's imagine the following everyday situation: Claude Code is working on a bigg
 
 With a classic single checkout, we now have three bad options:
 
-- **Chance it.** Quickly start a second agent: stash, switch the branch, fix, push, and switch back before the running agent notices. Except the first one reads and writes in exactly this directory. If we switch the branch underneath it, it edits foreign file states from that moment on, and the tests check a state that never existed.
+- **Chance it.** Quickly start a second agent: stash, switch the branch, fix, push, and switch back before the running agent notices. Except the first one reads and writes in exactly this directory. If we were fast and got lucky, this might even work.
 - **Wait.** The bugfix sits idle until the refactoring is done. The only reason: the working directory happens to be busy.
 - **Abort the agent.** Half the work is done, the context built up, all for the bin.
 
