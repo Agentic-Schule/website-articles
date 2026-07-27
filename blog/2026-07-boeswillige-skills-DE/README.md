@@ -133,7 +133,7 @@ Zwei Details machen die Sache noch fieser, und sie erklären, warum beim Lesen n
 
 > „Once we configured our domain to redirect to the real one, there's no way for either a standard user or an LLM scanner to tell something's off."
 
-Bösartig wird die Adresse nur, wenn jemand den Schalter umlegt. Für den Angriff haben sie den Inhalt ausgetauscht, danach ging es zurück in den Ruhezustand. Ich habe die Adresse geprüft, allerdings nur die HTTP-Antwortkopfzeilen, ohne den Inhalt zu laden. Stand 27. Juli 2026 antwortet sie mit einer Weiterleitung auf `stitch.withgoogle.com`. Wer den Link heute anklickt, landet beim Original und hakt die Prüfung zufrieden ab.
+Bösartig wird die Adresse nur, wenn jemand den Schalter umlegt. Für den Angriff haben sie den Inhalt ausgetauscht, danach ging es zurück in den Ruhezustand. Stand 27. Juli 2026 antwortet die Domain mit einer Weiterleitung auf `stitch.withgoogle.com`. Wer den Link heute anklickt, landet beim Original und hakt die Prüfung zufrieden ab.
 
 Ein Klick auf den Link beweist deshalb überhaupt nichts. Er zeigt den Zustand von genau diesem Augenblick, und dieser Zustand gehört jemand anderem.
 
