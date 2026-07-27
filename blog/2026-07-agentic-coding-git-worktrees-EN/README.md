@@ -33,7 +33,7 @@ This article shows the technique behind it, the built-in worktree support of tod
 
 ## The Problem: One Agent Occupies the Whole Repo
 
-An example from a perfectly normal morning: Claude Code is working on a bigger refactoring, forty files, tests running along. The run takes, let's say, forty-five minutes. Ten minutes in, a bug report arrives. Production. Should ship today.
+Let's imagine the following morning: Claude Code is working on a bigger refactoring, forty files, tests running along. The run takes, let's say, forty-five minutes. Ten minutes in, a bug report arrives. Production. Should ship today.
 
 With a classic single checkout, I now have three bad options:
 
