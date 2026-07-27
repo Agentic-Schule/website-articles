@@ -34,7 +34,7 @@ Dieser Artikel zeigt die Technik dahinter, den eingebauten Worktree-Support der 
 
 ## Das Problem: Ein Agent belegt das ganze Repo
 
-Stellen wir uns folgenden Vormittag vor: Claude Code arbeitet an einem größeren Refactoring und lässt dabei immer wieder die Tests laufen. So ein Lauf zieht sich. Mittendrin kommt ein Bug-Report rein. Produktion. Sollte heute noch raus.
+Stellen wir uns folgende Alltagssituation vor: Claude Code arbeitet an einem größeren Refactoring und lässt dabei immer wieder die Tests laufen. So ein Lauf zieht sich. Mittendrin kommt ein Bug-Report rein. Produktion. Sollte heute noch raus.
 
 Mit einem klassischen Einzel-Checkout haben wir jetzt drei schlechte Optionen:
 
