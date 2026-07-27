@@ -74,7 +74,7 @@ Two more things worth knowing:
 - **Things you don't immediately see are shared, too.** Hooks (`.git/hooks`) and the local repo configuration apply to all worktrees together. A pre-commit hook is in effect everywhere.
 - **Everything that's gitignored is NOT shared.** `node_modules`, `.env`, build caches: a fresh worktree is a fresh checkout, all of that is missing there at first. That's a curse (installation per worktree, more on that later) and a blessing at the same time (no half-built artifacts from the wrong branch).
 
-Worktrees existed long before the AI agents. Classically, you use them for the hotfix next to the running feature, or to check out a pull request without touching your own state. With agents, a new permanent situation joins the list: the personal computer suddenly hosts a whole team, and every team member needs its own checkout.
+Worktrees existed long before the AI agents. Classically, you use them for the hotfix next to the running feature, or to check out a pull request without touching your own state. With agents, a new permanent situation joins the list: the personal computer suddenly hosts a whole agentic team, and every team member needs its own checkout.
 
 ## What the Tools Make of It
 
