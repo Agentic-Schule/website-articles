@@ -154,7 +154,7 @@ Für meinen Workflow heißt das: selbst bauen. Zum Glück ist das in Claude Code
 
 ## Mein Init-Command: ein Kommando, zwei Repos, zwei Worktrees
 
-Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude Code schlicht Markdown-Dateien: Eine Datei `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Der Inhalt ist eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. So ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
+Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude Code schlicht Markdown-Dateien, die aktuelle Doku führt sie unter dem Oberbegriff „Skills": Eine Datei `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Der Inhalt ist eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. So ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
 
 1. **Feature-Name abfragen.** Er wird der Branch-Name, identisch in beiden Repos.
 2. **Beide Repos aktualisieren und prüfen, ob der Branch schon existiert**, lokal oder remote. Die Entscheidung fällt pro Repo: Existiert der Branch dort schon, wird er ausgecheckt (vielleicht hat gestern schon jemand angefangen, oder ich wars und das Feature ist mal wieder zu lange liegen geblieben). Falls nicht, entsteht er frisch vom neuesten `origin/main`.
@@ -289,7 +289,7 @@ Ehrlich bleiben will ich auch diesmal:
 - **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengend. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Die Technik gäbe locker mehr her. Mein Kopf kommt beim Review vorher an seine Grenze.
 - **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Deshalb steckt all das im Init-Command statt in meinem Gedächtnis. Das Aufräumen erledigt der Agent (zumindest Claude Code mit den aktuellen Modellen) von ganz alleine: Ist der PR endlich gemerged, sage ich nur „Fertig, bitte aufräumen", und der Worktree wird entfernt, der lokale Branch gelöscht, gegebenenfalls auch der remote. Und alles ist sauber. Schön.
 
-**Fragen, Feedback, eigene Worktree-Tricks?** Immer her damit, ich freue mich über jede Nachricht. Und wenn dir der Init-Command gefällt: Bau ihn nach. Er ist absichtlich so generisch gehalten, dass er in jedes Zwei-Repo-Setup passt.
+**Fragen, Feedback, eigene Worktree-Tricks?** Immer her damit, ich freue mich über jede Nachricht. Und wenn dir der Init-Command gefällt: Bau ihn nach und mach ihn dir zu eigen.
 
 ---
 

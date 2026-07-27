@@ -153,7 +153,7 @@ For my workflow, that means: build it yourself. Luckily, in Claude Code that's s
 
 ## My Init Command: One Command, Two Repos, Two Worktrees
 
-Custom [slash commands](https://code.claude.com/docs/en/skills) in Claude Code are simply Markdown files: a file `~/.claude/commands/feature-init.md` creates the command `/feature-init`. The content is a work instruction for the agent: prose with a few commands in it. Such a command creates my worktree pairs. The procedure it enforces:
+Custom [slash commands](https://code.claude.com/docs/en/skills) in Claude Code are simply Markdown files, the current docs group them under the umbrella term "skills": a file `~/.claude/commands/feature-init.md` creates the command `/feature-init`. The content is a work instruction for the agent: prose with a few commands in it. Such a command creates my worktree pairs. The procedure it enforces:
 
 1. **Ask for the feature name.** It becomes the branch name, identical in both repos.
 2. **Update both repos and check whether the branch already exists**, locally or on the remote. The decision is made per repo: if the branch already exists there, it gets checked out (maybe someone already started yesterday, or it was me and the feature has once again been sitting around for too long). If not, it's created fresh from the latest `origin/main`.
@@ -288,7 +288,7 @@ I want to stay honest this time, too:
 - **The mental load stays.** Hopping from branch to branch is hard work in your head. That's why I rarely allow myself more than two or three branches at a time. The technology could easily handle more. My head hits its limit at review time well before that.
 - **Discipline is part of it.** Install the deps, activate the license, assign the ports, clean up at the end. That's why all of it lives in the init command instead of my memory. The cleanup itself is something the agent (at least Claude Code with the current models) handles all on its own: once the PR is finally merged, I just say "done, please clean up", and the worktree is removed, the local branch deleted, the remote one too if needed. And everything is clean. Nice.
 
-**Questions, feedback, worktree tricks of your own?** Bring them on, I'm happy to hear from you. And if you like the init command: rebuild it. It is deliberately kept so generic that it fits any two-repo setup.
+**Questions, feedback, worktree tricks of your own?** Bring them on, I'm happy to hear from you. And if you like the init command: rebuild it and make it your own.
 
 ---
 
