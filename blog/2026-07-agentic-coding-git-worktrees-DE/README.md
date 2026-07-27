@@ -24,11 +24,9 @@ header: header.jpg
 
 In der klassischen Softwareentwicklung gab es Isolation gratis: ein Entwickler, ein persönlicher Rechner, ein Checkout. Jeder Coding-Agent geht heute genauso selbstverständlich davon aus, dass ihm das Arbeitsverzeichnis allein gehört: Er liest Dateien, ändert sie, lässt Builds und Tests laufen, und seine Subagenten tun parallel das Gleiche. Na gut, ob das jeder Agent so macht, weiß ich natürlich nicht. Aber zumindest mein Claude Code ist ohne Etikette ein kleiner Rambo. Jetzt tummeln sich aber viele solcher agentischen Entwickler gleichzeitig auf demselben Computer, und sobald zwei von ihnen dasselbe Verzeichnis für sich beanspruchen, gibt es ein Kuddelmuddel: Zwei Agenten editieren dieselben Dateien, Tests prüfen Stände, die es so nie gegeben hat, und am Ende weiß niemand mehr, welcher Diff von wem stammt.
 
-**Die Lösung ist ein unscheinbares git-Bordmittel, das inzwischen quer durch die agentischen Tools im Einsatz ist: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, die Alleinbesitz-Annahme stimmt wieder, und plötzlich laufen drei, vier Sessions parallel, ohne sich in die Quere zu kommen.**
+**Die Lösung ist ein unscheinbares git-Bordmittel, das inzwischen quer durch die agentischen Tools im Einsatz ist: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, die Alleinbesitz-Annahme stimmt wieder, und plötzlich laufen beliebig viele Sessions parallel, ohne sich in die Quere zu kommen.**
 
 Dieser Artikel zeigt die Technik dahinter, den eingebauten Worktree-Support der agentischen Tools und den Init-Command, mit dem ich einen Feature-Branch samt Worktrees über zwei Repos aufspanne.
-
-> 🌳 Das Bild dazu ist simpel: Das Repository ist der Stamm, jeder Worktree ein eigener Ast. Auf jedem Ast arbeitet genau ein Agent, und keiner sägt am Ast des anderen.
 
 ## Inhalt
 
