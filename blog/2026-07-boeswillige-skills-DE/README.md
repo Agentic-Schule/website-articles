@@ -157,7 +157,7 @@ Statische Prüfung kann dieses Problem gar nicht lösen. Das zu prüfende Objekt
 
 Meine Meinung dazu fällt deutlich aus: **In dieser Verfassung richten solche Scanner mehr Schaden an, als sie nützen.** Ein Werkzeug, das „keine Befunde" meldet, erzeugt Vertrauen. Wenn es prinzipbedingt nicht dort hinsehen kann, wo der Schaden sitzt, verkauft es dieses Vertrauen ungedeckt. Das ist schlechter als gar kein Scanner, denn ohne grünes Häkchen würde man wenigstens selbst nachsehen. Im geschilderten Fall haben gleich drei Prüfungen den Skill freigegeben, und genau diese Freigaben waren Teil seiner Glaubwürdigkeit.
 
-Man kennt das aus der alten Welt. Auch Virenscanner tun mit ihren Heuristiken oft so, als hätten sie eine Antwort auf etwas, das sie nicht sicher erkennen können. Bei Skills ist die Lage aber schlimmer: Hier ist der Schadteil nicht einmal Code, den man analysieren könnte, sondern ein höflich formulierter Satz, der auf eine Adresse zeigt.
+Man kennt das aus der alten Welt. Auch Virenscanner tun mit ihren Heuristiken oft so, als hätten sie eine Antwort auf etwas, das sie nicht sicher erkennen können. Bei Skills ist die Lage aber schlimmer. Hier gibt es nicht einmal Code, den man analysieren könnte. Der Schadteil ist ein höflich formulierter Satz, der auf eine Adresse zeigt.
 
 ## Wer prüft eigentlich die Marktplätze?
 
