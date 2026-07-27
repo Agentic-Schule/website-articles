@@ -80,7 +80,7 @@ The [documentation](https://code.claude.com/docs/en/scheduled-tasks) describes t
 | Prompt only | `/loop check the deploy` | Claude picks the delay itself |
 | Interval only, or nothing | `/loop` | built-in maintenance prompt |
 
-In self-paced mode, Claude picks a delay between one minute and one hour after each iteration, based on what it observed. Short waits while a build is running, longer ones when nothing is pending. The chosen delay and the reason for it are printed at the end of each iteration.
+In self-paced mode, Claude decides after each iteration how long to wait. The docs describe it like this: short waits while a build is finishing or a pull request is active, longer ones when nothing is pending. One minute is the floor, one hour the ceiling. As long as something is actually happening the delays stay short, and the hour is the exception for a loop running into nothing. The chosen delay and the reason for it are printed at the end of each iteration.
 
 A bare `/loop` with nothing else starts a built-in maintenance prompt. It works in a fixed order: first continue unfinished work from the conversation, then tend to the current branch's pull request, meaning review comments, red CI and merge conflicts, and when none of that is pending, run cleanup passes such as bug hunts or simplification. It starts no new initiatives. Irreversible actions such as pushing or deleting only happen when they continue something the transcript already authorized.
 
@@ -144,7 +144,7 @@ The pleasant part first. Anthropic extends the prompt cache automatically [when 
 
 > On a Claude subscription, Claude Code requests the one-hour TTL automatically.
 
-One hour is exactly the longest delay a self-paced loop will pick. On a subscription the cached context therefore stays warm across every pause, however long it turns out to be. The pause costs you nothing.
+One hour is also the ceiling for the self-chosen delay. On a subscription the cached context therefore stays warm across every pause, even the longest one possible. The pause costs you nothing.
 
 Now the edge. As soon as you work past your allowance and start drawing on usage credits, Claude Code drops to five minutes automatically, according to the same page. On an API key and with the cloud providers, five minutes is the default anyway. And then this applies:
 
@@ -187,7 +187,7 @@ Five things I take away:
 - **The completion condition is the real work.** The rest is a command with a time interval.
 - **`/loop` waits, `/goal` does not.** Waiting on something external, take the loop. Working toward an end state, take the goal.
 - **Do not let the same model that did the work check it.** `/goal` brings in a model of its own for that.
-- **Pauses are free on a subscription and expensive through the API.** One hour of cache against five minutes makes the difference.
+- **Pauses are free on a subscription and expensive through the API.** A cache that holds for an hour against one that goes cold after five minutes.
 - **Breaking out on its own is judgement, not a promise.** Do not rely on the agent stopping by itself when it finds something.
 
 And when the next term goes round the timeline in a few weeks, it is worth a look at the changelog first. Fairly often the feature has been sitting in there for a while.

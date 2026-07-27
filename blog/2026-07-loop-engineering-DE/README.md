@@ -80,7 +80,7 @@ Die [Dokumentation](https://code.claude.com/docs/en/scheduled-tasks) beschreibt 
 | nur Prompt | `/loop check the deploy` | Claude wählt den Abstand selbst |
 | nur Intervall oder nichts | `/loop` | eingebauter Wartungs-Prompt |
 
-Im selbstgetakteten Modus wählt Claude nach jedem Durchlauf einen Abstand zwischen einer Minute und einer Stunde, je nachdem was er gesehen hat. Kurze Abstände, solange ein Build läuft, längere, wenn nichts ansteht. Der gewählte Abstand und die Begründung dafür werden am Ende jedes Durchlaufs ausgegeben.
+Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie lange er wartet. Die Doku beschreibt das so: kurze Abstände, solange ein Build läuft oder ein Pull Request in Bewegung ist, längere, wenn nichts ansteht. Eine Minute ist die Untergrenze, eine Stunde die Obergrenze. Solange tatsächlich etwas passiert, bleiben die Abstände kurz, die Stunde ist der Ausnahmefall für eine Schleife, die ins Leere läuft. Der gewählte Abstand und die Begründung dafür werden am Ende jedes Durchlaufs ausgegeben.
 
 Ein bloßes `/loop` ohne alles startet einen eingebauten Wartungs-Prompt. Der arbeitet in fester Reihenfolge: erst unerledigte Arbeit aus dem Gespräch fortsetzen, dann den Pull Request des aktuellen Branch pflegen, also Review-Kommentare, rote CI und Merge-Konflikte, und wenn nichts davon ansteht, Aufräumdurchgänge wie Bug-Jagd oder Vereinfachung. Neue Initiativen startet er nicht. Irreversible Aktionen wie Pushen oder Löschen führt er nur aus, wenn sie etwas fortsetzen, das im Transkript schon genehmigt wurde.
 
@@ -144,7 +144,7 @@ Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [we
 
 > On a Claude subscription, Claude Code requests the one-hour TTL automatically.
 
-Eine Stunde ist exakt der längste Abstand, den eine selbstgetaktete Schleife wählt. Im Abo bleibt der zwischengespeicherte Kontext also über jede Pause hinweg warm, egal wie lang sie ausfällt. Die Pause kostet dich nichts.
+Eine Stunde ist zugleich die Obergrenze für den selbstgewählten Abstand. Im Abo bleibt der zwischengespeicherte Kontext deshalb über jede Pause hinweg warm, selbst über die längstmögliche. Die Pause kostet dich nichts.
 
 Jetzt die Kante. Sobald du über dein Kontingent hinaus arbeitest und Usage Credits verbrauchst, schaltet Claude Code laut derselben Seite automatisch auf fünf Minuten herunter. Auf einem API-Schlüssel und bei den Cloud-Anbietern sind fünf Minuten ohnehin der Standard. Und dann gilt:
 
@@ -187,7 +187,7 @@ Fünf Dinge nehme ich mit:
 - **Die Abbruchbedingung ist die eigentliche Arbeit.** Der Rest ist ein Befehl mit einem Zeitintervall.
 - **`/loop` wartet, `/goal` nicht.** Wartest du auf Fremdes, nimm die Schleife. Arbeitest du auf einen Endzustand hin, nimm das Ziel.
 - **Lass nicht dasselbe Modell prüfen, das gearbeitet hat.** `/goal` holt dafür ein eigenes Modell dazu.
-- **Pausen sind im Abo gratis und per API teuer.** Eine Stunde Cache gegen fünf Minuten macht den Unterschied.
+- **Pausen sind im Abo gratis und per API teuer.** Ein Cache, der eine Stunde hält, gegen einen, der nach fünf Minuten kalt ist.
 - **Selbstständiges Abbrechen ist Ermessen, keine Zusage.** Verlasse dich nicht darauf, dass der Agent bei einem Fund von allein innehält.
 
 Und wenn in ein paar Wochen der nächste Begriff durch die Timeline geht, lohnt vorher ein Blick ins Changelog. Ziemlich oft steht die Funktion da schon eine Weile drin.
