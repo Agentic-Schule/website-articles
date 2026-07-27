@@ -255,7 +255,7 @@ Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisi
 
 ### Abhängigkeiten sind pro Worktree fällig
 
-`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Der Lohn dafür: Jeder Ast hat exakt die Abhängigkeiten seines Branches und nichts leakt zwischen den Features.
+`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Der Lohn dafür: Jeder Worktree hat exakt die Abhängigkeiten seines Branches und nichts leakt zwischen den Features.
 
 ### Kommerzielle Lizenzen, die node_modules patchen
 
