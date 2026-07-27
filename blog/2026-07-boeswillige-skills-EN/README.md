@@ -173,7 +173,7 @@ Two examples of what it looks like when this is right: the Angular team publishe
 
 My advice is therefore: **only take skills from vendors whose software you already use.** Everything else is a foreign text that your agent executes with your permissions.
 
-If you still want to "run" something foreign, at least do it properly. For that I have a few tips, and the last one matters most to me. After that I show why I now go one step further.
+If you still want to "run" something foreign, at least do it properly. For that I have a few tips. After that I show why I now go one step further.
 
 > **🔍 The five-minute check before installing**
 >
@@ -185,13 +185,13 @@ If you still want to "run" something foreign, at least do it properly. For that 
 
 Two more habits have served me well: **use the protections that are already there.** According to the [security documentation](https://code.claude.com/docs/en/security), Claude Code asks before network access and does not auto-approve `curl` and `wget`. Write access stays limited to the working directory by default, and bash commands can run in a sandbox with filesystem and network isolation. Click those prompts away out of convenience and you switch off precisely the control that would make an attack like this visible. Fetching the script is a network access for which the agent in Claude Code would have to ask permission. How other tools handle this you have to look up per environment. The marketplace under attack served quite a few of them, after all.
 
-**Reduce the attack surface.** An agent trying out a new skill has no business in the directory holding your production credentials. In my setup, anything new runs first in an environment where there is little to take. There are ready-made tools for this. A [Docker-based dev container](https://code.claude.com/docs/en/devcontainer) runs everything inside the container instead of on your machine and can add a firewall that limits outbound traffic to allowed domains. For the other levels, from the built-in bash sandbox to a VM of your own, see the [documentation on sandbox environments](https://code.claude.com/docs/en/sandbox-environments). None of this is a free pass either. Anthropic points out explicitly that a dev container combined with `--dangerously-skip-permissions` does not stop a malicious project from exfiltrating anything reachable inside the container, including the credentials in `~/.claude`.
+**Reduce the attack surface.** An agent trying out a new skill has no business in the directory holding your production credentials. In my setup, anything new runs first in an environment where there is little to take. [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/), for instance, starts the agent in a microVM of its own, with its own filesystem and network, without it touching the host.
 
 And then the most important point: **a skill that fetches content from the internet and treats it as binding cannot be reviewed.** Not by you, not by a scanner, not by anyone. You can still use such a skill if you trust the operator of that address permanently, the way you trust a package manager. Just do not kid yourself that you have reviewed it.
 
 ## The Best Protection: Write Your Skills Yourself
 
-After all this I arrive at a conclusion that sounds like extra work and in truth saves work: **treat foreign skills as a template, never as a dependency.** Unlike a library, that is genuinely realistic here. A skill is prose with a few commands in it. A set of work instructions, really, and nothing you would have to rebuild like a framework. You write those yourself in half an hour; often enough the agent writes them for you on request. Anyone who reads a foreign skill thoroughly, as they should, has already done most of the work. The step from "I understand what this does" to "I have written this down for my project" is a short one. And you win twice over: what you wrote yourself cannot be swapped out behind your back, and it fits better. Foreign skills have to work for everybody. Your own knows your folder structure, your conventions and your test commands.
+After all this I arrive at a conclusion that sounds like extra work and in truth saves work: **treat foreign skills as a template, never as a dependency.** Unlike a library, that is genuinely realistic here. A skill is prose with a few commands in it. A set of work instructions, really, and nothing you would have to rebuild like a framework. You write those yourself, and often enough the agent writes them for you on request. Anyone who reads a foreign skill thoroughly, as they should, has already done most of the work. The step from "I understand what this does" to "I have written this down for my project" is a short one. And you win twice over: what you wrote yourself cannot be swapped out behind your back, and it fits better. Foreign skills have to work for everybody. Your own knows your folder structure, your conventions and your test commands.
 
 Snyk points skill developers in the same direction in its own report. Skills should be built as "fully self-contained packages", avoiding anything that amounts to self-updating or regularly polling a URL for further agent instructions. For users the recommendation there reads: "not to install agent skills without prior review". At this point I go one step further than Snyk, because surely the lesson from the case described here is this: **no review can guarantee that no malicious fragment is hiding somewhere.** Here the review did not merely miss the attack, it praised it. And prompt injection is evolving faster than any checklist can keep up. This time it was a URL, which you could at least see while reading. Next time it will be something you do not recognise as an instruction at all. You do not have to imagine that; Snyk maintains a dedicated finding code for it:
 
@@ -223,8 +223,8 @@ Skills are great. But they are an ecosystem running wild. Five things I take awa
 - **Review time is not runtime.** Anything a skill fetches only at runtime is unreviewed. However green the tick was at download time.
 - **Stars and download counts have no bearing on security.**
 - **The agent acts with your permissions.** The right question before every install is therefore: "What could this do if it were malicious?" The likelihood is secondary.
-- **Write your skills yourself.** A skill is just text. It costs you half an hour and removes the trust problem entirely.
-- **No review helps against invisible instructions.** The only thing that helps is never copying the text and having it rephrased instead.
+- **Write your skills yourself.** A skill is just text. It removes the trust problem entirely.
+- **Against invisible instructions, review only goes so far.** More reliable is never copying the text and having it rephrased instead.
 
 The comparison with the early package managers carries far, but it has a catch. With npm, malicious code still had to be executed. A skill merely has to be phrased convincingly, because it addresses a system trained to follow instructions. To that we have no good answer yet …
 
