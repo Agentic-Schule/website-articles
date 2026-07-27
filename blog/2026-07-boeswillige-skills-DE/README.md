@@ -40,9 +40,9 @@ Bei der Themenwahl sollte man kurz innehalten. Sie ist der psychologisch raffini
 
 Vergleiche das mit einem Skill für Datenbank-Migrationen oder Zugriffsrechte. Dort wäre man deutlich vorsichtiger. Wer etwas Dekoratives installiert, rechnet dagegen nicht damit, dabei die Kontrolle über seinen Agenten zu verlieren. **Angriffe gehen nicht dorthin, wo die wertvollsten Daten liegen. Sie gehen dorthin, wo die Aufmerksamkeit am niedrigsten ist.** Die Rechte des Agenten sind ja in beiden Fällen dieselben.
 
-Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffentlichen Skill-Marketplace auf GitHub. AIR beschreibt ihn als Repository mit rund 36.000 Sternen, 156 Skills und einer „welcoming contribution policy". Den Namen des Repositories nennt der Bericht nicht, aber er zeigt einen Screenshot des Pull Requests, und darauf sind die Nummer **#509**, der Maintainer **wshobson** und das einreichende Konto `travis-d-elliott` zu lesen. Damit war der Marktplatz in einer Minute gefunden: Es handelt sich um [`wshobson/agents`](https://github.com/wshobson/agents), einen „Multi-harness agentic plugin marketplace" für Claude Code, Codex CLI, Cursor, OpenCode, GitHub Copilot und Gemini CLI. Der Beitrag lief unter dem Titel „feat: add brand-landingpage plugin" als [Pull Request #509](https://github.com/wshobson/agents/pull/509).
+Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffentlichen Skill-Marketplace auf GitHub. AIR beschreibt ihn als Repository mit rund 36.000 Sternen, 156 Skills und einer „welcoming contribution policy". Den Namen nennt der Bericht nicht, aber er zeigt einen Screenshot des Pull Requests, auf dem Nummer und Maintainer zu lesen sind. Damit ist der Marktplatz schnell gefunden: [`wshobson/agents`](https://github.com/wshobson/agents), ein „Multi-harness agentic plugin marketplace" für Claude Code, Codex CLI, Cursor, OpenCode, GitHub Copilot und Gemini CLI, und darin [Pull Request #509](https://github.com/wshobson/agents/pull/509).
 
-Nach eigener Darstellung dauerte es „a few anxious days", dann wurde der Pull Request angenommen. Die Zeitstempel bestätigen das: eingereicht am 29. April 2026, gemerged am 2. Mai. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
+Nach eigener Darstellung dauerte es „a few anxious days", dann wurde der Pull Request angenommen. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
 
 Danach warben sie für ihn. Im Bericht steht dazu ein einziger Satz: Man habe den Skill „as an advertisement on Instagram" veröffentlicht, gerichtet an Leute aus Marketing, Vertrieb und Design. Also an Menschen, die heute Agenten benutzen, ohne Code zu lesen. Welche Form diese Werbung genau hatte, was sie kostete und wie viele Menschen sie erreichte, bleibt offen. Der Bericht schweigt dazu, und damit bleibt auch offen, wie viele der späteren Installationen darauf zurückgehen.
 
@@ -50,13 +50,11 @@ Dass die Tarnung überhaupt so gut funktionierte, liegt auch am Umfeld. Rund um 
 
 Und die Prüfungen? AIR gibt an, den Skill gegen die Scanner von Cisco, NVIDIA und skills.sh getestet zu haben. Alle stuften ihn als sicher ein.
 
-Der Rest ist schnell erzählt. Nach der Verbreitung tauschte AIR den Inhalt hinter einer im Skill hinterlegten Adresse aus. Ab diesem Moment wies der Skill die Agenten an, ein Skript zu laden und auszuführen. Die Nutzlast hielten die Autoren bewusst harmlos: Sie sammelte die E-Mail-Adresse des Opfers ein und schickte sie an AIR. Betroffen waren nach ihren Angaben mehrere zehntausend Agenten, darunter solche in Firmenkonten.
+Der Rest ist schnell erzählt. Nach der Verbreitung tauschte AIR den Inhalt hinter einer im Skill hinterlegten Adresse aus. Ab diesem Moment wies der Skill die Agenten an, ein Skript zu laden und auszuführen. Die Nutzlast hielten die Autoren bewusst harmlos: Sie sammelte die E-Mail-Adresse des Opfers ein und schickte sie an AIR. Wie viele Agenten sie tatsächlich ausführten, weiß nur AIR, denn die Zahl beruht auf den zurückgeschickten E-Mails. Es waren nach ihren Angaben mehrere zehntausend, darunter Agenten in Firmenkonten.
 
 Viel wichtiger als jede Zahl ist dieser Satz aus dem Bericht:
 
 > „We could have had full control of every one of their agents, their private conversations, and every internal system they could reach."
-
-Wer die Identität eines Agenten übernimmt, muss nichts mehr überwinden. Er erbt alles, was dieser Agent darf.
 
 So weit die Geschichte, wie AIR sie erzählt. Sie endet mit der Veröffentlichung am 22. Juni. Mich hat interessiert, was seitdem passiert ist, und dafür habe ich nachgesehen.
 
@@ -68,11 +66,9 @@ Und es bleibt nicht beim Marktplatz. Rund um diese Kataloge ist ein Ring von Ver
 
 Besonders bemerkenswert ist ein zweiter dieser Kataloge: [skills.sh](https://www.skills.sh/wshobson/agents), dessen Scanner den Skill laut AIR seinerzeit als sicher durchgewinkt hat, listet ihn bis heute. Dort steht er, ganz ohne Sicherheits-Kennzeichnung, mit **31.200 Installationen**.
 
-Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung, und vorbereitet war sie tatsächlich von langer Hand: Die Domain, auf die der Skill verweist, wurde am 20. April 2026 registriert, neun Tage vor dem Pull Request. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Eine Meldung an ihn oder eine Entfernung des Skills erwähnt der Bericht jedenfalls nicht.
+Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Eine Meldung an ihn oder eine Entfernung des Skills erwähnt der Bericht jedenfalls nicht.
 
 Bleibt eine Erkenntnis, die über diesen Einzelfall hinausreicht: **Ein bösartiger Beitrag verschwindet nicht von selbst, nur weil jemand darüber geschrieben hat.** Zwischen „ist öffentlich bekannt" und „ist bereinigt" liegt in diesem Ökosystem noch sehr viel Luft. Der Bericht wurde vielfach zitiert, der Skill steht trotzdem unverändert im Katalog.
-
-Zur Reichweite noch ein Wort: Wie viele Agenten den Payload tatsächlich ausgeführt haben, weiß nur AIR, denn diese Zahl beruht auf den zurückgeschickten E-Mails. Die Installationszahlen der Verzeichnisse sind dagegen unabhängig einsehbar und liegen in derselben Größenordnung. Genau nachrechnen lässt sich das nicht, und darauf kommt es auch nicht an. Entscheidend ist der Mechanismus, und der ist zweifelsfrei belegt.
 
 ## Der Trick: Prüfung und Ausführung sind zwei verschiedene Momente
 
@@ -107,19 +103,7 @@ Meine Einschätzung nach mehrfachem Lesen: **Dieser Angriff ist extrem schwer zu
 
 Man darf auch nicht darauf hoffen, dass die Scanner aus diesem Fall lernen. Angenommen, sie schlagen künftig an, sobald ein Skill fremde Dokumentation zur „ground truth" erklärt. Dann formuliert man es beim nächsten Mal eben anders. „Folge der offiziellen Anleitung unter", „halte dich an die Angaben des Herstellers", „die aktuellen Schritte findest du hier". Die Zahl der Umschreibungen für „lies das dort und tu, was dort steht" ist unbegrenzt. Wir reden über natürliche Sprache, und die lässt sich nicht mit Signaturen erschlagen. Für jede erkannte Variante gibt es ein Dutzend ebenso wirksame.
 
-### Die Pointe steht im Review
-
-Der Pull Request wurde nicht wortlos durchgewinkt. Es gibt ein ausführliches, fachlich kluges Review, das dem Beitrag mehrere Qualitäten bescheinigt: saubere progressive disclosure, gut kalibrierter Geltungsbereich, wohlgeformter Marktplatz-Eintrag. Und dann diesen Punkt:
-
-> „**Phase 0 hygiene.** Verifying the Stitch SDK and API key before starting the interview is the right call".
-
-Das ist exakt der Teil, in dem der Angriff steckt. Er wurde nicht übersehen, er wurde ausdrücklich **gelobt**, und zwar als gute Praxis. Das Review endet mit „Welcome aboard. Going to squash-merge.", und so kam es dann auch.
-
-Unter dem Kommentar steht der Hinweis „Generated by Claude Code". Auch die Prüfung lief also unter Mitwirkung eines Agenten.
-
-Und damit möchte ich einem naheliegenden Reflex zuvorkommen: auf den Prüfer zu zeigen. Ich habe die Datei mehrfach gelesen, mit dem Wissen, dass darin ein Angriff steckt, und ich habe eine ganze Weile gebraucht, um ihn zu benennen. Hätte mir jemand diesen Pull Request kommentarlos zum Review vorgelegt, ich hätte ihn durchgewunken. Ohne jede Chance. Genau das ist die eigentliche Nachricht dieses Falls.
-
-Damit ist der Angriff komplett. Er lässt sich in einem Satz zusammenfassen: **Geprüft wird der Skill. Ausgeführt wird, was zum Zeitpunkt der Ausführung hinter dem Link liegt.** Zwischen diesen beiden Momenten liegen Wochen. In diesen Wochen gehört der Inhalt dem Angreifer.
+Der Angriff lässt sich damit in einem Satz zusammenfassen: **Geprüft wird der Skill. Ausgeführt wird, was zum Zeitpunkt der Ausführung hinter dem Link liegt.** Zwischen diesen beiden Momenten liegen Wochen. In diesen Wochen gehört der Inhalt dem Angreifer.
 
 Zwei Details machen die Sache noch fieser, und sie erklären, warum beim Lesen niemand stutzt.
 
@@ -142,6 +126,18 @@ Anthropic beschreibt genau diese Gefahr in der eigenen Dokumentation, in erfreul
 > ([Agent Skills, Security considerations](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview))
 
 Der letzte Halbsatz ist der wichtigste des ganzen Themas. Ein Skill kann heute vertrauenswürdig sein und morgen nicht mehr, ohne dass sich an ihm eine einzige Zeile ändert.
+
+### Die Pointe steht im Review
+
+Der Pull Request wurde nicht wortlos durchgewinkt. Es gibt ein ausführliches, fachlich kluges Review, das dem Beitrag mehrere Qualitäten bescheinigt: saubere progressive disclosure, gut kalibrierter Geltungsbereich, wohlgeformter Marktplatz-Eintrag. Und dann diesen Punkt:
+
+> „**Phase 0 hygiene.** Verifying the Stitch SDK and API key before starting the interview is the right call".
+
+Das ist exakt der Teil, in dem der Angriff steckt. Er wurde nicht übersehen, er wurde ausdrücklich **gelobt**, und zwar als gute Praxis. Das Review endet mit „Welcome aboard. Going to squash-merge.", und so kam es dann auch.
+
+Unter dem Kommentar steht der Hinweis „Generated by Claude Code". Auch die Prüfung lief also unter Mitwirkung eines Agenten.
+
+Und damit möchte ich einem naheliegenden Reflex zuvorkommen: auf den Prüfer zu zeigen. Ich habe die Datei mehrfach gelesen, mit dem Wissen, dass darin ein Angriff steckt, und ich habe eine ganze Weile gebraucht, um ihn zu benennen. Hätte mir jemand diesen Pull Request kommentarlos zum Review vorgelegt, ich hätte ihn durchgewunken. Ohne jede Chance. Genau das ist die eigentliche Nachricht dieses Falls.
 
 ## Warum das niemand findet
 
@@ -243,9 +239,7 @@ Für Marktplätze bleibt damit eine sehr nützliche Rolle. Sie sind ein exzellen
 
 ## Fazit: Das Vertrauen liegt bei dir
 
-Skills sind großartig. Sie sind der Grund, warum Agenten heute Dinge können, für die vor einem Jahr eine eigene Integration nötig war. Sie sind aber auch ein Ökosystem im Wildwuchs. Die Marktplätze weisen ihre Prüfpflicht ausdrücklich von sich, die Scanner sind sich zu vier Fünfteln uneinig, und gegen diese Angriffsklasse kann statische Prüfung strukturell nicht gewinnen.
-
-Fünf Dinge nehme ich für mich mit:
+Skills sind großartig, und sie sind ein Ökosystem im Wildwuchs. Fünf Dinge nehme ich aus diesem Fall mit:
 
 - **Der Prüfzeitpunkt ist nicht der Ausführungszeitpunkt.** Alles, was ein Skill erst zur Laufzeit holt, ist ungeprüft. Egal wie grün das Häkchen beim Download war.
 - **Vertrauen wird geerbt, Sicherheit nicht.** Sterne, Downloadzahlen und ein akzeptierter Pull Request sagen nichts über den Inhalt einer einzelnen Datei.
@@ -253,9 +247,7 @@ Fünf Dinge nehme ich für mich mit:
 - **Selbst geschrieben schlägt fremd installiert.** Ein Skill ist Text, kein Framework. Wer ihn selbst schreibt, hat kein Vertrauensproblem und obendrein das passendere Ergebnis.
 - **Lesen reicht nicht, neu schreiben schon.** Gegen Anweisungen, die für uns unsichtbar sind, hilft kein noch so gründliches Review. Es hilft nur, den Text niemals zu kopieren und ihn stattdessen neu formulieren zu lassen.
 
-Der Vergleich mit den frühen Paketmanagern trägt weit, hat aber einen Haken. Bei npm musste bösartiger Code erst ausgeführt werden. Ein Skill muss nur überzeugend formuliert sein. Er richtet sich schließlich an ein System, das darauf trainiert ist, Anweisungen zu befolgen. Das ist die eigentliche Neuerung, und darauf haben wir noch keine gute Antwort.
-
-Bis es sie gibt, helfen zwei alte: lesen, was man installiert. Und im Zweifel lieber selbst schreiben.
+Der Vergleich mit den frühen Paketmanagern trägt weit, hat aber einen Haken. Bei npm musste bösartiger Code erst ausgeführt werden. Ein Skill muss nur überzeugend formuliert sein, denn er richtet sich an ein System, das darauf trainiert ist, Anweisungen zu befolgen. Darauf haben wir noch keine gute Antwort. Bis es eine gibt, helfen zwei alte: lesen, was man installiert, und im Zweifel selbst schreiben.
 
 **Wie haltet ihr das?** Prüft ihr Skills vor der Installation, habt ihr eigene Regeln oder sogar schon einen Fall erlebt? Ich freue mich über jede Nachricht, und wenn genug zusammenkommt, mache ich daraus einen Folgeartikel mit euren Praktiken.
 
