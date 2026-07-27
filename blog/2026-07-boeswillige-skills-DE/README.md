@@ -42,7 +42,9 @@ Bei der Themenwahl sollte man kurz innehalten. Sie ist der psychologisch raffini
 
 Vergleiche das mit einem Skill für Datenbank-Migrationen oder Zugriffsrechte. Dort wäre man deutlich vorsichtiger. Wer etwas Dekoratives installiert, rechnet dagegen nicht damit, dabei die Kontrolle über seinen Agenten zu verlieren. **Angriffe gehen nicht dorthin, wo die wertvollsten Daten liegen. Sie gehen dorthin, wo die Aufmerksamkeit am niedrigsten ist.** Die Rechte des Agenten sind ja in beiden Fällen dieselben.
 
-Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffentlichen Skill-Marketplace auf GitHub. AIR nennt ihn nicht beim Namen, beschreibt ihn aber als Repository mit rund 36.000 Sternen, 156 Skills und einer „welcoming contribution policy". Der Pull Request wurde angenommen. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
+Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffentlichen Skill-Marketplace auf GitHub. AIR beschreibt ihn als Repository mit rund 36.000 Sternen, 156 Skills und einer „welcoming contribution policy". Und der Bericht wird konkret, er zeigt einen Screenshot des Pull Requests. Damit ist alles offengelegt: Es handelt sich um [`wshobson/agents`](https://github.com/wshobson/agents), einen „Multi-harness agentic plugin marketplace" für Claude Code, Codex CLI, Cursor, OpenCode, GitHub Copilot und Gemini CLI. Der Beitrag lief unter dem Titel „feat: add brand-landingpage plugin" als [Pull Request #509](https://github.com/wshobson/agents/pull/509), eingereicht von einem Konto namens `travis-d-elliott`.
+
+Nach eigener Darstellung dauerte es „a few anxious days", dann wurde der Pull Request angenommen. Die Zeitstempel bestätigen das: eingereicht am 29. April 2026, gemerged am 2. Mai. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
 
 Danach kam der Teil, den ich am spannendsten finde. AIR schaltete eine Instagram-Anzeige. Als Zielgruppe wählten sie Leute aus Marketing, Vertrieb und Design, also Menschen, die heute Agenten benutzen, ohne Code zu lesen. Entwickler standen ausdrücklich nicht auf der Liste.
 
@@ -56,7 +58,7 @@ An dieser Stelle wird AIRs Bericht allerdings unscharf, und man sollte genau hin
 
 Übersetzt heißt das: Es war eine **gekaufte Anzeige**. Das Wort „targeting" stammt aus dem Anzeigenmanager. Von Influencern hat AIR niemanden angesprochen oder bezahlt, jedenfalls steht davon nichts im Bericht. Ich habe zusätzlich gesucht, ob einer dieser Accounts `brand-landingpage` aufgegriffen hat, und nichts gefunden.
 
-Weil beides unmittelbar nebeneinander steht, entsteht beim Lesen trotzdem der Eindruck, der Skill sei in dieser viralen Welle mitgeschwommen. Tatsächlich wurde die Reichweite eingekauft, und wie viel sie gekostet hat oder wie viele Menschen die Anzeige sahen, verrät der Bericht nicht. Das ist unbefriedigend, denn an genau dieser Reichweite hängt die Zahl der betroffenen Agenten. Verbreitet wurde der Skill also durch eine bezahlte Anzeige und später durch die Verzeichnis-Seiten.
+Weil beides unmittelbar nebeneinander steht, entsteht beim Lesen trotzdem der Eindruck, der Skill sei in dieser viralen Welle mitgeschwommen. Tatsächlich wurde die Reichweite eingekauft, und wie viel sie gekostet hat oder wie viele Menschen die Anzeige sahen, verrät der Bericht nicht. Das ist unbefriedigend, denn an genau dieser Reichweite hängt die Zahl der betroffenen Agenten. Verbreitet wurde der Skill also **wahrscheinlich** über die bezahlte Anzeige und später über die Verzeichnis-Seiten. Woher die Installationen tatsächlich kamen, weiß niemand von außen.
 
 Trotzdem lohnt der Blick auf diese Bildstrecke, denn sie erklärt, warum die Anzeige überhaupt funktionieren konnte. Unter den Posts steht nämlich, jedes Mal, derselbe Köder:
 
@@ -84,9 +86,9 @@ Viel wichtiger als jede Zahl ist dieser Satz aus dem Bericht:
 
 Wer die Identität eines Agenten übernimmt, muss nichts mehr überwinden. Er erbt alles, was dieser Agent darf.
 
-Weil AIR den Marktplatz anonymisiert, habe ich selbst nachgesehen. Die Angaben passen auf [`wshobson/agents`](https://github.com/wshobson/agents), einen „Multi-harness agentic plugin marketplace" für Claude Code, Codex CLI, Cursor, OpenCode, GitHub Copilot und Gemini CLI. Dort liegen der beschriebene Skill und der zugehörige [Pull Request #509](https://github.com/wshobson/agents/pull/509). Eingebracht wurde er am 29. April 2026 von einem Konto namens `travis-d-elliott` und am 2. Mai gemerged. Das deckt sich mit dem Bericht, wonach der PR „after a few anxious days" angenommen wurde.
+So weit die Geschichte, wie AIR sie erzählt. Sie endet mit der Veröffentlichung am 22. Juni. Mich hat interessiert, was seitdem passiert ist, und dafür habe ich nachgesehen.
 
-Und jetzt der Teil, der mich beim Nachprüfen wirklich überrascht hat: **Der Skill liegt dort bis heute.** Stand 27. Juli 2026 enthält die Datei `plugins/brand-landingpage/skills/brand-landingpage/SKILL.md` unverändert zwei Verweise auf die Domain der Angreifer. Das ist gut fünf Wochen nach Veröffentlichung des Berichts und knapp drei Monate nach dem Merge. Das Repository selbst ist quicklebendig. Es zählt inzwischen 38.273 Sterne und wurde zuletzt am 22. Juli 2026 aktualisiert.
+Der Teil, der mich dabei wirklich überrascht hat: **Der Skill liegt dort bis heute.** Stand 27. Juli 2026 enthält die Datei `plugins/brand-landingpage/skills/brand-landingpage/SKILL.md` unverändert zwei Verweise auf die Domain der Angreifer. Das ist gut fünf Wochen nach Veröffentlichung des Berichts und knapp drei Monate nach dem Merge. Das Repository selbst ist quicklebendig. Es zählt inzwischen 38.273 Sterne und wurde zuletzt am 22. Juli 2026 aktualisiert.
 
 Vermutlich wird der Skill früher oder später entfernt. Deshalb habe ich eine [Archivkopie abgelegt](https://agentic-schule.github.io/website-articles/blog/2026-07-boeswillige-skills-DE/ACHTUNG-boesartiger-skill-brand-landingpage.txt). Sie trägt einen unübersehbaren Warnhinweis, und die beiden Verweise auf die Angreifer-Domain sind darin entschärft. Bitte behandle die Datei als das, was sie ist: ein Beweisstück, keine Vorlage.
 
@@ -96,19 +98,11 @@ Noch unangenehmer wird es eine Ebene darüber. Rund um die Marktplätze ist ein 
 
 Besonders bemerkenswert ist ein zweiter dieser Kataloge: **skills.sh**, dessen Scanner den Skill laut AIR seinerzeit als sicher durchgewinkt hat, listet ihn bis heute. Dort steht er, ganz ohne Sicherheits-Kennzeichnung, mit **31.200 Installationen**.
 
-Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Weil AIR den Marktplatz im Bericht anonymisiert hat, hat er von seiner Rolle in der Geschichte womöglich nie erfahren. Eine Meldung an ihn oder eine Entfernung des Skills erwähnt der Bericht jedenfalls nicht. Genau das ist der Punkt: **Ein bösartiger Beitrag verschwindet nicht von selbst, nur weil jemand darüber geschrieben hat.** Zwischen „ist öffentlich bekannt" und „ist bereinigt" liegt in diesem Ökosystem noch sehr viel Luft.
+Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung, und vorbereitet war sie tatsächlich von langer Hand: Die Domain, auf die der Skill verweist, wurde am 20. April 2026 registriert, neun Tage vor dem Pull Request. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Eine Meldung an ihn oder eine Entfernung des Skills erwähnt der Bericht jedenfalls nicht.
 
-Aber ist das wirklich der Skill aus dem Bericht? AIR verlinkt ihn nicht, sondern beschreibt ihn nur. Denkbar wäre auch, dass ich einen Nachahmer gefunden habe, der die Masche nach der Veröffentlichung kopiert hat.
+Bleibt eine Erkenntnis, die über diesen Einzelfall hinausreicht: **Ein bösartiger Beitrag verschwindet nicht von selbst, nur weil jemand darüber geschrieben hat.** Zwischen „ist öffentlich bekannt" und „ist bereinigt" liegt in diesem Ökosystem noch sehr viel Luft. Der Bericht wurde vielfach zitiert, der Skill steht trotzdem unverändert im Katalog.
 
-Diese Frage lässt sich beantworten, und zwar über die Registrierungsdaten der beteiligten Domains. Ich habe deshalb nachgesehen, wem die Adresse gehört, auf die der Skill verweist. Der Eigentümer bleibt verborgen, die Registrierung läuft über einen Anonymisierungsdienst. Aufschlussreich ist aber das Datum: **Die Angreifer-Domain wurde am 20. April 2026 registriert**, neun Tage vor dem Pull Request. Für sich genommen beweist das nur, dass die Aktion vorbereitet war. Jeder beliebige Angreifer hätte das so gemacht.
-
-Die Kette schließt sich mit einem zweiten Datum. **Die Domain der Sicherheitsfirma selbst, `air.security`, wurde am 25. April 2026 registriert.** Fünf Tage nach der Tarn-Domain und vier Tage vor dem Pull Request.
-
-Damit passt ein Nachahmer nicht mehr ins Bild. Wer die Masche kopiert, kann das erst nach der Veröffentlichung des Berichts am 22. Juni tun. Hier aber liegen Tarn-Domain, öffentlicher Auftritt der Firma und Einreichung des Skills allesamt in derselben Woche im April, gut zwei Monate vor dem Bericht. Ein Nachahmer hätte keinerlei Einfluss darauf, wann AIR seine eigene Domain registriert. **Es handelt sich also mit hoher Wahrscheinlichkeit um das Original aus dem Bericht. Und es ist bis heute installierbar.**
-
-Ein Beweis im strengen Sinn ist das nicht, dafür müsste jemand den Anonymisierungsdienst lüften. Für die Frage, ob man diesen Skill installieren möchte, spielt es ohnehin keine Rolle. Ob Original oder Kopie: Die Datei weist den Agenten weiterhin an, eine fremde Adresse als verbindliche Wahrheit zu behandeln und stillschweigend zu installieren, was von dort kommt.
-
-Bleibt die Frage nach der Reichweite. Wie viele Agenten den Payload tatsächlich ausgeführt haben, weiß nur AIR, denn diese Zahl beruht auf den zurückgeschickten E-Mails. Die Installationszahlen der Verzeichnisse sind dagegen unabhängig einsehbar, und sie liegen in derselben Größenordnung. Genau nachrechnen lässt sich das nicht, und es ist auch nicht der Punkt. Entscheidend ist der Mechanismus, und der ist zweifelsfrei belegt.
+Zur Reichweite noch ein Wort: Wie viele Agenten den Payload tatsächlich ausgeführt haben, weiß nur AIR, denn diese Zahl beruht auf den zurückgeschickten E-Mails. Die Installationszahlen der Verzeichnisse sind dagegen unabhängig einsehbar und liegen in derselben Größenordnung. Genau nachrechnen lässt sich das nicht, und darauf kommt es auch nicht an. Entscheidend ist der Mechanismus, und der ist zweifelsfrei belegt.
 
 ## Der Trick: Prüfung und Ausführung sind zwei verschiedene Momente
 
