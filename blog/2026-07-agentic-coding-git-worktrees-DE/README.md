@@ -38,9 +38,9 @@ Stellen wir uns folgende Alltagssituation vor: Claude Code arbeitet an einem gr�
 
 Mit einem klassischen Einzel-Checkout haben wir jetzt drei schlechte Optionen:
 
+- **Es drauf ankommen lassen.** Schnell einen zweiten Agenten starten: stash, Branch wechseln, fixen, pushen und zur체ck, bevor der laufende Agent etwas merkt. Nur liest und schreibt der erste genau in diesem Verzeichnis. Wechseln wir darunter den Branch, editiert er ab sofort fremde Dateist채nde, und die Tests pr체fen einen Zustand, den es so nie gegeben hat.
 - **Warten.** Der Bugfix bleibt liegen, bis das Refactoring durch ist. Der einzige Grund: Das Arbeitsverzeichnis ist gerade belegt.
 - **Den Agenten abbrechen.** Die halbe Arbeit ist getan, der Kontext aufgebaut, alles f체r die Tonne.
-- **`git stash` und Branch wechseln, w채hrend der Agent l채uft.** Bitte nicht. Der Agent liest und schreibt in genau diesem Verzeichnis. Wechseln wir darunter den Branch, editiert er ab sofort fremde Dateist채nde, und die Tests pr체fen einen Zustand, den es so nie gegeben hat.
 
 Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abh채ngigkeiten hat, die IDE indexiert neu. Wer so arbeitet, hat wenig Komfort.
 

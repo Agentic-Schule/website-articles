@@ -37,9 +37,9 @@ Let's imagine the following everyday situation: Claude Code is working on a bigg
 
 With a classic single checkout, we now have three bad options:
 
+- **Chance it.** Quickly start a second agent: stash, switch the branch, fix, push, and switch back before the running agent notices. Except the first one reads and writes in exactly this directory. If we switch the branch underneath it, it edits foreign file states from that moment on, and the tests check a state that never existed.
 - **Wait.** The bugfix sits idle until the refactoring is done. The only reason: the working directory happens to be busy.
 - **Abort the agent.** Half the work is done, the context built up, all for the bin.
-- **`git stash` and switch branches while the agent is running.** Please don't. The agent reads and writes in exactly this directory. If we switch the branch underneath it, it edits foreign file states from that moment on, and the tests check a state that never existed.
 
 Even without an emergency, the classic context switch is a pain: stash, checkout, `npm install` because the other branch has different dependencies, the IDE re-indexes. Working like this is anything but comfortable.
 
