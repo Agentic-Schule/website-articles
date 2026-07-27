@@ -132,7 +132,7 @@ In der Desktop-App ist das Prinzip übrigens schon Standard: Dort bekommt jede n
 
 ### Der Antigravity-Weg
 
-Google baut die Isolation direkt in die IDE ein. [Antigravity](https://antigravity.google/docs/projects) verwaltet Agenten über einen eigenen Agent Manager: eine Übersicht, in der mehrere Agenten parallel laufen und beobachtet werden. Beim Start einer Konversation lässt sich der „New Worktree Mode" wählen, dann legt Antigravity im Hintergrund einen frischen git worktree an und die Konversation arbeitet dort, das aktive Arbeitsverzeichnis bleibt unberührt. Subagenten kennen dieselbe Wahl: Sie erben den Workspace ihres Eltern-Agenten oder bekommen einen eigenen, isolierten Worktree. Ein Detail sticht heraus: Ein Antigravity-„Project" darf mehrere Ordner umfassen, und der Worktree-Modus legt Worktrees für alle Git-Checkouts des Projects an. Dazu gleich mehr.
+Google baut die Isolation direkt in die IDE ein. [Antigravity](https://antigravity.google/product) verwaltet Agenten über einen eigenen Agent Manager: eine Übersicht, in der mehrere Agenten parallel laufen und beobachtet werden. Beim Start einer Konversation lässt sich der [„New Worktree Mode"](https://antigravity.google/docs/projects) wählen, dann legt Antigravity im Hintergrund einen frischen git worktree an und die Konversation arbeitet dort, das aktive Arbeitsverzeichnis bleibt unberührt. [Subagenten](https://antigravity.google/docs/subagents) kennen dieselbe Wahl: Sie erben den Workspace ihres Eltern-Agenten oder bekommen einen eigenen, isolierten Worktree. Ein Detail sticht heraus: Ein Antigravity-„Project" darf mehrere Ordner umfassen, und der Worktree-Modus legt Worktrees für alle Git-Checkouts des Projects an. Dazu gleich mehr.
 
 ### Der Copilot-Weg
 
@@ -140,11 +140,11 @@ Microsoft fährt zweigleisig. In [VS Code](https://code.visualstudio.com/docs/co
 
 ### Der Codex-Weg
 
-OpenAI spannt denselben Bogen. In der ChatGPT-Desktop-App kann [Codex](https://developers.openai.com/codex/app/worktrees) mehrere unabhängige Chats im selben Projekt fahren, und unter der Haube stecken git worktrees: Jeder Chat bekommt standardmäßig einen leichtgewichtigen, von Codex verwalteten Worktree. Wer länger an einem Stand arbeiten will, legt stattdessen einen permanenten Worktree an. Das Feature setzt ein Git-Repository voraus. In der Cloud läuft es wie bei den anderen: Jeder Task bekommt einen eigenen, isolierten Container, mehrere davon parallel.
+OpenAI spannt denselben Bogen. In der ChatGPT-Desktop-App kann [Codex](https://developers.openai.com/codex/app/worktrees) mehrere unabhängige Chats im selben Projekt fahren, und unter der Haube stecken git worktrees: Jeder Chat bekommt standardmäßig einen von Codex verwalteten Worktree. Wer länger an einem Stand arbeiten will, legt stattdessen einen permanenten Worktree an. Das Feature setzt ein Git-Repository voraus. In der [Cloud](https://developers.openai.com/codex/cloud) läuft es wie bei den anderen: Jeder Task bekommt einen eigenen, isolierten Container, mehrere davon parallel.
 
 ## Und wenn das Feature zwei Repos berührt?
 
-So weit die heile Welt der Ein-Repo-Demos. Die Realität in gewachsenen Systemlandschaften sieht anders aus: Ein System verteilt sich auf diverse Repositories. Frontend hier, Backend dort, dazu ein paar Services. Der Monorepo-Ansatz löst das auf dem Papier, ist aber längst nicht immer umsetzbar: getrennte Teams und Berechtigungen, unterschiedliche Build- und Deploy-Welten, gewachsene Historie. Man arbeitet mit der Systemlandschaft, die nun mal vorliegt.
+So weit die heile Welt der Ein-Repo-Demos. In meiner Realität bei Kunden mit einer gewachsenen Systemlandschaft (alles Legacy) sieht es anders aus: Ein System verteilt sich auf diverse Repositories. Frontend hier, Backend dort, dazu ein paar Services. Der Monorepo-Ansatz löst das auf dem Papier, ist aber längst nicht immer umsetzbar: getrennte Teams und Berechtigungen, unterschiedliche Build- und Deploy-Welten, gewachsene Historie. Man arbeitet mit der Systemlandschaft, die nun mal vorliegt.
 
 Nehmen wir ein vereinfachtes Beispiel: ein Angular-Frontend im Repo `app-frontend`, eine .NET-API im Repo `app-backend`. Das Feature „Checkout" braucht neue Endpunkte **und** neue Komponenten. Der Branch soll in beiden Repos gleich heißen, bei uns nach dem Ticket, sagen wir `shop-4711-checkout`. So finden Review, CI und alle Beteiligten die zusammengehörigen Stände auf einen Blick.
 
