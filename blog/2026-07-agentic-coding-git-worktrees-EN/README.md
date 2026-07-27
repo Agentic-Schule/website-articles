@@ -278,7 +278,7 @@ The supreme discipline. Two test runs on a shared database sabotage each other: 
 
 ## Conclusion: Isolation Is the Ticket
 
-In retrospect, the insight is almost banal: **parallelism starts with the working directory.** Classical development barely knew this problem; isolation came for free with the personal computer. With many agents on one machine, you have to create it explicitly, because as long as two sessions share one checkout, everything else is cosmetics. git worktrees solve this with built-in means in seconds, and the whole industry has recognized it: locally via worktree, in the cloud via throwaway VM.
+**Parallelism starts with the working directory.** Isolation used to come automatically with the personal computer; with several agents on one machine, you have to create it yourself. git worktrees do that with built-in means in seconds.
 
 Where the built-in features end, namely at the repo boundary, a self-built init command begins: one command, two repos, one branch name, two worktrees, dependencies and license included. The whole thing is one simple Markdown file. But it turns the most tedious part of everyday multi-repo work into a single question: "What's the feature called?"
 

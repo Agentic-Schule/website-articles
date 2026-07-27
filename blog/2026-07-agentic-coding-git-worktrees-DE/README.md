@@ -279,7 +279,7 @@ Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren
 
 ## Fazit: Isolation ist die Eintrittskarte
 
-Rückblickend ist die Erkenntnis fast banal: **Parallelität beginnt beim Arbeitsverzeichnis.** Die klassische Entwicklung hat dieses Problem kaum gekannt, die Isolation kam mit dem persönlichen Rechner gratis. Mit vielen Agenten auf einer Maschine muss man sie explizit herstellen, denn solange sich zwei Sessions einen Checkout teilen, ist alles andere Kosmetik. git worktrees lösen das mit Bordmitteln in Sekunden, und die gesamte Branche hat es erkannt: lokal per Worktree, in der Cloud per Wegwerf-VM.
+**Parallelität beginnt beim Arbeitsverzeichnis.** Früher war die Isolation mit dem persönlichen Rechner automatisch da, mit mehreren Agenten auf einer Maschine muss man sie selbst herstellen. git worktrees erledigen das mit Bordmitteln in Sekunden.
 
 Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Äste, Abhängigkeiten und Lizenz inklusive. Das Ganze ist eine simple Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
 
