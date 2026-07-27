@@ -184,7 +184,7 @@ Snyk gibt Skill-Entwicklern im eigenen Bericht dieselbe Richtung vor. Man solle 
 
 Genannt werden dort Zero-Width-Spaces, Richtungs-Umschalter und Unicode-Tag-Zeichen, die eine komplette versteckte Botschaft kodieren können. Für uns sieht das aus wie nichts. Der Agent liest es mit. Damit kippt die Logik des Prüfens. Die Frage lautet längst nicht mehr bloß: Steht im Text etwas Böses? Sie lautet: Steht dort überhaupt etwas, das ich sehen kann? Deshalb lautet mein Rat, und der geht bewusst über „gründlich lesen" hinaus:
 
-> **🛠️ Selbst nachbauen: Skills übernehmen, ohne sie zu kopieren**
+> **✍️ So übernimmst du einen Skill, ohne ihn zu kopieren**
 >
 > 1. **Niemals eine fremde Datei herüberkopieren und anpassen.** Auch nicht „nur zum Anfangen". Was einmal in deinem Verzeichnis liegt, wird irgendwann vom Agenten gelesen, inklusive dem, was du beim Überfliegen nicht gesehen hast.
 > 2. **Mit einer leeren Datei starten.** Erst dann die Ideen und Konzepte einzeln herübertragen, eines nach dem anderen.
