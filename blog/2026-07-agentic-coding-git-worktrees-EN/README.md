@@ -23,7 +23,7 @@ header: header.jpg
 
 In classical software development, isolation came for free: one developer, one personal computer, one checkout. Every coding agent today assumes just as naturally that the working directory belongs to it alone: it reads files, changes them, runs builds and tests, and its subagents do the same in parallel. Okay, I can't really say whether every agent behaves this way. But my Claude Code, at least, is a little Rambo without etiquette. Now, though, many of these agentic developers romp around on the same computer at the same time, and as soon as two of them claim the same directory for themselves, you quickly end up in a tangled mess: two agents editing the same files, tests checking states that never existed, and in the end nobody knows which diff came from whom.
 
-**The solution is an unassuming git built-in that is currently rising to become one of the most important tools of agentic work: git worktrees. Every agent gets its own working directory on its own branch, the sole-ownership assumption holds again, and suddenly three or four sessions run in parallel without getting in each other's way.**
+**The solution is an unassuming git built-in that is now in use all across the agentic tools: git worktrees. Every agent gets its own working directory on its own branch, the sole-ownership assumption holds again, and suddenly three or four sessions run in parallel without getting in each other's way.**
 
 This article shows the technique behind it, the built-in worktree support of today's agentic tools, and the init command I use to span a feature branch with worktrees across two repos.
 
