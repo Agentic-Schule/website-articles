@@ -99,23 +99,23 @@ Das ist perfektes Social Engineering, nur eben gegen eine Maschine gerichtet. Al
 
 Die Adresse selbst war der zweite Teil des Tricks. Google Stitch liegt in Wahrheit unter `stitch.withgoogle.com`. Der Skill verwies stattdessen auf eine Domain, die den Produktnamen im Titel führte und den Angreifern gehörte. Kaum jemand weiß auswendig, unter welcher Adresse Googles Werkzeug wirklich residiert. Wer es nicht weiß, hat keine Chance, den Unterschied zu bemerken. Der Agent übrigens auch nicht.
 
-Meine Einschätzung nach mehrfachem Lesen: **Dieser Angriff ist extrem schwer zu erkennen.** AIR schreibt, kein getesteter Scanner habe etwas beanstandet, und das glaube ich sofort. In dieser Datei gibt es schlicht nichts zu finden. Jede einzelne Anweisung darin lässt sich mit guter Absicht erklären, und in neunundneunzig von hundert Skills wäre sie auch genau so gemeint.
+Verborgen wird dabei übrigens erstaunlich wenig. Der Abschnitt am Ende der Datei heißt schlicht „Stitch Documentation", und die erste Zeile darin ist als „usage and **installation** documentation" beschriftet. Der Skill sagt also offen, dass hinter dieser Adresse Installationsanweisungen liegen, und Phase 0 sagt offen, dass der Agent sie befolgen und den Nutzer damit nicht behelligen soll.
 
-Man darf auch nicht darauf hoffen, dass die Scanner aus diesem Fall lernen. Angenommen, sie schlagen künftig an, sobald ein Skill fremde Dokumentation zur „ground truth" erklärt. Dann formuliert man es beim nächsten Mal eben anders. „Folge der offiziellen Anleitung unter", „halte dich an die Angaben des Herstellers", „die aktuellen Schritte findest du hier". Die Zahl der Umschreibungen für „lies das dort und tu, was dort steht" ist unbegrenzt. Wir reden über natürliche Sprache, und die lässt sich nicht mit Signaturen erschlagen. Für jede erkannte Variante gibt es ein Dutzend ebenso wirksame.
-
-Der Angriff lässt sich damit in einem Satz zusammenfassen: **Geprüft wird der Skill. Ausgeführt wird, was zum Zeitpunkt der Ausführung hinter dem Link liegt.** Zwischen diesen beiden Momenten liegen Wochen. In diesen Wochen gehört der Inhalt dem Angreifer.
-
-Zwei Details machen die Sache noch fieser, und sie erklären, warum beim Lesen niemand stutzt.
-
-**Der Link steht an einer ganz anderen Stelle.** Nirgends heißt es „führe das hier aus". Die Adresse taucht erst weit hinten in einem sachlichen Abschnitt „Stitch Documentation" auf, als schlichter Quellenverweis, so wie man ihn in jeder ordentlichen Anleitung erwartet. Zur Anweisung wird sie durch einen Satz ganz vorne in Phase 0. Zwischen der Anweisung und der Adresse liegen über zweihundert Zeilen. Wer die Datei liest, müsste beide Stellen im Kopf zusammenbringen, und genau das tut man beim Überfliegen nicht.
+Und trotzdem, vielleicht sogar deswegen, ist dieser Angriff **extrem schwer zu erkennen.** AIR schreibt, kein getesteter Scanner habe etwas beanstandet, und das glaube ich sofort. Denn genau so sähe ein völlig legitimer Skill für ein junges SDK auch aus: Schau in die Doku, installier bei Bedarf nach, halte den Nutzer da raus. In neunundneunzig von hundert Fällen wäre das guter Stil. Was diesen Skill bösartig macht, steht gar nicht in der Datei. Es ist die Frage, wem die Adresse gehört und was zum Zeitpunkt der Ausführung dahinter liegt.
 
 **Und wer den Link prüft, wird beruhigt.** Im Normalzustand leitet die Angreifer-Domain nämlich auf Googles echte Dokumentation weiter. Die Autoren beschreiben das als den entscheidenden Kniff:
+
+
 
 > „Once we configured our domain to redirect to the real one, there's no way for either a standard user or an LLM scanner to tell something's off."
 
 Bösartig wird die Adresse nur, wenn jemand den Schalter umlegt. Für den Angriff haben sie den Inhalt ausgetauscht, danach ging es zurück in den Ruhezustand. Stand 27. Juli 2026 antwortet die Domain mit einer Weiterleitung auf `stitch.withgoogle.com`. Wer den Link heute anklickt, landet beim Original und hakt die Prüfung zufrieden ab.
 
 Ein Klick auf den Link beweist deshalb überhaupt nichts. Er zeigt den Zustand von genau diesem Augenblick, und dieser Zustand gehört jemand anderem.
+
+Man darf auch nicht darauf hoffen, dass die Scanner aus diesem Fall lernen. Angenommen, sie schlagen künftig an, sobald ein Skill fremde Dokumentation zur „ground truth" erklärt. Dann formuliert man es beim nächsten Mal eben anders. „Folge der offiziellen Anleitung unter", „halte dich an die Angaben des Herstellers", „die aktuellen Schritte findest du hier". Die Zahl der Umschreibungen für „lies das dort und tu, was dort steht" ist unbegrenzt. Wir reden über natürliche Sprache, und die lässt sich nicht mit Signaturen erschlagen. Für jede erkannte Variante gibt es ein Dutzend ebenso wirksame.
+
+Der Angriff lässt sich damit in einem Satz zusammenfassen: **Geprüft wird der Skill. Ausgeführt wird, was zum Zeitpunkt der Ausführung hinter dem Link liegt.** Zwischen diesen beiden Momenten liegen Wochen. In diesen Wochen gehört der Inhalt dem Angreifer.
 
 Das Muster ist aus der klassischen Software-Lieferkette bekannt und heißt dort Rug Pull. Invariant Labs, heute Teil von Snyk, hat es [schon im April 2025 für MCP beschrieben](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks). Ein bösartiger Server könne die Beschreibung eines Werkzeugs ändern, *nachdem* der Client sie freigegeben hat. Neu ist nicht die Idee. Neu ist, wie billig sie geworden ist, seit die Nutzlast reiner Text sein darf.
 
