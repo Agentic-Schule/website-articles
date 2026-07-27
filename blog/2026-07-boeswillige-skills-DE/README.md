@@ -239,7 +239,11 @@ Der dritte Punkt ist der entscheidende, und er hat einen angenehmen Nebeneffekt.
 
 Ganz zum Schluss, wenn alles steht, hat ein `/security-review` noch nie geschadet. Der [eingebaute Befehl](https://code.claude.com/docs/en/commands) prüft die anstehenden Änderungen auf Sicherheitsprobleme. Er ersetzt keinen der Schritte davor, aber er ist die letzte Gelegenheit, etwas zu bemerken.
 
-Für Marktplätze bleibt damit eine sehr nützliche Rolle. Sie sind ein exzellenter Ideenkatalog. Dort sieht man, welche Arbeitsschritte sich lohnend automatisieren lassen und wie andere ein Problem zerlegen. Nur sollte man von dort Ideen mitnehmen, keine Dateien.
+An dieser Stelle noch eine Beobachtung, die man kennen sollte. AIRs Bericht endet mit einem Werbeblock. Die Empfehlung der Autoren lautet, Erweiterungen sollten „come from one trusted source you actually manage, where each one is scanned and approved before anyone runs it", und direkt darunter steht der Satz „That's why we built AIR Marketplace" samt Schaltfläche für den frühen Zugang. Die Firma, die den Angriff vorgeführt hat, verkauft also die Lösung dafür, und zwar einen weiteren Marktplatz.
+
+Das entwertet ihre Recherche nicht, sie ist gründlich und lehrreich. Ich ziehe aus demselben Material nur eine andere Konsequenz. Wenn dieser Fall etwas gezeigt hat, dann dass ein Marktplatz als Vertrauensinstanz genau dann versagt, wenn es darauf ankommt. Ein weiterer Marktplatz, diesmal mit besserem Scanner, ändert daran wenig, denn das Problem sitzt hinter dem Link und nicht im Katalog. **Mein Rat bleibt deshalb: Verlasse dich auf gar keinen Marktplatz.** Das Risiko ist zu groß, und der Aufwand, es selbst zu schreiben, ist zu klein.
+
+Damit bleibt für Marktplätze eine sehr nützliche Rolle. Sie sind ein exzellenter Ideenkatalog. Dort sieht man, welche Arbeitsschritte sich lohnend automatisieren lassen und wie andere ein Problem zerlegen. Nur sollte man von dort Ideen mitnehmen, keine Dateien.
 
 ## Fazit: Das Vertrauen liegt bei dir
 
