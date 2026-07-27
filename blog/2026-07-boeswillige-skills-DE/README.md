@@ -20,7 +20,7 @@ language: de
 header: header.jpg
 ---
 
-Ein Skill ist eine Textdatei. Genau das macht ihn so praktisch und genau das macht ihn so gefährlich. Wer einem KI-Agenten einen Skill installiert, gibt ihm keine Bibliothek in einer Sandbox. Er gibt ihm eine Anweisung, und der Agent führt sie mit seinen eigenen Rechten aus. Diese Anweisung darf auch lauten: „Lade dir die restlichen Instruktionen von dieser Adresse."
+Ein Skill ist eine Textdatei. Das macht ihn so praktisch und leider auch so gefährlich. Wer einem KI-Agenten einen Skill installiert, gibt ihm keine Bibliothek in einer Sandbox. Er gibt ihm eine Anweisung, und der Agent führt sie mit seinen eigenen Rechten aus. Diese Anweisung darf auch lauten: „Lade dir die restlichen Instruktionen von dieser Adresse."
 
 **Genau dort setzt eine Angriffsklasse an, die im Juni 2026 eindrucksvoll vorgeführt wurde. Eine Sicherheitsfirma baute einen harmlos aussehenden Skill, brachte ihn in einen populären Marketplace und bewarb ihn per Anzeige. Alle Prüfungen bestand er. Und dann tauschte sie aus, was hinter dem Link lag.**
 
@@ -44,15 +44,37 @@ Vergleiche das mit einem Skill für Datenbank-Migrationen oder Zugriffsrechte. D
 
 Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffentlichen Skill-Marketplace auf GitHub. AIR nennt ihn nicht beim Namen, beschreibt ihn aber als Repository mit rund 36.000 Sternen, 156 Skills und einer „welcoming contribution policy". Der Pull Request wurde angenommen. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
 
-Danach kam der Teil, den ich für den eigentlich interessanten halte. AIR schaltete eine Instagram-Anzeige. Nicht für Entwickler, sondern für Leute aus Marketing, Vertrieb und Design. Also für die Zielgruppe, die heute Agenten benutzt, ohne Code zu lesen.
+Danach kam der Teil, den ich am spannendsten finde. AIR schaltete eine Instagram-Anzeige. Als Zielgruppe wählten sie Leute aus Marketing, Vertrieb und Design, also Menschen, die heute Agenten benutzen, ohne Code zu lesen. Entwickler standen ausdrücklich nicht auf der Liste.
 
 Dass die Tarnung überhaupt so gut funktionierte, liegt auch am Umfeld. Rund um Google Stitch und Claude Code gibt es seit Monaten eine kleine Industrie aus Tutorials, Blogposts und „So baust du deine Landing Page in zehn Minuten"-Anleitungen. In diesem Rauschen fällt ein weiterer Skill mit genau diesem Versprechen niemandem auf. Er sieht schlicht aus wie das, was gerade alle machen.
+
+### Das Umfeld: „Comment CLAUDE and I'll send you the links"
+
+Warum ausgerechnet Instagram? Die Antwort liefert AIR selbst, mit einer Bildstrecke im Bericht, überschrieben mit „Skills Are Going Viral on Instagram". Darauf zu sehen: ein Dutzend Posts **fremder Accounts**, die Claude-Skills bewerben wie Nahrungsergänzungsmittel. „6 new claude skills for designers". „24 Things to Install in Claude." „TOP 5 Claude Code Front-End Skills". „42 Claude Skills to Automate Your Creative Workflow".
+
+Wichtig zum Verständnis: Diese Posts stammen nicht von AIR und bewerben auch nicht deren Skill. Sie dokumentieren das Umfeld, in das die Anzeige gestellt wurde. Ich habe ausdrücklich danach gesucht, ob einer dieser Accounts `brand-landingpage` aufgegriffen hat, und nichts gefunden. Auch AIRs Bericht erwähnt so etwas nicht. Verbreitet wurde der Skill durch eine bezahlte Anzeige und später durch die Verzeichnis-Seiten, nicht durch Influencer.
+
+Trotzdem lohnt der Blick auf diese Bildstrecke, denn sie erklärt, warum die Anzeige überhaupt funktionieren konnte. Unter den Posts steht nämlich, jedes Mal, derselbe Köder:
+
+> „Comment ‚CLAUDE' and I'll send you all 6 skill links"
+>
+> „Comment ‚INSTALL' & get the set up guide in your DM"
+>
+> „Comment ‚skills' to get all these latest claude skills in your dm's"
+
+Wir kennen dieses Format alle. Es ist reine Reichweiten-Mechanik: Kommentare gewichtet der Algorithmus höher als Likes, also muss man kommentieren, um an die Links zu kommen. Das Produkt ist nicht der Skill. Das Produkt ist dein Kommentar.
+
+Und jetzt überlege, was dabei eigentlich passiert. Jemand, der behauptet, 24 Dinge zur Installation zu empfehlen, hat diese 24 Dinge garantiert nicht gelesen. Nicht die `SKILL.md`, nicht die mitgelieferten Skripte, schon gar nicht die externen Adressen darin. Er hat eine Liste zusammengestellt, weil Listen gut laufen. Die Empfehlung landet anschließend per Direktnachricht bei dir, herausgelöst aus jedem Zusammenhang, ohne Quelle, ohne Datum, ohne Haftung. Es gibt keine Redaktion, keine Korrektur, kein „wir haben das nachgeprüft". Es gibt nur Reichweite.
+
+**Mein Rat, so unhöflich er klingt: Traue diesen Accounts kein einziges Wort.** Nicht weil die Leute dahinter zwangsläufig bösartig wären, die meisten sind einfach nur schnell. Sondern weil ihr Geschäftsmodell mit der Richtigkeit ihrer Empfehlungen überhaupt nichts zu tun hat. Sie werden für Aufmerksamkeit bezahlt, nicht für Sorgfalt. Wer eine Liste mit 42 Skills veröffentlicht, kann sie nicht geprüft haben, und wer sie ungeprüft veröffentlicht, ist genau der Verteilerkanal, den ein Angreifer sich wünscht.
+
+Für AIR war das die halbe Miete. Sie mussten kein Vertrauen aufbauen, sie mussten sich nur in einen bereits laufenden Hype stellen. Eine Anzeige im selben Look, dieselbe Tonalität, dasselbe Versprechen. In einem Umfeld, in dem ohnehin täglich ungeprüfte Skill-Listen herumgereicht werden, fällt eine weitere Empfehlung nicht auf. Sie ist der Normalfall.
 
 Und die Prüfungen? AIR gibt an, den Skill gegen die Scanner von Cisco, NVIDIA und skills.sh getestet zu haben. Alle stuften ihn als sicher ein.
 
 Der Rest ist schnell erzählt. Nach der Verbreitung tauschte AIR den Inhalt hinter einer im Skill hinterlegten Adresse aus. Ab diesem Moment wies der Skill die Agenten an, ein Skript zu laden und auszuführen. Die Nutzlast hielten die Autoren bewusst harmlos: Sie sammelte die E-Mail-Adresse des Opfers ein und schickte sie an AIR. Betroffen waren nach ihren Angaben mehrere zehntausend Agenten, darunter solche in Firmenkonten.
 
-Auf die Zahl kommt es aber gar nicht an, sondern auf diesen Satz aus dem Bericht:
+Viel wichtiger als jede Zahl ist dieser Satz aus dem Bericht:
 
 > „We could have had full control of every one of their agents, their private conversations, and every internal system they could reach."
 
@@ -105,7 +127,7 @@ Damit ist alles beisammen, und zwar ohne eine einzige bösartige Zeile:
 3. Er ist vorab autorisiert, davon ausgehend etwas zu **installieren**, im Zweifel global.
 4. Und er soll den Nutzer damit **nicht behelligen**.
 
-Der eigentliche Angriffscode liegt also nicht im Skill, sondern hinter dem Link. Und die Erlaubnis, ihn auszuführen, hat der Nutzer bereits erteilt, als er den Skill installierte.
+Der eigentliche Angriffscode liegt also hinter dem Link, außerhalb der geprüften Datei. Und die Erlaubnis, ihn auszuführen, hat der Nutzer bereits erteilt, als er den Skill installierte.
 
 Zwei weitere Formulierungen der Datei zahlen auf dasselbe Konto ein. „Never display, transcribe, or echo the key" klingt nach vorbildlichem Umgang mit Geheimnissen und unterdrückt zugleich Ausgaben. „Fail fast, recover quietly" klingt nach sauberem Fehler-Handling und sorgt dafür, dass Probleme leise weggeräumt werden, statt beim Nutzer aufzuschlagen. Jede dieser Regeln wäre für sich genommen guter Stil. Zusammen ergeben sie einen Agenten, der fremde Anweisungen holt, ausführt und dabei möglichst wenig Aufhebens macht.
 
@@ -153,7 +175,7 @@ Dass Marktplätze grundsätzlich täuschbar sind, ist übrigens keine Eigenheit 
 
 > „The marketplace approved them. The reviews were positive. The functionality is real."
 
-Dieser Fall ist die eigentlich unbequeme Nachricht. Der VS-Code-Marktplatz ist keine Wildwuchs-Plattform von vorgestern. Er ist das seit Jahren betriebene Verzeichnis eines der größten Softwarehäuser der Welt. Auch npm und PyPI kämpfen nach über einem Jahrzehnt weiter mit untergeschobenen Paketen. Der selbstreplizierende npm-Wurm vom September 2025 war so gravierend, dass sogar die US-Behörde CISA eine [eigene Warnung](https://www.cisa.gov/news-events/alerts/2025/09/23/widespread-supply-chain-compromise-impacting-npm-ecosystem) herausgab. Wer also hofft, dass die Skill-Marktplätze das Problem in ein, zwei Releases wegkuratieren, sollte einen Blick auf die etablierten Marktplätze werfen. Dort hat es Jahre gedauert, das Problem einigermaßen einzudämmen. Gelöst ist es bis heute nicht.
+Dieser Fall ist die unbequeme Nachricht. Der VS-Code-Marktplatz ist keine Wildwuchs-Plattform von vorgestern. Er ist das seit Jahren betriebene Verzeichnis eines der größten Softwarehäuser der Welt. Auch npm und PyPI kämpfen nach über einem Jahrzehnt weiter mit untergeschobenen Paketen. Der selbstreplizierende npm-Wurm vom September 2025 war so gravierend, dass sogar die US-Behörde CISA eine [eigene Warnung](https://www.cisa.gov/news-events/alerts/2025/09/23/widespread-supply-chain-compromise-impacting-npm-ecosystem) herausgab. Wer also hofft, dass die Skill-Marktplätze das Problem in ein, zwei Releases wegkuratieren, sollte einen Blick auf die etablierten Marktplätze werfen. Dort hat es Jahre gedauert, das Problem einigermaßen einzudämmen. Gelöst ist es bis heute nicht.
 
 Bei den Skills stehen wir am Anfang derselben Strecke, nur mit deutlich höherem Tempo und ohne die Bremsen, die npm und PyPI sich über die Jahre eingebaut haben.
 
@@ -171,7 +193,7 @@ Nur sollte man wissen, was diese Werkzeuge leisten können und was nicht.
 
 NVIDIA schreibt die Grenze selbst in die [Dokumentation von SkillSpector](https://github.com/NVIDIA/SkillSpector). Der Satz sollte über jeder Diskussion zu diesem Thema stehen: Der Scanner sei „defense-in-depth, not a sandbox". Er markiere riskante Muster vor der Installation, halte aber keinen Skill auf, den man trotzdem installiert. Dazu kommt: „Static analysis only, no dynamic execution."
 
-Die statische Prüfung eines Artefakts, dessen eigentlicher Inhalt erst zur Laufzeit von einem fremden Server kommt, kann gar nicht funktionieren. Das liegt nicht an schlechten Scannern, sondern daran, dass das Objekt zum Prüfzeitpunkt noch nicht existiert. Snyk formuliert es in seinem [technischen Bericht zum Skill-Ökosystem](https://github.com/snyk/agent-scan/blob/main/.github/reports/skills-report.pdf) vom Februar 2026 präzise. Der veröffentlichte Skill wirke bei der Prüfung harmlos, aber Angreifer könnten sein Verhalten jederzeit ändern, indem sie den nachgeladenen Inhalt austauschen. Die Erkennung hänge damit vom Zustand des entfernten Endpunkts in genau dem Moment ab, in dem der Agent den Skill benutzt.
+Die statische Prüfung eines Artefakts, dessen eigentlicher Inhalt erst zur Laufzeit von einem fremden Server kommt, kann gar nicht funktionieren. Schuld daran sind keine schlechten Scanner. Das zu prüfende Objekt existiert zum Prüfzeitpunkt schlicht noch nicht. Snyk formuliert es in seinem [technischen Bericht zum Skill-Ökosystem](https://github.com/snyk/agent-scan/blob/main/.github/reports/skills-report.pdf) vom Februar 2026 präzise. Der veröffentlichte Skill wirke bei der Prüfung harmlos, aber Angreifer könnten sein Verhalten jederzeit ändern, indem sie den nachgeladenen Inhalt austauschen. Die Erkennung hänge damit vom Zustand des entfernten Endpunkts in genau dem Moment ab, in dem der Agent den Skill benutzt.
 
 ## Wer prüft eigentlich die Marktplätze?
 
@@ -212,7 +234,7 @@ Der Unterschied liegt in den Rechten. Anthropic beschreibt in der [Skills-Dokume
 
 Der Agent auf deiner Maschine ist also kein eingesperrter Prozess. Er arbeitet mit deinen Rechten. Was du darfst, darf er. Und was er darf, darf ein Skill, der ihn belügt. Anthropic benennt die möglichen Folgen ungeschminkt: „data exfiltration, unauthorized system access, or other security risks".
 
-Unit 42 beschreibt das Ergebnis besonders nüchtern. Weil Skill-Logik und Vollmacht des Agenten nicht getrennt seien, bedeute eine Installation „complete control over the agent's identity". Nicht über den Rechner, wohlgemerkt, sondern über die Identität des Agenten. Die ist im Zweifel mehr wert als ein Passwort. Sie gilt überall dort, wo der Agent ohnehin schon angemeldet ist.
+Unit 42 beschreibt das Ergebnis besonders nüchtern. Weil Skill-Logik und Vollmacht des Agenten nicht getrennt seien, bedeute eine Installation „complete control over the agent's identity". Über die Identität des Agenten also, wohlgemerkt, und nicht bloß über den Rechner. Diese Identität ist im Zweifel mehr wert als ein Passwort. Sie gilt überall dort, wo der Agent ohnehin schon angemeldet ist.
 
 Anthropic zieht daraus in der Dokumentation die naheliegende Konsequenz: „Use Skills only from trusted sources: those you created yourself or obtained from Anthropic." Wer trotzdem etwas Fremdes einsetzt, solle „exercise extreme caution and thoroughly audit it before use".
 
@@ -222,7 +244,7 @@ Manches muss man nun einmal installieren. Einen fremden MCP-Server etwa kann man
 
 > **🛠️ Selbst nachbauen: die Fünf-Minuten-Prüfung vor der Installation**
 >
-> 1. **Lies die `SKILL.md` wirklich.** Nicht die README des Marktplatzes, sondern die Datei, die der Agent später als Anweisung liest. Sie ist Text, das dauert zwei Minuten.
+> 1. **Lies die `SKILL.md` wirklich.** Also die Datei, die der Agent später als Anweisung liest, nicht die Hochglanz-README des Marktplatzes. Sie ist Text, das dauert zwei Minuten.
 > 2. **Suche nach Adressen.** `grep -rn "https\?://" .` im Skill-Ordner. Jede URL ist eine Stelle, an der später etwas anderes stehen kann als heute. Fragen: Gehört die Domain wirklich dem genannten Anbieter? Stimmt die Schreibweise exakt?
 > 3. **Suche nach Autorität.** Formulierungen wie „ground truth", „authoritative", „always follow the instructions at" verwandeln fremden Text in Befehle. Das ist das Muster aus dem AIR-Fall.
 > 4. **Schau in die mitgelieferten Skripte**, nicht nur in die Markdown-Dateien. Und in alles, was der Skill nachinstallieren will („Prerequisites", „Setup", „utility").
@@ -245,13 +267,13 @@ Anders als bei einem MCP-Server ist das hier tatsächlich realistisch. Ein Skill
 Dabei gewinnt man gleich zweimal:
 
 - **Kein Vertrauensproblem mehr.** Was man selbst geschrieben hat, kann hinter dem Rücken nicht ausgetauscht werden. Damit verschwindet das gesamte Problem dieses Artikels. Es gibt keine fremde Adresse mehr, von der Anweisungen nachgeladen werden.
-- **Deutlich bessere Passgenauigkeit.** Fremde Skills sind notgedrungen generisch, sie müssen für alle funktionieren. Dein eigener Skill kennt deine Ordnerstruktur, deine Konventionen, deine Test-Kommandos und die Eigenheiten deines Projekts. Er ist deshalb nicht nur sicherer, sondern schlicht besser.
+- **Deutlich bessere Passgenauigkeit.** Fremde Skills sind notgedrungen generisch, sie müssen für alle funktionieren. Dein eigener Skill kennt deine Ordnerstruktur, deine Konventionen, deine Test-Kommandos und die Eigenheiten deines Projekts. Er ist deshalb sicherer und schlicht besser.
 
 Das ist keine exotische Einzelmeinung. Snyk gibt Skill-Entwicklern im eigenen Bericht dieselbe Richtung vor. Man solle Skills als „fully self-contained packages" bauen und alles vermeiden, was Selbstaktualisierung bedeutet oder regelmäßig eine URL nach weiteren Agenten-Anweisungen abfragt. Für Nutzer lautet die Empfehlung schlicht: „not to install agent skills without prior review".
 
 ### Warum mir „review" allein nicht reicht
 
-An dieser Stelle möchte ich einen Schritt weiter gehen als Snyk. Denn genau das ist doch die Lehre aus dem geschilderten Fall: **Kein Review kann sicherstellen, dass nicht doch irgendwo ein schadhaftes Fragment steckt.** In unserem Fall hat das Review den Angriff nicht nur übersehen, es hat ihn gelobt.
+An dieser Stelle möchte ich einen Schritt weiter gehen als Snyk. Die Lehre aus dem geschilderten Fall lautet doch: **Kein Review kann sicherstellen, dass nirgendwo ein schadhaftes Fragment steckt.** In unserem Fall hat das Review den Angriff nicht nur übersehen, es hat ihn gelobt.
 
 Prompt Injection ist eine Disziplin für sich. Sie entwickelt sich schneller, als eine Prüfliste mitwachsen kann. Diesmal war es eine URL, die man beim Lesen immerhin sehen konnte. Beim nächsten Mal ist es etwas, das man als Mensch gar nicht als Anweisung erkennt. Ausdenken muss man sich das nicht, es ist längst dokumentiert. Snyk führt einen eigenen Befund-Code für **versteckte Unicode-Zeichen**. Dessen Beschreibung liest sich wie eine Warnung an alle, die auf sorgfältiges Lesen vertrauen:
 
@@ -261,7 +283,7 @@ Prompt Injection ist eine Disziplin für sich. Sie entwickelt sich schneller, al
 
 Genannt werden dort Zero-Width-Spaces, Richtungs-Umschalter und Unicode-Tag-Zeichen, die eine **komplette versteckte Botschaft** kodieren können. Für uns sieht das aus wie nichts oder wie eine sinnlose Zeichenfolge, die man beim Lesen achselzuckend überspringt. Der Agent liest sie mit.
 
-Damit kippt die Logik des Prüfens. Man prüft ja nicht mehr nur, ob im Text etwas Böses steht, sondern ob im Text etwas steht, das man gar nicht sehen kann.
+Damit kippt die Logik des Prüfens. Die Frage lautet ja längst nicht mehr bloß: Steht im Text etwas Böses? Sie lautet: Steht dort etwas, das ich überhaupt sehen kann?
 
 ### Die Konsequenz: immer mit einem weißen Blatt anfangen
 
@@ -272,7 +294,7 @@ Deshalb lautet mein Rat, und der geht bewusst über „gründlich lesen" hinaus:
 > 1. **Niemals eine fremde Datei herüberkopieren und anpassen.** Auch nicht „nur zum Anfangen". Was einmal in deinem Verzeichnis liegt, wird irgendwann vom Agenten gelesen, inklusive dem, was du beim Überfliegen nicht gesehen hast.
 > 2. **Mit einer leeren Datei starten.** Erst dann die Ideen und Konzepte einzeln herübertragen, eines nach dem anderen.
 > 3. **Den Agenten neu formulieren lassen.** Er soll den fremden Text lesen, verstehen und **in eigenen Worten** neu aufschreiben. Was dabei entsteht, enthält keine unsichtbaren Zeichen mehr, denn sie überleben die Neuformulierung nicht.
-> 4. **Für Code gilt dasselbe.** Nicht übernehmen, sondern nacherzählen lassen.
+> 4. **Für Code gilt dasselbe.** Niemals übernehmen, immer nacherzählen lassen.
 
 Der dritte Punkt ist der entscheidende. Er hat noch einen angenehmen Nebeneffekt, denn die Neuformulierung ist zugleich ein Verständnistest. Was der Agent nicht in eigenen Worten wiedergeben kann, hat er nicht verstanden. Und dann willst du es ohnehin nicht in deinem Projekt haben.
 
@@ -290,9 +312,9 @@ Fünf Dinge nehme ich für mich mit:
 
 - **Der Prüfzeitpunkt ist nicht der Ausführungszeitpunkt.** Alles, was ein Skill erst zur Laufzeit holt, ist ungeprüft. Egal wie grün das Häkchen beim Download war.
 - **Vertrauen wird geerbt, Sicherheit nicht.** Sterne, Downloadzahlen und ein akzeptierter Pull Request sagen nichts über den Inhalt einer einzelnen Datei.
-- **Der Agent handelt mit meinen Rechten.** Die Frage vor jeder Installation lautet deshalb nicht „ist das wahrscheinlich böse?", sondern „was könnte es anrichten, wenn es böse wäre?".
+- **Der Agent handelt mit meinen Rechten.** Die richtige Frage vor jeder Installation lautet deshalb: „Was könnte das anrichten, wenn es böse wäre?" Die Wahrscheinlichkeit ist zweitrangig.
 - **Selbst geschrieben schlägt fremd installiert.** Ein Skill ist Text, kein Framework. Wer ihn selbst schreibt, hat kein Vertrauensproblem und obendrein das passendere Ergebnis.
-- **Lesen reicht nicht, neu schreiben schon.** Gegen Anweisungen, die für uns unsichtbar sind, hilft kein noch so gründliches Review. Es hilft nur, den Text niemals zu kopieren, sondern neu formulieren zu lassen.
+- **Lesen reicht nicht, neu schreiben schon.** Gegen Anweisungen, die für uns unsichtbar sind, hilft kein noch so gründliches Review. Es hilft nur, den Text niemals zu kopieren und ihn stattdessen neu formulieren zu lassen.
 
 Der Vergleich mit den frühen Paketmanagern trägt weit, hat aber einen Haken. Bei npm musste bösartiger Code erst ausgeführt werden. Ein Skill muss nur überzeugend formuliert sein. Er richtet sich schließlich an ein System, das darauf trainiert ist, Anweisungen zu befolgen. Das ist die eigentliche Neuerung, und darauf haben wir noch keine gute Antwort.
 
