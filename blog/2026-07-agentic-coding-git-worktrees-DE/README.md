@@ -38,7 +38,7 @@ Stellen wir uns folgende Alltagssituation vor: Claude Code arbeitet an einem gr�
 
 Mit einem klassischen Einzel-Checkout haben wir jetzt drei schlechte Optionen:
 
-- **Warten.** Der Bugfix wartet auf einen Agenten, der mit ihm gar nichts zu tun hat.
+- **Warten.** Der Bugfix bleibt liegen, bis das Refactoring durch ist. Der einzige Grund: Das Arbeitsverzeichnis ist gerade belegt.
 - **Den Agenten abbrechen.** Die halbe Arbeit ist getan, der Kontext aufgebaut, alles f체r die Tonne.
 - **`git stash` und Branch wechseln, w채hrend der Agent l채uft.** Bitte nicht. Der Agent liest und schreibt in genau diesem Verzeichnis. Wechseln wir darunter den Branch, editiert er ab sofort fremde Dateist채nde, und die Tests pr체fen einen Zustand, den es so nie gegeben hat.
 

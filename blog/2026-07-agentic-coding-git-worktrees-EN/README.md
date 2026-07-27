@@ -37,7 +37,7 @@ Let's imagine the following everyday situation: Claude Code is working on a bigg
 
 With a classic single checkout, we now have three bad options:
 
-- **Wait.** The bugfix waits for an agent that has nothing to do with it.
+- **Wait.** The bugfix sits idle until the refactoring is done. The only reason: the working directory happens to be busy.
 - **Abort the agent.** Half the work is done, the context built up, all for the bin.
 - **`git stash` and switch branches while the agent is running.** Please don't. The agent reads and writes in exactly this directory. If we switch the branch underneath it, it edits foreign file states from that moment on, and the tests check a state that never existed.
 
