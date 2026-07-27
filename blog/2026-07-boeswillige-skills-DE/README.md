@@ -22,7 +22,7 @@ Ein Skill ist eine Textdatei. Das macht ihn so praktisch und leider auch so gef�
 
 **Genau dort setzt eine Angriffsklasse an, die im Juni 2026 eindrucksvoll vorgeführt wurde. Eine Sicherheitsfirma baute einen harmlos aussehenden Skill, brachte ihn in populäre Marktplätze und schaltete Werbung dafür. Alle Prüfungen bestand er. Und dann tauschte sie aus, was hinter dem Link lag.**
 
-Dieser Artikel erzählt den Fall anhand der Originalquelle. Er zeigt, warum die üblichen Scanner ihn prinzipbedingt nicht sehen konnten und was das für alle bedeutet, die Skills aus dem Netz installieren. Am Ende stehen eine Prüfliste und die Konsequenz, die ich daraus gezogen habe.
+Dieser Artikel erzählt den Fall anhand der Originalquelle und der Spuren, die er auf GitHub hinterlassen hat: der Pull Request, das Review, die Datei selbst. Er zeigt, warum die üblichen Scanner den Angriff prinzipbedingt nicht sehen konnten und was das für alle bedeutet, die Skills aus dem Netz installieren. Am Ende stehen eine Prüfliste und die Konsequenz, die ich daraus gezogen habe.
 
 > ⚠️ Vorweg, weil es zum Thema passt: Der Bericht stammt von einer Firma, die Sicherheitsprodukte verkauft. Ich kennzeichne im Text, was Selbstauskunft ist und was ich unabhängig nachprüfen konnte.
 
