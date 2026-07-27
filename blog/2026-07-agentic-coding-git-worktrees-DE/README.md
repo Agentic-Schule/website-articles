@@ -34,15 +34,15 @@ Dieser Artikel zeigt die Technik dahinter, den eingebauten Worktree-Support der 
 
 ## Das Problem: Ein Agent belegt das ganze Repo
 
-Stellen wir uns folgenden Vormittag vor: Claude Code arbeitet an einem größeren Refactoring, vierzig Dateien, Tests laufen mit. Der Lauf dauert, sagen wir, eine Dreiviertelstunde. Nach zehn Minuten kommt ein Bug-Report rein. Produktion. Sollte heute noch raus.
+Stellen wir uns folgenden Vormittag vor: Claude Code arbeitet an einem größeren Refactoring und lässt dabei immer wieder die Tests laufen. So ein Lauf zieht sich. Mittendrin kommt ein Bug-Report rein. Produktion. Sollte heute noch raus.
 
-Mit einem klassischen Einzel-Checkout habe ich jetzt drei schlechte Optionen:
+Mit einem klassischen Einzel-Checkout haben wir jetzt drei schlechte Optionen:
 
-- **Warten.** Der Bugfix wartet eine halbe Stunde auf einen Agenten, der mit ihm gar nichts zu tun hat.
+- **Warten.** Der Bugfix wartet auf einen Agenten, der mit ihm gar nichts zu tun hat.
 - **Den Agenten abbrechen.** Die halbe Arbeit ist getan, der Kontext aufgebaut, alles für die Tonne.
-- **`git stash` und Branch wechseln, während der Agent läuft.** Bitte nicht. Der Agent liest und schreibt in genau diesem Verzeichnis. Wechsle ich darunter den Branch, editiert er ab sofort fremde Dateistände, und die Tests prüfen einen Zustand, den es so nie gegeben hat.
+- **`git stash` und Branch wechseln, während der Agent läuft.** Bitte nicht. Der Agent liest und schreibt in genau diesem Verzeichnis. Wechseln wir darunter den Branch, editiert er ab sofort fremde Dateistände, und die Tests prüfen einen Zustand, den es so nie gegeben hat.
 
-Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, wechselt seltener, als gut wäre.
+Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, hat wenig Komfort.
 
 Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Bei zwei Agenten im selben Arbeitsverzeichnis wird aus der erhofften Parallelität ein Wettrennen um dieselben Dateien. Obendrein schließen sich manche Features gegenseitig aus und andere dürfen nur in einer bestimmten Reihenfolge einfließen. Zwei halbfertige Features im selben Verzeichnis ergeben einen Mischzustand, den es im fertigen Produkt nie geben wird. Und ausgerechnet dagegen laufen dann Builds und Tests.
 
@@ -267,7 +267,7 @@ Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren
 
 Zurück zu dem Vormittag vom Anfang, diesmal mit Worktrees:
 
-**Neun Uhr.** Claude Code startet das große Refactoring auf Ast 1, im Worktree `app-frontend-shop-4708-refactor`. Vierzig Dateien, Tests laufen mit, geschätzte Dreiviertelstunde.
+**Neun Uhr.** Claude Code startet das große Refactoring auf Ast 1, im Worktree `app-frontend-shop-4708-refactor`. Die Tests laufen mit, der Lauf wird dauern.
 
 **Zehn nach neun.** Der Bug-Report: Produktion, falsche Preise im Warenkorb, sollte heute noch raus. Früher der Moment der drei schlechten Optionen. Heute tippe ich in einem neuen Terminal `/feature-init`, nenne das Feature `shop-4711-hotfix-prices`, und ein paar Minuten später stehen zwei frische Worktrees samt Abhängigkeiten und Lizenz bereit. Eine zweite Session bekommt den Bug. Ast 1 merkt davon nichts.
 

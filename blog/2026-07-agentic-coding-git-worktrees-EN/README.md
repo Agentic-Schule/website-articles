@@ -33,15 +33,15 @@ This article shows the technique behind it, the built-in worktree support of tod
 
 ## The Problem: One Agent Occupies the Whole Repo
 
-Let's imagine the following morning: Claude Code is working on a bigger refactoring, forty files, tests running along. The run takes, let's say, forty-five minutes. Ten minutes in, a bug report arrives. Production. Should ship today.
+Let's imagine the following morning: Claude Code is working on a bigger refactoring and keeps running the tests along the way. A run like this takes a while. Right in the middle of it, a bug report arrives. Production. Should ship today.
 
-With a classic single checkout, I now have three bad options:
+With a classic single checkout, we now have three bad options:
 
-- **Wait.** The bugfix waits half an hour for an agent that has nothing to do with it.
+- **Wait.** The bugfix waits for an agent that has nothing to do with it.
 - **Abort the agent.** Half the work is done, the context built up, all for the bin.
-- **`git stash` and switch branches while the agent is running.** Please don't. The agent reads and writes in exactly this directory. If I switch the branch underneath it, it edits foreign file states from that moment on, and the tests check a state that never existed.
+- **`git stash` and switch branches while the agent is running.** Please don't. The agent reads and writes in exactly this directory. If we switch the branch underneath it, it edits foreign file states from that moment on, and the tests check a state that never existed.
 
-Even without an emergency, the classic context switch is a pain: stash, checkout, `npm install` because the other branch has different dependencies, the IDE re-indexes. If you work like this, you switch less often than would be good for you.
+Even without an emergency, the classic context switch is a pain: stash, checkout, `npm install` because the other branch has different dependencies, the IDE re-indexes. Working like this is anything but comfortable.
 
 On top of that comes a luxury problem: frontier models with plenty of reasoning are thorough, but leisurely. Commands like `/code-review` sometimes run absurdly long for me. The natural reaction: parallelize. While session one runs the review, session two should start on the next feature. Except: with two agents in the same working directory, the hoped-for parallelism turns into a race for the same files. On top of that, some features are mutually exclusive and others may only land in a specific order. Two half-finished features in the same directory produce a mixed state that will never exist in the finished product. And that, of all things, is what builds and tests then run against.
 
@@ -266,7 +266,7 @@ The supreme discipline. Two test runs on a shared database sabotage each other: 
 
 Back to the morning from the beginning, this time with worktrees:
 
-**Nine o'clock.** Claude Code starts the big refactoring on branch one, in the worktree `app-frontend-shop-4708-refactor`. Forty files, tests running along, estimated forty-five minutes.
+**Nine o'clock.** Claude Code starts the big refactoring on branch one, in the worktree `app-frontend-shop-4708-refactor`. The tests are running along, this will take a while.
 
 **Ten past nine.** The bug report: production, wrong prices in the shopping cart, should ship today. This used to be the moment of the three bad options. Today, I type `/feature-init` in a new terminal, name the feature `shop-4711-hotfix-prices`, and a few minutes later two fresh worktrees are standing there, dependencies and license included. A second session gets the bug. Branch one doesn't notice a thing.
 
