@@ -53,7 +53,7 @@ The naive way out would be to simply clone the repo several times. That works, b
 
 A [git worktree](https://git-scm.com/docs/git-worktree) is an additional working directory of the same repository. The git docs call the checkout you get when cloning the *main worktree*. Everything you add with `git worktree add` is a *linked worktree*. All of them share the same `.git`, that is, the complete history, all branches, all remotes, and the object database. What's independent in each worktree is exactly what makes up the working state: the checked-out files, its own `HEAD`, and its own index.
 
-This has three pleasant consequences. First, a worktree is created in seconds and disposed of just as quickly; after all, no repository is copied, only a checkout is created. Second, the worktrees see each other: a commit on branch A is instantly visible in the log on branch B, and a single `git fetch` supplies them all. And third, for me the most important point against multiple cloned repos: you get **guaranteed exclusivity on every local branch name.** In two independent clones, you can accidentally create the same branch twice, and both states silently drift apart. Worktrees, on the other hand, share a single set of branches: creating the same name a second time? Simply not possible.
+This has two pleasant consequences. First, a worktree is created in seconds and disposed of just as quickly; after all, no repository is copied, only a checkout is created. Second, the worktrees see each other: a commit on branch A is instantly visible in the log on branch B, and a single `git fetch` supplies them all.
 
 > **🛠️ Build it yourself: the four commands you need**
 > ```bash
