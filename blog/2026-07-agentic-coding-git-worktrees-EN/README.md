@@ -83,13 +83,13 @@ Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition (and many others) no
 | Tool | Parallel work | Isolation |
 |---|---|---|
 | [Claude Code](https://code.claude.com/docs/en/worktrees) | parallel sessions via `--worktree`, isolated subagents | git worktrees under `.claude/worktrees/`, desktop app: automatic per session |
-| [Cursor](https://cursor.com/docs/configuration/worktrees) | up to eight agents on a single prompt | automatically managed git worktrees or remote machines |
-| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | parallel cloud sessions, one draft PR each | ephemeral GitHub Actions environment per session |
-| [VS Code](https://code.visualstudio.com/docs/copilot/agents/background-agents) | background agents (Copilot CLI, Claude, Codex) | automatically one git worktree per session |
-| [Windsurf](https://docs.windsurf.com/windsurf/cascade/worktrees) | worktree mode per chat, merge button back | git worktrees under `~/.windsurf/worktrees/` |
+| [Cursor](https://cursor.com/changelog/2-0) | up to eight agents on a single prompt | git worktrees or remote machines, isolated copy per agent |
+| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | cloud agent: changes on a branch, then a PR | ephemeral GitHub Actions environment per session |
+| [VS Code](https://code.visualstudio.com/docs/agents/agent-types/copilot-cli) | background agents (Copilot CLI, Claude) | selectable worktree isolation per session |
+| [Windsurf / Devin Desktop](https://docs.windsurf.com/windsurf/cascade/worktrees) | worktree mode per chat, merge button back | git worktrees under `~/.windsurf/worktrees/` |
 | [Google Antigravity](https://antigravity.google/docs/projects) | Agent Manager for many parallel agents | "New Worktree Mode" per conversation, optionally per subagent |
-| [OpenAI Codex](https://developers.openai.com/codex/app/worktrees) | multiple chats per project, parallel cloud tasks | git worktrees "under the hood", cloud: container per task |
-| [Devin](https://docs.devin.ai/onboard-devin/environment) | many sessions, "MultiDevin" orchestration | dedicated VM per session, booted from a snapshot |
+| [OpenAI Codex](https://developers.openai.com/codex/app/worktrees) | multiple chats per project, parallel cloud tasks | git worktrees "under the hood", cloud: isolated environment per task |
+| [Devin](https://docs.devin.ai/onboard-devin/environment) | orchestrates "managed Devins" in parallel | fresh copy of a snapshot per session |
 | [Google Jules](https://jules.google/docs/environment/) | parallel tasks, limit depends on plan | fresh VM per task |
 | [Aider](https://aider.chat/docs/faq.html) | officially no parallel story | community practice: one worktree per instance, by hand |
 
@@ -131,15 +131,15 @@ In the desktop app, the principle is already the default, by the way: there, eve
 
 ### The Antigravity Way
 
-Google builds the isolation right into the IDE. [Antigravity](https://antigravity.google/product) manages agents through its own Agent Manager: an overview where several agents run in parallel and can be observed. When starting a conversation, you can pick the ["New Worktree Mode"](https://antigravity.google/docs/projects); Antigravity then provisions a fresh git worktree in the background and the conversation works there, leaving the active working directory untouched. [Subagents](https://antigravity.google/docs/subagents) know the same choice: they inherit their parent's workspace or get their own isolated worktree. One detail stands out: an Antigravity "project" may span several folders, and the worktree mode creates worktrees for all git checkouts of the project. More on that in a moment.
+Google builds the isolation right into the IDE. [Antigravity](https://antigravity.google/product) manages agents through its own Agent Manager: an overview where several agents run in parallel and can be observed. When starting a conversation, you can pick the ["New Worktree Mode"](https://antigravity.google/docs/projects); Antigravity then creates a fresh git worktree for the conversation and works there, leaving the active working directory untouched. [Subagents](https://antigravity.google/docs/subagents) know the same choice: they inherit their parent's workspace or get their own isolated worktree. One detail stands out: an Antigravity "project" may span several folders, and the worktree mode creates worktrees for all git checkouts of the project. More on that in a moment.
 
 ### The Copilot Way
 
-Microsoft runs on two tracks. In [VS Code](https://code.visualstudio.com/docs/copilot/agents/background-agents), background agents (the Copilot CLI, optionally also Claude or Codex) each get an automatically created git worktree per session. The changes stay isolated there until you review them and merge them into your workspace, or send them off as a pull request right away. The second track leaves your machine entirely: the [Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) picks up tasks from a GitHub issue or from chat, works in an ephemeral GitHub Actions environment, and reports back with a draft pull request. Several of these sessions run in parallel, and once the work is done, the environment is disposed of.
+Microsoft runs on several tracks. In [VS Code](https://code.visualstudio.com/docs/agents/agent-types/copilot-cli), background agents run locally, the Copilot CLI as well as Claude sessions. When starting a session, you choose the isolation, and in worktree mode VS Code automatically creates a git worktree in a separate folder. In the [Agents window](https://code.visualstudio.com/docs/agents/agents-window), a merge button brings the changes back into your workspace, optionally with a pull request. The [Copilot desktop app](https://docs.github.com/en/copilot/how-tos/github-copilot-app/agent-sessions) makes the isolation the default: every session runs in its own workspace, several in parallel, and per session you pick between a fresh worktree, your local repo, and a cloud sandbox. The [Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent), finally, leaves your machine entirely: it picks up tasks from GitHub issues or from chat, works in an ephemeral environment powered by GitHub Actions, and delivers its changes on a branch. The pull request happens once you're happy.
 
 ### The Codex Way
 
-OpenAI spans the same arc. In the ChatGPT desktop app, [Codex](https://developers.openai.com/codex/app/worktrees) can run several independent chats in the same project, with git worktrees under the hood: each chat gets a Codex-managed worktree by default. Whoever wants to keep working on one state for longer creates a permanent worktree instead. The feature requires a git repository. In the [cloud](https://developers.openai.com/codex/cloud) it works like everywhere else: every task gets its own isolated container, several of them in parallel.
+OpenAI spans the same arc. In the ChatGPT desktop app, [Codex](https://developers.openai.com/codex/app/worktrees) can run several independent chats in the same project, with git worktrees under the hood: each chat gets a Codex-managed worktree by default. Whoever wants to keep working on one state for longer creates a permanent worktree instead. The feature requires a git repository. In the [cloud](https://developers.openai.com/codex/cloud) it works like everywhere else: every task runs in its own isolated environment, several of them in parallel.
 
 ## And When a Feature Touches Two Repos?
 
