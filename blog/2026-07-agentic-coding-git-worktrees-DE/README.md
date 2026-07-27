@@ -46,7 +46,7 @@ Mit einem klassischen Einzel-Checkout habe ich jetzt drei schlechte Optionen:
 
 Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, wechselt seltener, als gut wäre.
 
-Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Zwei Agenten im selben Arbeitsverzeichnis sind keine Parallelität, sondern ein Wettrennen um dieselben Dateien. Und das Wettrennen ist nicht einmal das ganze Problem: Manche Features schließen sich gegenseitig aus, andere dürfen nur in einer bestimmten Reihenfolge einfließen. Zwei halbfertige Features im selben Verzeichnis ergeben einen Mischzustand, den es im fertigen Produkt nie geben wird, und genau gegen den laufen dann Builds und Tests.
+Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Bei zwei Agenten im selben Arbeitsverzeichnis wird aus der erhofften Parallelität ein Wettrennen um dieselben Dateien. Obendrein schließen sich manche Features gegenseitig aus und andere dürfen nur in einer bestimmten Reihenfolge einfließen. Zwei halbfertige Features im selben Verzeichnis ergeben einen Mischzustand, den es im fertigen Produkt nie geben wird. Und ausgerechnet dagegen laufen dann Builds und Tests.
 
 Der naive Ausweg wäre, das Repo einfach mehrfach zu klonen. Das funktioniert, ist aber verschwenderisch (jede Kopie schleppt ihr eigenes `.git` mit, und gefetcht wird auch mehrfach) und vor allem unnötig: git hat für genau diesen Fall seit Jahren ein Bordmittel.
 
@@ -54,7 +54,7 @@ Der naive Ausweg wäre, das Repo einfach mehrfach zu klonen. Das funktioniert, i
 
 Ein [git worktree](https://git-scm.com/docs/git-worktree) ist ein zusätzliches Arbeitsverzeichnis desselben Repositories. Die git-Doku nennt den Checkout, den man beim Klonen bekommt, den *main worktree*. Alles, was man mit `git worktree add` dazustellt, sind *linked worktrees*. Alle teilen sich dasselbe `.git`, also die komplette Historie, alle Branches, alle Remotes und die Objektdatenbank. Eigenständig ist an jedem Worktree genau das, was den Arbeitszustand ausmacht: die ausgecheckten Dateien, ein eigener `HEAD` und ein eigener Index.
 
-Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angelegt und ebenso schnell wieder entsorgt, es wird ja kein Repository kopiert, sondern nur ein Checkout erzeugt. Zweitens sehen sich die Worktrees gegenseitig: Ein Commit auf Ast A ist auf Ast B sofort im Log sichtbar, ein `git fetch` versorgt alle gemeinsam. Und drittens, für mich der wichtigste Punkt gegen mehrfach geklonte Repos: Es gibt **garantierte Exklusivität auf jedem lokalen Branch-Namen.** In zwei unabhängigen Klonen kann man denselben Branch versehentlich doppelt anlegen, und beide Stände driften still auseinander. Worktrees teilen sich dagegen einen einzigen Branch-Bestand: Denselben Namen ein zweites Mal anlegen? Geht schlicht nicht.
+Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angelegt und ebenso schnell wieder entsorgt, es entsteht ja nur ein frischer Checkout und kein zweites Repository. Zweitens sehen sich die Worktrees gegenseitig: Ein Commit auf Ast A ist auf Ast B sofort im Log sichtbar, ein `git fetch` versorgt alle gemeinsam. Und drittens, für mich der wichtigste Punkt gegen mehrfach geklonte Repos: Es gibt **garantierte Exklusivität auf jedem lokalen Branch-Namen.** In zwei unabhängigen Klonen kann man denselben Branch versehentlich doppelt anlegen, und beide Stände driften still auseinander. Worktrees teilen sich dagegen einen einzigen Branch-Bestand: Denselben Namen ein zweites Mal anlegen? Geht schlicht nicht.
 
 > **🛠️ Selbst nachbauen: die vier Kommandos, die man braucht**
 > ```bash
@@ -69,7 +69,7 @@ Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angele
 > git worktree prune     # Verwaltungsreste von Hand gelöschter Worktrees aufräumen
 > ```
 
-Eine Regel muss man kennen: **Ein Branch kann immer nur in einem Worktree ausgecheckt sein.** Versucht man denselben Branch in zwei Worktrees zu öffnen, verweigert git das Kommando (wer es mit `--force` erzwingt, weiß hoffentlich, was er tut). Das ist keine Schikane, sondern Schutz: Zwei Checkouts desselben Branches würden sich gegenseitig Commits und Index zerschießen. Für unser Agenten-Szenario ist die Regel sogar ein Feature, denn sie erzwingt exakt das Modell, das wir wollen: ein Worktree, ein Branch, ein Agent.
+Eine Regel muss man kennen: **Ein Branch kann immer nur in einem Worktree ausgecheckt sein.** Versucht man denselben Branch in zwei Worktrees zu öffnen, verweigert git das Kommando (wer es mit `--force` erzwingt, weiß hoffentlich, was er tut). Die Regel hat einen guten Grund: Zwei Checkouts desselben Branches würden sich gegenseitig Commits und Index zerschießen. Für unser Agenten-Szenario ist die Regel sogar ein Feature, denn sie erzwingt exakt das Modell, das wir wollen: ein Worktree, ein Branch, ein Agent.
 
 Zwei Dinge sollte man außerdem wissen:
 
@@ -138,11 +138,11 @@ Nehmen wir ein neutrales Beispiel: ein Angular-Frontend im Repo `app-frontend`, 
 
 Und jetzt die Preisfrage: Was macht `claude --worktree` daraus? Genau, **einen** Worktree, im aktuellen Repo. Fast alle eingebauten Worktree-Features denken in einem Repository. Die rühmliche Ausnahme ist Antigravity, dessen „New Worktree Mode" Worktrees für alle Git-Checkouts eines Projects anlegt, aber ohne frei wählbaren gemeinsamen Branch-Namen und ohne alles, was nach dem Auschecken kommt: Abhängigkeiten, Lizenzen, Projektregeln.
 
-Für meinen Workflow heißt das: selbst bauen. Die gute Nachricht: In Claude Code ist das erstaunlich wenig Arbeit.
+Für meinen Workflow heißt das: selbst bauen. Zum Glück ist das in Claude Code erstaunlich wenig Arbeit.
 
 ## Mein Init-Command: ein Kommando, zwei Repos, zwei Worktrees
 
-Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude Code schlicht Markdown-Dateien: Eine Datei `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Der Inhalt ist kein Shell-Skript, sondern eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. Genau so ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
+Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude Code schlicht Markdown-Dateien: Eine Datei `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Der Inhalt ist eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. So ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
 
 1. **Feature-Name abfragen.** Er wird der Branch-Name, identisch in beiden Repos.
 2. **Beide Repos aktualisieren und prüfen, ob der Branch schon existiert**, lokal oder remote. Wo ja, wird er ausgecheckt (vielleicht hat gestern schon jemand angefangen). Wo nein, entsteht er frisch vom neuesten `origin/main`.
@@ -241,11 +241,11 @@ Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisi
 
 ### Abhängigkeiten sind pro Worktree fällig
 
-`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Es ist aber kein Bug, sondern der Sinn der Übung: Jeder Ast hat exakt die Abhängigkeiten seines Branches, nichts leakt zwischen den Features.
+`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Der Lohn dafür: Jeder Ast hat exakt die Abhängigkeiten seines Branches und nichts leakt zwischen den Features.
 
 ### Kommerzielle Lizenzen, die node_modules patchen
 
-Der Fallstrick, der uns wirklich erwischt hat: [Kendo UI](https://www.telerik.com/kendo-angular-ui) legt seine Lizenz-Aktivierung als gepatchte Dateien unter `node_modules/@progress/kendo-licensing/` ab. Die Aktivierung lebt also im Installationsartefakt, nicht im Repo, und ein frischer Worktree beginnt bei null. Fairerweise: Findet Telerik den Key von selbst (als `telerik-license.txt` oder Umgebungsvariable), erledigt ein Postinstall-Script das gleich beim `npm install`. Bei uns kapselt ihn ein eigenes npm-Script, also heißt es: nach jedem `npm install` in jedem Worktree neu aktivieren, sonst rendern die Komponenten mit Wasserzeichen und Lizenz-Warnung. Die Lehre verallgemeinert sich gut: Was ein frisches `npm install` überschreibt oder vergisst, muss der Init-Command pro Worktree wiederherstellen.
+Der Fallstrick, der uns wirklich erwischt hat: [Kendo UI](https://www.telerik.com/kendo-angular-ui) legt seine Lizenz-Aktivierung als gepatchte Dateien unter `node_modules/@progress/kendo-licensing/` ab. Die Aktivierung lebt also im Installationsartefakt statt im Repo und ein frischer Worktree beginnt bei null. Fairerweise: Findet Telerik den Key von selbst (als `telerik-license.txt` oder Umgebungsvariable), erledigt ein Postinstall-Script das gleich beim `npm install`. Bei uns kapselt ihn ein eigenes npm-Script, also heißt es: nach jedem `npm install` in jedem Worktree neu aktivieren, sonst rendern die Komponenten mit Wasserzeichen und Lizenz-Warnung. Die Lehre verallgemeinert sich gut: Was ein frisches `npm install` überschreibt oder vergisst, muss der Init-Command pro Worktree wiederherstellen.
 
 ### Eigene Ports für jeden Ast
 
@@ -279,15 +279,15 @@ Zurück zu dem Vormittag vom Anfang, diesmal mit Worktrees:
 
 ## Fazit: Isolation ist die Eintrittskarte
 
-Rückblickend ist die Erkenntnis fast banal: **Parallelität beginnt nicht beim Agenten, sondern beim Arbeitsverzeichnis.** Die klassische Entwicklung hat dieses Problem kaum gekannt, die Isolation kam mit dem persönlichen Rechner gratis. Mit vielen Agenten auf einer Maschine muss man sie explizit herstellen, denn solange sich zwei Sessions einen Checkout teilen, ist alles andere Kosmetik. git worktrees lösen genau dieses Problem, mit Bordmitteln, in Sekunden, und die gesamte Branche hat das erkannt: lokal per Worktree, in der Cloud per Wegwerf-VM.
+Rückblickend ist die Erkenntnis fast banal: **Parallelität beginnt beim Arbeitsverzeichnis.** Die klassische Entwicklung hat dieses Problem kaum gekannt, die Isolation kam mit dem persönlichen Rechner gratis. Mit vielen Agenten auf einer Maschine muss man sie explizit herstellen, denn solange sich zwei Sessions einen Checkout teilen, ist alles andere Kosmetik. git worktrees lösen das mit Bordmitteln in Sekunden, und die gesamte Branche hat es erkannt: lokal per Worktree, in der Cloud per Wegwerf-VM.
 
-Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Äste, Abhängigkeiten und Lizenz inklusive. Das ist kein großes Engineering, nur eine Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
+Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Äste, Abhängigkeiten und Lizenz inklusive. Das Ganze ist eine simple Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
 
 Ehrlich bleiben will ich auch diesmal:
 
-- **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Dazu vertragen sich nicht alle Features: Manche schließen sich gegenseitig aus, andere müssen in einer festen Reihenfolge einfließen. Worktrees halten die Stände sauber auseinander, aber was wann gemergt wird, bleibt Kopfarbeit. Das Review wird zum Flaschenhals, nicht die Rechenzeit.
-- **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengender als auf der Platte. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Nicht weil die Technik nicht mehr hergäbe, sondern weil mein Kopf sonst nicht mehr sinnvoll reviewen kann.
-- **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Genau deshalb steckt all das im Init-Command und nicht in meinem Gedächtnis.
+- **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Dazu vertragen sich nicht alle Features: Manche schließen sich gegenseitig aus, andere müssen in einer festen Reihenfolge einfließen. Worktrees halten die Stände sauber auseinander, aber was wann gemergt wird, bleibt Kopfarbeit. Der Flaschenhals ist das Review.
+- **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengender als auf der Platte. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Die Technik gäbe locker mehr her. Mein Kopf kommt beim Review vorher an seine Grenze.
+- **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Deshalb steckt all das im Init-Command statt in meinem Gedächtnis.
 
 **Fragen, Feedback, eigene Worktree-Tricks?** Immer her damit, ich freue mich über jede Nachricht. Und wenn dir der Init-Command gefällt: Bau ihn nach. Er ist absichtlich so generisch gehalten, dass er in jedes Zwei-Repo-Setup passt.
 

@@ -45,7 +45,7 @@ With a classic single checkout, I now have three bad options:
 
 Even without an emergency, the classic context switch is a pain: stash, checkout, `npm install` because the other branch has different dependencies, the IDE re-indexes. If you work like this, you switch less often than would be good for you.
 
-On top of that comes a luxury problem: frontier models with plenty of reasoning are thorough, but leisurely. Commands like `/code-review` sometimes run absurdly long for me. The natural reaction: parallelize. While session one runs the review, session two should start on the next feature. Except: two agents in the same working directory are not parallelism, they are a race for the same files. And the race isn't even the whole problem: some features are mutually exclusive, others may only land in a specific order. Two half-finished features in the same directory produce a mixed state that will never exist in the finished product, and that's exactly what builds and tests then run against.
+On top of that comes a luxury problem: frontier models with plenty of reasoning are thorough, but leisurely. Commands like `/code-review` sometimes run absurdly long for me. The natural reaction: parallelize. While session one runs the review, session two should start on the next feature. Except: with two agents in the same working directory, the hoped-for parallelism turns into a race for the same files. On top of that, some features are mutually exclusive and others may only land in a specific order. Two half-finished features in the same directory produce a mixed state that will never exist in the finished product. And that, of all things, is what builds and tests then run against.
 
 The naive way out would be to simply clone the repo several times. That works, but it's wasteful (every copy drags its own `.git` along, and you fetch multiple times, too) and above all unnecessary: git has had a built-in for exactly this case for years.
 
@@ -53,7 +53,7 @@ The naive way out would be to simply clone the repo several times. That works, b
 
 A [git worktree](https://git-scm.com/docs/git-worktree) is an additional working directory of the same repository. The git docs call the checkout you get when cloning the *main worktree*. Everything you add with `git worktree add` is a *linked worktree*. All of them share the same `.git`, that is, the complete history, all branches, all remotes, and the object database. What's independent in each worktree is exactly what makes up the working state: the checked-out files, its own `HEAD`, and its own index.
 
-This has three pleasant consequences. First, a worktree is created in seconds and disposed of just as quickly; after all, no repository is copied, only a checkout is created. Second, the worktrees see each other: a commit on branch A is instantly visible in the log on branch B, and a single `git fetch` supplies them all. And third, for me the most important point against multiple cloned repos: you get **guaranteed exclusivity on every local branch name.** In two independent clones, you can accidentally create the same branch twice, and both states silently drift apart. Worktrees, on the other hand, share a single set of branches: creating the same name a second time? Simply not possible.
+This has three pleasant consequences. First, a worktree is created in seconds and disposed of just as quickly; after all, it's only a fresh checkout and no second repository. Second, the worktrees see each other: a commit on branch A is instantly visible in the log on branch B, and a single `git fetch` supplies them all. And third, for me the most important point against multiple cloned repos: you get **guaranteed exclusivity on every local branch name.** In two independent clones, you can accidentally create the same branch twice, and both states silently drift apart. Worktrees, on the other hand, share a single set of branches: creating the same name a second time? Simply not possible.
 
 > **🛠️ Build it yourself: the four commands you need**
 > ```bash
@@ -68,7 +68,7 @@ This has three pleasant consequences. First, a worktree is created in seconds an
 > git worktree prune     # clean up leftovers of manually deleted worktrees
 > ```
 
-One rule you have to know: **A branch can only ever be checked out in one worktree.** If you try to open the same branch in two worktrees, git refuses the command (whoever forces it with `--force` hopefully knows what they are doing). That's not chicanery, it's protection: two checkouts of the same branch would shred each other's commits and index. For our agent scenario, the rule is actually a feature, because it enforces exactly the model we want: one worktree, one branch, one agent.
+One rule you have to know: **A branch can only ever be checked out in one worktree.** If you try to open the same branch in two worktrees, git refuses the command (whoever forces it with `--force` hopefully knows what they are doing). The rule has a good reason: two checkouts of the same branch would shred each other's commits and index. For our agent scenario, the rule is actually a feature, because it enforces exactly the model we want: one worktree, one branch, one agent.
 
 Two more things worth knowing:
 
@@ -137,11 +137,11 @@ Let's take a neutral example: an Angular frontend in the repo `app-frontend`, a 
 
 And now the prize question: what does `claude --worktree` make of this? Exactly, **one** worktree, in the current repo. Almost all built-in worktree features think in terms of one repository. The honorable exception is Antigravity, whose "New Worktree Mode" creates worktrees for all git checkouts of a project, but without a freely chosen shared branch name and without everything that comes after the checkout: dependencies, licenses, project rules.
 
-For my workflow, that means: build it yourself. The good news: in Claude Code, that's surprisingly little work.
+For my workflow, that means: build it yourself. Luckily, in Claude Code that's surprisingly little work.
 
 ## My Init Command: One Command, Two Repos, Two Worktrees
 
-Custom [slash commands](https://code.claude.com/docs/en/skills) in Claude Code are simply Markdown files: a file `~/.claude/commands/feature-init.md` creates the command `/feature-init`. The content is not a shell script but a work instruction for the agent: prose with a few commands in it. Exactly such a command creates my worktree pairs. The procedure it enforces:
+Custom [slash commands](https://code.claude.com/docs/en/skills) in Claude Code are simply Markdown files: a file `~/.claude/commands/feature-init.md` creates the command `/feature-init`. The content is a work instruction for the agent: prose with a few commands in it. Such a command creates my worktree pairs. The procedure it enforces:
 
 1. **Ask for the feature name.** It becomes the branch name, identical in both repos.
 2. **Update both repos and check whether the branch already exists**, locally or on the remote. Where it does, it gets checked out (maybe someone already started yesterday). Where it doesn't, it's created fresh from the latest `origin/main`.
@@ -240,11 +240,11 @@ The worktrees are in place, two agents are working on two branches. What remains
 
 ### Dependencies Are Due per Worktree
 
-`node_modules` in the frontend, `bin/` and `obj/` in the backend: all gitignored, so all new everywhere. That costs a few minutes and a good chunk of disk space. But it's not a bug, it's the point of the exercise: every worktree has exactly the dependencies of its branch, nothing leaks between features.
+`node_modules` in the frontend, `bin/` and `obj/` in the backend: all gitignored, so all new everywhere. That costs a few minutes and a good chunk of disk space. The reward: every worktree has exactly the dependencies of its branch and nothing leaks between features.
 
 ### Commercial Licenses That Patch node_modules
 
-The pitfall that really caught us: [Kendo UI](https://www.telerik.com/kendo-angular-ui) stores its license activation as patched files under `node_modules/@progress/kendo-licensing/`. The activation lives in the installation artifact, not in the repo, and a fresh worktree starts from zero. To be fair: if Telerik finds the key on its own (as `telerik-license.txt` or an environment variable), a postinstall script takes care of it right during `npm install`. In our setup, a custom npm script wraps the key, so the drill is: activate again after every `npm install` in every worktree, or the components render with a watermark and a license warning. The lesson generalizes well: whatever a fresh `npm install` overwrites or forgets, the init command has to restore per worktree.
+The pitfall that really caught us: [Kendo UI](https://www.telerik.com/kendo-angular-ui) stores its license activation as patched files under `node_modules/@progress/kendo-licensing/`. The activation lives in the installation artifact instead of the repo, and a fresh worktree starts from zero. To be fair: if Telerik finds the key on its own (as `telerik-license.txt` or an environment variable), a postinstall script takes care of it right during `npm install`. In our setup, a custom npm script wraps the key, so the drill is: activate again after every `npm install` in every worktree, or the components render with a watermark and a license warning. The lesson generalizes well: whatever a fresh `npm install` overwrites or forgets, the init command has to restore per worktree.
 
 ### Dedicated Ports for Every Branch
 
@@ -278,15 +278,15 @@ Back to the morning from the beginning, this time with worktrees:
 
 ## Conclusion: Isolation Is the Ticket
 
-In retrospect, the insight is almost banal: **parallelism doesn't start with the agent, it starts with the working directory.** Classical development barely knew this problem; isolation came for free with the personal computer. With many agents on one machine, you have to create it explicitly, because as long as two sessions share one checkout, everything else is cosmetics. git worktrees solve exactly this problem, with built-in means, in seconds, and the whole industry has recognized it: locally via worktree, in the cloud via throwaway VM.
+In retrospect, the insight is almost banal: **parallelism starts with the working directory.** Classical development barely knew this problem; isolation came for free with the personal computer. With many agents on one machine, you have to create it explicitly, because as long as two sessions share one checkout, everything else is cosmetics. git worktrees solve this with built-in means in seconds, and the whole industry has recognized it: locally via worktree, in the cloud via throwaway VM.
 
-Where the built-in features end, namely at the repo boundary, a self-built init command begins: one command, two repos, one branch name, two worktrees, dependencies and license included. That's no big engineering, just a Markdown file. But it turns the most tedious part of everyday multi-repo work into a single question: "What's the feature called?"
+Where the built-in features end, namely at the repo boundary, a self-built init command begins: one command, two repos, one branch name, two worktrees, dependencies and license included. The whole thing is one simple Markdown file. But it turns the most tedious part of everyday multi-repo work into a single question: "What's the feature called?"
 
 I want to stay honest this time, too:
 
-- **Parallelism is not an end in itself.** Three agents produce three times as many diffs, and somebody (me) has to read them all. On top of that, not all features get along: some are mutually exclusive, others have to land in a fixed order. Worktrees keep the states cleanly apart, but what gets merged when remains headwork. The review becomes the bottleneck, not the compute.
-- **The mental load stays.** Hopping from branch to branch is harder in your head than on disk. That's why I rarely allow myself more than two or three branches at a time. Not because the technology couldn't handle more, but because my head can't review more in any meaningful way.
-- **Discipline is part of it.** Install the deps, activate the license, assign the ports, clean up at the end. That's exactly why all of it lives in the init command and not in my memory.
+- **Parallelism is not an end in itself.** Three agents produce three times as many diffs, and somebody (me) has to read them all. On top of that, not all features get along: some are mutually exclusive, others have to land in a fixed order. Worktrees keep the states cleanly apart, but what gets merged when remains headwork. The bottleneck is the review.
+- **The mental load stays.** Hopping from branch to branch is harder in your head than on disk. That's why I rarely allow myself more than two or three branches at a time. The technology could easily handle more. My head hits its limit at review time well before that.
+- **Discipline is part of it.** Install the deps, activate the license, assign the ports, clean up at the end. That's why all of it lives in the init command instead of my memory.
 
 **Questions, feedback, worktree tricks of your own?** Bring them on, I'm happy to hear from you. And if you like the init command: rebuild it. It is deliberately kept so generic that it fits any two-repo setup.
 
