@@ -209,7 +209,7 @@ Skills sind großartig. Aber sie sind ein Ökosystem im Wildwuchs. Fünf Dinge n
 - **Selbst geschrieben schlägt fremd installiert.** Ein Skill ist Text, kein Framework. Wer ihn selbst schreibt, hat kein Vertrauensproblem und obendrein das passendere Ergebnis.
 - **Lesen reicht nicht, neu schreiben schon.** Gegen Anweisungen, die für uns unsichtbar sind, hilft kein noch so gründliches Review. Es hilft nur, den Text niemals zu kopieren und ihn stattdessen neu formulieren zu lassen.
 
-Der Vergleich mit den frühen Paketmanagern trägt weit, hat aber einen Haken. Bei npm musste bösartiger Code erst ausgeführt werden. Ein Skill muss nur überzeugend formuliert sein, denn er richtet sich an ein System, das darauf trainiert ist, Anweisungen zu befolgen. Darauf haben wir noch keine gute Antwort. Bis es eine gibt, helfen zwei alte: lesen, was man installiert, und im Zweifel selbst schreiben.
+Der Vergleich mit den frühen Paketmanagern trägt weit, hat aber einen Haken. Bei npm musste bösartiger Code erst ausgeführt werden. Ein Skill muss nur überzeugend formuliert sein, denn er richtet sich an ein System, das darauf trainiert ist, Anweisungen zu befolgen. Darauf haben wir noch keine gute Antwort …
 
 **Wie haltet ihr das?** Prüft ihr Skills vor der Installation, habt ihr eigene Regeln oder sogar schon einen Fall erlebt? Ich freue mich über jede Nachricht, und wenn genug zusammenkommt, mache ich daraus einen Folgeartikel mit euren Praktiken.
 
