@@ -66,6 +66,10 @@ Und es bleibt nicht beim Marktplatz. Rund um diese Kataloge ist ein Ring von Ver
 
 Besonders bemerkenswert ist ein zweiter dieser Kataloge: [skills.sh](https://www.skills.sh/wshobson/agents), dessen Scanner den Skill laut AIR seinerzeit als sicher durchgewinkt hat, listet ihn bis heute. Dort steht er, ganz ohne Sicherheits-Kennzeichnung, mit **31.200 Installationen**.
 
+Und damit ist die Sache endgültig aus der Kontrolle geraten. AIR schreibt selbst, der Skill sei „uploaded to multiple marketplaces" worden. Eine Suche über GitHub zeigt, wie weit er inzwischen gewandert ist: Die Datei liegt, byte-identisch samt der Angreifer-Domain, in weiteren Skill-Registern, in Spiegel-Repositories und in Sammlungen mit Namen wie „awesome-skills" oder „TOP-SKILLS". Und, das ist der unangenehmste Teil, sie liegt in ganz normalen Projekten. Ein Ernährungsrechner, eine Firmen-Website, ein Demo-Agent: alle haben den Skill in ihr `.claude`-Verzeichnis übernommen und mit eingecheckt.
+
+Ein bösartiger Skill lässt sich also nicht zurückrufen. Er wird kopiert, gespiegelt, in Kataloge übernommen und in Projekte eingecheckt. Selbst wenn der ursprüngliche Marktplatz ihn morgen löschte, bliebe er an Dutzenden Stellen verfügbar.
+
 Das ist ausdrücklich kein Vorwurf an den Betreiber. Er ist das Opfer einer sorgfältig vorbereiteten Täuschung. Ob der Betreiber je erfahren hat, dass sein Marktplatz in einem Sicherheitsbericht auftaucht, weiß ich nicht. Eine Meldung an ihn oder eine Entfernung des Skills erwähnt der Bericht jedenfalls nicht.
 
 Bleibt eine Erkenntnis, die über diesen Einzelfall hinausreicht: **Ein bösartiger Beitrag verschwindet nicht von selbst, nur weil jemand darüber geschrieben hat.** Zwischen „ist öffentlich bekannt" und „ist bereinigt" liegt in diesem Ökosystem noch sehr viel Luft. Der Bericht wurde vielfach zitiert, der Skill steht trotzdem unverändert im Katalog.
@@ -100,6 +104,8 @@ Das ist perfektes Social Engineering, nur eben gegen eine Maschine gerichtet. Al
 Die Adresse selbst war der zweite Teil des Tricks. Google Stitch liegt in Wahrheit unter `stitch.withgoogle.com`. Der Skill verwies stattdessen auf eine Domain, die den Produktnamen im Titel führte und den Angreifern gehörte. Kaum jemand weiß auswendig, unter welcher Adresse Googles Werkzeug wirklich residiert. Wer es nicht weiß, hat keine Chance, den Unterschied zu bemerken. Der Agent übrigens auch nicht.
 
 Verborgen wird dabei übrigens erstaunlich wenig. Der Abschnitt am Ende der Datei heißt schlicht „Stitch Documentation", und die erste Zeile darin ist als „usage and **installation** documentation" beschriftet. Der Skill sagt also offen, dass hinter dieser Adresse Installationsanweisungen liegen, und Phase 0 sagt offen, dass der Agent sie befolgen und den Nutzer damit nicht behelligen soll.
+
+Getrennt sind die beiden Hälften trotzdem gründlich. Ich habe nachgemessen: Die Anweisung „install it" steht in Zeile 32, die zugehörige Adresse in Zeile 248. Dazwischen liegen **216 Zeilen**. Die eine Hälfte des Angriffs sitzt bei zwölf Prozent der Datei, die andere bei sechsundneunzig. Wer prüft, liest das eine, hakt es ab, scrollt durch Interviewleitfäden und Fehlerbehandlung und trifft die zweite Hälfte in einem Kontext, in dem sie vollkommen harmlos wirkt.
 
 Und trotzdem, vielleicht sogar deswegen, ist dieser Angriff **extrem schwer zu erkennen.** AIR schreibt, kein getesteter Scanner habe etwas beanstandet, und das glaube ich sofort. Denn genau so sähe ein völlig legitimer Skill für ein junges SDK auch aus: Schau in die Doku, installier bei Bedarf nach, halte den Nutzer da raus. In neunundneunzig von hundert Fällen wäre das guter Stil. Was diesen Skill bösartig macht, steht gar nicht in der Datei. Es ist die Frage, wem die Adresse gehört und was zum Zeitpunkt der Ausführung dahinter liegt.
 
