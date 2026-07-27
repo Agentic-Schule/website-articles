@@ -46,35 +46,9 @@ Dann brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffe
 
 Nach eigener Darstellung dauerte es „a few anxious days", dann wurde der Pull Request angenommen. Die Zeitstempel bestätigen das: eingereicht am 29. April 2026, gemerged am 2. Mai. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
 
-Danach kam der Teil, den ich am spannendsten finde. AIR schaltete eine Instagram-Anzeige. Als Zielgruppe wählten sie Leute aus Marketing, Vertrieb und Design, also Menschen, die heute Agenten benutzen, ohne Code zu lesen. Entwickler standen ausdrücklich nicht auf der Liste.
+Danach warben sie für ihn. Im Bericht steht dazu ein einziger Satz: Man habe den Skill „as an advertisement on Instagram" veröffentlicht, gerichtet an Leute aus Marketing, Vertrieb und Design. Also an Menschen, die heute Agenten benutzen, ohne Code zu lesen. Welche Form diese Werbung genau hatte, was sie kostete und wie viele Menschen sie erreichte, bleibt offen. Der Bericht schweigt dazu, und damit bleibt auch offen, wie viele der späteren Installationen darauf zurückgehen.
 
 Dass die Tarnung überhaupt so gut funktionierte, liegt auch am Umfeld. Rund um Google Stitch und Claude Code gibt es seit Monaten eine kleine Industrie aus Tutorials, Blogposts und „So baust du deine Landing Page in zehn Minuten"-Anleitungen. In diesem Rauschen fällt ein weiterer Skill mit genau diesem Versprechen niemandem auf. Er sieht schlicht aus wie das, was gerade alle machen.
-
-### Das Umfeld: „Comment CLAUDE and I'll send you the links"
-
-Warum ausgerechnet Instagram? Die Antwort liefert AIR selbst, mit einer Bildstrecke im Bericht, überschrieben mit „Skills Are Going Viral on Instagram". Darauf zu sehen: ein Dutzend Posts **fremder Accounts**, die Claude-Skills bewerben wie Nahrungsergänzungsmittel. „6 new claude skills for designers". „24 Things to Install in Claude." „TOP 5 Claude Code Front-End Skills". „42 Claude Skills to Automate Your Creative Workflow".
-
-An dieser Stelle wird AIRs Bericht allerdings unscharf, und man sollte genau hinsehen. Die Collage steht unkommentiert im Text. Zu Influencern findet sich nur ein allgemeiner Satz über das Ökosystem, Skills würden „posted in reels by influencers with real followings". Über die eigene Aktion steht dort genau ein Satz: „we went ahead and published our skill as an advertisement on Instagram, targeting marketers, salespersons and designers."
-
-Übersetzt heißt das: Es war eine **gekaufte Anzeige**. Das Wort „targeting" stammt aus dem Anzeigenmanager. Von Influencern hat AIR niemanden angesprochen oder bezahlt, jedenfalls steht davon nichts im Bericht. Ich habe zusätzlich gesucht, ob einer dieser Accounts `brand-landingpage` aufgegriffen hat, und nichts gefunden.
-
-Weil beides unmittelbar nebeneinander steht, entsteht beim Lesen trotzdem der Eindruck, der Skill sei in dieser viralen Welle mitgeschwommen. Tatsächlich wurde die Reichweite eingekauft, und wie viel sie gekostet hat oder wie viele Menschen die Anzeige sahen, verrät der Bericht nicht. Das ist unbefriedigend, denn an genau dieser Reichweite hängt die Zahl der betroffenen Agenten. Verbreitet wurde der Skill also **wahrscheinlich** über die bezahlte Anzeige und später über die Verzeichnis-Seiten. Woher die Installationen tatsächlich kamen, weiß niemand von außen.
-
-Trotzdem lohnt der Blick auf diese Bildstrecke, denn sie erklärt, warum die Anzeige überhaupt funktionieren konnte. Unter den Posts steht nämlich, jedes Mal, derselbe Köder:
-
-> „Comment ‚CLAUDE' and I'll send you all 6 skill links"
->
-> „Comment ‚INSTALL' & get the set up guide in your DM"
->
-> „Comment ‚skills' to get all these latest claude skills in your dm's"
-
-Wir kennen dieses Format alle. Es ist reine Reichweiten-Mechanik: Kommentare gewichtet der Algorithmus höher als Likes, also muss man kommentieren, um an die Links zu kommen. Das Produkt ist nicht der Skill. Das Produkt ist dein Kommentar.
-
-Und jetzt überlege, was dabei eigentlich passiert. Jemand, der behauptet, 24 Dinge zur Installation zu empfehlen, hat diese 24 Dinge garantiert nicht gelesen. Nicht die `SKILL.md`, nicht die mitgelieferten Skripte, schon gar nicht die externen Adressen darin. Er hat eine Liste zusammengestellt, weil Listen gut laufen. Die Empfehlung landet anschließend per Direktnachricht bei dir, herausgelöst aus jedem Zusammenhang, ohne Quelle, ohne Datum, ohne Haftung. Es gibt keine Redaktion, keine Korrektur, kein „wir haben das nachgeprüft". Es gibt nur Reichweite.
-
-**Mein Rat, so unhöflich er klingt: Traue diesen Accounts kein einziges Wort.** Nicht weil die Leute dahinter zwangsläufig bösartig wären, die meisten sind einfach nur schnell. Sondern weil ihr Geschäftsmodell mit der Richtigkeit ihrer Empfehlungen überhaupt nichts zu tun hat. Sie werden für Aufmerksamkeit bezahlt, nicht für Sorgfalt. Wer eine Liste mit 42 Skills veröffentlicht, kann sie nicht geprüft haben, und wer sie ungeprüft veröffentlicht, ist genau der Verteilerkanal, den ein Angreifer sich wünscht.
-
-Für AIR war das die halbe Miete. Sie mussten kein Vertrauen aufbauen, sie mussten sich nur in einen bereits laufenden Hype stellen. Eine Anzeige im selben Look, dieselbe Tonalität, dasselbe Versprechen. In einem Umfeld, in dem ohnehin täglich ungeprüfte Skill-Listen herumgereicht werden, fällt eine weitere Empfehlung nicht auf. Sie ist der Normalfall.
 
 Und die Prüfungen? AIR gibt an, den Skill gegen die Scanner von Cisco, NVIDIA und skills.sh getestet zu haben. Alle stuften ihn als sicher ein.
 
