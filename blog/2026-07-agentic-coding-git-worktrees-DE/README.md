@@ -66,7 +66,7 @@ Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angele
 > git worktree remove ../app-frontend-checkout
 > git worktree prune
 > ```
-> Die letzten beiden verwechselt man leicht: `remove` ist der saubere Rückbau, es entsorgt das Verzeichnis mitsamt der internen Verwaltungsdaten. `prune` repariert dagegen nur: Wer einen Worktree-Ordner einfach per `rm -rf` löscht, hinterlässt im Repository verwaiste Verwaltungsdaten, und die räumt `prune` ab.
+> Die letzten beiden verwechselt man leicht: `remove` ist der saubere Rückbau, es entsorgt das Verzeichnis mitsamt der internen Verwaltungsdaten. Bei uncommitteten Änderungen verweigert es den Dienst (erst `--force` überstimmt das), und committete Arbeit geht dabei nie verloren, der Branch lebt im gemeinsamen Repo weiter. `prune` repariert dagegen nur: Wer einen Worktree-Ordner einfach per `rm -rf` löscht, hinterlässt im Repository verwaiste Verwaltungsdaten, und die räumt `prune` ab.
 
 Eine Regel muss man kennen: **Ein Branch kann immer nur in einem Worktree ausgecheckt sein.** Versucht man denselben Branch in zwei Worktrees zu öffnen, verweigert git das Kommando (wer es mit `--force` erzwingt, weiß hoffentlich, was er tut). Die Regel hat einen guten Grund: Zwei Checkouts desselben Branches würden sich gegenseitig Commits und Index zerschießen. Für unser Agenten-Szenario ist die Regel sogar ein Feature, denn sie erzwingt exakt das Modell, das wir wollen: ein Worktree, ein Branch, ein Agent.
 
@@ -276,20 +276,6 @@ Technisch ist das schnell verdrahtet: beim Frontend `ng serve --port 4201`, beim
 ### Parallele E2E-Läufe
 
 Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren sich gegenseitig: Der eine räumt gerade die Testdaten ab, auf die der andere wartet. Wer parallel testen will, braucht getrennte Datenbank-Instanzen pro Ast, oder wenigstens sauber getrennte Daten-Buckets innerhalb einer Instanz. Mit dem Port-Schema von oben ist die getrennte Instanz meist der einfachere Weg: zweiten Container hochziehen, Port eintragen, fertig.
-
-> **⚠️ Aufräumen ohne Angst:** `git worktree remove` verweigert den Dienst, solange im Worktree uncommittete Änderungen oder unversionierte Dateien liegen (erst `--force` überstimmt das). Und committete Arbeit hängt nicht am Worktree: Der Branch samt aller Commits, auch ungepushter, lebt im gemeinsamen Repo weiter. Verlieren kann man beim Aufräumen also nur, was nie committet wurde: vor dem `remove` kurz committen oder bewusst verwerfen, dann weg mit dem Ast.
-
-## Ein Vormittag auf drei Ästen
-
-Zurück zu dem Vormittag vom Anfang, diesmal mit Worktrees:
-
-**Neun Uhr.** Claude Code startet das große Refactoring auf Ast 1, im Worktree `app-frontend-shop-4708-refactor`. Die Tests laufen mit, der Lauf wird dauern.
-
-**Zehn nach neun.** Der Bug-Report: Produktion, falsche Preise im Warenkorb, sollte heute noch raus. Früher der Moment der drei schlechten Optionen. Heute tippe ich in einem neuen Terminal `/feature-init`, nenne das Feature `shop-4711-hotfix-prices`, und ein paar Minuten später stehen zwei frische Worktrees samt Abhängigkeiten und Lizenz bereit. Eine zweite Session bekommt den Bug. Ast 1 merkt davon nichts.
-
-**Kurz vor zehn.** Der Fix ist da, die Tests sind grün, kurzer Blick auf Port 4202: Die Preise stimmen wieder. Commit, Push, Review, Merge. Das Refactoring auf Ast 1 läuft immer noch, ungestört.
-
-**Halb elf.** Das Refactoring ist durch, holt sich den gemergten Preis-Fix per Rebase dazu und wartet auf Review. Ich könnte jetzt auf einem dritten Ast das nächste Feature starten. Ehrlicherweise lese ich stattdessen erst einmal Diffs: Äste austreiben ist billig geworden, Äste verantworten nicht.
 
 ## Fazit: Isolation ist die Eintrittskarte
 

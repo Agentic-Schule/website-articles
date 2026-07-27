@@ -65,7 +65,7 @@ This has three pleasant consequences. First, a worktree is created in seconds an
 > git worktree remove ../app-frontend-checkout
 > git worktree prune
 > ```
-> The last two are easy to mix up: `remove` is the clean teardown, it disposes of the directory along with git's internal bookkeeping. `prune` only repairs: if you delete a worktree folder with a plain `rm -rf`, orphaned bookkeeping entries remain in the repository, and `prune` clears those away.
+> The last two are easy to mix up: `remove` is the clean teardown, it disposes of the directory along with git's internal bookkeeping. With uncommitted changes it refuses to act (only `--force` overrules that), and committed work is never lost in the process, the branch lives on in the shared repo. `prune` only repairs: if you delete a worktree folder with a plain `rm -rf`, orphaned bookkeeping entries remain in the repository, and `prune` clears those away.
 
 One rule you have to know: **A branch can only ever be checked out in one worktree.** If you try to open the same branch in two worktrees, git refuses the command (whoever forces it with `--force` hopefully knows what they are doing). The rule has a good reason: two checkouts of the same branch would shred each other's commits and index. For our agent scenario, the rule is actually a feature, because it enforces exactly the model we want: one worktree, one branch, one agent.
 
@@ -275,20 +275,6 @@ Technically, this is wired up quickly: `ng serve --port 4201` for the frontend, 
 ### Parallel E2E Runs
 
 The supreme discipline. Two test runs on a shared database sabotage each other: one clears away the test data the other is waiting for. If you want to test in parallel, you need separate database instances per branch, or at least cleanly separated data buckets within one instance. With the port scheme above, the separate instance is usually the easier path: spin up a second container, enter the port, done.
-
-> **⚠️ Clean up without fear:** `git worktree remove` refuses to act as long as the worktree contains uncommitted changes or untracked files (only `--force` overrules that). And committed work doesn't hang on the worktree: the branch with all its commits, unpushed ones included, lives on in the shared repo. The only thing you can lose while cleaning up is what was never committed: briefly commit or consciously discard before the `remove`, then off with the branch.
-
-## A Morning on Three Branches
-
-Back to the morning from the beginning, this time with worktrees:
-
-**Nine o'clock.** Claude Code starts the big refactoring on branch one, in the worktree `app-frontend-shop-4708-refactor`. The tests are running along, this will take a while.
-
-**Ten past nine.** The bug report: production, wrong prices in the shopping cart, should ship today. This used to be the moment of the three bad options. Today, I type `/feature-init` in a new terminal, name the feature `shop-4711-hotfix-prices`, and a few minutes later two fresh worktrees are standing there, dependencies and license included. A second session gets the bug. Branch one doesn't notice a thing.
-
-**Shortly before ten.** The fix is in, the tests are green, a quick look at port 4202: the prices are right again. Commit, push, review, merge. The refactoring on branch one is still running, undisturbed.
-
-**Half past ten.** The refactoring is done, picks up the merged price fix via rebase, and waits for review. I could now start the next feature on a third branch. Honestly, though, I read diffs first: sprouting branches has become cheap, owning them has not.
 
 ## Conclusion: Isolation Is the Ticket
 
