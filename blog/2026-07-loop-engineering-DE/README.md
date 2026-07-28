@@ -130,6 +130,8 @@ Sechzig Sekunden bis eine Stunde also. Die interessante Frage ist, wonach das Mo
 
 In der Praxis deckt sich das. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht.
 
+Dieser Satz ist allerdings nur eine von drei Fassungen. Welche das Modell zu sehen bekommt, hängt davon ab, wie lange sein Prompt-Cache hält. Bei fünf Minuten Haltbarkeit lautet dieselbe Empfehlung anders, nämlich zweimal rund 270 Sekunden statt achtmal 60, weil jede längere Pause den Cache reißen würde. Die Anweisung rechnet den Cache also mit ein. Was das kostet, steht weiter unten.
+
 Wenn ohnehin etwas anderes das Aufwachen auslöst, ist ein langer Sicherungs-Herzschlag ab 1200 Sekunden vorgesehen, damit stille Aufwachvorgänge selten bleiben. Und wenn es gar nichts Bestimmtes zu beobachten gibt, lautet die Vorgabe 1200 bis 1800 Sekunden. Ausdrücklich verboten ist dagegen das Pollen um des Pollens willen:
 
 > Do NOT schedule a short-interval wakeup to poll for background work you started, when harness-tracked work finishes, you are re-invoked automatically, so polling is wasted.
@@ -149,7 +151,7 @@ Zuletzt der Ausstieg. Eine Schleife endet nicht nur, wenn du Esc drückst. Das M
 
 > To end the loop, call this tool with `stop: true`
 
-Genau das habe ich im Test ausgelöst, als die Frage beantwortet war. Die Rückmeldung lautete `Loop stopped, cancelled 1 pending wakeup(s)`.
+Genau das habe ich im Test ausgelöst, als die Frage beantwortet war. Die Rückmeldung lautete `Loop stopped, cancelled 1 pending wakeup(s)`. Eine Falle steckt darin: Das beendet nur die selbstgetaktete Schleife. Eine mit festem Intervall läuft weiter und muss über `CronDelete` weg.
 
 Bei `/goal` sieht das anders aus. Dort bekomme ich kein Werkzeug, sondern eine Anweisung. Sobald du ein Ziel setzt, erscheint dieser Text in meinem Kontext:
 
@@ -157,9 +159,21 @@ Bei `/goal` sieht das anders aus. Dort bekomme ich kein Werkzeug, sondern eine A
 
 Das ist der ganze Mechanismus, in drei Teilen. Die Bedingung wird zur Arbeitsanweisung. Ich soll ausdrücklich nicht zwischendurch nachfragen. Und ein Hook lässt mich nicht anhalten, solange die Bedingung nicht hält.
 
-Im Programm stecken dazu noch ein paar Werte, die die Doku bestätigen oder ergänzen. Die Konstante für die maximale Länge der Bedingung steht auf 4000 Zeichen. Der Statuseintrag heißt `goal_status` und führt die Felder `met`, `condition`, `iterations`, `durationMs` und `tokens`, also genau das, was `/goal` ohne Argument anzeigt. Und es gibt zwei Fehlermeldungen, die ich in der Dokumentation nicht gefunden habe: `/goal` läuft nur in vertrauenswürdigen Arbeitsverzeichnissen, und es verweigert den Dienst, wenn Hooks per `disableAllHooks` oder `allowManagedHooksOnly` eingeschränkt sind.
+Im Programm stecken dazu noch ein paar Werte, die die Doku bestätigen oder ergänzen. Die Konstante für die maximale Länge der Bedingung steht auf 4000 Zeichen. Der Statuseintrag heißt `goal_status` und tritt in mehreren Ausprägungen auf. Beim Setzen trägt er nur `met` und `condition`, beim Abschluss zusätzlich `reason`, `iterations`, `durationMs` und `tokens`. Dazu kommt ein Feld `failed`. Und es gibt zwei Fehlermeldungen, die ich in der Dokumentation nicht gefunden habe: `/goal` läuft nur in vertrauenswürdigen Arbeitsverzeichnissen, und es verweigert den Dienst, wenn Hooks per `disableAllHooks` oder `allowManagedHooksOnly` eingeschränkt sind.
 
 Wonach ich vergeblich gesucht habe, ist ein eigener Bewertungs-Prompt für das prüfende Modell. Den gibt es offenbar nicht, und das passt zur Doku, die `/goal` als „a wrapper around a session-scoped prompt-based Stop hook" beschreibt. Deine Bedingung selbst ist der Prompt, mit dem geprüft wird. Deshalb lohnt es sich, sie so zu formulieren, dass ein Außenstehender sie am Gesprächsverlauf beurteilen kann.
+
+Zwei Funde erklären noch etwas. Die Selbsttaktung hängt an einem serverseitig ausgespielten Schalter namens `tengu_kairos_loop_dynamic`. Im Programm steht dazu ein Rückfallwert, der aber nur greift, wenn die Konfiguration vom Server gar nicht erreichbar ist. Im Normalfall entscheidet der Server. Der Schalter steuert dabei mehr als man denkt: Ist er aus, tut `ScheduleWakeup` schlicht nichts, und schon der Hilfetext ändert sich. Nur mit gesetztem Schalter steht in der Beschreibung von `/loop` der Satz „Omit the interval to let the model self-pace.", ohne ihn steht dort ein Vorgabewert von zehn Minuten. Rund um das Thema liegen etwa drei Dutzend solcher Schalter im Programm.
+
+Der zweite Fund ist struktureller Natur und erklärt, warum `/loop` andere Slash-Befehle als Argument schlucken kann. `/goal` ist ein Befehl. `/loop` ist ein Skill, registriert unter dem Namen `loop` mit `proactive` als Alias.
+
+Für die Verfügbarkeit der beiden spielt das gewählte Modell keine Rolle. `/loop` hängt an einer Umgebungsvariablen und einem Feature-Schalter, `/goal` an Interaktivität, am Vertrauensstatus des Arbeitsverzeichnisses und an den Hook-Einstellungen. Ob Opus oder Sonnet läuft, ändert daran nichts, und die Merkmale, nach denen der Server seine Schalter ausspielt, enthalten überhaupt kein Modellfeld.
+
+Modellabhängige Schalter gibt es im Programm aber sehr wohl, nur an anderer Stelle. Die Websuche etwa prüft auf Google Vertex, welches Modell läuft, und schaltet sich für ältere Modelle ab. Bei `/loop` selbst habe ich genau eine Stelle gefunden, an der das Modell hineinspielt, und die betrifft das Verhalten. Für bestimmte Modelle endet ein Zug sofort, wenn sein einziger Werkzeugaufruf das Einplanen des nächsten Durchlaufs war.
+
+Diese Unterscheidung verdanke ich einem Gegenleser. Meine erste Fassung behauptete, kein einziger Aktivierungs-Ausdruck im Programm nehme Bezug auf ein Modell. Das war falsch, weil ich nur eine von mehreren Schreibweisen durchsucht hatte. Es sind 91 in der einen Form, 42 in einer zweiten und 101 weitere unter anderem Namen, und in den übersehenen sitzen die Modellprüfungen.
+
+Zwei Grenzen von `/goal` sind noch erwähnenswert. Ein Ziel kann enden, ohne erreicht zu sein: Hält das prüfende Modell die Bedingung für unmöglich, wird der Eintrag als gescheitert markiert und die Schleife endet. Und es gibt eine harte Obergrenze. Laut Changelog endet der Zug mit einer Warnung, nachdem der Stop-Hook achtmal hintereinander blockiert hat, einstellbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 Damit steht der Unterschied zwischen den beiden auch technisch da. Bei `/loop` bekomme ich ein Werkzeug und entscheide selbst über den Takt. Bei `/goal` bekomme ich eine Anweisung und einen Türsteher.
 
