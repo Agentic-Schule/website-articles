@@ -90,9 +90,35 @@ Ein paar Grenzen sollte man kennen. Die Schleife lebt in der Sitzung und endet m
 
 > ⚠️ Auf Amazon Bedrock, Claude Platform on AWS, Google Clouds Agent Platform und Microsoft Foundry gilt das nicht. Dort läuft ein Prompt ohne Intervall in einem festen Zehn-Minuten-Takt, und `loop.md` wird gar nicht erst gelesen.
 
+## `/loop`, `/goal` oder Hook
+
+Hier wird es interessant, denn `/loop` ist nur eine von drei Antworten auf die Frage, wie eine Sitzung weiterläuft. Anthropic stellt sie [selbst gegenüber](https://code.claude.com/docs/en/goal):
+
+| Ansatz | Nächster Zug startet | Endet |
+| --- | --- | --- |
+| `/goal` | sobald der vorige Zug fertig ist | ein Modell bestätigt die Bedingung |
+| `/loop` | wenn ein Zeitintervall verstrichen ist | du stoppst, oder Claude hält die Arbeit für erledigt |
+| Stop-Hook | sobald der vorige Zug fertig ist | dein eigenes Skript oder dein Prompt entscheidet |
+
+Der Unterschied zwischen den ersten beiden ist der wichtigste im ganzen Thema. `/loop` **wartet**. `/goal` startet den nächsten Zug sofort.
+
+Dazu kommt ein zweiter Unterschied, der leicht übersehen wird. `/goal` prüft die Abbruchbedingung mit einem eigenen Modell. In der Dokumentation steht es so:
+
+> completion is decided by a fresh model rather than the one doing the work
+
+Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug.
+
+Eine Einschränkung gehört dazu: Dieser Prüfer ruft keine Werkzeuge auf. Er urteilt nur über das, was im Gespräch schon sichtbar ist. Die Bedingung muss also so formuliert sein, dass Claudes eigene Ausgabe sie belegen kann. „Alle Tests in `test/auth` laufen durch" funktioniert, weil Claude die Tests ausführt und das Ergebnis im Transkript landet.
+
+Und noch eine Unterscheidung, die in der Praxis für Verwirrung sorgt. Die Dokumentation trennt zwei Sorten von Rückfragen:
+
+> auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
+
+Dass der Agent aufhört zu fragen „soll ich weitermachen", kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt.
+
 ## Ein Blick von innen
 
-Bis hierhin stand alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus einer Messung, die ich selbst gemacht habe, und aus dem, was der Agent während einer laufenden Schleife vor sich hat.
+Bis hierhin stand alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt. Ausgelesen habe ich sie aus **Claude Code 2.1.220**. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
 
 Denn die Selbsttaktung ist kein Automatismus im Programm. Das Modell bekommt dafür ein Werkzeug namens `ScheduleWakeup` in die Hand und setzt den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
 
@@ -125,31 +151,17 @@ Zuletzt der Ausstieg. Eine Schleife endet nicht nur, wenn du Esc drückst. Das M
 
 Genau das habe ich im Test ausgelöst, als die Frage beantwortet war. Die Rückmeldung lautete `Loop stopped, cancelled 1 pending wakeup(s)`.
 
-## `/loop`, `/goal` oder Hook
+Bei `/goal` sieht das anders aus. Dort bekomme ich kein Werkzeug, sondern eine Anweisung. Sobald du ein Ziel setzt, erscheint dieser Text in meinem Kontext:
 
-Hier wird es interessant, denn `/loop` ist nur eine von drei Antworten auf die Frage, wie eine Sitzung weiterläuft. Anthropic stellt sie [selbst gegenüber](https://code.claude.com/docs/en/goal):
+> A session-scoped Stop hook is now active with condition: "…". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
 
-| Ansatz | Nächster Zug startet | Endet |
-| --- | --- | --- |
-| `/goal` | sobald der vorige Zug fertig ist | ein Modell bestätigt die Bedingung |
-| `/loop` | wenn ein Zeitintervall verstrichen ist | du stoppst, oder Claude hält die Arbeit für erledigt |
-| Stop-Hook | sobald der vorige Zug fertig ist | dein eigenes Skript oder dein Prompt entscheidet |
+Das ist der ganze Mechanismus, in drei Teilen. Die Bedingung wird zur Arbeitsanweisung. Ich soll ausdrücklich nicht zwischendurch nachfragen. Und ein Hook lässt mich nicht anhalten, solange die Bedingung nicht hält.
 
-Der Unterschied zwischen den ersten beiden ist der wichtigste im ganzen Thema. `/loop` **wartet**. `/goal` startet den nächsten Zug sofort.
+Im Programm stecken dazu noch ein paar Werte, die die Doku bestätigen oder ergänzen. Die Konstante für die maximale Länge der Bedingung steht auf 4000 Zeichen. Der Statuseintrag heißt `goal_status` und führt die Felder `met`, `condition`, `iterations`, `durationMs` und `tokens`, also genau das, was `/goal` ohne Argument anzeigt. Und es gibt zwei Fehlermeldungen, die ich in der Dokumentation nicht gefunden habe: `/goal` läuft nur in vertrauenswürdigen Arbeitsverzeichnissen, und es verweigert den Dienst, wenn Hooks per `disableAllHooks` oder `allowManagedHooksOnly` eingeschränkt sind.
 
-Dazu kommt ein zweiter Unterschied, der leicht übersehen wird. `/goal` prüft die Abbruchbedingung mit einem eigenen Modell. In der Dokumentation steht es so:
+Wonach ich vergeblich gesucht habe, ist ein eigener Bewertungs-Prompt für das prüfende Modell. Den gibt es offenbar nicht, und das passt zur Doku, die `/goal` als „a wrapper around a session-scoped prompt-based Stop hook" beschreibt. Deine Bedingung selbst ist der Prompt, mit dem geprüft wird. Deshalb lohnt es sich, sie so zu formulieren, dass ein Außenstehender sie am Gesprächsverlauf beurteilen kann.
 
-> completion is decided by a fresh model rather than the one doing the work
-
-Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug.
-
-Eine Einschränkung gehört dazu: Dieser Prüfer ruft keine Werkzeuge auf. Er urteilt nur über das, was im Gespräch schon sichtbar ist. Die Bedingung muss also so formuliert sein, dass Claudes eigene Ausgabe sie belegen kann. „Alle Tests in `test/auth` laufen durch" funktioniert, weil Claude die Tests ausführt und das Ergebnis im Transkript landet.
-
-Und noch eine Unterscheidung, die in der Praxis für Verwirrung sorgt. Die Dokumentation trennt zwei Sorten von Rückfragen:
-
-> auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
-
-Dass der Agent aufhört zu fragen „soll ich weitermachen", kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt.
+Damit steht der Unterschied zwischen den beiden auch technisch da. Bei `/loop` bekomme ich ein Werkzeug und entscheide selbst über den Takt. Bei `/goal` bekomme ich eine Anweisung und einen Türsteher.
 
 ## Praxis: eine Bedingung statt fünfzehnmal „weiter"
 

@@ -90,9 +90,35 @@ A few limits are worth knowing. The loop lives in the session and ends with it. 
 
 > ⚠️ On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform and Microsoft Foundry none of this applies. There, a prompt without an interval runs on a fixed ten-minute schedule, and `loop.md` is not read at all.
 
+## `/loop`, `/goal` or a hook
+
+This is where it gets interesting, because `/loop` is only one of three answers to the question of how a session keeps going. Anthropic [compares them itself](https://code.claude.com/docs/en/goal):
+
+| Approach | Next turn starts | Stops when |
+| --- | --- | --- |
+| `/goal` | when the previous turn finishes | a model confirms the condition |
+| `/loop` | when a time interval elapses | you stop it, or Claude considers the work done |
+| Stop hook | when the previous turn finishes | your own script or prompt decides |
+
+The difference between the first two is the most important thing in this whole topic. `/loop` **waits**. `/goal` starts the next turn immediately.
+
+There is a second difference that is easy to miss. `/goal` checks the completion condition with a model of its own. The documentation puts it like this:
+
+> completion is decided by a fresh model rather than the one doing the work
+
+That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn.
+
+One limitation belongs with it: this evaluator calls no tools. It judges only what is already visible in the conversation. So the condition has to be phrased so that Claude's own output can demonstrate it. "All tests in `test/auth` pass" works, because Claude runs the tests and the result lands in the transcript.
+
+And one more distinction that causes confusion in practice. The documentation separates two kinds of prompting:
+
+> auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
+
+The agent no longer asking "shall I continue" comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up.
+
 ## A look from the inside
 
-Everything up to here was in the public documentation. The rest of this section is not. It comes from a measurement I made myself, and from what the agent has in front of it while a loop is running.
+Everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime. I read them out of **Claude Code 2.1.220**. Anthropic changes texts like these without notice, so a later version may well say something different.
 
 Self-pacing is not an automatism in the program. The model is handed a tool called `ScheduleWakeup` and sets the next wakeup itself. On the range, its description says plainly:
 
@@ -125,31 +151,17 @@ Finally the exit. A loop does not only end when you press Esc. The model can end
 
 That is exactly what I triggered in the test once the question was answered. The response was `Loop stopped, cancelled 1 pending wakeup(s)`.
 
-## `/loop`, `/goal` or a hook
+With `/goal` it looks different. There I am handed no tool, but an instruction. The moment you set a goal, this text appears in my context:
 
-This is where it gets interesting, because `/loop` is only one of three answers to the question of how a session keeps going. Anthropic [compares them itself](https://code.claude.com/docs/en/goal):
+> A session-scoped Stop hook is now active with condition: "…". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
 
-| Approach | Next turn starts | Stops when |
-| --- | --- | --- |
-| `/goal` | when the previous turn finishes | a model confirms the condition |
-| `/loop` | when a time interval elapses | you stop it, or Claude considers the work done |
-| Stop hook | when the previous turn finishes | your own script or prompt decides |
+That is the entire mechanism, in three parts. The condition becomes the work instruction. I am explicitly told not to ask in between. And a hook will not let me stop while the condition does not hold.
 
-The difference between the first two is the most important thing in this whole topic. `/loop` **waits**. `/goal` starts the next turn immediately.
+The program holds a few more values that confirm or extend the docs. The constant for the maximum length of the condition sits at 4000 characters. The status entry is called `goal_status` and carries the fields `met`, `condition`, `iterations`, `durationMs` and `tokens`, exactly what `/goal` shows with no argument. And there are two error messages I did not find in the documentation: `/goal` only runs in trusted workspaces, and it refuses to work when hooks are restricted via `disableAllHooks` or `allowManagedHooksOnly`.
 
-There is a second difference that is easy to miss. `/goal` checks the completion condition with a model of its own. The documentation puts it like this:
+What I searched for in vain is a separate evaluation prompt for the checking model. It appears not to exist, which fits the docs describing `/goal` as "a wrapper around a session-scoped prompt-based Stop hook". Your condition itself is the prompt used for checking. Which is why it pays to phrase it so that an outsider could judge it from the course of the conversation.
 
-> completion is decided by a fresh model rather than the one doing the work
-
-That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn.
-
-One limitation belongs with it: this evaluator calls no tools. It judges only what is already visible in the conversation. So the condition has to be phrased so that Claude's own output can demonstrate it. "All tests in `test/auth` pass" works, because Claude runs the tests and the result lands in the transcript.
-
-And one more distinction that causes confusion in practice. The documentation separates two kinds of prompting:
-
-> auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
-
-The agent no longer asking "shall I continue" comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up.
+That puts the difference between the two on a technical footing as well. With `/loop` I get a tool and decide the cadence myself. With `/goal` I get an instruction and a doorman.
 
 ## In practice: one condition instead of fifteen "keep going"
 
