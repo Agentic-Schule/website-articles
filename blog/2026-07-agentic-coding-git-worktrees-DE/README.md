@@ -22,13 +22,11 @@ language: de
 header: header.jpg
 ---
 
-Jeder Coding-Agent geht wie selbstverständlich davon aus, dass ihm das Arbeitsverzeichnis allein gehört: Er liest Dateien, ändert sie, lässt Builds und Tests laufen, und seine Subagenten tun parallel das Gleiche. In der klassischen Entwicklung war diese Annahme automatisch erfüllt, ein Entwickler, ein persönlicher Rechner, ein Checkout: Isolation gab es gratis. Jetzt aber tummeln sich viele agentische Entwickler gleichzeitig auf demselben Computer, und sobald zwei von ihnen dasselbe Verzeichnis für sich beanspruchen, gibt es Kuddelmuddel: Zwei Agenten editieren dieselben Dateien, Tests prüfen Stände, die es so nie gegeben hat, und am Ende weiß niemand mehr, welcher Diff von wem stammt.
+In der klassischen Softwareentwicklung gab es Isolation gratis: ein Entwickler, ein persönlicher Rechner, ein Checkout. Jeder Coding-Agent geht heute genauso selbstverständlich davon aus, dass ihm das Arbeitsverzeichnis allein gehört: Er liest Dateien, ändert sie, lässt Builds und Tests laufen, und seine Subagenten tun parallel das Gleiche. Na gut, ob das jeder Agent so macht, weiß ich natürlich nicht. Aber zumindest mein Claude Code ist ohne Etikette ein kleiner Rambo. Jetzt tummeln sich aber viele solcher agentischen Entwickler gleichzeitig auf demselben Computer, und sobald zwei von ihnen dasselbe Verzeichnis für sich beanspruchen, gibt es ein Kuddelmuddel: Zwei Agenten editieren dieselben Dateien, Tests prüfen Stände, die es so nie geben sollte, und am Ende weiß niemand mehr, welcher Diff von wem stammt.
 
-**Die Lösung ist ein unscheinbares git-Bordmittel, das gerade zum wichtigsten Werkzeug der agentischen Arbeit aufsteigt: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, die Alleinbesitz-Annahme stimmt wieder, und plötzlich laufen drei, vier Sessions parallel, ohne sich in die Quere zu kommen.**
+**Die Lösung ist ein unscheinbares git-Bordmittel, das inzwischen quer durch die agentischen Tools im Einsatz ist: git worktrees. Jeder Agent bekommt ein eigenes Arbeitsverzeichnis auf einem eigenen Branch, die Alleinbesitz-Annahme stimmt wieder, und plötzlich laufen beliebig viele Sessions parallel, ohne sich in die Quere zu kommen.**
 
 Dieser Artikel zeigt die Technik dahinter, den eingebauten Worktree-Support der agentischen Tools und den Init-Command, mit dem ich einen Feature-Branch samt Worktrees über zwei Repos aufspanne.
-
-> 🌳 Das Bild dazu ist simpel: Das Repository ist der Stamm, jeder Worktree ein eigener Ast. Auf jedem Ast arbeitet genau ein Agent, und keiner sägt am Ast des anderen.
 
 ## Inhalt
 
@@ -36,15 +34,15 @@ Dieser Artikel zeigt die Technik dahinter, den eingebauten Worktree-Support der 
 
 ## Das Problem: Ein Agent belegt das ganze Repo
 
-Ein Beispiel aus einem ganz normalen Vormittag: Claude Code arbeitet an einem größeren Refactoring, vierzig Dateien, Tests laufen mit. Der Lauf dauert, sagen wir, eine Dreiviertelstunde. Nach zehn Minuten kommt ein Bug-Report rein. Produktion. Sollte heute noch raus.
+Stellen wir uns folgende Alltagssituation vor: Claude Code arbeitet an einem größeren Refactoring und lässt dabei immer wieder die Tests laufen. So ein Lauf zieht sich. Mittendrin kommt ein Bug-Report rein. Produktion. Sollte heute noch raus.
 
-Mit einem klassischen Einzel-Checkout habe ich jetzt drei schlechte Optionen:
+Mit einem klassischen Einzel-Checkout haben wir jetzt drei schlechte Optionen:
 
-- **Warten.** Der Bugfix wartet eine halbe Stunde auf einen Agenten, der mit ihm gar nichts zu tun hat.
-- **Den Agenten abbrechen.** Die halbe Arbeit ist getan, der Kontext aufgebaut, alles für die Tonne.
-- **`git stash` und Branch wechseln, während der Agent läuft.** Bitte nicht. Der Agent liest und schreibt in genau diesem Verzeichnis. Wechsle ich darunter den Branch, editiert er ab sofort fremde Dateistände, und die Tests prüfen einen Zustand, den es so nie gegeben hat.
+- **Es drauf ankommen lassen.** Schnell einen zweiten Agenten starten: stash, Branch wechseln, fixen, pushen und zurück, bevor der laufende Agent etwas merkt. Nur liest und schreibt der erste genau in diesem Verzeichnis. Wenn wir schnell waren und kein Pech hatten, kann das vielleicht klappen.
+- **Warten.** Der Bugfix bleibt liegen, bis das Refactoring durch ist. Der einzige Grund: Das Arbeitsverzeichnis ist gerade belegt.
+- **Den Agenten abbrechen.** Bei einer komplexen Orchestrierung wird das teuer: Die Zwischenergebnisse sind wahrscheinlich verloren, und der neue Anlauf kostet dieselben Token gleich noch einmal.
 
-Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, wechselt seltener, als gut wäre.
+Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, hat wenig Komfort.
 
 Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Bei zwei Agenten im selben Arbeitsverzeichnis wird aus der erhofften Parallelität ein Wettrennen um dieselben Dateien. Obendrein schließen sich manche Features gegenseitig aus und andere dürfen nur in einer bestimmten Reihenfolge einfließen. Zwei halbfertige Features im selben Verzeichnis ergeben einen Mischzustand, den es im fertigen Produkt nie geben wird. Und ausgerechnet dagegen laufen dann Builds und Tests.
 
@@ -54,7 +52,7 @@ Der naive Ausweg wäre, das Repo einfach mehrfach zu klonen. Das funktioniert, i
 
 Ein [git worktree](https://git-scm.com/docs/git-worktree) ist ein zusätzliches Arbeitsverzeichnis desselben Repositories. Die git-Doku nennt den Checkout, den man beim Klonen bekommt, den *main worktree*. Alles, was man mit `git worktree add` dazustellt, sind *linked worktrees*. Alle teilen sich dasselbe `.git`, also die komplette Historie, alle Branches, alle Remotes und die Objektdatenbank. Eigenständig ist an jedem Worktree genau das, was den Arbeitszustand ausmacht: die ausgecheckten Dateien, ein eigener `HEAD` und ein eigener Index.
 
-Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angelegt und ebenso schnell wieder entsorgt, es entsteht ja nur ein frischer Checkout und kein zweites Repository. Zweitens sehen sich die Worktrees gegenseitig: Ein Commit auf Ast A ist auf Ast B sofort im Log sichtbar, ein `git fetch` versorgt alle gemeinsam. Und drittens, für mich der wichtigste Punkt gegen mehrfach geklonte Repos: Es gibt **garantierte Exklusivität auf jedem lokalen Branch-Namen.** In zwei unabhängigen Klonen kann man denselben Branch versehentlich doppelt anlegen, und beide Stände driften still auseinander. Worktrees teilen sich dagegen einen einzigen Branch-Bestand: Denselben Namen ein zweites Mal anlegen? Geht schlicht nicht.
+Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angelegt und ebenso schnell wieder entsorgt, es entsteht ja nur ein frischer Checkout und kein zweites Repository. Zweitens sehen sich die Worktrees gegenseitig: Ein Commit auf Ast A ist auf Ast B sofort im Log sichtbar, ein `git fetch` versorgt alle gemeinsam. Und drittens, für mich der wichtigste Punkt gegen mehrfach geklonte Repos: Es gibt **garantierte Exklusivität auf jedem lokalen Branch-Namen.** In zwei unabhängigen Klonen kann man denselben Branch versehentlich doppelt anlegen.
 
 > **🛠️ Selbst nachbauen: die vier Kommandos, die man braucht**
 > ```bash
@@ -66,8 +64,9 @@ Das hat drei angenehme Konsequenzen. Erstens ist ein Worktree in Sekunden angele
 >
 > git worktree list      # was liegt wo, auf welchem Branch?
 > git worktree remove ../app-frontend-checkout
-> git worktree prune     # Verwaltungsreste von Hand gelöschter Worktrees aufräumen
+> git worktree prune
 > ```
+> Die letzten beiden verwechselt man leicht: `remove` ist der saubere Rückbau, es entsorgt das Verzeichnis mitsamt der internen Verwaltungsdaten. Bei uncommitteten Änderungen verweigert es den Dienst (erst `--force` überstimmt das), und committete Arbeit geht dabei nie verloren, der Branch lebt im gemeinsamen Repo weiter. `prune` repariert dagegen nur: Wer einen Worktree-Ordner einfach per `rm -rf` löscht, hinterlässt im Repository verwaiste Verwaltungsdaten, und die räumt `prune` ab.
 
 Eine Regel muss man kennen: **Ein Branch kann immer nur in einem Worktree ausgecheckt sein.** Versucht man denselben Branch in zwei Worktrees zu öffnen, verweigert git das Kommando (wer es mit `--force` erzwingt, weiß hoffentlich, was er tut). Die Regel hat einen guten Grund: Zwei Checkouts desselben Branches würden sich gegenseitig Commits und Index zerschießen. Für unser Agenten-Szenario ist die Regel sogar ein Feature, denn sie erzwingt exakt das Modell, das wir wollen: ein Worktree, ein Branch, ein Agent.
 
@@ -76,29 +75,30 @@ Zwei Dinge sollte man außerdem wissen:
 - **Geteilt wird auch, was man nicht sofort sieht.** Hooks (`.git/hooks`) und die lokale Repo-Konfiguration gelten für alle Worktrees gemeinsam. Ein pre-commit-Hook wirkt also überall.
 - **Nicht geteilt wird alles, was gitignored ist.** `node_modules`, `.env`, Build-Caches: Ein frischer Worktree ist ein frischer Checkout, all das fehlt dort erst einmal. Das ist Fluch (Installation pro Worktree, dazu später mehr) und Segen zugleich (keine halb gebauten Artefakte vom falschen Branch).
 
-Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotfix neben dem laufenden Feature oder um einen Pull Request auszuchecken, ohne den eigenen Stand anzufassen. Zur Höchstform läuft das Feature aber erst jetzt auf, denn Agenten machen aus dem Sonderfall den Normalfall: Der persönliche Rechner, früher Arbeitsplatz genau eines Entwicklers, beherbergt auf einmal ein ganzes Team, und jedes Teammitglied braucht dauerhaft seinen eigenen Checkout.
+Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotfix neben dem laufenden Feature oder um einen Pull Request auszuchecken, ohne den eigenen Stand anzufassen. Mit Agenten kommt ein neuer Dauerzustand dazu: Der persönliche Rechner beherbergt auf einmal ein ganzes agentisches Team, und jedes Teammitglied braucht seinen eigenen Checkout.
 
 ## Was die Tools daraus machen
 
-Die Tool-Hersteller haben das längst erkannt. Die spannendste Erkenntnis meiner Recherche: Praktisch alle agentischen Tools sind in den letzten anderthalb Jahren beim selben Muster gelandet. **Lokal heißt Isolation git worktree, in der Cloud heißt sie eigene VM oder eigener Container.**
+Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition (und viele weitere) haben das längst erkannt. **Lokal heißt Isolation git worktree, in der Cloud heißt sie eigene VM oder eigener Container.**
 
 | Tool | Paralleles Arbeiten | Isolation |
 |---|---|---|
-| [Cursor](https://cursor.com/docs/configuration/worktrees) | bis zu acht Agenten auf einen Prompt | automatisch verwaltete git worktrees oder Remote-Maschinen |
-| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | parallele Cloud-Sessions, je ein Draft-PR | ephemere GitHub-Actions-Umgebung pro Session |
-| [VS Code](https://code.visualstudio.com/docs/copilot/agents/background-agents) | Background-Agents (Copilot CLI, Claude, Codex) | automatisch ein git worktree pro Session |
-| [Windsurf](https://docs.windsurf.com/windsurf/cascade/worktrees) | Worktree-Modus pro Chat, Merge-Button zurück | git worktrees unter `~/.windsurf/worktrees/` |
+| [Claude Code](https://code.claude.com/docs/en/worktrees) | parallele Sessions per `--worktree`, isolierte Subagenten | git worktrees unter `.claude/worktrees/`, Desktop-App: automatisch pro Session |
+| [Cursor](https://cursor.com/changelog/2-0) | bis zu acht Agenten auf einen Prompt | git worktrees oder Remote-Maschinen, isolierte Kopie pro Agent |
+| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | Cloud agent: Änderungen auf einem Branch, dann PR | ephemere GitHub-Actions-Umgebung pro Session |
+| [VS Code](https://code.visualstudio.com/docs/agents/agent-types/copilot-cli) | Background-Agents (Copilot CLI, Claude) | wählbare Worktree-Isolation je Session |
+| [Windsurf / Devin Desktop](https://docs.windsurf.com/windsurf/cascade/worktrees) | Worktree-Modus pro Chat, Merge-Button zurück | git worktrees unter `~/.windsurf/worktrees/` |
 | [Google Antigravity](https://antigravity.google/docs/projects) | Agent Manager für viele parallele Agenten | „New Worktree Mode" pro Konversation, optional pro Subagent |
-| [OpenAI Codex](https://developers.openai.com/codex/app/worktrees) | mehrere Chats pro Projekt, Cloud-Tasks parallel | git worktrees „under the hood", Cloud: Container pro Task |
-| [Devin](https://docs.devin.ai/onboard-devin/environment) | viele Sessions, „MultiDevin"-Orchestrierung | eigene VM pro Session, gebootet aus einem Snapshot |
+| [OpenAI Codex](https://developers.openai.com/codex/app/worktrees) | mehrere Chats pro Projekt, Cloud-Tasks parallel | git worktrees „under the hood", Cloud: isolierte Umgebung pro Task |
+| [Devin](https://docs.devin.ai/onboard-devin/environment) | orchestriert „Managed Devins" parallel | frische Kopie eines Snapshots pro Session |
 | [Google Jules](https://jules.google/docs/environment/) | parallele Tasks, Limit je nach Plan | frische VM pro Task |
 | [Aider](https://aider.chat/docs/faq.html) | offiziell keine Parallel-Story | Community-Praxis: von Hand ein Worktree pro Instanz |
 
 (Stand: Juli 2026. Die Feature-Lage ändert sich in diesem Feld gefühlt wöchentlich, die Links führen jeweils zur offiziellen Doku.)
 
-Zwei Schulen also: Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs. Der gemeinsame Nenner ist wichtiger als der Unterschied: **Kein ernstzunehmendes Tool lässt zwei Agenten unbeaufsichtigt im selben Verzeichnis arbeiten.** Isolation pro Agent ist keine Kür, sie ist die Eintrittskarte in die Parallelität. Zeit, sich das beim Werkzeug meiner Wahl im Detail anzusehen.
+Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Blind verlassen sollte man sich auf die Isolation trotzdem nicht: Claude Code etwa nutzt Worktrees nicht immer von allein, mal kommt der Agent selbst auf die Idee, mal nicht. Wie so vieles beim Vibe Coding lässt sich die Wahrscheinlichkeit aber gezielt erhöhen: **Einfach dazusagen, dass Worktrees eingesetzt werden sollen.** Wie das konkret aussieht, zeigen die folgenden Abschnitte, zuerst beim Werkzeug meiner Wahl.
 
-## Der Claude-Code-Weg
+### Der Claude-Code-Weg
 
 [Claude Code](https://claude.com/claude-code) hat Worktrees inzwischen fest eingebaut und ihnen eine [eigene Doku-Seite](https://code.claude.com/docs/en/worktrees) spendiert. Der wichtigste Einstieg ist ein CLI-Flag:
 
@@ -113,7 +113,7 @@ Genauso gut geht es mitten in der Session: Auf die Bitte „arbeite dafür bitte
 Richtig elegant wird es bei [Subagenten](https://code.claude.com/docs/en/sub-agents), also den Helfer-Agenten, an die Claude Teilaufgaben delegiert:
 
 > **🛠️ Selbst nachbauen: Subagenten automatisch isolieren**
-> Eine Datei `.claude/agents/refactorer.md` mit `isolation: worktree` im Frontmatter genügt, und jeder Lauf dieses Subagenten bekommt einen eigenen, temporären Worktree:
+> Eine Datei `.claude/agents/refactorer.md` mit [`isolation: worktree`](https://code.claude.com/docs/en/worktrees) im Frontmatter genügt, und jeder Lauf dieses Subagenten bekommt einen eigenen, temporären Worktree (Beispiel aus der offiziellen Doku):
 > ```markdown
 > ---
 > name: refactorer
@@ -130,11 +130,23 @@ Ein Detail aus der Praxis: Weil ein frischer Worktree ohne die gitignorierten Da
 
 In der Desktop-App ist das Prinzip übrigens schon Standard: Dort bekommt jede neue parallele Session automatisch ihren eigenen Worktree. Und falls du wie ich zuerst danach suchst: Einen Slash-Command `/worktree` gibt es nicht, das Flag beim Start und der Zuruf in der Session decken alles ab.
 
+### Der Antigravity-Weg
+
+Google baut die Isolation direkt in die IDE ein. [Antigravity](https://antigravity.google/product) verwaltet Agenten über einen eigenen Agent Manager: eine Übersicht, in der mehrere Agenten parallel laufen und beobachtet werden. Beim Start einer Konversation lässt sich der [„New Worktree Mode"](https://antigravity.google/docs/projects) wählen, dann legt Antigravity für die Konversation einen frischen git worktree an und arbeitet dort, das aktive Arbeitsverzeichnis bleibt unberührt. [Subagenten](https://antigravity.google/docs/subagents) kennen dieselbe Wahl: Sie erben den Workspace ihres Eltern-Agenten oder bekommen einen eigenen, isolierten Worktree. Ein Detail sticht heraus: Ein Antigravity-„Project" darf mehrere Ordner umfassen, und der Worktree-Modus legt Worktrees für alle Git-Checkouts des Projects an. Dazu gleich mehr.
+
+### Der Copilot-Weg
+
+Microsoft fährt mehrgleisig. In [VS Code](https://code.visualstudio.com/docs/agents/agent-types/copilot-cli) laufen Background-Agents lokal im Hintergrund, neben der Copilot CLI auch Claude-Sessions. Beim Start einer Session wählt man die Isolation, und im Worktree-Modus legt VS Code automatisch einen git worktree in einem eigenen Ordner an. Im [Agents-Fenster](https://code.visualstudio.com/docs/agents/agents-window) führt ein Merge-Knopf die Änderungen zurück in den Workspace, wahlweise samt Pull Request. Die [Copilot-Desktop-App](https://docs.github.com/en/copilot/how-tos/github-copilot-app/agent-sessions) macht die Isolation zum Standard: Jede Session läuft in einem eigenen Workspace, mehrere parallel, und pro Session wählt man zwischen frischem Worktree, lokalem Repo und Cloud-Sandbox. Der [Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) schließlich verlässt den Rechner ganz: Er übernimmt Aufgaben von GitHub Issues oder aus dem Chat, arbeitet in einer ephemeren, von GitHub Actions betriebenen Umgebung und liefert seine Änderungen auf einem Branch ab. Den Pull Request gibt es, sobald man zufrieden ist.
+
+### Der Codex-Weg
+
+OpenAI spannt denselben Bogen. In der ChatGPT-Desktop-App kann [Codex](https://developers.openai.com/codex/app/worktrees) mehrere unabhängige Chats im selben Projekt fahren, und unter der Haube stecken git worktrees: Jeder Chat bekommt standardmäßig einen von Codex verwalteten Worktree. Wer länger an einem Stand arbeiten will, legt stattdessen einen permanenten Worktree an. Das Feature setzt ein Git-Repository voraus. In der [Cloud](https://developers.openai.com/codex/cloud) läuft es wie bei den anderen: Jeder Task läuft in einer eigenen, isolierten Umgebung, mehrere davon parallel.
+
 ## Und wenn das Feature zwei Repos berührt?
 
-So weit die heile Welt der Ein-Repo-Demos. Die Realität in gewachsenen Systemlandschaften sieht anders aus: Ein System verteilt sich auf diverse Repositories. Frontend hier, Backend dort, dazu ein paar Services. Der Monorepo-Ansatz löst das auf dem Papier, ist aber längst nicht immer umsetzbar: getrennte Teams und Berechtigungen, unterschiedliche Build- und Deploy-Welten, gewachsene Historie. Man arbeitet mit dem Schnitt, den man hat.
+So weit die heile Welt der Ein-Repo-Demos. In meiner Realität bei Kunden mit einer gewachsenen Systemlandschaft (alles Legacy) sieht es anders aus: Ein System verteilt sich auf diverse Repositories. Frontend hier, Backend dort, dazu ein paar Services. Der Monorepo-Ansatz löst das auf dem Papier, ist aber längst nicht immer umsetzbar: getrennte Teams und Berechtigungen, unterschiedliche Build- und Deploy-Welten, gewachsene Historie. Man arbeitet mit der Systemlandschaft, die nun mal vorliegt.
 
-Nehmen wir ein neutrales Beispiel: ein Angular-Frontend im Repo `app-frontend`, eine .NET-API im Repo `app-backend`. Das Feature „Checkout" braucht neue Endpunkte **und** neue Komponenten. Der Branch soll in beiden Repos gleich heißen, bei uns nach dem Ticket, sagen wir `shop-4711-checkout`. So finden Review, CI und alle Beteiligten die zusammengehörigen Stände auf einen Blick.
+Nehmen wir ein vereinfachtes Beispiel: ein Angular-Frontend im Repo `app-frontend`, eine .NET-API im Repo `app-backend`. Das Feature „Checkout" braucht neue Endpunkte **und** neue Komponenten. Der Branch soll in beiden Repos gleich heißen, bei uns nach dem Ticket, sagen wir `shop-4711-checkout`. So finden Review, CI und alle Beteiligten die zusammengehörigen Stände auf einen Blick.
 
 Und jetzt die Preisfrage: Was macht `claude --worktree` daraus? Genau, **einen** Worktree, im aktuellen Repo. Fast alle eingebauten Worktree-Features denken in einem Repository. Die rühmliche Ausnahme ist Antigravity, dessen „New Worktree Mode" Worktrees für alle Git-Checkouts eines Projects anlegt, aber ohne frei wählbaren gemeinsamen Branch-Namen und ohne alles, was nach dem Auschecken kommt: Abhängigkeiten, Lizenzen, Projektregeln.
 
@@ -142,16 +154,16 @@ Für meinen Workflow heißt das: selbst bauen. Zum Glück ist das in Claude Code
 
 ## Mein Init-Command: ein Kommando, zwei Repos, zwei Worktrees
 
-Eigene [Slash-Commands](https://code.claude.com/docs/en/skills) sind in Claude Code schlicht Markdown-Dateien: Eine Datei `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Der Inhalt ist eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. So ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
+Eigene Slash-Commands werden in Claude Code über eine [Skill-Datei](https://code.claude.com/docs/en/skills) verfügbar gemacht, schlicht eine Markdown-Datei: `~/.claude/commands/feature-init.md` erzeugt den Command `/feature-init`. Früher nannte Claude diese Dateien „Commands", inzwischen heißen sie überall „Skills". Gemeint ist dasselbe, und auch in diesem Artikel meinen beide Begriffe dasselbe. Der Inhalt ist eine Arbeitsanweisung an den Agenten: Prosa mit ein paar Kommandos darin. So ein Command legt bei mir die Worktree-Paare an. Der Ablauf, den er erzwingt:
 
 1. **Feature-Name abfragen.** Er wird der Branch-Name, identisch in beiden Repos.
-2. **Beide Repos aktualisieren und prüfen, ob der Branch schon existiert**, lokal oder remote. Wo ja, wird er ausgecheckt (vielleicht hat gestern schon jemand angefangen). Wo nein, entsteht er frisch vom neuesten `origin/main`.
+2. **Beide Repos aktualisieren und prüfen, ob der Branch schon existiert**, lokal oder remote. Die Entscheidung fällt pro Repo: Existiert der Branch dort schon, wird er ausgecheckt (vielleicht hat gestern schon jemand angefangen, oder ich wars und das Feature ist mal wieder zu lange liegen geblieben). Falls nicht, entsteht er frisch vom neuesten `origin/main`.
 3. **Pro Repo ein Worktree**, als Nachbarordner mit sprechendem Namen: `app-frontend-shop-4711-checkout/` neben `app-frontend/`.
 4. **Abhängigkeiten installieren und Kendo-Lizenz aktivieren**, pro Worktree: `npm install` im Frontend, `dotnet restore` im Backend (zur Lizenz gleich mehr).
 5. **Projektregeln einlesen:** die `CLAUDE.md` beider Worktrees.
 6. **Die eiserne Regel:** Gearbeitet wird ausschließlich in den Worktrees. Die Hauptverzeichnisse bleiben unangetastet.
 
-**🛠️ Selbst nachbauen: die komplette Command-Datei `~/.claude/commands/feature-init.md`.** Sie ist absichtlich Prosa statt Shell-Skript und absichtlich laut. Warum, erklären die drei Anmerkungen im Anschluss; wer den Ablauf oben schon hat, springt direkt dorthin.
+**🛠️ Selbst nachbauen: die komplette Command-Datei `~/.claude/commands/feature-init.md`.** Sie ist absichtlich Prosa statt Shell-Skript und absichtlich laut. Warum, erklären die Anmerkungen im Anschluss; wer den Ablauf oben schon hat, springt direkt dorthin.
 
 ````markdown
 # Feature-Worktrees für Frontend und Backend anlegen
@@ -229,11 +241,13 @@ NIEMALS Dateien in den Hauptverzeichnissen bearbeiten. Alle Dateioperationen
 Die Hauptrepos (`app-backend/` und `app-frontend/`) dürfen NICHT verändert werden.
 ````
 
-Drei Anmerkungen dazu:
+Ein paar Anmerkungen dazu:
 
 - **Warum Prosa statt Shell-Skript?** Weil ein Agent auf Überraschungen reagieren kann: ein halb existierender Branch, ein schon belegter Ordnername, eine fehlgeschlagene Installation. Ein Bash-Skript scheitert an der ersten Abweichung oder überfährt sie. Der Agent liest die Situation und entscheidet im Sinne der Anweisung.
-- **Warum die Großbuchstaben?** Die Regeln sehen dramatisch aus, aber der Nachdruck wirkt. Vor allem die letzte Regel ist wichtig: Die Hauptverzeichnisse bleiben dauerhaft sauber auf `main` und dienen nur noch als Basis für `fetch` und `worktree add`. Damit können sich zwei Sessions niemals versehentlich ein Arbeitsverzeichnis teilen.
+- **Warum die Großbuchstaben?** Anschreien funktioniert. Vor allem die letzte Regel ist wichtig: Die Hauptverzeichnisse bleiben dauerhaft sauber auf `main` und dienen nur noch als Basis für `fetch` und `worktree add`. Damit können sich zwei Sessions niemals versehentlich ein Arbeitsverzeichnis teilen.
+- **Warum die `CLAUDE.md` aus dem Worktree und nicht aus dem Hauptrepo?** Die Regeln müssen zum Stand passen, den der Agent gerade bearbeitet: Baubefehle, Testkommandos, Konventionen. Und ist der Branch so alt, dass `main` inzwischen andere Regeln hat, ist die Antwort ein Rebase, der bringt auch die `CLAUDE.md` auf Stand.
 - **Die Regel „ein Branch, ein Worktree" arbeitet hier für uns:** Versucht eine zweite Session dasselbe Feature zu initialisieren, verweigert git das Anlegen des zweiten Worktrees. Doppelarbeit am selben Feature fällt sofort auf, statt still zu kollidieren.
+- **Und halten sich alle daran?** Leider nein. Nach meiner Erfahrung ignorieren ausgerechnet Subagenten die Regel manchmal komplett und arbeiten munter im Hauptverzeichnis. Vermutlich müsste die Hauptunterhaltung die Regel jedem Subagenten explizit in den automatisch erzeugten Prompt schreiben. Immerhin repariert sich das Problem bei mir von allein: Die Hauptunterhaltung erkennt stets, dass der Subagent im falschen Verzeichnis unterwegs war, und schickt ihn ein neues Mal los. Ärgerlich bleibt es trotzdem, denn dabei verbrennen unnötig Token.
 
 ## Ports, Lizenzen, Datenbanken: die Fallstricke der Parallelität
 
@@ -241,7 +255,7 @@ Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisi
 
 ### Abhängigkeiten sind pro Worktree fällig
 
-`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Der Lohn dafür: Jeder Ast hat exakt die Abhängigkeiten seines Branches und nichts leakt zwischen den Features.
+`node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Der Lohn dafür: Jeder Worktree hat exakt die Abhängigkeiten seines Branches und nichts leakt zwischen den Features.
 
 ### Kommerzielle Lizenzen, die node_modules patchen
 
@@ -263,33 +277,19 @@ Technisch ist das schnell verdrahtet: beim Frontend `ng serve --port 4201`, beim
 
 Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren sich gegenseitig: Der eine räumt gerade die Testdaten ab, auf die der andere wartet. Wer parallel testen will, braucht getrennte Datenbank-Instanzen pro Ast, oder wenigstens sauber getrennte Daten-Buckets innerhalb einer Instanz. Mit dem Port-Schema von oben ist die getrennte Instanz meist der einfachere Weg: zweiten Container hochziehen, Port eintragen, fertig.
 
-> **⚠️ Aufräumen ohne Angst:** `git worktree remove` verweigert den Dienst, solange im Worktree uncommittete Änderungen oder unversionierte Dateien liegen (erst `--force` überstimmt das). Und committete Arbeit hängt nicht am Worktree: Der Branch samt aller Commits, auch ungepushter, lebt im gemeinsamen Repo weiter. Verlieren kann man beim Aufräumen also nur, was nie committet wurde: vor dem `remove` kurz committen oder bewusst verwerfen, dann weg mit dem Ast.
-
-## Ein Vormittag auf drei Ästen
-
-Zurück zu dem Vormittag vom Anfang, diesmal mit Worktrees:
-
-**Neun Uhr.** Claude Code startet das große Refactoring auf Ast 1, im Worktree `app-frontend-shop-4708-refactor`. Vierzig Dateien, Tests laufen mit, geschätzte Dreiviertelstunde.
-
-**Zehn nach neun.** Der Bug-Report: Produktion, falsche Preise im Warenkorb, sollte heute noch raus. Früher der Moment der drei schlechten Optionen. Heute tippe ich in einem neuen Terminal `/feature-init`, nenne das Feature `shop-4711-hotfix-prices`, und ein paar Minuten später stehen zwei frische Worktrees samt Abhängigkeiten und Lizenz bereit. Eine zweite Session bekommt den Bug. Ast 1 merkt davon nichts.
-
-**Kurz vor zehn.** Der Fix ist da, die Tests sind grün, kurzer Blick auf Port 4202: Die Preise stimmen wieder. Commit, Push, Review, Merge. Das Refactoring auf Ast 1 läuft immer noch, ungestört.
-
-**Halb elf.** Das Refactoring ist durch, holt sich den gemergten Preis-Fix per Rebase dazu und wartet auf Review. Ich könnte jetzt auf einem dritten Ast das nächste Feature starten. Ehrlicherweise lese ich stattdessen erst einmal Diffs: Äste austreiben ist billig geworden, Äste verantworten nicht.
-
 ## Fazit: Isolation ist die Eintrittskarte
 
-Rückblickend ist die Erkenntnis fast banal: **Parallelität beginnt beim Arbeitsverzeichnis.** Die klassische Entwicklung hat dieses Problem kaum gekannt, die Isolation kam mit dem persönlichen Rechner gratis. Mit vielen Agenten auf einer Maschine muss man sie explizit herstellen, denn solange sich zwei Sessions einen Checkout teilen, ist alles andere Kosmetik. git worktrees lösen das mit Bordmitteln in Sekunden, und die gesamte Branche hat es erkannt: lokal per Worktree, in der Cloud per Wegwerf-VM.
+**Parallelität beginnt beim Arbeitsverzeichnis.** Früher war die Isolation mit dem persönlichen Rechner automatisch da, mit mehreren Agenten auf einer Maschine muss man sie selbst herstellen. git worktrees erledigen das mit Bordmitteln in Sekunden.
 
 Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Äste, Abhängigkeiten und Lizenz inklusive. Das Ganze ist eine simple Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
 
 Ehrlich bleiben will ich auch diesmal:
 
 - **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Dazu vertragen sich nicht alle Features: Manche schließen sich gegenseitig aus, andere müssen in einer festen Reihenfolge einfließen. Worktrees halten die Stände sauber auseinander, aber was wann gemergt wird, bleibt Kopfarbeit. Der Flaschenhals ist das Review.
-- **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengender als auf der Platte. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Die Technik gäbe locker mehr her. Mein Kopf kommt beim Review vorher an seine Grenze.
-- **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Deshalb steckt all das im Init-Command statt in meinem Gedächtnis.
+- **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengend. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Die Technik gäbe locker mehr her. Mein Kopf kommt beim Review vorher an seine Grenze.
+- **Disziplin gehört dazu.** Deps installieren, Lizenz aktivieren, Ports zuweisen, am Ende aufräumen. Deshalb steckt all das im Init-Command statt in meinem Gedächtnis. Das Aufräumen erledigt der Agent (zumindest Claude Code mit den aktuellen Modellen) von ganz alleine: Ist der PR endlich gemerged, sage ich nur „Fertig, bitte aufräumen", und der Worktree wird entfernt, der lokale Branch gelöscht, gegebenenfalls auch der remote. Und alles ist sauber. Schön.
 
-**Fragen, Feedback, eigene Worktree-Tricks?** Immer her damit, ich freue mich über jede Nachricht. Und wenn dir der Init-Command gefällt: Bau ihn nach. Er ist absichtlich so generisch gehalten, dass er in jedes Zwei-Repo-Setup passt.
+**Fragen, Feedback, eigene Worktree-Tricks?** Immer her damit, ich freue mich über jede Nachricht. Und wenn dir der Init-Command gefällt: Bau ihn nach und mach ihn dir zu eigen.
 
 ---
 
