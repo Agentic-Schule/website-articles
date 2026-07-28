@@ -120,19 +120,17 @@ Dass der Agent aufhört zu fragen „soll ich weitermachen", kommt von der Schle
 
 Bis hierhin stand alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt. Ausgelesen habe ich sie aus **Claude Code 2.1.220**. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
 
-Denn die Selbsttaktung ist kein Automatismus im Programm. Das Modell bekommt dafür ein Werkzeug namens `ScheduleWakeup` in die Hand und setzt den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
+**Bei `/loop` ist es ein Werkzeug.** Die Selbsttaktung ist kein Automatismus im Programm. Das Modell bekommt ein Werkzeug namens `ScheduleWakeup` und setzt den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
 
 > Clamped to [60, 3600] by the runtime.
 
-Sechzig Sekunden bis eine Stunde also. Die interessante Frage ist, wonach das Modell innerhalb dieser Spanne wählt. Dazu bekommt es drei Fälle vorgegeben. Beim Warten auf etwas Fremdes, das die Umgebung nicht von sich aus melden kann, soll der Abstand zur Sache passen:
+Die interessante Frage ist, wonach das Modell innerhalb dieser Spanne wählt. Dazu bekommt es drei Fälle vorgegeben. Beim Warten auf etwas Fremdes, das die Umgebung nicht von sich aus melden kann, soll der Abstand zur Sache passen:
 
 > A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
 
-In der Praxis deckt sich das. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht.
+Genau so erlebe ich es auch. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht. Bemerkenswert ist, dass dieser Satz in drei Fassungen im Programm liegt. Welche das Modell zu sehen bekommt, hängt davon ab, wie lange sein Prompt-Cache hält. Bei fünf Minuten Haltbarkeit rät derselbe Text zu zweimal rund 270 Sekunden statt achtmal 60, weil jede längere Pause den Cache reißen würde. Die Anweisung rechnet den Cache also mit ein. Was das kostet, steht weiter unten.
 
-Dieser Satz ist allerdings nur eine von drei Fassungen. Welche das Modell zu sehen bekommt, hängt davon ab, wie lange sein Prompt-Cache hält. Bei fünf Minuten Haltbarkeit lautet dieselbe Empfehlung anders, nämlich zweimal rund 270 Sekunden statt achtmal 60, weil jede längere Pause den Cache reißen würde. Die Anweisung rechnet den Cache also mit ein. Was das kostet, steht weiter unten.
-
-Wenn ohnehin etwas anderes das Aufwachen auslöst, ist ein langer Sicherungs-Herzschlag ab 1200 Sekunden vorgesehen, damit stille Aufwachvorgänge selten bleiben. Und wenn es gar nichts Bestimmtes zu beobachten gibt, lautet die Vorgabe 1200 bis 1800 Sekunden. Ausdrücklich verboten ist dagegen das Pollen um des Pollens willen:
+Für die beiden anderen Fälle gilt: Wenn ohnehin etwas anderes das Aufwachen auslöst, ist ein langer Sicherungs-Herzschlag ab 1200 Sekunden vorgesehen. Und wenn es gar nichts Bestimmtes zu beobachten gibt, lautet die Vorgabe 1200 bis 1800 Sekunden. Ausdrücklich verboten ist das Pollen um des Pollens willen:
 
 > Do NOT schedule a short-interval wakeup to poll for background work you started, when harness-tracked work finishes, you are re-invoked automatically, so polling is wasted.
 
@@ -147,33 +145,29 @@ Next wakeup scheduled for 22:41:00 (in 119s)
 
 Zwei Dinge passieren hier nacheinander. Erst wird der Wunsch auf sechzig Sekunden hochgesetzt, das ist die harte Untergrenze. Dann rutscht der Termin auf die nächste volle Minute, weil Cron nur Minutengranularität kennt. Aus dreißig angeforderten Sekunden wurden so **119 Sekunden echte Wartezeit**. Wer sehr kurze Takte plant, sollte das wissen.
 
-Zuletzt der Ausstieg. Eine Schleife endet nicht nur, wenn du Esc drückst. Das Modell kann sie selbst beenden, mit demselben Werkzeug:
+Beenden kann das Modell die Schleife ebenfalls selbst, mit demselben Werkzeug und dem Aufruf `stop: true`. Genau das habe ich im Test ausgelöst, als die Frage beantwortet war, und bekam `Loop stopped, cancelled 1 pending wakeup(s)` zurück. Eine Falle steckt darin: Das beendet nur die selbstgetaktete Schleife. Eine mit festem Intervall läuft weiter und muss über `CronDelete` weg.
 
-> To end the loop, call this tool with `stop: true`
-
-Genau das habe ich im Test ausgelöst, als die Frage beantwortet war. Die Rückmeldung lautete `Loop stopped, cancelled 1 pending wakeup(s)`. Eine Falle steckt darin: Das beendet nur die selbstgetaktete Schleife. Eine mit festem Intervall läuft weiter und muss über `CronDelete` weg.
-
-Bei `/goal` sieht das anders aus. Dort bekomme ich kein Werkzeug in die Hand, dort bekomme ich eine Anweisung. Sobald du ein Ziel setzt, erscheint dieser Text in meinem Kontext:
+**Bei `/goal` ist es eine Anweisung.** Dort bekomme ich kein Werkzeug in die Hand. Sobald du ein Ziel setzt, erscheint dieser Text in meinem Kontext:
 
 > A session-scoped Stop hook is now active with condition: "…". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
 
 Das ist der ganze Mechanismus, in drei Teilen. Die Bedingung wird zur Arbeitsanweisung. Ich soll ausdrücklich nicht zwischendurch nachfragen. Und ein Hook lässt mich nicht anhalten, solange die Bedingung nicht hält.
 
-Im Programm stecken dazu noch ein paar Werte, die die Doku bestätigen oder ergänzen. Die Konstante für die maximale Länge der Bedingung steht auf 4000 Zeichen. Der Statuseintrag heißt `goal_status` und tritt in mehreren Ausprägungen auf. Beim Setzen trägt er nur `met` und `condition`, beim Abschluss zusätzlich `reason`, `iterations`, `durationMs` und `tokens`. Dazu kommt ein Feld `failed`. Und es gibt zwei Fehlermeldungen, die ich in der Dokumentation nicht gefunden habe: `/goal` läuft nur in vertrauenswürdigen Arbeitsverzeichnissen, und es verweigert den Dienst, wenn Hooks per `disableAllHooks` oder `allowManagedHooksOnly` eingeschränkt sind.
+Drumherum liegen ein paar Werte, die die Doku bestätigen oder ergänzen. Die Konstante für die maximale Länge der Bedingung steht auf 4000 Zeichen. Der Statuseintrag heißt `goal_status` und tritt in mehreren Ausprägungen auf: beim Setzen nur mit `met` und `condition`, beim Abschluss zusätzlich mit `reason`, `iterations`, `durationMs` und `tokens`, dazu ein Feld `failed`. Und es gibt zwei Fehlermeldungen, die in der Dokumentation fehlen: `/goal` läuft nur in vertrauenswürdigen Arbeitsverzeichnissen, und es verweigert den Dienst, wenn Hooks per `disableAllHooks` oder `allowManagedHooksOnly` eingeschränkt sind.
 
-Wonach ich vergeblich gesucht habe, ist ein eigener Bewertungs-Prompt für das prüfende Modell. Den gibt es offenbar nicht, und das passt zur Doku, die `/goal` als „a wrapper around a session-scoped prompt-based Stop hook" beschreibt. Deine Bedingung selbst ist der Prompt, mit dem geprüft wird. Deshalb lohnt es sich, sie so zu formulieren, dass ein Außenstehender sie am Gesprächsverlauf beurteilen kann.
+Vergeblich gesucht habe ich nach einem eigenen Bewertungs-Prompt für das prüfende Modell. Den gibt es offenbar nicht, was zur Doku passt, die `/goal` als „a wrapper around a session-scoped prompt-based Stop hook" beschreibt. Deine Bedingung selbst ist der Prompt, mit dem geprüft wird. Deshalb lohnt es sich, sie so zu formulieren, dass ein Außenstehender sie am Gesprächsverlauf beurteilen kann.
 
-Zwei Funde erklären noch etwas. Die Selbsttaktung hängt an einem serverseitig ausgespielten Schalter namens `tengu_kairos_loop_dynamic`. Im Programm steht dazu ein Rückfallwert, der aber nur greift, wenn die Konfiguration vom Server gar nicht erreichbar ist. Im Normalfall entscheidet der Server. Der Schalter steuert dabei mehr als man denkt: Ist er aus, tut `ScheduleWakeup` schlicht nichts, und schon der Hilfetext ändert sich. Nur mit gesetztem Schalter steht in der Beschreibung von `/loop` der Satz „Omit the interval to let the model self-pace.", ohne ihn steht dort ein Vorgabewert von zehn Minuten. Rund um das Thema liegen etwa drei Dutzend solcher Schalter im Programm.
+Zwei Grenzen gehören dazu. Ein Ziel kann enden, ohne erreicht zu sein: Hält das prüfende Modell die Bedingung für unmöglich, wird der Eintrag als gescheitert markiert und die Schleife endet. Und es gibt eine harte Obergrenze. Laut Changelog endet der Zug mit einer Warnung, nachdem der Stop-Hook achtmal hintereinander blockiert hat, einstellbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
-Der zweite Fund ist struktureller Natur und erklärt, warum `/loop` andere Slash-Befehle als Argument schlucken kann. `/goal` ist ein Befehl. `/loop` ist ein Skill, registriert unter dem Namen `loop` mit `proactive` als Alias.
+**Was für beide gilt.** Die Selbsttaktung hängt an einem serverseitig ausgespielten Schalter namens `tengu_kairos_loop_dynamic`. Im Programm steht dazu ein Rückfallwert, der aber nur greift, wenn die Konfiguration vom Server gar nicht erreichbar ist. Im Normalfall entscheidet der Server. Der Schalter steuert dabei mehr als man denkt: Ist er aus, tut `ScheduleWakeup` schlicht nichts, und schon der Hilfetext ändert sich. Nur mit gesetztem Schalter steht in der Beschreibung von `/loop` der Satz „Omit the interval to let the model self-pace.", ohne ihn steht dort ein Vorgabewert von zehn Minuten.
 
-Für die Verfügbarkeit der beiden spielt das gewählte Modell keine Rolle. `/loop` hängt an einer Umgebungsvariablen und einem Feature-Schalter, `/goal` an Interaktivität, am Vertrauensstatus des Arbeitsverzeichnisses und an den Hook-Einstellungen. Ob Opus oder Sonnet läuft, ändert daran nichts, und die Merkmale, nach denen der Server seine Schalter ausspielt, enthalten überhaupt kein Modellfeld.
+Strukturell sind die beiden ohnehin verschiedene Dinge, und das erklärt, warum `/loop` andere Slash-Befehle als Argument schlucken kann. `/goal` ist ein Befehl. `/loop` ist ein Skill, registriert unter dem Namen `loop` mit `proactive` als Alias.
+
+Für die Verfügbarkeit spielt das gewählte Modell bei beiden keine Rolle. `/loop` hängt an einer Umgebungsvariablen und einem Feature-Schalter, `/goal` an Interaktivität, am Vertrauensstatus des Arbeitsverzeichnisses und an den Hook-Einstellungen. Ob Opus oder Sonnet läuft, ändert daran nichts, und die Merkmale, nach denen der Server seine Schalter ausspielt, enthalten überhaupt kein Modellfeld.
 
 Modellabhängige Schalter gibt es im Programm aber sehr wohl, nur an anderer Stelle. Die Websuche etwa prüft auf Google Vertex, welches Modell läuft, und schaltet sich für ältere Modelle ab. Bei `/loop` selbst habe ich genau eine Stelle gefunden, an der das Modell hineinspielt, und die betrifft das Verhalten. Für bestimmte Modelle endet ein Zug sofort, wenn sein einziger Werkzeugaufruf das Einplanen des nächsten Durchlaufs war.
 
 Diese Unterscheidung verdanke ich einem Gegenleser. Meine erste Fassung behauptete, kein einziger Aktivierungs-Ausdruck im Programm nehme Bezug auf ein Modell. Das war falsch, weil ich nur eine von mehreren Schreibweisen durchsucht hatte. Es sind 91 in der einen Form, 42 in einer zweiten und 101 weitere unter anderem Namen, und in den übersehenen sitzen die Modellprüfungen.
-
-Zwei Grenzen von `/goal` sind noch erwähnenswert. Ein Ziel kann enden, ohne erreicht zu sein: Hält das prüfende Modell die Bedingung für unmöglich, wird der Eintrag als gescheitert markiert und die Schleife endet. Und es gibt eine harte Obergrenze. Laut Changelog endet der Zug mit einer Warnung, nachdem der Stop-Hook achtmal hintereinander blockiert hat, einstellbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 Damit steht der Unterschied zwischen den beiden auch technisch da. Bei `/loop` bekomme ich ein Werkzeug und entscheide selbst über den Takt. Bei `/goal` bekomme ich eine Anweisung und einen Türsteher.
 
@@ -187,7 +181,7 @@ wenn alles meinen Vorgaben entspricht, alles durchgetestet ist, der
 Pull Request bereit ist und die CI grün ist.
 ```
 
-Der Effekt ist genau der, den man sich davon verspricht. Normalerweise erlebe ich immer wieder, dass der Agent nach einem Zwischenstand stehen bleibt und um Bestätigung bittet, weiterzumachen. Das passiert hier nicht. Es wird periodisch weitergearbeitet, bis das Ziel erreicht ist.
+Der Effekt ist genau der erhoffte. Normalerweise bleibt der Agent nach einem Zwischenstand stehen und bittet um Bestätigung, weiterzumachen. Das passiert hier nicht. Es wird periodisch weitergearbeitet, bis das Ziel erreicht ist.
 
 Nur ein einziges Mal habe ich erlebt, dass ein Agent von sich aus aus der Schleife ausgebrochen ist und um eine Richtungsentscheidung gebeten hat, nämlich als er eine Sicherheitslücke entdeckt hatte. Das ist eine schöne Beobachtung, aber ich möchte sie nicht zur Regel erklären. Die Dokumentation beschreibt Zurückhaltung ausdrücklich nur für den **eingebauten** Wartungs-Prompt. Bei einem eigenen Prompt wie oben gibt es diese Zusage nicht. Was ich gesehen habe, war Ermessen des Modells und kein Sicherheitsnetz, auf das man bauen sollte.
 
@@ -199,7 +193,7 @@ Wenn es beim Warten bleibt, lohnt noch ein Blick auf das [Monitor-Werkzeug](http
 
 ## Was die Pause kostet
 
-Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife über Stunden erträglich bleibt, und sie haben eine Kante, die man kennen sollte.
+Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife lange erträglich bleibt, und sie haben einen Haken, den man kennen sollte.
 
 Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [wenn du über ein Abo arbeitest](https://code.claude.com/docs/en/prompt-caching):
 
@@ -207,7 +201,7 @@ Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [we
 
 Im Abo bleibt der zwischengespeicherte Kontext damit über jede Pause hinweg warm, die eine Schleife überhaupt wählen kann. Die Pause kostet dich nichts.
 
-Jetzt die Kante. Sobald du über dein Kontingent hinaus arbeitest und Usage Credits verbrauchst, schaltet Claude Code laut derselben Seite automatisch auf fünf Minuten herunter. Auf einem API-Schlüssel und bei den Cloud-Anbietern sind fünf Minuten ohnehin der Standard. Und dann gilt:
+Jetzt der Haken. Sobald du über dein Kontingent hinaus arbeitest und Usage Credits verbrauchst, schaltet Claude Code laut derselben Seite automatisch auf fünf Minuten herunter. Auf einem API-Schlüssel und bei den Cloud-Anbietern sind fünf Minuten ohnehin der Standard. Und dann gilt:
 
 > After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
 
