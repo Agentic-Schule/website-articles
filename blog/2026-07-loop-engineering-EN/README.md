@@ -120,19 +120,17 @@ The agent no longer asking "shall I continue" comes from the loop. It not asking
 
 Everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime. I read them out of **Claude Code 2.1.220**. Anthropic changes texts like these without notice, so a later version may well say something different.
 
-Self-pacing is not an automatism in the program. The model is handed a tool called `ScheduleWakeup` and sets the next wakeup itself. On the range, its description says plainly:
+**With `/loop` it is a tool.** Self-pacing is not an automatism in the program. The model is handed a tool called `ScheduleWakeup` and sets the next wakeup itself. On the range, its description says plainly:
 
 > Clamped to [60, 3600] by the runtime.
 
-Sixty seconds to an hour, then. The interesting question is what the model picks within that range. It is given three cases for that. When waiting on something external that the environment cannot report on its own, the delay is supposed to fit the thing:
+The interesting question is what the model picks within that range. It is given three cases for that. When waiting on something external that the environment cannot report on its own, the delay is supposed to fit the thing:
 
 > A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
 
-That matches what I see in practice. While a CI run is going, the agent waits roughly as long as my CI usually takes.
+That is exactly what I see. While a CI run is going, the agent waits roughly as long as my CI usually takes. What is notable is that this sentence sits in the program in three versions. Which one the model gets depends on how long its prompt cache holds. With a five-minute lifetime the same text advises twice about 270 seconds instead of eight times 60, because every longer pause would break the cache. So the instruction factors the cache in. What that costs is further down.
 
-That sentence is only one of three versions, though. Which one the model gets depends on how long its prompt cache holds. With a five-minute lifetime the same advice reads differently, namely twice about 270 seconds instead of eight times 60, because every longer pause would break the cache. So the instruction factors the cache in. What that costs is further down.
-
-When something else triggers the wakeup anyway, a long fallback heartbeat from 1200 seconds is intended, so that quiet wakeups stay rare. And when there is nothing specific to watch, the guidance is 1200 to 1800 seconds. Polling for its own sake is explicitly ruled out:
+For the other two cases: when something else triggers the wakeup anyway, a long fallback heartbeat from 1200 seconds is intended. And when there is nothing specific to watch, the guidance is 1200 to 1800 seconds. Polling for its own sake is explicitly ruled out:
 
 > Do NOT schedule a short-interval wakeup to poll for background work you started, when harness-tracked work finishes, you are re-invoked automatically, so polling is wasted.
 
@@ -147,33 +145,29 @@ Next wakeup scheduled for 22:41:00 (in 119s)
 
 Two things happen here in sequence. First the request is raised to sixty seconds, which is the hard floor. Then the appointment slides to the next full minute, because cron only knows minute granularity. Thirty requested seconds became **119 seconds of actual waiting**. Worth knowing if you plan very short cadences.
 
-Finally the exit. A loop does not only end when you press Esc. The model can end it itself, using the same tool:
+The model can also end the loop itself, with the same tool and a call of `stop: true`. That is exactly what I triggered in the test once the question was answered, and I got back `Loop stopped, cancelled 1 pending wakeup(s)`. There is a trap in it: that ends only the self-paced loop. One on a fixed interval keeps running and has to go via `CronDelete`.
 
-> To end the loop, call this tool with `stop: true`
-
-That is exactly what I triggered in the test once the question was answered. The response was `Loop stopped, cancelled 1 pending wakeup(s)`. There is a trap in it: that ends only the self-paced loop. One on a fixed interval keeps running and has to go via `CronDelete`.
-
-With `/goal` it looks different. There I am handed no tool at all. I am handed an instruction. The moment you set a goal, this text appears in my context:
+**With `/goal` it is an instruction.** There I am handed no tool at all. The moment you set a goal, this text appears in my context:
 
 > A session-scoped Stop hook is now active with condition: "…". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
 
 That is the entire mechanism, in three parts. The condition becomes the work instruction. I am explicitly told not to ask in between. And a hook will not let me stop while the condition does not hold.
 
-The program holds a few more values that confirm or extend the docs. The constant for the maximum length of the condition sits at 4000 characters. The status entry is called `goal_status` and comes in several shapes. On setting it carries only `met` and `condition`, on completion additionally `reason`, `iterations`, `durationMs` and `tokens`. There is also a `failed` field. And there are two error messages I did not find in the documentation: `/goal` only runs in trusted workspaces, and it refuses to work when hooks are restricted via `disableAllHooks` or `allowManagedHooksOnly`.
+Around it sit a few values that confirm or extend the docs. The constant for the maximum length of the condition is 4000 characters. The status entry is called `goal_status` and comes in several shapes: on setting only with `met` and `condition`, on completion additionally with `reason`, `iterations`, `durationMs` and `tokens`, plus a `failed` field. And there are two error messages missing from the documentation: `/goal` only runs in trusted workspaces, and it refuses to work when hooks are restricted via `disableAllHooks` or `allowManagedHooksOnly`.
 
 What I searched for in vain is a separate evaluation prompt for the checking model. It appears not to exist, which fits the docs describing `/goal` as "a wrapper around a session-scoped prompt-based Stop hook". Your condition itself is the prompt used for checking. Which is why it pays to phrase it so that an outsider could judge it from the course of the conversation.
 
-Two more findings explain something. Self-pacing hangs on a switch delivered from the server, named `tengu_kairos_loop_dynamic`. The program holds a fallback value for it, but that only applies when the configuration cannot be reached at all. Normally the server decides. The switch controls more than you would think: with it off, `ScheduleWakeup` simply does nothing, and even the help text changes. Only with the switch set does the description of `/loop` carry the sentence "Omit the interval to let the model self-pace."; without it a default of ten minutes is named there. Around three dozen switches of this kind sit in the program on this topic alone.
+Two limits belong with it. A goal can end without being reached: if the checking model considers the condition impossible, the entry is marked as failed and the loop ends. And there is a hard ceiling. According to the changelog, the turn ends with a warning after the stop hook has blocked eight times in a row, adjustable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
-The second finding is structural, and it explains why `/loop` can swallow other slash commands as an argument. `/goal` is a command. `/loop` is a skill, registered under the name `loop` with `proactive` as an alias.
+**What applies to both.** Self-pacing hangs on a switch delivered from the server, named `tengu_kairos_loop_dynamic`. The program holds a fallback value for it, but that only applies when the configuration cannot be reached at all. Normally the server decides. The switch controls more than you would think: with it off, `ScheduleWakeup` simply does nothing, and even the help text changes. Only with the switch set does the description of `/loop` carry the sentence "Omit the interval to let the model self-pace."; without it a default of ten minutes is named there.
 
-For the availability of these two, the selected model plays no part. `/loop` hangs on an environment variable and a feature switch, `/goal` on interactivity, on the trust status of the working directory and on the hook settings. Whether Opus or Sonnet is running changes nothing there, and the attributes the server uses to target its switches contain no model field at all.
+Structurally the two are different things anyway, and that explains why `/loop` can swallow other slash commands as an argument. `/goal` is a command. `/loop` is a skill, registered under the name `loop` with `proactive` as an alias.
+
+For availability, the selected model plays no part in either. `/loop` hangs on an environment variable and a feature switch, `/goal` on interactivity, on the trust status of the working directory and on the hook settings. Whether Opus or Sonnet is running changes nothing there, and the attributes the server uses to target its switches contain no model field at all.
 
 Model-dependent switches do exist in the program, just elsewhere. Web search, for instance, checks on Google Vertex which model is running and disables itself for older ones. In `/loop` itself I found exactly one place where the model comes into play, and it concerns behaviour. For certain models a turn ends immediately when its only tool call was scheduling the next iteration.
 
 I owe that distinction to a reviewer. My first draft claimed that not a single activation expression in the program refers to a model. That was wrong, because I had searched only one of several spellings. There are 91 in one form, 42 in a second and 101 more under a different name, and the model checks sit in the ones I missed.
-
-Two limits of `/goal` are worth mentioning. A goal can end without being reached: if the checking model considers the condition impossible, the entry is marked as failed and the loop ends. And there is a hard ceiling. According to the changelog, the turn ends with a warning after the stop hook has blocked eight times in a row, adjustable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 That puts the difference between the two on a technical footing as well. With `/loop` I get a tool and decide the cadence myself. With `/goal` I get an instruction and a doorman.
 
@@ -187,7 +181,7 @@ everything matches my requirements, everything is tested, the pull
 request is ready and CI is green.
 ```
 
-The effect is exactly what you hope for. Normally I keep running into the agent stopping after an intermediate result and asking for confirmation to continue. That does not happen here. Work continues periodically until the goal is reached.
+The effect is exactly the one you hope for. Normally the agent stops after an intermediate result and asks for confirmation to continue. That does not happen here. Work continues periodically until the goal is reached.
 
 Only once have I seen an agent break out of the loop on its own and ask for a direction, namely when it had found a security hole. That is a nice observation, but I do not want to turn it into a rule. The documentation describes restraint explicitly only for the **built-in** maintenance prompt. With a custom prompt like the one above there is no such promise. What I saw was the model's own judgement, not a safety net you should build on.
 
@@ -199,7 +193,7 @@ If it comes down to waiting, the [Monitor tool](https://code.claude.com/docs/en/
 
 ## What the pause costs
 
-The pauses between iterations feel like a side effect. They are in fact the reason a loop stays bearable over hours, and they have an edge you should know about.
+The pauses between iterations feel like a side effect. They are in fact the reason a loop stays bearable for a long time, and they come with a catch you should know about.
 
 The pleasant part first. Anthropic extends the prompt cache automatically [when you work on a subscription](https://code.claude.com/docs/en/prompt-caching):
 
@@ -207,7 +201,7 @@ The pleasant part first. Anthropic extends the prompt cache automatically [when 
 
 On a subscription the cached context therefore stays warm across any pause a loop can choose. The pause costs you nothing.
 
-Now the edge. As soon as you work past your allowance and start drawing on usage credits, Claude Code drops to five minutes automatically, according to the same page. On an API key and with the cloud providers, five minutes is the default anyway. And then this applies:
+Now the catch. As soon as you work past your allowance and start drawing on usage credits, Claude Code drops to five minutes automatically, according to the same page. On an API key and with the cloud providers, five minutes is the default anyway. And then this applies:
 
 > After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
 
