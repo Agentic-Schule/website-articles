@@ -20,7 +20,7 @@ header: header.jpg
 
 In June 2026 a way of working got a name: loop engineering. Anyone who had been typing "keep going" to their agent fifteen times a session was suddenly writing loops. Within weeks there were guides, courses and diagrams about it.
 
-**The command at the centre of all this was already three months old by then. This article shows what `/loop` actually does, how it differs from `/goal`, what the pauses in between cost you, and which other tools now run loops of their own.**
+**The command at the centre of all this was already three months old by then. This article shows what `/loop` actually does, how it differs from `/goal`, what the pauses in between cost you, when the whole thing is worth it at all, and which other tools now run loops of their own.**
 
 ## Contents
 
@@ -207,6 +207,20 @@ Now the catch. As soon as you work past your allowance and start drawing on usag
 
 A self-chosen pause of twenty minutes sits far outside that window in this case. Every iteration then begins by reprocessing the entire context. The very pause meant to spare you becomes expensive. Anyone working through the API or Bedrock who wants long loops should therefore either set short fixed intervals or use the `ENABLE_PROMPT_CACHING_1H` environment variable that the same page names for this.
 
+## When a loop is not worth it
+
+So far this has been about how loops work. The more important question comes before that: whether you need one at all. Four conditions follow from what is above. Miss one and the loop costs more than it brings in.
+
+**Does the task repeat?** A loop pays for itself across many runs. `/loop` lives in the session and expires after seven days, `/goal` ends with its condition. For a one-off, a well-aimed prompt is faster and cheaper. If you do something once, you do not have a loop problem. You have a script.
+
+**Can anything other than the agent say no?** This is the hardest of the four. The evaluator behind `/goal` calls no tools, it judges only what is visible in the conversation. Without a test, a type check, a build or a linter whose result lands in the transcript, the grading falls back to whoever did the work. Then you sit there after every iteration reading diffs again, which is exactly the work the loop was supposed to take off your hands.
+
+**Can your plan absorb it?** A loop re-reads context, tries things and discards them. That burns tokens whether or not anything usable comes out. As described in the previous section, it gets more expensive outside a subscription, because every longer pause breaks the cached context. Loop engineering looks obvious when tokens are effectively free, and reckless when every iteration lands on the bill.
+
+**Can the agent try out what it builds?** Without logs, without a runnable environment, without the ability to execute its own code, the loop iterates blind. It then produces a lot of text quickly that nobody has checked.
+
+My honest assessment: loop engineering is a real technique, and most people do not need it yet. For one-off tasks, for exploration, and anywhere "done" is a judgement call, a single well-aimed prompt still wins. And if your bottleneck was review in the first place, a loop only makes the queue longer.
+
 ## Who else runs loops
 
 That leaves the question of whether this is a quirk of Claude Code. I went through the documentation of the common tools, as of 27 July 2026.
@@ -237,8 +251,9 @@ Same idea, different interface. And it shows where this is heading: the capabili
 
 Loop engineering is not a new craft. It is a name for something already built into the tools, and the name is useful because it raises a question that was rarely asked out loud before: who actually decides when the work is finished?
 
-Five things I take away:
+Six things I take away:
 
+- **Most people do not need a loop yet.** If the task does not repeat, or nothing but the agent can say no, a single good prompt still wins.
 - **The completion condition is the real work.** The rest is a command with a time interval.
 - **`/loop` waits, `/goal` does not.** Waiting on something external, take the loop. Working toward an end state, take the goal.
 - **Do not let the same model that did the work check it.** `/goal` brings in a model of its own for that.
