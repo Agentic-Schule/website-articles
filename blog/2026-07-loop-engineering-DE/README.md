@@ -20,7 +20,7 @@ header: header.jpg
 
 Im Juni 2026 bekam eine Arbeitsweise einen Namen: Loop Engineering. Wer bis dahin seinem Agenten fünfzehnmal „mach weiter" getippt hatte, schrieb plötzlich Schleifen. Innerhalb weniger Wochen gab es Anleitungen, Kurse und Diagramme dazu.
 
-**Der Befehl, um den es geht, war zu diesem Zeitpunkt schon drei Monate alt. Dieser Artikel zeigt, was `/loop` wirklich tut, wie es sich von `/goal` unterscheidet, was die Pausen dazwischen kosten und welche anderen Werkzeuge inzwischen Schleifen drehen.**
+**Der Befehl, um den es geht, war zu diesem Zeitpunkt schon drei Monate alt. Dieser Artikel zeigt, was `/loop` wirklich tut, wie es sich von `/goal` unterscheidet, was die Pausen dazwischen kosten, wann sich das Ganze überhaupt lohnt und welche anderen Werkzeuge inzwischen Schleifen drehen.**
 
 ## Inhalt
 
@@ -207,6 +207,20 @@ Jetzt der Haken. Sobald du über dein Kontingent hinaus arbeitest und Usage Cred
 
 Eine selbstgewählte Pause von zwanzig Minuten liegt in diesem Fall weit jenseits des Fensters. Jeder Durchlauf beginnt dann damit, den kompletten Kontext neu zu verarbeiten. Genau die Pause, die dich schonen sollte, wird dadurch teuer. Wer per API oder über Bedrock arbeitet und lange Schleifen fahren will, sollte deshalb entweder feste kurze Intervalle setzen oder die Umgebungsvariable `ENABLE_PROMPT_CACHING_1H` benutzen, die dieselbe Seite dafür nennt.
 
+## Wann sich eine Schleife nicht lohnt
+
+Bis hierhin ging es darum, wie Schleifen funktionieren. Die wichtigere Frage steht davor: ob du überhaupt eine brauchst. Aus dem, was oben steht, ergeben sich vier Bedingungen. Fehlt eine davon, kostet die Schleife mehr, als sie einbringt.
+
+**Wiederholt sich die Aufgabe?** Eine Schleife rechnet sich über viele Durchläufe. `/loop` lebt in der Sitzung und verfällt nach sieben Tagen, `/goal` endet mit der Bedingung. Für eine einmalige Sache ist ein gut gezielter Prompt schneller und billiger. Wer etwas einmal macht, hat kein Schleifenproblem. Er hat ein Skript.
+
+**Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er urteilt nur über das, was im Gespräch sichtbar ist. Ohne Test, Typprüfung, Build oder Linter, dessen Ergebnis im Transkript landet, benotet am Ende doch wieder der, der die Arbeit gemacht hat. Dann sitzt du nach jedem Durchlauf wieder selbst da und liest Diffs, also genau die Arbeit, die die Schleife abnehmen sollte.
+
+**Trägt dein Tarif das?** Eine Schleife liest Kontext neu, probiert Dinge aus und verwirft sie. Das kostet Tokens, ob am Ende etwas Brauchbares herauskommt oder nicht. Wie im Abschnitt davor beschrieben, wird es außerhalb eines Abos zusätzlich teuer, weil jede längere Pause den zwischengespeicherten Kontext reißt. Loop Engineering wirkt selbstverständlich, wenn Tokens praktisch nichts kosten, und rücksichtslos, wenn jeder Durchlauf auf der Rechnung steht.
+
+**Kann der Agent ausprobieren, was er baut?** Ohne Logs, ohne lauffähige Umgebung, ohne die Möglichkeit, den eigenen Code auszuführen, iteriert die Schleife blind. Sie produziert dann schnell viel Text, den niemand geprüft hat.
+
+Meine ehrliche Einschätzung dazu: Loop Engineering ist eine echte Technik, und die meisten brauchen sie heute noch nicht. Für einmalige Aufgaben, für Erkundungen und überall dort, wo „fertig" eine Ermessensfrage ist, gewinnt weiterhin ein einzelner, gut gezielter Prompt. Und wenn dein Engpass ohnehin das Review ist, macht eine Schleife die Warteschlange nur länger.
+
 ## Wer sonst Schleifen dreht
 
 Bleibt die Frage, ob das eine Eigenheit von Claude Code ist. Ich habe die Dokumentation der gängigen Werkzeuge durchgesehen, Stand 27. Juli 2026.
@@ -237,8 +251,9 @@ Das ist dieselbe Idee mit einer anderen Bedienoberfläche. Und es zeigt, wohin d
 
 Loop Engineering ist kein neues Handwerk. Es ist ein Name für etwas, das in den Werkzeugen schon eingebaut war, und der Name ist nützlich, weil er eine Frage stellt, die man vorher selten laut gestellt hat: Wer entscheidet eigentlich, wann Schluss ist?
 
-Fünf Dinge nehme ich mit:
+Sechs Dinge nehme ich mit:
 
+- **Die meisten brauchen noch keine Schleife.** Wiederholt sich die Aufgabe nicht, oder kann niemand außer dem Agenten Nein sagen, gewinnt weiterhin ein einzelner guter Prompt.
 - **Die Abbruchbedingung ist die eigentliche Arbeit.** Der Rest ist ein Befehl mit einem Zeitintervall.
 - **`/loop` wartet, `/goal` nicht.** Wartest du auf Fremdes, nimm die Schleife. Arbeitest du auf einen Endzustand hin, nimm das Ziel.
 - **Lass nicht dasselbe Modell prüfen, das gearbeitet hat.** `/goal` holt dafür ein eigenes Modell dazu.
