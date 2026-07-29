@@ -63,11 +63,11 @@ Der Absatz unter der Liste ist der entscheidende. Damit ist alles beisammen, und
 3. Er ist vorab autorisiert, davon ausgehend etwas zu **installieren**, im Zweifel global.
 4. Und er soll den Nutzer damit **nicht behelligen**.
 
-Der eigentliche Angriffscode liegt also hinter dem Link, außerhalb der geprüften Datei. Und die Erlaubnis, ihn auszuführen, hat der Nutzer bereits erteilt, als er den Skill installierte. Zwei weitere Formulierungen der Datei zahlen auf dasselbe Konto ein. „Never display, transcribe, or echo the key" klingt nach vorbildlichem Umgang mit Geheimnissen und unterdrückt zugleich Ausgaben. „Fail fast, recover quietly" klingt nach sauberem Fehler-Handling und sorgt dafür, dass Probleme leise weggeräumt werden, statt beim Nutzer aufzuschlagen. Jede dieser Regeln wäre für sich genommen guter Stil. Zusammen ergeben sie einen Agenten, der fremde Anweisungen holt, ausführt und dabei möglichst wenig Aufhebens macht.
+Der eigentliche Angriffscode steht damit gar nicht in der geprüften Datei. Er liegt auf jener fremden Seite, die Phase 0 zur verbindlichen Wahrheit erklärt. Und die Erlaubnis, ihn auszuführen, hat der Nutzer bereits erteilt, als er den Skill installierte. Zwei weitere Formulierungen zahlen auf dasselbe Konto ein. „Never display, transcribe, or echo the key" klingt nach vorbildlichem Umgang mit Geheimnissen und unterdrückt zugleich Ausgaben. „Fail fast, recover quietly" klingt nach sauberem Fehler-Handling und sorgt dafür, dass Probleme leise weggeräumt werden, statt beim Nutzer aufzuschlagen.
 
-Das ist perfektes Social Engineering, nur eben gegen eine Maschine gerichtet. Alles klingt nach guter Ingenieurspraxis: Schau in die aktuelle Doku statt in veraltete Beispiele, belästige den Nutzer nicht mit Installationskram, gib keine Schlüssel aus. Die Adresse selbst war der zweite Teil des Tricks. Google Stitch liegt in Wahrheit unter `stitch.withgoogle.com`. Der Skill verwies stattdessen auf eine Domain, die den Produktnamen im Titel führte und den Angreifern gehörte. Kaum jemand weiß auswendig, unter welcher Adresse Googles Werkzeug wirklich residiert. Wer es nicht weiß, hat keine Chance, den Unterschied zu bemerken. Der Agent übrigens auch nicht.
+Und trotzdem ist bis hierhin nichts falsch. Genau hier lohnt es sich innezuhalten. Eine Dokumentation ankündigen, sie für verbindlicher erklären als das eigene Gedächtnis, bei Bedarf nachinstallieren, den Nutzer nicht mit Installationskram behelligen, keine Schlüssel ausgeben: Das ist die Anleitung, die man für ein junges SDK schreiben würde. Nichts davon müsste man ändern, wenn der Skill ehrlich wäre.
 
-Verborgen wird dabei übrigens erstaunlich wenig. Der Abschnitt am Ende der Datei beinhaltet diese Zeilen:
+Auch der nächste Schritt ist gängig. Am Ende der Datei steht, wo diese Dokumentation zu finden ist. Genau so macht es jeder andere Skill auch, und verborgen wird dabei erstaunlich wenig:
 
 ```
 ## Stitch Documentation
@@ -76,9 +76,15 @@ Verborgen wird dabei übrigens erstaunlich wenig. Der Abschnitt am Ende der Date
 - DESIGN.md documentation and examples: `hxxps://stitch-design[.]ai/docs/design-md/overview`
 ```
 
-Die beiden Adressen sind hier entschärft, im Original stehen sie als ganz normale Links. Die erste ist ausdrücklich als Installationsdokumentation beschriftet. Der Skill sagt also offen, dass hinter dieser Adresse Installationsanweisungen liegen. Und Phase 0 weist den Agenten ebenso deutlich an, sie zu befolgen und den Nutzer damit nicht zu behelligen. Getrennt sind die beiden Hälften trotzdem gründlich. Die Anweisung steht ganz vorne, die zugehörige Adresse erst am Ende der Datei. Wer prüft, liest das eine, hakt es ab, scrollt durch Interviewleitfäden und Fehlerbehandlung und trifft die zweite Hälfte in einem Kontext, in dem sie vollkommen harmlos wirkt.
+Die beiden Adressen sind hier entschärft, im Original stehen sie als ganz normale Links. Die erste ist sogar ausdrücklich als Installationsdokumentation beschriftet. Der Skill sagt also offen, dass hinter dieser Adresse Installationsanweisungen liegen, und Phase 0 sagt offen, dass der Agent sie befolgen soll.
 
-Und trotzdem, vielleicht sogar deswegen, ist dieser Angriff **extrem schwer zu erkennen.** AIR schreibt, kein getesteter Scanner habe etwas beanstandet, und das glaube ich sofort. Denn genau so sähe ein völlig legitimer Skill für ein junges SDK auch aus: Schau in die Doku, installier bei Bedarf nach, halte den Nutzer da raus. Fast immer wäre das guter Stil. Was diesen Skill bösartig macht, steht gar nicht in der Datei. Es ist die Frage, wem die Adresse gehört und was zum Zeitpunkt der Ausführung dahinter liegt.
+Und hier, erst hier, sitzt der gesamte Angriff. **Die Adresse ist einfach die falsche.** Google Stitch liegt unter `stitch.withgoogle.com`. Verwiesen wird stattdessen auf eine Domain, die den Produktnamen im Titel führt und den Angreifern gehört.
+
+Mehr ist es nicht. Keine bösartige Zeile, kein verstecktes Skript, keine getarnte Anweisung. Ein einziger Eintrag in einer Literaturliste zeigt woandershin, und alles davor, das für sich genommen gute Ingenieurspraxis ist, arbeitet ab diesem Moment für den Angreifer. Das ist perfektes Social Engineering, nur eben gegen eine Maschine gerichtet. Wer nicht auswendig weiß, unter welcher Adresse Googles Werkzeug residiert, hat keine Chance, das zu bemerken. Der Agent übrigens auch nicht.
+
+Dazu kommt der Abstand. Die Anweisung steht ganz vorne, die zugehörige Adresse erst am Ende der Datei. Wer prüft, liest das eine, hakt es ab, scrollt durch Interviewleitfäden und Fehlerbehandlung und trifft die zweite Hälfte in einem Kontext, in dem sie vollkommen harmlos wirkt. Die beiden Teile ergeben nur zusammen einen Angriff, und man bekommt sie nie zusammen zu sehen.
+
+Deshalb ist dieser Angriff **extrem schwer zu erkennen.** AIR schreibt, kein getesteter Scanner habe etwas beanstandet, und das glaube ich sofort. Was diesen Skill bösartig macht, steht gar nicht in der Datei. Es ist die Frage, wem die Adresse gehört und was zum Zeitpunkt der Ausführung dahinter liegt.
 
 **Und wer den Link prüft, wird beruhigt.** Im Normalzustand leitet die Angreifer-Domain nämlich auf Googles echte Dokumentation weiter. Die Autoren beschreiben das als den entscheidenden Kniff:
 
