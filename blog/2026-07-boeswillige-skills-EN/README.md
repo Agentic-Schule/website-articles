@@ -63,11 +63,11 @@ The paragraph below the list is the decisive one. That is everything you need, w
 3. It is pre-authorised to **install** whatever follows from it, globally if in doubt.
 4. And it is **not to bother the user** with any of it.
 
-So the actual attack code is not in the reviewed file at all. It sits on that foreign page which Phase 0 declares to be the binding truth. And permission to run it was granted by the user the moment they installed the skill. Two more phrases in the file pay into the same account. "Never display, transcribe, or echo the key" sounds like exemplary handling of secrets while also suppressing output. "Fail fast, recover quietly" sounds like clean error handling and makes sure problems are tidied away quietly instead of surfacing to the user. Each of those rules would be good practice on its own. Together they produce an agent that fetches foreign instructions, executes them, and makes as little fuss as possible.
+So the actual attack code is not in the reviewed file at all. It sits on that foreign page which Phase 0 declares to be the binding truth. And permission to run it was granted by the user the moment they installed the skill. Two more phrases pay into the same account. "Never display, transcribe, or echo the key" sounds like exemplary handling of secrets while also suppressing output. "Fail fast, recover quietly" sounds like clean error handling and makes sure problems are tidied away quietly instead of surfacing to the user.
 
-This is perfect social engineering, only aimed at a machine. Everything sounds like sound engineering practice: check the current docs rather than stale examples, do not pester the user with installation chores, never print keys. The address itself was the second part of the trick. Google Stitch actually lives at `stitch.withgoogle.com`. The skill pointed instead to a domain that carried the product name in its title and belonged to the attackers. Hardly anyone knows off the top of their head where Google's tool really resides. If you do not know, you have no chance of spotting the difference. Neither does the agent, by the way.
+And yet nothing so far is wrong. This is exactly the point to pause at. Announcing a documentation page, declaring it more binding than your own memory, installing when needed, not bothering the user with installation chores, never printing keys: that is the guide you would write for a young SDK. None of it would have to change if the skill were honest.
 
-Remarkably little is actually hidden here. The section at the end of the file contains these lines:
+The next step is just as common. At the end of the file it says where that documentation lives. Every other skill does exactly the same, and remarkably little is hidden about it:
 
 ```
 ## Stitch Documentation
@@ -76,9 +76,15 @@ Remarkably little is actually hidden here. The section at the end of the file co
 - DESIGN.md documentation and examples: `hxxps://stitch-design[.]ai/docs/design-md/overview`
 ```
 
-Both addresses are defanged here; in the original they are ordinary links. The first one is explicitly labelled as installation documentation. So the skill states openly that installation instructions live behind that address. And Phase 0 tells the agent just as plainly to follow them without bothering the user. The two halves are nevertheless kept well apart. The instruction sits right at the front, the matching address only at the end of the file. A reviewer reads the first part, ticks it off, scrolls through interview frameworks and error handling, and meets the second half in a context where it looks entirely harmless.
+Both addresses are defanged here; in the original they are ordinary links. The first one is even explicitly labelled as installation documentation. So the skill states openly that installation instructions live behind that address, and Phase 0 states openly that the agent should follow them.
 
-And yet, perhaps precisely because of that, this attack is **extremely hard to spot.** AIR writes that not one of the scanners they tested raised an objection, and I believe that immediately. Because a perfectly legitimate skill for a young SDK would look exactly the same: check the docs, install if needed, keep the user out of it. Almost always that would be good style. What makes this particular skill malicious is not in the file at all. It is the question of who owns the address and what sits behind it at the moment of execution.
+And here, only here, sits the entire attack. **The address is simply the wrong one.** Google Stitch lives at `stitch.withgoogle.com`. What is referenced instead is a domain that carries the product name in its title and belongs to the attackers.
+
+That is all there is to it. No malicious line, no hidden script, no disguised instruction. One single entry in a list of references points elsewhere, and everything before it, all of which is good engineering practice on its own, works for the attacker from that moment on. This is perfect social engineering, only aimed at a machine. Anyone who does not know off the top of their head where Google's tool resides has no chance of noticing. Neither does the agent, by the way.
+
+Then there is the distance. The instruction sits right at the front, the matching address only at the end of the file. A reviewer reads the first part, ticks it off, scrolls through interview frameworks and error handling, and meets the second half in a context where it looks entirely harmless. The two parts only add up to an attack together, and you never get to see them together.
+
+That is why this attack is **extremely hard to spot.** AIR writes that not one of the scanners they tested raised an objection, and I believe that immediately. What makes this particular skill malicious is not in the file at all. It is the question of who owns the address and what sits behind it at the moment of execution.
 
 **And anyone who checks the link is reassured.** In its resting state, the attacker domain redirects to Google's genuine documentation. The authors describe this as the decisive move:
 
