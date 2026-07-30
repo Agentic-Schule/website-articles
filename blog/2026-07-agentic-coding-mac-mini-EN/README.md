@@ -122,7 +122,7 @@ I rarely use that direct terminal route, though. Most of the time I work more co
 
 ## Everything Duplicated, Always in Sync
 
-Up to here I could *access* the mini from anywhere. But the real kicker is that my big MacBook Pro is not a mere terminal, but a **true mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror is a permanent, second-by-second backup. Damn, that's good.
+Up to here I could *access* the mini from anywhere. But the real kicker is that my big MacBook Pro is not a mere terminal, but a **true mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror feels like a permanent, second-by-second backup. Damn, that's good, with one important caveat I'll get to below.
 
 This is handled by **[Syncthing](https://syncthing.net)**, a peer-to-peer sync with no cloud in between. It mirrors bidirectionally:
 
@@ -149,6 +149,8 @@ What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `bui
 **The screenshot trick as a bonus:** because both Macs have the same home, a screenshot lives under the same path on *both* machines. I set the macOS screenshot folder to `~/Shots` (`defaults write com.apple.screencapture location ~/Shots`), take a screenshot on the MacBook, and drag it into an agent session running **remotely** on the mini. The path exists there too thanks to sync, the agent reads the image even though it was created "on the other machine".
 
 > **⚠️ The one discipline:** "wait for green" before switching machines. If you switch machines while Syncthing is still transferring, you risk conflict files. Just check that the sync is `idle`, then the transition is clean.
+
+> **⚠️ And the promised caveat: a mirror is not a backup.** A bidirectional sync also replicates deletions and broken files faithfully. The newer version wins, an empty one if need be. So what once really saved me was not the mirror but Syncthing's **file versioning** (`.stversions`): before every overwrite it stores the old state with a timestamp. And because that history is **local per device** and is not synced along, in a pinch one machine still had what the other had already lost. That still does not replace a real off-device backup, but it has brought back a file I had already given up on.
 
 ## Headless Services That Just Run
 

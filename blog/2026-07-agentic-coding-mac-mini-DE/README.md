@@ -123,7 +123,7 @@ Diesen direkten Terminal-Weg nutze ich aber selten. Meist arbeite ich auf dem Ha
 
 ## Alles doppelt, immer synchron
 
-Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein großes MacBook Pro kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen, auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen, großer Mac und mini sind ja immer synchron. Ganz nebenbei ist dieser Spiegel ein permanentes, sekundenscharfes Backup. Geiler Scheiß.
+Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein großes MacBook Pro kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen, auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen, großer Mac und mini sind ja immer synchron. Ganz nebenbei wirkt dieser Spiegel wie ein permanentes, sekundenscharfes Backup. Geiler Scheiß, mit einem wichtigen Aber, zu dem ich unten komme.
 
 Dafür sorgt **[Syncthing](https://syncthing.net)**, ein Peer-to-Peer-Sync ohne Cloud dazwischen. Es spiegelt bidirektional:
 
@@ -150,6 +150,8 @@ Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `t
 **Der Screenshot-Trick als Bonus:** Weil beide Macs dasselbe Home haben, liegt ein Screenshot unter demselben Pfad auf *beiden* Rechnern. Ich stelle den macOS-Screenshot-Ordner auf `~/Shots` (`defaults write com.apple.screencapture location ~/Shots`), mache am MacBook einen Screenshot und ziehe ihn in eine **remote** laufende Agenten-Session auf dem mini. Der Pfad existiert dort dank Sync ebenfalls, der Agent liest das Bild, obwohl es „auf dem anderen Rechner" entstand.
 
 > **⚠️ Die eine Disziplin:** Vor dem Gerätewechsel „auf grün warten". Wechselt man die Maschine, während Syncthing noch überträgt, riskiert man Konfliktdateien. Kurz prüfen, dass der Sync `idle` ist, dann ist der Übergang sauber.
+
+> **⚠️ Und das versprochene Aber: ein Spiegel ist kein Backup.** Ein bidirektionaler Sync repliziert eben auch Löschungen und kaputte Dateien originalgetreu. Die neuere Version gewinnt, notfalls auch eine leere. Was mich einmal wirklich gerettet hat, war deshalb nicht der Spiegel, sondern Syncthings **Datei-Versionierung** (`.stversions`): Vor jedem Überschreiben legt sie den alten Stand mit Zeitstempel ab. Und weil diese Historie **pro Gerät lokal** liegt und nicht mitgesynct wird, hatte im Ernstfall die eine Maschine noch, was die andere schon verloren hatte. Ein echtes Off-Device-Backup ersetzt das trotzdem nicht, aber es hat mir schon eine totgeglaubte Datei zurückgeholt.
 
 ## Headless-Dienste, die einfach laufen
 
