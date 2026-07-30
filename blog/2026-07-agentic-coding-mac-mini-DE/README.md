@@ -151,7 +151,7 @@ Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `t
 
 > **⚠️ Die eine Disziplin:** Vor dem Gerätewechsel „auf grün warten". Wechselt man die Maschine, während Syncthing noch überträgt, riskiert man Konfliktdateien. Kurz prüfen, dass der Sync `idle` ist, dann ist der Übergang sauber.
 
-> **⚠️ Und das versprochene Aber: ein Spiegel ist kein Backup.** Ein bidirektionaler Sync repliziert eben auch Löschungen und kaputte Dateien originalgetreu. Die neuere Version gewinnt, notfalls auch eine leere. Was mich einmal wirklich gerettet hat, war deshalb nicht der Spiegel, sondern Syncthings **Datei-Versionierung** (`.stversions`): Vor jedem Überschreiben legt sie den alten Stand mit Zeitstempel ab. Und weil diese Historie **pro Gerät lokal** liegt und nicht mitgesynct wird, hatte im Ernstfall die eine Maschine noch, was die andere schon verloren hatte. Ein echtes Off-Device-Backup ersetzt das trotzdem nicht, aber es hat mir schon eine totgeglaubte Datei zurückgeholt.
+> **⚠️ Und das versprochene Aber: ein Spiegel ist kein Backup.** Ein bidirektionaler Sync repliziert eben auch Löschungen und kaputte Dateien originalgetreu. Die neuere Version gewinnt, notfalls auch eine leere. Was mich einmal wirklich gerettet hat, war deshalb nicht der Spiegel, sondern Syncthings **Datei-Versionierung** (`.stversions`): Vor jedem Überschreiben legt sie den alten Stand mit Zeitstempel ab. Und weil diese Historie **pro Gerät lokal** liegt und nicht mitgesynct wird, hatte im Ernstfall die eine Maschine noch, was die andere schon verloren hatte. Ein echtes Off-Device-Backup ersetzt das trotzdem nicht, aber es hat mir schon eine totgeglaubte Chat-Historie zurückgeholt.
 
 ## Headless-Dienste, die einfach laufen
 
