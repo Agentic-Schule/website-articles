@@ -24,6 +24,8 @@ If the answer is "too often", this article is for you. Loop engineering takes th
 
 **In Claude Code this sits behind two commands, `/loop` and `/goal`, and the two work in fundamentally different ways. This article shows what they actually do, what the pauses in between cost you, when a loop is worth it at all, and which other tools are keeping up.**
 
+Up front, to set the scope: I focus mainly on Claude Code here. Other agents have quite different ideas about what a loop should look like; what is right there can be wrong here. I come back to them at the end.
+
 ## Contents
 
 [[toc]]
@@ -34,13 +36,13 @@ The tightest definition comes from Addy Osmani, who [spelled the term out in an 
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
-That is all it is. You stop being the metronome. Instead of typing "keep going" after every intermediate result, you write down once what should happen and when it is finished.
+That is all it is. You stop being the metronome.
 
 How far that can go is described by Boris Cherny, creator and head of Claude Code at Anthropic. Fortune quotes him [on 11 June 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) from the stage of the Brainstorm Tech conference:
 
 > If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
 
-As it spread, this turned into a sharper line that is still circulating: "I don't prompt Claude anymore." I could not find a primary source for that version, and it should not be taken literally anyway. This is the head of a product promoting his own product, on a stage, in front of an audience. Anyone who actually runs loops knows that you very much do intervene, adjust and abort.
+That became the sharper line "I don't prompt Claude anymore." It cannot be sourced, and it should not be taken literally anyway: this is the head of a product promoting his own product. Anyone who actually runs loops intervenes, adjusts and aborts.
 
 The German consultancy codecentric has [placed the term in a useful layering](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context engineering makes sure the right information is in the individual prompt. Harness engineering builds the railing around it: tools, skills, hooks and sandboxes. Loop engineering is the layer on top:
 
@@ -48,9 +50,11 @@ The German consultancy codecentric has [placed the term in a useful layering](ht
 
 The important caveat comes from the same article: every layer inherits the weaknesses of the one below it. A loop around an agent that cannot keep its context straight just goes round in circles faster.
 
+So much for the idea. It is the same for every agent, the implementation is not. The next sections show it on Claude Code, the tool I use the most myself. How other tools solve the same idea comes at the end.
+
 ## What `/loop` actually does
 
-The [documentation](https://code.claude.com/docs/en/scheduled-tasks) describes three behaviours, and which one you get depends on what you type.
+Claude Code's [documentation](https://code.claude.com/docs/en/scheduled-tasks) describes three behaviours, and which one you get depends on what you type.
 
 | Input | Example | Behaviour |
 | --- | --- | --- |
@@ -201,7 +205,7 @@ My honest assessment: loop engineering is a real technique, and most people do n
 
 ## Who else runs loops
 
-That leaves the question of whether this is a quirk of Claude Code. I went through the documentation of the common tools, as of 27 July 2026.
+That leaves the question of whether this is a quirk of Claude Code. Here is an overview of the common tools, each checked against its own docs (as of 27 July 2026):
 
 | Tool | In-session command | What it has instead |
 | --- | --- | --- |

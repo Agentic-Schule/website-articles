@@ -24,6 +24,8 @@ Wenn die Antwort „zu oft" lautet, ist dieser Artikel für dich. Loop Engineeri
 
 **In Claude Code steckt das hinter zwei Befehlen, `/loop` und `/goal`, und die beiden arbeiten grundverschieden. Dieser Artikel zeigt, was sie tatsächlich tun, was die Pausen dazwischen kosten, wann sich eine Schleife überhaupt lohnt und welche anderen Werkzeuge mitziehen.**
 
+Vorweg zur Einordnung: Ich beziehe mich hier vor allem auf Claude Code. Andere Agenten haben teils eine ganz andere Vorstellung davon, wie eine Schleife aussehen sollte; was dort richtig ist, kann hier falsch sein. Auf sie komme ich am Ende zurück.
+
 ## Inhalt
 
 [[toc]]
@@ -34,13 +36,13 @@ Die knappste Definition stammt von Addy Osmani, der den Begriff [in einem Artike
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
-Mehr ist es nicht. Du hörst auf, der Taktgeber zu sein. Statt nach jedem Zwischenstand „weiter" zu tippen, schreibst du einmal auf, was passieren soll und wann Schluss ist.
+Mehr ist es nicht. Du hörst auf, der Taktgeber zu sein.
 
 Wie weit das gehen kann, beschreibt Boris Cherny, Erfinder und Chef von Claude Code bei Anthropic. Fortune zitiert ihn [am 11. Juni 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) von der Bühne der Konferenz Brainstorm Tech:
 
 > If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
 
-In der weiteren Verbreitung wurde daraus ein zugespitzter Satz, der bis heute kursiert: „I don't prompt Claude anymore." Für diese Fassung habe ich keine Primärquelle gefunden, und wörtlich nehmen sollte man sie ohnehin nicht. Hier bewirbt der Chef eines Produkts sein eigenes Produkt, auf einer Bühne, vor Publikum. Wer selbst Schleifen laufen lässt, weiß, dass man sehr wohl eingreift, nachjustiert und abbricht.
+Daraus wurde der zugespitzte Satz „I don't prompt Claude anymore." Belegen lässt er sich nicht, und wörtlich nehmen sollte man ihn ohnehin nicht: Hier bewirbt der Chef sein eigenes Produkt. Wer selbst Schleifen laufen lässt, greift sehr wohl ein, justiert nach und bricht ab.
 
 Die deutschsprachige codecentric hat den Begriff [in eine brauchbare Schichtung eingeordnet](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context Engineering sorgt dafür, dass im einzelnen Prompt die richtigen Informationen stehen. Harness Engineering baut das Geländer drumherum, also Werkzeuge, Skills, Hooks und Sandboxes. Loop Engineering ist die Schicht darüber:
 
@@ -48,9 +50,11 @@ Die deutschsprachige codecentric hat den Begriff [in eine brauchbare Schichtung 
 
 Wichtig ist der Zusatz aus demselben Artikel: Jede Schicht erbt die Schwächen der darunter. Eine Schleife um einen Agenten, der seinen Kontext nicht im Griff hat, dreht nur schneller im Kreis.
 
+So viel zur Idee. Sie ist für jeden Agenten dieselbe, die Umsetzung ist es nicht. Die nächsten Abschnitte zeigen sie an Claude Code, dem Werkzeug, das ich selbst am meisten einsetze. Wie andere Werkzeuge dieselbe Idee lösen, kommt am Ende.
+
 ## Was `/loop` tatsächlich tut
 
-Die [Dokumentation](https://code.claude.com/docs/en/scheduled-tasks) beschreibt drei Verhaltensweisen, und welche du bekommst, hängt davon ab, was du eingibst.
+Die [Dokumentation von Claude Code](https://code.claude.com/docs/en/scheduled-tasks) beschreibt drei Verhaltensweisen, und welche du bekommst, hängt davon ab, was du eingibst.
 
 | Eingabe | Beispiel | Verhalten |
 | --- | --- | --- |
@@ -201,7 +205,7 @@ Meine ehrliche Einschätzung dazu: Loop Engineering ist eine echte Technik, und 
 
 ## Wer sonst Schleifen dreht
 
-Bleibt die Frage, ob das eine Eigenheit von Claude Code ist. Ich habe die Dokumentation der gängigen Werkzeuge durchgesehen, Stand 27. Juli 2026.
+Bleibt die Frage, ob das eine Eigenheit von Claude Code ist. Hier ist eine Übersicht der gängigen Werkzeuge, jeweils an ihrer eigenen Doku geprüft (Stand 27. Juli 2026):
 
 | Werkzeug | Befehl in der Sitzung | Was es stattdessen gibt |
 | --- | --- | --- |
