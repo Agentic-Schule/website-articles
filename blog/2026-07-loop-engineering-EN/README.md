@@ -132,7 +132,7 @@ Now the catch. As soon as you work past your allowance and start drawing on usag
 
 > After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
 
-A self-chosen pause of twenty minutes sits far outside that window in this case. Every iteration then begins by reprocessing the entire context. The very pause meant to spare you becomes expensive. Anyone working through the API or Bedrock who wants long loops should therefore either set short fixed intervals or use the `ENABLE_PROMPT_CACHING_1H` environment variable that the same page names for this. Or you just do not care about the tokens you burn. Then YOLO! 😄
+A self-chosen pause of twenty minutes sits far outside that window in this case. Every iteration then begins by reprocessing the entire context. The very pause meant to spare you becomes expensive, and markedly so. While the cache is warm, the large unchanged part of the context costs only a tenth of the normal input price. After a miss that part is written again, at [1.25 times](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#pricing). A tenth turns into more than twelve times, iteration after iteration. Anyone working through the API or Bedrock who wants long loops should therefore either set short fixed intervals or use the `ENABLE_PROMPT_CACHING_1H` environment variable that the same page names for this. Or you just do not care about the tokens you burn. Then YOLO! 😄
 
 ## When a loop is not worth it
 
@@ -140,7 +140,7 @@ So far this has been about how loops work. The more important question comes bef
 
 **Does the task repeat?** A loop pays for itself across many runs. `/loop` lives in the session and expires after seven days, `/goal` ends with its condition. For a one-off, a well-aimed prompt is faster and cheaper. If you do something once, you do not have a loop problem. You have a script.
 
-**Can anything other than the agent say no?** This is the hardest of the four. The evaluator behind `/goal` calls no tools, it judges only what is visible in the conversation. Without a test, a type check, a build or a linter whose result lands in the transcript, the grading falls back to whoever did the work. Then you sit there after every iteration reading diffs again, which is exactly the work the loop was supposed to take off your hands.
+**Can anything but the agent say no?** This is the hardest of the four. The `/goal` evaluator calls no tools; it only sees what is in the conversation. Without a hard test, build or linter, the agent ends up grading its own work. Then the loop keeps running happily even when something has long been broken.
 
 **Can your plan absorb it?** A loop re-reads context, tries things and discards them. That burns tokens whether or not anything usable comes out. As described in the previous section, it gets more expensive outside a subscription, because every longer pause breaks the cached context. Loop engineering looks obvious when tokens are effectively free, and reckless when every iteration lands on the bill.
 

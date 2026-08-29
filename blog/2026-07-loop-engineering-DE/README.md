@@ -132,7 +132,7 @@ Jetzt der Haken. Sobald du über dein Kontingent hinaus arbeitest und Usage Cred
 
 > After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
 
-Eine selbstgewählte Pause von zwanzig Minuten liegt in diesem Fall weit jenseits des Fensters. Jeder Durchlauf beginnt dann damit, den kompletten Kontext neu zu verarbeiten. Genau die Pause, die dich schonen sollte, wird dadurch teuer. Wer per API oder über Bedrock arbeitet und lange Schleifen fahren will, sollte deshalb entweder feste kurze Intervalle setzen oder die Umgebungsvariable `ENABLE_PROMPT_CACHING_1H` benutzen, die dieselbe Seite dafür nennt. Oder dir sind die verbrauchten Tokens egal. Dann YOLO! 😄
+Eine selbstgewählte Pause von zwanzig Minuten liegt in diesem Fall weit jenseits des Fensters. Jeder Durchlauf beginnt dann damit, den kompletten Kontext neu zu verarbeiten. Genau die Pause, die dich schonen sollte, wird dadurch teuer. Und zwar deutlich: Solange der Cache warm ist, kostet der große, unveränderte Teil des Kontexts nur ein Zehntel des normalen Input-Preises. Nach einem Miss wird genau dieser Teil neu geschrieben, zum [1,25-fachen](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#pricing). Aus einem Zehntel wird so mehr als das Zwölffache, und das Durchlauf für Durchlauf. Wer per API oder über Bedrock arbeitet und lange Schleifen fahren will, sollte deshalb entweder feste kurze Intervalle setzen oder die Umgebungsvariable `ENABLE_PROMPT_CACHING_1H` benutzen, die dieselbe Seite dafür nennt. Oder dir sind die verbrauchten Tokens egal. Dann YOLO! 😄
 
 ## Wann sich eine Schleife nicht lohnt
 
@@ -140,7 +140,7 @@ Bis hierhin ging es darum, wie Schleifen funktionieren. Die wichtigere Frage ste
 
 **Wiederholt sich die Aufgabe?** Eine Schleife rechnet sich über viele Durchläufe. `/loop` lebt in der Sitzung und verfällt nach sieben Tagen, `/goal` endet mit der Bedingung. Für eine einmalige Sache ist ein gut gezielter Prompt schneller und billiger. Wer etwas einmal macht, hat kein Schleifenproblem. Er hat ein Skript.
 
-**Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er urteilt nur über das, was im Gespräch sichtbar ist. Ohne Test, Typprüfung, Build oder Linter, dessen Ergebnis im Transkript landet, benotet am Ende doch wieder der, der die Arbeit gemacht hat. Dann sitzt du nach jedem Durchlauf wieder selbst da und liest Diffs, also genau die Arbeit, die die Schleife abnehmen sollte.
+**Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er sieht nur, was im Gespräch steht. Fehlt ein harter Test, Build oder Linter, benotet der Agent am Ende seine eigene Arbeit. Dann läuft die Schleife munter weiter, auch wenn längst etwas kaputt ist.
 
 **Trägt dein Tarif das?** Eine Schleife liest Kontext neu, probiert Dinge aus und verwirft sie. Das kostet Tokens, ob am Ende etwas Brauchbares herauskommt oder nicht. Wie im Abschnitt davor beschrieben, wird es außerhalb eines Abos zusätzlich teuer, weil jede längere Pause den zwischengespeicherten Kontext reißt. Loop Engineering wirkt selbstverständlich, wenn Tokens praktisch nichts kosten, und rücksichtslos, wenn jeder Durchlauf auf der Rechnung steht.
 
