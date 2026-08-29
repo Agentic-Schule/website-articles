@@ -132,7 +132,7 @@ Now the catch. As soon as you work past your allowance and start drawing on usag
 
 > After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
 
-A self-chosen pause of twenty minutes sits far outside that window in this case. Every iteration then begins by reprocessing the entire context. The very pause meant to spare you becomes expensive. Anyone working through the API or Bedrock who wants long loops should therefore either set short fixed intervals or use the `ENABLE_PROMPT_CACHING_1H` environment variable that the same page names for this.
+A self-chosen pause of twenty minutes sits far outside that window in this case. Every iteration then begins by reprocessing the entire context. The very pause meant to spare you becomes expensive. Anyone working through the API or Bedrock who wants long loops should therefore either set short fixed intervals or use the `ENABLE_PROMPT_CACHING_1H` environment variable that the same page names for this. Or you just do not care about the tokens you burn. Then YOLO! 😄
 
 ## When a loop is not worth it
 

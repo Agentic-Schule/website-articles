@@ -132,7 +132,7 @@ Jetzt der Haken. Sobald du über dein Kontingent hinaus arbeitest und Usage Cred
 
 > After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
 
-Eine selbstgewählte Pause von zwanzig Minuten liegt in diesem Fall weit jenseits des Fensters. Jeder Durchlauf beginnt dann damit, den kompletten Kontext neu zu verarbeiten. Genau die Pause, die dich schonen sollte, wird dadurch teuer. Wer per API oder über Bedrock arbeitet und lange Schleifen fahren will, sollte deshalb entweder feste kurze Intervalle setzen oder die Umgebungsvariable `ENABLE_PROMPT_CACHING_1H` benutzen, die dieselbe Seite dafür nennt.
+Eine selbstgewählte Pause von zwanzig Minuten liegt in diesem Fall weit jenseits des Fensters. Jeder Durchlauf beginnt dann damit, den kompletten Kontext neu zu verarbeiten. Genau die Pause, die dich schonen sollte, wird dadurch teuer. Wer per API oder über Bedrock arbeitet und lange Schleifen fahren will, sollte deshalb entweder feste kurze Intervalle setzen oder die Umgebungsvariable `ENABLE_PROMPT_CACHING_1H` benutzen, die dieselbe Seite dafür nennt. Oder dir sind die verbrauchten Tokens egal. Dann YOLO! 😄
 
 ## Wann sich eine Schleife nicht lohnt
 
