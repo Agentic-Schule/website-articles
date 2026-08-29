@@ -36,7 +36,7 @@ The tightest definition comes from Addy Osmani, who [spelled the term out in an 
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
-That is all it is. You stop being the metronome.
+Sounds spectacular. It really isn't. You simply stop being the metronome.
 
 How far that can go is described by Boris Cherny, creator and head of Claude Code at Anthropic. Fortune quotes him [on 11 June 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) from the stage of the Brainstorm Tech conference:
 

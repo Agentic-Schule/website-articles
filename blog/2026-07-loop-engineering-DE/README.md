@@ -36,7 +36,7 @@ Die knappste Definition stammt von Addy Osmani, der den Begriff [in einem Artike
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
-Mehr ist es nicht. Du hörst auf, der Taktgeber zu sein.
+Klingt spektakulär. Ist es aber eigentlich nicht. Du hörst schlicht auf, der Taktgeber zu sein.
 
 Wie weit das gehen kann, beschreibt Boris Cherny, Erfinder und Chef von Claude Code bei Anthropic. Fortune zitiert ihn [am 11. Juni 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) von der Bühne der Konferenz Brainstorm Tech:
 
