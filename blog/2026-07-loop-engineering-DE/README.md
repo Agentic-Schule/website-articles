@@ -62,7 +62,7 @@ Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie la
 
 Diesen Standard kannst du ersetzen. Eine Datei `.claude/loop.md` im Projekt oder `~/.claude/loop.md` für dich persönlich tritt an seine Stelle. Das ist einfaches Markdown ohne vorgeschriebene Struktur, geschrieben so, als würdest du den Prompt direkt eintippen. Änderungen daran greifen beim nächsten Durchlauf, du kannst also nachschärfen, während die Schleife läuft.
 
-Ein paar Grenzen sollte man kennen. Die Schleife lebt in der Sitzung und endet mit ihr. Ein `--resume` holt sie zurück, aber nach sieben Tagen verfällt sie endgültig. Esc bricht einen wartenden Durchlauf ab. Und im selbstgetakteten Modus kann Claude von sich aus Schluss machen, wenn er die Arbeit für erledigt hält. Vergisst er beides, also weder neu planen noch stoppen, plant Claude Code einen einzigen Nachzügler nach etwa zwanzig Minuten und beendet die Schleife dann.
+Ein paar Grenzen solltest du kennen. Die Schleife lebt in der Sitzung und endet mit ihr. Ein `--resume` holt sie zurück, aber nach sieben Tagen verfällt sie endgültig. Esc bricht einen wartenden Durchlauf ab. Und im selbstgetakteten Modus kann Claude von sich aus Schluss machen, wenn er die Arbeit für erledigt hält. Vergisst er beides, also weder neu planen noch stoppen, plant Claude Code einen einzigen Nachzügler nach etwa zwanzig Minuten und beendet die Schleife dann.
 
 > ⚠️ Auf Amazon Bedrock, Claude Platform on AWS, Google Clouds Agent Platform und Microsoft Foundry gilt das nicht. Dort läuft ein Prompt ohne Intervall in einem festen Zehn-Minuten-Takt, und `loop.md` wird gar nicht erst gelesen.
 
@@ -135,7 +135,7 @@ Vergeblich gesucht habe ich nach einem eigenen Bewertungs-Prompt für das prüfe
 
 Zwei Grenzen gehören dazu. Ein Ziel kann enden, ohne erreicht zu sein: Hält das prüfende Modell die Bedingung für unmöglich, wird der Eintrag als gescheitert markiert und die Schleife endet. Und es gibt eine harte Obergrenze. Laut Changelog endet der Zug mit einer Warnung, nachdem der Stop-Hook achtmal hintereinander blockiert hat, einstellbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
-**Was für beide gilt.** Die Selbsttaktung hängt an einem serverseitig ausgespielten Schalter namens `tengu_kairos_loop_dynamic`. Im Programm steht dazu ein Rückfallwert, der aber nur greift, wenn die Konfiguration vom Server gar nicht erreichbar ist. Im Normalfall entscheidet der Server. Der Schalter steuert dabei mehr als man denkt: Ist er aus, tut `ScheduleWakeup` schlicht nichts, und schon der Hilfetext ändert sich. Nur mit gesetztem Schalter steht in der Beschreibung von `/loop` der Satz „Omit the interval to let the model self-pace.", ohne ihn steht dort ein Vorgabewert von zehn Minuten.
+**Was für beide gilt.** Die Selbsttaktung hängt an einem serverseitig ausgespielten Schalter namens `tengu_kairos_loop_dynamic`. Im Programm steht dazu ein Rückfallwert, der aber nur greift, wenn die Konfiguration vom Server gar nicht erreichbar ist. Im Normalfall entscheidet der Server. Der Schalter steuert dabei mehr als man denkt: Ist er aus, tut `ScheduleWakeup` schlicht nichts, und schon der Hilfetext ändert sich. Nur mit gesetztem Schalter trägt die Beschreibung von `/loop` den Zusatz „Omit the interval to let the model self-pace." Ohne den Schalter nennt sie dort einen Vorgabewert von zehn Minuten.
 
 Strukturell sind die beiden ohnehin verschiedene Dinge, und das erklärt, warum `/loop` andere Slash-Befehle als Argument schlucken kann. `/goal` ist ein Befehl. `/loop` ist ein Skill, registriert unter dem Namen `loop` mit `proactive` als Alias.
 
@@ -159,17 +159,17 @@ Pull Request bereit ist und die CI grün ist.
 
 Der Effekt ist genau der erhoffte. Normalerweise bleibt der Agent nach einem Zwischenstand stehen und bittet um Bestätigung, weiterzumachen. Das passiert hier nicht. Es wird periodisch weitergearbeitet, bis das Ziel erreicht ist.
 
-Nur ein einziges Mal habe ich erlebt, dass ein Agent von sich aus aus der Schleife ausgebrochen ist und um eine Richtungsentscheidung gebeten hat, nämlich als er eine Sicherheitslücke entdeckt hatte. Das ist eine schöne Beobachtung, aber ich möchte sie nicht zur Regel erklären. Die Dokumentation beschreibt Zurückhaltung ausdrücklich nur für den **eingebauten** Wartungs-Prompt. Bei einem eigenen Prompt wie oben gibt es diese Zusage nicht. Was ich gesehen habe, war Ermessen des Modells und kein Sicherheitsnetz, auf das man bauen sollte.
+Nur ein einziges Mal habe ich erlebt, dass ein Agent von sich aus aus der Schleife ausgebrochen ist und um eine Richtungsentscheidung gebeten hat, nämlich als er eine Sicherheitslücke entdeckt hatte. Das ist eine schöne Beobachtung, aber ich möchte sie nicht zur Regel erklären. Die Dokumentation beschreibt Zurückhaltung ausdrücklich nur für den **eingebauten** Wartungs-Prompt. Bei einem eigenen Prompt wie oben gibt es diese Zusage nicht. Was ich gesehen habe, war Ermessen des Modells und kein Sicherheitsnetz, auf das du bauen solltest.
 
 Streng genommen ist mein Beispiel ein Mischfall, und deshalb ist es lehrreich. „Implementieren und durchtesten" ist Arbeit ohne Wartezeit, dafür wäre `/goal` gebaut. „CI ist grün" ist Warten auf etwas Fremdes, dafür ist `/loop` gebaut. Beides in einer Bedingung ergibt einen Auftrag, der von beiden Werkzeugen etwas will. In der Praxis funktioniert die Schleife hier gut, weil das Warten auf die CI den Takt ohnehin vorgibt.
 
-> 🔁 **Faustregel:** Wartest du auf etwas außerhalb deiner Sitzung, nimm `/loop`. Arbeitest du auf einen prüfbaren Endzustand hin, nimm `/goal`. Willst du dieselbe Prüfung in jeder Sitzung, nimm einen Stop-Hook.
+> 🔁 **Merke:** Wartest du auf etwas außerhalb deiner Sitzung, nimm `/loop`. Arbeitest du auf einen prüfbaren Endzustand hin, nimm `/goal`. Willst du dieselbe Prüfung in jeder Sitzung, nimm einen Stop-Hook.
 
 Wenn es beim Warten bleibt, lohnt noch ein Blick auf das [Monitor-Werkzeug](https://code.claude.com/docs/en/tools-reference). Die Dokumentation weist selbst darauf hin, dass Claude bei einer selbstgetakteten Schleife stattdessen Monitor greifen kann. Das lässt ein Skript im Hintergrund laufen und reicht jede Ausgabezeile durch, statt in Abständen nachzuschauen. Wer auf ein Log wartet, spart sich damit das Pollen komplett.
 
 ## Was die Pause kostet
 
-Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife lange erträglich bleibt, und sie haben einen Haken, den man kennen sollte.
+Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife lange erträglich bleibt, und sie haben einen Haken, den du kennen solltest.
 
 Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [wenn du über ein Abo arbeitest](https://code.claude.com/docs/en/prompt-caching):
 
