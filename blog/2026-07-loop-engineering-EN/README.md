@@ -112,7 +112,7 @@ request is ready and CI is green.
 
 The effect is exactly the one you hope for. Normally the agent stops after an intermediate result and asks for confirmation to continue. That does not happen here. Work continues periodically until the goal is reached.
 
-Only once have I seen an agent break out of the loop on its own and ask for a direction, namely when it had found a security hole. That is a nice observation, but I do not want to turn it into a rule. The documentation describes restraint explicitly only for the **built-in** maintenance prompt. With a custom prompt like the one above there is no such promise. What I saw was the model's own judgement, not a safety net you should build on.
+More than once I have seen an agent break out of the loop on its own and ask for a direction. For instance when it found a fundamental flaw in the instruction, where carrying on would have made no sense, or when it hit a security hole. That is reassuring, but I do not want to turn it into a rule. The documentation describes restraint explicitly only for the **built-in** maintenance prompt. With a custom prompt like the one above there is no such promise. What I saw was the model's own judgement, not a safety net you should build on.
 
 Strictly speaking my example is a hybrid, and that is what makes it instructive. "Implement and test" is work without waiting, which is what `/goal` was built for. "CI is green" is waiting on something external, which is what `/loop` was built for. Both in one condition produces an instruction that wants something from each tool. In practice the loop works well here, because waiting for CI sets the cadence anyway.
 
