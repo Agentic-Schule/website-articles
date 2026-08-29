@@ -52,29 +52,9 @@ Wichtig ist der Zusatz aus demselben Artikel: Jede Schicht erbt die Schwächen d
 
 So viel zur Idee. Sie ist für jeden Agenten dieselbe, die Umsetzung ist es nicht. Die nächsten Abschnitte zeigen sie an Claude Code, dem Werkzeug, das ich selbst am meisten einsetze. Wie andere Werkzeuge dieselbe Idee lösen, kommt am Ende.
 
-## Was `/loop` tatsächlich tut
-
-Die [Dokumentation von Claude Code](https://code.claude.com/docs/en/scheduled-tasks) beschreibt drei Verhaltensweisen, und welche du bekommst, hängt davon ab, was du eingibst.
-
-| Eingabe | Beispiel | Verhalten |
-| --- | --- | --- |
-| Intervall und Prompt | `/loop 5m check the deploy` | fester Takt per Cron |
-| nur Prompt | `/loop check the deploy` | Claude wählt den Abstand selbst |
-| nur Intervall oder nichts | `/loop` | eingebauter Wartungs-Prompt |
-
-Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie lange er wartet. Die Doku beschreibt das so: kurze Abstände, solange ein Build läuft oder ein Pull Request in Bewegung ist, längere, wenn nichts ansteht. Solange tatsächlich etwas passiert, bleiben die Abstände kurz. Der gewählte Abstand und die Begründung dafür werden am Ende jedes Durchlaufs ausgegeben.
-
-`/proactive` ist übrigens ein Alias und tut dasselbe. Ein bloßes `/loop` ohne alles startet einen eingebauten Wartungs-Prompt. Der arbeitet in fester Reihenfolge: erst unerledigte Arbeit aus dem Gespräch fortsetzen, dann den Pull Request des aktuellen Branch pflegen, also Review-Kommentare, rote CI und Merge-Konflikte, und wenn nichts davon ansteht, Aufräumdurchgänge wie Bug-Jagd oder Vereinfachung. Neue Initiativen startet er nicht. Irreversible Aktionen wie Pushen oder Löschen führt er nur aus, wenn sie etwas fortsetzen, das im Transkript schon genehmigt wurde.
-
-Diesen Standard kannst du ersetzen. Eine Datei `.claude/loop.md` im Projekt oder `~/.claude/loop.md` für dich persönlich tritt an seine Stelle. Das ist einfaches Markdown ohne vorgeschriebene Struktur, geschrieben so, als würdest du den Prompt direkt eintippen. Änderungen daran greifen beim nächsten Durchlauf, du kannst also nachschärfen, während die Schleife läuft.
-
-Ein paar Grenzen solltest du kennen. Die Schleife lebt in der Sitzung und endet mit ihr. Ein `--resume` holt sie zurück, aber nach sieben Tagen verfällt sie endgültig. Esc bricht einen wartenden Durchlauf ab. Und im selbstgetakteten Modus kann Claude von sich aus Schluss machen, wenn er die Arbeit für erledigt hält. Vergisst er beides, also weder neu planen noch stoppen, plant Claude Code einen einzigen Nachzügler nach etwa zwanzig Minuten und beendet die Schleife dann.
-
-> ⚠️ Auf Amazon Bedrock, Claude Platform on AWS, Google Clouds Agent Platform und Microsoft Foundry gilt das nicht. Dort läuft ein Prompt ohne Intervall in einem festen Zehn-Minuten-Takt, und `loop.md` wird gar nicht erst gelesen.
-
 ## `/loop`, `/goal` oder Hook
 
-Hier wird es interessant, denn `/loop` ist nur eine von drei Antworten auf die Frage, wie eine Sitzung weiterläuft. Anthropic stellt sie [selbst gegenüber](https://code.claude.com/docs/en/goal):
+In Claude Code gibt es drei Wege, eine Sitzung weiterlaufen zu lassen; `/loop` ist nur einer davon. Anthropic stellt sie [selbst gegenüber](https://code.claude.com/docs/en/goal):
 
 | Ansatz | Nächster Zug startet | Endet |
 | --- | --- | --- |
@@ -98,6 +78,76 @@ Und noch eine Unterscheidung, die in der Praxis für Verwirrung sorgt. Die Dokum
 
 Dass der Agent aufhört zu fragen „soll ich weitermachen", kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt.
 
+> 🔁 **Merke:** Wartest du auf etwas außerhalb deiner Sitzung, nimm `/loop`. Arbeitest du auf einen prüfbaren Endzustand hin, nimm `/goal`. Willst du dieselbe Prüfung in jeder Sitzung, nimm einen Stop-Hook.
+
+## Was `/loop` tatsächlich tut
+
+Die [Dokumentation von Claude Code](https://code.claude.com/docs/en/scheduled-tasks) beschreibt drei Verhaltensweisen, und welche du bekommst, hängt davon ab, was du eingibst.
+
+| Eingabe | Beispiel | Verhalten |
+| --- | --- | --- |
+| Intervall und Prompt | `/loop 5m check the deploy` | fester Takt per Cron |
+| nur Prompt | `/loop check the deploy` | Claude wählt den Abstand selbst |
+| nur Intervall oder nichts | `/loop` | eingebauter Wartungs-Prompt |
+
+Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie lange er wartet. Die Doku beschreibt das so: kurze Abstände, solange ein Build läuft oder ein Pull Request in Bewegung ist, längere, wenn nichts ansteht. Solange tatsächlich etwas passiert, bleiben die Abstände kurz. Der gewählte Abstand und die Begründung dafür werden am Ende jedes Durchlaufs ausgegeben.
+
+`/proactive` ist übrigens ein Alias und tut dasselbe. Ein bloßes `/loop` ohne alles startet einen eingebauten Wartungs-Prompt. Der arbeitet in fester Reihenfolge: erst unerledigte Arbeit aus dem Gespräch fortsetzen, dann den Pull Request des aktuellen Branch pflegen, also Review-Kommentare, rote CI und Merge-Konflikte, und wenn nichts davon ansteht, Aufräumdurchgänge wie Bug-Jagd oder Vereinfachung. Neue Initiativen startet er nicht. Irreversible Aktionen wie Pushen oder Löschen führt er nur aus, wenn sie etwas fortsetzen, das im Transkript schon genehmigt wurde.
+
+Diesen Standard kannst du ersetzen. Eine Datei `.claude/loop.md` im Projekt oder `~/.claude/loop.md` für dich persönlich tritt an seine Stelle. Das ist einfaches Markdown ohne vorgeschriebene Struktur, geschrieben so, als würdest du den Prompt direkt eintippen. Änderungen daran greifen beim nächsten Durchlauf, du kannst also nachschärfen, während die Schleife läuft.
+
+Ein paar Grenzen solltest du kennen. Die Schleife lebt in der Sitzung und endet mit ihr. Ein `--resume` holt sie zurück, aber nach sieben Tagen verfällt sie endgültig. Esc bricht einen wartenden Durchlauf ab. Und im selbstgetakteten Modus kann Claude von sich aus Schluss machen, wenn er die Arbeit für erledigt hält. Vergisst er beides, also weder neu planen noch stoppen, plant Claude Code einen einzigen Nachzügler nach etwa zwanzig Minuten und beendet die Schleife dann.
+
+> ⚠️ Auf Amazon Bedrock, Claude Platform on AWS, Google Clouds Agent Platform und Microsoft Foundry gilt das nicht. Dort läuft ein Prompt ohne Intervall in einem festen Zehn-Minuten-Takt, und `loop.md` wird gar nicht erst gelesen.
+
+## Praxis: eine Bedingung statt fünfzehnmal „weiter"
+
+So sieht das bei mir im Alltag aus:
+
+```text
+/loop implementiere das Feature wie besprochen. Du bist erst fertig,
+wenn alles meinen Vorgaben entspricht, alles durchgetestet ist, der
+Pull Request bereit ist und die CI grün ist.
+```
+
+Der Effekt ist genau der erhoffte. Normalerweise bleibt der Agent nach einem Zwischenstand stehen und bittet um Bestätigung, weiterzumachen. Das passiert hier nicht. Es wird periodisch weitergearbeitet, bis das Ziel erreicht ist.
+
+Nur ein einziges Mal habe ich erlebt, dass ein Agent von sich aus aus der Schleife ausgebrochen ist und um eine Richtungsentscheidung gebeten hat, nämlich als er eine Sicherheitslücke entdeckt hatte. Das ist eine schöne Beobachtung, aber ich möchte sie nicht zur Regel erklären. Die Dokumentation beschreibt Zurückhaltung ausdrücklich nur für den **eingebauten** Wartungs-Prompt. Bei einem eigenen Prompt wie oben gibt es diese Zusage nicht. Was ich gesehen habe, war Ermessen des Modells und kein Sicherheitsnetz, auf das du bauen solltest.
+
+Streng genommen ist mein Beispiel ein Mischfall, und deshalb ist es lehrreich. „Implementieren und durchtesten" ist Arbeit ohne Wartezeit, dafür wäre `/goal` gebaut. „CI ist grün" ist Warten auf etwas Fremdes, dafür ist `/loop` gebaut. Beides in einer Bedingung ergibt einen Auftrag, der von beiden Werkzeugen etwas will. In der Praxis funktioniert die Schleife hier gut, weil das Warten auf die CI den Takt ohnehin vorgibt.
+
+Wenn es beim Warten bleibt, lohnt noch ein Blick auf das [Monitor-Werkzeug](https://code.claude.com/docs/en/tools-reference). Die Dokumentation weist selbst darauf hin, dass Claude bei einer selbstgetakteten Schleife stattdessen Monitor greifen kann. Das lässt ein Skript im Hintergrund laufen und reicht jede Ausgabezeile durch, statt in Abständen nachzuschauen. Wer auf ein Log wartet, spart sich damit das Pollen komplett.
+
+## Was die Pause kostet
+
+Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife lange erträglich bleibt, und sie haben einen Haken, den du kennen solltest.
+
+Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [wenn du über ein Abo arbeitest](https://code.claude.com/docs/en/prompt-caching):
+
+> On a Claude subscription, Claude Code requests the one-hour TTL automatically.
+
+Im Abo bleibt der zwischengespeicherte Kontext damit über jede Pause hinweg warm, die eine Schleife überhaupt wählen kann. Die Pause kostet dich nichts.
+
+Jetzt der Haken. Sobald du über dein Kontingent hinaus arbeitest und Usage Credits verbrauchst, schaltet Claude Code laut derselben Seite automatisch auf fünf Minuten herunter. Auf einem API-Schlüssel und bei den Cloud-Anbietern sind fünf Minuten ohnehin der Standard. Und dann gilt:
+
+> After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
+
+Eine selbstgewählte Pause von zwanzig Minuten liegt in diesem Fall weit jenseits des Fensters. Jeder Durchlauf beginnt dann damit, den kompletten Kontext neu zu verarbeiten. Genau die Pause, die dich schonen sollte, wird dadurch teuer. Wer per API oder über Bedrock arbeitet und lange Schleifen fahren will, sollte deshalb entweder feste kurze Intervalle setzen oder die Umgebungsvariable `ENABLE_PROMPT_CACHING_1H` benutzen, die dieselbe Seite dafür nennt.
+
+## Wann sich eine Schleife nicht lohnt
+
+Bis hierhin ging es darum, wie Schleifen funktionieren. Die wichtigere Frage steht davor: ob du überhaupt eine brauchst. Aus dem, was oben steht, ergeben sich vier Bedingungen. Fehlt eine davon, kostet die Schleife mehr, als sie einbringt.
+
+**Wiederholt sich die Aufgabe?** Eine Schleife rechnet sich über viele Durchläufe. `/loop` lebt in der Sitzung und verfällt nach sieben Tagen, `/goal` endet mit der Bedingung. Für eine einmalige Sache ist ein gut gezielter Prompt schneller und billiger. Wer etwas einmal macht, hat kein Schleifenproblem. Er hat ein Skript.
+
+**Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er urteilt nur über das, was im Gespräch sichtbar ist. Ohne Test, Typprüfung, Build oder Linter, dessen Ergebnis im Transkript landet, benotet am Ende doch wieder der, der die Arbeit gemacht hat. Dann sitzt du nach jedem Durchlauf wieder selbst da und liest Diffs, also genau die Arbeit, die die Schleife abnehmen sollte.
+
+**Trägt dein Tarif das?** Eine Schleife liest Kontext neu, probiert Dinge aus und verwirft sie. Das kostet Tokens, ob am Ende etwas Brauchbares herauskommt oder nicht. Wie im Abschnitt davor beschrieben, wird es außerhalb eines Abos zusätzlich teuer, weil jede längere Pause den zwischengespeicherten Kontext reißt. Loop Engineering wirkt selbstverständlich, wenn Tokens praktisch nichts kosten, und rücksichtslos, wenn jeder Durchlauf auf der Rechnung steht.
+
+**Kann der Agent ausprobieren, was er baut?** Ohne Logs, ohne lauffähige Umgebung, ohne die Möglichkeit, den eigenen Code auszuführen, iteriert die Schleife blind. Sie produziert dann schnell viel Text, den niemand geprüft hat.
+
+Meine ehrliche Einschätzung dazu: Loop Engineering ist eine echte Technik, und die meisten brauchen sie heute noch nicht. Für einmalige Aufgaben, für Erkundungen und überall dort, wo „fertig" eine Ermessensfrage ist, gewinnt weiterhin ein einzelner, gut gezielter Prompt. Und wenn dein Engpass ohnehin das Review ist, macht eine Schleife die Warteschlange nur länger.
+
 ## Ein Blick von innen
 
 Bis hierhin stand alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt. Ausgelesen habe ich sie aus **Claude Code 2.1.220**. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
@@ -110,7 +160,7 @@ Die interessante Frage ist, wonach das Modell innerhalb dieser Spanne wählt. Da
 
 > A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
 
-Genau so erlebe ich es auch. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht. Bemerkenswert ist, dass dieser Satz in drei Fassungen im Programm liegt. Welche das Modell zu sehen bekommt, hängt davon ab, wie lange sein Prompt-Cache hält. Bei fünf Minuten Haltbarkeit rät derselbe Text zu zweimal rund 270 Sekunden statt achtmal 60, weil jede längere Pause den Cache reißen würde. Die Anweisung rechnet den Cache also mit ein. Was das kostet, steht weiter unten.
+Genau so erlebe ich es auch. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht. Bemerkenswert ist, dass dieser Satz in drei Fassungen im Programm liegt. Welche das Modell zu sehen bekommt, hängt davon ab, wie lange sein Prompt-Cache hält. Bei fünf Minuten Haltbarkeit rät derselbe Text zu zweimal rund 270 Sekunden statt achtmal 60, weil jede längere Pause den Cache reißen würde. Die Anweisung rechnet den Cache also mit ein; die Kosten dahinter stehen weiter oben.
 
 Für die beiden anderen Fälle gilt: Wenn ohnehin etwas anderes das Aufwachen auslöst, ist ein langer Sicherungs-Herzschlag ab 1200 Sekunden vorgesehen. Und wenn es gar nichts Bestimmtes zu beobachten gibt, lautet die Vorgabe 1200 bis 1800 Sekunden. Ausdrücklich verboten ist das Pollen um des Pollens willen:
 
@@ -153,56 +203,6 @@ Diese Unterscheidung verdanke ich einem Gegenleser. Meine erste Fassung behaupte
 
 Damit steht der Unterschied zwischen den beiden auch technisch da. Bei `/loop` bekomme ich ein Werkzeug und entscheide selbst über den Takt. Bei `/goal` bekomme ich eine Anweisung und einen Türsteher.
 
-## Praxis: eine Bedingung statt fünfzehnmal „weiter"
-
-So sieht das bei mir im Alltag aus:
-
-```text
-/loop implementiere das Feature wie besprochen. Du bist erst fertig,
-wenn alles meinen Vorgaben entspricht, alles durchgetestet ist, der
-Pull Request bereit ist und die CI grün ist.
-```
-
-Der Effekt ist genau der erhoffte. Normalerweise bleibt der Agent nach einem Zwischenstand stehen und bittet um Bestätigung, weiterzumachen. Das passiert hier nicht. Es wird periodisch weitergearbeitet, bis das Ziel erreicht ist.
-
-Nur ein einziges Mal habe ich erlebt, dass ein Agent von sich aus aus der Schleife ausgebrochen ist und um eine Richtungsentscheidung gebeten hat, nämlich als er eine Sicherheitslücke entdeckt hatte. Das ist eine schöne Beobachtung, aber ich möchte sie nicht zur Regel erklären. Die Dokumentation beschreibt Zurückhaltung ausdrücklich nur für den **eingebauten** Wartungs-Prompt. Bei einem eigenen Prompt wie oben gibt es diese Zusage nicht. Was ich gesehen habe, war Ermessen des Modells und kein Sicherheitsnetz, auf das du bauen solltest.
-
-Streng genommen ist mein Beispiel ein Mischfall, und deshalb ist es lehrreich. „Implementieren und durchtesten" ist Arbeit ohne Wartezeit, dafür wäre `/goal` gebaut. „CI ist grün" ist Warten auf etwas Fremdes, dafür ist `/loop` gebaut. Beides in einer Bedingung ergibt einen Auftrag, der von beiden Werkzeugen etwas will. In der Praxis funktioniert die Schleife hier gut, weil das Warten auf die CI den Takt ohnehin vorgibt.
-
-> 🔁 **Merke:** Wartest du auf etwas außerhalb deiner Sitzung, nimm `/loop`. Arbeitest du auf einen prüfbaren Endzustand hin, nimm `/goal`. Willst du dieselbe Prüfung in jeder Sitzung, nimm einen Stop-Hook.
-
-Wenn es beim Warten bleibt, lohnt noch ein Blick auf das [Monitor-Werkzeug](https://code.claude.com/docs/en/tools-reference). Die Dokumentation weist selbst darauf hin, dass Claude bei einer selbstgetakteten Schleife stattdessen Monitor greifen kann. Das lässt ein Skript im Hintergrund laufen und reicht jede Ausgabezeile durch, statt in Abständen nachzuschauen. Wer auf ein Log wartet, spart sich damit das Pollen komplett.
-
-## Was die Pause kostet
-
-Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife lange erträglich bleibt, und sie haben einen Haken, den du kennen solltest.
-
-Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [wenn du über ein Abo arbeitest](https://code.claude.com/docs/en/prompt-caching):
-
-> On a Claude subscription, Claude Code requests the one-hour TTL automatically.
-
-Im Abo bleibt der zwischengespeicherte Kontext damit über jede Pause hinweg warm, die eine Schleife überhaupt wählen kann. Die Pause kostet dich nichts.
-
-Jetzt der Haken. Sobald du über dein Kontingent hinaus arbeitest und Usage Credits verbrauchst, schaltet Claude Code laut derselben Seite automatisch auf fünf Minuten herunter. Auf einem API-Schlüssel und bei den Cloud-Anbietern sind fünf Minuten ohnehin der Standard. Und dann gilt:
-
-> After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
-
-Eine selbstgewählte Pause von zwanzig Minuten liegt in diesem Fall weit jenseits des Fensters. Jeder Durchlauf beginnt dann damit, den kompletten Kontext neu zu verarbeiten. Genau die Pause, die dich schonen sollte, wird dadurch teuer. Wer per API oder über Bedrock arbeitet und lange Schleifen fahren will, sollte deshalb entweder feste kurze Intervalle setzen oder die Umgebungsvariable `ENABLE_PROMPT_CACHING_1H` benutzen, die dieselbe Seite dafür nennt.
-
-## Wann sich eine Schleife nicht lohnt
-
-Bis hierhin ging es darum, wie Schleifen funktionieren. Die wichtigere Frage steht davor: ob du überhaupt eine brauchst. Aus dem, was oben steht, ergeben sich vier Bedingungen. Fehlt eine davon, kostet die Schleife mehr, als sie einbringt.
-
-**Wiederholt sich die Aufgabe?** Eine Schleife rechnet sich über viele Durchläufe. `/loop` lebt in der Sitzung und verfällt nach sieben Tagen, `/goal` endet mit der Bedingung. Für eine einmalige Sache ist ein gut gezielter Prompt schneller und billiger. Wer etwas einmal macht, hat kein Schleifenproblem. Er hat ein Skript.
-
-**Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er urteilt nur über das, was im Gespräch sichtbar ist. Ohne Test, Typprüfung, Build oder Linter, dessen Ergebnis im Transkript landet, benotet am Ende doch wieder der, der die Arbeit gemacht hat. Dann sitzt du nach jedem Durchlauf wieder selbst da und liest Diffs, also genau die Arbeit, die die Schleife abnehmen sollte.
-
-**Trägt dein Tarif das?** Eine Schleife liest Kontext neu, probiert Dinge aus und verwirft sie. Das kostet Tokens, ob am Ende etwas Brauchbares herauskommt oder nicht. Wie im Abschnitt davor beschrieben, wird es außerhalb eines Abos zusätzlich teuer, weil jede längere Pause den zwischengespeicherten Kontext reißt. Loop Engineering wirkt selbstverständlich, wenn Tokens praktisch nichts kosten, und rücksichtslos, wenn jeder Durchlauf auf der Rechnung steht.
-
-**Kann der Agent ausprobieren, was er baut?** Ohne Logs, ohne lauffähige Umgebung, ohne die Möglichkeit, den eigenen Code auszuführen, iteriert die Schleife blind. Sie produziert dann schnell viel Text, den niemand geprüft hat.
-
-Meine ehrliche Einschätzung dazu: Loop Engineering ist eine echte Technik, und die meisten brauchen sie heute noch nicht. Für einmalige Aufgaben, für Erkundungen und überall dort, wo „fertig" eine Ermessensfrage ist, gewinnt weiterhin ein einzelner, gut gezielter Prompt. Und wenn dein Engpass ohnehin das Review ist, macht eine Schleife die Warteschlange nur länger.
-
 ## Wer sonst Schleifen dreht
 
 Bleibt die Frage, ob das eine Eigenheit von Claude Code ist. Hier ist eine Übersicht der gängigen Werkzeuge, jeweils an ihrer eigenen Doku geprüft (Stand 27. Juli 2026):
@@ -237,7 +237,7 @@ Sechs Dinge nehme ich mit:
 
 - **Die meisten brauchen noch keine Schleife.** Wiederholt sich die Aufgabe nicht, oder kann niemand außer dem Agenten Nein sagen, gewinnt weiterhin ein einzelner guter Prompt.
 - **Die Abbruchbedingung ist die eigentliche Arbeit.** Der Rest ist ein Befehl mit einem Zeitintervall.
-- **`/loop` wartet, `/goal` nicht.** Wartest du auf Fremdes, nimm die Schleife. Arbeitest du auf einen Endzustand hin, nimm das Ziel.
+- **`/loop` wartet, `/goal` nicht.** Wartest du auf etwas Fremdes wie den grünen CI-Run, der gleich einen guten Takt vorgibt, nimm die Schleife. Arbeitest du auf einen Endzustand hin, nimm das Ziel.
 - **Lass nicht dasselbe Modell prüfen, das gearbeitet hat.** `/goal` holt dafür ein eigenes Modell dazu.
 - **Pausen sind im Abo gratis und per API teuer.** Ein Cache, der eine Stunde hält, gegen einen, der nach fünf Minuten kalt ist.
 - **Selbstständiges Abbrechen ist Ermessen, keine Zusage.** Verlasse dich nicht darauf, dass der Agent bei einem Fund von allein innehält.
