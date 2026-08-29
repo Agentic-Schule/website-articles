@@ -1,5 +1,5 @@
 ---
-title: 'Loop Engineering: Der Name kam drei Monate nach dem Befehl'
+title: 'Loop Engineering: Wenn der Agent sich selbst weiterschickt'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -18,57 +18,33 @@ language: de
 header: header.jpg
 ---
 
-Im Juni 2026 bekam eine Arbeitsweise einen Namen: Loop Engineering. Wer bis dahin seinem Agenten fünfzehnmal „mach weiter" getippt hatte, schrieb plötzlich Schleifen. Innerhalb weniger Wochen gab es Anleitungen, Kurse und Diagramme dazu.
+Loop Engineering heißt, dass du deinem Agenten nicht mehr fünfzehnmal „mach weiter" tippst. Du schreibst einmal auf, was passieren soll und wann Schluss ist, und eine Schleife erledigt den Rest.
 
-**Der Befehl, um den es geht, war zu diesem Zeitpunkt schon drei Monate alt. Dieser Artikel zeigt, was `/loop` wirklich tut, wie es sich von `/goal` unterscheidet, was die Pausen dazwischen kosten, wann sich das Ganze überhaupt lohnt und welche anderen Werkzeuge inzwischen Schleifen drehen.**
+**In Claude Code steckt das hinter zwei Befehlen, `/loop` und `/goal`, und die beiden arbeiten grundverschieden. Dieser Artikel zeigt, was sie tatsächlich tun, was die Pausen dazwischen kosten, wann sich eine Schleife überhaupt lohnt und welche anderen Werkzeuge mitziehen.**
 
 ## Inhalt
 
 [[toc]]
 
-## Der Satz, mit dem alles anfing
-
-Auf Fortunes Konferenz Brainstorm Tech saß Boris Cherny auf der Bühne, Erfinder und Chef von Claude Code bei Anthropic. Fortune zitiert ihn am [11. Juni 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) so:
-
-> If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
-
-Dazu sagte er, er habe seit etwa acht Monaten keine Zeile Code mehr von Hand geschrieben, und er verwalte an manchen Morgen einige hundert Agenten.
-
-In der weiteren Verbreitung wurde daraus ein zugespitzter Satz, der bis heute überall kursiert: „I don't prompt Claude anymore." Ich habe für diese Fassung keine Primärquelle gefunden, nur Zitate über Zitate. Und selbst wenn sie so gefallen ist, sollte man sie nicht wörtlich nehmen. Hier bewirbt der Chef eines Produkts sein eigenes Produkt, auf einer Bühne, vor Publikum. Wer selbst Schleifen laufen lässt, weiß, dass man sehr wohl eingreift, nachjustiert und abbricht. Die Richtung stimmt trotzdem, und das reicht als Anlass.
-
 ## Was Loop Engineering bedeutet
 
-Die knappste Definition stammt von Addy Osmani, der den Begriff Anfang Juni [in einem Artikel ausbuchstabiert hat](https://addyosmani.com/blog/loop-engineering/):
+Die knappste Definition stammt von Addy Osmani, der den Begriff [in einem Artikel ausbuchstabiert hat](https://addyosmani.com/blog/loop-engineering/):
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
 Mehr ist es nicht. Du hörst auf, der Taktgeber zu sein. Statt nach jedem Zwischenstand „weiter" zu tippen, schreibst du einmal auf, was passieren soll und wann Schluss ist.
+
+Wie weit das gehen kann, beschreibt Boris Cherny, Erfinder und Chef von Claude Code bei Anthropic. Fortune zitiert ihn [am 11. Juni 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) von der Bühne der Konferenz Brainstorm Tech:
+
+> If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
+
+In der weiteren Verbreitung wurde daraus ein zugespitzter Satz, der bis heute kursiert: „I don't prompt Claude anymore." Für diese Fassung habe ich keine Primärquelle gefunden, und wörtlich nehmen sollte man sie ohnehin nicht. Hier bewirbt der Chef eines Produkts sein eigenes Produkt, auf einer Bühne, vor Publikum. Wer selbst Schleifen laufen lässt, weiß, dass man sehr wohl eingreift, nachjustiert und abbricht.
 
 Die deutschsprachige codecentric hat den Begriff [in eine brauchbare Schichtung eingeordnet](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context Engineering sorgt dafür, dass im einzelnen Prompt die richtigen Informationen stehen. Harness Engineering baut das Geländer drumherum, also Werkzeuge, Skills, Hooks und Sandboxes. Loop Engineering ist die Schicht darüber:
 
 > the system that repeatedly triggers an AI agent, spawns helper agents, verifies results, and feeds itself, without a human prompting turn by turn
 
 Wichtig ist der Zusatz aus demselben Artikel: Jede Schicht erbt die Schwächen der darunter. Eine Schleife um einen Agenten, der seinen Kontext nicht im Griff hat, dreht nur schneller im Kreis.
-
-## Der Befehl war vor dem Namen da
-
-Jetzt der Teil, der mich beim Nachschlagen überrascht hat. Anthropics [Changelog](https://code.claude.com/docs/en/changelog) führt für Version 2.1.71 vom **7. März 2026** diesen Eintrag:
-
-> Added `/loop` command to run a prompt or slash command on a recurring interval (e.g. `/loop 5m check the deploy`)
-
-Das ist drei Monate vor dem Kamingespräch und vor Osmanis Artikel. Und es blieb nicht bei der ersten Fassung. Im selben Changelog stehen für die Wochen danach:
-
-| Version | Datum | Was dazukam |
-| --- | --- | --- |
-| 2.1.73 | 11.03.2026 | `/loop` auch auf Bedrock, Vertex und Foundry verfügbar |
-| 2.1.85 | 26.03.2026 | Zeitstempel im Transkript, wenn eine Schleife feuert |
-| 2.1.105 | 13.04.2026 | `/proactive` wird zum Alias für `/loop` |
-| 2.1.113 | 17.04.2026 | Esc bricht einen wartenden Durchlauf ab |
-| 2.1.140 | 12.05.2026 | keine überflüssigen Aufwachvorgänge mehr beim Pollen |
-
-Dazwischen liegt die Selbsttaktung, die Anthropic in der Wochenübersicht für den [6. bis 10. April](https://code.claude.com/docs/en/whats-new/2026-w15) ankündigte. Der Befehl war also längst durchiteriert, als die Timeline ihn entdeckte.
-
-Das ist kein Vorwurf an irgendwen. Es ist nur eine nützliche Beobachtung über die Reihenfolge: Erst baut jemand eine Funktion, dann benutzen Leute sie, und irgendwann bekommt die Praxis einen Namen. Wer neu dazukommt, erlebt die Reihenfolge umgekehrt und hält den Namen für die Neuigkeit.
 
 ## Was `/loop` tatsächlich tut
 
@@ -82,7 +58,7 @@ Die [Dokumentation](https://code.claude.com/docs/en/scheduled-tasks) beschreibt 
 
 Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie lange er wartet. Die Doku beschreibt das so: kurze Abstände, solange ein Build läuft oder ein Pull Request in Bewegung ist, längere, wenn nichts ansteht. Solange tatsächlich etwas passiert, bleiben die Abstände kurz. Der gewählte Abstand und die Begründung dafür werden am Ende jedes Durchlaufs ausgegeben.
 
-Ein bloßes `/loop` ohne alles startet einen eingebauten Wartungs-Prompt. Der arbeitet in fester Reihenfolge: erst unerledigte Arbeit aus dem Gespräch fortsetzen, dann den Pull Request des aktuellen Branch pflegen, also Review-Kommentare, rote CI und Merge-Konflikte, und wenn nichts davon ansteht, Aufräumdurchgänge wie Bug-Jagd oder Vereinfachung. Neue Initiativen startet er nicht. Irreversible Aktionen wie Pushen oder Löschen führt er nur aus, wenn sie etwas fortsetzen, das im Transkript schon genehmigt wurde.
+`/proactive` ist übrigens ein Alias und tut dasselbe. Ein bloßes `/loop` ohne alles startet einen eingebauten Wartungs-Prompt. Der arbeitet in fester Reihenfolge: erst unerledigte Arbeit aus dem Gespräch fortsetzen, dann den Pull Request des aktuellen Branch pflegen, also Review-Kommentare, rote CI und Merge-Konflikte, und wenn nichts davon ansteht, Aufräumdurchgänge wie Bug-Jagd oder Vereinfachung. Neue Initiativen startet er nicht. Irreversible Aktionen wie Pushen oder Löschen führt er nur aus, wenn sie etwas fortsetzen, das im Transkript schon genehmigt wurde.
 
 Diesen Standard kannst du ersetzen. Eine Datei `.claude/loop.md` im Projekt oder `~/.claude/loop.md` für dich persönlich tritt an seine Stelle. Das ist einfaches Markdown ohne vorgeschriebene Struktur, geschrieben so, als würdest du den Prompt direkt eintippen. Änderungen daran greifen beim nächsten Durchlauf, du kannst also nachschärfen, während die Schleife läuft.
 
@@ -249,7 +225,7 @@ Das ist dieselbe Idee mit einer anderen Bedienoberfläche. Und es zeigt, wohin d
 
 ## Fazit
 
-Loop Engineering ist kein neues Handwerk. Es ist ein Name für etwas, das in den Werkzeugen schon eingebaut war, und der Name ist nützlich, weil er eine Frage stellt, die man vorher selten laut gestellt hat: Wer entscheidet eigentlich, wann Schluss ist?
+Im Kern läuft Loop Engineering auf eine einzige Frage hinaus: Wer entscheidet, wann Schluss ist? Solange du das bist, tippst du „weiter". Sobald du es aufschreibst, hast du eine Schleife.
 
 Sechs Dinge nehme ich mit:
 
@@ -260,7 +236,7 @@ Sechs Dinge nehme ich mit:
 - **Pausen sind im Abo gratis und per API teuer.** Ein Cache, der eine Stunde hält, gegen einen, der nach fünf Minuten kalt ist.
 - **Selbstständiges Abbrechen ist Ermessen, keine Zusage.** Verlasse dich nicht darauf, dass der Agent bei einem Fund von allein innehält.
 
-Und wenn in ein paar Wochen der nächste Begriff durch die Timeline geht, lohnt vorher ein Blick ins Changelog. Ziemlich oft steht die Funktion da schon eine Weile drin.
+Und wenn du dich zwischen den beiden Befehlen nicht entscheiden magst, fang mit `/goal` an. Eine prüfbare Abbruchbedingung zwingt dich ohnehin dazu, das Problem vorher zu Ende zu denken.
 
 **Wie haltet ihr das?** Lasst ihr Schleifen laufen, und wenn ja, mit welcher Abbruchbedingung? Ich freue mich über jede Nachricht.
 

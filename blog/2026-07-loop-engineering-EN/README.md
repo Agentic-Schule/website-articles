@@ -1,5 +1,5 @@
 ---
-title: 'Loop Engineering: The Name Arrived Three Months After the Command'
+title: 'Loop Engineering: When the Agent Prompts Itself'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
@@ -18,57 +18,33 @@ language: en
 header: header.jpg
 ---
 
-In June 2026 a way of working got a name: loop engineering. Anyone who had been typing "keep going" to their agent fifteen times a session was suddenly writing loops. Within weeks there were guides, courses and diagrams about it.
+Loop engineering means you stop typing "keep going" to your agent fifteen times a session. You write down once what should happen and when it is finished, and a loop takes care of the rest.
 
-**The command at the centre of all this was already three months old by then. This article shows what `/loop` actually does, how it differs from `/goal`, what the pauses in between cost you, when the whole thing is worth it at all, and which other tools now run loops of their own.**
+**In Claude Code this sits behind two commands, `/loop` and `/goal`, and the two work in fundamentally different ways. This article shows what they actually do, what the pauses in between cost you, when a loop is worth it at all, and which other tools are keeping up.**
 
 ## Contents
 
 [[toc]]
 
-## The sentence that started it
-
-At Fortune's Brainstorm Tech conference, Boris Cherny sat on stage, creator and head of Claude Code at Anthropic. Fortune quotes him on [11 June 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/):
-
-> If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
-
-He added that he had not written a line of code by hand in about eight months, and that on some mornings he manages a few hundred agents.
-
-As it spread, this turned into a sharper line that is still circulating: "I don't prompt Claude anymore." I could not find a primary source for that version, only quotes of quotes. And even if it was said exactly that way, it should not be taken literally. This is the head of a product promoting his own product, on a stage, in front of an audience. Anyone who actually runs loops knows that you very much do intervene, adjust and abort. The direction still holds, and that is enough as a starting point.
-
 ## What loop engineering means
 
-The tightest definition comes from Addy Osmani, who [spelled the term out in early June](https://addyosmani.com/blog/loop-engineering/):
+The tightest definition comes from Addy Osmani, who [spelled the term out in an article](https://addyosmani.com/blog/loop-engineering/):
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
 That is all it is. You stop being the metronome. Instead of typing "keep going" after every intermediate result, you write down once what should happen and when it is finished.
+
+How far that can go is described by Boris Cherny, creator and head of Claude Code at Anthropic. Fortune quotes him [on 11 June 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) from the stage of the Brainstorm Tech conference:
+
+> If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
+
+As it spread, this turned into a sharper line that is still circulating: "I don't prompt Claude anymore." I could not find a primary source for that version, and it should not be taken literally anyway. This is the head of a product promoting his own product, on a stage, in front of an audience. Anyone who actually runs loops knows that you very much do intervene, adjust and abort.
 
 The German consultancy codecentric has [placed the term in a useful layering](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context engineering makes sure the right information is in the individual prompt. Harness engineering builds the railing around it: tools, skills, hooks and sandboxes. Loop engineering is the layer on top:
 
 > the system that repeatedly triggers an AI agent, spawns helper agents, verifies results, and feeds itself, without a human prompting turn by turn
 
 The important caveat comes from the same article: every layer inherits the weaknesses of the one below it. A loop around an agent that cannot keep its context straight just goes round in circles faster.
-
-## The command was there before the name
-
-Now the part that surprised me while looking things up. Anthropic's [changelog](https://code.claude.com/docs/en/changelog) has this entry for version 2.1.71, dated **7 March 2026**:
-
-> Added `/loop` command to run a prompt or slash command on a recurring interval (e.g. `/loop 5m check the deploy`)
-
-That is three months before the fireside chat and before Osmani's article. And it did not stop at the first version. The same changelog records the following in the weeks after:
-
-| Version | Date | What was added |
-| --- | --- | --- |
-| 2.1.73 | 11.03.2026 | `/loop` also available on Bedrock, Vertex and Foundry |
-| 2.1.85 | 26.03.2026 | timestamps in the transcript when a loop fires |
-| 2.1.105 | 13.04.2026 | `/proactive` becomes an alias for `/loop` |
-| 2.1.113 | 17.04.2026 | Esc cancels a pending iteration |
-| 2.1.140 | 12.05.2026 | no more redundant wakeups when polling |
-
-In between came self-pacing, which Anthropic announced in the weekly digest for [6 to 10 April](https://code.claude.com/docs/en/whats-new/2026-w15). So the command had long been through several rounds of polish by the time the timeline discovered it.
-
-This is not a reproach aimed at anyone. It is simply a useful observation about the order of things. Somebody builds a feature, people use it, and at some point the practice gets a name. Whoever arrives later experiences that order in reverse and mistakes the name for the news.
 
 ## What `/loop` actually does
 
@@ -82,7 +58,7 @@ The [documentation](https://code.claude.com/docs/en/scheduled-tasks) describes t
 
 In self-paced mode, Claude decides after each iteration how long to wait. The docs describe it like this: short waits while a build is finishing or a pull request is active, longer ones when nothing is pending. As long as something is actually happening the delays stay short. The chosen delay and the reason for it are printed at the end of each iteration.
 
-A bare `/loop` with nothing else starts a built-in maintenance prompt. It works in a fixed order: first continue unfinished work from the conversation, then tend to the current branch's pull request, meaning review comments, red CI and merge conflicts, and when none of that is pending, run cleanup passes such as bug hunts or simplification. It starts no new initiatives. Irreversible actions such as pushing or deleting only happen when they continue something the transcript already authorized.
+`/proactive` is an alias, by the way, and does the same thing. A bare `/loop` with nothing else starts a built-in maintenance prompt. It works in a fixed order: first continue unfinished work from the conversation, then tend to the current branch's pull request, meaning review comments, red CI and merge conflicts, and when none of that is pending, run cleanup passes such as bug hunts or simplification. It starts no new initiatives. Irreversible actions such as pushing or deleting only happen when they continue something the transcript already authorized.
 
 You can replace that default. A `.claude/loop.md` file in the project, or `~/.claude/loop.md` for you personally, takes its place. It is plain Markdown with no required structure, written as if you were typing the prompt directly. Edits take effect on the next iteration, so you can sharpen the instructions while the loop is running.
 
@@ -249,7 +225,7 @@ Same idea, different interface. And it shows where this is heading: the capabili
 
 ## Conclusion
 
-Loop engineering is not a new craft. It is a name for something already built into the tools, and the name is useful because it raises a question that was rarely asked out loud before: who actually decides when the work is finished?
+At its core, loop engineering comes down to a single question: who decides when the work is finished? As long as that is you, you keep typing "keep going". The moment you write it down, you have a loop.
 
 Six things I take away:
 
@@ -260,7 +236,7 @@ Six things I take away:
 - **Pauses are free on a subscription and expensive through the API.** A cache that holds for an hour against one that goes cold after five minutes.
 - **Breaking out on its own is judgement, not a promise.** Do not rely on the agent stopping by itself when it finds something.
 
-And when the next term goes round the timeline in a few weeks, it is worth a look at the changelog first. Fairly often the feature has been sitting in there for a while.
+And if you cannot decide between the two commands, start with `/goal`. A checkable completion condition forces you to think the problem through beforehand anyway.
 
 **How do you handle this?** Do you run loops, and if so with what completion condition? I am glad to hear from you.
 
