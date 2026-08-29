@@ -116,7 +116,7 @@ More than once I have seen an agent break out of the loop on its own and ask for
 
 Strictly speaking my example is a hybrid, and that is what makes it instructive. "Implement and test" is work without waiting, which is what `/goal` was built for. "CI is green" is waiting on something external, which is what `/loop` was built for. Both in one condition produces an instruction that wants something from each tool. In practice the loop works well here, because waiting for CI sets the cadence anyway.
 
-If it comes down to waiting, the [Monitor tool](https://code.claude.com/docs/en/tools-reference) is worth a look. The documentation itself points out that Claude may reach for Monitor instead during a self-paced loop. It runs a script in the background and streams each output line back, rather than checking in at intervals. Anyone waiting on a log saves the polling entirely.
+If it comes down to waiting, the [Monitor tool](https://code.claude.com/docs/en/tools-reference#monitor-tool) is worth a look. The documentation itself points out that Claude may reach for Monitor instead during a self-paced loop. It runs a script in the background and streams each output line back, rather than checking in at intervals. Anyone waiting on a log saves the polling entirely.
 
 ## What the pause costs
 
