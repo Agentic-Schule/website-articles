@@ -18,7 +18,9 @@ language: en
 header: header.jpg
 ---
 
-Loop engineering means you stop typing "keep going" to your agent fifteen times a session. You write down once what should happen and when it is finished, and a loop takes care of the rest.
+How many times a day do you type "keep going" to your agent?
+
+If the answer is "too often", this article is for you. Loop engineering takes that "keep going" off your hands: you write down once what should happen and when it is finished, and a loop takes care of the rest.
 
 **In Claude Code this sits behind two commands, `/loop` and `/goal`, and the two work in fundamentally different ways. This article shows what they actually do, what the pauses in between cost you, when a loop is worth it at all, and which other tools are keeping up.**
 

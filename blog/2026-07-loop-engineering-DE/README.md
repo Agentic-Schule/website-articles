@@ -18,7 +18,9 @@ language: de
 header: header.jpg
 ---
 
-Loop Engineering heißt, dass du deinem Agenten nicht mehr fünfzehnmal „mach weiter" tippst. Du schreibst einmal auf, was passieren soll und wann Schluss ist, und eine Schleife erledigt den Rest.
+Wie oft am Tag tippst du deinem Agenten „mach weiter"?
+
+Wenn die Antwort „zu oft" lautet, ist dieser Artikel für dich. Loop Engineering nimmt dir genau dieses „weiter" ab: Du schreibst einmal auf, was passieren soll und wann Schluss ist, und eine Schleife erledigt den Rest.
 
 **In Claude Code steckt das hinter zwei Befehlen, `/loop` und `/goal`, und die beiden arbeiten grundverschieden. Dieser Artikel zeigt, was sie tatsächlich tun, was die Pausen dazwischen kosten, wann sich eine Schleife überhaupt lohnt und welche anderen Werkzeuge mitziehen.**
 
