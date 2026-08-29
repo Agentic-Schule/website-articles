@@ -148,9 +148,25 @@ So far this has been about how loops work. The more important question comes bef
 
 My honest assessment: loop engineering is a real technique, and most people do not need it yet. For one-off tasks, for exploration, and anywhere "done" is a judgement call, a single well-aimed prompt still wins. And if your bottleneck was review in the first place, a loop only makes the queue longer.
 
+## The overnight run
+
+So much for when a loop is not worth it. There is one case, though, where I love it. Some tasks are simply hard. They need many attempts, again and again against CI, until everything is finally green. That is exactly what I let the agent grind through, all night if that is what it takes.
+
+The stop condition is brutal then:
+
+```text
+/loop implement the plan. Everything tested, everything green on CI.
+No exceptions, no shortcuts. Do not give up until the goal is reached.
+No questions. I am AFK now and have all night.
+```
+
+Whether that last line about the night is really needed, I do not know. But Opus usually wishes me a good night in return and promises everything will be green in the morning. And most of the time it is.
+
+This case hits exactly the conditions that make a loop pay off: CI can say no, the agent can run its own code, and on a subscription the many overnight iterations cost nothing extra. No wonder the loop shines here.
+
 ## A look from the inside
 
-Everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime. I read them out of **Claude Code 2.1.220**. Anthropic changes texts like these without notice, so a later version may well say something different.
+Nearly everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime. I read them out of **Claude Code 2.1.220**. Anthropic changes texts like these without notice, so a later version may well say something different.
 
 **With `/loop` it is a tool.** Self-pacing is not an automatism in the program. The model is handed a tool called `ScheduleWakeup` and sets the next wakeup itself. On the range, its description says plainly:
 
@@ -160,7 +176,7 @@ The interesting question is what the model picks within that range. It is given 
 
 > A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
 
-That is exactly what I see. While a CI run is going, the agent waits roughly as long as my CI usually takes. What is notable is that this sentence sits in the program in three versions. Which one the model gets depends on how long its prompt cache holds. With a five-minute lifetime the same text advises twice about 270 seconds instead of eight times 60, because every longer pause would break the cache. So the instruction factors the cache in; the cost behind it is further up.
+That is exactly what I see. While a CI run is going, the agent waits roughly as long as my CI usually takes. What is notable is that this sentence sits in the program in three versions. Which one the model gets depends on how long its prompt cache holds. With a five-minute lifetime the same text advises twice about 270 seconds instead of eight times 60, because every longer pause would break the cache. So the instruction factors the cache in, exactly the cost that the section "What the pause costs" puts a number on.
 
 For the other two cases: when something else triggers the wakeup anyway, a long fallback heartbeat from 1200 seconds is intended. And when there is nothing specific to watch, the guidance is 1200 to 1800 seconds. Polling for its own sake is explicitly ruled out:
 

@@ -148,9 +148,25 @@ Bis hierhin ging es darum, wie Schleifen funktionieren. Die wichtigere Frage ste
 
 Meine ehrliche Einschätzung dazu: Loop Engineering ist eine echte Technik, und die meisten brauchen sie heute noch nicht. Für einmalige Aufgaben, für Erkundungen und überall dort, wo „fertig" eine Ermessensfrage ist, gewinnt weiterhin ein einzelner, gut gezielter Prompt. Und wenn dein Engpass ohnehin das Review ist, macht eine Schleife die Warteschlange nur länger.
 
+## Der Nachtlauf
+
+So viel dazu, wann sich eine Schleife nicht lohnt. Es gibt aber einen Fall, für den ich sie liebe. Manche Aufgaben sind schlicht hart. Sie brauchen viele Anläufe, immer wieder gegen die CI, bis endlich alles grün ist. Genau dafür lasse ich den Agenten grinden, notfalls die ganze Nacht.
+
+Die Abbruchbedingung ist dann knallhart:
+
+```text
+/loop implementiere den Plan. Alles durchgetestet, alles auf CI grün.
+Keine Ausnahmen, keine Abkürzungen. Gib nicht auf, bis das Ziel erreicht
+ist. Keine Rückfragen. Ich bin jetzt AFK und habe die ganze Nacht Zeit.
+```
+
+Ob der letzte Satz mit der Nacht wirklich nötig ist, weiß ich nicht. Aber Opus wünscht mir daraufhin meist eine gute Nacht und verspricht, dass morgens alles grün ist. Und meistens ist es das dann auch.
+
+Dieser Fall trifft genau die Bedingungen, die eine Schleife lohnend machen: Die CI kann Nein sagen, der Agent kann seinen Code ausführen, und im Abo kosten die vielen Nachtdurchläufe nichts extra. Kein Wunder, dass die Schleife hier glänzt.
+
 ## Ein Blick von innen
 
-Bis hierhin stand alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt. Ausgelesen habe ich sie aus **Claude Code 2.1.220**. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
+Bis hierhin stand weitgehend alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt. Ausgelesen habe ich sie aus **Claude Code 2.1.220**. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
 
 **Bei `/loop` ist es ein Werkzeug.** Die Selbsttaktung ist kein Automatismus im Programm. Das Modell bekommt ein Werkzeug namens `ScheduleWakeup` und setzt den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
 
@@ -160,7 +176,7 @@ Die interessante Frage ist, wonach das Modell innerhalb dieser Spanne wählt. Da
 
 > A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
 
-Genau so erlebe ich es auch. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht. Bemerkenswert ist, dass dieser Satz in drei Fassungen im Programm liegt. Welche das Modell zu sehen bekommt, hängt davon ab, wie lange sein Prompt-Cache hält. Bei fünf Minuten Haltbarkeit rät derselbe Text zu zweimal rund 270 Sekunden statt achtmal 60, weil jede längere Pause den Cache reißen würde. Die Anweisung rechnet den Cache also mit ein; die Kosten dahinter stehen weiter oben.
+Genau so erlebe ich es auch. Bei einem laufenden CI-Durchlauf wartet der Agent ungefähr so lange, wie mein CI üblicherweise braucht. Bemerkenswert ist, dass dieser Satz in drei Fassungen im Programm liegt. Welche das Modell zu sehen bekommt, hängt davon ab, wie lange sein Prompt-Cache hält. Bei fünf Minuten Haltbarkeit rät derselbe Text zu zweimal rund 270 Sekunden statt achtmal 60, weil jede längere Pause den Cache reißen würde. Die Anweisung rechnet den Cache also mit ein, genau die Kosten, die der Abschnitt „Was die Pause kostet" beziffert.
 
 Für die beiden anderen Fälle gilt: Wenn ohnehin etwas anderes das Aufwachen auslöst, ist ein langer Sicherungs-Herzschlag ab 1200 Sekunden vorgesehen. Und wenn es gar nichts Bestimmtes zu beobachten gibt, lautet die Vorgabe 1200 bis 1800 Sekunden. Ausdrücklich verboten ist das Pollen um des Pollens willen:
 
