@@ -19,7 +19,8 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 ## Aufbau eines Artikels
 
 - **Fette These direkt nach dem Frontmatter**, ein Absatz, der den Kern vorwegnimmt. Danach `## Inhalt` (bzw. `## Contents`) mit `[[toc]]`.
-- **Problem, dann gescheiterte Versuche, dann Lösung, dann Fazit mit Handlungsaufruf.** Bei Vergleichen gern nummerierte „Idee 1 … Idee 5" oder Schritte.
+- **Beginne mit dem „Warum".** Erst die Motivation oder das Problem, dann der Weg dahin, dann das Fazit. Die konkrete Form richtet sich nach dem Artikeltyp: ein Tutorial läuft Schritt für Schritt, ein Meinungsstück von Problem zu Lösung, ein Überblick Thema für Thema. Kein festes Schema erzwingen.
+- Optionale Mittel für Meinungs- und Deep-Dive-Artikel: gescheiterte Versuche durchspielen, bevor die Lösung kommt, oder Varianten als nummerierte „Idee 1 … Idee 5" gegenüberstellen. Kein Muss.
 - **Brückensätze am Sektionsende**, die die nächste Sektion ankündigen. „Doch bei aller Begeisterung: Claude Code ist nicht perfekt."
 - **Überschriften als Frage, Imperativ/Infinitiv oder „Thema: Untertitel".** „Warum ein Terminal?", „Den MCP-Server einrichten", „Herausforderung: veraltetes Wissen". Kapitel schließen mit „Fazit" oder „Was haben wir gelernt?".
 - **Abschluss:** persönliches Urteil plus Handlungsaufruf („Fang einfach an."), danach Feedback-Einladung und eine Danksagung in `<small>`.
