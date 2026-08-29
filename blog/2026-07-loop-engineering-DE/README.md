@@ -76,7 +76,7 @@ Und noch eine Unterscheidung, die in der Praxis für Verwirrung sorgt. Die Dokum
 
 > auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
 
-Dass der Agent aufhört zu fragen „soll ich weitermachen", kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt.
+Dass der Agent aufhört zu fragen „soll ich weitermachen", kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt. Willst du auch diese Werkzeug-Dialoge los, wechsle in den **Auto Mode**: Im Terminal schaltest du mit `Shift+Tab` durch die [Berechtigungsmodi](https://code.claude.com/docs/en/permission-modes), bis „auto" dasteht. Dann gibt ein Klassifizierer die Aufrufe frei, statt bei jedem nachzufragen.
 
 > 🔁 **Merke:** Wartest du auf etwas außerhalb deiner Sitzung, nimm `/loop`. Arbeitest du auf einen prüfbaren Endzustand hin, nimm `/goal`. Willst du dieselbe Prüfung in jeder Sitzung, nimm einen Stop-Hook.
 

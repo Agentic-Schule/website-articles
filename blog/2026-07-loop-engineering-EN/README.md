@@ -76,7 +76,7 @@ And one more distinction that causes confusion in practice. The documentation se
 
 > auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
 
-The agent no longer asking "shall I continue" comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up.
+The agent no longer asking "shall I continue" comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up. To get rid of those per-tool dialogs too, switch to **auto mode**: in the terminal, press `Shift+Tab` to cycle the [permission modes](https://code.claude.com/docs/en/permission-modes) until it shows "auto". A classifier then approves the calls instead of asking about each one.
 
 > 🔁 **Rule of thumb:** waiting on something outside your session, use `/loop`. Working toward a verifiable end state, use `/goal`. Wanting the same check in every session, use a stop hook.
 
