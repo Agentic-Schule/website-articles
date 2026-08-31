@@ -96,7 +96,7 @@ Im selbstgetakteten Modus entscheidet Claude nach jedem Durchlauf selbst, wie la
 
 Diesen Standard kannst du ersetzen. Eine Datei `.claude/loop.md` im Projekt oder `~/.claude/loop.md` für dich persönlich tritt an seine Stelle. Das ist einfaches Markdown ohne vorgeschriebene Struktur, geschrieben so, als würdest du den Prompt direkt eintippen. Änderungen daran greifen beim nächsten Durchlauf, du kannst also nachschärfen, während die Schleife läuft.
 
-Ein paar Grenzen solltest du kennen. Die Schleife lebt in der Sitzung und endet mit ihr. Ein `--resume` holt sie zurück, aber nach sieben Tagen verfällt sie endgültig. Esc bricht einen wartenden Durchlauf ab. Und im selbstgetakteten Modus kann Claude von sich aus Schluss machen, wenn er die Arbeit für erledigt hält. Vergisst er beides, also weder neu planen noch stoppen, plant Claude Code einen einzigen Nachzügler nach etwa zwanzig Minuten und beendet die Schleife dann.
+Ein paar Grenzen solltest du kennen. Die Schleife lebt in der Sitzung. Eine frische Konversation beendet sie, aber ein `--resume` holt sie zurück, solange sie nicht verfallen ist. Verfallen ist sie sieben Tage nach dem Anlegen: Dann feuert sie ein letztes Mal und löscht sich. Esc bricht einen wartenden Durchlauf ab. Und im selbstgetakteten Modus kann Claude von sich aus Schluss machen, wenn er die Arbeit für erledigt hält. Vergisst er beides, also weder neu planen noch stoppen, plant Claude Code einen einzigen Nachzügler nach etwa zwanzig Minuten und beendet die Schleife dann.
 
 > ⚠️ Auf Amazon Bedrock, Claude Platform on AWS, Google Clouds Agent Platform und Microsoft Foundry gilt das nicht. Dort läuft ein Prompt ohne Intervall in einem festen Zehn-Minuten-Takt, und `loop.md` wird gar nicht erst gelesen.
 
@@ -105,7 +105,7 @@ Ein paar Grenzen solltest du kennen. Die Schleife lebt in der Sitzung und endet 
 So sieht das bei mir im Alltag aus:
 
 ```text
-/loop implementiere das Feature wie besprochen. Du bist erst fertig,
+/loop implementiere das Feature wie geplant. Du bist erst fertig,
 wenn alles meinen Vorgaben entspricht, alles durchgetestet ist, der
 Pull Request bereit ist und die CI grün ist.
 ```

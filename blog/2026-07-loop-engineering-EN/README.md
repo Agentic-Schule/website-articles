@@ -96,7 +96,7 @@ In self-paced mode, Claude decides after each iteration how long to wait. The do
 
 You can replace that default. A `.claude/loop.md` file in the project, or `~/.claude/loop.md` for you personally, takes its place. It is plain Markdown with no required structure, written as if you were typing the prompt directly. Edits take effect on the next iteration, so you can sharpen the instructions while the loop is running.
 
-A few limits are worth knowing. The loop lives in the session and ends with it. A `--resume` brings it back, but after seven days it expires for good. Esc cancels a pending iteration. And in self-paced mode Claude can call it a day on its own once it considers the work done. If it forgets both, meaning it neither reschedules nor stops, Claude Code schedules a single straggler about twenty minutes later and ends the loop then.
+A few limits are worth knowing. The loop lives in the session. A fresh conversation ends it, but a `--resume` brings it back as long as it has not expired. It expires seven days after you created it: it fires one last time and then deletes itself. Esc cancels a pending iteration. And in self-paced mode Claude can call it a day on its own once it considers the work done. If it forgets both, meaning it neither reschedules nor stops, Claude Code schedules a single straggler about twenty minutes later and ends the loop then.
 
 > ⚠️ On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform and Microsoft Foundry none of this applies. There, a prompt without an interval runs on a fixed ten-minute schedule, and `loop.md` is not read at all.
 
@@ -105,7 +105,7 @@ A few limits are worth knowing. The loop lives in the session and ends with it. 
 Here is what this looks like in my day-to-day work:
 
 ```text
-/loop implement the feature as discussed. You are only finished when
+/loop implement the feature as planned. You are only finished when
 everything matches my requirements, everything is tested, the pull
 request is ready and CI is green.
 ```
