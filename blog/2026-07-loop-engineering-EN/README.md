@@ -68,7 +68,7 @@ There is a second difference that is easy to miss. `/goal` checks the completion
 
 > completion is decided by a fresh model rather than the one doing the work
 
-That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn. Since Haiku is comparatively weak, by the way, you should [set](https://code.claude.com/docs/en/model-config) this checking model deliberately beforehand.
+That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. Which is why it pays to phrase the condition so that an outsider could judge it from the course of the conversation. On a "no", that reason becomes guidance for the next turn. Since Haiku is comparatively weak, by the way, you should [set](https://code.claude.com/docs/en/model-config) this checking model deliberately beforehand.
 
 One limitation belongs with it: this evaluator calls no tools. It judges only what is already visible in the conversation. So the condition has to be phrased so that Claude's own output can demonstrate it. "All tests in `test/auth` pass" works, because Claude runs the tests and the result lands in the transcript.
 
@@ -76,7 +76,9 @@ And one more distinction that causes confusion in practice. The documentation se
 
 > auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
 
-The agent no longer asking "shall I continue" comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up. For the loop to really run without you, without hitting Enter all the time, switch to **auto mode**: press `Shift+Tab` to cycle the [permission modes](https://code.claude.com/docs/en/permission-modes) until it shows "auto". A classifier then approves the calls.
+The agent no longer asking whether it should continue comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up. For the loop to really run without you, without hitting Enter all the time, switch to **auto mode**: press `Shift+Tab` to cycle the [permission modes](https://code.claude.com/docs/en/permission-modes) until it shows "auto". A classifier then approves the calls.
+
+That leaves the third way. A stop hook is a script or a prompt in your `settings.json` that fires at the end of every turn, in every session, and can block stopping. `/goal` is essentially such a hook, just boiled down to a single session and condition. That is why the stop hook gets no section of its own here.
 
 > 🔁 **Rule of thumb:** waiting on something outside your session, use `/loop`. Working toward a verifiable end state, use `/goal`. Wanting the same check in every session, use a stop hook.
 
@@ -172,7 +174,7 @@ This case hits exactly the conditions that make a loop pay off: CI can say no, t
 
 Nearly everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime. I read them out of **Claude Code 2.1.220**. Anthropic changes texts like these without notice, so a later version may well say something different.
 
-**With `/loop` it is a tool.** Self-pacing is not an automatism in the program. The model is handed a tool called `ScheduleWakeup` and sets the next wakeup itself. On the range, its description says plainly:
+**With `/loop` the instruction gives the model a tool.** It is called `ScheduleWakeup`; the model does the work and schedules its own next wakeup with it. On the range, its description says plainly:
 
 > Clamped to [60, 3600] by the runtime.
 
@@ -199,29 +201,23 @@ Two things happen here in sequence. First the request is raised to sixty seconds
 
 The model can also end the loop itself, with the same tool and a call of `stop: true`. That is exactly what I triggered in the test once the question was answered, and I got back `Loop stopped, cancelled 1 pending wakeup(s)`. There is a trap in it: that ends only the self-paced loop. One on a fixed interval keeps running and has to be ended via `CronDelete`.
 
-**With `/goal` it is an instruction.** There I am handed no tool at all. The moment you set a goal, this text appears in my context:
+**With `/goal` the instruction gives the model no tool.** The moment you set a goal, this text appears in the context:
 
 > A session-scoped Stop hook is now active with condition: "…". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
 
-That is the entire mechanism, in three parts. The condition becomes the work instruction. I am explicitly told not to ask in between. And a hook will not let me stop while the condition does not hold.
+That is the entire mechanism, in three parts. The condition becomes the work instruction. The model is explicitly told not to ask in between. And a hook will not let it stop while the condition does not hold.
 
 Around it sit a few values that confirm or extend the docs. The constant for the maximum length of the condition is 4000 characters. The status entry is called `goal_status` and comes in several shapes: on setting only with `met` and `condition`, on completion additionally with `reason`, `iterations`, `durationMs` and `tokens`, plus a `failed` field. And there are two error messages missing from the documentation: `/goal` only runs in trusted workspaces, and it refuses to work when hooks are restricted via `disableAllHooks` or `allowManagedHooksOnly`.
-
-What I searched for in vain is a separate evaluation prompt for the checking model. It appears not to exist, which fits the docs describing `/goal` as "a wrapper around a session-scoped prompt-based Stop hook". Your condition itself is the prompt used for checking. Which is why it pays to phrase it so that an outsider could judge it from the course of the conversation.
 
 Two limits belong with it. A goal can end without being reached: if the checking model considers the condition impossible, the entry is marked as failed and the loop ends. And there is a hard ceiling. According to the changelog, the turn ends with a warning after the stop hook has blocked eight times in a row, adjustable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 **What applies to both.** Self-pacing hangs on a switch delivered from the server, named `tengu_kairos_loop_dynamic`. The program holds a fallback value for it, but that only applies when the configuration cannot be reached at all. Normally the server decides. The switch controls more than you would think: with it off, `ScheduleWakeup` simply does nothing, and even the help text changes. Only with the switch set does the description of `/loop` carry the sentence "Omit the interval to let the model self-pace."; without it a default of ten minutes is named there.
 
-Structurally the two are different things anyway, and that explains why `/loop` can swallow other slash commands as an argument. `/goal` is a command. `/loop` is a skill, registered under the name `loop` with `proactive` as an alias.
+Structurally the two are different things anyway, and that explains why `/loop` can swallow other slash commands as an argument. `/goal` is a command: a slash command with fixed program logic behind it, here setting the Stop hook. `/loop` is a skill: a bundle of instructions in text form that the model loads and follows itself, registered under the name `loop` with `proactive` as an alias.
 
 For availability, the selected model plays no part in either. `/loop` hangs on an environment variable and a feature switch, `/goal` on interactivity, on the trust status of the working directory and on the hook settings. Whether Opus or Sonnet is running changes nothing there, and the attributes the server uses to target its switches contain no model field at all.
 
 Model-dependent switches do exist in the program, just elsewhere. Web search, for instance, checks on Google Vertex which model is running and disables itself for older ones. In `/loop` itself I found exactly one place where the model comes into play, and it concerns behaviour. For certain models a turn ends immediately when its only tool call was scheduling the next iteration.
-
-I owe that distinction to a reviewer. My first draft claimed that not a single activation expression in the program refers to a model. That was wrong, because I had searched only one of several spellings. There are 91 in one form, 42 in a second and 101 more under a different name, and the model checks sit in the ones I missed.
-
-That puts the difference between the two on a technical footing as well. With `/loop` I get a tool and decide the cadence myself. With `/goal` I get an instruction and a doorman.
 
 ## Who else runs loops
 
@@ -235,13 +231,13 @@ That leaves the question of whether this is a quirk of Claude Code. Here is an o
 | [Amp](https://ampcode.com/news/schedule) | none | agents schedule themselves and wake themselves up |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/cli-reference.md) | none | nothing comparable documented |
 | [OpenCode](https://opencode.ai/docs/commands/) | none | nothing comparable documented |
-| [GitHub Copilot CLI](https://github.com/github/copilot-cli/blob/main/README.md) | none | nothing comparable documented |
+| [GitHub Copilot CLI](https://github.com/github/copilot-cli/blob/main/README.md) | none | Autopilot mode, keeps working until the task is done |
 
 Three observations on that.
 
-**Codex can do it, but elsewhere.** In the CLI, the [documentation](https://learn.chatgpt.com/docs/codex/cli) lists only `/init`, `/status`, `/permissions`, `/model` and `/review`. The scheduling sits in the app. There, however, is something that comes very close to a loop, namely scheduled tasks inside an existing chat. OpenAI describes them with a notable choice of words: "Scheduled tasks in a chat can use minute-based intervals for active follow-up loops." So the word is there too.
+**Codex can do it, but elsewhere.** In the CLI, the [documentation](https://learn.chatgpt.com/docs/codex/cli) lists only `/init`, `/status`, `/permissions`, `/model` and `/review`. The scheduling sits in the app. There, however, is something that comes very close to a loop, namely scheduled tasks inside an existing chat. OpenAI describes them with a notable choice of words: "Scheduled tasks in a chat can use minute-based intervals for active follow-up loops." So the word "loop" is there too.
 
-**A request has been sitting in the Codex repository since the end of May.** [Issue #25466](https://github.com/openai/codex/issues/25466) asks for exactly this feature for the CLI and describes it down to the tool names used in Claude Code, including `CronCreate` and `ScheduleWakeup`. The author has already built it on a fork. Opened on 31 May 2026, open to this day, without a single comment.
+**A request has been sitting in the Codex repository since the end of May.** [Issue #25466](https://github.com/openai/codex/issues/25466) asks for exactly this feature for the CLI and describes it down to the tool names used in Claude Code, including `CronCreate` and `ScheduleWakeup`. The author has already built it on a fork. Opened on 31 May 2026 and still open at the end of July 2026, without a single comment.
 
 **Amp solves it without a command.** No slash command needed there, you simply say it. The [announcement of 21 July 2026](https://ampcode.com/news/schedule) puts it like this:
 
@@ -258,8 +254,8 @@ Six things I take away:
 - **Infrastructure first, then the loop.** Without test coverage and CI that can say no, the loop has nothing to measure against. With that foundation in place, it is worth using.
 - **The completion condition is the real work.** The rest is a command with a time interval.
 - **`/loop` waits, `/goal` does not.** Waiting on something external like a green CI run, which also sets a good rhythm, take the loop. Working toward an end state, take the goal.
-- **Do not let the same model that did the work check it.** `/goal` brings in a model of its own for that.
-- **Pauses are free on a subscription and expensive through the API.** A cache that holds for an hour against one that goes cold after five minutes.
+- **If you want the evaluation to come from a fresh context, use `/goal`.** It brings in a model of its own, instead of letting the same one that just did the work decide.
+- **Pauses are free on a subscription and expensive through the API.** Depending on the plan and cache behaviour, the cost can be considerable.
 - **Breaking out on its own is judgement, not a promise.** Do not rely on the agent stopping by itself when it finds something.
 
 And if you cannot decide between the two commands, start with `/goal`. A checkable completion condition forces you to think the problem through beforehand anyway.

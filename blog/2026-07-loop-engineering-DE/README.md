@@ -68,7 +68,7 @@ Dazu kommt ein zweiter Unterschied, der leicht übersehen wird. `/goal` prüft d
 
 > completion is decided by a fresh model rather than the one doing the work
 
-Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug. Weil Haiku vergleichsweise schwach ist, solltest du dieses prüfende Modell übrigens vorher bewusst [festlegen](https://code.claude.com/docs/en/model-config).
+Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Deshalb lohnt es sich, die Bedingung so zu formulieren, dass ein Außenstehender sie am Gesprächsverlauf beurteilen kann. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug. Weil Haiku vergleichsweise schwach ist, solltest du dieses prüfende Modell übrigens vorher bewusst [festlegen](https://code.claude.com/docs/en/model-config).
 
 Eine Einschränkung gehört dazu: Dieser Prüfer ruft keine Werkzeuge auf. Er urteilt nur über das, was im Gespräch schon sichtbar ist. Die Bedingung muss also so formuliert sein, dass Claudes eigene Ausgabe sie belegen kann. „Alle Tests in `test/auth` laufen durch" funktioniert, weil Claude die Tests ausführt und das Ergebnis im Transkript landet.
 
@@ -76,7 +76,9 @@ Und noch eine Unterscheidung, die in der Praxis für Verwirrung sorgt. Die Dokum
 
 > auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
 
-Dass der Agent aufhört zu fragen „soll ich weitermachen", kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt. Damit die Schleife wirklich ohne dich weiterläuft und du nicht ständig Enter drücken musst, wechsle in den **Auto Mode**: mit `Shift+Tab` durch die [Berechtigungsmodi](https://code.claude.com/docs/en/permission-modes), bis „auto" dasteht. Ein Klassifizierer gibt die Aufrufe dann frei.
+Dass der Agent aufhört zu fragen, ob er weitermachen soll, kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt. Damit die Schleife wirklich ohne dich weiterläuft und du nicht ständig Enter drücken musst, wechsle in den **Auto Mode**: mit `Shift+Tab` durch die [Berechtigungsmodi](https://code.claude.com/docs/en/permission-modes), bis „auto" dasteht. Ein Klassifizierer gibt die Aufrufe dann frei.
+
+Bleibt der dritte Weg. Ein Stop-Hook ist ein Skript oder ein Prompt in deiner `settings.json`, das bei jedem Zugende feuert, in jeder Sitzung, und das Anhalten blockieren kann. `/goal` ist im Grunde genau so ein Hook, nur auf eine Sitzung und eine Bedingung eingedampft. Deshalb bekommt der Stop-Hook hier keinen eigenen Abschnitt.
 
 > 🔁 **Merke:** Wartest du auf etwas außerhalb deiner Sitzung, nimm `/loop`. Arbeitest du auf einen prüfbaren Endzustand hin, nimm `/goal`. Willst du dieselbe Prüfung in jeder Sitzung, nimm einen Stop-Hook.
 
@@ -172,7 +174,7 @@ Dieser Fall trifft genau die Bedingungen, die eine Schleife lohnend machen: Die 
 
 Bis hierhin stand weitgehend alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt. Ausgelesen habe ich sie aus **Claude Code 2.1.220**. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
 
-**Bei `/loop` ist es ein Werkzeug.** Die Selbsttaktung ist kein Automatismus im Programm. Das Modell bekommt ein Werkzeug namens `ScheduleWakeup` und setzt den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
+**Bei `/loop` gibt die Anweisung dem Modell ein Werkzeug in die Hand.** Das Modell bekommt eines namens `ScheduleWakeup`, erledigt die Aufgabe und setzt damit den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
 
 > Clamped to [60, 3600] by the runtime.
 
@@ -199,29 +201,23 @@ Zwei Dinge passieren hier nacheinander. Erst wird der Wunsch auf sechzig Sekunde
 
 Beenden kann das Modell die Schleife ebenfalls selbst, mit demselben Werkzeug und dem Aufruf `stop: true`. Genau das habe ich im Test ausgelöst, als die Frage beantwortet war, und bekam `Loop stopped, cancelled 1 pending wakeup(s)` zurück. Eine Falle steckt darin: Das beendet nur die selbstgetaktete Schleife. Eine mit festem Intervall läuft weiter und muss über `CronDelete` beendet werden.
 
-**Bei `/goal` ist es eine Anweisung.** Dort bekomme ich kein Werkzeug in die Hand. Sobald du ein Ziel setzt, erscheint dieser Text in meinem Kontext:
+**Bei `/goal` gibt die Anweisung dem Modell kein Werkzeug in die Hand.** Sobald du ein Ziel setzt, erscheint dieser Text im Kontext:
 
 > A session-scoped Stop hook is now active with condition: "…". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
 
-Das ist der ganze Mechanismus, in drei Teilen. Die Bedingung wird zur Arbeitsanweisung. Ich soll ausdrücklich nicht zwischendurch nachfragen. Und ein Hook lässt mich nicht anhalten, solange die Bedingung nicht hält.
+Das ist der ganze Mechanismus, in drei Teilen. Die Bedingung wird zur Arbeitsanweisung. Das Modell soll ausdrücklich nicht zwischendurch nachfragen. Und ein Hook lässt es nicht anhalten, solange die Bedingung nicht hält.
 
 Drumherum liegen ein paar Werte, die die Doku bestätigen oder ergänzen. Die Konstante für die maximale Länge der Bedingung steht auf 4000 Zeichen. Der Statuseintrag heißt `goal_status` und tritt in mehreren Ausprägungen auf: beim Setzen nur mit `met` und `condition`, beim Abschluss zusätzlich mit `reason`, `iterations`, `durationMs` und `tokens`, dazu ein Feld `failed`. Und es gibt zwei Fehlermeldungen, die in der Dokumentation fehlen: `/goal` läuft nur in vertrauenswürdigen Arbeitsverzeichnissen, und es verweigert den Dienst, wenn Hooks per `disableAllHooks` oder `allowManagedHooksOnly` eingeschränkt sind.
-
-Vergeblich gesucht habe ich nach einem eigenen Bewertungs-Prompt für das prüfende Modell. Den gibt es offenbar nicht, was zur Doku passt, die `/goal` als „a wrapper around a session-scoped prompt-based Stop hook" beschreibt. Deine Bedingung selbst ist der Prompt, mit dem geprüft wird. Deshalb lohnt es sich, sie so zu formulieren, dass ein Außenstehender sie am Gesprächsverlauf beurteilen kann.
 
 Zwei Grenzen gehören dazu. Ein Ziel kann enden, ohne erreicht zu sein: Hält das prüfende Modell die Bedingung für unmöglich, wird der Eintrag als gescheitert markiert und die Schleife endet. Und es gibt eine harte Obergrenze. Laut Changelog endet der Zug mit einer Warnung, nachdem der Stop-Hook achtmal hintereinander blockiert hat, einstellbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 **Was für beide gilt.** Die Selbsttaktung hängt an einem serverseitig ausgespielten Schalter namens `tengu_kairos_loop_dynamic`. Im Programm steht dazu ein Rückfallwert, der aber nur greift, wenn die Konfiguration vom Server gar nicht erreichbar ist. Im Normalfall entscheidet der Server. Der Schalter steuert dabei mehr als man denkt: Ist er aus, tut `ScheduleWakeup` schlicht nichts, und schon der Hilfetext ändert sich. Nur mit gesetztem Schalter trägt die Beschreibung von `/loop` den Zusatz „Omit the interval to let the model self-pace." Ohne den Schalter nennt sie dort einen Vorgabewert von zehn Minuten.
 
-Strukturell sind die beiden ohnehin verschiedene Dinge, und das erklärt, warum `/loop` andere Slash-Befehle als Argument schlucken kann. `/goal` ist ein Befehl. `/loop` ist ein Skill, registriert unter dem Namen `loop` mit `proactive` als Alias.
+Strukturell sind die beiden ohnehin verschiedene Dinge, und das erklärt, warum `/loop` andere Slash-Befehle als Argument schlucken kann. `/goal` ist ein Befehl: ein Slash-Kommando mit fester Programmlogik dahinter, hier das Setzen des Stop-Hooks. `/loop` ist ein Skill: ein Bündel von Anweisungen in Textform, das das Modell lädt und selbst befolgt, registriert unter dem Namen `loop` mit `proactive` als Alias.
 
 Für die Verfügbarkeit spielt das gewählte Modell bei beiden keine Rolle. `/loop` hängt an einer Umgebungsvariablen und einem Feature-Schalter, `/goal` an Interaktivität, am Vertrauensstatus des Arbeitsverzeichnisses und an den Hook-Einstellungen. Ob Opus oder Sonnet läuft, ändert daran nichts, und die Merkmale, nach denen der Server seine Schalter ausspielt, enthalten überhaupt kein Modellfeld.
 
 Modellabhängige Schalter gibt es im Programm aber sehr wohl, nur an anderer Stelle. Die Websuche etwa prüft auf Google Vertex, welches Modell läuft, und schaltet sich für ältere Modelle ab. Bei `/loop` selbst habe ich genau eine Stelle gefunden, an der das Modell hineinspielt, und die betrifft das Verhalten. Für bestimmte Modelle endet ein Zug sofort, wenn sein einziger Werkzeugaufruf das Einplanen des nächsten Durchlaufs war.
-
-Diese Unterscheidung verdanke ich einem Gegenleser. Meine erste Fassung behauptete, kein einziger Aktivierungs-Ausdruck im Programm nehme Bezug auf ein Modell. Das war falsch, weil ich nur eine von mehreren Schreibweisen durchsucht hatte. Es sind 91 in der einen Form, 42 in einer zweiten und 101 weitere unter anderem Namen, und in den übersehenen sitzen die Modellprüfungen.
-
-Damit steht der Unterschied zwischen den beiden auch technisch da. Bei `/loop` bekomme ich ein Werkzeug und entscheide selbst über den Takt. Bei `/goal` bekomme ich eine Anweisung und einen Türsteher.
 
 ## Wer sonst Schleifen dreht
 
@@ -235,13 +231,13 @@ Bleibt die Frage, ob das eine Eigenheit von Claude Code ist. Hier ist eine Über
 | [Amp](https://ampcode.com/news/schedule) | keiner | Agenten planen sich selbst und wecken sich auf |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/cli-reference.md) | keiner | nichts Vergleichbares dokumentiert |
 | [OpenCode](https://opencode.ai/docs/commands/) | keiner | nichts Vergleichbares dokumentiert |
-| [GitHub Copilot CLI](https://github.com/github/copilot-cli/blob/main/README.md) | keiner | nichts Vergleichbares dokumentiert |
+| [GitHub Copilot CLI](https://github.com/github/copilot-cli/blob/main/README.md) | keiner | Autopilot-Modus, arbeitet weiter, bis die Aufgabe erledigt ist |
 
 Drei Beobachtungen dazu.
 
-**Codex kann es, aber woanders.** Im CLI sind laut [Dokumentation](https://learn.chatgpt.com/docs/codex/cli) nur `/init`, `/status`, `/permissions`, `/model` und `/review` vorgesehen. Die Zeitplanung sitzt in der App. Dort gibt es allerdings etwas, das der Schleife sehr nahe kommt, nämlich geplante Aufgaben innerhalb eines bestehenden Chats. OpenAI beschreibt sie mit einer bemerkenswerten Wortwahl: „Scheduled tasks in a chat can use minute-based intervals for active follow-up loops." Das Wort steht also auch dort.
+**Codex kann es, aber woanders.** Im CLI sind laut [Dokumentation](https://learn.chatgpt.com/docs/codex/cli) nur `/init`, `/status`, `/permissions`, `/model` und `/review` vorgesehen. Die Zeitplanung sitzt in der App. Dort gibt es allerdings etwas, das der Schleife sehr nahe kommt, nämlich geplante Aufgaben innerhalb eines bestehenden Chats. OpenAI beschreibt sie mit einer bemerkenswerten Wortwahl: „Scheduled tasks in a chat can use minute-based intervals for active follow-up loops." Das Wort „loop" steht also auch dort.
 
-**Im Codex-Repository liegt seit Ende Mai ein Wunsch.** [Issue #25466](https://github.com/openai/codex/issues/25466) fordert genau diese Funktion für das CLI und beschreibt sie bis in die Werkzeugnamen hinein wie bei Claude Code, inklusive `CronCreate` und `ScheduleWakeup`. Der Autor hat sie auf einem Fork bereits gebaut. Eröffnet am 31. Mai 2026, Stand heute offen, ohne einen einzigen Kommentar.
+**Im Codex-Repository liegt seit Ende Mai ein Wunsch.** [Issue #25466](https://github.com/openai/codex/issues/25466) fordert genau diese Funktion für das CLI und beschreibt sie bis in die Werkzeugnamen hinein wie bei Claude Code, inklusive `CronCreate` und `ScheduleWakeup`. Der Autor hat sie auf einem Fork bereits gebaut. Eröffnet am 31. Mai 2026 und Ende Juli 2026 noch immer offen, ohne einen einzigen Kommentar.
 
 **Amp löst es ohne Befehl.** Dort braucht es keinen Slash-Befehl, man sagt es einfach. Die [Ankündigung vom 21. Juli 2026](https://ampcode.com/news/schedule) formuliert es so:
 
@@ -258,8 +254,8 @@ Sechs Dinge nehme ich mit:
 - **Erst die Infrastruktur, dann die Schleife.** Ohne Testabdeckung und CI, die Nein sagen können, hat die Schleife nichts, woran sie sich misst. Steht die Grundlage, lohnt sich der Einsatz.
 - **Die Abbruchbedingung ist die eigentliche Arbeit.** Der Rest ist ein Befehl mit einem Zeitintervall.
 - **`/loop` wartet, `/goal` nicht.** Wartest du auf etwas Fremdes wie den grünen CI-Run, der gleich einen guten Takt vorgibt, nimm die Schleife. Arbeitest du auf einen Endzustand hin, nimm das Ziel.
-- **Lass nicht dasselbe Modell prüfen, das gearbeitet hat.** `/goal` holt dafür ein eigenes Modell dazu.
-- **Pausen sind im Abo gratis und per API teuer.** Ein Cache, der eine Stunde hält, gegen einen, der nach fünf Minuten kalt ist.
+- **Willst du die Bewertung aus frischem Kontext, nimm `/goal`.** Es zieht dafür ein eigenes Modell hinzu, statt dasselbe entscheiden zu lassen, das gerade gearbeitet hat.
+- **Pausen sind im Abo gratis und per API teuer.** Je nach Tarif und Cache-Verhalten fallen die Kosten beachtlich aus.
 - **Selbstständiges Abbrechen ist Ermessen, keine Zusage.** Verlasse dich nicht darauf, dass der Agent bei einem Fund von allein innehält.
 
 Und wenn du dich zwischen den beiden Befehlen nicht entscheiden magst, fang mit `/goal` an. Eine prüfbare Abbruchbedingung zwingt dich ohnehin dazu, das Problem vorher zu Ende zu denken.
