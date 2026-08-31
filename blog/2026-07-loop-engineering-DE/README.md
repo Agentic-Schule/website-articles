@@ -199,7 +199,7 @@ Next wakeup scheduled for 22:41:00 (in 119s)
 
 Zwei Dinge passieren hier nacheinander. Erst wird der Wunsch auf sechzig Sekunden hochgesetzt, das ist die harte Untergrenze. Dann rutscht der Termin auf die nächste volle Minute, weil Cron nur Minutengranularität kennt. Aus dreißig angeforderten Sekunden wurden so **119 Sekunden echte Wartezeit**. Wer sehr kurze Takte plant, sollte das wissen.
 
-Beenden kann das Modell die Schleife ebenfalls selbst, mit demselben Werkzeug und dem Aufruf `stop: true`. Genau das habe ich im Test ausgelöst, als die Frage beantwortet war, und bekam `Loop stopped, cancelled 1 pending wakeup(s)` zurück. Eine Falle steckt darin: Das beendet nur die selbstgetaktete Schleife. Eine mit festem Intervall läuft weiter und muss über `CronDelete` beendet werden.
+Beenden kann das Modell die Schleife ebenfalls selbst, mit demselben Werkzeug und dem Aufruf `stop: true`. Genau das habe ich im Test ausgelöst, sobald die Frage beantwortet war. Die Rückmeldung: `Loop stopped, cancelled 1 pending wakeup(s)`. Eine Falle steckt darin: Das beendet nur die selbstgetaktete Schleife. Eine mit festem Intervall läuft weiter und muss über `CronDelete` beendet werden.
 
 **Bei `/goal` gibt die Anweisung dem Modell kein Werkzeug in die Hand.** Sobald du ein Ziel setzt, erscheint dieser Text im Kontext:
 
