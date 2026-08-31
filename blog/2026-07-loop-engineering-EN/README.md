@@ -36,7 +36,7 @@ The tightest definition comes from Addy Osmani, who [spelled the term out in an 
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
-Sounds spectacular. It really isn't. You simply stop being the metronome.
+Sounds spectacular. It isn't. You simply stop being the metronome.
 
 How far that can go is described by Boris Cherny, creator and head of Claude Code at Anthropic. Fortune quotes him [on 11 June 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) from the stage of the Brainstorm Tech conference:
 
@@ -114,7 +114,7 @@ request is ready and CI is green.
 
 The effect is exactly the one you hope for. Normally the agent stops after an intermediate result and asks for confirmation to continue. That does not happen here. Work continues periodically until the goal is reached.
 
-More than once I have seen an agent break out of the loop on its own and ask for a direction. For instance when it found a fundamental flaw in the instruction, where carrying on would have made no sense, or when it hit a security hole. That is reassuring, but I do not want to turn it into a rule. The documentation describes restraint explicitly only for the **built-in** maintenance prompt. With a custom prompt like the one above there is no such promise. What I saw was the model's own judgement, not a safety net you should build on. In theory Claude could just as well carry the instruction out without mercy. That is simply how it goes with non-deterministic software.
+More than once I have seen an agent break out of the loop on its own and ask for a direction. For instance when it found a fundamental flaw in the instruction, where carrying on would have made no sense, or when it hit a security hole. That is reassuring, but I do not want to turn it into a rule. The documentation describes restraint explicitly only for the **built-in** maintenance prompt. With a custom prompt like the one above there is no such promise. What I saw was the model's own judgement, not a safety net you should build on. In theory Claude could just as well carry the instruction out without mercy. That is how it goes with non-deterministic software.
 
 Strictly speaking my example mixes both. "Implement and test" would be a case for `/goal`, "CI is green" one for `/loop`. That the loop still works well here comes down to waiting for CI: it sets the pace.
 

@@ -36,7 +36,7 @@ Die knappste Definition stammt von Addy Osmani, der den Begriff [in einem Artike
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
-Klingt spektakulär. Ist es aber eigentlich nicht. Du hörst schlicht auf, der Taktgeber zu sein.
+Klingt spektakulär. Ist es aber nicht. Du hörst schlicht auf, der Taktgeber zu sein.
 
 Wie weit das gehen kann, beschreibt Boris Cherny, Erfinder und Chef von Claude Code bei Anthropic. Fortune zitiert ihn [am 11. Juni 2026](https://fortune.com/2026/06/11/anthropic-claude-boris-cherny-doesnt-write-code-by-hand-anymore/) von der Bühne der Konferenz Brainstorm Tech:
 
@@ -114,7 +114,7 @@ Pull Request bereit ist und die CI grün ist.
 
 Der Effekt ist genau der erhoffte. Normalerweise bleibt der Agent nach einem Zwischenstand stehen und bittet um Bestätigung, weiterzumachen. Das passiert hier nicht. Es wird periodisch weitergearbeitet, bis das Ziel erreicht ist.
 
-Mehr als einmal habe ich erlebt, dass ein Agent von sich aus aus der Schleife ausgebrochen ist und um eine Richtungsentscheidung gebeten hat. Etwa als er einen fundamentalen Fehler in der Anweisung entdeckte, bei dem weiteres Abarbeiten keinen Sinn ergeben hätte, oder als er auf eine Sicherheitslücke stieß. Das beruhigt, aber ich möchte es nicht zur Regel erklären. Die Dokumentation beschreibt Zurückhaltung ausdrücklich nur für den **eingebauten** Wartungs-Prompt. Bei einem eigenen Prompt wie oben gibt es diese Zusage nicht. Was ich gesehen habe, war Ermessen des Modells und kein Sicherheitsnetz, auf das du bauen solltest. Theoretisch könnte Claude die Anweisung genauso gnadenlos durchziehen. So ist das halt bei nicht-deterministischer Software.
+Mehr als einmal habe ich erlebt, dass ein Agent von sich aus aus der Schleife ausgebrochen ist und um eine Richtungsentscheidung gebeten hat. Etwa als er einen fundamentalen Fehler in der Anweisung entdeckte, bei dem weiteres Abarbeiten keinen Sinn ergeben hätte, oder als er auf eine Sicherheitslücke stieß. Das beruhigt, aber ich möchte es nicht zur Regel erklären. Die Dokumentation beschreibt Zurückhaltung ausdrücklich nur für den **eingebauten** Wartungs-Prompt. Bei einem eigenen Prompt wie oben gibt es diese Zusage nicht. Was ich gesehen habe, war Ermessen des Modells und kein Sicherheitsnetz, auf das du bauen solltest. Theoretisch könnte Claude die Anweisung genauso gnadenlos durchziehen. So ist das bei nicht-deterministischer Software.
 
 Genau genommen mischt mein Beispiel beides. „Implementieren und durchtesten" wäre ein Fall für `/goal`, „CI ist grün" einer für `/loop`. Dass die Schleife hier trotzdem gut läuft, liegt am Warten auf die CI: Das gibt den Takt vor.
 
