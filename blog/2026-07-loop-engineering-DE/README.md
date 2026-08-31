@@ -22,7 +22,7 @@ Wie oft am Tag tippst du deinem Agenten „mach weiter"?
 
 Wenn die Antwort „zu oft" lautet, ist dieser Artikel für dich. Loop Engineering nimmt dir genau dieses „weiter" ab: Du schreibst einmal auf, was passieren soll und wann Schluss ist, und eine Schleife erledigt den Rest.
 
-**In Claude Code steckt das hinter zwei Befehlen, `/loop` und `/goal`, und die beiden arbeiten grundverschieden. Dieser Artikel zeigt, was sie tatsächlich tun, was die Pausen dazwischen kosten, wann sich eine Schleife überhaupt lohnt und welche anderen Werkzeuge mitziehen.**
+**In Claude Code steckt das hinter `/loop` und `/goal`, und die beiden arbeiten grundverschieden. Dieser Artikel zeigt, was sie tatsächlich tun, was die Pausen dazwischen kosten, wann sich eine Schleife überhaupt lohnt und welche anderen Werkzeuge mitziehen.**
 
 Vorweg zur Einordnung: Ich beziehe mich hier vor allem auf Claude Code. Andere Agenten haben teils eine ganz andere Vorstellung davon, wie eine Schleife aussehen sollte; was dort richtig ist, kann hier falsch sein. Auf sie komme ich am Ende zurück.
 
@@ -68,7 +68,7 @@ Dazu kommt ein zweiter Unterschied, der leicht übersehen wird. `/goal` prüft d
 
 > completion is decided by a fresh model rather than the one doing the work
 
-Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Deshalb lohnt es sich, die Bedingung so zu formulieren, dass ein Außenstehender sie am Gesprächsverlauf beurteilen kann. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug. Weil Haiku vergleichsweise schwach ist, solltest du dieses prüfende Modell übrigens vorher bewusst [festlegen](https://code.claude.com/docs/en/model-config).
+Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug. Weil Haiku vergleichsweise schwach ist, solltest du dieses prüfende Modell übrigens vorher bewusst [festlegen](https://code.claude.com/docs/en/model-config).
 
 Eine Einschränkung gehört dazu: Dieser Prüfer ruft keine Werkzeuge auf. Er urteilt nur über das, was im Gespräch schon sichtbar ist. Die Bedingung muss also so formuliert sein, dass Claudes eigene Ausgabe sie belegen kann. „Alle Tests in `test/auth` laufen durch" funktioniert, weil Claude die Tests ausführt und das Ergebnis im Transkript landet.
 
@@ -190,7 +190,7 @@ Für die beiden anderen Fälle gilt: Wenn ohnehin etwas anderes das Aufwachen au
 
 Das erklärt, warum sich eine Schleife im Alltag flotter anfühlt, als die Spanne vermuten lässt. Solange etwas läuft, wird kurz gewartet. Die langen Abstände sind für den Fall reserviert, dass gerade nichts passiert.
 
-Dann habe ich nachgemessen und bewusst einen zu kurzen Abstand angefordert, nämlich dreißig Sekunden. Die Antwort:
+Zeit für die Gegenprobe: Ich habe bewusst einen viel zu kurzen Abstand angefordert, dreißig Sekunden. Die Antwort:
 
 ```text
 Next wakeup scheduled for 22:41:00 (in 119s)
@@ -285,13 +285,13 @@ Im Kern läuft Loop Engineering auf eine einzige Frage hinaus: Wer entscheidet, 
 Sechs Dinge nehme ich mit:
 
 - **Erst die Infrastruktur, dann die Schleife.** Ohne Testabdeckung und CI, die Nein sagen können, hat die Schleife nichts, woran sie sich misst. Steht die Grundlage, lohnt sich der Einsatz.
-- **Die Abbruchbedingung ist die eigentliche Arbeit.** Der Rest ist ein Befehl mit einem Zeitintervall.
+- **Die Abbruchbedingung ist die eigentliche Arbeit.** Der Rest ist ein Aufruf mit einem Zeitintervall.
 - **`/loop` wartet, `/goal` nicht.** Wartest du auf etwas Fremdes wie den grünen CI-Run, der gleich einen guten Takt vorgibt, nimm die Schleife. Arbeitest du auf einen Endzustand hin, nimm das Ziel.
 - **Willst du die Bewertung aus frischem Kontext, nimm `/goal`.** Es zieht dafür ein eigenes Modell hinzu, statt dasselbe entscheiden zu lassen, das gerade gearbeitet hat.
 - **Pausen sind im Abo gratis und per API teuer.** Je nach Tarif und Cache-Verhalten fallen die Kosten beachtlich aus.
 - **Selbstständiges Abbrechen ist Ermessen, keine Zusage.** Verlasse dich nicht darauf, dass der Agent bei einem Fund von allein innehält.
 
-Und wenn du dich zwischen den beiden Befehlen nicht entscheiden magst, fang mit `/goal` an. Eine prüfbare Abbruchbedingung zwingt dich ohnehin dazu, das Problem vorher zu Ende zu denken.
+Und wenn du dich zwischen `/loop` und `/goal` nicht entscheiden magst, fang mit `/goal` an. Eine prüfbare Abbruchbedingung zwingt dich ohnehin dazu, das Problem vorher zu Ende zu denken.
 
 **Wie haltet ihr das?** Lasst ihr Schleifen laufen, und wenn ja, mit welcher Abbruchbedingung? Ich freue mich über jede Nachricht.
 

@@ -22,7 +22,7 @@ How many times a day do you type "keep going" to your agent?
 
 If the answer is "too often", this article is for you. Loop engineering takes that "keep going" off your hands: you write down once what should happen and when it is finished, and a loop takes care of the rest.
 
-**In Claude Code this sits behind two commands, `/loop` and `/goal`, and the two work in fundamentally different ways. This article shows what they actually do, what the pauses in between cost you, when a loop is worth it at all, and which other tools are keeping up.**
+**In Claude Code this sits behind `/loop` and `/goal`, and the two work in fundamentally different ways. This article shows what they actually do, what the pauses in between cost you, when a loop is worth it at all, and which other tools are keeping up.**
 
 Up front, to set the scope: I focus mainly on Claude Code here. Other agents have quite different ideas about what a loop should look like; what is right there can be wrong here. I come back to them at the end.
 
@@ -68,7 +68,7 @@ There is a second difference that is easy to miss. `/goal` checks the completion
 
 > completion is decided by a fresh model rather than the one doing the work
 
-That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. Which is why it pays to phrase the condition so that an outsider could judge it from the course of the conversation. On a "no", that reason becomes guidance for the next turn. Since Haiku is comparatively weak, by the way, you should [set](https://code.claude.com/docs/en/model-config) this checking model deliberately beforehand.
+That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn. Since Haiku is comparatively weak, by the way, you should [set](https://code.claude.com/docs/en/model-config) this checking model deliberately beforehand.
 
 One limitation belongs with it: this evaluator calls no tools. It judges only what is already visible in the conversation. So the condition has to be phrased so that Claude's own output can demonstrate it. "All tests in `test/auth` pass" works, because Claude runs the tests and the result lands in the transcript.
 
@@ -190,7 +190,7 @@ For the other two cases: when something else triggers the wakeup anyway, a long 
 
 That explains why a loop feels brisker in practice than the range suggests. While something is running, the wait is short. The long delays are reserved for the case where nothing is happening.
 
-Then I measured, deliberately requesting a delay below the floor: thirty seconds. The reply:
+Time to put it to the test: I deliberately requested a delay far too short, thirty seconds. The reply:
 
 ```text
 Next wakeup scheduled for 22:41:00 (in 119s)
@@ -285,13 +285,13 @@ At its core, loop engineering comes down to a single question: who decides when 
 Six things I take away:
 
 - **Infrastructure first, then the loop.** Without test coverage and CI that can say no, the loop has nothing to measure against. With that foundation in place, it is worth using.
-- **The completion condition is the real work.** The rest is a command with a time interval.
+- **The completion condition is the real work.** The rest is an invocation with a time interval.
 - **`/loop` waits, `/goal` does not.** Waiting on something external like a green CI run, which also sets a good rhythm, take the loop. Working toward an end state, take the goal.
 - **If you want the evaluation to come from a fresh context, use `/goal`.** It brings in a model of its own, instead of letting the same one that just did the work decide.
 - **Pauses are free on a subscription and expensive through the API.** Depending on the plan and cache behaviour, the cost can be considerable.
 - **Breaking out on its own is judgement, not a promise.** Do not rely on the agent stopping by itself when it finds something.
 
-And if you cannot decide between the two commands, start with `/goal`. A checkable completion condition forces you to think the problem through beforehand anyway.
+And if you cannot decide between `/loop` and `/goal`, start with `/goal`. A checkable completion condition forces you to think the problem through beforehand anyway.
 
 **How do you handle this?** Do you run loops, and if so with what completion condition? I am glad to hear from you.
 
