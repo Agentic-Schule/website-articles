@@ -142,6 +142,8 @@ Bis hierhin ging es darum, wie Schleifen funktionieren. Die wichtigere Frage ste
 
 **Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er sieht nur, was im Gespräch steht. Fehlt ein harter Test, Build oder Linter, benotet der Agent am Ende seine eigene Arbeit. Dann läuft die Schleife munter weiter, auch wenn längst etwas kaputt ist.
 
+Und noch etwas gehört dazu: Jeder Durchlauf braucht etwas Neues zum Arbeiten. Ein frisches Testergebnis, einen neuen Fehler, dein Feedback. Ein bloßes „lies es nochmal und mach es besser" ist keine neue Information; dann poliert die Schleife endlos dieselbe Ausgabe. Das ist der häufigste Anfängerfehler: eine Schleife wie „verbessere den Text, bis er gut ist" ansetzen und sich wundern, dass nichts besser wird.
+
 **Trägt dein Tarif das?** Eine Schleife liest Kontext neu, probiert Dinge aus und verwirft sie. Das kostet Tokens, ob am Ende etwas Brauchbares herauskommt oder nicht. Wie im Abschnitt davor beschrieben, wird es außerhalb eines Abos zusätzlich teuer, weil jede längere Pause den zwischengespeicherten Kontext reißt. Loop Engineering wirkt selbstverständlich, wenn Tokens praktisch nichts kosten, und rücksichtslos, wenn jeder Durchlauf auf der Rechnung steht.
 
 **Kann der Agent ausprobieren, was er baut?** Ohne Logs, ohne lauffähige Umgebung, ohne die Möglichkeit, den eigenen Code auszuführen, iteriert die Schleife blind. Sie produziert dann schnell viel Text, den niemand geprüft hat.

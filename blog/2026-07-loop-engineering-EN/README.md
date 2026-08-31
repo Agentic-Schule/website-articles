@@ -142,6 +142,8 @@ So far this has been about how loops work. The more important question comes bef
 
 **Can anything but the agent say no?** This is the hardest of the four. The `/goal` evaluator calls no tools; it only sees what is in the conversation. Without a hard test, build or linter, the agent ends up grading its own work. Then the loop keeps running happily even when something has long been broken.
 
+And one more thing belongs here: every iteration needs something new to work with. A fresh test result, a new error, your feedback. A bare "read it again and make it better" is not new information; the loop then polishes the same output forever. That is the most common beginner mistake: setting up a loop like "improve the text until it is good" and being surprised that nothing gets better.
+
 **Can your plan absorb it?** A loop re-reads context, tries things and discards them. That burns tokens whether or not anything usable comes out. As described in the previous section, it gets more expensive outside a subscription, because every longer pause breaks the cached context. Loop engineering looks obvious when tokens are effectively free, and reckless when every iteration lands on the bill.
 
 **Can the agent try out what it builds?** Without logs, without a runnable environment, without the ability to execute its own code, the loop iterates blind. It then produces a lot of text quickly that nobody has checked.
