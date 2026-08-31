@@ -78,7 +78,7 @@ Und noch eine Unterscheidung, die in der Praxis für Verwirrung sorgt. Die Dokum
 
 Dass der Agent aufhört zu fragen, ob er weitermachen soll, kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt. Damit die Schleife wirklich ohne dich weiterläuft und du nicht ständig Enter drücken musst, wechsle in den **Auto Mode**: mit `Shift+Tab` durch die [Berechtigungsmodi](https://code.claude.com/docs/en/permission-modes), bis „auto" dasteht. Ein Klassifizierer gibt die Aufrufe dann frei.
 
-Bleibt der dritte Weg. Ein Stop-Hook ist ein Skript oder ein Prompt in deiner `settings.json`, das bei jedem Zugende feuert, in jeder Sitzung, und das Anhalten blockieren kann. `/goal` ist im Grunde genau so ein Hook, nur auf eine Sitzung und eine Bedingung eingedampft. Deshalb bekommt der Stop-Hook hier keinen eigenen Abschnitt.
+Bleibt der dritte Weg. Ein Stop-Hook ist ein Skript oder ein Prompt in deiner `settings.json`, das bei jedem Zugende feuert, in jeder Sitzung, und das Anhalten blockieren kann. `/goal` ist im Grunde genau so ein Hook, nur auf eine Sitzung und eine Bedingung eingedampft. Wie du dir einen eigenen baust, steht weiter unten.
 
 > 🔁 **Merke:** Wartest du auf etwas außerhalb deiner Sitzung, nimm `/loop`. Arbeitest du auf einen prüfbaren Endzustand hin, nimm `/goal`. Willst du dieselbe Prüfung in jeder Sitzung, nimm einen Stop-Hook.
 
@@ -218,6 +218,39 @@ Strukturell sind die beiden ohnehin verschiedene Dinge, und das erklärt, warum 
 Für die Verfügbarkeit spielt das gewählte Modell bei beiden keine Rolle. `/loop` hängt an einer Umgebungsvariablen und einem Feature-Schalter, `/goal` an Interaktivität, am Vertrauensstatus des Arbeitsverzeichnisses und an den Hook-Einstellungen. Ob Opus oder Sonnet läuft, ändert daran nichts, und die Merkmale, nach denen der Server seine Schalter ausspielt, enthalten überhaupt kein Modellfeld.
 
 Modellabhängige Schalter gibt es im Programm aber sehr wohl, nur an anderer Stelle. Die Websuche etwa prüft auf Google Vertex, welches Modell läuft, und schaltet sich für ältere Modelle ab. Bei `/loop` selbst habe ich genau eine Stelle gefunden, an der das Modell hineinspielt, und die betrifft das Verhalten. Für bestimmte Modelle endet ein Zug sofort, wenn sein einziger Werkzeugaufruf das Einplanen des nächsten Durchlaufs war.
+
+## Deinen eigenen Stop-Hook bauen
+
+Diesen dritten Weg kannst du auch selbst aufsetzen, und dann hast du den dauerhaften: `/loop` und `/goal` leben in einer Sitzung, ein Stop-Hook lebt in deiner `settings.json` und ist in jeder Sitzung da. Das lohnt sich, wenn dieselbe Regel überall gelten soll, ohne dass du sie jedes Mal neu eintippst.
+
+Der Hook feuert am **Stop-Ereignis**, wenn das Modell einen Zug beendet. Er darf das Anhalten durchwinken oder blockieren. Blockiert er, arbeitet das Modell weiter, mit der mitgegebenen Begründung als nächstem Auftrag. Zwei Sorten gibt es: Ein **Command-Hook** ist ein Skript, dessen Exit-Code entscheidet, `2` blockiert und `0` lässt anhalten. Ein **Prompt-Hook** reicht eine Bedingung an ein Modell, das über den Gesprächsverlauf urteilt, genau wie `/goal`.
+
+So blockiert ein Command-Hook das Anhalten, solange die Tests rot sind:
+
+```json
+// settings.json
+{
+  "hooks": {
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": ".claude/hooks/test-gate.sh" } ] }
+    ]
+  }
+}
+```
+
+```bash
+#!/bin/bash
+# test-gate.sh liest das Hook-JSON von stdin
+input=$(cat)
+# ohne diese Zeile blockiert der Hook endlos
+[ "$(jq -r '.stop_hook_active' <<< "$input")" = "true" ] && exit 0
+npm test --silent || { echo "Tests sind rot, mach weiter." >&2; exit 2; }
+exit 0
+```
+
+Die Zeile mit `stop_hook_active` ist keine Kür. Ohne sie blockiert der Hook jeden Anhalteversuch, und die Sitzung dreht sich, bis die Tokens alle sind. Als Netz darunter beendet Claude Code den Zug nach acht Blockaden in Folge mit einer Warnung, hochsetzbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+
+Bau dir einen eigenen Hook, wenn du die Prüfung in **jeder** Sitzung willst, oder wenn ein Skript objektiv entscheiden soll statt eines Modells. Der Preis ist etwas mehr Einrichtung, und ein dauerhafter Hook kann dich überraschen, wenn du vergisst, dass er da ist. Die Details stehen in der [Hooks-Dokumentation](https://code.claude.com/docs/en/hooks).
 
 ## Wer sonst Schleifen dreht
 

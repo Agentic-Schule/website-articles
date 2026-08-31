@@ -78,7 +78,7 @@ And one more distinction that causes confusion in practice. The documentation se
 
 The agent no longer asking whether it should continue comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up. For the loop to really run without you, without hitting Enter all the time, switch to **auto mode**: press `Shift+Tab` to cycle the [permission modes](https://code.claude.com/docs/en/permission-modes) until it shows "auto". A classifier then approves the calls.
 
-That leaves the third way. A stop hook is a script or a prompt in your `settings.json` that fires at the end of every turn, in every session, and can block stopping. `/goal` is essentially such a hook, just boiled down to a single session and condition. That is why the stop hook gets no section of its own here.
+That leaves the third way. A stop hook is a script or a prompt in your `settings.json` that fires at the end of every turn, in every session, and can block stopping. `/goal` is essentially such a hook, just boiled down to a single session and condition. How to build one of your own is further down.
 
 > 🔁 **Rule of thumb:** waiting on something outside your session, use `/loop`. Working toward a verifiable end state, use `/goal`. Wanting the same check in every session, use a stop hook.
 
@@ -218,6 +218,39 @@ Structurally the two are different things anyway, and that explains why `/loop` 
 For availability, the selected model plays no part in either. `/loop` hangs on an environment variable and a feature switch, `/goal` on interactivity, on the trust status of the working directory and on the hook settings. Whether Opus or Sonnet is running changes nothing there, and the attributes the server uses to target its switches contain no model field at all.
 
 Model-dependent switches do exist in the program, just elsewhere. Web search, for instance, checks on Google Vertex which model is running and disables itself for older ones. In `/loop` itself I found exactly one place where the model comes into play, and it concerns behaviour. For certain models a turn ends immediately when its only tool call was scheduling the next iteration.
+
+## Build your own stop hook
+
+You can set up this third way yourself, and then you have the persistent one: `/loop` and `/goal` live in one session, a stop hook lives in your `settings.json` and is there in every session. That pays off when the same rule should hold everywhere, without you typing it in each time.
+
+The hook fires on the **Stop event**, when the model finishes a turn. It may wave the stop through or block it. If it blocks, the model keeps working, with the reason you passed in as its next task. There are two kinds: a **command hook** is a script whose exit code decides, `2` blocks and `0` allows the stop. A **prompt hook** passes a condition to a model that judges from the course of the conversation, exactly like `/goal`.
+
+Here is how a command hook blocks the stop while the tests are red:
+
+```json
+// settings.json
+{
+  "hooks": {
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": ".claude/hooks/test-gate.sh" } ] }
+    ]
+  }
+}
+```
+
+```bash
+#!/bin/bash
+# test-gate.sh reads the hook JSON from stdin
+input=$(cat)
+# without this line the hook blocks forever
+[ "$(jq -r '.stop_hook_active' <<< "$input")" = "true" ] && exit 0
+npm test --silent || { echo "Tests are red, keep going." >&2; exit 2; }
+exit 0
+```
+
+The line with `stop_hook_active` is not optional. Without it the hook blocks every stop attempt, and the session spins until the tokens run out. As a net underneath, Claude Code ends the turn after eight blocks in a row with a warning, raisable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+
+Build your own hook when you want the check in **every** session, or when a script should decide objectively instead of a model. The price is a bit more setup, and a persistent hook can surprise you when you forget it is there. The details are in the [hooks documentation](https://code.claude.com/docs/en/hooks).
 
 ## Who else runs loops
 
