@@ -120,9 +120,11 @@ If it comes down to waiting, the [Monitor tool](https://code.claude.com/docs/en/
 
 ## What the pause costs
 
-The pauses between iterations feel like a side effect. They are in fact the reason a loop stays bearable for a long time, and they come with a catch you should know about.
+The pauses between iterations feel like a side effect. They are in fact the reason a loop stays bearable for a long time.
 
-The pleasant part first. Anthropic extends the prompt cache automatically [when you work on a subscription](https://code.claude.com/docs/en/prompt-caching):
+For one, it does not hammer the API continuously. That leaves headroom under the server-side rate limits, and you can run several loops in parallel without them throttling each other. For another, the pause is your window to step in: you see what the last iteration did and can adjust or abort before the next one starts.
+
+And on a subscription it is free on top of that. Anthropic extends the prompt cache automatically [when you work on a subscription](https://code.claude.com/docs/en/prompt-caching):
 
 > On a Claude subscription, Claude Code requests the one-hour TTL automatically.
 

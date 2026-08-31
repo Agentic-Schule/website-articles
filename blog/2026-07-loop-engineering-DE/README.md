@@ -120,9 +120,11 @@ Wenn es beim Warten bleibt, lohnt noch ein Blick auf das [Monitor-Werkzeug](http
 
 ## Was die Pause kostet
 
-Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife lange erträglich bleibt, und sie haben einen Haken, den du kennen solltest.
+Die Pausen zwischen den Durchläufen fühlen sich nach einem Nebeneffekt an. Sie sind aber der Grund, warum eine Schleife lange erträglich bleibt.
 
-Erst der angenehme Teil. Anthropic verlängert den Prompt-Cache automatisch, [wenn du über ein Abo arbeitest](https://code.claude.com/docs/en/prompt-caching):
+Zum einen hämmert sie nicht durchgehend gegen die API. Das lässt Luft unter den serverseitigen Rate-Limits, und du kannst mehrere Schleifen parallel laufen lassen, ohne dass sie sich gegenseitig ausbremsen. Zum anderen ist die Pause dein Fenster zum Eingreifen: Du siehst, was der letzte Durchlauf getan hat, und kannst nachjustieren oder abbrechen, bevor der nächste startet.
+
+Und im Abo ist sie obendrein gratis. Anthropic verlängert den Prompt-Cache automatisch, [wenn du über ein Abo arbeitest](https://code.claude.com/docs/en/prompt-caching):
 
 > On a Claude subscription, Claude Code requests the one-hour TTL automatically.
 
