@@ -142,7 +142,7 @@ So far this has been about how loops work. The more important question comes bef
 
 **Does the task repeat?** A loop pays for itself across many runs. `/loop` lives in the session and expires after seven days, `/goal` ends with its condition. For a one-off, a well-aimed prompt is faster and cheaper. If you do something once, you do not have a loop problem. You have a script.
 
-**Can anything but the agent say no?** This is the hardest of the four. The `/goal` evaluator calls no tools; it only sees what is in the conversation. Without a hard test, build or linter, the agent ends up grading its own work. Then the loop keeps running happily even when something has long been broken.
+**Can anything but the agent say no?** This is the hardest of the four. The `/goal` evaluator calls no tools; it only sees what is in the conversation. Without a hard test, build or linter, the agent ends up grading its own work. Then the loop may keep running happily even when something has long been broken.
 
 And one more thing belongs here: every iteration needs something new to work with. A fresh test result, a new error, your feedback. A bare "read it again and make it better" is not new information; the loop then polishes the same output forever, or, in the best case, simply ends. That is the most common beginner mistake: setting up a loop like "improve the text until it is good" and being surprised that nothing gets better. That a model judging only the finished answer talks itself into approval rather than getting better is what the paper ["More Convincing, Not More Correct"](https://arxiv.org/abs/2607.05904) measured.
 

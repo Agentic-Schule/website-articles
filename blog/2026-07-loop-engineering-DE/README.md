@@ -142,7 +142,7 @@ Bis hierhin ging es darum, wie Schleifen funktionieren. Die wichtigere Frage ste
 
 **Wiederholt sich die Aufgabe?** Eine Schleife rechnet sich über viele Durchläufe. `/loop` lebt in der Sitzung und verfällt nach sieben Tagen, `/goal` endet mit der Bedingung. Für eine einmalige Sache ist ein gut gezielter Prompt schneller und billiger. Wer etwas einmal macht, hat kein Schleifenproblem. Er hat ein Skript.
 
-**Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er sieht nur, was im Gespräch steht. Fehlt ein harter Test, Build oder Linter, benotet der Agent am Ende seine eigene Arbeit. Dann läuft die Schleife munter weiter, auch wenn längst etwas kaputt ist.
+**Kann etwas außer dem Agenten Nein sagen?** Das ist die härteste der vier. Der Prüfer von `/goal` ruft keine Werkzeuge auf, er sieht nur, was im Gespräch steht. Fehlt ein harter Test, Build oder Linter, benotet der Agent am Ende seine eigene Arbeit. Dann läuft die Schleife womöglich munter weiter, auch wenn längst etwas kaputt ist.
 
 Und noch etwas gehört dazu: Jeder Durchlauf braucht etwas Neues zum Arbeiten. Ein frisches Testergebnis, einen neuen Fehler, dein Feedback. Ein bloßes „lies es nochmal und mach es besser" ist keine neue Information; dann poliert die Schleife endlos dieselbe Ausgabe, oder sie endet im Idealfall einfach. Das ist der häufigste Anfängerfehler: eine Schleife wie „verbessere den Text, bis er gut ist" ansetzen und sich wundern, dass nichts besser wird. Dass ein Modell, das nur die fertige Antwort beurteilt, sich damit eher selbst überzeugt als besser wird, hat das Paper [„More Convincing, Not More Correct"](https://arxiv.org/abs/2607.05904) gemessen.
 
