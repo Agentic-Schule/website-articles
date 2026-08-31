@@ -172,9 +172,13 @@ This case hits exactly the conditions that make a loop pay off: CI can say no, t
 
 ## A look from the inside
 
-Nearly everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime. I read them out of **Claude Code 2.1.220**. Anthropic changes texts like these without notice, so a later version may well say something different.
+Nearly everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime, which I read straight out of the program. Anthropic changes texts like these without notice, so a later version may well say something different.
 
-**With `/loop` the instruction gives the model a tool.** It is called `ScheduleWakeup`; the model does the work and schedules its own next wakeup with it. On the range, its description says plainly:
+**With `/loop` the instruction gives the model a tool.** Without a fixed interval, the skill tells the model to pace itself:
+
+> The user wants you to self-pace. Decide what makes the next iteration worth running — a passage of time, or an observable event.
+
+For that it gets the `ScheduleWakeup` tool: it does the work and schedules its own next wakeup with it. On the range, its description says plainly:
 
 > Clamped to [60, 3600] by the runtime.
 
@@ -221,9 +225,9 @@ Model-dependent switches do exist in the program, just elsewhere. Web search, fo
 
 ## Build your own stop hook
 
-You can set up this third way yourself, and then you have the persistent one: `/loop` and `/goal` live in one session, a stop hook lives in your `settings.json` and is there in every session. That pays off when the same rule should hold everywhere, without you typing it in each time.
+You can set up this third way yourself. It is the persistent variant: `/loop` and `/goal` live in one session, a stop hook lives in your `settings.json` and exists in every session. That pays off when the same rule should hold everywhere, without you typing it in each time.
 
-The hook fires on the **Stop event**, when the model finishes a turn. It may wave the stop through or block it. If it blocks, the model keeps working, with the reason you passed in as its next task. There are two kinds: a **command hook** is a script whose exit code decides, `2` blocks and `0` allows the stop. A **prompt hook** passes a condition to a model that judges from the course of the conversation, exactly like `/goal`.
+The hook fires on the **Stop event**, when the model finishes a turn. It may wave the stop through or block it. If it blocks, the model keeps working, with the reason you passed in as its next task. There are two kinds: a **command hook** is a script whose exit code decides: `2` blocks and `0` allows the stop. A **prompt hook** passes a condition to a model that judges from the course of the conversation, exactly like `/goal`.
 
 Here is how a command hook blocks the stop while the tests are red:
 
@@ -248,7 +252,7 @@ npm test --silent || { echo "Tests are red, keep going." >&2; exit 2; }
 exit 0
 ```
 
-The line with `stop_hook_active` is not optional. Without it the hook blocks every stop attempt, and the session spins until the tokens run out. As a net underneath, Claude Code ends the turn after eight blocks in a row with a warning, raisable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+The line with `stop_hook_active` is not optional. Without it the hook blocks every stop attempt, and the session spins until the tokens run out. As a safety net underneath, Claude Code ends the turn after eight blocks in a row with a warning, raisable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 Build your own hook when you want the check in **every** session, or when a script should decide objectively instead of a model. The price is a bit more setup, and a persistent hook can surprise you when you forget it is there. The details are in the [hooks documentation](https://code.claude.com/docs/en/hooks).
 

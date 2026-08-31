@@ -172,9 +172,13 @@ Dieser Fall trifft genau die Bedingungen, die eine Schleife lohnend machen: Die 
 
 ## Ein Blick von innen
 
-Bis hierhin stand weitgehend alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt. Ausgelesen habe ich sie aus **Claude Code 2.1.220**. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
+Bis hierhin stand weitgehend alles in der öffentlichen Dokumentation. Der Rest dieses Abschnitts nicht. Er stammt aus eigenen Messungen und aus den Anweisungen, die das Modell zur Laufzeit bekommt und die ich direkt aus dem Programm ausgelesen habe. Anthropic ändert solche Texte ohne Ankündigung, in einer späteren Version kann dort also etwas anderes stehen.
 
-**Bei `/loop` gibt die Anweisung dem Modell ein Werkzeug in die Hand.** Das Modell bekommt eines namens `ScheduleWakeup`, erledigt die Aufgabe und setzt damit den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
+**Bei `/loop` gibt die Anweisung dem Modell ein Werkzeug in die Hand.** Ohne festes Intervall trägt der Skill dem Modell auf, sich selbst zu takten:
+
+> The user wants you to self-pace. Decide what makes the next iteration worth running — a passage of time, or an observable event.
+
+Dafür bekommt es das Werkzeug `ScheduleWakeup`: Es erledigt die Aufgabe und setzt damit den nächsten Aufwachzeitpunkt selbst. Zur Spanne steht in dessen Beschreibung schlicht:
 
 > Clamped to [60, 3600] by the runtime.
 
@@ -221,9 +225,9 @@ Modellabhängige Schalter gibt es im Programm aber sehr wohl, nur an anderer Ste
 
 ## Deinen eigenen Stop-Hook bauen
 
-Diesen dritten Weg kannst du auch selbst aufsetzen, und dann hast du den dauerhaften: `/loop` und `/goal` leben in einer Sitzung, ein Stop-Hook lebt in deiner `settings.json` und ist in jeder Sitzung da. Das lohnt sich, wenn dieselbe Regel überall gelten soll, ohne dass du sie jedes Mal neu eintippst.
+Diesen dritten Weg kannst du auch selbst aufsetzen. Er ist die dauerhafte Variante: `/loop` und `/goal` leben in einer Sitzung, ein Stop-Hook lebt in deiner `settings.json` und existiert in jeder Sitzung. Das lohnt sich, wenn dieselbe Regel überall gelten soll, ohne dass du sie jedes Mal neu eintippst.
 
-Der Hook feuert am **Stop-Ereignis**, wenn das Modell einen Zug beendet. Er darf das Anhalten durchwinken oder blockieren. Blockiert er, arbeitet das Modell weiter, mit der mitgegebenen Begründung als nächstem Auftrag. Zwei Sorten gibt es: Ein **Command-Hook** ist ein Skript, dessen Exit-Code entscheidet, `2` blockiert und `0` lässt anhalten. Ein **Prompt-Hook** reicht eine Bedingung an ein Modell, das über den Gesprächsverlauf urteilt, genau wie `/goal`.
+Der Hook feuert am **Stop-Ereignis**, wenn das Modell einen Zug beendet. Er darf das Anhalten durchwinken oder blockieren. Blockiert er, arbeitet das Modell weiter, mit der mitgegebenen Begründung als nächstem Auftrag. Zwei Sorten gibt es: Ein **Command-Hook** ist ein Skript, dessen Exit-Code entscheidet: `2` blockiert und `0` lässt anhalten. Ein **Prompt-Hook** reicht eine Bedingung an ein Modell, das über den Gesprächsverlauf urteilt, genau wie `/goal`.
 
 So blockiert ein Command-Hook das Anhalten, solange die Tests rot sind:
 
@@ -248,7 +252,7 @@ npm test --silent || { echo "Tests sind rot, mach weiter." >&2; exit 2; }
 exit 0
 ```
 
-Die Zeile mit `stop_hook_active` ist keine Kür. Ohne sie blockiert der Hook jeden Anhalteversuch, und die Sitzung dreht sich, bis die Tokens alle sind. Als Netz darunter beendet Claude Code den Zug nach acht Blockaden in Folge mit einer Warnung, hochsetzbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+Die Zeile mit `stop_hook_active` ist keine Kür. Ohne sie blockiert der Hook jeden Anhalteversuch, und die Sitzung dreht sich, bis die Tokens alle sind. Als Sicherheitsnetz darunter beendet Claude Code den Zug nach acht Blockaden in Folge mit einer Warnung, hochsetzbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 Bau dir einen eigenen Hook, wenn du die Prüfung in **jeder** Sitzung willst, oder wenn ein Skript objektiv entscheiden soll statt eines Modells. Der Preis ist etwas mehr Einrichtung, und ein dauerhafter Hook kann dich überraschen, wenn du vergisst, dass er da ist. Die Details stehen in der [Hooks-Dokumentation](https://code.claude.com/docs/en/hooks).
 
