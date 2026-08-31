@@ -68,7 +68,7 @@ Dazu kommt ein zweiter Unterschied, der leicht übersehen wird. `/goal` prüft d
 
 > completion is decided by a fresh model rather than the one doing the work
 
-Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug.
+Das ist mehr als ein Detail. Wer die Bedingung in den Prompt einer `/loop` schreibt, lässt dasselbe Modell entscheiden, ob es fertig ist, das gerade die Arbeit gemacht hat. Bei `/goal` schaut ein anderes Modell drauf, laut Doku das kleine schnelle Modell der Sitzung, standardmäßig Haiku. Es bekommt die Bedingung und das bisherige Gespräch und gibt eine Ja-Nein-Entscheidung samt kurzer Begründung zurück. Bei einem Nein wird diese Begründung zur Wegweisung für den nächsten Zug. Weil Haiku vergleichsweise schwach ist, solltest du dieses prüfende Modell übrigens vorher bewusst [festlegen](https://code.claude.com/docs/en/model-config).
 
 Eine Einschränkung gehört dazu: Dieser Prüfer ruft keine Werkzeuge auf. Er urteilt nur über das, was im Gespräch schon sichtbar ist. Die Bedingung muss also so formuliert sein, dass Claudes eigene Ausgabe sie belegen kann. „Alle Tests in `test/auth` laufen durch" funktioniert, weil Claude die Tests ausführt und das Ergebnis im Transkript landet.
 

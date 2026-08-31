@@ -68,7 +68,7 @@ There is a second difference that is easy to miss. `/goal` checks the completion
 
 > completion is decided by a fresh model rather than the one doing the work
 
-That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn.
+That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn. Since Haiku is comparatively weak, by the way, you should [set](https://code.claude.com/docs/en/model-config) this checking model deliberately beforehand.
 
 One limitation belongs with it: this evaluator calls no tools. It judges only what is already visible in the conversation. So the condition has to be phrased so that Claude's own output can demonstrate it. "All tests in `test/auth` pass" works, because Claude runs the tests and the result lands in the transcript.
 
