@@ -44,7 +44,7 @@ Wie weit das gehen kann, beschreibt Boris Cherny, Erfinder und Chef von Claude C
 
 Daraus wurde der zugespitzte Satz „I don't prompt Claude anymore." Belegen lässt er sich nicht, und wörtlich nehmen sollte man ihn ohnehin nicht: Hier bewirbt der Chef sein eigenes Produkt. Wer selbst Schleifen laufen lässt, greift sehr wohl ein, justiert nach und bricht ab.
 
-Die deutsche Beratung codecentric hat den Begriff [in eine brauchbare Schichtung eingeordnet](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context Engineering sorgt dafür, dass im einzelnen Prompt die richtigen Informationen stehen. Harness Engineering baut das Geländer drumherum, also Werkzeuge, Skills, Hooks und Sandboxes. Loop Engineering ist die Schicht darüber:
+Das Beratungsunternehmen codecentric hat den Begriff [in eine brauchbare Schichtung eingeordnet](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context Engineering sorgt dafür, dass im einzelnen Prompt die richtigen Informationen stehen. Harness Engineering baut das Geländer drumherum, also Werkzeuge, Skills, Hooks und Sandboxes. Loop Engineering ist die Schicht darüber:
 
 > the system that repeatedly triggers an AI agent, spawns helper agents, verifies results, and feeds itself, without a human prompting turn by turn
 
