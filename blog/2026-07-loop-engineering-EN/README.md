@@ -197,7 +197,7 @@ Next wakeup scheduled for 22:41:00 (in 119s)
 
 Two things happen here in sequence. First the request is raised to sixty seconds, which is the hard floor. Then the appointment slides to the next full minute, because cron only knows minute granularity. Thirty requested seconds became **119 seconds of actual waiting**. Worth knowing if you plan very short cadences.
 
-The model can also end the loop itself, with the same tool and a call of `stop: true`. That is exactly what I triggered in the test once the question was answered, and I got back `Loop stopped, cancelled 1 pending wakeup(s)`. There is a trap in it: that ends only the self-paced loop. One on a fixed interval keeps running and has to go via `CronDelete`.
+The model can also end the loop itself, with the same tool and a call of `stop: true`. That is exactly what I triggered in the test once the question was answered, and I got back `Loop stopped, cancelled 1 pending wakeup(s)`. There is a trap in it: that ends only the self-paced loop. One on a fixed interval keeps running and has to be ended via `CronDelete`.
 
 **With `/goal` it is an instruction.** There I am handed no tool at all. The moment you set a goal, this text appears in my context:
 
