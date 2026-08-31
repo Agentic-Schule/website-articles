@@ -150,7 +150,7 @@ And one more thing belongs here: every iteration needs something new to work wit
 
 **Can the agent try out what it builds?** Without logs, without a runnable environment, without the ability to execute its own code, the loop iterates blind. It then produces a lot of text quickly that nobody has checked.
 
-My honest assessment: loop engineering is a real technique, and most people do not need it yet. For one-off tasks, for exploration, and anywhere "done" is a judgement call, a single well-aimed prompt still wins. And if your bottleneck was review in the first place, a loop only makes the queue longer.
+My take: loop engineering is worth it, and you should use it once the infrastructure is in place. Without proper test coverage and a CI that objectively says green or red, the loop has nothing to measure against. With that foundation, it pays off. For one-off tasks and anywhere "done" is a pure judgement call, a single well-aimed prompt is still the better choice. And if your bottleneck was review in the first place, a loop only makes the queue longer.
 
 ## The overnight run
 
@@ -161,7 +161,7 @@ The stop condition is brutal then:
 ```text
 /loop implement the plan. Everything tested, everything green on CI.
 No exceptions, no shortcuts. Do not give up until the goal is reached.
-No questions. I am AFK now and have all night.
+No questions. I am AFK now. You have all night.
 ```
 
 Whether that last line about the night is really needed, I do not know. But Opus usually wishes me a good night in return and promises everything will be green in the morning. And most of the time it is.
@@ -255,7 +255,7 @@ At its core, loop engineering comes down to a single question: who decides when 
 
 Six things I take away:
 
-- **Most people do not need a loop yet.** If the task does not repeat, or nothing but the agent can say no, a single good prompt still wins.
+- **Infrastructure first, then the loop.** Without test coverage and CI that can say no, the loop has nothing to measure against. With that foundation in place, it is worth using.
 - **The completion condition is the real work.** The rest is a command with a time interval.
 - **`/loop` waits, `/goal` does not.** Waiting on something external like a green CI run, which also sets a good rhythm, take the loop. Working toward an end state, take the goal.
 - **Do not let the same model that did the work check it.** `/goal` brings in a model of its own for that.

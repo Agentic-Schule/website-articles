@@ -150,18 +150,18 @@ Und noch etwas gehört dazu: Jeder Durchlauf braucht etwas Neues zum Arbeiten. E
 
 **Kann der Agent ausprobieren, was er baut?** Ohne Logs, ohne lauffähige Umgebung, ohne die Möglichkeit, den eigenen Code auszuführen, iteriert die Schleife blind. Sie produziert dann schnell viel Text, den niemand geprüft hat.
 
-Meine ehrliche Einschätzung dazu: Loop Engineering ist eine echte Technik, und die meisten brauchen sie heute noch nicht. Für einmalige Aufgaben, für Erkundungen und überall dort, wo „fertig" eine Ermessensfrage ist, gewinnt weiterhin ein einzelner, gut gezielter Prompt. Und wenn dein Engpass ohnehin das Review ist, macht eine Schleife die Warteschlange nur länger.
+Meine Einschätzung: Loop Engineering lohnt sich, und du solltest es einsetzen, sobald die Infrastruktur steht. Ohne ordentliche Testabdeckung und eine CI, die objektiv Grün oder Rot sagt, hat die Schleife nichts, woran sie sich messen kann. Ist diese Grundlage da, zahlt sie sich aus. Für einmalige Aufgaben und dort, wo „fertig" reine Ermessenssache ist, bleibt ein einzelner, gut gezielter Prompt die bessere Wahl. Und wenn dein Engpass ohnehin das Review ist, macht eine Schleife die Warteschlange nur länger.
 
 ## Der Nachtlauf
 
-So viel dazu, wann sich eine Schleife nicht lohnt. Es gibt aber einen Fall, für den ich sie liebe. Manche Aufgaben sind schlicht hart. Sie brauchen viele Anläufe, immer wieder gegen die CI, bis endlich alles grün ist. Genau dafür lasse ich den Agenten grinden, notfalls die ganze Nacht.
+So viel dazu, wann sich eine Schleife nicht lohnt. Es gibt aber einen Fall, für den ich sie liebe. Manche Aufgaben sind schlicht hart. Sie brauchen viele Anläufe, immer wieder gegen die CI, bis endlich alles grün ist. Genau dafür lasse ich den Agenten „grinden", notfalls die ganze Nacht.
 
 Die Abbruchbedingung ist dann knallhart:
 
 ```text
 /loop implementiere den Plan. Alles durchgetestet, alles auf CI grün.
 Keine Ausnahmen, keine Abkürzungen. Gib nicht auf, bis das Ziel erreicht
-ist. Keine Rückfragen. Ich bin jetzt AFK und habe die ganze Nacht Zeit.
+ist. Keine Rückfragen. Ich bin jetzt AFK. Du hast die ganze Nacht Zeit.
 ```
 
 Ob der letzte Satz mit der Nacht wirklich nötig ist, weiß ich nicht. Aber Opus wünscht mir daraufhin meist eine gute Nacht und verspricht, dass morgens alles grün ist. Und meistens ist es das dann auch.
@@ -255,7 +255,7 @@ Im Kern läuft Loop Engineering auf eine einzige Frage hinaus: Wer entscheidet, 
 
 Sechs Dinge nehme ich mit:
 
-- **Die meisten brauchen noch keine Schleife.** Wiederholt sich die Aufgabe nicht, oder kann niemand außer dem Agenten Nein sagen, gewinnt weiterhin ein einzelner guter Prompt.
+- **Erst die Infrastruktur, dann die Schleife.** Ohne Testabdeckung und CI, die Nein sagen können, hat die Schleife nichts, woran sie sich misst. Steht die Grundlage, lohnt sich der Einsatz.
 - **Die Abbruchbedingung ist die eigentliche Arbeit.** Der Rest ist ein Befehl mit einem Zeitintervall.
 - **`/loop` wartet, `/goal` nicht.** Wartest du auf etwas Fremdes wie den grünen CI-Run, der gleich einen guten Takt vorgibt, nimm die Schleife. Arbeitest du auf einen Endzustand hin, nimm das Ziel.
 - **Lass nicht dasselbe Modell prüfen, das gearbeitet hat.** `/goal` holt dafür ein eigenes Modell dazu.
