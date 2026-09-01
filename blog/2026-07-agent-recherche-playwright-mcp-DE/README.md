@@ -20,9 +20,7 @@ header: header.jpg
 
 Kennst du das? Du schickst deinen Agenten zur Web-Recherche los, und er wird ausgesperrt.
 
-Aus immer mehr Seiten werden AI-Agenten und ganz normale Crawler gemeinsam ausgesperrt, und bei Cloudflare wird dieses Aussperren für neue Domains gerade zur Voreinstellung. Zurück kommen leere Seiten, Weiterleitungen und ein „Access Denied". Der Agent tut dann, was Agenten in so einer Lage tun: Er behilft sich mit Suchmaschinen-Auszügen und schreibt aus zweiter Hand. Das ist heikel, denn Auszüge sind älter als die Seite und manchmal schlicht falsch.
-
-**Wo eine Seite dich bewusst aussperrt, ist das ihr gutes Recht. Viel häufiger aber liegt die Ursache gar nicht an der Seite, sondern beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine kaputte Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie ein Browser von Hand.**
+**Wo eine Seite dich bewusst aussperrt, ist das ihr gutes Recht. Meistens aber will der Betreiber nur die großen Botfarmen draußen halten, die mit ihrem Traffic echten Ärger machen. Dein Agent mit seinen paar Aufrufen macht diesen Ärger nicht, gerät aber in denselben Filter und kommt mit unter die Räder. Der Grund liegt beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine kaputte Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie ein Browser von Hand.**
 
 Dieser Artikel zeigt, woran ein Default-Headless-Browser erkannt wird (mit gemessenen Werten), wie ein eigener MCP update-fest eingerichtet wird, wo die ehrliche Grenze dieser Übung liegt und wie man verhindert, dass der Browser seine Dateien mitten in die Repos kippt.
 
@@ -38,7 +36,7 @@ Die Ausgangslage ist harmlos. Ein Agent liest ein paar Doku-Seiten, um Aussagen 
 - Die Seite lädt, ist aber leer, weil das Frontend abbricht.
 - Die Startseite kommt, jede Unterseite verweigert.
 
-Was jetzt passiert, ist schlimmer als der Fehlschlag selbst: Der Agent weicht aus, statt aufzugeben. Er nimmt die Suchmaschinen-Vorschau, den Cache, ein Zitat aus einem fremden Blog. Das liest sich im Ergebnis genauso souverän wie eine echte Quelle. Mir ist das beim letzten Artikel passiert, und erst der zweite Blick zeigte, dass mehrere Doku-Seiten inzwischen ganz anders formulieren, als die Auszüge behaupteten. Wer mit Agenten arbeitet, kennt das Muster: Eine blockierte Quelle wird lautlos zu einer schlechteren Quelle.
+Was jetzt passiert, ist schlimmer als der Fehlschlag selbst: Der Agent weicht aus, statt aufzugeben. Er nimmt die Suchmaschinen-Vorschau, den Cache, ein Zitat aus einem fremden Blog, oder er halluziniert gleich ganz. Das liest sich im Ergebnis genauso souverän wie eine echte Quelle. Mir ist das beim letzten Artikel passiert, und erst der zweite Blick zeigte, dass mehrere Doku-Seiten inzwischen ganz anders formulieren, als die Auszüge behaupteten. Wer mit Agenten arbeitet, kennt das Muster: Eine blockierte Quelle wird lautlos zu einer schlechteren Quelle.
 
 Und der Wind wird rauer. Cloudflare sitzt vor einem großen Teil des Webs und [kündigt zum 15. September 2026 neue Standardwerte an](https://blog.cloudflare.com/content-independence-day-ai-options/):
 
