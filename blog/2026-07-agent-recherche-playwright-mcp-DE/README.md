@@ -280,6 +280,8 @@ Am Ende geht es um eine kleine Reparatur mit großer Wirkung: Der Agent gerät n
 
 Übrigens läuft dieser Recherche-Browser bei mir dauerhaft auf einer Maschine, die nie ausgeht. Wie diese Bodenstation aufgebaut ist, steht im Begleitartikel [„Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation"](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini).
 
+<a href="https://agentic.schule/blog/2026-07-agentic-coding-mac-mini"><img src="../2026-07-agentic-coding-mac-mini-DE/header.jpg" alt="Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation" style="display:block;margin:1.5em auto;width:42%;"></a>
+
 **Fragen, Feedback, eigene Erfahrungen mit ausgesperrten Agenten?** Immer her damit, ich freue mich über jede Nachricht.
 
 ---
