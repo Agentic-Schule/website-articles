@@ -208,6 +208,49 @@ Die Konfiguration ist bewusst maschinen-lokal. Sie enthält die Chrome-Version d
 > claude mcp add playwright --scope user -- npx @playwright/mcp@latest --config "$CONFIG"
 > ```
 
+## Aufräumen: liegengebliebene Chrome-Prozesse
+
+Ein letztes Ärgernis, und diesmal ohne Fingerabdruck. Playwright startet für `channel: chrome` einen echten Chrome, und bei einem Absturz oder hartem Abbruch bleibt der schon mal liegen. Über die Tage stapeln sich diese Leichen und fressen CPU und Speicher. Bei mir waren es einmal über achtzig Prozesse auf einmal, darunter ein GPU-Helper, der tagelang mit mehreren hundert Prozent CPU lief.
+
+Das ist kein Einzelfall, sondern ein wiederkehrendes Muster: übrig bleibende Chrome-Prozesse [nach dem Schließen der Sitzung](https://github.com/microsoft/playwright-mcp/issues/1568), [ganze verwaiste Prozessbäume](https://github.com/microsoft/playwright-mcp/issues/1634) und [Zombies, die im App-Switcher hängen bleiben](https://github.com/microsoft/playwright-mcp/issues/1458). Die Issues sind zwar geschlossen, doch bei mir zeigt sich das Muster weiter: Mein Aufräum-Skript erntet Zyklus für Zyklus ein paar solcher Prozesse.
+
+Die Lösung ist unspektakulär, ein kleiner Reaper, der alle paar Minuten läuft und Chrome-Prozesse killt, die älter als eine Schwelle sind. Das Alter ist der Kniff: Ein gerade laufender Aufruf hat einen jungen Browser und bleibt verschont, die Leichen von gestern fliegen raus.
+
+> **🛠️ Selbst nachbauen: `chrome-reaper.sh`**
+> ```bash
+> #!/usr/bin/env bash
+> # Killt Google-Chrome-Prozesse, die älter als CHROME_MAX_AGE_MIN Minuten sind.
+> # Ein gerade laufender Aufruf hat einen jungen Browser und bleibt verschont.
+> # DRY_RUN=1 zeigt nur an, was gekillt würde.
+> set -uo pipefail
+> export PATH=/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin
+>
+> MAX_AGE_MIN="${CHROME_MAX_AGE_MIN:-120}"
+> DRY_RUN="${DRY_RUN:-0}"
+> threshold=$(( MAX_AGE_MIN * 60 ))
+>
+> # etime ([[TT-]HH:]MM:SS) in Sekunden umrechnen
+> etime_to_secs() {
+>   awk -F'[-:]' '{
+>     if (NF==4) print (($1*24+$2)*60+$3)*60+$4;
+>     else if (NF==3) print ($1*60+$2)*60+$3;
+>     else if (NF==2) print $1*60+$2;
+>     else print 0
+>   }' <<<"$1"
+> }
+>
+> # Bracket-Trick: so matcht grep sich nicht selbst
+> while read -r pid etime _; do
+>   [ -z "${pid:-}" ] && continue
+>   [ "$(etime_to_secs "$etime")" -gt "$threshold" ] || continue
+>   [ "$DRY_RUN" = "1" ] && { echo "[dry-run] würde killen: $pid ($etime)"; continue; }
+>   kill -9 "$pid" 2>/dev/null
+> done < <(ps -Ao pid=,etime=,command= | grep '[G]oogle Chrome')
+> ```
+> Zeitgesteuert läuft es bei mir per `launchd` alle 15 Minuten; ein Cron-Eintrag `*/15 * * * *` tut dasselbe. Vorher gefahrlos mit `DRY_RUN=1` prüfen, was gekillt würde.
+
+Ehrlich bleibt: Das räumt nur auf, es behebt die Ursache nicht. Solange Playwright bei Abbrüchen Prozesse liegen lässt, ist der Reaper ein Besen, kein Verbot. Für eine Maschine, die rund um die Uhr recherchiert, ist mir ein Besen aber lieber als ein volllaufender Speicher.
+
 ## Fazit
 
 Der Aufwand ist überschaubar: eine Konfigurationsdatei, ein zweizeiliges Skript, ein Registrierungsbefehl. Der Gewinn ist größer, als es zunächst klingt.
