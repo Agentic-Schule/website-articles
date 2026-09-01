@@ -172,12 +172,9 @@ Drei Bausteine:
 > ```
 > Damit sie beim Boot ohne Login hochkommt, einen LaunchDaemon unter `/Library/LaunchDaemons/` einrichten, der `colima start` als dein Benutzer ausführt. Container mit `restart: always` in der `docker-compose.yml` starten dann automatisch mit.
 
-> **🛠️ Selbst nachbauen — headless Playwright-MCP für Claude Code**
-> ```bash
-> claude mcp add playwright --scope user -- \
->   npx @playwright/mcp@latest --headless --browser chrome --isolated
-> ```
-> `--headless` = kein GUI nötig · `--browser chrome` = nutzt den installierten System-Chrome · `--isolated` = frisches Profil je Lauf. Auf einer monitorlosen Maschine zusätzlich `--disable-gpu` (via Config-Datei), sonst kann Chrome beim Start am fehlenden Display-Kontext scheitern.
+Diesen Playwright-MCP so einzurichten, dass er unauffällig bleibt, Updates übersteht und nicht in die groben Bot-Filter gerät, ist ein Thema für sich. Den ganzen Weg beschreibe ich im eigenen Artikel:
+
+<a href="https://agentic.schule/blog/2026-07-agent-recherche-playwright-mcp"><img src="../2026-07-agent-recherche-playwright-mcp-DE/header.jpg" alt="Dein Agent wird bei der Recherche ausgesperrt? Gib ihm einen eigenen, unauffälligen Playwright-MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
 
 ## Die Arbeit des Agenten im Browser ansehen
 

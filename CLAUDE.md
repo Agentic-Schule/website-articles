@@ -30,7 +30,10 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - Begeisterung ja, Hype nein. **Transparenz ist wichtiger als Werbung.** Zu jedem gelobten Werkzeug gehört eine ehrliche Schwächen-Sektion und die offenen Trade-offs.
 - **Gehedgt statt behauptet:** „in der Regel", „meist", „typischerweise". Keine unbelegten Superlative.
 - **Jede starke Aussage wird belegt** (Quelle, Link, Zeilennummer, Issue). Was sich nicht belegen lässt, wird als unbestätigt markiert oder fliegt raus.
+- **Sparsam mit Zahlen.** Nie Zahlen zur Ausschmückung streuen („über achtzig Prozesse", „mehrere hundert Prozent CPU", „eine halbe Stunde"). Eine konkrete Zahl gehört nur in den Text, wenn sie fürs Verständnis wirklich, wirklich wichtig und belegt ist. Sonst qualitativ formulieren („stapeln sich", „lasten die CPU aus", „wächst immer weiter").
 - Dosierter, trockener Humor und Selbstironie sind erwünscht, nie albern. Personifikation zur Erklärung ist gut („Der Agent hat kein Ego und erklärt geduldig").
+- **Der Autor tritt stets souverän auf, wie ein Profi, der die Dinge im Griff hat.** Erkenntnisse sind Wissen und Können, keine Zufallsfunde oder mühsam erlittenen Lektionen. Tabu sind „mir ist das passiert", „das hat mich Ärger gekostet", „erst beim zweiten Mal habe ich die Ursache verstanden", „meine erste, naive Intuition war …". Solche Pannen-Erzählungen wirken dilettantisch. Fallen werden als Wissen präsentiert („das ist eine Falle: …"), das eigene Hineintappen bleibt draußen. Trockene Selbstironie und klar markierte Vorlieben („ich bevorzuge …") bleiben ausdrücklich erwünscht.
+- **Das Wort „ehrlich" nicht in den Artikeltext schreiben.** Der Autor liefert Fakten, die sind ohnehin ehrlich. Sich selbst als „ehrlich" zu markieren, legt nahe, es gäbe auch unehrliche oder geschönte Aussagen. Die Sache direkt benennen („das räumt nur auf, behebt aber die Ursache nicht") statt sie mit „ehrlich bleibt" oder „ehrliche Grenze" zu etikettieren. Transparenz zeigt sich im Inhalt, nicht im Etikett.
 
 ## Fachsprache und Code
 
