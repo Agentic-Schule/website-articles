@@ -62,19 +62,25 @@ Der entscheidende Punkt: **Diese Merkmale sagen nichts über Absicht.** Sie sage
 
 ## Die Lösung: ein eigener, dedizierter Playwright-MCP
 
-Claude Code kann Playwright über einen [MCP-Server](https://code.claude.com/docs/en/mcp) ansprechen, und dafür gibt es ein offizielles Plugin von Microsoft im Marketplace. Damit habe ich zunächst gearbeitet, und so werden es sicher viele angehen: ein Plugin aus dem offiziellen Marketplace, von einem Anbieter, dem man vertraut, da weiß man, was man hat. Am Ende habe ich es trotzdem abgeschaltet und den Server selbst registriert. Dafür gibt es zwei Gründe.
+Claude Code kann Playwright über einen [MCP-Server](https://code.claude.com/docs/en/mcp) ansprechen, und dafür gibt es ein offizielles Plugin von Microsoft im Marketplace. Es startet den quelloffenen Server [`@playwright/mcp`](https://github.com/microsoft/playwright-mcp) und ist mit einem Befehl installiert:
 
-**Erstens Haltbarkeit.** Meine erste Intuition war, das fertige Plugin einfach anzupassen. Viel steht da ohnehin nicht drin, die ganze Definition ist ein Vierzeiler:
+```bash
+claude plugin install playwright@claude-plugins-official
+```
+
+Damit habe ich zunächst gearbeitet, und so werden es sicher viele angehen: ein Plugin aus dem offiziellen Marketplace, von einem Anbieter, dem man vertraut, da weiß man, was man hat. Am Ende habe ich es trotzdem abgeschaltet und den Server selbst registriert. Dafür gibt es zwei Gründe.
+
+**Erstens Haltbarkeit.** Das fertige Plugin direkt anzupassen liegt nahe, viel steht da ohnehin nicht drin, die ganze Definition ist ein Vierzeiler:
 
 ```json
 { "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] } }
 ```
 
-Also die Argumente ergänzen, fertig? Kurzfristig lief das auch. Nur liegt diese Datei im Plugin-Cache, und den schreibt Claude Code bei jedem Update neu. Mit dem nächsten Update war meine Änderung weg, und das gleich zweimal, bevor ich die Ursache verstand. Ein selbst registrierter Server liegt woanders: Laut [MCP-Dokumentation](https://code.claude.com/docs/en/mcp-quickstart) landet er bei `--scope user` in `~/.claude.json` unter dem Schlüssel `mcpServers` und gilt dann für alle Projekte. Updates fassen diese Datei nicht an.
+Also die Argumente ergänzen, fertig? Das ist aber eine Falle: Die Datei liegt im Plugin-Cache, und den schreibt Claude Code bei jedem Update neu. Jede Änderung dort ist nach dem nächsten Update wieder weg. Ein selbst registrierter Server liegt woanders: Laut [MCP-Dokumentation](https://code.claude.com/docs/en/mcp-quickstart) landet er bei `--scope user` in `~/.claude.json` unter dem Schlüssel `mcpServers` und gilt dann für alle Projekte. Updates fassen diese Datei nicht an.
 
 Praktischerweise gewinnt der eigene Server ohnehin: Die Dokumentation nennt als Reihenfolge Local, Project, User, danach erst Plugins, und stellt klar, dass immer genau ein Eintrag gewinnt („The entire server entry from that source is used; fields are not merged across scopes"). Ein eigener `playwright` sticht das Plugin also. Ich schalte das Plugin trotzdem ab, weil zwei Definitionen für dieselbe Sache eine Einladung zum Rätselraten sind.
 
-**Zweitens Übersichtlichkeit.** Alle Einstellungen stehen in einer Konfigurationsdatei statt in einer wachsenden Kette von Kommandozeilen-Schaltern. Das ist keine Geschmacksfrage: Zusätzliche Chrome-Argumente (gleich mehr dazu) lassen sich **nur** über die Konfiguration setzen, ein passendes CLI-Flag gibt es nicht. Eine Datei, eine Wahrheit.
+**Zweitens Übersichtlichkeit.** Ich bevorzuge es, wenn alle Einstellungen in einer Konfigurationsdatei stehen und nicht über eine wachsende Kette von Kommandozeilen-Schaltern verteilt sind. Und hier ist es nicht nur Geschmack: Zusätzliche Chrome-Argumente (gleich mehr dazu) lassen sich **nur** über die Konfiguration setzen, ein passendes CLI-Flag gibt es nicht. Eine Datei, eine Wahrheit.
 
 > **🛠️ Selbst nachbauen: den Server registrieren**
 > ```bash
@@ -89,7 +95,7 @@ Praktischerweise gewinnt der eigene Server ohnehin: Die Dokumentation nennt als 
 
 ## Unauffällig ist nicht unsichtbar
 
-Jetzt der Teil, den ich am wichtigsten finde. Was hier passiert, ist **Reparatur, keine Tarnkappe**. Zwei Handgriffe genügen, um die drei Verräter loszuwerden.
+Jetzt wollen wir den Chrome ein wenig tarnen. Zwei Handgriffe genügen, um die drei Verräter loszuwerden.
 
 Der User-Agent wird auf einen normalen Chrome-String gesetzt. Entscheidend ist dabei die Versionsnummer: Sie muss zum tatsächlich installierten Chrome passen. Ein User-Agent, der Version 130 behauptet, während der Browser sich in jedem anderen Detail wie Version 150 verhält, ist selbst wieder ein Widerspruch. Deshalb liest mein Setup-Skript die Version aus dem installierten Chrome aus, statt sie fest einzutragen.
 
@@ -113,7 +119,7 @@ Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair 
 
 ## Headless auf einer Maschine ohne Bildschirm
 
-Mein Agenten-Rechner ist ein [Mac mini ohne Monitor](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini), an dem sich niemand grafisch anmeldet. Genau dort stürzte der echte Chrome beim Start reproduzierbar ab, sobald keine grafische Anmeldung aktiv war, mit `CVDisplayLink failed` und einem SIGTRAP. Der Grund ist unspektakulär: Chrome baut beim Start einen Grafik- und Display-Kontext auf, und ohne eine aktive grafische Sitzung gibt es den nicht. Die Lösung ist ein einziges Chrome-Argument:
+Mein Agenten-Rechner ist ein [Mac mini ohne Monitor](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini), an dem sich niemand grafisch anmeldet. Genau dort stürzte der echte Chrome beim Start reproduzierbar ab, sobald keine grafische Anmeldung aktiv war, mit `CVDisplayLink failed` und einem SIGTRAP. Der Grund ist unspektakulär: Chrome baut beim Start einen Grafik- und Display-Kontext auf, und ohne eine aktive grafische Sitzung gibt es den nicht. Die Lösung ist folgendes Chrome-Argument:
 
 ```json
 "args": ["--disable-gpu"]
@@ -125,7 +131,7 @@ Und hier zeigt sich, warum die Konfigurationsdatei nötig ist: Für zusätzliche
 
 ## Hygiene: wohin mit den Dateien?
 
-Ein Detail, das mich echten Ärger gekostet hat. Der Playwright-MCP legt Dateien an, Snapshots der Seitenstruktur, Screenshots, Konsolenprotokolle. Standardmäßig landen sie in einem Ordner `.playwright-mcp` **im aktuellen Arbeitsverzeichnis**, und das ist bei einem Coding-Agenten nun einmal das Repository. So sieht die Zuständigkeit im Quelltext von [`@playwright/mcp`](https://github.com/microsoft/playwright-mcp) aus (quelloffen unter Apache-2.0, Version 0.0.78):
+Ein unscheinbares Detail mit Folgen. Der Playwright-MCP hinterlässt Spuren auf der Platte: Snapshots der Seitenstruktur, Screenshots, Konsolenprotokolle. Standardmäßig landen sie in einem Ordner `.playwright-mcp` **im aktuellen Arbeitsverzeichnis**, und das ist bei einem Coding-Agenten nun einmal das Repository. So sieht die Zuständigkeit im Quelltext von `@playwright/mcp` aus (Version 0.0.78):
 
 ```js
 function outputDir(options) {
@@ -138,7 +144,7 @@ function outputDir(options) {
 }
 ```
 
-Ohne `outputDir` schreibt der Server also mitten in das Projekt, an dem gerade gearbeitet wird. Bei mir tauchten die Dateien prompt in einem Commit auf, und in einem anderen Projekt wuchs der Ordner unbemerkt immer weiter.
+Ohne `outputDir` schreibt der Server also mitten in das Projekt, an dem gerade gearbeitet wird. Die Artefakte muss man dann von Hand wieder löschen und bei Bedarf ein `.gitignore` anlegen, damit sie nicht im nächsten Commit landen. Und ohne Aufräumen wächst der Ordner immer weiter.
 
 Der zweite Teil des Problems ist die Aufräumfunktion. Es gibt sie, aber sie tut standardmäßig nichts:
 
@@ -176,7 +182,7 @@ Die erste Bedingung erklärt das vollständig. Ohne gesetztes Budget kehrt die F
 > ```
 > `outputDir` lenkt die Dateien zentral nach `/tmp`, `outputMaxSize` (hier 200 MB) schaltet das Aufräumen überhaupt erst ein. `channel: chrome` nutzt den installierten Chrome statt eines Testbrowsers, `isolated: true` gibt jeder Sitzung ein frisches Profil im Arbeitsspeicher, was Sperrkonflikte bei parallelen Sessions vermeidet. Die Versionsnummer im `userAgent` (`<version>`) trägt das Setup-Skript unten passend zur Maschine ein.
 
-> **⚠️ Beim Debuggen daran denken:** Die Konfiguration wird beim Start des Servers gelesen. Wer sie ändert und sich wundert, dass nichts passiert, debuggt gegen einen Prozess von vorgestern. Beim Schreiben dieses Artikels ist mir das passiert: Der Ordner tauchte wieder im Repository auf, obwohl die Einstellung längst richtig war. Nach einem Neuverbinden des Servers war Ruhe.
+> **⚠️ Beim Debuggen daran denken:** Die Konfiguration wird beim Start des Servers gelesen. Wer sie ändert und sich wundert, dass nichts passiert, debuggt gegen den falschen Prozess. Gelöst ist das durch ein Neuverbinden des Servers, das die Konfiguration frisch einliest.
 
 ## Einrichtung: ein Skript pro Maschine
 
@@ -210,7 +216,7 @@ Die Konfiguration ist bewusst maschinen-lokal. Sie enthält die Chrome-Version d
 
 ## Aufräumen: liegengebliebene Chrome-Prozesse
 
-Ein letztes Ärgernis, und diesmal ohne Fingerabdruck. Playwright startet für `channel: chrome` einen echten Chrome, und bei einem Absturz oder hartem Abbruch bleibt der schon mal liegen. Über die Tage stapeln sich diese Leichen und fressen CPU und Speicher. Bei mir waren es einmal über achtzig Prozesse auf einmal, darunter ein GPU-Helper, der tagelang mit mehreren hundert Prozent CPU lief.
+Ein letztes Ärgernis, und diesmal ohne Fingerabdruck. Playwright startet für `channel: chrome` einen echten Chrome, und bei einem Absturz oder hartem Abbruch bleibt der schon mal liegen. Über die Tage stapeln sich diese Leichen und fressen CPU und Speicher, in einem Fall über achtzig Prozesse auf einmal, darunter ein GPU-Helper, der tagelang mit mehreren hundert Prozent CPU lief.
 
 Das ist kein Einzelfall, sondern ein wiederkehrendes Muster: übrig bleibende Chrome-Prozesse [nach dem Schließen der Sitzung](https://github.com/microsoft/playwright-mcp/issues/1568), [ganze verwaiste Prozessbäume](https://github.com/microsoft/playwright-mcp/issues/1634) und [Zombies, die im App-Switcher hängen bleiben](https://github.com/microsoft/playwright-mcp/issues/1458). Die Issues sind zwar geschlossen, doch bei mir zeigt sich das Muster weiter: Mein Aufräum-Skript erntet Zyklus für Zyklus ein paar solcher Prozesse.
 
