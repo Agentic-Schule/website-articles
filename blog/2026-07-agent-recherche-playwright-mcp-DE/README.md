@@ -18,9 +18,11 @@ language: de
 header: header.jpg
 ---
 
-Mein Agent sollte für einen Artikel ein paar Behauptungen prüfen. Ganz normale Hersteller-Dokumentation, öffentlich, jede Seite im Browser mit einem Klick erreichbar. Was zurückkam, waren leere Seiten, Weiterleitungen und ein „Access Denied". Der Agent tat daraufhin das, was Agenten in so einer Lage tun: Er behalf sich mit Suchmaschinen-Auszügen und schrieb aus zweiter Hand. Genau das will ich nicht, denn Auszüge sind älter als die Seite und manchmal schlicht falsch.
+Kennst du das? Du schickst deinen Agenten zur Web-Recherche los, und er wird ausgesperrt.
 
-**Die Ursache liegt selten bei der Seite und fast immer beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine kaputte Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie ein Browser von Hand.**
+Aus immer mehr Seiten werden AI-Agenten und ganz normale Crawler gemeinsam ausgesperrt, und bei Cloudflare wird dieses Aussperren für neue Domains gerade zur Voreinstellung. Zurück kommen leere Seiten, Weiterleitungen und ein „Access Denied". Der Agent tut dann, was Agenten in so einer Lage tun: Er behilft sich mit Suchmaschinen-Auszügen und schreibt aus zweiter Hand. Das ist heikel, denn Auszüge sind älter als die Seite und manchmal schlicht falsch.
+
+**Wo eine Seite dich bewusst aussperrt, ist das ihr gutes Recht. Viel häufiger aber liegt die Ursache gar nicht an der Seite, sondern beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine kaputte Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie ein Browser von Hand.**
 
 Dieser Artikel zeigt, woran ein Default-Headless-Browser erkannt wird (mit gemessenen Werten), wie ein eigener MCP update-fest eingerichtet wird, wo die ehrliche Grenze dieser Übung liegt und wie man verhindert, dass der Browser seine Dateien mitten in die Repos kippt.
 
@@ -30,7 +32,7 @@ Dieser Artikel zeigt, woran ein Default-Headless-Browser erkannt wird (mit gemes
 
 ## Das Problem: höflich angeklopft, trotzdem ausgesperrt
 
-Die Ausgangslage ist harmlos. Ein Agent liest ein paar Doku-Seiten, um Aussagen zu prüfen, ein Dutzend Aufrufe über eine halbe Stunde verteilt. Kein Scraping, keine Last, nichts, was ein Mensch mit derselben Absicht nicht auch täte. Trotzdem kommt nichts Brauchbares zurück:
+Die Ausgangslage ist harmlos. Ein Agent liest ein paar Doku-Seiten, um Aussagen zu prüfen, in Ruhe und ohne Eile. Kein Scraping, keine Last, nichts, was ein Mensch mit derselben Absicht nicht auch täte. Trotzdem kommt nichts Brauchbares zurück:
 
 - Statt Inhalt erscheint „Access Denied" oder „Checking your browser…".
 - Die Seite lädt, ist aber leer, weil das Frontend abbricht.
@@ -38,13 +40,19 @@ Die Ausgangslage ist harmlos. Ein Agent liest ein paar Doku-Seiten, um Aussagen 
 
 Was jetzt passiert, ist schlimmer als der Fehlschlag selbst: Der Agent weicht aus, statt aufzugeben. Er nimmt die Suchmaschinen-Vorschau, den Cache, ein Zitat aus einem fremden Blog. Das liest sich im Ergebnis genauso souverän wie eine echte Quelle. Mir ist das beim letzten Artikel passiert, und erst der zweite Blick zeigte, dass mehrere Doku-Seiten inzwischen ganz anders formulieren, als die Auszüge behaupteten. Wer mit Agenten arbeitet, kennt das Muster: Eine blockierte Quelle wird lautlos zu einer schlechteren Quelle.
 
+Und der Wind wird rauer. Cloudflare sitzt vor einem großen Teil des Webs und [kündigt zum 15. September 2026 neue Standardwerte an](https://blog.cloudflare.com/content-independence-day-ai-options/):
+
+> For all new domains onboarding to Cloudflare, the categories of Training and Agent will be blocked by default on the pages that display ads, while Search will remain allowed by default.
+
+Bezeichnend ist schon die Kategorie „Agent": Der Echtzeit-Zugriff durch KI-Agenten gilt inzwischen als eigene Verkehrsklasse, die man für neue, werbefinanzierte Seiten per Voreinstellung blockt. Das ist die bewusste Entscheidung einer Seite, und die respektiert man, dazu unten mehr. Der Ärger, um den es in diesem Artikel geht, ist ein anderer: die groben Filter, die jede Automatisierung wegsortieren und dabei auch den freundlichen Leser treffen.
+
 ## Warum das passiert: der Browser sieht kaputt aus
 
 Ein frisch gestarteter Playwright-Browser trägt drei Merkmale, die kein Handbrowser hat. Die folgenden Werte stammen aus einer Messung auf meiner Maschine, einmal im Standardzustand und einmal mit der Konfiguration, um die es gleich geht:
 
 | Merkmal | Playwright im Standardzustand | mit eigener Konfiguration |
 |---|---|---|
-| `navigator.userAgent` | `…HeadlessChrome/150.0.0.0…` | `…Chrome/150.0.0.0…` |
+| `navigator.userAgent` | `…HeadlessChrome/…` | `…Chrome/…` |
 | `navigator.webdriver` | `true` | `undefined` |
 | `navigator.languages` | `["en-US","en"]` | `["de-DE","de","en-US","en"]` |
 | `window.chrome` | vorhanden | vorhanden |
@@ -97,7 +105,7 @@ Der Rest ist ein kleines Skript, das vor jedem Seitenaufbau läuft:
 
 **Und jetzt die Grenze, die in jeden Text dieser Art gehört:** Gegen echtes Bot-Management hilft das nicht. Systeme wie Cloudflare Turnstile oder DataDome schauen sich den TLS-Fingerabdruck an, messen Mausbewegungen und Timings und stellen aktive Rechenaufgaben. Zwei Zeilen JavaScript beeindrucken sie nicht, und das ist auch gut so. Wer eine solche Wand vor sich hat, hat eine klare Antwort bekommen: Diese Seite möchte nicht automatisiert gelesen werden. Dann ist Schluss, unabhängig davon, was technisch ginge.
 
-Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair bleiben.** `robots.txt` und Nutzungsbedingungen respektieren. Ein Dutzend Seiten in Ruhe lesen, statt zu hämmern. Keine Zugangs- oder Zahlschranken umgehen. Der Anspruch ist, dass der eigene Browser sich so verhält wie ein Mensch mit derselben Absicht, und keinen Deut darüber hinaus.
+Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair bleiben.** `robots.txt` und Nutzungsbedingungen respektieren. Ein paar Seiten in Ruhe lesen, statt zu hämmern. Keine Zugangs- oder Zahlschranken umgehen. Der Anspruch ist, dass der eigene Browser sich so verhält wie ein Mensch mit derselben Absicht, und keinen Deut darüber hinaus.
 
 ## Headless auf einer Maschine ohne Bildschirm
 
@@ -128,7 +136,7 @@ function outputDir(options) {
 }
 ```
 
-Ohne `outputDir` schreibt der Server also mitten in das Projekt, an dem gerade gearbeitet wird. Bei mir tauchten die Dateien prompt in einem Commit auf, und in einem anderen Projekt wuchs der Ordner unbemerkt auf über 800 MB.
+Ohne `outputDir` schreibt der Server also mitten in das Projekt, an dem gerade gearbeitet wird. Bei mir tauchten die Dateien prompt in einem Commit auf, und in einem anderen Projekt wuchs der Ordner unbemerkt immer weiter.
 
 Der zweite Teil des Problems ist die Aufräumfunktion. Es gibt sie, aber sie tut standardmäßig nichts:
 
@@ -141,7 +149,7 @@ async _enforceOutputBudget() {
 }
 ```
 
-Die erste Bedingung erklärt die 800 MB vollständig. Ohne gesetztes Budget kehrt die Funktion sofort zurück und löscht nie etwas. Ist ein Budget gesetzt, sortiert sie nach Änderungsdatum und entfernt die ältesten Dateien zuerst.
+Die erste Bedingung erklärt das vollständig. Ohne gesetztes Budget kehrt die Funktion sofort zurück und löscht nie etwas. Ist ein Budget gesetzt, sortiert sie nach Änderungsdatum und entfernt die ältesten Dateien zuerst.
 
 > **🛠️ Selbst nachbauen: die vollständige Konfiguration**
 > `~/.config/playwright-mcp/config.json`
@@ -158,13 +166,13 @@ Die erste Bedingung erklärt die 800 MB vollständig. Ohne gesetztes Budget kehr
 >       "args": ["--disable-gpu"]
 >     },
 >     "contextOptions": {
->       "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36"
+>       "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<version>.0.0.0 Safari/537.36"
 >     },
 >     "initScript": ["/pfad/zu/pw-stealth.js"]
 >   }
 > }
 > ```
-> `outputDir` lenkt die Dateien zentral nach `/tmp`, `outputMaxSize` (hier 200 MB) schaltet das Aufräumen überhaupt erst ein. `channel: chrome` nutzt den installierten Chrome statt eines Testbrowsers, `isolated: true` gibt jeder Sitzung ein frisches Profil im Arbeitsspeicher, was Sperrkonflikte bei parallelen Sessions vermeidet.
+> `outputDir` lenkt die Dateien zentral nach `/tmp`, `outputMaxSize` (hier 200 MB) schaltet das Aufräumen überhaupt erst ein. `channel: chrome` nutzt den installierten Chrome statt eines Testbrowsers, `isolated: true` gibt jeder Sitzung ein frisches Profil im Arbeitsspeicher, was Sperrkonflikte bei parallelen Sessions vermeidet. Die Versionsnummer im `userAgent` (`<version>`) trägt das Setup-Skript unten passend zur Maschine ein.
 
 > **⚠️ Beim Debuggen daran denken:** Die Konfiguration wird beim Start des Servers gelesen. Wer sie ändert und sich wundert, dass nichts passiert, debuggt gegen einen Prozess von vorgestern. Beim Schreiben dieses Artikels ist mir das passiert: Der Ordner tauchte wieder im Repository auf, obwohl die Einstellung längst richtig war. Nach einem Neuverbinden des Servers war Ruhe.
 
