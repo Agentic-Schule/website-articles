@@ -56,7 +56,7 @@ Bezeichnend ist schon die Kategorie „Agent": Der Echtzeit-Zugriff durch KI-Age
 
 ## Warum das passiert: der Browser sieht verdächtig aus
 
-Ein frisch gestarteter Playwright-Browser trägt drei Merkmale, die kein normaler Browser hat. Die folgenden Werte habe ich auf meiner Maschine ausgelesen, einmal im Standardzustand und einmal mit der Konfiguration, um die es gleich geht:
+Ein frisch gestarteter Playwright-Browser trägt unter anderem drei Merkmale, die kein normaler Browser hat. Die folgenden Werte habe ich auf meiner Maschine ausgelesen, einmal im Standardzustand und einmal mit der Konfiguration, um die es gleich geht:
 
 | Merkmal | Playwright im Standardzustand | mit eigener Konfiguration |
 |---|---|---|
@@ -64,9 +64,9 @@ Ein frisch gestarteter Playwright-Browser trägt drei Merkmale, die kein normale
 | `navigator.webdriver` | `true` | `undefined` |
 | `navigator.languages` | `["en-US","en"]` | `["de-DE","de","en-US","en"]` |
 
-Alle drei Merkmale sind das Problem. Das Wort **HeadlessChrome** steht im User-Agent und geht in jedem einzelnen Request an den Server. Dafür braucht es keine ausgefeilte Erkennung, ein simpler Textabgleich genügt. **`navigator.webdriver`** ist ein standardisiertes Flag, das der Browser selbst setzt, wenn er ferngesteuert wird, ein Stück JavaScript im Frontend liest es aus. Und die Sprachliste `["en-US","en"]`? Für sich genommen ist sie kein Beweis, denn viele Menschen haben tatsächlich nur Englisch eingestellt. Zum Signal wird sie erst in Kombination. Eine typische Heuristik gleicht die Browsersprache mit der Geolokalisierung der IP ab: Ein Zugriff aus Deutschland, der ausschließlich US-Englisch meldet, passt schlecht zusammen. Dazu kommt, dass die Standardliste bei jeder Playwright-Installation dieselbe ist. So bleibt die Sprachliste für sich schwach. Zusammen mit den anderen Merkmalen wird sie zum weiteren Baustein im Gesamtbild.
+Diese Standardwerte stellen ein Problem dar. Das Wort **HeadlessChrome** steht im User-Agent und geht in jedem einzelnen Request an den Server. Dafür braucht es keine ausgefeilte Erkennung, ein simpler Textabgleich genügt: Kein normaler Benutzer surft headless. **`navigator.webdriver`** ist ein standardisiertes Flag, das der Browser selbst setzt, wenn er ferngesteuert wird, mittels JS ist es schnell ausgelesen. Und die Sprachliste `["en-US","en"]`? Für sich genommen ist sie kein Beweis, denn viele Menschen haben tatsächlich nur Englisch eingestellt. Zum Signal wird sie erst in Kombination. Eine typische Heuristik gleicht die Browsersprache mit der Geolokalisierung der IP ab: Ein Zugriff aus Deutschland, der ausschließlich US-Englisch meldet, passt schlecht zusammen. Dazu kommt, dass die Standardliste bei jeder Playwright-Installation dieselbe ist. So bleibt die Sprachliste für sich schwach. Zusammen mit den anderen Merkmalen wird sie zum weiteren Baustein im Gesamtbild.
 
-Der entscheidende Punkt: **Diese Merkmale sagen nichts über Absicht.** Sie sagen nur „hier läuft Automatisierung". Wer grob filtert, sperrt damit den freundlichen Leser genauso aus wie den Massen-Scraper.
+Der entscheidende Punkt: **Diese Merkmale sagen nichts über die Absicht.** Sie machen es aber sehr einfach, eine Automatisierung zu erkennen. Wenn ein Betreiber grob filtert, sperrt er den freundlichen Leser genauso aus wie den Massen-Scraper.
 
 ## Die Lösung: ein eigener, dedizierter Playwright-MCP
 
@@ -99,13 +99,14 @@ Praktischerweise gewinnt der eigene Server ohnehin: Die Dokumentation nennt als 
 > ```json
 > { "enabledPlugins": { "playwright@claude-plugins-official": false } }
 > ```
+> Oder man installiert einfach das offizielle Plugin wieder. Funktioniert genauso.
 > Danach zeigt `claude mcp list` den eigenen Server, im Idealfall mit `✔ Connected`.
 
 ## Unauffällig ist nicht unsichtbar
 
 Jetzt wollen wir den Chrome ein wenig tarnen. Zwei Handgriffe genügen, um die drei Verräter loszuwerden.
 
-Der User-Agent wird auf einen normalen Chrome-String gesetzt. Entscheidend ist dabei die Versionsnummer: Sie muss zum tatsächlich installierten Chrome passen. Ein User-Agent, der Version 130 behauptet, während der Browser sich in jedem anderen Detail wie Version 150 verhält, ist selbst wieder ein Widerspruch. Deshalb liest mein Setup-Skript die Version aus dem installierten Chrome aus, statt sie fest einzutragen.
+Der User-Agent wird auf einen normalen Chrome-String gesetzt. Entscheidend ist dabei die Versionsnummer: Sie sollte zum tatsächlich installierten Chrome passen. Ein User-Agent, der Version 130 behauptet, während der Browser sich in jedem anderen Detail wie Version 150 verhält, wirkt verdächtig. Deshalb liest mein Setup-Skript die Version aus dem installierten Chrome aus, statt sie fest einzutragen.
 
 Der Rest ist ein kleines Skript, das vor jedem Seitenaufbau läuft:
 
@@ -121,7 +122,7 @@ Der Rest ist ein kleines Skript, das vor jedem Seitenaufbau läuft:
 > ```
 > Der User-Agent lässt sich hier bewusst nicht setzen, denn er steckt im Request-Header und wird gesendet, bevor JavaScript überhaupt läuft. Dafür ist die Konfiguration zuständig.
 
-**Doch die Tarnung hat eine Grenze:** Gegen echtes Bot-Management hilft das nicht. Systeme wie Cloudflare Turnstile oder DataDome schauen sich den TLS-Fingerabdruck an, messen Mausbewegungen und Timings und stellen aktive Rechenaufgaben. Zwei Zeilen JavaScript beeindrucken sie nicht, und das ist auch gut so. Wer eine solche Wand vor sich hat, hat eine klare Antwort bekommen: Diese Seite möchte nicht automatisiert gelesen werden. Dann ist Schluss, unabhängig davon, was technisch ginge.
+**Doch die Tarnung hat eine Grenze:** Gegen echtes Bot-Management hilft das nicht. Systeme wie Cloudflare Turnstile oder DataDome schauen sich den TLS-Fingerabdruck an, messen Mausbewegungen und Timings und stellen aktive Rechenaufgaben. Zwei Zeilen JavaScript beeindrucken sie nicht, und das ist auch gut so. Wer eine solche Sperre vor sich hat, hat eine klare Antwort bekommen: Diese Seite möchte nicht automatisiert gelesen werden. Dann ist Schluss, unabhängig davon, was technisch ginge.
 
 Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair bleiben.** `robots.txt` und Nutzungsbedingungen respektieren. Ein paar Seiten in Ruhe lesen, statt zu hämmern. Keine Zugangs- oder Zahlschranken umgehen. Mein Anspruch ist, dass der eigene Browser sich so verhält wie ein Mensch mit derselben Absicht, und keinen Deut darüber hinaus.
 
@@ -165,7 +166,7 @@ async _enforceOutputBudget() {
 }
 ```
 
-Die erste Bedingung erklärt das vollständig. Ohne gesetztes Budget kehrt die Funktion sofort zurück und löscht nie etwas. Ist ein Budget gesetzt, sortiert sie nach Änderungsdatum und entfernt die ältesten Dateien zuerst.
+Die erste Bedingung erklärt das vollständig. Ohne gesetztes Budget kehrt die Funktion sofort zurück und löscht nie etwas. Ist ein Budget gesetzt, sortiert sie nach Änderungsdatum und entfernt die ältesten Dateien zuerst. Wir sollten also unbedingt ein Budget setzen!
 
 > **🛠️ Selbst nachbauen: die vollständige Konfiguration**
 > `~/.config/playwright-mcp/config.json`
@@ -194,7 +195,7 @@ Die erste Bedingung erklärt das vollständig. Ohne gesetztes Budget kehrt die F
 
 ## Einrichtung: ein Skript pro Maschine
 
-Die Konfiguration ist bewusst maschinen-lokal. Sie enthält die Chrome-Version dieses Rechners und Pfade dieses Rechners, sie gehört also nicht in einen Sync-Ordner und auch nicht ins Repository. Für neue Maschinen gibt es stattdessen ein Skript, das die Konfiguration erzeugt und den Server registriert. Es ist idempotent, mehrfaches Ausführen schadet also nicht.
+Und ich automatisiere gerne alles: Hier ist mein Befehl, mit dem ich einen frischen Rechner mit dem Playwright-MCP für Claude Code einrichte und die Konfiguration über mehrere Rechner hinweg gleich halte.
 
 > **🛠️ Selbst nachbauen: `setup-playwright-mcp.sh` (Kern)**
 > ```bash
@@ -224,18 +225,16 @@ Die Konfiguration ist bewusst maschinen-lokal. Sie enthält die Chrome-Version d
 
 ## Aufräumen: liegengebliebene Chrome-Prozesse
 
-Ein letztes Ärgernis, und diesmal ohne Fingerabdruck. Playwright startet für `channel: chrome` einen echten Chrome, und bei einem Absturz oder hartem Abbruch bleibt der schon mal liegen. Über die Tage stapeln sich diese Leichen und fressen CPU und Speicher.
+Auf meinem Rechner haben sich ungenutzte Chrome-Prozesse angesammelt und zunehmend Arbeitsspeicher blockiert. Das ist ein bekanntes Problem: übrig bleibende Chrome-Prozesse [nach dem Schließen der Sitzung](https://github.com/microsoft/playwright-mcp/issues/1568), [ganze verwaiste Prozessbäume](https://github.com/microsoft/playwright-mcp/issues/1634) und [Zombies, die im App-Switcher hängen bleiben](https://github.com/microsoft/playwright-mcp/issues/1458). Die Issues sind zwar geschlossen, doch bei mir zeigt sich das Muster weiter.
 
-Es ist ein bekanntes Muster: übrig bleibende Chrome-Prozesse [nach dem Schließen der Sitzung](https://github.com/microsoft/playwright-mcp/issues/1568), [ganze verwaiste Prozessbäume](https://github.com/microsoft/playwright-mcp/issues/1634) und [Zombies, die im App-Switcher hängen bleiben](https://github.com/microsoft/playwright-mcp/issues/1458). Die Issues sind zwar geschlossen, doch bei mir zeigt sich das Muster weiter: Mein Aufräum-Skript erntet Zyklus für Zyklus ein paar solcher Prozesse.
-
-Die Lösung ist unspektakulär, ein kleiner Reaper, der alle paar Minuten läuft und Chrome-Prozesse killt, die älter als eine Schwelle sind. Das Alter ist der Kniff: Ein gerade laufender Aufruf hat einen jungen Browser und bleibt verschont, die Leichen von gestern fliegen raus.
+Ich habe mich damit beholfen, die Prozesse nach einem gewissen Alter einfach zu killen. Ein gerade laufender Aufruf hat einen jungen Browser und bleibt verschont, die Leichen von gestern fliegen raus.
 
 > **🛠️ Selbst nachbauen: `chrome-reaper.sh`**
 > ```bash
 > #!/usr/bin/env bash
 > # Killt Google-Chrome-Prozesse, die älter als CHROME_MAX_AGE_MIN Minuten sind.
 > # Ein gerade laufender Aufruf hat einen jungen Browser und bleibt verschont.
-> # DRY_RUN=1 zeigt nur an, was gekillt würde.
+> # DRY_RUN=1 zeigt nur an, was gekillt werden würde.
 > set -uo pipefail
 > export PATH=/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin
 >
@@ -261,23 +260,23 @@ Die Lösung ist unspektakulär, ein kleiner Reaper, der alle paar Minuten läuft
 >   kill -9 "$pid" 2>/dev/null
 > done < <(ps -Ao pid=,etime=,command= | grep '[G]oogle Chrome')
 > ```
-> Zeitgesteuert läuft es bei mir per `launchd` alle 15 Minuten; ein Cron-Eintrag `*/15 * * * *` tut dasselbe. Vorher gefahrlos mit `DRY_RUN=1` prüfen, was gekillt würde.
+> Zeitgesteuert läuft es bei mir per `launchd` alle 15 Minuten; ein Cron-Eintrag `*/15 * * * *` tut dasselbe. Vorher gefahrlos mit `DRY_RUN=1` prüfen, was gekillt werden würde.
 
-Das räumt nur auf, es behebt die Ursache nicht. Solange Playwright bei Abbrüchen Prozesse liegen lässt, ist der Reaper ein Besen, kein Verbot. Für eine Maschine, die rund um die Uhr recherchiert, ist mir ein Besen aber lieber als ein volllaufender Speicher.
+Das räumt nur auf, es behebt die Ursache nicht. Die Lösung ist ein wenig brutal, aber für mich ist das Problem gelöst. Für eine Maschine, die rund um die Uhr recherchiert, ist mir das lieber als ein volllaufender Speicher.
 
 ## Fazit
 
-Der Aufwand ist überschaubar: eine Konfigurationsdatei, ein zweizeiliges Skript, ein Registrierungsbefehl. Der Gewinn ist größer, als es zunächst klingt.
+Im Prinzip haben wir lediglich den offiziellen `@playwright/mcp` etwas besser verdrahtet. Aber der Gewinn ist spürbar.
 
 Die Recherche wird **zuverlässiger**, weil der Agent öffentliche Seiten tatsächlich zu sehen bekommt und nicht auf Auszüge aus zweiter Hand ausweicht. Sie wird **belegbarer**, weil eine im Volltext gelesene Seite zitierfähig ist. Und die Repositories bleiben **sauber**, weil die Artefakte zentral abgelegt und automatisch aufgeräumt werden.
 
 Was auch hier gilt:
 
-- **Das ist keine Tarnkappe.** Gegen ernsthaftes Bot-Management hilft es nicht, und es soll auch nicht dagegen helfen. Eine Wand ist eine Antwort.
+- **Das ist keine Tarnkappe.** Gegen ernsthaftes Bot-Management hilft es nicht, und es soll auch nicht dagegen helfen. Eine harte Sperre ist eine klare Antwort.
 - **Es bleibt Handwerk.** Der User-Agent hängt an der installierten Chrome-Version und veraltet mit jedem Update. Deshalb erzeugt das Skript ihn, statt ihn festzuschreiben.
-- **Fairness ist kein Beiwerk.** `robots.txt`, Nutzungsbedingungen und eine ruhige Aufruffrequenz sind die Bedingung dafür, dass diese Art zu arbeiten für mich in Ordnung ist.
+- **Fairness sollte bleiben!** `robots.txt`, Nutzungsbedingungen und eine ruhige Aufruffrequenz sind die Bedingung dafür, dass diese Art zu arbeiten für mich in Ordnung ist.
 
-Am Ende geht es um eine kleine Reparatur mit großer Wirkung: Der Browser des Agenten soll sich so verhalten wie der Browser eines Menschen, der dieselbe Seite lesen möchte. Ganz normal eben.
+Am Ende geht es um eine kleine Reparatur mit großer Wirkung: Der Agent gerät nicht mehr in den groben Filter, der ihn nie gemeint hat.
 
 Übrigens läuft dieser Recherche-Browser bei mir dauerhaft auf einer Maschine, die nie ausgeht. Wie diese Bodenstation aufgebaut ist, steht im Begleitartikel [„Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation"](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini).
 
