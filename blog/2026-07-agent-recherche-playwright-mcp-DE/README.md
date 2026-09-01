@@ -20,13 +20,23 @@ header: header.jpg
 
 Kennst du das? Du schickst deinen Agenten zur Web-Recherche los, und er wird ausgesperrt.
 
-**Wo eine Seite dich bewusst aussperrt, ist das ihr gutes Recht. Meistens aber will der Betreiber nur die großen Botfarmen draußen halten, die mit ihrem Traffic echten Ärger machen. Dein Agent mit seinen paar Aufrufen macht diesen Ärger nicht, gerät aber in denselben Filter und kommt mit unter die Räder. Der Grund liegt beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine kaputte Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie der Browser eines Menschen.**
+**Dass eine Seite dich bewusst aussperrt, ist ihr gutes Recht. Meistens aber will der Betreiber nur die großen Botfarmen draußen halten, die mit ihrem Traffic echten Ärger machen. Dein Agent mit seinen paar Aufrufen macht diesen Ärger nicht, gerät aber in denselben Filter und kommt mit unter die Räder. Der Grund liegt beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine verdächtige Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie der Browser eines Menschen.**
 
-Dieser Artikel zeigt, woran ein Default-Headless-Browser erkannt wird (mit konkreten Werten), wie ein eigener MCP update-fest eingerichtet wird, wo die ehrliche Grenze dieser Übung liegt und wie man verhindert, dass der Browser seine Dateien mitten in die Repos kippt.
+Dieser Artikel zeigt, woran ein Default-Headless-Browser erkannt wird (mit konkreten Werten), wie ein eigener MCP update-fest eingerichtet wird und wo die Grenze dieser Übung liegt.
 
 ## Inhalt
 
 [[toc]]
+
+## Warum Playwright?
+
+Playwright ist eine der beliebtesten Lösungen, um einen Chrome zu automatisieren, wenn nicht die beliebteste. Entwickler setzen es seit Jahren ein. Man steuert damit einen echten Browser fern: JavaScript ausführen, Screenshots machen, Formulare ausfüllen, all das geht wunderbar.
+
+Da liegt es nahe, auch dem eigenen AI-Agenten einen Playwright per MCP (Model Context Protocol) zur Verfügung zu stellen. Dann muss er sich das Werkzeug nicht erst mühevoll selbst installieren, was er ohnehin nur auf Befehl täte. Zumindest hoffe ich das, dass sich nicht irgendein Research-Agent einfach so Dinge installiert. 😅
+
+Ein Auftrag klingt dann etwa so: „Mach eine Recherche zu Thema X. Wirst du ausgesperrt, gib nicht auf und nutze deinen installierten Playwright-MCP." Das Hauptmodell reicht die Anweisung an seine Sub-Agenten weiter, und die greifen nach eigenem Ermessen ganz selbstverständlich zum Playwright.
+
+Das funktioniert an und für sich wunderbar. Wenn da nicht die Sperren wären.
 
 ## Das Problem: höflich angeklopft, trotzdem ausgesperrt
 
@@ -36,15 +46,15 @@ Die Ausgangslage ist harmlos. Ein Agent liest ein paar Doku-Seiten, um Aussagen 
 - Die Seite lädt, ist aber leer, weil das Frontend abbricht.
 - Die Startseite kommt, jede Unterseite verweigert.
 
-Was jetzt passiert, ist schlimmer als der Fehlschlag selbst: Der Agent weicht aus, statt aufzugeben. Er nimmt die Suchmaschinen-Vorschau, den Cache, ein Zitat aus einem fremden Blog, oder er halluziniert gleich ganz. Das liest sich im Ergebnis genauso souverän wie eine echte Quelle. Wer mit Agenten arbeitet, kennt das Muster: Eine blockierte Quelle wird lautlos zu einer schlechteren Quelle. Deshalb prüfe ich am Ende jede Behauptung noch einmal an der Primärquelle nach. Ein Auszug oder eine Vorschau zählt nicht als Beleg, nur die tatsächlich geöffnete Seite.
+Was jetzt passieren kann, ist schlimmer als der Fehlschlag selbst. Manchmal gibt der beauftragte Sub-Agent einfach auf und meldet, dass er nicht durchkam. Er kann aber auch ausweichen, statt aufzugeben: Er nimmt die Suchmaschinen-Vorschau als Notlösung, den Cache, ein Zitat aus einem fremden Blog, oder er halluziniert gleich ganz. Das liest sich im Ergebnis genauso souverän wie eine echte Quelle. Das ist das Tückische daran: Eine blockierte Quelle wird lautlos zu einer schlechteren Quelle. Deshalb prüfe ich am Ende jede Behauptung noch einmal an der Primärquelle nach. Ein Auszug oder eine Vorschau zählt bei mir nicht als Beleg, nur die tatsächlich geöffnete Seite.
 
 Und der Wind wird rauer. Cloudflare sitzt vor einem großen Teil des Webs und [kündigt zum 15. September 2026 neue Standardwerte an](https://blog.cloudflare.com/content-independence-day-ai-options/):
 
 > For all new domains onboarding to Cloudflare, the categories of Training and Agent will be blocked by default on the pages that display ads, while Search will remain allowed by default.
 
-Bezeichnend ist schon die Kategorie „Agent": Der Echtzeit-Zugriff durch KI-Agenten gilt inzwischen als eigene Verkehrsklasse, die man für neue, werbefinanzierte Seiten per Voreinstellung blockt. Das ist die bewusste Entscheidung einer Seite, und die respektiert man, dazu unten mehr. Der Ärger, um den es in diesem Artikel geht, ist ein anderer: die groben Filter, die jede Automatisierung wegsortieren und dabei auch den freundlichen Leser treffen.
+Bezeichnend ist schon die Kategorie „Agent": Der Echtzeit-Zugriff durch KI-Agenten gilt inzwischen als eigene Verkehrsklasse, die man für neue, werbefinanzierte Seiten per Voreinstellung blockt. Das ist die bewusste Entscheidung einer Seite, und die respektiere ich, dazu unten mehr. Der Ärger, um den es in diesem Artikel geht, ist ein anderer: die groben Filter, die jede Automatisierung wegsortieren und dabei auch den freundlichen Leser treffen.
 
-## Warum das passiert: der Browser sieht kaputt aus
+## Warum das passiert: der Browser sieht verdächtig aus
 
 Ein frisch gestarteter Playwright-Browser trägt drei Merkmale, die kein normaler Browser hat. Die folgenden Werte habe ich auf meiner Maschine ausgelesen, einmal im Standardzustand und einmal mit der Konfiguration, um die es gleich geht:
 
@@ -53,12 +63,10 @@ Ein frisch gestarteter Playwright-Browser trägt drei Merkmale, die kein normale
 | `navigator.userAgent` | `…HeadlessChrome/…` | `…Chrome/…` |
 | `navigator.webdriver` | `true` | `undefined` |
 | `navigator.languages` | `["en-US","en"]` | `["de-DE","de","en-US","en"]` |
-| `window.chrome` | vorhanden | vorhanden |
-| Anzahl Plugins | 5 | 5 |
 
-Die ersten drei Zeilen sind das Problem. Das Wort **HeadlessChrome** steht im User-Agent und geht in jedem einzelnen Request an den Server. Dafür braucht es keine Analyse, ein Textvergleich genügt. **`navigator.webdriver`** ist ein standardisiertes Flag, das der Browser selbst setzt, wenn er ferngesteuert wird, drei Zeilen JavaScript im Frontend reichen zum Auslesen. Und eine Sprachliste, die exakt `["en-US","en"]` lautet, ist der Fingerabdruck einer Maschine, denn echte Browser tragen die Sprachen ihres Besitzers.
+Alle drei Merkmale sind das Problem. Das Wort **HeadlessChrome** steht im User-Agent und geht in jedem einzelnen Request an den Server. Dafür braucht es keine ausgefeilte Erkennung, ein simpler Textabgleich genügt. **`navigator.webdriver`** ist ein standardisiertes Flag, das der Browser selbst setzt, wenn er ferngesteuert wird, ein Stück JavaScript im Frontend liest es aus. Und die Sprachliste `["en-US","en"]`? Für sich genommen ist sie kein Beweis, denn viele Menschen haben tatsächlich nur Englisch eingestellt. Zum Signal wird sie erst in Kombination. Eine typische Heuristik gleicht die Browsersprache mit der Geolokalisierung der IP ab: Ein Zugriff aus Deutschland, der ausschließlich US-Englisch meldet, passt schlecht zusammen. Dazu kommt, dass die Standardliste bei jeder Playwright-Installation dieselbe ist. So bleibt die Sprachliste für sich schwach. Zusammen mit den anderen Merkmalen wird sie zum weiteren Baustein im Gesamtbild.
 
-Der entscheidende Punkt: **Diese Merkmale sagen nichts über Absicht.** Sie sagen nur „hier läuft Automatisierung". Wer grob filtert, sperrt damit den freundlichen Leser genauso aus wie den Massen-Scraper. Die unteren beiden Zeilen der Tabelle zeigen übrigens, warum es sinnvoll ist, den echten installierten Chrome zu verwenden statt eines mitgelieferten Testbrowsers: `window.chrome` und die Plugin-Liste sind dann schon von Haus aus normal.
+Der entscheidende Punkt: **Diese Merkmale sagen nichts über Absicht.** Sie sagen nur „hier läuft Automatisierung". Wer grob filtert, sperrt damit den freundlichen Leser genauso aus wie den Massen-Scraper.
 
 ## Die Lösung: ein eigener, dedizierter Playwright-MCP
 
@@ -113,7 +121,7 @@ Der Rest ist ein kleines Skript, das vor jedem Seitenaufbau läuft:
 > ```
 > Der User-Agent lässt sich hier bewusst nicht setzen, denn er steckt im Request-Header und wird gesendet, bevor JavaScript überhaupt läuft. Dafür ist die Konfiguration zuständig.
 
-**Und jetzt die Grenze, die in jeden Text dieser Art gehört:** Gegen echtes Bot-Management hilft das nicht. Systeme wie Cloudflare Turnstile oder DataDome schauen sich den TLS-Fingerabdruck an, messen Mausbewegungen und Timings und stellen aktive Rechenaufgaben. Zwei Zeilen JavaScript beeindrucken sie nicht, und das ist auch gut so. Wer eine solche Wand vor sich hat, hat eine klare Antwort bekommen: Diese Seite möchte nicht automatisiert gelesen werden. Dann ist Schluss, unabhängig davon, was technisch ginge.
+**Doch die Tarnung hat eine Grenze:** Gegen echtes Bot-Management hilft das nicht. Systeme wie Cloudflare Turnstile oder DataDome schauen sich den TLS-Fingerabdruck an, messen Mausbewegungen und Timings und stellen aktive Rechenaufgaben. Zwei Zeilen JavaScript beeindrucken sie nicht, und das ist auch gut so. Wer eine solche Wand vor sich hat, hat eine klare Antwort bekommen: Diese Seite möchte nicht automatisiert gelesen werden. Dann ist Schluss, unabhängig davon, was technisch ginge.
 
 Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair bleiben.** `robots.txt` und Nutzungsbedingungen respektieren. Ein paar Seiten in Ruhe lesen, statt zu hämmern. Keine Zugangs- oder Zahlschranken umgehen. Mein Anspruch ist, dass der eigene Browser sich so verhält wie ein Mensch mit derselben Absicht, und keinen Deut darüber hinaus.
 
@@ -218,7 +226,7 @@ Die Konfiguration ist bewusst maschinen-lokal. Sie enthält die Chrome-Version d
 
 Ein letztes Ärgernis, und diesmal ohne Fingerabdruck. Playwright startet für `channel: chrome` einen echten Chrome, und bei einem Absturz oder hartem Abbruch bleibt der schon mal liegen. Über die Tage stapeln sich diese Leichen und fressen CPU und Speicher.
 
-Das ist kein Einzelfall, sondern ein wiederkehrendes Muster: übrig bleibende Chrome-Prozesse [nach dem Schließen der Sitzung](https://github.com/microsoft/playwright-mcp/issues/1568), [ganze verwaiste Prozessbäume](https://github.com/microsoft/playwright-mcp/issues/1634) und [Zombies, die im App-Switcher hängen bleiben](https://github.com/microsoft/playwright-mcp/issues/1458). Die Issues sind zwar geschlossen, doch bei mir zeigt sich das Muster weiter: Mein Aufräum-Skript erntet Zyklus für Zyklus ein paar solcher Prozesse.
+Es ist ein bekanntes Muster: übrig bleibende Chrome-Prozesse [nach dem Schließen der Sitzung](https://github.com/microsoft/playwright-mcp/issues/1568), [ganze verwaiste Prozessbäume](https://github.com/microsoft/playwright-mcp/issues/1634) und [Zombies, die im App-Switcher hängen bleiben](https://github.com/microsoft/playwright-mcp/issues/1458). Die Issues sind zwar geschlossen, doch bei mir zeigt sich das Muster weiter: Mein Aufräum-Skript erntet Zyklus für Zyklus ein paar solcher Prozesse.
 
 Die Lösung ist unspektakulär, ein kleiner Reaper, der alle paar Minuten läuft und Chrome-Prozesse killt, die älter als eine Schwelle sind. Das Alter ist der Kniff: Ein gerade laufender Aufruf hat einen jungen Browser und bleibt verschont, die Leichen von gestern fliegen raus.
 
@@ -255,7 +263,7 @@ Die Lösung ist unspektakulär, ein kleiner Reaper, der alle paar Minuten läuft
 > ```
 > Zeitgesteuert läuft es bei mir per `launchd` alle 15 Minuten; ein Cron-Eintrag `*/15 * * * *` tut dasselbe. Vorher gefahrlos mit `DRY_RUN=1` prüfen, was gekillt würde.
 
-Ehrlich bleibt: Das räumt nur auf, es behebt die Ursache nicht. Solange Playwright bei Abbrüchen Prozesse liegen lässt, ist der Reaper ein Besen, kein Verbot. Für eine Maschine, die rund um die Uhr recherchiert, ist mir ein Besen aber lieber als ein volllaufender Speicher.
+Das räumt nur auf, es behebt die Ursache nicht. Solange Playwright bei Abbrüchen Prozesse liegen lässt, ist der Reaper ein Besen, kein Verbot. Für eine Maschine, die rund um die Uhr recherchiert, ist mir ein Besen aber lieber als ein volllaufender Speicher.
 
 ## Fazit
 
@@ -263,13 +271,13 @@ Der Aufwand ist überschaubar: eine Konfigurationsdatei, ein zweizeiliges Skript
 
 Die Recherche wird **zuverlässiger**, weil der Agent öffentliche Seiten tatsächlich zu sehen bekommt und nicht auf Auszüge aus zweiter Hand ausweicht. Sie wird **belegbarer**, weil eine im Volltext gelesene Seite zitierfähig ist. Und die Repositories bleiben **sauber**, weil die Artefakte zentral abgelegt und automatisch aufgeräumt werden.
 
-Ehrlich bleiben will ich auch hier:
+Was auch hier gilt:
 
 - **Das ist keine Tarnkappe.** Gegen ernsthaftes Bot-Management hilft es nicht, und es soll auch nicht dagegen helfen. Eine Wand ist eine Antwort.
 - **Es bleibt Handwerk.** Der User-Agent hängt an der installierten Chrome-Version und veraltet mit jedem Update. Deshalb erzeugt das Skript ihn, statt ihn festzuschreiben.
 - **Fairness ist kein Beiwerk.** `robots.txt`, Nutzungsbedingungen und eine ruhige Aufruffrequenz sind die Bedingung dafür, dass diese Art zu arbeiten für mich in Ordnung ist.
 
-Am Ende geht es um eine kleine Reparatur mit großer Wirkung: Der Browser des Agenten soll sich so verhalten wie der Browser eines Menschen, der dieselbe Seite lesen möchte. Nicht besser, nicht unsichtbarer. Nur normal.
+Am Ende geht es um eine kleine Reparatur mit großer Wirkung: Der Browser des Agenten soll sich so verhalten wie der Browser eines Menschen, der dieselbe Seite lesen möchte. Ganz normal eben.
 
 Übrigens läuft dieser Recherche-Browser bei mir dauerhaft auf einer Maschine, die nie ausgeht. Wie diese Bodenstation aufgebaut ist, steht im Begleitartikel [„Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation"](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini).
 
