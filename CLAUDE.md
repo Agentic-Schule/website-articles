@@ -31,6 +31,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - **Gehedgt statt behauptet:** „in der Regel", „meist", „typischerweise". Keine unbelegten Superlative.
 - **Jede starke Aussage wird belegt** (Quelle, Link, Zeilennummer, Issue). Was sich nicht belegen lässt, wird als unbestätigt markiert oder fliegt raus.
 - Dosierter, trockener Humor und Selbstironie sind erwünscht, nie albern. Personifikation zur Erklärung ist gut („Der Agent hat kein Ego und erklärt geduldig").
+- **Der Autor tritt stets souverän auf, wie ein Profi, der die Dinge im Griff hat.** Erkenntnisse sind Wissen und Können, keine Zufallsfunde oder mühsam erlittenen Lektionen. Tabu sind „mir ist das passiert", „das hat mich Ärger gekostet", „erst beim zweiten Mal habe ich die Ursache verstanden", „meine erste, naive Intuition war …". Solche Pannen-Erzählungen wirken dilettantisch. Fallen werden als Wissen präsentiert („das ist eine Falle: …"), das eigene Hineintappen bleibt draußen. Trockene Selbstironie und klar markierte Vorlieben („ich bevorzuge …") bleiben ausdrücklich erwünscht.
 
 ## Fachsprache und Code
 
