@@ -216,7 +216,7 @@ Die Konfiguration ist bewusst maschinen-lokal. Sie enthält die Chrome-Version d
 
 ## Aufräumen: liegengebliebene Chrome-Prozesse
 
-Ein letztes Ärgernis, und diesmal ohne Fingerabdruck. Playwright startet für `channel: chrome` einen echten Chrome, und bei einem Absturz oder hartem Abbruch bleibt der schon mal liegen. Über die Tage stapeln sich diese Leichen und fressen CPU und Speicher, in einem Fall über achtzig Prozesse auf einmal, darunter ein GPU-Helper, der tagelang mit mehreren hundert Prozent CPU lief.
+Ein letztes Ärgernis, und diesmal ohne Fingerabdruck. Playwright startet für `channel: chrome` einen echten Chrome, und bei einem Absturz oder hartem Abbruch bleibt der schon mal liegen. Über die Tage stapeln sich diese Leichen und fressen CPU und Speicher.
 
 Das ist kein Einzelfall, sondern ein wiederkehrendes Muster: übrig bleibende Chrome-Prozesse [nach dem Schließen der Sitzung](https://github.com/microsoft/playwright-mcp/issues/1568), [ganze verwaiste Prozessbäume](https://github.com/microsoft/playwright-mcp/issues/1634) und [Zombies, die im App-Switcher hängen bleiben](https://github.com/microsoft/playwright-mcp/issues/1458). Die Issues sind zwar geschlossen, doch bei mir zeigt sich das Muster weiter: Mein Aufräum-Skript erntet Zyklus für Zyklus ein paar solcher Prozesse.
 
