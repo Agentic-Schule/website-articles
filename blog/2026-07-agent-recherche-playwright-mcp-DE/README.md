@@ -20,9 +20,9 @@ header: header.jpg
 
 Kennst du das? Du schickst deinen Agenten zur Web-Recherche los, und er wird ausgesperrt.
 
-**Wo eine Seite dich bewusst aussperrt, ist das ihr gutes Recht. Meistens aber will der Betreiber nur die großen Botfarmen draußen halten, die mit ihrem Traffic echten Ärger machen. Dein Agent mit seinen paar Aufrufen macht diesen Ärger nicht, gerät aber in denselben Filter und kommt mit unter die Räder. Der Grund liegt beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine kaputte Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie ein Browser von Hand.**
+**Wo eine Seite dich bewusst aussperrt, ist das ihr gutes Recht. Meistens aber will der Betreiber nur die großen Botfarmen draußen halten, die mit ihrem Traffic echten Ärger machen. Dein Agent mit seinen paar Aufrufen macht diesen Ärger nicht, gerät aber in denselben Filter und kommt mit unter die Räder. Der Grund liegt beim Browser des Agenten: Ein Playwright-Standardstart sieht für jeden simplen Bot-Check aus wie eine kaputte Maschine. Die Lösung ist ein eigener, dediziert eingerichteter Playwright-MCP, der sich so normal verhält wie der Browser eines Menschen.**
 
-Dieser Artikel zeigt, woran ein Default-Headless-Browser erkannt wird (mit gemessenen Werten), wie ein eigener MCP update-fest eingerichtet wird, wo die ehrliche Grenze dieser Übung liegt und wie man verhindert, dass der Browser seine Dateien mitten in die Repos kippt.
+Dieser Artikel zeigt, woran ein Default-Headless-Browser erkannt wird (mit konkreten Werten), wie ein eigener MCP update-fest eingerichtet wird, wo die ehrliche Grenze dieser Übung liegt und wie man verhindert, dass der Browser seine Dateien mitten in die Repos kippt.
 
 ## Inhalt
 
@@ -36,7 +36,7 @@ Die Ausgangslage ist harmlos. Ein Agent liest ein paar Doku-Seiten, um Aussagen 
 - Die Seite lädt, ist aber leer, weil das Frontend abbricht.
 - Die Startseite kommt, jede Unterseite verweigert.
 
-Was jetzt passiert, ist schlimmer als der Fehlschlag selbst: Der Agent weicht aus, statt aufzugeben. Er nimmt die Suchmaschinen-Vorschau, den Cache, ein Zitat aus einem fremden Blog, oder er halluziniert gleich ganz. Das liest sich im Ergebnis genauso souverän wie eine echte Quelle. Mir ist das beim letzten Artikel passiert, und erst der zweite Blick zeigte, dass mehrere Doku-Seiten inzwischen ganz anders formulieren, als die Auszüge behaupteten. Wer mit Agenten arbeitet, kennt das Muster: Eine blockierte Quelle wird lautlos zu einer schlechteren Quelle.
+Was jetzt passiert, ist schlimmer als der Fehlschlag selbst: Der Agent weicht aus, statt aufzugeben. Er nimmt die Suchmaschinen-Vorschau, den Cache, ein Zitat aus einem fremden Blog, oder er halluziniert gleich ganz. Das liest sich im Ergebnis genauso souverän wie eine echte Quelle. Wer mit Agenten arbeitet, kennt das Muster: Eine blockierte Quelle wird lautlos zu einer schlechteren Quelle. Deshalb prüfe ich am Ende jede Behauptung noch einmal an der Primärquelle nach. Ein Auszug oder eine Vorschau zählt nicht als Beleg, nur die tatsächlich geöffnete Seite.
 
 Und der Wind wird rauer. Cloudflare sitzt vor einem großen Teil des Webs und [kündigt zum 15. September 2026 neue Standardwerte an](https://blog.cloudflare.com/content-independence-day-ai-options/):
 
@@ -46,7 +46,7 @@ Bezeichnend ist schon die Kategorie „Agent": Der Echtzeit-Zugriff durch KI-Age
 
 ## Warum das passiert: der Browser sieht kaputt aus
 
-Ein frisch gestarteter Playwright-Browser trägt drei Merkmale, die kein Handbrowser hat. Die folgenden Werte stammen aus einer Messung auf meiner Maschine, einmal im Standardzustand und einmal mit der Konfiguration, um die es gleich geht:
+Ein frisch gestarteter Playwright-Browser trägt drei Merkmale, die kein normaler Browser hat. Die folgenden Werte habe ich auf meiner Maschine ausgelesen, einmal im Standardzustand und einmal mit der Konfiguration, um die es gleich geht:
 
 | Merkmal | Playwright im Standardzustand | mit eigener Konfiguration |
 |---|---|---|
@@ -62,9 +62,15 @@ Der entscheidende Punkt: **Diese Merkmale sagen nichts über Absicht.** Sie sage
 
 ## Die Lösung: ein eigener, dedizierter Playwright-MCP
 
-Claude Code kann Playwright über einen [MCP-Server](https://code.claude.com/docs/en/mcp) ansprechen, und es gibt dafür ein fertiges Plugin. Ich habe das Plugin abgeschaltet und den Server selbst registriert. Dafür gibt es zwei Gründe.
+Claude Code kann Playwright über einen [MCP-Server](https://code.claude.com/docs/en/mcp) ansprechen, und dafür gibt es ein offizielles Plugin von Microsoft im Marketplace. Damit habe ich zunächst gearbeitet, und so werden es sicher viele angehen: ein Plugin aus dem offiziellen Marketplace, von einem Anbieter, dem man vertraut, da weiß man, was man hat. Am Ende habe ich es trotzdem abgeschaltet und den Server selbst registriert. Dafür gibt es zwei Gründe.
 
-**Erstens Haltbarkeit.** Die Plugin-Definition liegt im Plugin-Cache, und dieser Cache wird bei Updates neu geschrieben. Jede Anpassung dort ist nach dem nächsten Update weg, was bei mir zweimal passiert ist, bevor ich die Ursache verstanden hatte. Ein selbst registrierter Server liegt woanders: Laut [MCP-Dokumentation](https://code.claude.com/docs/en/mcp-quickstart) landet er bei `--scope user` in `~/.claude.json` unter dem Schlüssel `mcpServers` und gilt dann für alle Projekte. Dass Updates diese Datei nicht anfassen, ist meine Beobachtung aus mehreren Update-Zyklen und steht so nicht in der Doku.
+**Erstens Haltbarkeit.** Meine erste Intuition war, das fertige Plugin einfach anzupassen. Viel steht da ohnehin nicht drin, die ganze Definition ist ein Vierzeiler:
+
+```json
+{ "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] } }
+```
+
+Also die Argumente ergänzen, fertig? Kurzfristig lief das auch. Nur liegt diese Datei im Plugin-Cache, und den schreibt Claude Code bei jedem Update neu. Mit dem nächsten Update war meine Änderung weg, und das gleich zweimal, bevor ich die Ursache verstand. Ein selbst registrierter Server liegt woanders: Laut [MCP-Dokumentation](https://code.claude.com/docs/en/mcp-quickstart) landet er bei `--scope user` in `~/.claude.json` unter dem Schlüssel `mcpServers` und gilt dann für alle Projekte. Updates fassen diese Datei nicht an.
 
 Praktischerweise gewinnt der eigene Server ohnehin: Die Dokumentation nennt als Reihenfolge Local, Project, User, danach erst Plugins, und stellt klar, dass immer genau ein Eintrag gewinnt („The entire server entry from that source is used; fields are not merged across scopes"). Ein eigener `playwright` sticht das Plugin also. Ich schalte das Plugin trotzdem ab, weil zwei Definitionen für dieselbe Sache eine Einladung zum Rätselraten sind.
 
@@ -103,25 +109,23 @@ Der Rest ist ein kleines Skript, das vor jedem Seitenaufbau läuft:
 
 **Und jetzt die Grenze, die in jeden Text dieser Art gehört:** Gegen echtes Bot-Management hilft das nicht. Systeme wie Cloudflare Turnstile oder DataDome schauen sich den TLS-Fingerabdruck an, messen Mausbewegungen und Timings und stellen aktive Rechenaufgaben. Zwei Zeilen JavaScript beeindrucken sie nicht, und das ist auch gut so. Wer eine solche Wand vor sich hat, hat eine klare Antwort bekommen: Diese Seite möchte nicht automatisiert gelesen werden. Dann ist Schluss, unabhängig davon, was technisch ginge.
 
-Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair bleiben.** `robots.txt` und Nutzungsbedingungen respektieren. Ein paar Seiten in Ruhe lesen, statt zu hämmern. Keine Zugangs- oder Zahlschranken umgehen. Der Anspruch ist, dass der eigene Browser sich so verhält wie ein Mensch mit derselben Absicht, und keinen Deut darüber hinaus.
+Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair bleiben.** `robots.txt` und Nutzungsbedingungen respektieren. Ein paar Seiten in Ruhe lesen, statt zu hämmern. Keine Zugangs- oder Zahlschranken umgehen. Mein Anspruch ist, dass der eigene Browser sich so verhält wie ein Mensch mit derselben Absicht, und keinen Deut darüber hinaus.
 
 ## Headless auf einer Maschine ohne Bildschirm
 
-Mein Agenten-Rechner ist ein [Mac mini ohne Monitor](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini), an dem sich niemand grafisch anmeldet. Genau dort zeigte der echte Chrome eine Eigenart: Er stürzte beim Start gelegentlich ab, mit `CVDisplayLink failed` und einem SIGTRAP. Gelegentlich heißt: nicht reproduzierbar, mal ging es tagelang gut, dann wieder nicht.
-
-Die Erklärung ist unspektakulär. Chrome baut beim Start einen Grafik- und Display-Kontext auf. Auf einer Maschine ohne aktives Display gibt es diesen Kontext nicht, und je nach Zustand des Systems (Bildschirm schlafend, gesperrt, gar keine Sitzung) geht das schief. Die Lösung ist ein einziges Chrome-Argument:
+Mein Agenten-Rechner ist ein [Mac mini ohne Monitor](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini), an dem sich niemand grafisch anmeldet. Genau dort stürzte der echte Chrome beim Start reproduzierbar ab, sobald keine grafische Anmeldung aktiv war, mit `CVDisplayLink failed` und einem SIGTRAP. Der Grund ist unspektakulär: Chrome baut beim Start einen Grafik- und Display-Kontext auf, und ohne eine aktive grafische Sitzung gibt es den nicht. Die Lösung ist ein einziges Chrome-Argument:
 
 ```json
 "args": ["--disable-gpu"]
 ```
 
-Ohne GPU-Prozess wird der Display-Kontext nie angefasst, und der Absturz ist strukturell unmöglich statt nur unwahrscheinlich. WebGL funktioniert weiterhin, weil Chrome dann in Software rendert (SwiftShader). Das kostet einen kleinen Rest Unauffälligkeit, denn der WebGL-Renderer heißt jetzt „SwiftShader" statt nach einer echten Grafikkarte. Diesen Preis zahle ich gern, ein zuverlässiger Browser ist mir mehr wert als ein perfekter Fingerabdruck.
+Ohne GPU-Prozess wird der Display-Kontext nie angefasst, und der Absturz ist strukturell unmöglich. WebGL funktioniert weiterhin, weil Chrome dann in Software rendert (SwiftShader). Das kostet einen kleinen Rest Unauffälligkeit, denn der WebGL-Renderer heißt jetzt „SwiftShader" statt nach einer echten Grafikkarte. Diesen kleinen Preis zahle ich gern: Ein zuverlässig laufender Browser ist mir wichtiger als ein makelloser Grafik-Fingerabdruck.
 
 Und hier zeigt sich, warum die Konfigurationsdatei nötig ist: Für zusätzliche Chrome-Argumente gibt es keinen Kommandozeilen-Schalter, `launchOptions.args` existiert ausschließlich in der Konfiguration.
 
 ## Hygiene: wohin mit den Dateien?
 
-Ein Detail, das mich echten Ärger gekostet hat. Der Playwright-MCP legt Dateien an, Snapshots der Seitenstruktur, Screenshots, Konsolenprotokolle. Standardmäßig landen sie in einem Ordner `.playwright-mcp` **im aktuellen Arbeitsverzeichnis**, und das ist bei einem Coding-Agenten nun einmal das Repository. So sieht die Zuständigkeit im Quelltext von `@playwright/mcp` aus (Version 0.0.78):
+Ein Detail, das mich echten Ärger gekostet hat. Der Playwright-MCP legt Dateien an, Snapshots der Seitenstruktur, Screenshots, Konsolenprotokolle. Standardmäßig landen sie in einem Ordner `.playwright-mcp` **im aktuellen Arbeitsverzeichnis**, und das ist bei einem Coding-Agenten nun einmal das Repository. So sieht die Zuständigkeit im Quelltext von [`@playwright/mcp`](https://github.com/microsoft/playwright-mcp) aus (quelloffen unter Apache-2.0, Version 0.0.78):
 
 ```js
 function outputDir(options) {
@@ -214,7 +218,7 @@ Ehrlich bleiben will ich auch hier:
 
 - **Das ist keine Tarnkappe.** Gegen ernsthaftes Bot-Management hilft es nicht, und es soll auch nicht dagegen helfen. Eine Wand ist eine Antwort.
 - **Es bleibt Handwerk.** Der User-Agent hängt an der installierten Chrome-Version und veraltet mit jedem Update. Deshalb erzeugt das Skript ihn, statt ihn festzuschreiben.
-- **Fairness ist kein Beiwerk.** `robots.txt`, Nutzungsbedingungen und eine ruhige Aufruffrequenz sind die Bedingung dafür, dass diese Art zu arbeiten in Ordnung ist.
+- **Fairness ist kein Beiwerk.** `robots.txt`, Nutzungsbedingungen und eine ruhige Aufruffrequenz sind die Bedingung dafür, dass diese Art zu arbeiten für mich in Ordnung ist.
 
 Am Ende geht es um eine kleine Reparatur mit großer Wirkung: Der Browser des Agenten soll sich so verhalten wie der Browser eines Menschen, der dieselbe Seite lesen möchte. Nicht besser, nicht unsichtbarer. Nur normal.
 
