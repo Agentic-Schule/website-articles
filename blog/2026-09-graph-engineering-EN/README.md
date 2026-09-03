@@ -77,20 +77,22 @@ That is the actual gain, and it is bigger than "more agents at once". Because th
 > ```
 > Claude fans the search out across several angles, fetches and cross-checks the sources, and delivers a cited report at the end instead of a turn-by-turn transcript. With `/workflows` you watch the run live.
 
+That `/workflows` is the control center. The command lists running and completed workflows, and the detail view shows every phase with its agents, token usage and elapsed time. From there you stop a run, resume it, or save it for later.
+
 ## Dynamic Workflows: Claude writes the script
 
 That leaves the question of where such a script comes from. You could write it by hand. It is meant to work the other way round, and that is exactly what "dynamic" means: you describe the task, and Claude writes the workflow for it. The documentation says it [in one sentence](https://code.claude.com/docs/en/workflows):
 
 > A dynamic workflow is a JavaScript script that orchestrates many subagents at once. Claude writes the script for the task you describe, and a runtime executes it in the background while your session stays responsive.
 
-If you save a good run, with the `s` key in `/workflows`, it becomes a fixed command again, just like `/deep-research`. Such a workflow is triggered, among other ways, like this, the finished ones on top, the dynamic ones below:
+If you save a good run, with the `s` key in `/workflows`, it becomes a fixed command again, just like `/deep-research`. Such a workflow is triggered, among other ways, like this:
 
-| Trigger | What happens |
-|---|---|
-| `/deep-research <question>` | the only bundled workflow: research with source cross-checking |
-| `/<name>` | a workflow you saved, running as its own command |
-| `ultracode` in the prompt (or "use a workflow") | Claude writes a one-off workflow for this one task |
-| `/effort ultracode` (mode) | from then on, Claude plans a workflow for every larger task on its own |
+| Trigger | Kind | What happens |
+|---|---|---|
+| `/deep-research <question>` | finished | the only bundled workflow: research with source cross-checking |
+| `/<name>` | finished | a workflow you saved, running as its own command |
+| `ultracode` in the prompt (or "use a workflow") | dynamic | Claude writes a one-off workflow for this one task |
+| `/effort ultracode` (mode) | dynamic | from then on, Claude plans a workflow for every larger task on its own |
 
 It is available on all paid plans; on Pro you first switch on the _Dynamic workflows_ row in `/config`.
 

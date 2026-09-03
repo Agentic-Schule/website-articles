@@ -77,20 +77,22 @@ Das ist der eigentliche Gewinn, und er ist größer als „mehr Agenten gleichze
 > ```
 > Claude fächert die Suche über mehrere Richtungen auf, holt und kreuzprüft die Quellen und liefert am Ende einen belegten Bericht statt eines Zug-um-Zug-Protokolls. Mit `/workflows` schaust du dem Lauf live zu.
 
+Das `/workflows` dahinter ist die Schaltzentrale. Der Befehl listet laufende und abgeschlossene Workflows auf, und die Detailansicht zeigt jede Phase mit ihren Agenten, dem Token-Verbrauch und der Laufzeit. Von dort stoppst du einen Lauf, setzt ihn fort oder speicherst ihn für später.
+
 ## Dynamic Workflows: Claude schreibt das Skript
 
 Bleibt die Frage, woher so ein Skript kommt. Du könntest es von Hand schreiben. Gedacht ist es andersherum, und genau das meint „dynamic": Du beschreibst die Aufgabe, und Claude schreibt den Workflow dafür. Die Dokumentation sagt es [in einem Satz](https://code.claude.com/docs/en/workflows):
 
 > A dynamic workflow is a JavaScript script that orchestrates many subagents at once. Claude writes the script for the task you describe, and a runtime executes it in the background while your session stays responsive.
 
-Speicherst du einen gelungenen Lauf, in `/workflows` mit der Taste `s`, wird daraus wieder ein fester Befehl wie `/deep-research`. Ausgelöst wird ein Workflow unter anderem auf diesen Wegen, oben die fertigen, unten die dynamischen:
+Speicherst du einen gelungenen Lauf, in `/workflows` mit der Taste `s`, wird daraus wieder ein fester Befehl wie `/deep-research`. Ausgelöst wird ein Workflow unter anderem auf diesen Wegen:
 
-| Auslöser | Was passiert |
-|---|---|
-| `/deep-research <Frage>` | der einzige mitgelieferte Workflow: Recherche mit Quellen-Kreuzprüfung |
-| `/<name>` | ein von dir gespeicherter Workflow, läuft als eigener Befehl |
-| `ultracode` im Prompt (oder „nutze einen Workflow") | Claude schreibt einmalig einen Workflow für diese eine Aufgabe |
-| `/effort ultracode` (Modus) | Claude plant ab dann für jede größere Aufgabe von allein einen Workflow |
+| Auslöser | Art | Was passiert |
+|---|---|---|
+| `/deep-research <Frage>` | fertig | der einzige mitgelieferte Workflow: Recherche mit Quellen-Kreuzprüfung |
+| `/<name>` | fertig | ein von dir gespeicherter Workflow, läuft als eigener Befehl |
+| `ultracode` im Prompt (oder „nutze einen Workflow") | dynamisch | Claude schreibt einmalig einen Workflow für diese eine Aufgabe |
+| `/effort ultracode` (Modus) | dynamisch | Claude plant ab dann für jede größere Aufgabe von allein einen Workflow |
 
 Verfügbar ist das auf allen bezahlten Plänen; auf Pro schaltest du die Zeile _Dynamic workflows_ vorher in `/config` ein.
 
