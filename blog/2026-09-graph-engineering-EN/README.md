@@ -77,7 +77,7 @@ The quickest way to see it is `/deep-research`, the bundled workflow for researc
 > ```
 > Claude fans the search out across several angles, fetches and cross-checks the sources, and delivers a cited report at the end instead of a turn-by-turn transcript. With `/workflows` you watch the run live.
 
-That `/workflows` is the control center. The command lists running and completed workflows, and the detail view shows every phase with its agents, token usage and elapsed time. From there you stop a run, resume it, or save it for later.
+The `/workflows` slash command behind it is the control center. The command lists running and completed workflows, and the detail view shows every phase with its agents, token usage and elapsed time. From there you stop a run, resume it, or save it for later.
 
 ## Dynamic Workflows: Claude writes the script
 
