@@ -75,7 +75,7 @@ Das ist der eigentliche Gewinn, und er ist größer als „mehr Agenten gleichze
 > ```text
 > /deep-research Was hat sich im Node.js-Permission-Model zwischen v20 und v22 geändert?
 > ```
-> Claude fächert die Suche über mehrere Richtungen auf, holt die Quellen, prüft sie gegeneinander und liefert am Ende einen belegten Bericht statt eines Zug-um-Zug-Protokolls. Mit `/workflows` schaust du dem Lauf live zu.
+> Claude fächert die Suche über mehrere Richtungen auf, holt die Quellen, prüft sie gegeneinander und liefert am Ende einen belegten Bericht, statt dir jeden Zwischenschritt einzeln in den Chat zu schreiben. Mit `/workflows` schaust du dem Lauf live zu.
 
 Das `/workflows` dahinter ist die Schaltzentrale. Der Befehl listet laufende und abgeschlossene Workflows auf, und die Detailansicht zeigt jede Phase mit ihren Agenten, dem Token-Verbrauch und der Laufzeit. Von dort stoppst du einen Lauf, setzt ihn fort oder speicherst ihn für später.
 
