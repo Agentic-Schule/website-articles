@@ -103,12 +103,16 @@ Wahrscheinlich löst du so etwas längst täglich aus, ohne den Begriff zu benut
 Wie groß der Unterschied ist, habe ich beim Schreiben dieses Artikels selbst gesehen. Denn natürlich ging genau dieser Text hier durch die Mühle:
 
 ```text
-/code-review max mache einen intensiven review aller Texte dieses repos. prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
+/code-review max Mache einen intensiven Review aller Texte dieses Repos. Prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
 ```
 
-Mit `max` auf Fable 5 fächerte der Review in parallele Prüf-Agenten auf, zugeschnitten auf den Auftrag: einer für die deutsche Rechtschreibung, einer für den englischen Sprachschliff, einer für den Abgleich der beiden Fassungen, weitere für den Faktencheck gegen die Anthropic-Doku und gegen externe Quellen. Ohne das `max`, bei `xhigh` auf Opus 4.8, lief derselbe Befehl dagegen als Linie und arbeitete seine Blickwinkel nacheinander im selben Kontext ab. Zurück kam in beiden Fällen eine Liste echter Funde, von der schiefen Tatsachenbehauptung bis zum Grammatikfehler in der Übersetzung. Und übrigens: `/code-review` heißt zwar Code-Review, für Artikel-Texte funktioniert es genauso gut.
+Mit `max` auf Fable 5 fächerte der Review in parallele Prüf-Agenten auf, zugeschnitten auf den Auftrag: einer für die deutsche Rechtschreibung, einer für den englischen Sprachschliff, einer für den Abgleich der beiden Fassungen, weitere für den Faktencheck gegen die Anthropic-Doku und gegen externe Quellen. So sah das live aus:
 
-Und weil das Skript eine ganz normale Datei unter `~/.claude/projects/` ist, kannst du es lesen, mit einem früheren Lauf vergleichen oder von Hand anpassen und Claude neu starten lassen. Ein Graph ist damit nichts Magisches: nur Code, den du in die Hand nehmen kannst.
+<img src="code-review-max-agents.png" alt="Hintergrundaufgaben in Claude Code: fünf parallele Prüf-Agenten (Angle A bis E) während /code-review max" style="display:block;margin:1.5em auto;width:45%;">
+
+Ohne das `max`, bei `xhigh` auf Opus 4.8, lief derselbe Befehl dagegen als Linie und arbeitete seine Blickwinkel nacheinander im selben Kontext ab. Zurück kam in beiden Fällen eine Liste echter Funde, von der schiefen Tatsachenbehauptung bis zum Grammatikfehler in der Übersetzung. Und übrigens: `/code-review` heißt zwar Code-Review, für Artikel-Texte funktioniert es genauso gut.
+
+Und weil das Skript eine ganz normale Datei unter `~/.claude/projects/` ist, kannst du es lesen, mit einem früheren Lauf vergleichen oder von Hand anpassen und Claude neu starten lassen. Ein Graph ist damit nichts Magisches: nur JavaScript-Code, den du bei Neugierde sogar nachlesen kannst.
 
 ## Wann sich ein Graph lohnt, und wann nicht
 

@@ -103,12 +103,16 @@ You probably trigger something like this every day already, without using the te
 How big the difference is, I saw for myself while writing this article. Because of course this very text went through the grinder, with a German prompt asking for an intensive review of all the repo's texts, covering spelling, grammar, style, truth and the English translation:
 
 ```text
-/code-review max mache einen intensiven review aller Texte dieses repos. prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
+/code-review max Mache einen intensiven Review aller Texte dieses Repos. Prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
 ```
 
-With `max` on Fable 5, the review fanned out into parallel review agents, tailored to the request: one for German orthography, one for polishing the English, one for comparing the two versions, more for fact-checking against the Anthropic docs and against external sources. Without the `max`, at `xhigh` on Opus 4.8, the same command ran as a line instead and worked through its angles one after another in the same context. Both times a list of genuine findings came back, from a skewed factual claim to a grammar mistake in the translation. And by the way: `/code-review` may be called code review, but it works just as well for article texts.
+With `max` on Fable 5, the review fanned out into parallel review agents, tailored to the request: one for German orthography, one for polishing the English, one for comparing the two versions, more for fact-checking against the Anthropic docs and against external sources. This is what it looked like live:
 
-And because the script is an ordinary file under `~/.claude/projects/`, you can read it, diff it against an earlier run, or edit it by hand and have Claude relaunch it. A graph is nothing magical this way: just code you can take into your own hands.
+<img src="code-review-max-agents.png" alt="Background tasks in Claude Code: five parallel review agents (Angle A to E) while /code-review max is running" style="display:block;margin:1.5em auto;width:45%;">
+
+Without the `max`, at `xhigh` on Opus 4.8, the same command ran as a line instead and worked through its angles one after another in the same context. Both times a list of genuine findings came back, from a skewed factual claim to a grammar mistake in the translation. And by the way: `/code-review` may be called code review, but it works just as well for article texts.
+
+And because the script is an ordinary file under `~/.claude/projects/`, you can read it, diff it against an earlier run, or edit it by hand and have Claude relaunch it. A graph is nothing magical this way: just JavaScript code that you can even read through if you are curious.
 
 ## When a graph is worth it, and when not
 
