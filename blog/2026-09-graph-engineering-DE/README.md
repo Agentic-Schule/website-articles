@@ -122,7 +122,7 @@ Genauso wichtig ist die andere Richtung. Ein Graph lohnt sich **nicht**, wenn di
 
 > **⚠️ Der Kostenpunkt, den man dir gern verschweigt:** Ich habe schon gelesen, ein Workflow koste praktisch nichts extra, weil die Zwischenergebnisse ja im Skript bleiben. Das ist die halbe Wahrheit. Gespart wird an der Koordination, nicht an der Arbeit. Die Doku ist da unmissverständlich: ein Workflow verbraucht *„meaningfully more tokens than working through the same task in conversation"*. Die Subagenten kosten. Deshalb: erst auf einem kleinen Ausschnitt laufen lassen, ein Verzeichnis statt des ganzen Repos, den Verbrauch in `/workflows` beobachten, dann erst breiter gehen.
 
-Auch die Skala lohnt einen zweiten Blick. Die Standardgröße eines Workflows ist `medium`, also unter 15 Agenten; gleichzeitig laufen bis zu 16. Die Obergrenze von 1000 Agenten pro Lauf existiert allein dafür, eine außer Kontrolle geratene Schleife zu stoppen. Ein Zielwert ist sie nicht. Wer wirklich tausend Agenten auf einmal braucht, hat meist ein anderes Problem.
+Auch die Größenordnung lohnt einen zweiten Blick. Die Standardgröße eines Workflows ist `medium`, also unter 15 Agenten; gleichzeitig laufen bis zu 16. Die Obergrenze von 1000 Agenten pro Lauf existiert allein dafür, eine außer Kontrolle geratene Schleife zu stoppen. Ein Zielwert ist sie nicht. Wer wirklich tausend Agenten auf einmal braucht, hat meist ein anderes Problem.
 
 Dass ein breiter Fächer nicht immer die Antwort ist, sagt Anthropic selbst, im Beitrag [„When to use multi-agent systems (and when not to)"](https://claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them). Ein Werkzeug wird nicht dadurch besser, dass man es überall einsetzt.
 
