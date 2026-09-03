@@ -43,7 +43,7 @@ How far that can go is described by Boris Cherny, creator and head of Claude Cod
 
 > If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
 
-A sharper version was already circulating before the Fortune appearance. In his article, Osmani quotes Cherny with "I don’t prompt Claude anymore. I have loops running that prompt Claude and figuring out what to do. My job is to write loops". The trail of that quote, however, leads to an X post that has since been deleted, so a primary source no longer exists. And it should not be taken literally anyway: this is the head of a product promoting his own product. Anyone who actually runs loops intervenes, adjusts and aborts.
+A sharper version was already circulating before the Fortune appearance. In his article, Osmani quotes Cherny with "I don’t prompt Claude anymore. I have loops running that prompt Claude and figuring out what to do. My job is to write loops". I chased that sentence down: whether Cherny ever said it in exactly that form can no longer be proven. The X post the quote rests on has been deleted, and in the video ["Reflecting on a year of Claude Code"](https://www.youtube.com/watch?v=Hth_tLaC2j8) on Anthropic's official channel it does not appear. What Cherny actually says there (at 10:55): "I don't talk to an agent anymore. I talk to loop or I talk to a routine and it prompts Claude for me." The viral version has been sharpened, then. And neither should be taken literally anyway: this is the head of a product promoting his own product. Anyone who actually runs loops intervenes, adjusts and aborts. And the foundation of a loop is still a prompt, of course. So all in all, laying it on pretty thick, if you ask me.
 
 The German consultancy codecentric has [placed the term in a useful layering](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context engineering makes sure the right information is in the individual prompt. Harness engineering builds the guardrails around it: tools, skills, hooks and sandboxes. Loop engineering is the layer on top:
 
@@ -143,7 +143,7 @@ A self-chosen pause of twenty minutes sits far outside that window in this case.
 
 So far this has been about how loops work. The more important question comes before that: whether you need one at all. A few conditions follow from what is above. Miss one and the loop costs more than it brings in.
 
-**Does the task need many attempts?** A loop pays for itself across many runs. `/loop` lives in the session and expires after seven days; `/goal` ends with its condition. For something that lands on the first attempt, a well-aimed prompt is faster and cheaper. If one run is all it takes, you do not have a loop problem. You have a script.
+**Does the task need many attempts?** A loop pays for itself across many runs. `/loop` lives in the session and expires after seven days; `/goal` ends with its condition. For something that lands on the first attempt, a well-aimed prompt is faster and cheaper. If one run is all it takes, you do not have a loop problem.
 
 **Can anything but the agent say no?** This is the hardest of them all. The `/goal` evaluator calls no tools; it only sees what is in the conversation. Without a hard test, build or linter, the only evidence left is what the agent itself reports about its work. Even the fresh `/goal` evaluator then grades nothing but that self-report. Then the loop may keep running happily even when something has long been broken.
 

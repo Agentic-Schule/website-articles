@@ -47,7 +47,7 @@ Und eins ohne Kante: „Prüfe jede Route-Datei auf fehlende Auth-Checks." Keine
 
 ![Von der Linie zum Graphen: Knoten erledigen die Arbeit, Kanten sind die Abhängigkeiten dazwischen.](knoten-kanten.svg)
 
-Neu ist dieses Prinzip nicht. Build-Systeme wie `make` bauen seit Jahrzehnten aus genau solchen Abhängigkeiten einen Graphen und erledigen alles Unabhängige parallel. Und auch für Agenten hat es Anthropic längst nüchtern aufgeschrieben, in [„Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents): dort heißt das Muster *Parallelization* (unabhängige Teilaufgaben gleichzeitig) und *Orchestrator-Workers* (eine zentrale Instanz zerlegt die Aufgabe, verteilt sie an Worker und fügt die Ergebnisse zusammen). Ein neues Wort braucht es dafür also nicht, und doch ist genau eines entstanden.
+Neu ist dieses Prinzip nicht. Build-Systeme wie `make` bauen seit Jahrzehnten aus genau solchen Abhängigkeiten einen Graphen und erledigen alles Unabhängige parallel. Und auch für Agenten hat es Anthropic längst nüchtern aufgeschrieben, in [„Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents): dort heißt das Muster *Parallelization* (unabhängige Teilaufgaben gleichzeitig) und *Orchestrator-Workers* (eine zentrale Instanz zerlegt die Aufgabe, verteilt sie an Worker und fügt die Ergebnisse zusammen). Ein neues Wort braucht es dafür also nicht, und doch ist genau eines entstanden. (Meine Vermutung: weil es cool klingt.)
 
 ## Woher der Begriff kommt
 
@@ -55,17 +55,15 @@ Um den Begriff einzuordnen, halte ich mich an LangChain, die Firma hinter dem ve
 
 Das Wort ist neu, die Sache nicht. Denselben Gedanken, ein Agentensystem als Graph zu bauen, hat LangChain vor drei Jahren zu LangGraph gemacht, das heute über 65 Millionen Mal im Monat heruntergeladen wird. Die Definition dort ist genau unsere: „nodes do work" (Knoten erledigen die Arbeit), „edges define what happens next" (Kanten bestimmen, was als Nächstes kommt), das Ganze als Zustandsmaschine. Das Buzzword steht also für eine erprobte Praxis.
 
-Und das „Engineering" im Namen? Das ist der Teil, der am meisten verspricht und am wenigsten hält. Das echte Engineering steckt in den Werkzeugen, in LangGraph und in Claude Codes Runtime. Sie zu benutzen verlangt keins. Was für dich übrig bleibt, ist schlicht: parallele Agenten orchestrieren. So würde ich es lieber nennen.
+Und das „Engineering" im Namen? Das ist der Teil, der am meisten verspricht und am wenigsten hält. Das echte Engineering steckt in den Werkzeugen, in LangGraph, in Claude Codes Runtime und den anderen Harnessen. Die Verwendung der Tools verlangt keine „Engineering"-Skills. Das ist Blödsinn. Ich persönlich verwende lieber den Begriff: **parallele Agenten orchestrieren**.
 
 Eine Verwechslung muss ich noch ausräumen. „Graph" ist in der KI-Welt doppelt belegt. Es meint auch Wissensgraphen für die Suche, wie in Microsofts [GraphRAG](https://www.microsoft.com/en-us/research/blog/graphrag-unlocking-llm-discovery-on-narrative-private-data/), wo aus Texten Entitäten und Beziehungen extrahiert werden. Das ist eine andere Baustelle: GraphRAG strukturiert Wissen, Graph Engineering steuert Abläufe zwischen Agenten.
 
 Bleibt die Umsetzung. In Claude Code heißt das Werkzeug dafür Dynamic Workflows, und das Wort „Graph" fällt in der Dokumentation kein einziges Mal.
 
-## Das Werkzeug dahinter: Dynamic Workflows
+## Workflows: das Skript hält den Plan
 
-Die Dokumentation von Claude Code beschreibt sie [in einem Satz](https://code.claude.com/docs/en/workflows):
-
-> A dynamic workflow is a JavaScript script that orchestrates many subagents at once. Claude writes the script for the task you describe, and a runtime executes it in the background while your session stays responsive.
+Ein Workflow ist in Claude Code ein JavaScript-Skript, das viele Subagenten auf einmal orchestriert. Fertige Workflows rufst du wie jeden anderen Befehl auf.
 
 Der entscheidende Unterschied zu allem anderen ist, **wer den Plan hält**. Bei einzelnen Subagenten, bei Skills, bei Agent-Teams ist Claude selbst der Dirigent: Es entscheidet Zug um Zug, was als Nächstes läuft, und jedes Zwischenergebnis landet im Kontextfenster. Beim Workflow hält das Skript den Plan. Die Schleifen, die Verzweigungen und vor allem die Zwischenergebnisse liegen in Skript-Variablen. Im Kontext bleibt am Ende nur die eine geprüfte Antwort.
 
@@ -77,9 +75,15 @@ Das ist der eigentliche Gewinn, und er ist größer als „mehr Agenten gleichze
 > ```text
 > /deep-research Was hat sich im Node.js-Permission-Model zwischen v20 und v22 geändert?
 > ```
-> Claude fächert die Suche über mehrere Richtungen auf, holt und kreuzprüft die Quellen und liefert am Ende einen belegten Bericht statt eines Zug-um-Zug-Protokolls. Mit `/workflows` schaust du dem Lauf live zu. Gefällt dir das Ergebnis, speicherst du das Skript mit `s`; künftig läuft es als eigener Befehl `/<name>`.
+> Claude fächert die Suche über mehrere Richtungen auf, holt und kreuzprüft die Quellen und liefert am Ende einen belegten Bericht statt eines Zug-um-Zug-Protokolls. Mit `/workflows` schaust du dem Lauf live zu.
 
-„Dynamic" meint dabei genau eines: Das feste Ablauf-Skript schreibt Claude selbst, dynamisch für deine Aufgabe. Ausgelöst wird so ein Workflow unter anderem auf diesen Wegen:
+## Dynamic Workflows: Claude schreibt das Skript
+
+Bleibt die Frage, woher so ein Skript kommt. Du könntest es von Hand schreiben. Gedacht ist es andersherum, und genau das meint „dynamic": Du beschreibst die Aufgabe, und Claude schreibt den Workflow dafür. Die Dokumentation sagt es [in einem Satz](https://code.claude.com/docs/en/workflows):
+
+> A dynamic workflow is a JavaScript script that orchestrates many subagents at once. Claude writes the script for the task you describe, and a runtime executes it in the background while your session stays responsive.
+
+Speicherst du einen gelungenen Lauf, in `/workflows` mit der Taste `s`, wird daraus wieder ein fester Befehl wie `/deep-research`. Ausgelöst wird ein Workflow unter anderem auf diesen Wegen, oben die fertigen, unten die dynamischen:
 
 | Auslöser | Was passiert |
 |---|---|
