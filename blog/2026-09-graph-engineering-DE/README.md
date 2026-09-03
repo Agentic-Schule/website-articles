@@ -69,7 +69,7 @@ Der entscheidende Unterschied zu allem anderen ist, **wer den Plan hält**. Bei 
 
 Das ist der eigentliche Gewinn, und er ist größer als „mehr Agenten gleichzeitig". Weil die Orchestrierung Code ist, lässt sich ein wiederholbares Qualitätsmuster einbauen: unabhängige Agenten prüfen die Befunde der anderen gegen (engl. *adversarial review*), oder ein Plan wird aus mehreren Blickwinkeln entworfen und gegeneinander abgewogen. Ein Durchlauf, dem man eher trauen kann als einem einzelnen Schuss.
 
-**Ausprobieren geht mit einem einzigen Befehl.** Am schnellsten sieht man es an `/deep-research`, dem mitgelieferten Workflow für Recherchefragen:
+Am schnellsten sieht man es an `/deep-research`, dem mitgelieferten Workflow für Recherchefragen:
 
 > **🛠️ Selbst ausprobieren**
 > ```text

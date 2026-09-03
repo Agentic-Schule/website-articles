@@ -69,7 +69,7 @@ The decisive difference to everything else is **who holds the plan**. With indiv
 
 That is the actual gain, and it is bigger than "more agents at once". Because the orchestration is code, a repeatable quality pattern can be built in: independent agents cross-check each other's findings (*adversarial review*), or a plan is drafted from several angles and weighed against itself. A run you can trust more than a single shot.
 
-**Trying it out takes a single command.** The quickest way to see it is `/deep-research`, the bundled workflow for research questions:
+The quickest way to see it is `/deep-research`, the bundled workflow for research questions:
 
 > **🛠️ Try it yourself**
 > ```text
