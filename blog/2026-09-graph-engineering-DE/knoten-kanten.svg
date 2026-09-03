@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Von der Linie zum Graphen: Knoten erledigen die Arbeit, Kanten sind die Abhaengigkeiten dazwischen.">
+  <defs>
+    <marker id="a-gray" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8c7f77"/>
+    </marker>
+    <marker id="a-coral" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#d97757"/>
+    </marker>
+  </defs>
+
+  <text x="60" y="52" font-size="18" font-weight="700" fill="#221a16">Linie</text>
+  <text x="490" y="52" font-size="18" font-weight="700" fill="#221a16">Graph</text>
+
+  <line x1="430" y1="58" x2="430" y2="302" stroke="#e7ddd6" stroke-width="1.5" stroke-dasharray="3 6"/>
+
+  <!-- Linie: Kanten -->
+  <line x1="97" y1="175" x2="166" y2="175" stroke="#8c7f77" stroke-width="2" marker-end="url(#a-gray)"/>
+  <line x1="212" y1="175" x2="281" y2="175" stroke="#8c7f77" stroke-width="2" marker-end="url(#a-gray)"/>
+  <!-- Linie: Knoten -->
+  <circle cx="75" cy="175" r="22" fill="#fbf7f4" stroke="#cbb8ac" stroke-width="1.5"/>
+  <circle cx="190" cy="175" r="22" fill="#fbf7f4" stroke="#cbb8ac" stroke-width="1.5"/>
+  <circle cx="305" cy="175" r="22" fill="#fbf7f4" stroke="#cbb8ac" stroke-width="1.5"/>
+  <text x="75" y="180" text-anchor="middle" font-size="15" fill="#3a322d">1</text>
+  <text x="190" y="180" text-anchor="middle" font-size="15" fill="#3a322d">2</text>
+  <text x="305" y="180" text-anchor="middle" font-size="15" fill="#3a322d">3</text>
+  <text x="60" y="252" font-size="13" fill="#8c7f77">Jeder Schritt wartet auf den vorigen.</text>
+
+  <!-- Graph: Kanten (Fan-out) -->
+  <path d="M550 161 L660 109" stroke="#d97757" stroke-width="2.4" fill="none" marker-end="url(#a-coral)"/>
+  <line x1="552" y1="170" x2="658" y2="170" stroke="#8c7f77" stroke-width="2" marker-end="url(#a-gray)"/>
+  <path d="M550 179 L660 231" stroke="#8c7f77" stroke-width="2" fill="none" marker-end="url(#a-gray)"/>
+  <!-- Graph: Kanten (Zusammenfuehren) -->
+  <path d="M700 109 L810 161" stroke="#8c7f77" stroke-width="2" fill="none" marker-end="url(#a-gray)"/>
+  <line x1="702" y1="170" x2="808" y2="170" stroke="#8c7f77" stroke-width="2" marker-end="url(#a-gray)"/>
+  <path d="M700 231 L810 179" stroke="#8c7f77" stroke-width="2" fill="none" marker-end="url(#a-gray)"/>
+  <!-- Graph: Knoten -->
+  <circle cx="530" cy="170" r="22" fill="#fbf7f4" stroke="#cbb8ac" stroke-width="1.5"/>
+  <circle cx="680" cy="100" r="22" fill="#fdeee7" stroke="#d97757" stroke-width="2.2"/>
+  <circle cx="680" cy="170" r="22" fill="#fbf7f4" stroke="#cbb8ac" stroke-width="1.5"/>
+  <circle cx="680" cy="240" r="22" fill="#fbf7f4" stroke="#cbb8ac" stroke-width="1.5"/>
+  <circle cx="830" cy="170" r="22" fill="#fbf7f4" stroke="#cbb8ac" stroke-width="1.5"/>
+  <text x="530" y="216" text-anchor="middle" font-size="12.5" fill="#8c7f77">Aufgabe</text>
+  <text x="830" y="216" text-anchor="middle" font-size="12.5" fill="#8c7f77">Ergebnis</text>
+  <text x="490" y="300" font-size="13" fill="#8c7f77">Unabh&#228;ngiges l&#228;uft gleichzeitig, dann f&#252;hrt es zusammen.</text>
+
+  <!-- Annotationen -->
+  <text x="680" y="58" text-anchor="middle" font-size="13" font-weight="600" fill="#d97757">Knoten</text>
+  <line x1="680" y1="63" x2="680" y2="76" stroke="#d97757" stroke-width="1.2"/>
+  <text x="600" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#d97757">Kante</text>
+  <line x1="600" y1="125" x2="604" y2="134" stroke="#d97757" stroke-width="1.2"/>
+</svg>

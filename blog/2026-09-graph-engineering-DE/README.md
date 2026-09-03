@@ -43,6 +43,8 @@ Der ganze Trick steckt in einer einzigen Frage. Für jedes „und dann" im Auftr
 
 „Fasse diese Datei zusammen und dann sag mir das Wetter." Das Wetter liest die Zusammenfassung nicht. Das sind zwei unabhängige Aufgaben, die ein lineares Skript ohne Not hintereinanderhängt.
 
+![Von der Linie zum Graphen: Knoten erledigen die Arbeit, Kanten sind die Abhängigkeiten dazwischen.](knoten-kanten.svg)
+
 Neu ist dieses Prinzip nicht. Build-Systeme wie `make` bauen seit Jahrzehnten aus genau solchen Abhängigkeiten einen Graphen und erledigen alles Unabhängige parallel. Und auch für Agenten hat es Anthropic längst nüchtern aufgeschrieben, in [„Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents): dort heißt das Muster *Parallelization* (unabhängige Teilaufgaben gleichzeitig) und *Orchestrator-Workers* (eine zentrale Instanz zerlegt die Aufgabe, verteilt sie an Worker und fügt die Ergebnisse zusammen). Ein neues Wort braucht es dafür also nicht, und doch ist genau eines entstanden.
 
 ## Woher der Begriff kommt
