@@ -17,9 +17,9 @@ language: de
 header: header.jpg
 ---
 
-Erst hieß es, Prompt Engineering sei der Job der Zukunft. Jetzt heißt es, Context Engineering löse es ab. Was ist dran?
+Garbage in, garbage out: Kaum ein Satz der Informatik passt so gut auf Sprachmodelle. Was das Modell zu sehen bekommt, bestimmt, was herauskommt. Müll wollen wir nicht. Schauen wir uns also an, was gute Prompts und guten Kontext ausmacht.
 
-**Beides sind Hype-Begriffe, und hinter beiden steckt trotzdem echtes Handwerk. Prompt Engineering: Formuliere die Anweisung klar, belege sie mit Beispielen und miss das Ergebnis. Context Engineering: Kuratiere alles, was das Modell zu sehen bekommt, denn das Kontextfenster ist eine endliche Ressource. Das eine schreibt die Anweisung, das andere bewirtschaftet das Fenster drumherum. Einen Kurs brauchst du für keins von beiden, die Primärquellen sind frei zugänglich.**
+**Dafür kursieren gleich zwei Hype-Begriffe: Prompt Engineering und Context Engineering. Hinter beiden steckt echtes Handwerk. Prompt Engineering: Formuliere die Anweisung klar, belege sie mit Beispielen und miss das Ergebnis. Context Engineering: Kuratiere alles, was das Modell zu sehen bekommt, denn das Kontextfenster ist eine endliche Ressource. Das eine schreibt die Anweisung, das andere bewirtschaftet das Fenster drumherum. Einen Kurs brauchst du für keins von beiden, die Primärquellen sind frei zugänglich.**
 
 Das hier ist der Auftakt der kleinen Serie über die Engineering-Begriffe der Agenten-Welt. Die beiden anderen Teile sind schon erschienen: die Schleife ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)) und der Graph ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Jeder Teil ist für sich lesbar.
 
@@ -52,6 +52,8 @@ Anthropic pflegt alle Techniken auf einer einzigen Seite, den [Prompting best pr
 - **Zeige Beispiele.** Wenige gut gewählte Beispiele (*Few-Shot-Prompting*) sind laut Doku eine der zuverlässigsten Methoden, Format, Ton und Struktur zu steuern. Der Tipp dort: drei bis fünf Stück, relevant und divers, eingepackt in `<example>`-Tags.
 - **Strukturiere mit XML-Tags.** `<instructions>`, `<context>`, `<input>`: Wenn ein Prompt Anweisungen, Kontext, Beispiele und variable Eingaben mischt, verhindern Tags, dass das Modell sie durcheinanderwirft.
 
+Und was ist mit Verboten? Die offizielle Linie: „Tell Claude what to do instead of what not to do". Statt „Do not use markdown in your response" empfiehlt die Doku die positive Fassung „Your response should be composed of smoothly flowing prose paragraphs." Spannend dabei: Anthropic hält sich selbst nicht dogmatisch daran, die Beispiel-Prompts derselben Seite sind voll mit „DO NOT", „NEVER" und „Avoid". Das Muster in diesen Beispielen: Das Verbot steht fast nie allein, direkt daneben steht die erwünschte Alternative oder eine Ausnahmebedingung. Negativbeispiele fürs Few-Shot-Prompting empfiehlt die Doku dagegen nirgends; die Kriterien für Beispiele sind relevant, divers und strukturiert.
+
 Dazu eine Anordnung, die kaum jemand kennt: Bei langen Eingaben gehören die Dokumente an den Anfang und die Frage ans Ende. Laut Anthropic verbessert die Frage am Ende die Antwortqualität in internen Tests um bis zu 30 Prozent, gerade bei mehreren Dokumenten. Die Methodik dahinter ist nicht veröffentlicht, die Richtung deckt sich aber mit der Forschung: Das Paper [„Lost in the Middle"](https://arxiv.org/abs/2307.03172) zeigt, dass Modelle Informationen am Anfang und am Ende des Kontexts deutlich besser abrufen als in der Mitte.
 
 > **💡 Historischer Fußabdruck:** Schon im September 2023, zu Zeiten von Claude 2, hat Anthropic [Long-Context-Prompting vermessen](https://www.anthropic.com/news/prompting-long-context). Zwei Techniken halfen: das Modell erst relevante Zitate herausschreiben lassen, dann antworten, plus kontextbezogene Beispiele. Anthropic rahmte den Effekt damals als „36% reduction in errors". Ein datierter Datenpunkt aus einer früheren Modell-Ära, aber die Zitate-Technik lebt in den heutigen Best Practices weiter.
@@ -69,6 +71,14 @@ Daraus folgt das Leitprinzip, und es ist herrlich unbequem: „finding the small
 - **Beispiele statt Regelkataloge.** Wenige kanonische Beispiele steuern das Verhalten besser als eine Litanei aus Edge Cases. Die Doku bringt es auf die schönste Formel des ganzen Themas: „For an LLM, examples are the “pictures” worth a thousand words."
 
 Nebenbei ist das Thema inzwischen im Modell selbst angekommen: Claude Sonnet 5, Sonnet 4.6, Sonnet 4.5 und Haiku 4.5 verfolgen laut [Doku](https://platform.claude.com/docs/en/build-with-claude/context-windows#context-awareness) ihr verbleibendes Token-Budget während der Konversation, *Context Awareness* genannt. Das Modell weiß also, wie voll sein eigenes Fenster ist.
+
+## Ressourcen zum Selbstabholen
+
+Kuratieren heißt übrigens nicht, dass du dem Modell alles vorkauen musst. Ein Agent holt sich seinen Kontext zur Laufzeit selbst: Er navigiert durch Dateien, folgt Verweisen und lädt nur, was er gerade braucht. Anthropic nennt das die „just in time"-Strategie. Der Agent hält leichte Verweise wie Dateipfade, gespeicherte Abfragen und Weblinks und lädt die Inhalte erst bei Bedarf über seine Werkzeuge nach. Jede Erkundung liefert dabei Hinweise für die nächste, *progressive disclosure* genannt: Der Agent baut sein Verständnis Schicht für Schicht auf, statt in einem vollgestopften Fenster zu ertrinken.
+
+Damit verschiebt sich deine Aufgabe: Du stellst gute Ressourcen bereit und machst sie auffindbar. Eine gepflegte README, Wiki-Inhalte, Beispiel-Komponenten, ein Ordner mit Referenz-Implementierungen: All das ist Kontext, den sich der Agent im richtigen Moment selbst zieht. Sogar die Metadaten arbeiten mit. Anthropics Beispiel: Eine Datei `test_utils.py` im `tests`-Ordner hat erkennbar einen anderen Zweck als dieselbe Datei unter `src/core_logic/`, denn „Folder hierarchies, naming conventions, and timestamps all provide important signals". Ein aufgeräumtes Repository mit sprechenden Namen ist also selbst schon Context Engineering.
+
+Der Beitrag benennt auch den Preis: Erkundung zur Laufzeit ist langsamer, und ohne die richtigen Werkzeuge und Heuristiken verschwendet ein Agent Kontext in Sackgassen. Die Empfehlung ist deshalb ein Hybrid, und Claude Code ist das Anschauungsbeispiel: Die `CLAUDE.md`-Dateien landen vorab komplett im Kontext, alles andere holt sich der Agent mit `glob` und `grep` just in time.
 
 ## Für lange Strecken: drei Techniken
 
