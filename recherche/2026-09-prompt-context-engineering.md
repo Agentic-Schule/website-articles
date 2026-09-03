@@ -1,0 +1,69 @@
+# Recherche: Prompt Engineering und Context Engineering
+
+Ergebnis des /deep-research-Laufs vom 3. September 2026 (5 Suchwinkel, 21 Quellen geholt, 101 Claims extrahiert, 25 verifiziert: 24 bestätigt mit 3-0-Votes wörtlich an den Live-Quellen, 1 widerlegt). Diese Datei ist das Quellenarchiv für den Artikel `blog/2026-09-prompt-context-engineering-DE/`.
+
+## Die zwölf verifizierten Bausteine
+
+1. **Prompt Engineering ist eine empirische, iterative Disziplin.** Voraussetzungen laut Anthropic-Doku: klare Erfolgskriterien, empirische Tests dagegen, ein erster Entwurf. Der Zyklus Testfälle → vorläufiger Prompt → Verfeinerung → Validierung → Ship ist wörtlich „central to prompt engineering". Eval-Prinzip: „More questions with slightly lower signal automated grading is better than fewer questions with high-quality human hand-graded evals."
+   Quellen: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview und https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+2. **Grenzen:** „Not every success criteria or failing eval is best solved by prompt engineering. For example, you can sometimes improve latency and cost more easily by selecting a different model." (Overview-Seite, Abschnitt „When to prompt engineer")
+3. **Die eine Technik-Referenz:** Alle Techniken (Klarheit, Beispiele, XML, Rolle, Thinking, Chaining) stehen konsolidiert auf „Prompting best practices", von der Doku selbst „the living reference" genannt.
+   Quelle: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+4. **Grundprinzipien:** Explizit anfordern statt ableiten lassen („If you want 'above and beyond' behavior, explicitly request it") und das Warum mitliefern („Claude is smart enough to generalize from the explanation").
+5. **Beispiele/Few-Shot:** „Examples are one of the most reliable ways to steer Claude's output format, tone, and structure." Tipp (keine harte Regel): „Include 3–5 examples for best results", Kriterien relevant/divers/strukturiert, eingebettet in `<example>`-Tags.
+6. **XML-Struktur:** Tags wie `<instructions>`, `<context>`, `<input>` helfen, komplexe Prompts eindeutig zu parsen, und reduzieren Fehlinterpretationen.
+7. **Long-Context-Anordnung:** Langform-Dokumente an den Anfang, Frage ans Ende. „Queries at the end can improve response quality by up to 30 percent in tests" — Anthropic-interne Messung, im Artikel zwingend attribuieren („laut Anthropic, in Tests").
+8. **Historischer Kasten (optional):** Long-Context-Forschung 2023 (Claude-2-Ära): Zitate-Extraktion (Scratchpad) plus kontextbezogene Beispiele hoben die Genauigkeit von 0.939 auf 0.961, von Anthropic als „36% reduction in errors" gerahmt. Als datierten historischen Datenpunkt kennzeichnen; die Quote-Technik lebt in „Ground responses in quotes" weiter.
+   Quelle: https://www.anthropic.com/news/prompting-long-context (23.09.2023)
+9. **Brücke zu Context Engineering:** Anthropics Definition: „the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference", ausdrücklich „the natural progression of prompt engineering". Ankündigungs-Tweet des verifizierten @AnthropicAI-Accounts: „Most developers have heard of prompt engineering. But to get the most out of AI agents, you need context engineering." Vendor-Framing, kein Industriestandard — so kennzeichnen.
+   Quellen: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents (29.09.2025) und https://x.com/AnthropicAI/status/1973098580060631341
+10. **Warum nötig — Context Rot:** „as the number of tokens in the context window increases, the model's ability to accurately recall information from that context decreases." Unabhängig gestützt (Chroma-Report, „Lost in the Middle"); Ausmaß variiert nach Task-Komplexität.
+11. **Context Awareness:** Sonnet 5, Sonnet 4.6, Sonnet 4.5 und Haiku 4.5 verfolgen ihr verbleibendes Token-Budget (`<budget:token_budget>`-Tags). Gilt exakt für diese vier Modelle, Opus/Fable nicht.
+    Quelle: https://platform.claude.com/docs/en/build-with-claude/context-windows#context-awareness
+12. **Wissenschaftlicher Rahmen:** „The Prompt Report" (Schulhoff et al., arXiv:2406.06608, v6 Feb 2025): Taxonomie von 58 textbasierten Prompting-Techniken, 33 Vokabular-Begriffe, 40 Techniken für andere Modalitäten. arXiv-Preprint, als herstellerunabhängige Einordnung zitierbar.
+
+## Zwingende Vorbehalte fürs Schreiben
+
+- **URL-Hygiene:** Alle docs.anthropic.com-Pfade sind nur noch 301-Redirects. Im Artikel ausschließlich die kanonischen platform.claude.com-URLs zitieren.
+- **Selbstmessungen:** „bis zu 30 %" und „36 % Fehlerreduktion" sind Anthropic-interne Tests ohne veröffentlichte Methodik — nur attribuiert, nie als unabhängiger Fakt.
+- **Zeitbezug:** Die Long-Context-Experimente sind von 2023 (Claude 2); aktuelle Modelle sättigen simple NIAH-Tests fast vollständig.
+- **Vendor-Perspektive:** Die Context-Engineering-Definition ist Anthropics Framing (Engineering-Blog), kein Standard.
+- **WIDERLEGT (0-3), NICHT verwenden:** Der Vierer-Katalog „Compaction, Note-Taking, Sub-Agents, Just-in-Time-Retrieval" als Anthropic-Empfehlung für Long-Horizon-Agenten. Was der Blogpost tatsächlich für Agenten empfiehlt, muss direkt am Original nachgelesen und zitiert werden.
+- **Einseitigkeit:** Kernaussagen stammen fast alle von Anthropic plus einem Preprint; für Balance die Vergleichsquellen unten heranziehen.
+
+## Offene Fragen vor dem Schreiben
+
+1. Welche Agent-Techniken empfiehlt der Context-Engineering-Blogpost wirklich? (Original lesen, wörtlich zitieren.)
+2. Gibt es unabhängige aktuelle Benchmarks zu Context Rot für die heutige Modellgeneration (z. B. Chroma)?
+3. Wie rahmen OpenAI/Google/Microsoft das Verhältnis der beiden Begriffe? Lohnt ein Vergleichsabschnitt?
+4. Wie belastbar ist die 30-%-Angabe methodisch? (Keine veröffentlichte Methodik.)
+
+## Alle Quellen (für späteres Nachschlagen)
+
+### Anthropic (Primärquellen)
+- https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview — Prompt engineering overview (Kanon-Einstieg, Voraussetzungen, „When to prompt engineer")
+- https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices — Prompting best practices („the living reference": Klarheit, Beispiele, XML, Rolle, Thinking, Chaining, Long Context)
+- https://platform.claude.com/docs/en/test-and-evaluate/develop-tests — Erfolgskriterien und Evals
+- https://platform.claude.com/docs/en/build-with-claude/context-windows#context-awareness — Context Awareness (Token-Budget-Tracking)
+- https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective context engineering for AI agents (29.09.2025; Definition, Context Rot, Agent-Techniken)
+- https://www.anthropic.com/news/prompting-long-context — Prompting long context (23.09.2023; historisch, Claude-2-Ära)
+- https://x.com/AnthropicAI/status/1973098580060631341 — Ankündigungs-Tweet zum Context-Engineering-Post (30.09.2025)
+
+### Begriffsdebatte
+- https://x.com/karpathy/status/1937902205765607626 — Karpathy, Juni 2025: „+1 for 'context engineering' over 'prompt engineering'" (Ursprung der Debatte)
+- https://spectrum.ieee.org/prompt-engineering-is-dead — IEEE Spectrum: „Prompt Engineering is Dead" (Kritik-Perspektive, sekundär)
+- https://fedi.simonwillison.net/@simon/114757992443676572 — Simon Willison zur Begriffsverschiebung
+- https://www.langchain.com/blog/context-engineering-for-agents — LangChain: Context Engineering for Agents (Blog, Vergleichsrahmung)
+
+### Akademisch
+- https://arxiv.org/abs/2406.06608 — The Prompt Report (Schulhoff et al.): Taxonomie von 58 Prompting-Techniken
+- https://arxiv.org/abs/2507.13334 — Context-Engineering-Survey (formale Definition als Disziplin)
+- https://arxiv.org/abs/2402.07927 — Prompt-Engineering-Survey (41 Techniken nach Anwendungsgebiet)
+- https://arxiv.org/abs/2307.03172 — Lost in the Middle (U-Kurve: Anfang/Ende gut, Mitte schlecht)
+- https://arxiv.org/abs/2201.11903 — Chain-of-Thought Prompting (Wei et al.)
+
+### Herstellervergleich
+- https://developers.openai.com/api/docs/guides/prompt-engineering — OpenAI Prompt engineering guide
+- https://ai.google.dev/gemini-api/docs/prompting-strategies — Google Gemini Prompting strategies
+- https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/prompt-engineering — Microsoft Azure Prompt engineering
+- https://github.com/openai/openai-cookbook/blob/main/examples/gpt-5/gpt-5_prompting_guide.ipynb — OpenAI GPT-5 Prompting Guide (Cookbook)
