@@ -5,6 +5,7 @@ mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
 published: 2026-07-27
+lastModified: 2026-09-03
 keywords:
   - Loop Engineering
   - Claude Code
@@ -42,15 +43,15 @@ How far that can go is described by Boris Cherny, creator and head of Claude Cod
 
 > If you look at most Claude Code sessions, it's actually another Claude that does the prompting.
 
-That became the sharper line "I don't prompt Claude anymore." It cannot be sourced, and it should not be taken literally anyway: this is the head of a product promoting his own product. Anyone who actually runs loops intervenes, adjusts and aborts.
+A sharper version was already circulating before the Fortune appearance. In his article, Osmani quotes Cherny with "I don’t prompt Claude anymore. I have loops running that prompt Claude and figuring out what to do. My job is to write loops". I chased that sentence down: whether Cherny ever said it in exactly that form can no longer be proven. The X post the quote rests on has been deleted, and in the video ["Reflecting on a year of Claude Code"](https://www.youtube.com/watch?v=Hth_tLaC2j8) on Anthropic's official channel it does not appear. What Cherny actually says there (at 10:55): "I don't talk to an agent anymore. I talk to loop or I talk to a routine and it prompts Claude for me." The viral version has been sharpened, then. And neither should be taken literally anyway: this is the head of a product promoting his own product. Anyone who actually runs loops intervenes, adjusts and aborts. And the foundation of a loop is still a prompt, of course. So all in all, laying it on pretty thick, if you ask me.
 
-The German consultancy codecentric has [placed the term in a useful layering](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context engineering makes sure the right information is in the individual prompt. Harness engineering builds the railing around it: tools, skills, hooks and sandboxes. Loop engineering is the layer on top:
+The German consultancy codecentric has [placed the term in a useful layering](https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained). Context engineering makes sure the right information is in the individual prompt. Harness engineering builds the guardrails around it: tools, skills, hooks and sandboxes. Loop engineering is the layer on top:
 
 > the system that repeatedly triggers an AI agent, spawns helper agents, verifies results, and feeds itself, without a human prompting turn by turn
 
 The important caveat comes from the same article: every layer inherits the weaknesses of the one below it. A loop around an agent that cannot keep its context straight just goes round in circles faster.
 
-So much for the idea. It is the same for every agent, the implementation is not. The next sections show it on Claude Code, the tool I use the most myself. How other tools solve the same idea comes at the end.
+So much for the idea. It is the same for every agent; the implementation is not. The next sections show it on Claude Code, the tool I use the most myself. How other tools solve the same idea comes at the end.
 
 ## `/loop`, `/goal` or a hook
 
@@ -68,9 +69,9 @@ There is a second difference that is easy to miss. `/goal` checks the completion
 
 > completion is decided by a fresh model rather than the one doing the work
 
-That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn. Since Haiku is comparatively weak, by the way, you should [set](https://code.claude.com/docs/en/model-config) this checking model deliberately beforehand.
+That is more than a detail. Put the condition into the prompt of a `/loop` and the same model that just did the work decides whether it is finished. With `/goal` a different model looks at it, according to the docs the session's small fast model, Haiku by default. It receives the condition and the conversation so far and returns a yes-or-no decision with a short reason. On a "no", that reason becomes guidance for the next turn. Since Haiku is comparatively weak, by the way, you should set this checking model deliberately beforehand, [according to the docs](https://code.claude.com/docs/en/goal) via the `ANTHROPIC_DEFAULT_HAIKU_MODEL` environment variable. But be careful: the variable applies everywhere Claude Code uses the small fast model, including background work such as conversation summarization. A bigger model there costs accordingly more.
 
-One limitation belongs with it: this evaluator calls no tools. It judges only what is already visible in the conversation. So the condition has to be phrased so that Claude's own output can demonstrate it. "All tests in `test/auth` pass" works, because Claude runs the tests and the result lands in the transcript.
+One limitation comes with it: this evaluator calls no tools. It judges only what is already visible in the conversation. So the condition has to be phrased so that Claude's own output can demonstrate it. "All tests in `test/auth` pass" works, because Claude runs the tests and the result lands in the transcript.
 
 And one more distinction that causes confusion in practice. The documentation separates two kinds of prompting:
 
@@ -80,7 +81,7 @@ The agent no longer asking whether it should continue comes from the loop. It no
 
 That leaves the third way. A stop hook is a script or a prompt in your `settings.json` that fires at the end of every turn, in every session, and can block stopping. `/goal` is essentially such a hook, just boiled down to a single session and condition. How to build one of your own is further down.
 
-> 🔁 **Rule of thumb:** waiting on something outside your session, use `/loop`. Working toward a verifiable end state, use `/goal`. Wanting the same check in every session, use a stop hook.
+> **💡 Rule of thumb:** if you are waiting on something outside your session, use `/loop`. If you are working toward a verifiable end state, use `/goal`. If you want the same check in every session, use a stop hook.
 
 ## What `/loop` actually does
 
@@ -98,9 +99,9 @@ In self-paced mode, Claude decides after each iteration how long to wait. The do
 
 You can replace that default. A `.claude/loop.md` file in the project, or `~/.claude/loop.md` for you personally, takes its place. It is plain Markdown with no required structure, written as if you were typing the prompt directly. Edits take effect on the next iteration, so you can sharpen the instructions while the loop is running.
 
-A few limits are worth knowing. The loop lives in the session. A fresh conversation ends it, but a `--resume` brings it back as long as it has not expired. It expires seven days after you created it: it fires one last time and then deletes itself. Esc cancels a pending iteration. And in self-paced mode Claude can call it a day on its own once it considers the work done. If it forgets both, meaning it neither reschedules nor stops, Claude Code schedules a single straggler about twenty minutes later and ends the loop then.
+A few limits are worth knowing. The loop lives in the session. A fresh conversation ends it, but a `--resume` brings it back as long as it has not expired. It expires seven days after you created it: it fires one last time and then deletes itself. Esc cancels a pending self-paced iteration; a loop on a fixed interval keeps running until you delete it. And in self-paced mode Claude can call it a day on its own once it considers the work done. If it neither reschedules nor stops, Claude Code schedules a single straggler about twenty minutes later and ends the loop then.
 
-> ⚠️ On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform and Microsoft Foundry none of this applies. There, a prompt without an interval runs on a fixed ten-minute schedule, and `loop.md` is not read at all.
+> **⚠️ Warning:** On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform and Microsoft Foundry, the self-paced intervals and the built-in maintenance prompt require at least Claude Code v2.1.248. On earlier versions, a prompt without an interval runs there on a fixed ten-minute schedule.
 
 ## In practice: one condition instead of fifteen "keep going"
 
@@ -126,25 +127,25 @@ The pauses between iterations feel like a side effect. They are in fact the reas
 
 For one, it does not hammer the API continuously. That leaves headroom under the server-side rate limits, and you can run several loops in parallel without them throttling each other. For another, the pause is your window to step in: you see what the last iteration did and can adjust or abort before the next one starts.
 
-And on a subscription it is free on top of that. Anthropic extends the prompt cache automatically [when you work on a subscription](https://code.claude.com/docs/en/prompt-caching):
+And on a subscription it is free on top of that. Anthropic extends the main conversation's prompt cache to one hour automatically, [as long as you work on a subscription within your plan's included usage](https://code.claude.com/docs/en/prompt-caching):
 
-> On a Claude subscription, Claude Code requests the one-hour TTL automatically.
+> Unless you choose a TTL yourself, Claude Code requests the one-hour TTL only on a Claude subscription within your plan’s included usage.
 
-On a subscription the cached context therefore stays warm across any pause a loop can choose. The pause costs you nothing.
+The cached context therefore stays warm across any pause a self-paced loop can choose, because its upper bound is exactly one hour. Only a fixed interval beyond that tears the gap open. The pause costs you nothing.
 
-Now the catch. As soon as you work past your allowance and start drawing on usage credits, Claude Code drops to five minutes automatically, according to the same page. On an API key and with the cloud providers, five minutes is the default anyway. And then this applies:
+Now the catch. As soon as you work past your allowance and start drawing on usage credits, Claude Code drops the TTL to five minutes automatically, according to the same page. On an API key and with the cloud providers, five minutes is the default anyway. And then this applies:
 
 > After a long enough gap, the next request recomputes the full input and re-establishes the cache, which is why the first turn back after stepping away can be noticeably slower.
 
-A self-chosen pause of twenty minutes sits far outside that window in this case. Every iteration then begins by reprocessing the entire context. The very pause meant to spare you becomes expensive, and markedly so. While the cache is warm, the large unchanged part of the context costs only a tenth of the normal input price. After a miss that part is written again, at [1.25 times](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#pricing). A tenth turns into more than twelve times, iteration after iteration. Anyone working through the API or Bedrock who wants long loops should therefore either set short fixed intervals or use the `ENABLE_PROMPT_CACHING_1H` environment variable that the same page names for this. Or you just do not care about the tokens you burn. Then YOLO! 😄
+A self-chosen pause of twenty minutes sits far outside that window in this case. Every iteration then begins by reprocessing the entire context. The very pause meant to spare you becomes expensive, and markedly so. While the cache is warm, the large unchanged part of the context costs only a tenth of the normal input price. After a miss that part is written again, at [1.25 times the normal price](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#pricing). Compared with the cheap cache read, that is more than twelve times as much, iteration after iteration. Anyone working through the API or Bedrock who wants long loops should therefore either set short fixed intervals or request the one-hour cache themselves, for instance via the `ENABLE_PROMPT_CACHING_1H` environment variable described in [Claude Code's cache docs](https://code.claude.com/docs/en/prompt-caching). The longer cache bills writes at a somewhat higher rate, but spares you the constant rebuild. Or you just do not care about the tokens you burn. Then YOLO! 😅
 
-## When a loop is not worth it
+## When a loop is worth it
 
-So far this has been about how loops work. The more important question comes before that: whether you need one at all. Four conditions follow from what is above. Miss one and the loop costs more than it brings in.
+So far this has been about how loops work. The more important question comes before that: whether you need one at all. A few conditions follow from what is above. Miss one and the loop costs more than it brings in.
 
-**Does the task repeat?** A loop pays for itself across many runs. `/loop` lives in the session and expires after seven days, `/goal` ends with its condition. For a one-off, a well-aimed prompt is faster and cheaper. If you do something once, you do not have a loop problem. You have a script.
+**Does the task need many attempts?** A loop pays for itself across many runs. `/loop` lives in the session and expires after seven days; `/goal` ends with its condition. For something that lands on the first attempt, a well-aimed prompt is faster and cheaper. If one run is all it takes, you do not have a loop problem.
 
-**Can anything but the agent say no?** This is the hardest of the four. The `/goal` evaluator calls no tools; it only sees what is in the conversation. Without a hard test, build or linter, the agent ends up grading its own work. Then the loop may keep running happily even when something has long been broken.
+**Can anything but the agent say no?** This is the hardest of them all. The `/goal` evaluator calls no tools; it only sees what is in the conversation. Without a hard test, build or linter, the only evidence left is what the agent itself reports about its work. Even the fresh `/goal` evaluator then grades nothing but that self-report. Then the loop may keep running happily even when something has long been broken.
 
 And one more thing belongs here: every iteration needs something new to work with. A fresh test result, a new error, your feedback. A bare "read it again and make it better" is not new information; the loop then polishes the same output forever, or, in the best case, simply ends. That is the most common beginner mistake: setting up a loop like "improve the text until it is good" and being surprised that nothing gets better. That a model judging only the finished answer talks itself into approval rather than getting better is what the paper ["More Convincing, Not More Correct"](https://arxiv.org/abs/2607.05904) measured.
 
@@ -152,11 +153,11 @@ And one more thing belongs here: every iteration needs something new to work wit
 
 **Can the agent try out what it builds?** Without logs, without a runnable environment, without the ability to execute its own code, the loop iterates blind. It then produces a lot of text quickly that nobody has checked.
 
-My take: loop engineering is worth it, and you should use it once the infrastructure is in place. Without proper test coverage and a CI that objectively says green or red, the loop has nothing to measure against. With that foundation, it pays off. For one-off tasks and anywhere "done" is a pure judgement call, a single well-aimed prompt is still the better choice. And if your bottleneck was review in the first place, a loop only makes the queue longer.
+My take: loop engineering is worth it, and you should use it once the infrastructure is in place. Without proper test coverage and a CI that objectively says green or red, the loop has nothing to measure against. With that foundation, it pays off. For one-off tasks and anywhere "done" is a pure judgement call, a single well-aimed prompt is still the better choice. And if your bottleneck is review in the first place, a loop only makes the queue longer.
 
 ## The overnight run
 
-So much for when a loop is not worth it. There is one case, though, where I love it. Some tasks are simply hard. They need many attempts, again and again against CI, until everything is finally green. That is exactly what I let the agent grind through, all night if that is what it takes.
+So much for the conditions. And there is one case where I especially love the loop. Some tasks are simply hard. They need many attempts, again and again against CI, until everything is finally green. That is exactly what I let the agent grind through, all night if that is what it takes.
 
 The stop condition is brutal then:
 
@@ -168,17 +169,17 @@ No questions. I am AFK now. You have all night.
 
 Whether that last line about the night is really needed, I do not know. But Opus usually wishes me a good night in return and promises everything will be green in the morning. And most of the time it is.
 
-This case hits exactly the conditions that make a loop pay off: CI can say no, the agent can run its own code, and on a subscription the many overnight iterations cost nothing extra. No wonder the loop shines here.
+This case hits exactly the conditions that make a loop pay off: CI can say no, the agent can run its own code, and on a subscription the many overnight iterations cost nothing extra, as long as you stay within your allowance. No wonder the loop shines here.
 
 ## A look from the inside
 
-Nearly everything up to here was in the public documentation. The rest of this section is not. It comes from my own measurements and from the instructions the model receives at runtime, which I read straight out of the program. Anthropic changes texts like these without notice, so a later version may well say something different.
+Everything up to here was in the public documentation. Now we go one level deeper, to the instructions the model receives at runtime, which I read straight out of the program, supplemented by my own measurements. Anthropic changes texts like these without notice, so a later version may well say something different.
 
 **With `/loop` the instruction gives the model a tool.** Without a fixed interval, the skill tells the model to pace itself:
 
 > The user wants you to self-pace. Decide what makes the next iteration worth running — a passage of time, or an observable event.
 
-For that it gets the `ScheduleWakeup` tool: it does the work and schedules its own next wakeup with it. On the range, its description says plainly:
+For that the model gets the `ScheduleWakeup` tool: it does the work and then uses the tool to schedule its own next wakeup. On the range, its description says plainly:
 
 > Clamped to [60, 3600] by the runtime.
 
@@ -186,9 +187,9 @@ The interesting question is what the model picks within that range. It is given 
 
 > A CI run that takes ~8 minutes deserves one ~480s check, not eight 60s ones.
 
-That is exactly what I see. While a CI run is going, the agent waits roughly as long as my CI usually takes. What is notable is that this sentence sits in the program in three versions. Which one the model gets depends on how long its prompt cache holds. With a five-minute lifetime the same text advises twice about 270 seconds instead of eight times 60, because every longer pause would break the cache. So the instruction factors the cache in, exactly the cost that the section "What the pause costs" puts a number on.
+That is exactly what I see. While a CI run is going, the agent waits roughly as long as my CI usually takes. What is notable is that this sentence sits in the program in several versions. Which one the model gets depends on how long its prompt cache holds. With a five-minute lifetime the same text advises twice about 270 seconds instead of eight times 60, because every longer pause would break the cache. So the instruction factors the cache in, exactly the cost that the section "What the pause costs" puts a number on.
 
-For the other two cases: when something else triggers the wakeup anyway, a long fallback heartbeat from 1200 seconds is intended. And when there is nothing specific to watch, the guidance is 1200 to 1800 seconds. Polling for its own sake is explicitly ruled out:
+For the other two cases: when something else triggers the wakeup anyway, a long fallback heartbeat of 1200 seconds or more is intended. And when there is nothing specific to watch, the guidance is 1200 to 1800 seconds. Polling for its own sake is explicitly ruled out:
 
 > Do NOT schedule a short-interval wakeup to poll for background work you started, when harness-tracked work finishes, you are re-invoked automatically, so polling is wasted.
 
@@ -201,7 +202,7 @@ Next wakeup scheduled for 22:41:00 (in 119s)
 (clamped to 60s from your requested value)
 ```
 
-Two things happen here in sequence. First the request is raised to sixty seconds, which is the hard floor. Then the appointment slides to the next full minute, because cron only knows minute granularity. Thirty requested seconds became **119 seconds of actual waiting**. Worth knowing if you plan very short cadences.
+Two things happen here in sequence. First the request is raised to sixty seconds, which is the hard floor. Then the wakeup slides to the next full minute, because cron only knows minute granularity. Thirty requested seconds became **119 seconds of actual waiting**. Worth knowing if you plan very short cadences.
 
 The model can also end the loop itself, with the same tool and a call of `stop: true`. That is exactly what I triggered in the test once the question was answered. The response: `Loop stopped, cancelled 1 pending wakeup(s)`. There is a trap in it: that ends only the self-paced loop. One on a fixed interval keeps running and has to be ended via `CronDelete`.
 
@@ -211,28 +212,27 @@ The model can also end the loop itself, with the same tool and a call of `stop: 
 
 That is the entire mechanism, in three parts. The condition becomes the work instruction. The model is explicitly told not to ask in between. And a hook will not let it stop while the condition does not hold.
 
-Around it sit a few values that confirm or extend the docs. The constant for the maximum length of the condition is 4000 characters. The status entry is called `goal_status` and comes in several shapes: on setting only with `met` and `condition`, on completion additionally with `reason`, `iterations`, `durationMs` and `tokens`, plus a `failed` field. And there are two error messages missing from the documentation: `/goal` only runs in trusted workspaces, and it refuses to work when hooks are restricted via `disableAllHooks` or `allowManagedHooksOnly`.
+Around it sit a few values that confirm or extend the docs. The constant for the maximum length of the condition is 4000 characters. The status entry is called `goal_status` and comes in several shapes: on setting only with `met` and `condition`, on completion additionally with `reason`, `iterations`, `durationMs` and `tokens`, plus a `failed` field. And the docs name two requirements explicitly: `/goal` only runs in trusted workspaces, and it refuses to work when hooks are restricted via `disableAllHooks` or `allowManagedHooksOnly`. In both cases the command tells you why.
 
-Two limits belong with it. A goal can end without being reached: if the checking model considers the condition impossible, the entry is marked as failed and the loop ends. And there is a hard ceiling. According to the changelog, the turn ends with a warning after the stop hook has blocked eight times in a row, adjustable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+Two limits come with it. A goal can end without being reached: if the checking model considers the condition impossible, the entry is marked as failed and the loop ends. And there is a hard ceiling. According to the changelog, the turn ends with a warning after the stop hook has blocked eight times in a row, adjustable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
-**What applies to both.** Self-pacing hangs on a switch delivered from the server, named `tengu_kairos_loop_dynamic`. The program holds a fallback value for it, but that only applies when the configuration cannot be reached at all. Normally the server decides. The switch controls more than you would think: with it off, `ScheduleWakeup` simply does nothing, and even the help text changes. Only with the switch set does the description of `/loop` carry the sentence "Omit the interval to let the model self-pace."; without it a default of ten minutes is named there.
+**What applies to both.** Self-pacing depends on a switch delivered from the server, named `tengu_kairos_loop_dynamic`. The program holds a fallback value for it, but that only applies when the configuration cannot be reached at all. Normally the server decides. The switch controls more than you would think: with it off, `ScheduleWakeup` simply does nothing, and even the help text changes. Only with the switch set does the description of `/loop` carry the sentence "Omit the interval to let the model self-pace." Without the switch, a default of ten minutes is named there.
 
 Structurally the two are different things anyway, and that explains why `/loop` can swallow other slash commands as an argument. `/goal` is a command: a slash command with fixed program logic behind it, here setting the Stop hook. `/loop` is a skill: a bundle of instructions in text form that the model loads and follows itself, registered under the name `loop` with `proactive` as an alias.
 
-For availability, the selected model plays no part in either. `/loop` hangs on an environment variable and a feature switch, `/goal` on interactivity, on the trust status of the working directory and on the hook settings. Whether Opus or Sonnet is running changes nothing there, and the attributes the server uses to target its switches contain no model field at all.
+For availability, the selected model plays no part in either. `/loop` depends on an environment variable and a feature switch, `/goal` on interactivity, on the trust status of the working directory and on the hook settings. Whether Opus or Sonnet is running changes nothing there, and the attributes the server uses to target its switches contain no model field at all.
 
 Model-dependent switches do exist in the program, just elsewhere. Web search, for instance, checks on Google Vertex which model is running and disables itself for older ones. In `/loop` itself I found exactly one place where the model comes into play, and it concerns behaviour. For certain models a turn ends immediately when its only tool call was scheduling the next iteration.
 
 ## Build your own stop hook
 
-You can set up this third way yourself. It is the persistent variant: `/loop` and `/goal` live in one session, a stop hook lives in your `settings.json` and exists in every session. That pays off when the same rule should hold everywhere, without you typing it in each time.
+You can set up this third way yourself. It is the persistent variant: `/loop` and `/goal` live in one session; a stop hook lives in your `settings.json` and exists in every session. That pays off when the same rule should hold everywhere, without you typing it in each time.
 
 The hook fires on the **Stop event**, when the model finishes a turn. It may wave the stop through or block it. If it blocks, the model keeps working, with the reason you passed in as its next task. There are two kinds: a **command hook** is a script whose exit code decides: `2` blocks and `0` allows the stop. A **prompt hook** passes a condition to a model that judges from the course of the conversation, exactly like `/goal`.
 
-Here is how a command hook blocks the stop while the tests are red:
+Here is how a command hook blocks the stop while the tests are red. The entry goes into your `settings.json`:
 
 ```json
-// settings.json
 {
   "hooks": {
     "Stop": [
@@ -246,24 +246,28 @@ Here is how a command hook blocks the stop while the tests are red:
 #!/bin/bash
 # test-gate.sh reads the hook JSON from stdin
 input=$(cat)
-# without this line the hook blocks forever
-[ "$(jq -r '.stop_hook_active' <<< "$input")" = "true" ] && exit 0
-npm test --silent || { echo "Tests are red, keep going." >&2; exit 2; }
-exit 0
+# without this guard the hook blocks every stop attempt
+printf '%s' "$input" | grep -Eq '"stop_hook_active"[[:space:]]*:[[:space:]]*true' && exit 0
+if out=$(npm test 2>&1); then
+  exit 0
+fi
+# return the last lines: fresh input for the next iteration
+printf 'Tests are red, keep going:\n%s\n' "$(printf '%s' "$out" | tail -n 20)" >&2
+exit 2
 ```
 
-The line with `stop_hook_active` is not optional. Without it the hook blocks every stop attempt, and the session spins until the tokens run out. As a safety net underneath, Claude Code ends the turn after eight blocks in a row with a warning, raisable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+Three things come with this. The script has to be executable (`chmod +x .claude/hooks/test-gate.sh`), otherwise the call fails silently and the turn ends even with red tests. The guard with `stop_hook_active` is not optional: without it the hook blocks every stop attempt until the safety net kicks in and Claude Code ends the turn after eight blocks in a row with a warning, raisable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`. And the script does not distinguish red tests from a broken environment: if `npm test` already fails for missing packages, that counts as red too.
 
 Build your own hook when you want the check in **every** session, or when a script should decide objectively instead of a model. The price is a bit more setup, and a persistent hook can surprise you when you forget it is there. The details are in the [hooks documentation](https://code.claude.com/docs/en/hooks).
 
 ## Who else runs loops
 
-That leaves the question of whether this is a quirk of Claude Code. Here is an overview of the common tools, each checked against its own docs (as of 27 July 2026):
+That leaves the question of whether this is a quirk of Claude Code. Here is an overview of the common tools, each checked against its own docs (as of 3 September 2026):
 
 | Tool | In-session command | What it has instead |
 | --- | --- | --- |
 | [Claude Code](https://code.claude.com/docs/en/scheduled-tasks) | **`/loop`** | plus `/goal`, Monitor, cloud routines, desktop tasks |
-| [OpenAI Codex](https://developers.openai.com/codex/automations) | none | scheduled tasks in the app, including inside a chat |
+| [OpenAI Codex](https://learn.chatgpt.com/docs/automations) | none | a `/goal` counterpart in the CLI, scheduled tasks in the app |
 | [Cursor](https://cursor.com/docs/cloud-agent/automations) | `/automate` | automations as cloud agents, by schedule or event |
 | [Amp](https://ampcode.com/news/schedule) | none | agents schedule themselves and wake themselves up |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/cli-reference.md) | none | nothing comparable documented |
@@ -272,15 +276,15 @@ That leaves the question of whether this is a quirk of Claude Code. Here is an o
 
 Three observations on that.
 
-**Codex can do it, but elsewhere.** In the CLI, the [documentation](https://learn.chatgpt.com/docs/codex/cli) lists only `/init`, `/status`, `/permissions`, `/model` and `/review`. The scheduling sits in the app. There, however, is something that comes very close to a loop, namely scheduled tasks inside an existing chat. OpenAI describes them with a notable choice of words: "Scheduled tasks in a chat can use minute-based intervals for active follow-up loops." So the word "loop" is there too.
+**Codex can do it, but elsewhere.** The CLI's [command reference](https://learn.chatgpt.com/docs/developer-commands) now lists dozens of slash commands, even including a counterpart to `/goal` ("Set, edit, pause, resume, view, or clear a task goal."). A loop is not among them. The scheduling sits in the app. There is, however, something there that comes very close to a loop, namely scheduled tasks inside an existing chat. OpenAI describes them with a notable choice of words: "Scheduled tasks in a chat can use minute-based intervals for active follow-up loops." So the word "loop" is there too.
 
-**A request has been sitting in the Codex repository since the end of May.** [Issue #25466](https://github.com/openai/codex/issues/25466) asks for exactly this feature for the CLI and describes it down to the tool names used in Claude Code, including `CronCreate` and `ScheduleWakeup`. The author has already built it on a fork. Opened on 31 May 2026 and still open at the end of July 2026, without a single comment.
+**A request has been sitting in the Codex repository since the end of May.** [Issue #25466](https://github.com/openai/codex/issues/25466) asks for exactly this feature for the CLI and describes it down to the tool names used in Claude Code, including `CronCreate` and `ScheduleWakeup`. The author has already built it on a fork. Opened on 31 May 2026 and still open at the beginning of September 2026, without a single comment.
 
-**Amp solves it without a command.** No slash command needed there, you simply say it. The [announcement of 21 July 2026](https://ampcode.com/news/schedule) puts it like this:
+**Amp solves it without a command.** No slash command needed there; you simply say it. The [announcement of 21 July 2026](https://ampcode.com/news/schedule) puts it like this:
 
 > Agents in Amp can now set their own schedules and wake themselves up. When a schedule fires, the agent wakes up with its saved prompt and continues right where it left off, with all of its context and history.
 
-Same idea, different interface. And it shows where this is heading: the capability is becoming a given, what differs is how you reach it.
+Same idea, different interface. And it shows where this is heading: the capability is becoming a given; what differs is how you reach it.
 
 ## Conclusion
 
@@ -290,10 +294,10 @@ Six things I take away:
 
 - **Infrastructure first, then the loop.** Without test coverage and CI that can say no, the loop has nothing to measure against. With that foundation in place, it is worth using.
 - **The completion condition is the real work.** The rest is an invocation with a time interval.
-- **`/loop` waits, `/goal` does not.** Waiting on something external like a green CI run, which also sets a good rhythm, take the loop. Working toward an end state, take the goal.
+- **`/loop` waits, `/goal` does not.** If you are waiting on something external like a green CI run, which also sets a good rhythm, take the loop. If you are working toward an end state, take the goal.
 - **If you want the evaluation to come from a fresh context, use `/goal`.** It brings in a model of its own, instead of letting the same one that just did the work decide.
 - **Pauses are free on a subscription and expensive through the API.** Depending on the plan and cache behaviour, the cost can be considerable.
-- **Breaking out on its own is judgement, not a promise.** Do not rely on the agent stopping by itself when it finds something.
+- **Breaking out on its own is pure judgement.** Do not rely on the agent stopping by itself when it finds something.
 
 And if you cannot decide between `/loop` and `/goal`, start with `/goal`. A checkable completion condition forces you to think the problem through beforehand anyway.
 
