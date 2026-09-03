@@ -51,13 +51,13 @@ This principle is not new. Build systems like `make` have been turning exactly t
 
 ## Where the term comes from
 
-To place the term, I go by LangChain, the company behind the widespread agent framework LangGraph. It [classifies "graph engineering" itself](https://www.langchain.com/blog/3-years-of-graph-engineering-with-langgraph): it is "the latest term to come out of X's AI content factory", in line with prompt engineering, context engineering and loop engineering. A fresh buzzword, then.
+To place the term, I go by LangChain, the company behind the widespread agent framework LangGraph. It [classifies "graph engineering" itself](https://www.langchain.com/blog/3-years-of-graph-engineering-with-langgraph): it is "the latest term to come out of X's AI content factory", joining prompt engineering, context engineering and loop engineering. A fresh buzzword, then.
 
 The word is new, the thing is not. The very idea of building an agent system as a graph is what LangChain turned into LangGraph three years ago, downloaded more than 65 million times a month today. The definition there is exactly ours: "nodes do work", "edges define what happens next", the whole thing as a state machine. So the buzzword stands for a proven practice.
 
 And the "engineering" in the name? That is the part that promises the most and delivers the least. The real engineering sits in the tools, in LangGraph, in Claude Code's runtime and the other harnesses. Using the tools requires no "engineering" skills. That is nonsense. Personally, I prefer the term: **orchestrating parallel agents**.
 
-One mix-up still needs clearing. "Graph" is doubly booked in the AI world. It also means knowledge graphs for retrieval, as in Microsoft's [GraphRAG](https://www.microsoft.com/en-us/research/blog/graphrag-unlocking-llm-discovery-on-narrative-private-data/), where entities and relations are extracted from text. That is a different construction site: GraphRAG structures knowledge, graph engineering steers workflows between agents.
+One mix-up still needs clearing. "Graph" is doubly booked in the AI world. It also means knowledge graphs for retrieval, as in Microsoft's [GraphRAG](https://www.microsoft.com/en-us/research/blog/graphrag-unlocking-llm-discovery-on-narrative-private-data/), where entities and relations are extracted from text. That is a different story: GraphRAG structures knowledge, graph engineering steers workflows between agents.
 
 That leaves the implementation. In Claude Code the tool for it is called Dynamic Workflows, and the word "graph" does not appear in the documentation a single time.
 
@@ -81,7 +81,7 @@ The `/workflows` slash command behind it is the control center. The command list
 
 ## Dynamic Workflows: Claude writes the script
 
-That leaves the question of where such a script comes from. You could write it by hand. It is meant to work the other way round, and that is exactly what "dynamic" means: you describe the task, and Claude writes the workflow for it. The documentation says it [in one sentence](https://code.claude.com/docs/en/workflows):
+Where does such a script come from? You could write it by hand. It is meant to work the other way round, and that is exactly what "dynamic" means: you describe the task, and Claude writes the workflow for it. The documentation says it [in one sentence](https://code.claude.com/docs/en/workflows):
 
 > A dynamic workflow is a JavaScript script that orchestrates many subagents at once. Claude writes the script for the task you describe, and a runtime executes it in the background while your session stays responsive.
 
@@ -96,11 +96,11 @@ If you save a good run, with the `s` key in `/workflows`, it becomes a fixed com
 
 It is available on all paid plans; on Pro you first switch on the _Dynamic workflows_ row in `/config`.
 
-You probably trigger something like this every day already, without using the term. Commands like `/code-review` and `/security-review` check from several independent angles, one for bugs, one for the git history, one for the conventions. For a review that is exactly right, because perspectives that must not influence each other are perfect to parallelize. Whether the angles run one after another in the same context or as parallel agents is decided by Claude Code depending on model and effort. At the top end it becomes a real workflow with the pattern from above: fan out the reviewers, have every finding cross-checked by its own agent, compile a ranked report. Fan out, verify, synthesize, a graph straight from the textbook.
+You probably trigger something like this every day already, without using the term. Commands like `/code-review` and `/security-review` check from several independent angles, one for bugs, one for the git history, one for the conventions. For a review, that is exactly right: perspectives that must not influence each other are perfect to parallelize. Whether the angles run one after another in the same context or as parallel agents is decided by Claude Code depending on model and effort. At the top end it becomes a real workflow with the pattern from above: fan out the reviewers, have every finding cross-checked by its own agent, compile a ranked report. Fan out, verify, synthesize, a graph straight from the textbook.
 
 > **💡 Tip:** How far `/code-review` fans out depends on model and effort. You pass the effort directly as the first argument, for instance `/code-review max`; without it, the last level you typed applies, and otherwise the session's effort. More effort means more review angles, and from `xhigh` on an extra round that hunts only for missed spots.
 
-How big the difference is, I saw for myself while writing this article. Because of course this very text went through the grinder, with a German prompt asking for an intensive review of all the repo's texts, covering spelling, grammar, style, truth and the English translation:
+I saw for myself how big the difference is while writing this article. Because of course this very text went through the grinder, with a German prompt asking for an intensive review of all the repo's texts, covering spelling, grammar, style, truth and the English translation:
 
 ```text
 /code-review max Mache einen intensiven Review aller Texte dieses Repos. Prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
@@ -122,7 +122,7 @@ The other direction matters just as much. A graph is **not** worth it when the s
 
 > **⚠️ The cost point people like to keep from you:** I have already read claims that a workflow costs practically nothing extra, because the intermediate results stay in the script. That is half the truth. The saving is in the coordination, not in the work. The docs are unambiguous here: a workflow uses *"meaningfully more tokens than working through the same task in conversation"*. The subagents cost. So: run it on a small slice first, one directory instead of the whole repo, watch the usage in `/workflows`, and only then go broader.
 
-The scale deserves a second look too. A workflow's default size is `medium`, meaning fewer than 15 agents; up to 16 run at the same time. The ceiling of 1000 agents per run exists solely to stop a loop that has run out of control. It is not a target. If you really need a thousand agents at once, you usually have a different problem.
+The scale deserves a second look too. A workflow's default size is `medium`, meaning fewer than 15 agents; up to 16 run at the same time. The ceiling of 1000 agents per run exists solely to stop a script that has run out of control. It is not a target. If you really need a thousand agents at once, you usually have a different problem.
 
 That a wide fan is not always the answer is something Anthropic says itself, in the post ["When to use multi-agent systems (and when not to)"](https://claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them). A tool does not get better by being used everywhere.
 

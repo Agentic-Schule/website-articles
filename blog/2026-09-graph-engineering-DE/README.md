@@ -39,7 +39,7 @@ Ein Graph beschreibt diese Struktur. Er hat nur zwei Bausteine:
 
 Der ganze Trick steckt in einer einzigen Frage. Für jedes „und dann" im Auftrag: Liest der nächste Schritt tatsächlich das Ergebnis des vorigen?
 
-> **💡 Die Faustregel:** Fließen Daten von A nach B, ist das eine echte Kante, die Reihenfolge bleibt. Fließen keine Daten, ist es keine Kante, und das Warten ist verschenkt. Dann könnten A und B nebeneinander laufen.
+> **💡 Merke:** Fließen Daten von A nach B, ist das eine echte Kante, die Reihenfolge bleibt. Fließen keine Daten, ist es keine Kante, und das Warten ist verschenkt. Dann könnten A und B nebeneinander laufen.
 
 Ein Beispiel für eine echte Kante: „Lies das Datenbankschema aus und generiere daraus die Typen." Der zweite Schritt braucht das Ergebnis des ersten. Die Reihenfolge bleibt.
 
@@ -65,7 +65,7 @@ Bleibt die Umsetzung. In Claude Code heißt das Werkzeug dafür Dynamic Workflow
 
 Ein Workflow ist in Claude Code ein JavaScript-Skript, das viele Subagenten auf einmal orchestriert. Fertige Workflows rufst du wie jeden anderen Befehl auf.
 
-Der entscheidende Unterschied zu allem anderen ist, **wer den Plan hält**. Bei einzelnen Subagenten, bei Skills, bei Agent-Teams ist Claude selbst der Dirigent: Es entscheidet Zug um Zug, was als Nächstes läuft, und jedes Zwischenergebnis landet im Kontextfenster. Beim Workflow hält das Skript den Plan. Die Schleifen, die Verzweigungen und vor allem die Zwischenergebnisse liegen in Skript-Variablen. Im Kontext bleibt am Ende nur die eine geprüfte Antwort.
+Der entscheidende Unterschied zu allem anderen ist, **wer den Plan hält**. Bei einzelnen Subagenten, bei Skills, bei Agent-Teams ist Claude selbst der Dirigent, entscheidet Zug um Zug, was als Nächstes läuft, und jedes Zwischenergebnis landet im Kontextfenster. Beim Workflow hält das Skript den Plan. Die Schleifen, die Verzweigungen und vor allem die Zwischenergebnisse liegen in Skript-Variablen. Im Kontext bleibt am Ende nur die eine geprüfte Antwort.
 
 Das ist der eigentliche Gewinn, und er ist größer als „mehr Agenten gleichzeitig". Weil die Orchestrierung Code ist, lässt sich ein wiederholbares Qualitätsmuster einbauen: unabhängige Agenten prüfen die Befunde der anderen gegen (engl. *adversarial review*), oder ein Plan wird aus mehreren Blickwinkeln entworfen und gegeneinander abgewogen. Ein Durchlauf, dem man eher trauen kann als einem einzelnen Schuss.
 
@@ -81,7 +81,7 @@ Das Slash-Command `/workflows` dahinter ist die Schaltzentrale. Der Befehl liste
 
 ## Dynamic Workflows: Claude schreibt das Skript
 
-Bleibt die Frage, woher so ein Skript kommt. Du könntest es von Hand schreiben. Gedacht ist es andersherum, und genau das meint „dynamic": Du beschreibst die Aufgabe, und Claude schreibt den Workflow dafür. Die Dokumentation sagt es [in einem Satz](https://code.claude.com/docs/en/workflows):
+Woher kommt so ein Skript? Du könntest es von Hand schreiben. Gedacht ist es andersherum, und genau das meint „dynamic": Du beschreibst die Aufgabe, und Claude schreibt den Workflow dafür. Die Dokumentation sagt es [in einem Satz](https://code.claude.com/docs/en/workflows):
 
 > A dynamic workflow is a JavaScript script that orchestrates many subagents at once. Claude writes the script for the task you describe, and a runtime executes it in the background while your session stays responsive.
 
@@ -116,13 +116,13 @@ Und weil das Skript eine ganz normale Datei unter `~/.claude/projects/` ist, kan
 
 ## Wann sich ein Graph lohnt, und wann nicht
 
-Ein Graph zahlt sich aus, wenn die Arbeit von Natur aus breit ist. Die Doku nennt genau die Fälle, in denen es sich lohnt: ein Bug-Sweep über die ganze Codebasis, eine Migration über hunderte Dateien, eine Recherche, deren Quellen gegeneinander geprüft werden müssen, oder ein schwieriger Plan, den man erst aus mehreren Richtungen entwerfen will. Viele unabhängige Teilaufgaben, ein zusammengeführtes Ergebnis.
+Ein Graph zahlt sich aus, wenn die Arbeit von Natur aus breit ist. Die Doku nennt genau die Fälle, in denen es sich lohnt: ein Bug-Sweep über die ganze Codebasis, eine Migration über Hunderte Dateien, eine Recherche, deren Quellen gegeneinander geprüft werden müssen, oder ein schwieriger Plan, den man erst aus mehreren Richtungen entwerfen will. Viele unabhängige Teilaufgaben, ein zusammengeführtes Ergebnis.
 
 Genauso wichtig ist die andere Richtung. Ein Graph lohnt sich **nicht**, wenn die Schritte echt voneinander abhängen. Wo jeder Schritt das Ergebnis des vorigen braucht, ist die Linie die richtige Form, und ein Graph darüber bringt nichts außer Aufwand. Und für eine kleine Aufgabe ist die ganze Maschinerie schlicht zu viel.
 
 > **⚠️ Der Kostenpunkt, den man dir gern verschweigt:** Ich habe schon gelesen, ein Workflow koste praktisch nichts extra, weil die Zwischenergebnisse ja im Skript bleiben. Das ist die halbe Wahrheit. Gespart wird an der Koordination, nicht an der Arbeit. Die Doku ist da unmissverständlich: ein Workflow verbraucht *„meaningfully more tokens than working through the same task in conversation"*. Die Subagenten kosten. Deshalb: erst auf einem kleinen Ausschnitt laufen lassen, ein Verzeichnis statt des ganzen Repos, den Verbrauch in `/workflows` beobachten, dann erst breiter gehen.
 
-Auch die Größenordnung lohnt einen zweiten Blick. Die Standardgröße eines Workflows ist `medium`, also unter 15 Agenten; gleichzeitig laufen bis zu 16. Die Obergrenze von 1000 Agenten pro Lauf existiert allein dafür, eine außer Kontrolle geratene Schleife zu stoppen. Ein Zielwert ist sie nicht. Wer wirklich tausend Agenten auf einmal braucht, hat meist ein anderes Problem.
+Auch die Größenordnung lohnt einen zweiten Blick. Die Standardgröße eines Workflows ist `medium`, also unter 15 Agenten; gleichzeitig laufen bis zu 16. Die Obergrenze von 1000 Agenten pro Lauf existiert allein dafür, ein außer Kontrolle geratenes Skript zu stoppen. Ein Zielwert ist sie nicht. Wer wirklich tausend Agenten auf einmal braucht, hat meist ein anderes Problem.
 
 Dass ein breiter Fächer nicht immer die Antwort ist, sagt Anthropic selbst, im Beitrag [„When to use multi-agent systems (and when not to)"](https://claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them). Ein Werkzeug wird nicht dadurch besser, dass man es überall einsetzt.
 
