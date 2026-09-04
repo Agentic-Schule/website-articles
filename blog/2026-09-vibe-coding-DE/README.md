@@ -17,9 +17,9 @@ language: de
 header: header.jpg
 ---
 
-Ich habe ein ganzes Produkt gevibecodet. Und trotzdem lese ich jeden Diff. Nach der Original-Definition geht das gar nicht zusammen.
+Vibe Coding ist entweder ein Schimpfwort oder ein Kompliment, je nachdem, wen du fragst. Ich habe ein ganzes Produkt so gebaut und finde: Es ist beides, nur nicht gleichzeitig.
 
-**Genau in diesem Widerspruch steckt die ganze Geschichte des Begriffs Vibe Coding: Was Andrej Karpathy als Wegwerf-Experiment fürs Wochenende beschrieb, ist heute das Etikett für so ziemlich alles, was mit KI-Agenten gebaut wird. Zeit, das Wort auseinanderzunehmen, auf die Faktenlage zu schauen und dann zu zeigen, mit welchen Techniken trotz KI am Steuer brauchbare Software entsteht.**
+**Genau in dieser Doppeldeutigkeit steckt die ganze Geschichte des Begriffs: Als Kompliment meint Vibe Coding die verblüffende Leichtigkeit, mit der heute Software entsteht. Als Schimpfwort meint es ungelesenen KI-Code in Produktion. Was Andrej Karpathy als Wegwerf-Experiment fürs Wochenende beschrieb, ist heute das Etikett für so ziemlich alles, was mit KI-Agenten gebaut wird. Zeit, das Wort auseinanderzunehmen, auf die Faktenlage zu schauen und dann zu zeigen, mit welchen Techniken trotz KI am Steuer brauchbare Software entsteht.**
 
 ## Inhalt
 
@@ -110,7 +110,7 @@ Meine Lieblingsregel im Repo ist übrigens die Rosa-Elefant-Regel 🐘: In allem
 
 ## Fazit
 
-Ist das noch Vibe Coding? Oder doch gutes Handwerk? Die Antwort des Artikels: Der Begriff aus dem Wörterbuch meint inzwischen beides, und genau deshalb taugt er wenig. Karpathys Original beschreibt ein legitimes Experiment für Dinge, die kaputtgehen dürfen. Sobald andere Menschen deine Software benutzen, gilt Willisons Trennlinie: Lesen, testen, erklären können. Dann ist es Software-Entwicklung, egal wer tippt.
+Ist das noch Vibe Coding? Oder doch gutes Handwerk? Nach allem, was wir gesehen haben: Das Wort ist Kompliment und Schimpfwort zugleich, nur nie im selben Projekt. Als Kompliment steht es für Karpathys befreiendes Experiment, für Dinge, die kaputtgehen dürfen. Zum Schimpfwort wird es, sobald andere Menschen deine Software benutzen und niemand gelesen hat, was die KI gebaut hat. Die Grenze dazwischen ist Willisons Trennlinie: Lesen, testen, erklären können. Dann ist es Software-Entwicklung, egal wer tippt.
 
 Die schönste Pointe liefert der Erfinder selbst: Als Karpathy im Oktober 2025 sein Projekt nanochat veröffentlichte, fragte jemand, wie viel davon die KI geschrieben habe. [Seine Antwort](https://x.com/karpathy/status/1977758204139331904): „it's basically entirely hand-written (with tab autocomplete). I tried to use claude/codex agents a few times but they just didn't work well enough at all and net unhelpful, possibly the repo is too far off the data distribution." Der Vater des Vibe Codings hat sein wichtigstes Projekt von Hand geschrieben. 😄 Und seine Begründung ist die vielleicht beste Faustregel zum Schluss: Je weiter dein Problem von der Masse des Trainingsmaterials entfernt ist, desto weniger trägt der Vibe, und desto mehr zählt das Handwerk.
 
