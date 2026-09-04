@@ -1,10 +1,15 @@
 {
-  "comment": "Alte Artikel-URLs auf die neuen Slugs umleiten. Entstanden beim Umdatieren der Serie auf den taeglichen September-Rhythmus (Start 15.09.2026). Schluessel: alter Slug, Wert: neuer Slug, jeweils ohne /blog/-Praefix und ohne Sprach-Suffix.",
+  "comment": "Umbenannte Artikel-Ordner. Entstanden beim Umdatieren der Serie auf den taeglichen September-Rhythmus (Start 15.09.2026). Schluessel: alter Ordnername, Wert: neuer Ordnername, jeweils mit Sprach-Suffix; das Entfernen des Suffix passiert eine Ebene hoeher.",
   "redirects": {
-    "2026-07-boeswillige-skills": "2026-09-boeswillige-skills",
-    "2026-07-agentic-coding-mac-mini": "2026-09-agentic-coding-mac-mini",
-    "2026-07-agentic-coding-git-worktrees": "2026-09-agentic-coding-git-worktrees",
-    "2026-07-loop-engineering": "2026-09-loop-engineering",
-    "2026-07-agent-recherche-playwright-mcp": "2026-09-agent-recherche-playwright-mcp"
+    "2026-07-boeswillige-skills-DE": "2026-09-boeswillige-skills-DE",
+    "2026-07-boeswillige-skills-EN": "2026-09-boeswillige-skills-EN",
+    "2026-07-agentic-coding-mac-mini-DE": "2026-09-agentic-coding-mac-mini-DE",
+    "2026-07-agentic-coding-mac-mini-EN": "2026-09-agentic-coding-mac-mini-EN",
+    "2026-07-agentic-coding-git-worktrees-DE": "2026-09-agentic-coding-git-worktrees-DE",
+    "2026-07-agentic-coding-git-worktrees-EN": "2026-09-agentic-coding-git-worktrees-EN",
+    "2026-07-loop-engineering-DE": "2026-09-loop-engineering-DE",
+    "2026-07-loop-engineering-EN": "2026-09-loop-engineering-EN",
+    "2026-07-agent-recherche-playwright-mcp-DE": "2026-09-agent-recherche-playwright-mcp-DE",
+    "2026-07-agent-recherche-playwright-mcp-EN": "2026-09-agent-recherche-playwright-mcp-EN"
   }
 }
