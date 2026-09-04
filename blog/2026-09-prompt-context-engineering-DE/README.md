@@ -21,7 +21,7 @@ Garbage in, garbage out: Kaum ein Satz der Informatik passt so gut auf Sprachmod
 
 **Dafür kursieren gleich zwei Hype-Begriffe: Prompt Engineering und Context Engineering. Doch hinter beiden steckt tatsächlich echtes Handwerk. Prompt Engineering: Formuliere die Anweisung klar, belege sie mit Beispielen und miss das Ergebnis. Context Engineering: Kuratiere alles, was das Modell zu sehen bekommt, denn das Kontextfenster ist eine endliche Ressource.**
 
-Das hier ist der Auftakt der kleinen Serie über die Engineering-Begriffe der Agenten-Welt. Danach geht es weiter mit der Schleife ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)) und dem Graphen ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Jeder Teil ist für sich lesbar.
+Das hier ist der Auftakt der Serie über die Engineering-Begriffe der Agenten-Welt. Danach geht es weiter mit der Schleife ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)) und dem Graphen ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Jeder Teil ist für sich lesbar.
 
 ## Inhalt
 
@@ -31,7 +31,7 @@ Das hier ist der Auftakt der kleinen Serie über die Engineering-Begriffe der Ag
 
 Prompt Engineering ist der ältere der beiden Begriffe und längst etabliert: Jeder große Anbieter pflegt eine eigene Anleitung dazu, [Anthropic](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) genauso wie [OpenAI](https://developers.openai.com/api/docs/guides/prompt-engineering) und [Google](https://ai.google.dev/gemini-api/docs/prompting-strategies). Wer es akademisch mag: Der Survey [„The Prompt Report"](https://arxiv.org/abs/2406.06608) katalogisiert allein für Text eine Taxonomie von 58 Prompting-Techniken.
 
-Der Begriff Context Engineering ist dagegen jung, und seine Herkunft lässt sich auf die Woche genau datieren. Am 19. Juni 2025 schreibt Shopify-Chef Tobi Lütke [auf X](https://x.com/tobi/status/1935533422589399127): „I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM." Sechs Tage später legt Andrej Karpathy [mit seinem „+1"](https://x.com/karpathy/status/1937902205765607626) nach und definiert: „context engineering is the delicate art and science of filling the context window with just the right information for the next step". Im September 2025 zieht Anthropic mit einem eigenen [Engineering-Beitrag](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) nach und erklärt den Begriff zur offiziellen Linie: „At Anthropic, we view context engineering as the natural progression of prompt engineering."
+Der Begriff Context Engineering ist dagegen jung, und seine Herkunft lässt sich auf die Woche genau datieren. Am 19. Juni 2025 schrieb Shopify-Chef Tobi Lütke [auf X](https://x.com/tobi/status/1935533422589399127): „I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM." Sechs Tage später legte Andrej Karpathy [mit seinem „+1"](https://x.com/karpathy/status/1937902205765607626) nach und definierte: „context engineering is the delicate art and science of filling the context window with just the right information for the next step". Im September 2025 zog Anthropic mit einem eigenen [Engineering-Beitrag](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) nach und erklärte den Begriff zur offiziellen Linie: „At Anthropic, we view context engineering as the natural progression of prompt engineering."
 
 Zur Einordnung: Das ist Anthropics Rahmung, kein Industriestandard. Es ist aber eine gute Definition, und an ihr arbeite ich mich in diesem Artikel entlang.
 
@@ -50,13 +50,29 @@ Obendrauf wächst mit jeder Runde der Verlauf: Claudes Antworten und Reasoning, 
 
 ## Prompt Engineering: schreiben, messen, verfeinern
 
-Die Anthropic-Doku beschreibt Prompt Engineering als empirische, iterative Disziplin. Bevor du überhaupt am Prompt feilst, brauchst du laut [Overview-Seite](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) drei Dinge: klare Erfolgskriterien, eine Möglichkeit, empirisch dagegen zu testen, und einen ersten Entwurf. Dann läuft der Zyklus: Testfälle schreiben, Prompt bauen, gegen die Tests verfeinern, validieren, ausliefern. Die Doku nennt diesen Kreislauf wörtlich „central to prompt engineering". Mit Tests sind dabei keine Unit-Tests gemeint, sondern sogenannte *Evals* ([Evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)): Testfragen, die messen, wie gut der Prompt die vorher definierten Erfolgskriterien erfüllt. Bewertet wird laut Doku per Code (etwa der exakte Vergleich mit einer Musterlösung), durch Menschen oder durch ein LLM als Gutachter.
+Die Anthropic-Doku beschreibt Prompt Engineering als empirische, iterative Disziplin. Bevor du überhaupt am Prompt feilst, brauchst du [aus Sicht von Anthropic](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) drei Dinge:
 
-Diesen Zyklus fährst du vermutlich längst, ohne ihn so zu nennen: Du liest den erzeugten Code. Gefällt er dir, bleiben die Regeln in der `CLAUDE.md`, gefällt er dir nicht, schärfst du nach. Das ist ein Eval mit dir als einzigem Gutachter und einer Rubrik, die nur in deinem Kopf existiert. Die Doku stuft genau dieses Vorgehen allerdings als die schwächste Variante ein, beim Human grading steht wörtlich: „Most flexible and high quality, but slow and expensive. Avoid if possible." Dazu kommt: Du beurteilst nur den einen Fall vor deinen Augen. Ob die Änderung an der `CLAUDE.md` die übrigen Fälle verbessert oder verschlechtert hat, siehst du nicht.
+1. klare Erfolgskriterien
+2. eine Möglichkeit, empirisch dagegen zu testen
+3. einen ersten Entwurf
+
+Dann läuft der Zyklus: Testfälle schreiben, Prompt bauen, gegen die Tests verfeinern, validieren, ausliefern. Die Doku nennt diesen Kreislauf wörtlich „central to prompt engineering". Mit Tests sind dabei keine Unit-Tests gemeint, sondern sogenannte *Evals* ([Evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)): Testfragen, die messen, wie gut der Prompt die vorher definierten Erfolgskriterien erfüllt. Bewertet wird laut Doku per Code (etwa der exakte Vergleich mit einer Musterlösung), durch Menschen oder durch ein LLM als Gutachter.
+
+Diesen Zyklus fährst du vermutlich längst, ohne ihn so zu nennen: Du liest den erzeugten Code. Gefällt er dir, bleiben die Regeln in der `CLAUDE.md`, gefällt er dir nicht, schärfst du nach. Das ist ein Eval mit dir als einzigem Gutachter und einer Rubrik, die nur in deinem Kopf existiert. Die Doku stuft genau dieses Vorgehen allerdings als die schwächste Variante ein, beim Human grading steht wörtlich: „Most flexible and high quality, but slow and expensive. Avoid if possible." Dazu kommt: Du beurteilst nur den einen Fall vor deinen Augen. Ob die Änderung an der `CLAUDE.md` die übrigen Fälle verbessern oder verschlechtern würde, siehst du nicht. Schließlich konzentrierst du dich gerade auf eine ganz konkrete Fachanforderung, für die du eine Lösung brauchst. Bestehender Code wird dann wahrscheinlich gar nicht nachgezogen. Ohne eine quantitative Auswertung kannst du gar nicht wissen, ob der aktuelle Custom Prompt die Sache im Allgemeinen verbessert, gar keinen Effekt hat oder sogar verschlechtert.
 
 Gute Prompts entstehen also durch Messen, und zwar an vielen Fällen statt an einem. Beim Testdesign empfiehlt Anthropic ausdrücklich Masse mit automatischer Bewertung: „More questions with slightly lower signal automated grading is better than fewer questions with high-quality human hand-graded evals."
 
-> **💡 Praxis-Tipp:** Du brauchst dafür kein Framework. Das offizielle [Evals-Cookbook](https://platform.claude.com/cookbook/misc-building-evals) zerlegt einen Eval in vier Teile: Eingabe, Modell-Antwort, Musterlösung („golden answer") und Bewertung, und zeigt lauffähigen Beispiel-Code für alle drei Bewertungsarten. Für den Hausgebrauch reicht eine Datei mit Beispiel-Aufgaben und ein Skript, das sie nach jeder Prompt-Änderung durchs Modell schickt und die Antworten vergleicht. Das funktioniert auch für deine `CLAUDE.md`: Sammle die Aufgaben, bei denen der Agent danebenlag, und lass sie nach jeder Regeländerung erneut laufen. Eine Nummer größer ist der [Web Codegen Scorer](https://github.com/angular/web-codegen-scorer) vom Angular-Team: ein fertiges Eval-Werkzeug für generierten Web-Code, mit dem du verschiedene Anweisungen und Modelle gegeneinander antreten lässt, samt eingebauter Checks für Build-Erfolg, Laufzeitfehler, Accessibility und Security. Als Runner unterstützt es neben direkten API-Aufrufen auch `claude-code`, `gemini-cli` und `codex`.
+> **💡 Praxis-Tipp:** Du brauchst dafür kein Framework. Das offizielle [Evals-Cookbook](https://platform.claude.com/cookbook/misc-building-evals) zerlegt einen Eval in vier Teile: Eingabe, Modell-Antwort, Musterlösung („golden answer") und Bewertung, und zeigt lauffähigen Beispiel-Code für alle drei Bewertungsarten. Für den Hausgebrauch reicht eine Datei mit Beispiel-Aufgaben und ein Skript, das sie nach jeder Prompt-Änderung durchs Modell schickt und die Antworten vergleicht. Das funktioniert auch für deine `CLAUDE.md`: Sammle die Aufgaben, bei denen der Agent danebenlag, und lass sie nach jeder Regeländerung erneut laufen.
+
+Und die Prompt-Engineering-Doku zieht selbst die Grenze: „Not every success criteria or failing eval is best solved by prompt engineering." Latenz und Kosten verbesserst du oft leichter über die Modellwahl als über den Prompt. Wenn eine Doku die Grenzen der eigenen Methode so offen benennt, spricht das für sie.
+
+### Eine Nummer größer: Web Codegen Scorer
+
+Das Angular-Team hat ein fertiges Eval-Werkzeug für generierten Web-Code gebaut: den [Web Codegen Scorer](https://github.com/angular/web-codegen-scorer). Der erklärte Zweck laut README sind „evidence-based decisions relating to AI-generated code". Du konfigurierst eine Umgebung mit deinen Anweisungen (auf Wunsch samt MCP-Servern) und lässt verschiedene Modelle und Frameworks gegeneinander antreten. Eingebaute Checks prüfen Build-Erfolg, Laufzeitfehler, Accessibility, Security und Coding Best Practices; das LLM-Rating übernimmt ein separates Autorater-Modell, und bei Build-Fehlern versucht das Werkzeug automatische Reparaturen. Die Ergebnisse landen in einem Report-Viewer, der die Läufe vergleichbar macht. Als Runner unterstützt es neben direkten API-Aufrufen auch `claude-code`, `gemini-cli` und `codex`, und mit `web-codegen-scorer eval --env=angular-example` startet der erste Lauf gegen das mitgelieferte Angular-Beispiel.
+
+Lohnt sich der Einsatz? Wenn du nur einen Prompt für ein einzelnes Repo baust, ist das ganz bestimmt überdimensioniert. Spannend wird es, wenn du etwa die Prompts im Unternehmen über mehrere Projekte vereinheitlichen und harmonisieren willst. Denn dann gibt es garantiert unterschiedliche Auffassungen darüber, was „gut" ist und was besser funktioniert. In dieser Situation zählt genau eines: harte Fakten. Nimm die verschiedenen Prompts, lass sie gegeneinander antreten und belege, was tatsächlich die besseren Ergebnisse liefert.
+
+Meine Vermutung übrigens: Das Angular-Team hat seine [offiziellen Skills](https://github.com/angular/skills) (mehr dazu im [Skills-Artikel](https://agentic.schule/blog/2026-07-boeswillige-skills)) ganz bestimmt mehrfach durch genau dieses Werkzeug gejagt, um ein optimales Ergebnis zu bekommen.
 
 <p style="display:flex;gap:2%;justify-content:center;margin:1.5em 0;">
   <img src="wcs-report-angular.png" alt="Web-Codegen-Scorer-Report für Angular: Gesamt-Score 97, darunter Balken für Build, Runtime, Security und Accessibility" style="width:49%;height:auto;align-self:flex-start;">
@@ -65,15 +81,17 @@ Gute Prompts entstehen also durch Messen, und zwar an vielen Fällen statt an ei
 
 *So sehen Eval-Ergebnisse aus: zwei Läufe im Report-Viewer des Web Codegen Scorers, links Angular, rechts Solid.js. (Screenshots aus dem Projekt, MIT-lizenziert.)*
 
-Und die Prompt-Engineering-Doku zieht selbst die Grenze: „Not every success criteria or failing eval is best solved by prompt engineering." Latenz und Kosten verbesserst du oft leichter über die Modellwahl als über den Prompt. Wenn eine Doku die Grenzen der eigenen Methode so offen benennt, spricht das für sie.
-
 ## Die Techniken, die tragen
 
-Anthropic pflegt alle Techniken auf einer einzigen Seite, den [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), von der Doku selbst „the living reference" genannt. Der Kern in vier Regeln:
+Anthropic pflegt alle Techniken auf einer einzigen Seite: den [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices). Die Overview-Seite schickt dich mit einem klaren Auftrag dorthin:
+
+> „All prompting techniques (from clarity and examples to XML structuring, role prompting, thinking, and prompt chaining) are covered in Prompting best practices. That's the living reference; start there."
+
+Der Kern in vier Regeln:
 
 - **Sei explizit.** Gewünschtes Verhalten ausdrücklich anfordern, statt es das Modell aus vagen Formulierungen raten zu lassen: „If you want "above and beyond" behavior, explicitly request it".
 - **Liefere das Warum mit.** Eine Anweisung mit Begründung trifft besser, denn „Claude is smart enough to generalize from the explanation".
-- **Zeige Beispiele.** Wenige gut gewählte Beispiele (*Few-Shot-Prompting*) sind laut Doku eine der zuverlässigsten Methoden, Format, Ton und Struktur zu steuern. Der Tipp dort: drei bis fünf Stück, relevant und divers, eingepackt in `<example>`-Tags.
+- **Zeige Beispiele.** Gib dem Modell ein paar vollständige Beispiele direkt im Prompt mit, jeweils Eingabe samt gewünschter Antwort, damit es das Muster nachahmt. Der Fachbegriff dafür ist *Few-Shot-Prompting* („shot" steht für ein Beispiel; *zero-shot* heißt: gar keins). Laut Doku ist das eine der zuverlässigsten Methoden, Format, Ton und Struktur zu steuern. Der Tipp dort: drei bis fünf Stück, relevant und divers, eingepackt in `<example>`-Tags.
 - **Strukturiere mit XML-Tags.** `<instructions>`, `<context>`, `<input>`: Wenn ein Prompt Anweisungen, Kontext, Beispiele und variable Eingaben mischt, verhindern Tags, dass das Modell sie durcheinanderwirft.
 
 Und was ist mit Verboten? Die offizielle Linie: „Tell Claude what to do instead of what not to do". Statt „Do not use markdown in your response" empfiehlt die Doku die positive Fassung „Your response should be composed of smoothly flowing prose paragraphs." Auffällig dabei: Anthropic hält sich selbst nicht dogmatisch daran, die Beispiel-Prompts derselben Seite sind voll mit „DO NOT", „NEVER" und „Avoid". Das Muster in diesen Beispielen: Das Verbot steht fast nie allein, direkt daneben steht die erwünschte Alternative oder eine Ausnahmebedingung. Negativbeispiele fürs Few-Shot-Prompting empfiehlt die Doku dagegen nirgends; die Kriterien für Beispiele sind relevant, divers und strukturiert.
@@ -84,7 +102,7 @@ Dazu kommt die Anordnung bei langen Eingaben: Die Dokumente gehören an den Anfa
 
 Warum reicht der gute Prompt nicht mehr? Weil ein Agent nicht nur einen Prompt sieht. In seinem Kontextfenster stapeln sich System Prompt, Werkzeug-Beschreibungen, Dateiinhalte, Suchergebnisse und der gesamte bisherige Verlauf. Anthropic definiert Context Engineering deshalb als „the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference".
 
-Der Gegenspieler hat auch einen Namen: *Context Rot*. „as the number of tokens in the context window increases, the model’s ability to accurately recall information from that context decreases", so der Beitrag. Mehr Kontext ist also nicht automatisch besser, ab einem Punkt wird er schlechter.
+Der Gegenspieler hat auch einen Namen: *Context Rot*. „as the number of tokens in the context window increases, the model’s ability to accurately recall information from that context decreases", so der Beitrag. Mehr Kontext ist also nicht automatisch besser, ab einem unbekannten Punkt kippt die Situation. Was ja auch ganz logisch ist: Hast du eine relevante Information und zwei irrelevante, dann wird jedes starke Modell die relevante mit an Sicherheit grenzender Wahrscheinlichkeit nutzen. Hast du aber eine relevante Information und tausende irrelevante, ist längst nicht mehr sicher, dass sie den Weg in die Antwort findet. LLMs sind vor allem Stochastik, und wir sollten es möglichst unwahrscheinlich machen, dass das Modell danebenliegt.
 
 Daraus folgt das Leitprinzip, und es ist herrlich unbequem: „finding the smallest possible set of high-signal tokens that maximize the likelihood of some desired outcome". Drei Konsequenzen aus dem Beitrag:
 
@@ -98,17 +116,23 @@ Nebenbei ist das Thema inzwischen im Modell selbst angekommen: Claude Sonnet 5, 
 
 Kuratieren heißt übrigens nicht, dass du dem Modell alles vorkauen musst. Ein Agent holt sich seinen Kontext zur Laufzeit selbst: Er navigiert durch Dateien, folgt Verweisen und lädt nur, was er gerade braucht. Anthropic nennt das die „just in time"-Strategie. Der Agent hält leichte Verweise wie Dateipfade, gespeicherte Abfragen und Weblinks und lädt die Inhalte erst bei Bedarf über seine Werkzeuge nach. Jede Erkundung liefert dabei Hinweise für die nächste, *progressive disclosure* genannt: Der Agent baut sein Verständnis Schicht für Schicht auf, statt in einem vollgestopften Fenster zu ertrinken.
 
-Damit verschiebt sich deine Aufgabe: Du stellst gute Ressourcen bereit und machst sie auffindbar. Eine gepflegte README, Wiki-Inhalte, Beispiel-Komponenten, ein Ordner mit Referenz-Implementierungen: All das ist Kontext, den sich der Agent im richtigen Moment selbst zieht. Sogar die Metadaten arbeiten mit. Anthropics Beispiel: Eine Datei `test_utils.py` im `tests`-Ordner hat erkennbar einen anderen Zweck als dieselbe Datei unter `src/core_logic/`, denn „Folder hierarchies, naming conventions, and timestamps all provide important signals". Ein aufgeräumtes Repository mit sprechenden Namen ist also selbst schon Context Engineering.
+Damit verschiebt sich deine Aufgabe: Du stellst gute Ressourcen bereit und machst sie auffindbar. Eine gepflegte README, Wiki-Inhalte, Beispiel-Komponenten, ein Ordner mit Referenz-Implementierungen: All das ist Kontext, den sich der Agent im richtigen Moment selbst zieht. Sogar die Metadaten arbeiten mit. Anthropics Beispiel: Eine Datei `test_utils.py` im `tests`-Ordner hat erkennbar einen anderen Zweck als dieselbe Datei unter `src/core_logic/`, denn „Folder hierarchies, naming conventions, and timestamps all provide important signals". Ein aufgeräumtes Repository mit sprechenden Namen ist also selbst schon Context Engineering. Daher würde ich sogar sagen:
 
-Der Beitrag benennt auch den Preis: Erkundung zur Laufzeit ist langsamer, und ohne die richtigen Werkzeuge und Heuristiken verschwendet ein Agent Kontext in Sackgassen. Der Beitrag beschreibt deshalb eine Hybrid-Strategie, und Claude Code ist das Anschauungsbeispiel: Die `CLAUDE.md`-Dateien landen vorab komplett im Kontext, alles andere holt sich der Agent mit `glob` und `grep` just in time.
+> **Clean Code is not dead. It's context engineering now.**
+>
+> — Johannes Hoppe
+
+Bitte dieses Zitat fleißig weiterverbreiten. Hab ich mir selbst ausgedacht! 😄
+
+Der Context-Engineering-Beitrag von Anthropic benennt auch den Preis: Erkundung zur Laufzeit ist langsamer, und ohne die richtigen Werkzeuge und Heuristiken verschwendet ein Agent Kontext in Sackgassen. Der Beitrag beschreibt deshalb eine Hybrid-Strategie, und Claude Code ist das Anschauungsbeispiel: Die `CLAUDE.md`-Dateien landen vorab komplett im Kontext, alles andere holt sich der Agent mit `glob` und `grep` just in time.
 
 ## Für lange Strecken: drei Techniken
 
 Für Agenten, die über Stunden arbeiten, reicht auch das beste Kuratieren irgendwann nicht mehr, das Fenster läuft trotzdem voll. Der Anthropic-Beitrag nennt für diesen Fall genau drei Techniken: „compaction, structured note-taking, and multi-agent architectures".
 
-**Compaction:** Läuft das Fenster voll, wird der Verlauf zusammengefasst und ein frisches Fenster mit der Zusammenfassung gestartet. Claude Code macht genau das, es bewahrt dabei laut Beitrag Architektur-Entscheidungen, offene Bugs und Implementierungsdetails und verwirft redundante Werkzeug-Ausgaben, dazu kommen die fünf zuletzt benutzten Dateien.
+**Compaction:** Läuft das Fenster voll, wird der Verlauf zusammengefasst und ein frisches Fenster mit der Zusammenfassung gestartet. Claude Code macht genau das, es bewahrt dabei laut Beitrag Architektur-Entscheidungen, offene Bugs und Implementierungsdetails und verwirft redundante Werkzeug-Ausgaben, dazu kommen die fünf zuletzt benutzten Dateien. Ich kann bestätigen, dass der gefürchtete Auto-Compact seit einigen Monaten seinen Schrecken verloren hat. Der Compact funktioniert extrem gut, und ich reite teilweise eine Session aus Komfortgründen wochenlang. Dann aber hat es manchmal wieder gar nicht hingehauen, und Claude weiß von nix. Wenn ich sehe, dass der Kontext zur Neige geht, nutze ich daher gerne die Option, beim Befehl `/compact` genau festzulegen, was nicht verloren gehen darf.
 
-**Structured Note-Taking:** Der Agent schreibt Notizen außerhalb des Kontextfensters und liest sie später wieder ein, eine To-do-Liste, eine `NOTES.md`. Anthropics Anschauungsbeispiel: Claude spielt Pokémon und hält über Tausende Spielschritte Karten, Ziele und Kampfstrategien in eigenen Notizen fest, die jeden Kontext-Reset überleben.
+**Structured Note-Taking:** Der Agent schreibt Notizen außerhalb des Kontextfensters und liest sie später wieder ein, eine To-do-Liste, eine `NOTES.md`. Anthropics Anschauungsbeispiel: Claude spielt Pokémon und hält über Tausende Spielschritte Karten, Ziele und Kampfstrategien in eigenen Notizen fest, die jeden Kontext-Reset überleben. Das wird jeder Entwickler schon gesehen haben: Claude liebt es, solche Notizen anzulegen. Grundsätzlich in `GROSSBUCHSTABEN.md`. Man sollte sie aber regelmäßig wieder aufräumen, denn so ein Plan veraltet schnell und kann dann Fehlinformationen enthalten.
 
 **Multi-Agent-Architekturen:** Statt dass ein Agent alles im eigenen Fenster hält, erledigen Sub-Agenten fokussierte Teilaufgaben mit frischem Fenster und geben nur eine destillierte Zusammenfassung zurück. Mehr dazu im [Graph-Artikel](https://agentic.schule/blog/2026-09-graph-engineering).
 
@@ -117,6 +141,12 @@ Für Agenten, die über Stunden arbeiten, reicht auch das beste Kuratieren irgen
 Falls dir das alles bekannt vorkommt: Claude Code setzt diese Techniken im Alltag um, und du benutzt sie mit. Die `CLAUDE.md` ist kuratierter Dauer-Kontext, genau das „smallest possible set of high-signal tokens" für dein Projekt. Die Kompaktierung springt automatisch an, wenn das Fenster voll läuft, und mit `/compact` stößt du sie selbst an. Die To-do-Listen des Agenten sind Note-Taking. Und Subagenten samt Workflows sind die Multi-Agent-Architektur.
 
 > **💡 Merke:** Wenn der nächste Prompt zäh läuft, füge nicht als Erstes mehr Worte hinzu. Prüfe zuerst, was das Modell gerade alles sieht. Meist ist das Fenster das Problem, und dann hilft Kuratieren mehr als Formulieren.
+
+## Die perfekte CLAUDE.md
+
+Okay, die Überschrift hat viel versprochen und wird es nicht halten: Die eine perfekte `CLAUDE.md` wird es nicht geben, dafür ist jedes Projekt zu einzigartig. Und dass ich kein Fan von riesigen Skill-Sammlungen bin, weißt du als aufmerksamer Leser [meiner Artikel](https://agentic.schule/blog/2026-07-boeswillige-skills) bereits. Das alles ist Context Rot und kein Signal.
+
+Aber: Wenn du meinen [Kurs](https://agentic.schule/build-with-ai/online) besuchst, zeige ich dir gerne Custom Prompts aus meinen Kundenprojekten, und wir besprechen gemeinsam, was gut funktioniert und was nicht. Ich freue mich auf deinen Besuch!
 
 ## Fazit
 

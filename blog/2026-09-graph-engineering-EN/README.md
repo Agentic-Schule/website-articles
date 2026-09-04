@@ -22,7 +22,7 @@ The topic "graph engineering" is being hyped hard in my tech bubble right now. B
 
 **Underneath the noise sits an old, simple principle and a real tool. The principle: model the work as a graph and let independent branches run at the same time, instead of making them wait for each other in a line. My tool for it: Claude Code's _Dynamic Workflows_, where Claude writes an orchestration script and fans the work out across many subagents. The gain is real as soon as the work actually is a graph. If it is not, the graph only costs more.**
 
-This is the third look in a small series. First came the prompt, then the loop (_Loop Engineering_), now the graph. Each part stands on its own.
+This is the third look in a series. First came the prompt, then the loop (_Loop Engineering_), now the graph. Each part stands on its own.
 
 ## Contents
 

@@ -22,7 +22,7 @@ Das Thema „Graph Engineering" wird in meiner Tech-Bubble gerade stark gehyped.
 
 **Unter dem Lärm steckt ein altes, simples Prinzip und ein echtes Werkzeug. Das Prinzip: Modelliere die Arbeit als Graph und lass unabhängige Zweige gleichzeitig laufen, statt sie in einer Linie aufeinander warten zu lassen. Mein Werkzeug dafür: die _Dynamic Workflows_ von Claude Code, bei denen Claude ein Orchestrierungs-Skript schreibt und die Arbeit auf viele Subagenten auffächert. Der Gewinn ist real, sobald die Arbeit wirklich ein Graph ist. Ist sie es nicht, kostet der Graph nur mehr.**
 
-Das hier ist der dritte Blick in einer kleinen Serie. Erst ging es ums Prompt, dann um die Schleife (_Loop Engineering_), jetzt um den Graphen. Jeder Teil ist für sich lesbar.
+Das hier ist der dritte Blick in einer Serie. Erst ging es ums Prompt, dann um die Schleife (_Loop Engineering_), jetzt um den Graphen. Jeder Teil ist für sich lesbar.
 
 ## Inhalt
 
