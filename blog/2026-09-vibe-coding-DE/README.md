@@ -75,7 +75,7 @@ Wichtig für die Einordnung: Keine dieser Studien misst Vibe Coding im engen Sin
 
 ## Die Techniken: KI am Steuer, du an der Leitplanke
 
-Genau so ist unser eigenes Produkt Learnly entstanden: zu 100 Prozent KI-geschrieben, und trotzdem wurde jeder Diff gelesen. Nach dem strengen Maßstab von Karpathy und Willison ist das dann eben kein Vibe Coding mehr. Das ist Software-Entwicklung, und die folgenden Leitplanken machen den Unterschied:
+Was heißt das nun konkret? Die folgenden Leitplanken machen den Unterschied zwischen Würfeln und Entwickeln:
 
 **1. Diffs lesen.** Die Minimalregel, und die exakte Umkehrung von Karpathys „I don't read the diffs anymore". Dazu Willisons Commit-Test: Was du nicht erklären kannst, committest du nicht.
 
@@ -90,6 +90,23 @@ Genau so ist unser eigenes Produkt Learnly entstanden: zu 100 Prozent KI-geschri
 **6. Lass eine zweite Instanz prüfen.** Befehle wie `/code-review` und `/security-review` sind ein zusätzliches Netz mit frischem Blick. Sie ersetzen das eigene Lesen nicht, sie ergänzen es.
 
 > **💡 Merke:** Wer den Code tippt, ist zweitrangig. Software wird daraus erst, wenn jemand liest, testet und die Verantwortung trägt.
+
+## So bauen wir learnly.school
+
+Zeit für den Praxis-Beweis. Unsere Lernplattform [learnly.school](https://learnly.school) ist zu 100 Prozent KI-geschrieben: Kein Mensch hat den Code getippt, aber jeder Diff wurde gelesen. Nach dem strengen Maßstab von Karpathy und Willison ist das eben kein Vibe Coding mehr, das ist Software-Entwicklung. Ein Blick in das Repository zeigt, wie viel Handwerk in „100 % KI" steckt:
+
+- **Geschichtete Custom Prompts:** drei `CLAUDE.md`-Dateien (Projekt, Backend, Frontend) plus ein zentrales Referenzdokument, als Pflichtlektüre für jede Session markiert. Wie diese Schichten zusammenspielen, steht im [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-09-prompt-context-engineering).
+- **Strenge Typisierung:** TypeScript überall, `any` ist als harte Regel verboten. Der Compiler ist der billigste Reviewer, den es gibt.
+- **Getrennte Schichten mit Vertrag:** Backend (NestJS, Drizzle ORM) und Frontend (Angular) sind sauber getrennt, die API ist per Swagger/OpenAPI dokumentiert, und der Frontend-Client wird daraus generiert. Der dokumentierte Workflow arbeitet sich von unten nach oben durch: „Complete each layer fully before moving up." Datenbank-Views verstecken Komplexität vor dem Agenten.
+- **Vibe-kompatible Patterns:** bewusst simple, effektive Bausteine wie `rxResource` statt cleverer Eigenkonstruktionen. Was der Agent oft gesehen hat, baut er zuverlässig. (Ich persönlich erzwinge dabei [`rxResourceFixed`](https://angular.schule/blog/2025-10-rx-resource-is-broken#the-solution-rxresourcefixed-it-actually-works), meine verbesserte Fassung des Originals.)
+- **Tests bis ins kleinste Detail:** E2E mit Playwright gegen das echte Backend und eine echte Postgres, mit dokumentierten Best Practices. Genau der „Check, den der Agent selbst ausführen kann".
+- **Personas als Ensemble:** Eine komplette fiktive Schule aus Personas (Schulleitung, Sekretariat, Fachlehrkräfte, Schüler) läuft regelmäßig realistische Journeys gegen die echte App und meldet jede Reibung sofort, mit der Regel „nur aus dem Gesehenen berichten, nie erfundene Details".
+- **Reviews als Institution:** regelmäßige `/code-review`- und `/security-review`-Läufe, und die Befunde fließen als datierte harte Regeln zurück in die `CLAUDE.md`. So wurde aus einem Security-Fund ein fail-closed-Default und aus dem Schul-WLAN-Problem die Regel „Rate-Limiting niemals pro IP".
+- **Die Screenshot-Schleife:** Bei visuellen Aufgaben gilt wörtlich „rendern → selbst ansehen → korrigieren, nie blind bauen". Der Agent erzeugt Screenshots und sieht dann selbst, dass etwas schief ist.
+- **Lebende Doku fürs Modell:** `SPECS.md` beschreibt den Ist-Zustand („kein Wunschdenken"), `PROTOCOL.md` ist das append-only-Logbuch, `TODOS.md` der Backlog ohne Scrum-Theater. Entscheidungen stehen datiert in den Regeln.
+- **Backups, Backups.** Verschlüsselt, versteht sich.
+
+Meine Lieblingsregel im Repo ist übrigens die Rosa-Elefant-Regel 🐘: In allem, was in den Kontext eines Modells gelangt, sind ausgemalte Gefahren-Beispiele verboten, auch als Verbot formuliert, denn lebhafte Negationen primen das Modell erst recht. Ein eigener Test prüft, dass keine Beispiel-Marker in den Prompts auftauchen. Das ist Prompt Engineering mit Evals, mitten im Produktcode.
 
 ## Fazit
 
