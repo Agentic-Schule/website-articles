@@ -47,7 +47,7 @@ Ein Fork dieser Sitzung hat den Slogan an die Website-Sitzung geschickt. Belege 
 - `ListAgents` zeigte hier **86 erreichbare Peers** plus die Remote-Control-Einträge.
 - **Namensgleichheit ist der Stolperstein:** Drei Sitzungen hießen `agentic.schule`. Erst mit dem Ref `[5355cb]` ging die Nachricht an die richtige, nämlich die aktive lokale. Die beiden Remote-Control-Namensvettern waren seit Tagen offline.
 - Antworten der Empfängerin landen **nicht** beim Fork, sondern in der Hauptkonversation. Deckt sich mit der Changelog-Zeile zu 2.1.x: „Changed `SendMessage` from a subagent to another session: the result now notes that any reply is delivered to the parent session's conversation, not to the subagent."
-- Die Empfängerin muss nicht wach sein; die Antwort kam später und von selbst in die Hauptkonversation.
+- Niemand musste vor der Empfängerin sitzen; die Antwort kam später und von selbst in die Hauptkonversation. ⚠️ „Wach" ist als Begriff untauglich: Bedingung ist laut Doku allein, dass der Prozess läuft und seinen Inbox-Socket hält („A session appears only when it binds an inbox socket"). Im Leerlauf startet die Nachricht eine neue Runde, mitten in der Arbeit wird sie zwischen zwei Werkzeug-Aufrufen gelesen. Keine Magie, eine Zustellung in die laufende Konversation.
 
 ## Quellen
 
