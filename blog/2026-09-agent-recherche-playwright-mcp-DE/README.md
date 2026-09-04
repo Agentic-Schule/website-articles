@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-07-29
+published: 2026-09-22
 keywords:
   - Playwright
   - MCP
@@ -128,7 +128,7 @@ Dazu gehört ein zweiter Punkt, der nichts kostet und alles entscheidet: **Fair 
 
 ## Headless auf einer Maschine ohne Bildschirm
 
-Mein Agenten-Rechner ist ein [Mac mini ohne Monitor](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini), an dem sich niemand grafisch anmeldet. Genau dort stürzte der echte Chrome beim Start reproduzierbar ab, sobald keine grafische Anmeldung aktiv war, mit `CVDisplayLink failed` und einem SIGTRAP. Der Grund ist unspektakulär: Chrome baut beim Start einen Grafik- und Display-Kontext auf, und ohne eine aktive grafische Sitzung gibt es den nicht. Die Lösung ist folgendes Chrome-Argument:
+Mein Agenten-Rechner ist ein [Mac mini ohne Monitor](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini), an dem sich niemand grafisch anmeldet. Genau dort stürzte der echte Chrome beim Start reproduzierbar ab, sobald keine grafische Anmeldung aktiv war, mit `CVDisplayLink failed` und einem SIGTRAP. Der Grund ist unspektakulär: Chrome baut beim Start einen Grafik- und Display-Kontext auf, und ohne eine aktive grafische Sitzung gibt es den nicht. Die Lösung ist folgendes Chrome-Argument:
 
 ```json
 "args": ["--disable-gpu"]
@@ -278,9 +278,9 @@ Was auch hier gilt:
 
 Am Ende geht es um eine kleine Reparatur mit großer Wirkung: Der Agent gerät nicht mehr in den groben Filter, der ihn nie gemeint hat.
 
-Übrigens läuft dieser Recherche-Browser bei mir dauerhaft auf einer Maschine, die nie ausgeht. Wie diese Bodenstation aufgebaut ist, steht im Begleitartikel [„Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation"](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini).
+Übrigens läuft dieser Recherche-Browser bei mir dauerhaft auf einer Maschine, die nie ausgeht. Wie diese Bodenstation aufgebaut ist, steht im Begleitartikel [„Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation"](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini).
 
-<a href="https://agentic.schule/blog/2026-07-agentic-coding-mac-mini"><img src="../2026-07-agentic-coding-mac-mini-DE/header.jpg" alt="Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation" style="display:block;margin:1.5em auto;width:42%;"></a>
+<a href="https://agentic.schule/blog/2026-09-agentic-coding-mac-mini"><img src="../2026-09-agentic-coding-mac-mini-DE/header.jpg" alt="Agentic Coding rund um die Uhr: Der Mac mini als Bodenstation" style="display:block;margin:1.5em auto;width:42%;"></a>
 
 **Fragen, Feedback, eigene Erfahrungen mit ausgesperrten Agenten?** Immer her damit, ich freue mich über jede Nachricht.
 

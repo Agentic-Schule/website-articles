@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-09-02
+published: 2026-09-20
 keywords:
   - Graph Engineering
   - Claude Code
@@ -131,7 +131,7 @@ Dass ein breiter Fächer nicht immer die Antwort ist, sagt Anthropic selbst, im 
 
 Wenn du also das nächste Mal von einem AI-Influencer das Wort „Graph Engineering" hörst, weißt du: Das hab ich längst, und einen Zwei-Stunden-Kurs muss ich dafür nicht buchen. Nein, es revolutioniert nicht alles Bisherige. Und schaltest du `ultracode` ein, startet Claude bei komplexen Aufgaben sogar von allein einen Workflow, wenn er sich lohnt. Sehr beruhigend.
 
-Damit schließt sich die Serie. Drei Werkzeuge für drei Formen von Arbeit: Das **Prompt** bestimmt, wie du fragst. Die **Schleife** treibt eine Linie in die Tiefe, immer weiter, bis das Ziel steht ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)). Der **Graph** fächert unabhängige Arbeit in die Breite. Das eine ist nicht der Nachfolger des anderen, sie lösen verschiedene Probleme.
+Damit schließt sich die Serie. Drei Werkzeuge für drei Formen von Arbeit: Das **Prompt** bestimmt, wie du fragst. Die **Schleife** treibt eine Linie in die Tiefe, immer weiter, bis das Ziel steht ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)). Der **Graph** fächert unabhängige Arbeit in die Breite. Das eine ist nicht der Nachfolger des anderen, sie lösen verschiedene Probleme.
 
 Mein Rat ist wie immer der undramatische: Fang klein an. Ein `/deep-research` zu einer echten Frage, oder ein Audit über ein einzelnes Verzeichnis. Schau in `/workflows` auf den Verbrauch, lies das Skript, das Claude geschrieben hat, und urteile selbst, ob deine Arbeit gerade eine Linie ist oder ein Graph.
 

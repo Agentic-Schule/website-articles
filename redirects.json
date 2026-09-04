@@ -1,0 +1,10 @@
+{
+  "comment": "Alte Artikel-URLs auf die neuen Slugs umleiten. Entstanden beim Umdatieren der Serie auf den taeglichen September-Rhythmus (Start 15.09.2026). Schluessel: alter Slug, Wert: neuer Slug, jeweils ohne /blog/-Praefix und ohne Sprach-Suffix.",
+  "redirects": {
+    "2026-07-boeswillige-skills": "2026-09-boeswillige-skills",
+    "2026-07-agentic-coding-mac-mini": "2026-09-agentic-coding-mac-mini",
+    "2026-07-agentic-coding-git-worktrees": "2026-09-agentic-coding-git-worktrees",
+    "2026-07-loop-engineering": "2026-09-loop-engineering",
+    "2026-07-agent-recherche-playwright-mcp": "2026-09-agent-recherche-playwright-mcp"
+  }
+}

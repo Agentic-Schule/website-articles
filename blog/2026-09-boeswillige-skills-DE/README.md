@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-07-27
+published: 2026-09-15
 keywords:
   - Agent Skills
   - Skill Marketplace
@@ -124,7 +124,7 @@ Viel wichtiger als jede Zahl ist dieser Satz aus dem Bericht:
 
 So weit die Geschichte, wie AIR sie erzählt. Sie endet mit der Veröffentlichung am 22. Juni. Mich hat interessiert, was seitdem passiert ist, und dafür habe ich nachgesehen. Der Teil, der mich dabei wirklich überrascht hat: **Der Skill liegt dort bis heute.** Stand 27. Juli 2026 enthält die Datei `plugins/brand-landingpage/skills/brand-landingpage/SKILL.md` unverändert zwei Verweise auf die Domain der Angreifer. Das ist gut fünf Wochen nach Veröffentlichung des Berichts und knapp drei Monate nach dem Merge. Das Repository selbst ist quicklebendig. Es zählt inzwischen über 38.000 Sterne und wurde zuletzt am 22. Juli 2026 aktualisiert.
 
-Vermutlich wird der Skill früher oder später entfernt. Deshalb habe ich eine [Archivkopie abgelegt](https://agentic-schule.github.io/website-articles/blog/2026-07-boeswillige-skills-DE/ACHTUNG-boesartiger-skill-brand-landingpage.txt). Sie trägt einen unübersehbaren Warnhinweis, und die beiden Verweise auf die Angreifer-Domain sind darin entschärft. Die Datei ist ein Beweisstück zum Anschauen. Bitte bloß nicht ausführen, nicht in ein Skills-Verzeichnis kopieren und keinem Agenten zu lesen geben.
+Vermutlich wird der Skill früher oder später entfernt. Deshalb habe ich eine [Archivkopie abgelegt](https://agentic-schule.github.io/website-articles/blog/2026-09-boeswillige-skills-DE/ACHTUNG-boesartiger-skill-brand-landingpage.txt). Sie trägt einen unübersehbaren Warnhinweis, und die beiden Verweise auf die Angreifer-Domain sind darin entschärft. Die Datei ist ein Beweisstück zum Anschauen. Bitte bloß nicht ausführen, nicht in ein Skills-Verzeichnis kopieren und keinem Agenten zu lesen geben.
 
 Das gilt auch dann, wenn der Agent den Text bloß lesen und nichts damit tun soll. Sobald er im Kontextfenster liegt, steht er neben deinen eigenen Anweisungen, und genau darauf beruht Prompt Injection. Dazu kommt ein Effekt, an den man selten denkt. Läuft der Kontext voll, fasst Claude Code die älteren Teile der Unterhaltung zusammen. Was diese Zusammenfassung überlebt, entscheidet das Modell. Anthropic bietet dafür sogar [eigene Compact-Anweisungen](https://code.claude.com/docs/en/costs) an, mit denen man steuern kann, was erhalten bleiben soll, und genau das heißt im Umkehrschluss: garantiert ist nichts. Dass dabei einmal die Warnung wegfällt und die Anweisung stehen bleibt, habe ich nicht beobachtet und behaupte ich nicht. Ausschließen lässt es sich aber ebenso wenig, und der gefährliche Teil ist nur zwei Sätze lang.
 

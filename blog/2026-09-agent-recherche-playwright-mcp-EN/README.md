@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-07-29
+published: 2026-09-22
 keywords:
   - Playwright
   - MCP
@@ -128,7 +128,7 @@ There is a second point that costs nothing and decides everything: **stay fair.*
 
 ## Headless on a machine without a screen
 
-My agent machine is a [Mac mini without a monitor](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini) that nobody logs into graphically. On exactly that machine the real Chrome crashed reproducibly at startup whenever no graphical login was active, with `CVDisplayLink failed` and a SIGTRAP. The reason is unspectacular: at startup Chrome builds a graphics and display context, and without an active graphical session there is none. The fix is the following Chrome argument:
+My agent machine is a [Mac mini without a monitor](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) that nobody logs into graphically. On exactly that machine the real Chrome crashed reproducibly at startup whenever no graphical login was active, with `CVDisplayLink failed` and a SIGTRAP. The reason is unspectacular: at startup Chrome builds a graphics and display context, and without an active graphical session there is none. The fix is the following Chrome argument:
 
 ```json
 "args": ["--disable-gpu"]
@@ -278,9 +278,9 @@ What holds here too:
 
 In the end it comes down to a small repair with a big effect: the agent no longer lands in the crude filter that never meant it.
 
-By the way, this research browser runs on my end permanently on a machine that never shuts off. How that ground station is built is described in the companion article ["Agentic coding around the clock: the Mac mini as a ground station"](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini).
+By the way, this research browser runs on my end permanently on a machine that never shuts off. How that ground station is built is described in the companion article ["Agentic coding around the clock: the Mac mini as a ground station"](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini).
 
-<a href="https://agentic.schule/blog/2026-07-agentic-coding-mac-mini"><img src="../2026-07-agentic-coding-mac-mini-EN/header.jpg" alt="Agentic coding around the clock: the Mac mini as a ground station" style="display:block;margin:1.5em auto;width:42%;"></a>
+<a href="https://agentic.schule/blog/2026-09-agentic-coding-mac-mini"><img src="../2026-09-agentic-coding-mac-mini-EN/header.jpg" alt="Agentic coding around the clock: the Mac mini as a ground station" style="display:block;margin:1.5em auto;width:42%;"></a>
 
 **Questions, feedback, your own experiences with locked-out agents?** Bring them on, I am glad to hear from you.
 
