@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 316" width="900" height="316" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="The prompt stack: the system prompt at the very bottom, the custom prompt on top of it, then skills and slash commands, your prompt at the very top.">
+  <!-- layer 4 (top): your prompt -->
+  <rect x="190" y="20" width="520" height="60" rx="10" fill="#d97757" fill-opacity="0.14" stroke="#d97757" stroke-width="2.2"/>
+  <text x="210" y="45" font-size="15" font-weight="700" fill="#d97757">Your Prompt</text>
+  <text x="210" y="66" font-size="12.5" fill="#8a8079">the task you type into the chat (what most people mean)</text>
+
+  <!-- layer 3: skills and slash commands -->
+  <rect x="190" y="92" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
+  <text x="210" y="117" font-size="15" font-weight="700" fill="#8a8079">Skills &amp; Slash Commands</text>
+  <text x="210" y="138" font-size="12.5" fill="#8a8079">prepared instructions, loaded on demand</text>
+
+  <!-- layer 2: custom prompt -->
+  <rect x="190" y="164" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
+  <text x="210" y="189" font-size="15" font-weight="700" fill="#8a8079">Custom Prompt</text>
+  <text x="210" y="210" font-size="12.5" fill="#8a8079">your permanent project rules: CLAUDE.md, AGENTS.md &amp; co.</text>
+
+  <!-- layer 1 (very bottom): system prompt -->
+  <rect x="190" y="236" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
+  <text x="210" y="261" font-size="15" font-weight="700" fill="#8a8079">System Prompt</text>
+  <text x="210" y="282" font-size="12.5" fill="#8a8079">ground rules and tools, shipped by the vendor</text>
+</svg>
