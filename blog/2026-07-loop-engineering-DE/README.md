@@ -33,7 +33,7 @@ Vorweg zur Einordnung: Ich beziehe mich hier vor allem auf Claude Code. Andere A
 
 ## Was Loop Engineering bedeutet
 
-Die knappste Definition stammt von Addy Osmani, der den Begriff [in einem Artikel ausbuchstabiert hat](https://addyosmani.com/blog/loop-engineering/):
+Die knappste Definition stammt von Addy Osmani aus Googles Chrome-Team, der den Begriff [in einem Artikel ausbuchstabiert hat](https://addyosmani.com/blog/loop-engineering/):
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
