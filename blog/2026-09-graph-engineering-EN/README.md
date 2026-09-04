@@ -103,7 +103,8 @@ You probably trigger something like this every day already, without using the te
 I saw for myself how big the difference is while writing this article. Because of course this very text went through the grinder, with a German prompt asking for an intensive review of all the repo's texts, covering spelling, grammar, style, truth and the English translation:
 
 ```text
-/code-review max Mache einen intensiven Review aller Texte dieses Repos. Prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
+/code-review max Conduct a thorough review of all text in this repo.
+Check for: spelling, grammatical errors, style, accuracy, and translation into English
 ```
 
 With `max` on Fable 5, the review fanned out into parallel review agents, tailored to the request: one for German orthography, one for polishing the English, one for comparing the two versions, more for fact-checking against the Anthropic docs and against external sources. This is what it looked like live:

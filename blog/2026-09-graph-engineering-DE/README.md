@@ -103,7 +103,8 @@ Wahrscheinlich löst du so etwas längst täglich aus, ohne den Begriff zu benut
 Wie groß der Unterschied ist, habe ich beim Schreiben dieses Artikels selbst gesehen. Denn natürlich ging genau dieser Text hier durch die Mühle:
 
 ```text
-/code-review max Mache einen intensiven Review aller Texte dieses Repos. Prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
+/code-review max Mache einen intensiven Review aller Texte dieses Repos.
+Prüfe: Rechtschreibung, Grammatikfehler, Stil, Wahrheit und Übersetzung ins Englische
 ```
 
 Mit `max` auf Fable 5 fächerte der Review in parallele Prüf-Agenten auf, zugeschnitten auf den Auftrag: einer für die deutsche Rechtschreibung, einer für den englischen Sprachschliff, einer für den Abgleich der beiden Fassungen, weitere für den Faktencheck gegen die Anthropic-Doku und gegen externe Quellen. So sah das live aus:
