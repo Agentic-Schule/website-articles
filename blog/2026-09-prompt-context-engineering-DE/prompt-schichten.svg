@@ -1,30 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Fünf Schichten im Kontextfenster: ganz unten der System Prompt, darauf der Custom Prompt, dann Skills und Slash-Befehle, dein Prompt, und ganz oben wächst der Verlauf aus Antworten, Reasoning und Tool-Aufrufen.">
-  <!-- Kontextfenster als Rahmen -->
-  <rect x="150" y="28" width="600" height="412" rx="14" fill="none" stroke="#8a8079" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="3 6"/>
-  <text x="450" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#8a8079">das Kontextfenster</text>
-
-  <!-- Schicht 5 (ganz oben, wächst): der Verlauf -->
-  <rect x="190" y="78" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8" stroke-dasharray="5 5"/>
-  <text x="210" y="103" font-size="15" font-weight="700" fill="#8a8079">Der Verlauf</text>
-  <text x="210" y="124" font-size="12.5" fill="#8a8079">Antworten, Reasoning, Tool-Aufrufe samt Ergebnissen, wächst mit jeder Runde</text>
-
-  <!-- Schicht 4: Dein Prompt -->
-  <rect x="190" y="150" width="520" height="60" rx="10" fill="#d97757" fill-opacity="0.14" stroke="#d97757" stroke-width="2.2"/>
-  <text x="210" y="175" font-size="15" font-weight="700" fill="#d97757">Dein Prompt</text>
-  <text x="210" y="196" font-size="12.5" fill="#8a8079">die Aufgabe, die du in den Chat tippst (das meinen die meisten)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 316" width="900" height="316" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Der Prompt-Stapel: ganz unten der System Prompt, darauf der Custom Prompt, dann Skills und Slash-Befehle, ganz oben dein Prompt.">
+  <!-- Schicht 4 (oben): Dein Prompt -->
+  <rect x="190" y="20" width="520" height="60" rx="10" fill="#d97757" fill-opacity="0.14" stroke="#d97757" stroke-width="2.2"/>
+  <text x="210" y="45" font-size="15" font-weight="700" fill="#d97757">Dein Prompt</text>
+  <text x="210" y="66" font-size="12.5" fill="#8a8079">die Aufgabe, die du in den Chat tippst (das meinen die meisten)</text>
 
   <!-- Schicht 3: Skills und Slash-Befehle -->
-  <rect x="190" y="222" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
-  <text x="210" y="247" font-size="15" font-weight="700" fill="#8a8079">Skills &amp; Slash-Befehle</text>
-  <text x="210" y="268" font-size="12.5" fill="#8a8079">vorbereitete Anweisungen, bei Bedarf geladen</text>
+  <rect x="190" y="92" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
+  <text x="210" y="117" font-size="15" font-weight="700" fill="#8a8079">Skills &amp; Slash-Befehle</text>
+  <text x="210" y="138" font-size="12.5" fill="#8a8079">vorbereitete Anweisungen, bei Bedarf geladen</text>
 
   <!-- Schicht 2: Custom Prompt -->
-  <rect x="190" y="294" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
-  <text x="210" y="319" font-size="15" font-weight="700" fill="#8a8079">Custom Prompt</text>
-  <text x="210" y="340" font-size="12.5" fill="#8a8079">deine dauerhaften Projektregeln: CLAUDE.md, AGENTS.md &amp; Co.</text>
+  <rect x="190" y="164" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
+  <text x="210" y="189" font-size="15" font-weight="700" fill="#8a8079">Custom Prompt</text>
+  <text x="210" y="210" font-size="12.5" fill="#8a8079">deine dauerhaften Projektregeln: CLAUDE.md, AGENTS.md &amp; Co.</text>
 
   <!-- Schicht 1 (ganz unten): System Prompt -->
-  <rect x="190" y="366" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
-  <text x="210" y="391" font-size="15" font-weight="700" fill="#8a8079">System Prompt</text>
-  <text x="210" y="412" font-size="12.5" fill="#8a8079">Grundregeln und Werkzeuge, vom Hersteller mitgeliefert</text>
+  <rect x="190" y="236" width="520" height="60" rx="10" fill="none" stroke="#8a8079" stroke-width="1.8"/>
+  <text x="210" y="261" font-size="15" font-weight="700" fill="#8a8079">System Prompt</text>
+  <text x="210" y="282" font-size="12.5" fill="#8a8079">Grundregeln und Werkzeuge, vom Hersteller mitgeliefert</text>
 </svg>
