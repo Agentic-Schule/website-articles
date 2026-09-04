@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(60% 55% at 74% 42%, rgba(217,119,87,0.30), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(126,96,196,0.12), transparent 60%),
+      linear-gradient(155deg,#221a16 0%,#160f0c 58%,#0d0908 100%);
+    color:#fff; position:relative;
+  }
+  /* dezenter Punkt-Grid (gleiche DNA wie die Geschwister-Header) */
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:600px; }
+  .kicker { font-size:20px; letter-spacing:6px; font-weight:700; color:#e0916f; text-transform:uppercase; }
+  .kicker .dot { color:#d97757; }
+  h1 { font-size:64px; line-height:1.05; font-weight:800; letter-spacing:-1.5px; margin:22px 0 0; }
+  h1 .accent { color:#e58a68; }
+  .sub { margin-top:24px; font-size:25px; font-weight:500; color:#c3b7ae; letter-spacing:-.2px; line-height:1.35; }
+  .by { margin-top:38px; font-size:19px; color:#8c8079; }
+  .by b { color:#cbbfb6; font-weight:600; }
+  .art { position:absolute; right:34px; top:0; height:675px; width:520px; }
+  /* offizielles Claude-Logo, via CSS-mask: in beiden Sitzungen sitzt derselbe Agent */
+  .agent { position:absolute; width:20px; height:20px; background:#d97757; opacity:0.75;
+    mask:url("claude.svg") center/contain no-repeat; }
+  .agent.a { left:62px; top:132px; }
+  .agent.b { left:302px; top:452px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="left">
+      <div class="kicker">agentic<span class="dot">.</span>schule</div>
+      <h1>Zuruf zwischen<br><span class="accent">Terminals</span></h1>
+      <div class="sub">Wenn Claude-Code-Sitzungen<br>sich Nachrichten schreiben</div>
+      <div class="by">von <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <div class="art">
+    <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.45"/>
+          <stop offset="55%" stop-color="#d97757" stop-opacity="0.13"/>
+          <stop offset="100%" stop-color="#d97757" stop-opacity="0"/>
+        </radialGradient>
+        <marker id="a-coral" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#d97757"/>
+        </marker>
+      </defs>
+
+      <!-- Glow hinter dem Brief -->
+      <circle cx="262" cy="335" r="180" fill="url(#glow)"/>
+
+      <!-- Sitzung A: oben links -->
+      <g opacity="0.62">
+        <rect x="40" y="112" width="212" height="132" rx="12" fill="#1d1713" stroke="rgba(255,255,255,0.28)" stroke-width="1.8"/>
+        <line x1="40" y1="152" x2="252" y2="152" stroke="rgba(255,255,255,0.22)" stroke-width="1.4"/>
+        <circle cx="228" cy="132" r="4" fill="#8c7f77"/>
+        <circle cx="212" cy="132" r="4" fill="#8c7f77"/>
+        <circle cx="196" cy="132" r="4" fill="#8c7f77"/>
+        <rect x="62" y="176" width="118" height="7" rx="3.5" fill="#8c7f77" opacity="0.75"/>
+        <rect x="62" y="196" width="158" height="7" rx="3.5" fill="#8c7f77" opacity="0.5"/>
+        <rect x="62" y="216" width="86" height="7" rx="3.5" fill="#8c7f77" opacity="0.35"/>
+      </g>
+
+      <!-- Sitzung B: unten rechts -->
+      <g opacity="0.62">
+        <rect x="280" y="432" width="212" height="132" rx="12" fill="#1d1713" stroke="rgba(255,255,255,0.28)" stroke-width="1.8"/>
+        <line x1="280" y1="472" x2="492" y2="472" stroke="rgba(255,255,255,0.22)" stroke-width="1.4"/>
+        <circle cx="468" cy="452" r="4" fill="#8c7f77"/>
+        <circle cx="452" cy="452" r="4" fill="#8c7f77"/>
+        <circle cx="436" cy="452" r="4" fill="#8c7f77"/>
+        <rect x="302" y="496" width="138" height="7" rx="3.5" fill="#8c7f77" opacity="0.75"/>
+        <rect x="302" y="516" width="98" height="7" rx="3.5" fill="#8c7f77" opacity="0.5"/>
+        <rect x="302" y="536" width="150" height="7" rx="3.5" fill="#8c7f77" opacity="0.35"/>
+      </g>
+
+      <!-- Flugbahn: aus Sitzung A heraus, am Brief vorbei, in Sitzung B hinein -->
+      <path d="M150 250 Q 150 300 200 322" stroke="#8c7f77" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="4 8" fill="none"/>
+      <path d="M330 372 Q 384 400 386 428" stroke="#d97757" stroke-opacity="0.85" stroke-width="2.4" stroke-dasharray="4 8" fill="none" marker-end="url(#a-coral)"/>
+
+      <!-- Der fliegende Brief -->
+      <g transform="translate(262,340) rotate(-14)">
+        <rect x="-84" y="-56" width="168" height="112" rx="12" fill="#2a1c14" stroke="#d97757" stroke-width="2.8"/>
+        <path d="M-84 -46 L0 18 L84 -46" stroke="#d97757" stroke-width="2.8" fill="none" stroke-linejoin="round"/>
+      </g>
+    </svg>
+    <div class="agent a"></div>
+    <div class="agent b"></div>
+  </div>
+</body>
+</html>
