@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-09-03
+published: 2026-09-23
 keywords:
   - Claude Code
   - Slash-Befehle
@@ -43,7 +43,7 @@ Der einzige mitgelieferte Workflow, und ein Schaustück dafür, was Claude Code 
 
 ## 4. `/loop`: die Schleife
 
-Wiederholt einen Prompt im festen Intervall (`/loop 5m prüfe den Deploy`) oder lässt Claude selbst takten, wenn du das Intervall weglässt. Damit erledigt der Agent harte Aufgaben in vielen Anläufen, notfalls die ganze Nacht gegen die CI. Was dahintersteckt, habe ich in einem eigenen Artikel auseinandergenommen: [Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering).
+Wiederholt einen Prompt im festen Intervall (`/loop 5m prüfe den Deploy`) oder lässt Claude selbst takten, wenn du das Intervall weglässt. Damit erledigt der Agent harte Aufgaben in vielen Anläufen, notfalls die ganze Nacht gegen die CI. Was dahintersteckt, habe ich in einem eigenen Artikel auseinandergenommen: [Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering).
 
 > **💡 Tipp:** Die Abbruchbedingung ist die eigentliche Arbeit. „Bis die CI wieder grün ist" funktioniert, „bis es gut ist" dreht sich im Kreis.
 
@@ -81,7 +81,7 @@ Stellt ein, wie gründlich Claude arbeitet, von `low` bis `xhigh`, dazu `auto` f
 
 ## 10. `/remote-control`: die Sitzung in der Hosentasche
 
-Verbindet die laufende Sitzung mit claude.ai/code oder der Claude-App: QR-Code mit dem Handy scannen, und du führst dieselbe Sitzung am Telefon oder im Browser weiter, während sie auf deinem Rechner läuft. Perfekt, um einen langen Lauf vom Sofa aus zu begleiten oder unterwegs eine Rückfrage zu beantworten, statt sie bis zum Feierabend liegen zu lassen. Meine Bodenstation, den Mac mini, steuere ich genau so ([mehr dazu hier](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini)).
+Verbindet die laufende Sitzung mit claude.ai/code oder der Claude-App: QR-Code mit dem Handy scannen, und du führst dieselbe Sitzung am Telefon oder im Browser weiter, während sie auf deinem Rechner läuft. Perfekt, um einen langen Lauf vom Sofa aus zu begleiten oder unterwegs eine Rückfrage zu beantworten, statt sie bis zum Feierabend liegen zu lassen. Meine Bodenstation, den Mac mini, steuere ich genau so ([mehr dazu hier](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)).
 
 > **💡 Tipp:** Zum Tippen reicht `/rc`, das ist der offizielle Alias.
 

@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-09-03
+published: 2026-09-18
 keywords:
   - Prompt Engineering
   - Context Engineering
@@ -21,7 +21,7 @@ Garbage in, garbage out: hardly any phrase from computer science fits language m
 
 **There are two hype terms in circulation for exactly that: prompt engineering and context engineering. Yet behind both lies real craft. Prompt engineering: phrase the instruction clearly, back it with examples, and measure the result. Context engineering: curate everything the model gets to see, because the context window is a finite resource.**
 
-This is the opening part of the series about the engineering terms of the agent world. It continues with the loop ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)) and the graph ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Each part stands on its own.
+This is the opening part of the series about the engineering terms of the agent world. It continues with the loop ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)) and the graph ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Each part stands on its own.
 
 ## Contents
 
@@ -72,7 +72,7 @@ The Angular team has built a ready-made eval tool for generated web code: the [W
 
 Is it worth using? If you are only building one prompt for a single repo, it is certainly oversized. It gets interesting when you want to unify and harmonize the prompts across several projects in a company. Because then there will be different opinions about what is "good" and what works better, guaranteed. In that situation, exactly one thing counts: hard facts. Take the various prompts, let them compete against each other, and prove what actually delivers the better results.
 
-My guess, by the way: the Angular team has most certainly run its [official skills](https://github.com/angular/skills) (more on those in my [skills article](https://agentic.schule/blog/2026-07-boeswillige-skills)) through exactly this tool several times to get an optimal result.
+My guess, by the way: the Angular team has most certainly run its [official skills](https://github.com/angular/skills) (more on those in my [skills article](https://agentic.schule/blog/2026-09-boeswillige-skills)) through exactly this tool several times to get an optimal result.
 
 <p style="display:flex;gap:2%;justify-content:center;margin:1.5em 0;">
   <img src="wcs-report-angular.png" alt="Web Codegen Scorer report for Angular: overall score 97, with bars for build, runtime, security, and accessibility" style="width:49%;height:auto;align-self:flex-start;">
@@ -144,7 +144,7 @@ If all of this sounds familiar: Claude Code applies these techniques in everyday
 
 ## The perfect CLAUDE.md
 
-Okay, the heading promised a lot and will not deliver: the one perfect `CLAUDE.md` will not exist, every project is too unique for that. And that I am no fan of giant skill collections is something you, as an attentive reader of [my articles](https://agentic.schule/blog/2026-07-boeswillige-skills), already know. All of that is context rot, not signal.
+Okay, the heading promised a lot and will not deliver: the one perfect `CLAUDE.md` will not exist, every project is too unique for that. And that I am no fan of giant skill collections is something you, as an attentive reader of [my articles](https://agentic.schule/blog/2026-09-boeswillige-skills), already know. All of that is context rot, not signal.
 
 But: if you attend my [course](https://agentic.schule/build-with-ai/online), I will gladly show you custom prompts from my client projects, and together we will discuss what works well and what doesn't. I am looking forward to your visit!
 
@@ -152,7 +152,7 @@ But: if you attend my [course](https://agentic.schule/build-with-ai/online), I w
 
 Two buzzwords, one craft. Prompt engineering means: clear instructions, examples, measured by evals. Context engineering means: the window is finite, so curate what goes in, tight and informative. Both are freely available in the primary sources, and neither needs a paid course. (Except at [agentic.schule](https://agentic.schule)! 😉)
 
-This article is the first part of the series: **prompt and context** determine what the model sees. It continues with the **loop**, which drives a line into the depth until the goal stands ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)), and the **graph**, which fans independent work out into the breadth ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Three tools, three shapes of work, and all three start with the same question: what does the model need to know to make the next step a good one?
+This article is the first part of the series: **prompt and context** determine what the model sees. It continues with the **loop**, which drives a line into the depth until the goal stands ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)), and the **graph**, which fans independent work out into the breadth ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Three tools, three shapes of work, and all three start with the same question: what does the model need to know to make the next step a good one?
 
 **Questions, feedback, prompt recipes of your own?** Bring them on, I am glad to hear from you.
 

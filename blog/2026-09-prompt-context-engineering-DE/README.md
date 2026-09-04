@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-09-03
+published: 2026-09-18
 keywords:
   - Prompt Engineering
   - Context Engineering
@@ -21,7 +21,7 @@ Garbage in, garbage out: Kaum ein Satz der Informatik passt so gut auf Sprachmod
 
 **Dafür kursieren gleich zwei Hype-Begriffe: Prompt Engineering und Context Engineering. Doch hinter beiden steckt tatsächlich echtes Handwerk. Prompt Engineering: Formuliere die Anweisung klar, belege sie mit Beispielen und miss das Ergebnis. Context Engineering: Kuratiere alles, was das Modell zu sehen bekommt, denn das Kontextfenster ist eine endliche Ressource.**
 
-Das hier ist der Auftakt der Serie über die Engineering-Begriffe der Agenten-Welt. Danach geht es weiter mit der Schleife ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)) und dem Graphen ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Jeder Teil ist für sich lesbar.
+Das hier ist der Auftakt der Serie über die Engineering-Begriffe der Agenten-Welt. Danach geht es weiter mit der Schleife ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)) und dem Graphen ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Jeder Teil ist für sich lesbar.
 
 ## Inhalt
 
@@ -72,7 +72,7 @@ Das Angular-Team hat ein fertiges Eval-Werkzeug für generierten Web-Code gebaut
 
 Lohnt sich der Einsatz? Wenn du nur einen Prompt für ein einzelnes Repo baust, ist das ganz bestimmt überdimensioniert. Spannend wird es, wenn du etwa die Prompts im Unternehmen über mehrere Projekte vereinheitlichen und harmonisieren willst. Denn dann gibt es garantiert unterschiedliche Auffassungen darüber, was „gut" ist und was besser funktioniert. In dieser Situation zählt genau eines: harte Fakten. Nimm die verschiedenen Prompts, lass sie gegeneinander antreten und belege, was tatsächlich die besseren Ergebnisse liefert.
 
-Meine Vermutung übrigens: Das Angular-Team hat seine [offiziellen Skills](https://github.com/angular/skills) (mehr dazu im [Skills-Artikel](https://agentic.schule/blog/2026-07-boeswillige-skills)) ganz bestimmt mehrfach durch genau dieses Werkzeug gejagt, um ein optimales Ergebnis zu bekommen.
+Meine Vermutung übrigens: Das Angular-Team hat seine [offiziellen Skills](https://github.com/angular/skills) (mehr dazu im [Skills-Artikel](https://agentic.schule/blog/2026-09-boeswillige-skills)) ganz bestimmt mehrfach durch genau dieses Werkzeug gejagt, um ein optimales Ergebnis zu bekommen.
 
 <p style="display:flex;gap:2%;justify-content:center;margin:1.5em 0;">
   <img src="wcs-report-angular.png" alt="Web-Codegen-Scorer-Report für Angular: Gesamt-Score 97, darunter Balken für Build, Runtime, Security und Accessibility" style="width:49%;height:auto;align-self:flex-start;">
@@ -144,7 +144,7 @@ Falls dir das alles bekannt vorkommt: Claude Code setzt diese Techniken im Allta
 
 ## Die perfekte CLAUDE.md
 
-Okay, die Überschrift hat viel versprochen und wird es nicht halten: Die eine perfekte `CLAUDE.md` wird es nicht geben, dafür ist jedes Projekt zu einzigartig. Und dass ich kein Fan von riesigen Skill-Sammlungen bin, weißt du als aufmerksamer Leser [meiner Artikel](https://agentic.schule/blog/2026-07-boeswillige-skills) bereits. Das alles ist Context Rot und kein Signal.
+Okay, die Überschrift hat viel versprochen und wird es nicht halten: Die eine perfekte `CLAUDE.md` wird es nicht geben, dafür ist jedes Projekt zu einzigartig. Und dass ich kein Fan von riesigen Skill-Sammlungen bin, weißt du als aufmerksamer Leser [meiner Artikel](https://agentic.schule/blog/2026-09-boeswillige-skills) bereits. Das alles ist Context Rot und kein Signal.
 
 Aber: Wenn du meinen [Kurs](https://agentic.schule/build-with-ai/online) besuchst, zeige ich dir gerne Custom Prompts aus meinen Kundenprojekten, und wir besprechen gemeinsam, was gut funktioniert und was nicht. Ich freue mich auf deinen Besuch!
 
@@ -152,7 +152,7 @@ Aber: Wenn du meinen [Kurs](https://agentic.schule/build-with-ai/online) besuchs
 
 Zwei Buzzwords, ein Handwerk. Prompt Engineering heißt: klare Anweisung, Beispiele, gemessen an Evals. Context Engineering heißt: Das Fenster ist endlich, also kuratiere, was hineinkommt, knapp und informativ. Beides steht frei zugänglich in den Primärquellen, und keines von beiden braucht einen bezahlten Kurs. (Außer bei der [agentic.schule](https://agentic.schule)! 😉)
 
-Dieser Artikel ist der erste Teil der Serie: **Prompt und Kontext** bestimmen, was das Modell sieht. Weiter geht es mit der **Schleife**, die eine Linie in die Tiefe treibt, bis das Ziel steht ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)), und dem **Graphen**, der unabhängige Arbeit in die Breite fächert ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Drei Werkzeuge, drei Formen von Arbeit, und alle drei fangen mit derselben Frage an: Was muss das Modell wissen, um den nächsten Schritt gut zu machen?
+Dieser Artikel ist der erste Teil der Serie: **Prompt und Kontext** bestimmen, was das Modell sieht. Weiter geht es mit der **Schleife**, die eine Linie in die Tiefe treibt, bis das Ziel steht ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)), und dem **Graphen**, der unabhängige Arbeit in die Breite fächert ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Drei Werkzeuge, drei Formen von Arbeit, und alle drei fangen mit derselben Frage an: Was muss das Modell wissen, um den nächsten Schritt gut zu machen?
 
 **Fragen, Feedback, eigene Prompt-Rezepte?** Immer her damit, ich freue mich über jede Nachricht.
 

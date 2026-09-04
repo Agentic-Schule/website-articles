@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-07-27
+published: 2026-09-15
 keywords:
   - Agent Skills
   - Skill Marketplace
@@ -124,7 +124,7 @@ Far more important than any number is this sentence from the report:
 
 So much for the story as AIR tells it. It ends with publication on 22 June. What interested me is what has happened since, so I went and looked. The part that genuinely surprised me: **the skill is still there.** As of 27 July 2026, the file `plugins/brand-landingpage/skills/brand-landingpage/SKILL.md` still contains both references to the attackers' domain, unchanged. That is a good five weeks after the report was published and almost three months after the merge. The repository itself is very much alive. It now counts more than 38,000 stars and was last updated on 22 July 2026.
 
-The skill will probably be removed sooner or later. That is why I have put up an [archive copy](https://agentic-schule.github.io/website-articles/blog/2026-07-boeswillige-skills-EN/WARNING-malicious-skill-brand-landingpage.txt). It carries an unmissable warning, and the two references to the attacker domain are defanged in it. The file is an exhibit to look at. Please do not run it, do not copy it into a skills directory, and do not hand it to an agent to read.
+The skill will probably be removed sooner or later. That is why I have put up an [archive copy](https://agentic-schule.github.io/website-articles/blog/2026-09-boeswillige-skills-EN/WARNING-malicious-skill-brand-landingpage.txt). It carries an unmissable warning, and the two references to the attacker domain are defanged in it. The file is an exhibit to look at. Please do not run it, do not copy it into a skills directory, and do not hand it to an agent to read.
 
 That holds even when the agent is only meant to read the text and do nothing with it. The moment it sits in the context window it stands next to your own instructions, and that is precisely what prompt injection rests on. On top of that comes an effect people rarely think about. When the context fills up, Claude Code summarises the older parts of the conversation. What survives that summary is the model's decision. Anthropic even offers [dedicated compaction instructions](https://code.claude.com/docs/en/costs) that let you steer what should be preserved, which by the same token means nothing is guaranteed. That the warning might drop out while the instruction stays in is something I have not observed and do not claim. Nor can I rule it out, and the dangerous part is only two sentences long.
 

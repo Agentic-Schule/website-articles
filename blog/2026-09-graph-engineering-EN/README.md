@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-09-02
+published: 2026-09-20
 keywords:
   - Graph Engineering
   - Claude Code
@@ -131,7 +131,7 @@ That a wide fan is not always the answer is something Anthropic says itself, in 
 
 So the next time you hear an AI influencer say "graph engineering", you know: I already have all of that, and I do not need to book a two-hour course for it. No, it does not revolutionize everything that came before. And if you switch on `ultracode`, Claude even starts a workflow on its own for complex tasks, whenever one is worth it. Very reassuring.
 
-That closes the series. Three tools for three shapes of work: the **prompt** determines how you ask. The **loop** drives a line into the depth, on and on, until the goal stands ([Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering)). The **graph** fans independent work out into the breadth. One is not the successor of the other; they solve different problems.
+That closes the series. Three tools for three shapes of work: the **prompt** determines how you ask. The **loop** drives a line into the depth, on and on, until the goal stands ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)). The **graph** fans independent work out into the breadth. One is not the successor of the other; they solve different problems.
 
 My advice is the undramatic one, as always: start small. A `/deep-research` on a real question, or an audit across a single directory. Watch the usage in `/workflows`, read the script Claude wrote, and judge for yourself whether your work right now is a line or a graph.
 

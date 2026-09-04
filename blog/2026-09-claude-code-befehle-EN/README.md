@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-09-03
+published: 2026-09-23
 keywords:
   - Claude Code
   - Slash Commands
@@ -43,7 +43,7 @@ The only bundled workflow, and a showcase of what Claude Code can do in terms of
 
 ## 4. `/loop`: the loop
 
-Repeats a prompt at a fixed interval (`/loop 5m check the deploy`) or lets Claude set its own pace if you leave the interval out. That lets the agent tackle hard tasks across many attempts, all night against CI if need be. What is behind it, I took apart in a separate article: [Loop Engineering](https://agentic.schule/blog/2026-07-loop-engineering).
+Repeats a prompt at a fixed interval (`/loop 5m check the deploy`) or lets Claude set its own pace if you leave the interval out. That lets the agent tackle hard tasks across many attempts, all night against CI if need be. What is behind it, I took apart in a separate article: [Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering).
 
 > **💡 Tip:** The stop condition is the actual work. "Until CI is green again" works, "until it is good" goes in circles.
 
@@ -81,7 +81,7 @@ Opens the overview of your connected MCP servers, the external tools Claude uses
 
 ## 10. `/remote-control`: the session in your pocket
 
-Connects the running session to claude.ai/code or the Claude app: scan the QR code with your phone, and you continue that same session on your phone or in the browser while it runs on your machine. Perfect for following a long run from the sofa, or answering a question on the go instead of leaving it until the end of the day. My ground station, the Mac mini, is exactly what I drive this way ([more on that here](https://agentic.schule/blog/2026-07-agentic-coding-mac-mini)).
+Connects the running session to claude.ai/code or the Claude app: scan the QR code with your phone, and you continue that same session on your phone or in the browser while it runs on your machine. Perfect for following a long run from the sofa, or answering a question on the go instead of leaving it until the end of the day. My ground station, the Mac mini, is exactly what I drive this way ([more on that here](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)).
 
 > **💡 Tip:** `/rc` is enough to type, that is the official alias.
 
