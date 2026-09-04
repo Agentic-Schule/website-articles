@@ -18,7 +18,9 @@ header: header.jpg
 
 Deine Agenten arbeiten an überschneidenden Aufgaben, etwa an zwei Features für dasselbe Projekt. Agent A hat eine Nachricht für Agent B. Bisher musstest du dabei den Postboten spielen, mit Kopieren und Einfügen. Damit ist jetzt Schluss.
 
-**Seit August können sich Claude-Code-Sitzungen gegenseitig Nachrichten schicken. Claude reicht die Erkenntnis selbst weiter, statt dass du sie von einem Fenster ins nächste kopierst (oder eine Datei als Briefkasten missbrauchst: schreib nach `/tmp/nachricht.md`, lies aus `/tmp/nachricht.md`, was am Ende derselbe Botengang ist). Das Feature heißt Cross-Session Messaging, es ist standardmäßig an, und es ist bewusst schmal gebaut: Es überträgt Text, sonst nichts.**
+**Seit August können sich Claude-Code-Sitzungen gegenseitig Nachrichten schicken. Claude reicht die Erkenntnis selbst weiter, statt dass du sie von einem Fenster ins nächste kopierst (oder eine Datei als Briefkasten missbrauchst).**
+
+Das Feature heißt Cross-Session Messaging, es ist standardmäßig an, und es ist bewusst schmal gebaut: Es überträgt Text, sonst nichts.
 
 ## Inhalt
 
@@ -26,11 +28,11 @@ Deine Agenten arbeiten an überschneidenden Aufgaben, etwa an zwei Features für
 
 ## Was das Feature tut
 
-Zwei neue Werkzeuge stecken dahinter. `ListAgents` findet heraus, welche Sitzungen erreichbar sind, `SendMessage` stellt die Nachricht zu. Beide ruft Claude selbst auf, du tippst keines davon.
+Die Mechanik besteht aus zwei neuen Werkzeugen: `ListAgents` findet heraus, welche Sitzungen erreichbar sind, `SendMessage` stellt die Nachricht zu. Beide ruft Claude selbst auf, du tippst keines davon.
 
-Die [offizielle Doku](https://code.claude.com/docs/en/cross-session-messaging) beschreibt den Zweck mit einem Beispiel, das jeder kennt, der mit mehreren Fenstern arbeitet: „When a change in one session breaks what another is building on, Claude can warn that session before you notice." Wer gerade das Datenbankschema umbaut, gibt dem Kollegen im anderen Fenster Bescheid, der noch auf dem alten Stand entwickelt.
+Die [offizielle Doku](https://code.claude.com/docs/en/cross-session-messaging) beschreibt den Zweck mit einem Beispiel, das jeder kennt, der mit mehreren Sitzungen arbeitet: „When a change in one session breaks what another is building on, Claude can warn that session before you notice." Die Sitzung, die gerade das Datenbankschema umbaut, meldet das an die Sitzung, die noch gegen den alten Stand entwickelt.
 
-Es ist ein junges Feature. Eingeführt wurde es mit Claude Code 2.1.224 am 7. August 2026, zunächst für macOS und Linux, Windows folgte wenige Wochen später. Innerhalb einer Sitzung gab es `SendMessage` schon länger, um Subagenten weiterzureichen. Neu ist der Weg über Sitzungsgrenzen hinweg.
+Es ist ein junges Feature. Eingeführt wurde es mit Claude Code 2.1.224 am 7. August 2026, zunächst für macOS und Linux, Windows folgte wenige Wochen später. Innerhalb einer Sitzung gab es `SendMessage` schon länger: Damit schickt Claude einem bereits gestarteten Subagenten eine weitere Anweisung und nimmt dessen Arbeit wieder auf. Neu ist der Weg über Sitzungsgrenzen hinweg.
 
 ## Der wichtigste Satz der Doku
 
@@ -38,9 +40,9 @@ Bevor es praktisch wird, die eine Einschränkung, die alles andere erklärt:
 
 > „A message is a piece of text one Claude writes to another, never the sender's conversation history or files. To move a whole conversation or its context, resume the session instead."
 
-Übertragen wird also **nur Text**. Keine Historie, keine Dateien, kein Kontext. Wer erwartet, dass die andere Sitzung anschließend weiß, worüber die erste den ganzen Vormittag nachgedacht hat, erwartet das Falsche. Wenn du eine ganze Konversation woanders fortsetzen willst, ist `--resume` das richtige Werkzeug.
+Übertragen wird also **nur Text**. Keine Historie, keine Dateien, kein Kontext. Wer erwartet, dass die andere Sitzung anschließend weiß, worüber die erste den ganzen Vormittag nachgedacht hat, erwartet das Falsche. Die Doku nennt für diesen Fall auch gleich das richtige Werkzeug: „resume the session instead", also `--resume` beziehungsweise `/resume`. Und wer den bisherigen Verlauf mitnehmen und von dort aus in eine andere Richtung weiterarbeiten will, nimmt `/branch`, das laut Beschreibung „a branch of the current conversation at this point" anlegt (früher hieß der Befehl `/fork`, der Alias funktioniert weiterhin).
 
-Das klingt nach einer Schwäche, ist aber genau der Grund, warum das Feature im Alltag funktioniert: Eine Nachricht ist ein Zuruf. Kurz, klar, ohne Ballast. Und für das, was überleben soll, gibt es weiterhin die Platte: Notizen, Recherche-Archive, Dateien im Repository.
+Zurück zur Nachricht. Dass sie nur Text überträgt, klingt nach einer Schwäche, ist aber genau der Grund, warum das Feature so praktisch ist: Eine Nachricht ist ein Zuruf. Kurz, klar, ohne Ballast. Und für das, was überleben soll, gibt es weiterhin die Festplatte: Notizen, Recherche-Archive, Dateien im Repository.
 
 ## So benutzt du es
 
@@ -48,7 +50,7 @@ In der Praxis sagst du einfach, was die andere Sitzung wissen soll, und Claude k
 
 > **🛠️ Selbst ausprobieren**
 > ```text
-> Frag die Sitzung in meinem anderen Terminal, ob die Migration durch ist
+> Frag die Sitzung, die an der Migration arbeitet, ob sie durch ist
 > ```
 
 Willst du die Ziel-Sitzung genau benennen, erwähnst du sie mit `@` und den ersten Buchstaben ihres Namens, so wie du einen Subagenten erwähnst:
@@ -65,7 +67,7 @@ Die eigene Inbox-Adresse zeigt übrigens `/status` in der Zeile „Peer address"
 
 ## Der Name ist die Adresse
 
-Damit zur Frage, die sich sofort stellt: Woher kommt der Name, unter dem eine Sitzung angesprochen wird? Die Antwort: aus dem Namen der Konversation! Claude Code vergibt beim Start einen lesbaren Vorschlag, und du kannst ihn jederzeit ändern:
+Damit zur Frage, die sich sofort stellt: Woher kommt der Name, unter dem eine Sitzung angesprochen wird? Die Antwort: aus dem Namen der Konversation! Claude Code vergibt beim Start einen lesbaren Vorschlag (der oft ziemlich nutzlos ist), und du kannst ihn jederzeit ändern:
 
 - `/rename` (Alias `/name`) benennt die laufende Konversation um, also deine aktuelle Sitzung.
 - `claude --name <name>` setzt den Namen schon beim Start.
@@ -81,7 +83,7 @@ Die Zustellung ist rücksichtsvoller gebaut, als man erwartet. Arbeitet die Ziel
 
 Eine Bedingung gibt es: Der Prozess muss laufen. Eine Sitzung taucht laut Doku überhaupt erst in der Liste auf, wenn sie ihren Inbox-Socket hält. Wer das Terminal geschlossen hat, ist nicht erreichbar. Davorsitzen musst du allerdings nicht, und Hintergrund-Sitzungen zählen genauso.
 
-Sichtbar wird das als einzeilige Vorschau in der Konversation, etwa so:
+Sichtbar wird das als einzeilige Vorschau, die dauerhaft in der Konversation stehen bleibt. Die Doku zeigt sie so:
 
 ```text
 › Message from @api-worker: Schema migration finished (ctrl+o to expand)
@@ -104,7 +106,7 @@ Für lange Läufe gibt es einen zweiten Weg, der ohne Nachfragen auskommt: Claud
 
 Das ist eine Anmeldung, kein Dauerabo und kein Polling. Im Changelog heißt der Parameter dahinter `notify_when_idle`, beschrieben als „opt-in, one-shot, no polling". Statt alle paar Minuten nachzuschauen, bekommst du genau eine Rückmeldung. Wer regelmäßig lange Läufe nebenher fährt, etwa auf einer eigenen Maschine wie in meinem [Bodenstation-Artikel](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini), spart sich damit das ständige Kontrollieren.
 
-Zwei Einschränkungen gehören dazu. Es gibt nur dieses eine Ereignis, nämlich Leerlauf oder Ende, und keine frei wählbaren Auslöser. Und es funktioniert nur zwischen Sitzungen auf derselben Maschine. Wer auf etwas Fachliches warten will, etwa auf grüne Tests, trägt das der anderen Sitzung stattdessen als ganz normale Nachricht auf. Dann meldet sie sich, wenn es so weit ist.
+Zwei Einschränkungen gehören dazu. Es gibt nur dieses eine Ereignis, nämlich Leerlauf oder Ende, und keine frei wählbaren Auslöser. Und es funktioniert nur zwischen Sitzungen auf derselben Maschine.
 
 ## Was dich schützt
 
@@ -126,7 +128,7 @@ Ein paar Eigenschaften des Kanals sind fest eingebaut, und alle drei ergeben Sin
 
 **Nur Klartext.** Strukturierte Protokoll-Nachrichten bleiben innerhalb eines Agenten-Teams.
 
-**Größenlimit.** Wird die Nachricht zu groß, weist Claude Code sie schon beim Absender ab, bevor sie losgeht. Die Obergrenze liegt bei rund einer Million Zeichen, du wirst sie im Alltag nicht sehen.
+**Größenlimit.** Wird die Nachricht zu groß, weist Claude Code sie schon beim Absender ab, bevor sie losgeht. Die Obergrenze liegt bei rund einer Million Zeichen, was absurd groß ist. So große Nachrichten will sowieso niemand verschicken.
 
 **Schleifen laufen sich tot.** Wiederholungen an dieselbe Sitzung werden gedrosselt, identische Nachrichten innerhalb kurzer Zeit verworfen, und die Warteschlange fasst höchstens fünfzig Nachrichten. Die Doku sagt trocken: „A message loop between two sessions therefore stops on its own." Zwei Sitzungen, die sich gegenseitig hochschaukeln, sind also ein gelöstes Problem.
 
@@ -135,22 +137,22 @@ Ein paar Eigenschaften des Kanals sind fest eingebaut, und alle drei ergeben Sin
 Die Doku grenzt das Feature selbst ab, und diese Liste ist es wert, gelesen zu werden, bevor man alles mit Nachrichten löst:
 
 - Willst du **eine Konversation woanders fortsetzen**, nimm `--resume`.
-- Willst du ein **koordiniertes Team**, das Claude selbst aufsetzt und beaufsichtigt, nimm Agent Teams. Die sind allerdings noch experimentell und standardmäßig aus, du musst sie über die Umgebungsvariable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` einschalten. Ein eigener Artikel dazu ist in Arbeit.
+- Willst du ein **koordiniertes Team**, das Claude selbst aufsetzt und beaufsichtigt, nimm Agent Teams. Die sind allerdings noch experimentell und standardmäßig aus, du musst sie über die Umgebungsvariable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` einschalten.
 - Willst du **viele Sitzungen an einem Ort beobachten**, nimm die Agent View.
 - Willst du **selbst vom Handy steuern**, nimm Remote Control, siehe dazu die zehn Befehle in meinem [Befehle-Artikel](https://agentic.schule/blog/2026-09-claude-code-befehle).
 - Willst du **externe Ereignisse hineinreichen**, etwa CI-Ergebnisse, nimm Channels.
 
-Cross-Session Messaging ist für den Fall dazwischen: unabhängige Sitzungen, die du selbst gestartet hast und selbst steuerst, und von denen eine mitten in der Arbeit etwas erfährt, das eine andere braucht.
+Cross-Session Messaging ist für den Fall dazwischen. Du startest und steuerst deine Sitzungen selbst. Eine davon erfährt mitten in der Arbeit etwas, das eine andere gerade braucht.
 
-> **💡 Merke:** Die Nachricht ist der Zuruf, die Datei ist das Ergebnis. Alles, was groß ist oder überleben soll, gehört weiterhin auf die Platte.
+> **💡 Merke:** Die Nachricht ist als kurzfristiger Zuruf gedacht. Alles, was groß ist oder längerfristig überleben soll, gehört weiterhin auf die Festplatte.
 
 ## Fazit
 
-Cross-Session Messaging ist ein kleines Feature mit einer klaren Aufgabe, und es ist genau deshalb gut. Es kopiert keine Kontexte, es synchronisiert keine Zustände, es baut kein verteiltes System. Es reicht einen Satz von einem Terminal ins nächste, im richtigen Moment, ohne dass du zwischen Fenstern wechselst.
+Cross-Session Messaging ist ein praktisches Feature mit einer klaren Aufgabe, und es ist genau deshalb gut. Es reicht einen Satz von einem Terminal ins nächste, im richtigen Moment, ohne dass du zwischen Fenstern wechselst.
 
 Wer ohnehin mit mehreren Sitzungen arbeitet, etwa mit [git worktrees](https://agentic.schule/blog/2026-09-agentic-coding-git-worktrees) pro Aufgabe, bekommt damit das fehlende Stück: Die Zweige wissen voneinander. Und der erste Schritt dorthin ist ein einziger Befehl, nämlich `/rename` in jeder Sitzung, damit deine Fenster sprechende Namen haben.
 
-**Was war die erste Nachricht, die deine Sitzungen einander geschickt haben?** Ich sammle die schönsten.
+**Was war die erste Nachricht, die deine Sitzungen einander geschickt haben?** Gerne sammle ich die schönsten.
 
 ---
 
