@@ -15,9 +15,9 @@ language: de
 header: header.jpg
 ---
 
-Der Schrägstrich ist die mächtigste Taste in Claude Code.
+Der `/Schrägstrich` ist die mächtigste Taste in Claude Code, denn damit startest du einen Slash-Command. Los geht's!
 
-**Claude Code bringt deutlich mehr Slash-Befehle mit, als die üblichen Einsteiger-Listen zeigen. Hier sind zehn, die ich selbst ständig benutze, jeder mit dem einen Handgriff, der ihn wertvoll macht. Alle Angaben habe ich an Version 2.1.260 nachgeprüft.**
+**Claude Code bringt deutlich mehr Slash-Befehle mit, als die üblichen Einsteiger-Listen zeigen. Hier sind zehn, die ich selbst ständig benutze, jeder mit dem einen Handgriff, der ihn wertvoll macht.**
 
 ## Inhalt
 
