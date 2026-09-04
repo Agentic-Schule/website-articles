@@ -1,0 +1,104 @@
+---
+title: 'Ist das noch Vibe Coding? Oder doch gutes Handwerk?'
+author: Johannes Hoppe
+mail: johannes.hoppe@haushoppe-its.de
+bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
+bioHeading: Über den Autor
+published: 2026-09-04
+keywords:
+  - Vibe Coding
+  - Agentic Coding
+  - Claude Code
+  - AI-assisted Engineering
+  - Code-Review
+  - Sicherheit
+  - Evals
+language: de
+header: header.jpg
+---
+
+Ich habe ein ganzes Produkt gevibecodet. Und trotzdem lese ich jeden Diff. Nach der Original-Definition geht das gar nicht zusammen.
+
+**Genau in diesem Widerspruch steckt die ganze Geschichte des Begriffs Vibe Coding: Was Andrej Karpathy als Wegwerf-Experiment fürs Wochenende beschrieb, ist heute das Etikett für so ziemlich alles, was mit KI-Agenten gebaut wird. Zeit, das Wort auseinanderzunehmen, auf die Faktenlage zu schauen und dann zu zeigen, mit welchen Techniken trotz KI am Steuer brauchbare Software entsteht.**
+
+## Inhalt
+
+[[toc]]
+
+## Vom Wegwerf-Experiment zum Wort des Jahres
+
+Am 6. November 2025 kürte das Collins Dictionary „vibe coding" zum [Word of the Year 2025](https://blog.collinsdictionary.com/language-lovers/collins-word-of-the-year-2025-ai-meets-authenticity-as-society-shifts/). Die Begründung liest sich wie ein Werbetext: „It’s programming by vibes, not variables. While tech experts debate whether it’s revolutionary or reckless, the term has resonated far beyond Silicon Valley, speaking to a broader cultural shift towards AI-assisted everything in everyday life."
+
+Der [Wörterbucheintrag](https://www.collinsdictionary.com/dictionary/english/vibe-coding) selbst ist bemerkenswert zahm: „the use of artificial intelligence prompted by natural language to assist with the writing of computer code", als Slang-Substantiv, mit den abgeleiteten Formen „vibe coder" und „vibe-code" als Verb. Nach dieser Definition wäre jede KI-gestützte Programmierung Vibe Coding. Und genau da beginnt das Problem, denn das Original sagt etwas völlig anderes.
+
+## Was Karpathy wirklich schrieb
+
+Der Begriff lässt sich auf die Minute genau datieren: 2. Februar 2025, 23:17 UTC, ein [X-Post von Andrej Karpathy](https://x.com/karpathy/status/1886192184808149383). (Falls du irgendwo den 6. Februar liest: Das ist eine Falschangabe, die durch Sekundärquellen geistert.) Der Anfang im Wortlaut:
+
+> „There's a new kind of coding I call "vibe coding", where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."
+
+Und dann wird es konkret. Karpathy beschreibt, was das praktisch heißt: „I "Accept All" always, I don't read the diffs anymore." Fehlermeldungen kopiert er kommentarlos zurück in den Chat. Der Code wächst „beyond my usual comprehension". Und wenn ein Bug nicht verschwindet, bittet er um zufällige Änderungen, bis er weg ist. Seine eigene Einordnung steht im selben Post: „It's not too bad for throwaway weekend projects, but still quite amusing." Und: „it's not really coding - I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works."
+
+Das Original ist also erfrischend klar: Vibe Coding heißt, den Code bewusst **nicht** zu lesen. Es ist ein Experiment mit Kontrollverzicht, gedacht für Wegwerf-Projekte. Eine Produktions-Methodik hat Karpathy nie daraus gemacht.
+
+## Die Verwässerung und die Gegenwehr
+
+Was dann passierte, kennt jeder, der die Branche verfolgt: Der Begriff explodierte, und plötzlich hieß alles Vibe Coding, vom Wochenend-Prototyp bis zur professionellen Agenten-Entwicklung. Der prominenteste Gegenspieler dieser Verwässerung ist Simon Willison. Schon am 19. März 2025 stellte er in [„Not all AI-assisted programming is vibe coding (but vibe coding rocks)"](https://simonwillison.net/2025/Mar/19/vibe-coding/) klar, wie er den Begriff versteht: „When I talk about vibe coding I mean building software with an LLM without reviewing the code it writes." Seine Trennlinie ist der beste Satz der ganzen Debatte:
+
+> „If an LLM wrote the code for you, and you then reviewed it, tested it thoroughly and made sure you could explain how it works to someone else that’s not vibe coding, it’s software development. The usage of an LLM to support that activity is immaterial."
+
+Dazu seine goldene Regel: „My golden rule for production-quality AI-assisted programming is that I won’t commit any code to my repository if I couldn’t explain exactly what it does to somebody else."
+
+Wie ernst Willison das meint, zeigt eine Episode vom Mai 2025: Unter dem Titel [„Two publishers and three authors fail to understand what “vibe coding” means"](https://simonwillison.net/2025/May/1/not-vibe-coding/) kritisierte er zwei angekündigte Fachbücher, die den Begriff als Synonym für alle KI-Programmierung verwendeten. Es hatte offenbar Wirkung: Addy Osmanis Buch hieß ursprünglich „Vibe Coding: The Future of Programming" und kam als [„Beyond Vibe Coding: From Coder to AI-Era Developer"](https://beyond.addy.ie/) auf den Markt. Willisons Kommentar: „This title is so much better." Osmani selbst schreibt inzwischen: „Vibe coding was never meant to describe all AI-assisted coding. It's a specific approach where you don't read the AI's code before running it." Sein Gegenbegriff heißt *AI-assisted engineering*: „a more structured approach that combines the creativity of vibe coding with the rigor of traditional engineering practices." Und für die Fälle, in denen es schiefgeht, hat seine Buchseite den schönsten Satz: „Vibe coding is fun until you start leaking database credentials."
+
+Im Oktober 2025 legte Willison [selbst einen Gegenbegriff nach](https://simonwillison.net/2025/Oct/7/vibe-engineering/): „I propose we call this vibe engineering, with my tongue only partially in my cheek." Gemeint ist „a different, harder and more sophisticated way of working with AI tools to build production software", inklusive Selbstironie („Is this a stupid name? Yeah, probably."). Die Begriffs-Evolution ging danach übrigens weiter: Ein Update vom Februar 2026 im selben Post notiert, dass sich inzwischen „Agentic Engineering" durchsetzt.
+
+## Und dann verschwimmt die Grenze doch
+
+Die Geschichte hat einen dritten Akt, und der macht sie erst richtig interessant. Im Mai 2026 veröffentlichte Willison [„Vibe coding and agentic engineering are getting closer than I’d like"](https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/) und gestand: „Weirdly though, those things have started to blur for me already, which is quite upsetting." Der Grund: „The problem is that as the coding agents get more reliable, I’m not reviewing every line of code that they write anymore, even for my production level stuff."
+
+Ausgerechnet der Mann, der die Review-Pflicht zur Definitionsfrage gemacht hat, liest also nicht mehr jede Zeile. Er vergleicht das mit der Arbeit in großen Organisationen: Den Image-Resize-Service des Nachbarteams liest man auch nicht Zeile für Zeile, man nutzt ihn über die Doku und schaut erst hinein, wenn etwas klemmt. Der Unterschied, und den benennt er messerscharf: „Claude Code does not have a professional reputation! It can’t take accountability for what it’s done." Und er warnt vor dem schleichenden Gewöhnungseffekt: „There’s an element of the normalization of deviance here—every time a model turns out to have written the right code without me monitoring it closely there’s a risk that I’ll trust it at the wrong moment in the future and get burned."
+
+Für seine harte Grenze bleibt trotzdem Platz: „If you’re building software for other people, vibe coding is grossly irresponsible because it’s other people’s information. Other people get hurt by your stupid bugs."
+
+## Was die Empirie sagt
+
+Neben den Meinungen gibt es inzwischen Messungen, und die mahnen zur Vorsicht. Drei Befunde, jeweils mit ihren Grenzen:
+
+**KI-Code enthält messbar Schwachstellen.** Eine [peer-reviewte Analyse](https://arxiv.org/abs/2510.26103) (ICICS 2025) ließ CodeQL über 7.703 KI-attribuierte Dateien aus öffentlichen GitHub-Repos laufen: 87,9 % waren ohne identifizierbare CWE-Schwachstellen, im Umkehrschluss trug rund jede achte Datei mindestens einen Befund, insgesamt 4.241 CWE-Instanzen über 77 Typen. Zur Einordnung: Der Korpus besteht zu über 90 Prozent aus ChatGPT-Code, die Attribution ist selbst gemeldet, und statische Analyse liefert eine Untergrenze.
+
+**Autonome Iteration macht es schlimmer.** Eine [zweite peer-reviewte Studie](https://arxiv.org/abs/2506.11022) (IEEE ISTAS 2025) ließ ein LLM seinen eigenen Code in Schleife „verbessern", ganz ohne Menschen: Nach fünf Iterationen zählten die Autoren 37,6 % mehr kritische Schwachstellen, und selbst explizit sicherheitsfokussiertes Prompting verhinderte den Effekt nicht, es milderte ihn nur. Die Empfehlung der Autoren steht wörtlich im Paper: „Restrict consecutive LLM-only iterations to 3 maximum", danach Human Review und den Zähler zurücksetzen. Auch hier die Grenzen: ein einziges Modell (GPT-4o), nur C und Java, und ein bewusst konstruiertes Szenario ohne menschliches Eingreifen, also ziemlich genau Vibe Coding im Karpathy-Sinn.
+
+**Der Code wird kopierter und wird seltener aufgeräumt.** [GitClears Analyse](https://www.gitclear.com/ai_assistant_code_quality_2025_research) über 211 Millionen geänderte Codezeilen (2020 bis 2024) zeigt: Der Anteil von Refactoring-Zeilen fiel von 25 % auf unter 10 %, Copy-Paste stieg von 8,3 % auf 12,3 %, erstmals wurde mehr kopiert als verschoben. GitClear ist allerdings Anbieter von Code-Qualitäts-Tooling und misst mit proprietärem Algorithmus; der Befund ist eine Korrelation über die Zeitachse.
+
+Wichtig für die Einordnung: Keine dieser Studien misst Vibe Coding im engen Sinn, also das ungereviewte Akzeptieren. Sie vermessen KI-generierten Code generell, mit Modellen und Daten bis etwa Mitte 2025. Die Richtung ist trotzdem eindeutig: Ohne Kontrolle sammelt sich Risiko an.
+
+## Die Techniken: KI am Steuer, du an der Leitplanke
+
+Genau so ist unser eigenes Produkt Learnly entstanden: zu 100 Prozent KI-geschrieben, und trotzdem wurde jeder Diff gelesen. Nach dem strengen Maßstab von Karpathy und Willison ist das dann eben kein Vibe Coding mehr. Das ist Software-Entwicklung, und die folgenden Leitplanken machen den Unterschied:
+
+**1. Diffs lesen.** Die Minimalregel, und die exakte Umkehrung von Karpathys „I don't read the diffs anymore". Dazu Willisons Commit-Test: Was du nicht erklären kannst, committest du nicht.
+
+**2. Gib dem Agenten einen Check.** Die [offizielle Claude-Code-Doku](https://code.claude.com/docs/en/best-practices) bringt es auf den Punkt: „Give Claude a check it can run: tests, a build, a screenshot to compare. It’s the difference between a session you watch and one you walk away from." Ohne prüfbares Signal wirst du selbst zum Prüfstand, wörtlich: „you become the verification loop: every mistake waits for you to notice it." Tests, Build-Exit-Codes, Linter und Screenshot-Vergleiche schließen die Schleife, ganz im Sinne des [Loop-Artikels](https://agentic.schule/blog/2026-07-loop-engineering).
+
+**3. Tests zuerst.** Willison beobachtet, dass „LLMs actively reward existing top tier software engineering practices", allen voran automatisierte Tests: Mit stabiler Test-Suite fliegen die Agenten, ohne sie behauptet der Agent gerne, etwas funktioniere, ohne es je geprüft zu haben. Wie man die Qualität der Anweisungen selbst misst, statt nach Bauchgefühl zu urteilen, steht im [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-09-prompt-context-engineering): Evals.
+
+**4. Deckel auf die Iterationen.** Die Max-3-Regel aus der ISTAS-Studie ist eine Einzelstudien-Leitlinie, aber sie deckt sich mit der Alltagserfahrung: Wenn der Agent lange allein vor sich hin „verbessert", wird es selten besser. Zwischendrin selbst draufschauen.
+
+**5. Begrenze den Schaden.** Anthropic setzt bei Claude Code auf [Sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) mit Dateisystem- und Netzwerk-Isolation, ausdrücklich auch als Schutz gegen Prompt Injection. Laut Anthropic reduzieren die definierten Grenzen in der internen Nutzung die Berechtigungs-Nachfragen um 84 Prozent; der Agent arbeitet also freier und trotzdem eingezäunt.
+
+**6. Lass eine zweite Instanz prüfen.** Befehle wie `/code-review` und `/security-review` sind ein zusätzliches Netz mit frischem Blick. Sie ersetzen das eigene Lesen nicht, sie ergänzen es.
+
+> **💡 Merke:** Wer den Code tippt, ist zweitrangig. Software wird daraus erst, wenn jemand liest, testet und die Verantwortung trägt.
+
+## Fazit
+
+Ist das noch Vibe Coding? Oder doch gutes Handwerk? Die Antwort des Artikels: Der Begriff aus dem Wörterbuch meint inzwischen beides, und genau deshalb taugt er wenig. Karpathys Original beschreibt ein legitimes Experiment für Dinge, die kaputtgehen dürfen. Sobald andere Menschen deine Software benutzen, gilt Willisons Trennlinie: Lesen, testen, erklären können. Dann ist es Software-Entwicklung, egal wer tippt.
+
+Die schönste Pointe liefert der Erfinder selbst: Als Karpathy im Oktober 2025 sein Projekt nanochat veröffentlichte, fragte jemand, wie viel davon die KI geschrieben habe. [Seine Antwort](https://x.com/karpathy/status/1977758204139331904): „it's basically entirely hand-written (with tab autocomplete). I tried to use claude/codex agents a few times but they just didn't work well enough at all and net unhelpful, possibly the repo is too far off the data distribution." Der Vater des Vibe Codings hat sein wichtigstes Projekt von Hand geschrieben. 😄 Und seine Begründung ist die vielleicht beste Faustregel zum Schluss: Je weiter dein Problem von der Masse des Trainingsmaterials entfernt ist, desto weniger trägt der Vibe, und desto mehr zählt das Handwerk.
+
+**Fragen, Feedback, eigene Vibe-Geschichten?** Immer her damit, ich freue mich über jede Nachricht.
+
+---
+
+*Neugierig auf agentisches Arbeiten in der Praxis? In den Workshops von [agentic.schule](https://agentic.schule) und [angular.schule](https://angular.schule) zeigen wir, wie moderne KI-Agenten die tägliche Entwicklung verändern.*
