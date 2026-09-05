@@ -1,16 +1,40 @@
 # Vorgehen: aus gesammeltem Material werden Artikel-Themen
 
-Beschreibt die Kette von der Instagram-Aktivität bis zum abarbeitbaren Themen-Fundus. Der Workflow dazu ist `instagram-themen-fundus.js` und wird per `Workflow({ name: 'instagram-themen-fundus', args: { total, chunkSize, runDate } })` gestartet.
+Beschreibt die Kette von der Instagram-Aktivität bis zum abarbeitbaren Themen-Fundus. Die Umwandlung des Exports übernimmt `instagram-export-to-posts.py`, den Rest der Workflow `instagram-themen-fundus.js`, gestartet per `Workflow({ name: 'instagram-themen-fundus', args: { total, chunkSize, runDate } })` gestartet.
 
 ## Warum das Ganze
 
 Gespeicherte Reels sind ein Themenspeicher, der sich nicht von selbst erschließt. Ein Reel dauert eine Minute, 248 davon anzusehen kostet einen Arbeitstag. Der Fundus macht daraus eine Liste, die sich nach Themengruppen abarbeiten lässt.
 
-## Die Eingabedatei
+## Schritt 1: die Eingabedatei erzeugen
 
-`~/Shots/instagram-posts.json` ist ein JSON-Array. Jeder Eintrag hat `source` (`saved` oder `liked`), `date`, `url`, `account` und `caption`. Sie entsteht aus dem offiziellen Instagram-Datenexport, der die gespeicherten Posts und die Likes in getrennten Dateien liefert.
+Der Ausgangspunkt ist der offizielle Instagram-Datenexport. Anfordern lässt er sich in der App unter „Deine Aktivität" über „Deine Informationen herunterladen"; wichtig ist die Wahl **JSON** als Format, denn die HTML-Variante ist für diesen Zweck unbrauchbar. Instagram schickt das Archiv per Mail.
 
-Die Anzahl der Einträge wird als `args.total` übergeben, weil Workflow-Skripte selbst keinen Dateizugriff haben.
+Aus dem entpackten Archiv wird nur ein Verzeichnis gebraucht:
+
+```
+your_instagram_activity/
+  saved/saved_posts.json     gespeicherte Beiträge
+  likes/liked_posts.json     gelikte Beiträge
+```
+
+Beide Dateien sind Arrays. Jeder Eintrag hat einen `timestamp` und eine Liste `label_values`, in der die Angaben unter deutschen Labels stecken: „URL", „Untertitel" für die Caption, dazu verschachtelte Blöcke für Hashtags und den Eigentümer des Beitrags.
+
+Die Umwandlung übernimmt `instagram-export-to-posts.py`:
+
+```bash
+python3 .claude/workflows/instagram-export-to-posts.py ~/Shots/your_instagram_activity ~/Shots/instagram-posts.json
+```
+
+Das Ergebnis ist ein flaches Array mit `source` (`saved` oder `liked`), `date`, `url`, `account` und `caption`, sortiert nach Datum absteigend. Drei Eigenheiten des Exports behandelt das Skript, und jede davon kostet sonst Zeit:
+
+- **Die Texte sind doppelt kodiert.** UTF-8-Bytes stehen als Latin-1-Zeichen in der Datei, aus „wäre" wird „wÃ¤re". Ohne die Reparatur landet der Zeichensalat später im Fundus.
+- **Die Zeitstempel werden in UTC ausgewertet.** Bei Ortszeit rutschen Beiträge vom späten Abend auf den Folgetag.
+- **Die Captions werden bei 800 Zeichen gekappt.** Für Schlagworte und Kernaussage genügt der Anfang, und die gebündelte Übergabe an den Fundus-Agenten bleibt handhabbar.
+
+Der Anzeigename unter `account` stammt aus dem ersten Feld „Name" im Eintrag. Je nach Beitrag ist das der Kanalname oder der Name des Urhebers. Beides taugt als Anzeige im Fundus, die Zuordnung läuft ohnehin über die URL.
+
+Die Anzahl der Einträge, die das Skript ausgibt, wird anschließend als `args.total` an den Workflow übergeben, denn Workflow-Skripte haben selbst keinen Dateizugriff.
 
 ## Die beiden Phasen
 
