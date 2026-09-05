@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(60% 55% at 76% 44%, rgba(217,119,87,0.30), transparent 60%),
+      radial-gradient(50% 60% at 20% 92%, rgba(126,96,196,0.12), transparent 60%),
+      linear-gradient(155deg,#221a16 0%,#160f0c 58%,#0d0908 100%);
+    color:#fff; position:relative;
+  }
+  /* dezenter Punkt-Grid (gleiche DNA wie die Geschwister-Header) */
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:600px; }
+  .kicker { font-size:20px; letter-spacing:6px; font-weight:700; color:#e0916f; text-transform:uppercase; }
+  .kicker .dot { color:#d97757; }
+  h1 { font-size:64px; line-height:1.05; font-weight:800; letter-spacing:-1.5px; margin:22px 0 0; }
+  h1 .accent { color:#e58a68; }
+  .sub { margin-top:24px; font-size:25px; font-weight:500; color:#c3b7ae; letter-spacing:-.2px; line-height:1.35; }
+  .by { margin-top:38px; font-size:19px; color:#8c8079; }
+  .by b { color:#cbbfb6; font-weight:600; }
+  .art { position:absolute; right:34px; top:0; height:675px; width:520px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="left">
+      <div class="kicker">agentic<span class="dot">.</span>schule</div>
+      <h1>Der Sicherheits-<br><span class="accent">abstand</span></h1>
+      <div class="sub">Wenn das Modell deinen<br>eigenen Code nicht prüfen will</div>
+      <div class="by">von <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <div class="art">
+    <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.40"/>
+          <stop offset="55%" stop-color="#d97757" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#d97757" stop-opacity="0"/>
+        </radialGradient>
+        <marker id="a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#d97757"/>
+        </marker>
+      </defs>
+
+      <circle cx="282" cy="336" r="205" fill="url(#glow)"/>
+
+      <!-- der absichtlich breit gezogene Sicherheitsabstand: geblockter Ring -->
+      <circle cx="282" cy="336" r="129" fill="none" stroke="#d97757" stroke-opacity="0.20" stroke-width="118"/>
+      <circle cx="282" cy="336" r="188" fill="none" stroke="#d97757" stroke-opacity="0.55" stroke-width="1.8" stroke-dasharray="7 9"/>
+      <circle cx="282" cy="336" r="70" fill="#1d1713" stroke="rgba(255,255,255,0.30)" stroke-width="1.8"/>
+
+      <!-- die Anfrage laeuft von links an und bleibt im Abstand haengen -->
+      <path d="M18 336 L176 336" stroke="#8c7f77" stroke-opacity="0.85" stroke-width="2.4" marker-end="url(#a-coral)"/>
+      <g stroke="#d97757" stroke-width="3.4" stroke-linecap="round">
+        <path d="M196 322 L216 350"/>
+        <path d="M216 322 L196 350"/>
+      </g>
+
+      <text x="282" y="331" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#cbbfb6">very clearly</text>
+      <text x="282" y="351" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#cbbfb6">safe</text>
+      <text x="282" y="190" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#e0916f" letter-spacing="1.5">SAFETY MARGIN</text>
+    </svg>
+  </div>
+</body>
+</html>
