@@ -51,3 +51,10 @@ die Quelldateien werden also mit veröffentlicht (harmlos, aber gut zu wissen).
 git submodule update --init --recursive
 cd build && npm install && npm run build
 ```
+
+## Themenfindung
+
+`.claude/workflows/` enthält den Weg von der gesammelten Instagram-Aktivität zu einer nach
+Themen gruppierten Liste mit Abarbeitungs-Checkliste: `instagram-export-to-posts.py` wandelt
+den Instagram-Datenexport um, der Workflow `instagram-themen-fundus.js` transkribiert und
+bündelt. Das vollständige Vorgehen samt Fallstricken steht in `.claude/workflows/README.md`.
