@@ -95,15 +95,17 @@ Wie eng dieser Rahmen ist, hat sich wenige Tage nach dem Start gezeigt. Am 12. J
 
 Für einen Entwickler in Europa, der im Auftrag seines Kunden dessen eigene Software prüft, ist die Lage damit klar umrissen. Die volle Fähigkeit existiert. Sie ist an ein Freigabeprogramm gebunden, das auf einen anderen Kontinent zeigt. Und was übrig bleibt, ist ein Modell mit einem Sicherheitsabstand, der absichtlich zu groß ist.
 
-## Was ich selbst beobachte
+## Was ich selbst gemessen habe
 
 In einem Teil meiner Projekte geht es um Authentifizierung, Schlüsselverwaltung und kryptografische Verfahren. Also um die Sorte Code, bei der eine Sicherheitsprüfung nicht optional ist.
 
-Genau dort war der Befehl `/security-review` mit Claude Fable 5 für mich praktisch unbedienbar. Er wurde wiederholt verweigert. Auffällig ist das Muster: Ausgelöst hat es der Gegenstand der Prüfung. Sobald der Code selbst sicherheitsrelevant ist, kippt das Verhalten, und daran ändert auch eine andere Formulierung nichts.
+Ein Audit läuft dort heute anstandslos durch. Ich habe es an einem sicherheitsrelevanten Repository nachgemessen, mit Claude Fable 5: die Architektur erklären, Schwachstellen suchen, `/security-review`, sogar Schwachstellen finden und für jede den Angriffsvektor beschreiben. Alles wird bedient, und die Abrechnungsdaten bestätigen, dass wirklich Fable antwortet und nicht ersatzweise ein anderes Modell.
 
-Das deckt sich mit dem, was Anthropic beschreibt. Der Auslöser ist die Domäne und nicht die Absicht. Ein Klassifikator sieht Schlüsselableitung, Signaturprüfung und das Wort Exploit, und er kann nicht unterscheiden, ob hier jemand sein eigenes Produkt vor dem Release absichert oder ein fremdes angreift. Genau diese Unterscheidung nennt Hugging Face als Kern des Problems: „which cannot distinguish an incident responder from an attacker."
+Eine Sache läuft nicht durch: der Schritt vom Befund zum funktionierenden Exploit. Und genau der ist für die Verteidigung der wichtigste. Ein Befund ohne Proof of Concept bleibt eine Vermutung. Big Sleep und die DARPA-Challenge belegen ihre Funde nicht mit Prosa, sondern mit tatsächlicher Ausführung. Diese Grenze ist übrigens nicht Fable-eigen. Als ich für diese Messung einen Assistenten einen funktionierenden Exploit schreiben lassen wollte, hat dessen eigener Schutzmechanismus das abgelehnt, bevor die Frage das Modell erreichte.
 
-> **⚠️ Achtung:** Das ist meine Beobachtung an meinen eigenen Projekten, keine Messreihe. Veröffentlichte Studien decken diesen Fall bisher nicht ab. Big Sleep, die DARPA-Challenge und CyberSecEval messen alle etwas anderes, nämlich Fähigkeiten und Grenzfälle zwischen offensiv und legitim. Ein Coding-Agent, der ein sicherheitsrelevantes Repository prüfen soll, kommt in keiner dieser Messungen vor.
+Der Grund dafür ist sauber und liegt offen. Der Schutzmechanismus kann nicht wissen, ob hier jemand sein eigenes Produkt absichert oder ein fremdes angreift. Hugging Face nennt genau das den Kern des Problems: „which cannot distinguish an incident responder from an attacker." Weil sich die Absicht nicht prüfen lässt, wird nicht die Person gesperrt, sondern die Fähigkeit. Der Angreifer umgeht das, indem er längst lokal und unzensiert arbeitet. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen.
+
+> **💡 Der Stand heute:** Diese Schranke ist ein eigenes System vor dem Modell, kein Teil der Gewichte. Sie lässt sich nachjustieren, ohne dass sich die Modellversion ändert. Deshalb kann dieselbe Anfrage heute durchlaufen und morgen nicht, an keiner Versionsnummer ablesbar. Für verlässliche Arbeit ist das der eigentliche Grund, die Kontrolle auf die eigene Maschine zu holen.
 
 Bevor wir zum lokalen Modell kommen, lohnt der nüchterne Blick auf die Frage, ob diese Werkzeuge überhaupt taugen.
 
