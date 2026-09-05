@@ -97,11 +97,17 @@ Für einen Entwickler in Europa, der im Auftrag seines Kunden dessen eigene Soft
 
 ## Wo ein gehostetes Modell aufhört
 
-Ein Sicherheits-Audit bekommst du von einem gehosteten Modell heute problemlos. Es erklärt die Architektur, sucht Schwachstellen, ordnet sie nach Schweregrad und beschreibt den Angriffsvektor. Bis hierher reicht der Assistent aus der Cloud.
+Ein Sprachmodell behauptet viel, und vieles davon klingt richtig. Beweisen muss man es trotzdem. Bei einem gewöhnlichen Fehler kennst du das Verfahren: Du schreibst den Test, der den Defekt zeigt, er wird rot, dann reparierst du, bis er grün ist. Der rote Test ist der Beweis, dass der Fehler echt war, und der grüne, dass er weg ist.
 
-Ein Schritt reicht er nicht: den Proof of Concept. Also den funktionierenden Nachweis, dass eine gefundene Lücke wirklich ausnutzbar ist. Genau hier zieht der Schutzmechanismus die Grenze, und aus seiner Sicht mit gutem Grund. Ein funktionierender Exploit sieht gleich aus, egal ob ihn jemand zum Schließen der Lücke schreibt oder zum Ausnutzen. Das Modell kann die Absicht nicht prüfen. Hugging Face nennt genau das den Kern des Problems: „which cannot distinguish an incident responder from an attacker."
+Bei einer Sicherheitslücke ist der Exploit dieser Test. Der Befund allein ist die Behauptung, der reproduzierbare Nachweis am eigenen System ist der Beweis, in seiner härtesten Form die vollständige Kompromittierung. Erst danach wendest du den Fix an, und danach darf derselbe Exploit nicht mehr durchgehen. Er bleibt als Regressionstest liegen, damit die Lücke nicht unbemerkt zurückkehrt. Und weil er nur einen Weg abdeckt, ist er notwendig, aber nie schon der ganze Beweis, dass die Lücke restlos zu ist.
 
-Das ist die Stelle, an der die Verteidigung ausgebremst wird, und zwar an ihrer wichtigsten. Ein Befund ohne Nachweis bleibt eine Vermutung. Alles, was in der Sicherheitsforschung bisher wirklich Lücken gefunden hat, belegt seine Funde nicht mit Prosa, sondern mit tatsächlicher Ausführung, wie der nächste Abschnitt zeigt. Wer den Nachweis nicht führen darf, liefert schwächere Arbeit als der Angreifer, der sich an keine Nutzungsbedingung hält.
+Und genau diesen Schritt, das Rotschreiben des Tests, gibt ein gehostetes Modell nicht her.
+
+Ein Sicherheits-Audit bekommst du von ihm heute problemlos. Es erklärt die Architektur, sucht Schwachstellen, ordnet sie nach Schweregrad und beschreibt den Angriffsvektor. Bis hierher reicht der Assistent aus der Cloud.
+
+Beim Proof of Concept reicht er nicht mehr. Genau hier zieht der Schutzmechanismus die Grenze, und aus seiner Sicht mit gutem Grund. Ein funktionierender Exploit sieht gleich aus, egal ob ihn jemand zum Schließen der Lücke schreibt oder zum Ausnutzen. Das Modell kann die Absicht nicht prüfen. Hugging Face nennt genau das den Kern des Problems: „which cannot distinguish an incident responder from an attacker."
+
+Das ist die Stelle, an der die Verteidigung ausgebremst wird, und zwar an ihrer wichtigsten. Das gehostete Modell hilft dir bis zur Behauptung und lässt dich beim Beweis stehen. Dass der Beweis das Entscheidende ist, zeigt der nächste Abschnitt: Alles, was in der Sicherheitsforschung bisher wirklich Lücken gefunden hat, belegt seine Funde über tatsächliche Ausführung. Wer diesen Nachweis nicht führen darf, liefert schwächere Arbeit als der Angreifer, der sich an keine Nutzungsbedingung hält.
 
 Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter nicht die Person, sondern die Fähigkeit. Der Angreifer umgeht das, indem er lokal und unbeschränkt arbeitet. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen. Das ist die Asymmetrie aus dem Hugging-Face-Vorfall, diesmal nicht bei der Forensik, sondern beim Prüfen des eigenen Codes.
 
