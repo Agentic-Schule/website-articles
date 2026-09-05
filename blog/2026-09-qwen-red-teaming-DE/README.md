@@ -81,7 +81,7 @@ Der entscheidende Absatz steht im Bericht zur [Wiederinbetriebnahme](https://www
 
 > „We therefore deliberately set the safety classifiers to trigger on a set of requests that we know are likely benign. This ‚safety margin' approach means that a request has to look very clearly safe to avoid triggering the classifier. Users experience the safety margin as a model refusing to respond to some reasonable, non-harmful requests. For Fable 5, we made this safety margin much larger than in any prior launch, meaning that many more benign requests would be blocked."
 
-Der Klassifikator soll also ausdrücklich auch bei Anfragen anspringen, die der Anbieter selbst für harmlos hält. Eine Anfrage muss „very clearly safe" aussehen, um durchzukommen. Wer Sicherheitscode prüft, sieht per Definition nicht clearly safe aus.
+Der Klassifikator soll also ausdrücklich auch bei Anfragen anspringen, die der Anbieter selbst für harmlos hält. Eine Anfrage muss „very clearly safe" aussehen, um durchzukommen. Wo diese Linie verläuft, entscheidet der Anbieter, und sie ist bewusst mit Abstand gezogen. Genau deshalb ist entscheidend, an welcher Stelle sie in der Sicherheitsarbeit einschneidet.
 
 Dass das Ganze zu breit greift, schreibt Anthropic selbst. In der [Stellungnahme vom 12. Juni](https://www.anthropic.com/news/fable-mythos-access) steht der Satz: „our safeguards are so strong that many users have complained that they are overly broad." Nach einer Nachschärfung Ende Juni kommt die Einschränkung noch dichter an unseren Alltag heran: „The new classifier also comes at the cost of flagging benign requests more often during routine coding and debugging tasks."
 
@@ -95,17 +95,17 @@ Wie eng dieser Rahmen ist, hat sich wenige Tage nach dem Start gezeigt. Am 12. J
 
 Für einen Entwickler in Europa, der im Auftrag seines Kunden dessen eigene Software prüft, ist die Lage damit klar umrissen. Die volle Fähigkeit existiert. Sie ist an ein Freigabeprogramm gebunden, das auf einen anderen Kontinent zeigt. Und was übrig bleibt, ist ein Modell mit einem Sicherheitsabstand, der absichtlich zu groß ist.
 
-## Was ich selbst gemessen habe
+## Wo ein gehostetes Modell aufhört
 
-In einem Teil meiner Projekte geht es um Authentifizierung, Schlüsselverwaltung und kryptografische Verfahren. Also um die Sorte Code, bei der eine Sicherheitsprüfung nicht optional ist.
+Ein Sicherheits-Audit bekommst du von einem gehosteten Modell heute problemlos. Es erklärt die Architektur, sucht Schwachstellen, ordnet sie nach Schweregrad und beschreibt den Angriffsvektor. Bis hierher reicht der Assistent aus der Cloud.
 
-Ein Audit läuft dort heute anstandslos durch. Ich habe es an einem sicherheitsrelevanten Repository nachgemessen, mit Claude Fable 5: die Architektur erklären, Schwachstellen suchen, `/security-review`, sogar Schwachstellen finden und für jede den Angriffsvektor beschreiben. Alles wird bedient, und die Abrechnungsdaten bestätigen, dass wirklich Fable antwortet und nicht ersatzweise ein anderes Modell.
+Ein Schritt reicht er nicht: den Proof of Concept. Also den funktionierenden Nachweis, dass eine gefundene Lücke wirklich ausnutzbar ist. Genau hier zieht der Schutzmechanismus die Grenze, und aus seiner Sicht mit gutem Grund. Ein funktionierender Exploit sieht gleich aus, egal ob ihn jemand zum Schließen der Lücke schreibt oder zum Ausnutzen. Das Modell kann die Absicht nicht prüfen. Hugging Face nennt genau das den Kern des Problems: „which cannot distinguish an incident responder from an attacker."
 
-Eine Sache läuft nicht durch: der Schritt vom Befund zum funktionierenden Exploit. Und genau der ist für die Verteidigung der wichtigste. Ein Befund ohne Proof of Concept bleibt eine Vermutung. Big Sleep und die DARPA-Challenge belegen ihre Funde nicht mit Prosa, sondern mit tatsächlicher Ausführung. Diese Grenze ist übrigens nicht Fable-eigen. Als ich für diese Messung einen Assistenten einen funktionierenden Exploit schreiben lassen wollte, hat dessen eigener Schutzmechanismus das abgelehnt, bevor die Frage das Modell erreichte.
+Das ist die Stelle, an der die Verteidigung ausgebremst wird, und zwar an ihrer wichtigsten. Ein Befund ohne Nachweis bleibt eine Vermutung. Alles, was in der Sicherheitsforschung bisher wirklich Lücken gefunden hat, belegt seine Funde nicht mit Prosa, sondern mit tatsächlicher Ausführung, wie der nächste Abschnitt zeigt. Wer den Nachweis nicht führen darf, liefert schwächere Arbeit als der Angreifer, der sich an keine Nutzungsbedingung hält.
 
-Der Grund dafür ist sauber und liegt offen. Der Schutzmechanismus kann nicht wissen, ob hier jemand sein eigenes Produkt absichert oder ein fremdes angreift. Hugging Face nennt genau das den Kern des Problems: „which cannot distinguish an incident responder from an attacker." Weil sich die Absicht nicht prüfen lässt, wird nicht die Person gesperrt, sondern die Fähigkeit. Der Angreifer umgeht das, indem er längst lokal und unzensiert arbeitet. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen.
+Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter nicht die Person, sondern die Fähigkeit. Der Angreifer umgeht das, indem er lokal und unbeschränkt arbeitet. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen. Das ist die Asymmetrie aus dem Hugging-Face-Vorfall, diesmal nicht bei der Forensik, sondern beim Prüfen des eigenen Codes.
 
-> **💡 Der Stand heute:** Diese Schranke ist ein eigenes System vor dem Modell, kein Teil der Gewichte. Sie lässt sich nachjustieren, ohne dass sich die Modellversion ändert. Deshalb kann dieselbe Anfrage heute durchlaufen und morgen nicht, an keiner Versionsnummer ablesbar. Für verlässliche Arbeit ist das der eigentliche Grund, die Kontrolle auf die eigene Maschine zu holen.
+> **💡 Warum das kein stabiler Zustand ist:** Diese Schranke ist ein eigenes System vor dem Modell, kein Teil der Gewichte. Sie lässt sich nachjustieren, ohne dass sich die Modellversion ändert. Wo sie heute steht, kann sie morgen woanders stehen, und du liest das an keiner Versionsnummer ab. Für verlässliche Arbeit ist genau das der Grund, die Kontrolle auf die eigene Maschine zu holen.
 
 Bevor wir zum lokalen Modell kommen, lohnt der nüchterne Blick auf die Frage, ob diese Werkzeuge überhaupt taugen.
 
@@ -190,7 +190,7 @@ Und die Reihenfolge bleibt: erst lokal, dann messen, und über Abliteration rede
 
 Bleibt die Frage, in welchem Rahmen so ein Modell arbeiten darf, sobald es Werkzeuge in die Hand bekommt. Darum geht es im [nächsten Artikel](https://agentic.schule/blog/2026-09-strix-pentest-agent), am Beispiel eines Pentest-Agenten und an drei Fragen, von denen die Sandbox nur eine beantwortet.
 
-**Fang mit einem Repository an, bei dem dein Assistent zuletzt abgewinkt hat.** Genau dort siehst du den Unterschied in fünf Minuten.
+**Nimm dir den Schritt vor, an dem dein gehosteter Assistent zuletzt aufgehört hat.** Lass ihn lokal laufen. Genau dort siehst du den Unterschied in wenigen Minuten.
 
 Wo ist dir ein Modell zuletzt bei legitimer Arbeit in die Quere gekommen? Schreib mir, ich sammle die Fälle.
 
