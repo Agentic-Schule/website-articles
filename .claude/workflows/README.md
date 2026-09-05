@@ -1,6 +1,6 @@
 # Vorgehen: aus gesammeltem Material werden Artikel-Themen
 
-Beschreibt die Kette von der Instagram-Aktivität bis zum abarbeitbaren Themen-Fundus. Die Umwandlung des Exports übernimmt `instagram-export-to-posts.py`, den Rest der Workflow `instagram-themen-fundus.js`, gestartet per `Workflow({ name: 'instagram-themen-fundus', args: { total, chunkSize, runDate } })` gestartet.
+Beschreibt die Kette von der Instagram-Aktivität bis zum abarbeitbaren Themen-Fundus. Die Umwandlung des Exports übernimmt `instagram-export-to-posts.py`, den Rest der Workflow `instagram-themen-fundus.js`, gestartet per `Workflow({ name: 'instagram-themen-fundus', args: { total, chunkSize, runDate } })`.
 
 ## Warum das Ganze
 
