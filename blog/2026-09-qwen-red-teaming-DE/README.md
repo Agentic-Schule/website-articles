@@ -27,7 +27,7 @@ Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-
 
 ## Zwei Beispiele aus dem heißen Sommer 2026
 
-Diesen Sommer gab es zwei Meldungen, die mich besonders beeindruckt haben. Sie kamen wenige Tage auseinander, aus verschiedenen Ecken der Sicherheitswelt, und führen doch zur selben Frage. In der IT-Sicherheit brennt es gerade akut, und dies hier sind nur zwei Beispiele.
+In der IT-Sicherheit brennt es gerade akut, und dies hier sind nur zwei Beispiele. Beide haben mich besonders beeindruckt. Sie kamen wenige Tage auseinander, aus verschiedenen Ecken der Sicherheitswelt, und führen doch zur selben Frage.
 
 ### Coldcard: ein Job, abgrundtief versagt
 
