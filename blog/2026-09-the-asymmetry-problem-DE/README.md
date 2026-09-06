@@ -103,7 +103,9 @@ Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweis
 
 **Viertens, das bloße Schreiben darüber.** Diesen Artikel habe ich zeitweise mit Claude Fable 5 verfasst. Mitten im Text, ganz ohne Exploit und ohne fremdes System, stieg das Modell aus:
 
-> „Fable 5.1's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8. […] Details: `[cyber]`"
+![Fable 5.1's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8. Send feedback with /feedback or learn more. Details: [cyber]](fable-cyber-block.png)
+
+<small>Original-Screenshot, aufgenommen beim Schreiben dieses Artikels.</small>
 
 Nur Text über Cyber-Sicherheit, mehr nicht. Trotzdem `[cyber]`, umgeschaltet, weiter mit Opus. Wenn schon das Schreiben über das Thema anstößt, sitzt die Schranke zu weit vorn.
 
