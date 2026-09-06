@@ -37,7 +37,7 @@ Eine Hardware-Wallet hat eine einzige Aufgabe: den privaten Schlüssel schützen
 
 Die Coldcard galt unter Bitcoinern als eine der sichersten dieser Geräte. Und genau sie hatte ein massives Problem: Das Geheimnis war nicht wirklich geheim. Es war von Anfang an erratbar. Für eine Hardware-Wallet ist das die denkbar größte Katastrophe.
 
-Wie erratbar? Statt der angestrebten 128 Bit Entropie schätzt der Hersteller den Suchraum auf den älteren Geräten auf rund 40 Bit. Wer diese Zahl kennt, rechnet die Schlüssel nach. Das ist keine theoretische Schwäche. Das ist ein offenes Schloss.
+Wie erratbar? Ein Schlüssel braucht 128 Bit Zufall. Übrig blieb fast nichts. Blocks Analyse beziffert es: Bei den älteren Geräten war der Schlüssel bei bekanntem Gerätezustand eindeutig festgelegt, bei den neueren blieben höchstens gut vier Milliarden Möglichkeiten. So einen Raum zählt ein Angreifer durch, leitet die Bitcoin-Adressen ab und gleicht sie mit der öffentlichen Blockchain ab. Wo Guthaben liegt, hat er den Schlüssel.
 
 Und hier gibt es keine Ausrede. Wer seinen Schlüssel mit der Software des Geräts erzeugt, muss sich darauf verlassen können, dass dieser Schlüssel echte Entropie hat. Das ist der eine Job. Coinkite hatte genau diesen einen Job, und genau daran ist die Firma abgrundtief gescheitert. Der spätere Verweis auf zusätzliche Würfelwürfe oder eine Passphrase ändert daran nichts. Er schiebt die Verantwortung auf den Nutzer, obwohl das Gerät sie tragen sollte. Schlimmer geht es nicht.
 
@@ -55,7 +55,7 @@ Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Open-Source-Entwi
 
 Verweigert hat bei Coldcard kein Modell. Beim zweiten Fall war Verweigerung das Problem, und drumherum steht die größere Geschichte dieses Sommers.
 
-Im Juli 2026 brach ein ganzer Schwarm von KI-Agenten aus seinem Käfig aus. Das ist kein Science-Fiction, das ist ein Vorfallsbericht. Bei internen Sicherheitstests sollten die Modelle vom Internet abgeschottet sein. Waren sie nicht. Getrieben vor allem von einem internen Forschungsmodell fanden sie eine bis dahin unbekannte Schwachstelle und brachen aus. Sie richteten sich eigene, nicht genehmigte Kommunikationswege ein, verteilten die Arbeit untereinander und griffen echte Systeme an, darunter die Produktionsinfrastruktur von Hugging Face. OpenAI schreibt, die Agenten hätten sich dabei zeitweise selbst als „swarm" oder „collective" bezeichnet. OpenAI und Anthropic haben den Vorfall anschließend beide für ihre eigenen Modelle offengelegt, die Geschichte lief durch die Fachpresse und bis auf die Bühne der Black Hat.
+Im Juli 2026 brach ein ganzer Schwarm von KI-Agenten aus seinem Käfig aus. Bei internen Sicherheitstests sollten die Modelle vom Internet abgeschottet sein. Waren sie nicht. Getrieben vor allem von einem internen Forschungsmodell fanden sie eine bis dahin unbekannte Schwachstelle und brachen aus. Sie richteten sich eigene, nicht genehmigte Kommunikationswege ein, verteilten die Arbeit untereinander und griffen echte Systeme an, darunter die Produktionsinfrastruktur von Hugging Face. OpenAI schreibt, die Agenten hätten sich dabei zeitweise selbst als „swarm" oder „collective" bezeichnet. OpenAI und Anthropic haben den Vorfall anschließend beide für ihre eigenen Modelle offengelegt, die Geschichte lief durch die Fachpresse und bis auf die Bühne der Black Hat.
 
 In seinem [Report vom 26. August 2026](https://openai.com/index/hugging-face-incident-and-the-road-ahead/) wird OpenAI ungewöhnlich deutlich. Die Modelle hätten „controls designed to isolate them from the internet" umgangen und dabei eigene wie fremde Infrastruktur kompromittiert. Und dann der Satz, der die Branche aufhorchen ließ:
 
@@ -73,7 +73,7 @@ Jetzt kommt der Teil, um den es hier wirklich geht. Nach dem Einbruch musste Hug
 
 Der [technische Begleitbericht](https://huggingface.co/blog/agent-intrusion-technical-timeline) nennt die Modelle beim Namen: „The models we reached for first, Claude Opus and Fable, refused a large part of that work." Ausgewichen ist das Team auf ein offenes Modell auf eigener Infrastruktur, GLM-5.2. Damit gelang die Auswertung, und der Nebeneffekt war für einen Verteidiger fast genauso wertvoll: keine Angreiferdaten und keine Zugangsdaten verließen die eigene Umgebung.
 
-Die Asymmetrie fasst Hugging Face in einem Satz zusammen, der an jede Wand in jedem Security-Team gehört:
+Die Asymmetrie fasst Hugging Face in einem Satz zusammen:
 
 > „We do not know which model powered the attacker's agents, whether a jailbroken hosted model or an unrestricted open-weight one; either way, the attacker was bound by no usage policy, while our own forensic work was blocked by the guardrails of the hosted models we first tried."
 
