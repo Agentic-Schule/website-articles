@@ -27,7 +27,7 @@ Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-
 
 ## Zwei Vorfälle in einem Monat
 
-Der Juli 2026 hat zwei Fälle geliefert, die das Problem von zwei verschiedenen Seiten zeigen. Beide sind von den Beteiligten selbst dokumentiert, und beide sagen etwas anderes darüber aus, wo es hakt.
+Diesen Sommer gab es zwei Meldungen, die mich besonders beeindruckt haben. Sie kamen wenige Tage auseinander, aus verschiedenen Ecken der Sicherheitswelt, und führen doch zur selben Frage. In der IT-Sicherheit brennt es gerade, und diese Fälle zeigen, wo. Dokumentiert haben beide die Beteiligten selbst.
 
 ### Coldcard: fünf Jahre schwacher Zufall
 
