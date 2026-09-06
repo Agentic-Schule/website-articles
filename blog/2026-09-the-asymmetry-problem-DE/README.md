@@ -85,7 +85,7 @@ Der Angreifer war an keine Nutzungsbedingung gebunden. Der Verteidiger schon.
 
 ## Das unbeschränkte Modell gibt es, nur nicht für dich
 
-Dieselbe KI ohne diese Schranke gibt es. Anthropic nennt sie Claude Mythos 5: dasselbe Modell wie Fable 5, nur „with cyber safeguards lifted", und von Anthropic beworben als das Modell mit den stärksten Cyber-Fähigkeiten der Welt. Nur ist das eine Privatparty. Zugang bekommt ein kleiner Kreis von Verteidigern und Infrastruktur-Betreibern, über das Programm Project Glasswing, in Abstimmung mit der US-Regierung. Du und ich, wir beide sind nicht eingeladen.
+Dieselbe KI ohne diese Schranke gibt es. Anthropic nennt sie Claude Mythos 5, nach eigener Angabe dasselbe Modell wie Fable 5, nur „with cyber safeguards lifted", und beworben als das Modell mit den stärksten Cyber-Fähigkeiten der Welt. Ob es wirklich dasselbe Modell ist, kann von außen niemand prüfen, wir haben nur Anthropics Wort. Zugang gibt es ohnehin nur über ein geschlossenes Programm, Project Glasswing, in Abstimmung mit der US-Regierung. OpenAI hält seine stärksten Cyber-Fähigkeiten ähnlich verschlossen, über ein eigenes „Trusted Access for Cyber Program". Das sind zwei Privatpartys. Du und ich, wir sind auf keiner eingeladen.
 
 ## Es betrifft jeden Entwickler: Wo ein gehostetes Modell aufhört
 
