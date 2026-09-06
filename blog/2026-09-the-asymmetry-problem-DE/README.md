@@ -88,7 +88,7 @@ Der Angreifer war an keine Nutzungsbedingung gebunden. Der Verteidiger schon.
 
 ## Das unbeschränkte Modell gibt es, nur nicht für dich
 
-Was der Verteidiger bräuchte, ist eine starke KI, die es mit den Angreifern aufnehmen kann. Die gibt es. Anthropic nennt sie Claude Mythos 5. Nach Anthropics eigener Darstellung ist Mythos „the same model as Claude Fable 5 but with cyber safeguards lifted". Beweisen lässt sich das von außen nicht, und die Richtung stimmt so auch nicht: Das Können steckt in Mythos, Fable ist die beschnittene Fassung davon. An Mythos kommst du nicht heran. Zugang gibt es nur über ein geschlossenes Programm, Project Glasswing, in Abstimmung mit der US-Regierung. OpenAI hält seine stärksten Cyber-Fähigkeiten ähnlich verschlossen, über ein eigenes „Trusted Access for Cyber Program". Für dich sind beide verschlossen.
+Was der Verteidiger bräuchte, ist eine starke KI, die es mit den Angreifern aufnehmen kann. Die gibt es. Anthropic nennt sie Claude Mythos 5. Nach Anthropics eigener Darstellung ist Mythos „the same model as Claude Fable 5 but with cyber safeguards lifted". Beweisen lässt sich das von außen nicht, und die Richtung stimmt so auch nicht: Das Können steckt in Mythos, Fable ist die beschnittene Fassung davon. An Mythos kommst du nicht heran. Zugang gibt es nur über ein geschlossenes Programm, [Project Glasswing](https://www.anthropic.com/glasswing), in Abstimmung mit der US-Regierung. OpenAI hält seine stärksten Cyber-Fähigkeiten ähnlich verschlossen, über ein eigenes „Trusted Access for Cyber Program". Für dich sind beide verschlossen.
 
 ## Die Privatparty: Du bist nicht eingeladen
 
