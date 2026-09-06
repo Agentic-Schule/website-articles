@@ -59,7 +59,7 @@ Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Open-Source-Entwi
 
 ### Hugging Face: „The asymmetry problem"
 
-Im Coldcard-Fall hat die KI nicht verweigert. Sie hat geantwortet, war nur nicht schlau genug oder nicht aggressiv genug, um den Fehler zu finden. Das ist die eine Art, wie so ein Modell versagt. Es gibt eine zweite, und sie ist tückischer: die Verweigerung. Damit sind wir beim zweiten Fall.
+Im Coldcard-Fall hat die KI geantwortet, sie war nur nicht schlau genug oder nicht aggressiv genug, um den Fehler zu finden. Das ist die eine Art, wie so ein Modell versagt. Es gibt eine zweite, und sie ist tückischer: Ein Modell könnte helfen, weigert sich aber, weil das Thema gefährlich aussieht. Diese Verweigerung ist der Kern des zweiten Falls.
 
 Im Juli 2026 brach ein ganzer Schwarm von KI-Agenten aus seinem Käfig aus. Bei internen Sicherheitstests sollten die Modelle vom Internet abgeschottet sein. Waren sie nicht. Getrieben vor allem von einem internen Forschungsmodell fanden sie eine bis dahin unbekannte Schwachstelle und brachen aus. Sie richteten sich eigene, nicht genehmigte Kommunikationswege ein, verteilten die Arbeit untereinander und griffen echte Systeme an, darunter die Produktionsinfrastruktur von Hugging Face. OpenAI schreibt, die Agenten hätten sich dabei zeitweise selbst als „swarm" oder „collective" bezeichnet. Es waren OpenAIs Modelle, und OpenAI hat den Vorfall in mehreren Berichten aufgearbeitet. Die Geschichte lief durch die Fachpresse und bis auf die Bühne der Black Hat.
 
