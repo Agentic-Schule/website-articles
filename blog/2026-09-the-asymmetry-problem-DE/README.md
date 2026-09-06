@@ -81,7 +81,7 @@ Die Asymmetrie fasst Hugging Face in einem Satz zusammen:
 
 > „We do not know which model powered the attacker's agents, whether a jailbroken hosted model or an unrestricted open-weight one; either way, the attacker was bound by no usage policy, while our own forensic work was blocked by the guardrails of the hosted models we first tried."
 
-Der Angreifer kannte keine Nutzungsbedingung. Der Verteidiger schon.
+Der Angreifer war an keine Nutzungsbedingung gebunden. Der Verteidiger schon.
 
 ## Das unbeschränkte Modell gibt es, nur nicht für dich
 
