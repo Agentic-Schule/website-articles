@@ -6,6 +6,7 @@ bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" a
 bioHeading: Über den Autor
 published: 2026-09-25
 keywords:
+  - Meinung
   - Security
   - Red Teaming
   - Qwen
@@ -22,6 +23,8 @@ In der IT-Sicherheit brennt es gerade akut.
 Ein Hardware-Hersteller brachte es diesen Sommer auf den Punkt, nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
 **Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Guardrails und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar und ziehe die Konsequenz für uns Entwickler.**
+
+Meine Sympathie liegt dabei klar auf einer Seite: Dieser Text ist ein Plädoyer für eine ungezügelte KI, dieselbe, mit der der Angreifer längst arbeitet, nur endlich auch in der Hand dessen, der verteidigt.
 
 ## Inhalt
 
@@ -127,7 +130,7 @@ Was in all diesen Quellen fehlt, ist bemerkenswert: Keine von ihnen nennt Verwei
 
 Damit ist die Aufgabe klar: Wir brauchen dieselbe Fähigkeit ohne den Klassifikator dazwischen.
 
-## Fazit
+## Fazit: Wo ich stehe
 
 Als Entwickler bin ich dafür verantwortlich, meine Software sicher zu halten. Das ist meine Pflicht, und ich nehme sie ernst. Was ich nicht einsehe: dass ein Anbieter mir vorschreibt, was ich dafür tun und lassen darf.
 
