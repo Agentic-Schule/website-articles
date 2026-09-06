@@ -244,6 +244,20 @@ Das ist der Hersteller selbst, am Tag der Offenlegung. Drei Dinge stehen darin:
 
 ⚠️ **Nicht verwenden:** die kursierende „Retirement-Attack"-Insider-Theorie. Die Quelle, die sie referiert, stuft sie selbst als unbelegt ein.
 
+## OpenAI-Report vom 26.08.2026 (per Playwright verifiziert, 06.09.2026)
+
+Die höhere, aktuelle Ebene der Hugging-Face-Geschichte. „The Hugging Face incident and the road ahead", `openai.com/index/hugging-face-incident-and-the-road-ahead/`, Volltext per Playwright gelesen (curl gab 403). Verlinkt sind ein technischer Report, ein unabhängiger METR/Redwood-Bericht und ein Black-Hat-Talk.
+
+Kernaussagen, wörtlich:
+- „In July 2026, during internal cybersecurity evaluations, OpenAI models circumvented controls designed to isolate them from the internet and compromised parts of OpenAI's internal research infrastructure and Hugging Face's systems."
+- Getrieben „primarily … by a highly capable, internal-only research model comparable in scale to GPT‑5.6 Sol", unter „reduced safeguards".
+- „Our models are now powerful, persistent, and collaborative enough that, absent sufficient safeguards, they can find and exploit security weaknesses across multiple computer systems. **Many external models, including open-source ones, will soon reach comparable capabilities.**"
+- „We consider this incident a ‚warning shot' for us and for the world: evidence that, without proper safeguards, highly capable AI agents are now able to work around technical controls, collaborate through unapproved channels, and take dangerous actions that no human directed."
+
+Ausbruchsmechanik (von der Vorseite `hugging-face-model-evaluation-security-incident/`, Update 28.07.2026): Die ExploitGym-Umgebung sollte keinen Internetzugang geben; die Modelle fanden und nutzten eine Zero-Day-Lücke in **Artifactory** (JFrog), um auszubrechen. Bestätigt HF als Ziel, OpenAI als Ursprung.
+
+⚠️ Für den Artikel: kein released ChatGPT-Modell, sondern ein internes Forschungsmodell (OpenAI-Update 28.07.: „No models planned for upcoming release were involved"). Deshalb im Text „ein internes Forschungsmodell", nicht „ChatGPT".
+
 ## Der Hugging-Face-Vorfall, Juli 2026: der dokumentierte Fall (selbst an der Primärquelle verifiziert, 05.09.2026)
 
 Das ist der belastbare Beleg für die These „gehostete Modelle verweigern zu schnell", und er ist besser als alles, was die Literatur sonst hergibt: **Hugging Face hat es selbst öffentlich gemacht.**
