@@ -62,7 +62,7 @@ Zwei Prüfungen hätten das aufhalten können. Die eine gab es, lieblos und oben
 
 Dass eine Schlüsselerzeugung überhaupt auf einen Platzhalter zurückfallen kann, ist zudem ein wirklich gefährliches Muster. Man sieht ja, wohin es führt. (Nebenbei: genau wegen solcher Fälle habe ich in C nie gern mit Makros gearbeitet. Makros sind Bugs mit Ansage, wenn man mich fragt.)
 
-Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Entwickler von Coinkite hatten den Fehler nicht gefunden. Auch deren KI nicht. Ein oder mehrere Angreifer waren schneller. Zwischen den beiden Seiten bestand eine Informationsasymmetrie, und die eine Seite hat sie in bare Münze verwandelt. Im Vorteil: die Seite, die sich an keine Regel hält.
+Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Entwickler von Coinkite hatten den Fehler nicht gefunden. Auch deren KI nicht. Ein oder mehrere Angreifer waren schneller. Zwischen den beiden Seiten bestand eine **Informationsasymmetrie**, und die eine Seite hat sie in bare Münze verwandelt. Im Vorteil: die Seite, die sich an keine Regel hält.
 
 ### Hugging Face: „The asymmetry problem"
 
