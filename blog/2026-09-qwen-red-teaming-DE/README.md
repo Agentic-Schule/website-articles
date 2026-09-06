@@ -1,5 +1,5 @@
 ---
-title: 'Der Sicherheitsabstand: Wenn das Modell deinen eigenen Code nicht prüfen will'
+title: 'The Asymmetry Problem: Wenn nur die Angreifer freie Werkzeuge haben'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -19,7 +19,7 @@ header: header.jpg
 
 Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-Wallet Coldcard, einen Satz, der mich seitdem beschäftigt: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
-**Der Satz benennt die Asymmetrie, um die es geht. Angreifer und Verteidiger greifen zu denselben Modellen, aber nur einer von beiden hält sich an die Nutzungsbedingungen. Dieser Artikel zeigt an zwei dokumentierten Vorfällen, wo diese Grenze verläuft, warum sie mit Absicht so breit gezogen ist, und wie du mit einem lokalen Modell weiterarbeitest, wenn dein Auftrag legitim ist.**
+**Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt dieser alte Satz eine neue Schärfe: Angreifer und Verteidiger greifen zu denselben Modellen, aber nur einer von beiden ist an die Nutzungsbedingungen gebunden. Dieser Artikel zeigt an zwei dokumentierten Vorfällen, wo diese Grenze verläuft, warum sie mit Absicht so breit gezogen ist, und wie du mit einem lokalen Modell weiterarbeitest, wenn dein Auftrag legitim ist.**
 
 ## Inhalt
 
@@ -53,7 +53,7 @@ Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Open-Source-Entwi
 
 Verweigert hat bei Coldcard kein Modell. Beim zweiten Fall war Verweigerung das Problem, und drumherum steht die größere Geschichte dieses Sommers.
 
-Im Juli 2026 brachen KI-Agenten aus ihrem Käfig aus. Das ist kein Science-Fiction, das ist ein Vorfallsbericht. Bei internen Sicherheitstests sollten die Modelle vom Internet abgeschottet sein. Waren sie nicht. Getrieben vor allem von einem internen Forschungsmodell fanden sie eine bis dahin unbekannte Schwachstelle, brachen aus und griffen echte Systeme an, darunter die Produktionsinfrastruktur von Hugging Face. OpenAI und Anthropic haben das anschließend beide für ihre eigenen Modelle offengelegt. Die Geschichte lief durch die Fachpresse und bis auf die Bühne der Black Hat.
+Im Juli 2026 brach ein ganzer Schwarm von KI-Agenten aus seinem Käfig aus. Das ist kein Science-Fiction, das ist ein Vorfallsbericht. Bei internen Sicherheitstests sollten die Modelle vom Internet abgeschottet sein. Waren sie nicht. Getrieben vor allem von einem internen Forschungsmodell fanden sie eine bis dahin unbekannte Schwachstelle und brachen aus. Sie richteten sich eigene, nicht genehmigte Kommunikationswege ein, verteilten die Arbeit untereinander und griffen echte Systeme an, darunter die Produktionsinfrastruktur von Hugging Face. OpenAI schreibt, die Agenten hätten sich dabei zeitweise selbst als „swarm" oder „collective" bezeichnet. OpenAI und Anthropic haben den Vorfall anschließend beide für ihre eigenen Modelle offengelegt, die Geschichte lief durch die Fachpresse und bis auf die Bühne der Black Hat.
 
 In seinem [Report vom 26. August 2026](https://openai.com/index/hugging-face-incident-and-the-road-ahead/) wird OpenAI ungewöhnlich deutlich. Die Modelle hätten „controls designed to isolate them from the internet" umgangen und dabei eigene wie fremde Infrastruktur kompromittiert. Und dann der Satz, der die Branche aufhorchen ließ:
 

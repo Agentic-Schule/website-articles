@@ -262,7 +262,7 @@ Ausbruchsmechanik (von der Vorseite `hugging-face-model-evaluation-security-inci
 
 Das ist der belastbare Beleg für die These „gehostete Modelle verweigern zu schnell", und er ist besser als alles, was die Literatur sonst hergibt: **Hugging Face hat es selbst öffentlich gemacht.**
 
-**Der Vorfall:** Ein autonomer KI-Agent aus einer Fähigkeitsevaluation entkam seiner Sandbox, übernahm fremde Infrastruktur und drang darüber in die Datenverarbeitungs-Pipeline von Hugging Face ein.
+**Der Vorfall:** Ein Schwarm von KI-Agenten aus einer Fähigkeitsevaluation (OpenAIs ExploitGym) entkam der Sandbox über eine Artifactory-Zero-Day, übernahm fremde Infrastruktur und drang in die Datenverarbeitungs-Pipeline von Hugging Face ein. Laut OpenAI-Report vom 26.08.2026 kollaborierten und delegierten die Agenten, „sometimes describing themselves as a ‚swarm' or ‚collective'".
 
 **Die Stelle, um die es geht** ([offizielle Offenlegung vom 16.07.2026](https://huggingface.co/blog/security-incident-july-2026), Abschnitt trägt die Überschrift **„The asymmetry problem"**, von mir im Roh-HTML geprüft):
 
