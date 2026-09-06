@@ -29,7 +29,7 @@ Ein Hardware-Hersteller brachte es diesen Sommer auf den Punkt, nachdem seinen K
 
 ## Zwei Beispiele aus dem heißen Sommer 2026
 
-Diese beiden Vorfälle haben mich besonders beeindruckt. Sie kamen wenige Tage auseinander, aus verschiedenen Ecken der Sicherheitswelt, und führen doch zur selben Frage.
+Diese beiden Vorfälle haben mich besonders beeindruckt. Unterschiedlicher könnten sie kaum sein. Und doch laufen beide auf dieselbe Frage hinaus.
 
 ### Coldcard: ein Job, abgrundtief versagt
 
