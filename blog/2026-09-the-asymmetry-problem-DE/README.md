@@ -62,7 +62,7 @@ Zwei Prüfungen hätten das aufhalten können. Die eine gab es, lieblos und oben
 
 Dass eine Schlüsselerzeugung überhaupt auf einen Platzhalter zurückfallen kann, ist zudem ein wirklich gefährliches Muster. Man sieht ja, wohin es führt. (Nebenbei: genau wegen solcher Fälle habe ich in C nie gern mit Makros gearbeitet. Makros sind Bugs mit Ansage, wenn man mich fragt.)
 
-Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Entwickler von Coinkite hatten den Fehler nicht gefunden. Auch deren KI nicht. Ein oder mehrere Angreifer waren schneller. Zwischen den beiden Seiten bestand eine **Informationsasymmetrie**, und die Angreifer haben sie in bare Münze verwandelt. Im Vorteil: die Seite, die sich an keine Regel hält.
+Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Entwickler von Coinkite hatten den Fehler nicht gefunden. Auch deren KI nicht. Ein oder mehrere Angreifer waren schneller. Ihnen standen weder Skrupel noch Ressourcen im Weg. Zwischen den beiden Seiten bestand eine **Informationsasymmetrie**, und die Angreifer haben sie in bare Münze verwandelt. Im Vorteil: die Seite, die sich an keine Regel hält.
 
 ### Hugging Face: „The asymmetry problem"
 
@@ -133,6 +133,8 @@ Damit ist die Aufgabe klar: Wir brauchen dieselbe Fähigkeit ohne den Klassifika
 ## „Aber das bewaffnet doch die Angreifer"
 
 Ein Einwand liegt auf der Hand: Wer offene, unbeschränkte Modelle verteidigt, gibt sie auch dem Angreifer in die Hand. Das stimmt, und es ändert trotzdem nichts. Der Angreifer hat diese Modelle längst, er wartet nicht auf meine Zustimmung. Die Asymmetrie entsteht erst dadurch, dass allein der Verteidiger an der Schranke stehen bleibt. Wer die Fähigkeit nur auf einer Seite künstlich klein hält, vergrößert die Lücke, statt sie zu schließen.
+
+**Aber die Angreifer haben mehr Ressourcen.** Auch das stimmt. Der Angreifer finanziert seine Rechenzeit aus der Beute, und wenn Millionen winken, sind ein paar Regale voller GPUs irrelevant. Manche sind staatliche Akteure. Auf nackte Rechenleistung gewinnt der kleine Hersteller dieses Rennen nie, und ein lokales Modell allein ändert das nicht. Aber der Verteidiger hat einen Hebel, den der Angreifer nicht hat: Er darf sich offen vernetzen. Funde teilen, Werkzeuge bündeln, über Firmengrenzen hinweg koordinieren, alles legal und ohne Angst, dabei aufzufliegen. Der Angreifer muss verborgen bleiben, und genau das begrenzt seine Zusammenarbeit. Wo die Verteidiger sich zusammentun, kippt der Ressourcenvorteil. Dass Block seine Coldcard-Analyse öffentlich gemacht hat, ist genau diese Art von Zusammenarbeit.
 
 ## Fazit: Wo ich stehe
 
