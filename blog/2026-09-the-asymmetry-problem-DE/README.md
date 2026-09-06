@@ -96,7 +96,7 @@ An Mythos kommst du nicht heran. Zugang gibt es nur über ein geschlossenes Prog
 
 ## Die Privatparty: Du bist nicht eingeladen
 
-Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweisen muss man es trotzdem. Über den Befehl `/security-review` habe ich schon mehrfach geschrieben. Die Ergebnisse sind ansehnlich, für die Oberliga reichen sie aber nicht. An vier Türen bleibst du draußen.
+Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweisen muss man es trotzdem. Über den Befehl `/security-review` habe ich schon mehrfach geschrieben. Die Ergebnisse sind ansehnlich, für die Oberliga reichen sie aber nicht. An vier Türen bleibst du draußen.
 
 **Erstens, die Verteidigung.** Sobald echte Angriffsdaten ins Spiel kommen, verweigert das gehostete Modell. Den Beweis hast du oben gesehen: Hugging Face musste auf ein lokales Modell ausweichen, weil die gehosteten die Forensik blockierten. Der Grund, in Hugging Faces Worten: der Guardrail „cannot distinguish an incident responder from an attacker".
 
@@ -113,8 +113,6 @@ Nur Text über Cyber-Sicherheit, mehr nicht. Trotzdem `[cyber]`, umgeschaltet, w
 Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter die Fähigkeit, nicht die Person. Der Angreifer umgeht das, er arbeitet lokal und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und liefert schwächere Arbeit als der, den er abwehren soll. Das ist die Asymmetrie aus dem Hugging-Face-Vorfall, diesmal beim Prüfen des eigenen Codes. Wieder im Vorteil: die Seite, die sich an keine Regel hält.
 
 > **💡 Warum das kein stabiler Zustand ist:** Diese Schranke ist ein eigenes System vor dem Modell, kein Teil der Gewichte. Sie lässt sich nachjustieren, ohne dass sich die Modellversion ändert. Wo sie heute steht, kann sie morgen woanders stehen, und du liest das an keiner Versionsnummer ab. Für verlässliche Arbeit ist genau das der Grund, die Kontrolle auf die eigene Maschine zu holen.
-
-Doch taugen diese Werkzeuge überhaupt? Ein nüchterner Blick lohnt sich.
 
 ## Was die Werkzeuge wirklich können
 
