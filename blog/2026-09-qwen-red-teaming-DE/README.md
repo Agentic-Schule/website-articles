@@ -35,6 +35,10 @@ Diese beiden Vorfälle haben mich besonders beeindruckt. Sie kamen wenige Tage a
 
 Eine Hardware-Wallet hat eine einzige Aufgabe: den privaten Schlüssel schützen, unter allen Umständen. Sie ist die letzte Bastion. Sie soll auch dann sicher bleiben, wenn dein eigener Rechner längst kompromittiert ist. Diese Messlatte liegt aus gutem Grund so hoch. Viele Bitcoiner halten ihre gesamten Ersparnisse auf der Blockchain, und dahinter steht am Ende dieser eine Schlüssel.
 
+![Eine Coldcard-Hardware-Wallet beim Bestätigen einer Transaktion](coldcard.jpg)
+
+<small>Das klassische Coldcard-Modell mit seiner Tastatur im durchsichtigen Gehäuse. Foto: [Gareth Halfacree](https://commons.wikimedia.org/wiki/File:Coinkite_Coldcard_Hardware_Wallet_(43153914460).png), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)</small>
+
 Die Coldcard galt unter Bitcoinern als eine der sichersten dieser Geräte. Und genau sie hatte ein massives Problem: Das Geheimnis war nicht wirklich geheim. Es war von Anfang an erratbar. Für eine Hardware-Wallet ist das die denkbar größte Katastrophe.
 
 Wie erratbar? Ein Schlüssel muss 128 Bit stark sein, und diese riesige Zahl muss an jeder Stelle aus einem echten, unvorhersehbaren Zufallswert entstanden sein. Man nennt das Entropie. Doch es gab überhaupt keine echte Entropie! Statt der 128 Bit blieben laut Blocks Analyse je nach Gerät nur einige zehntausend bis höchstens gut vier Milliarden Möglichkeiten übrig. So einen Raum zählt ein Angreifer durch, leitet aus jedem Kandidaten die möglichen Bitcoin-Adressen ab und sucht die, die auf der öffentlichen Blockchain Guthaben halten.
@@ -99,7 +103,7 @@ Wie eng dieser Rahmen ist, hat sich wenige Tage nach dem Start gezeigt. Am 12. J
 
 Für einen Entwickler in Europa, der im Auftrag seines Kunden dessen eigene Software prüft, ist die Lage damit klar umrissen. Die volle Fähigkeit existiert. Sie ist an ein Freigabeprogramm gebunden, das auf einen anderen Kontinent zeigt. Und was übrig bleibt, ist ein Modell mit einem Sicherheitsabstand, der absichtlich zu groß ist.
 
-## Wo ein gehostetes Modell aufhört
+## Es betrifft jeden Entwickler: Wo ein gehostetes Modell aufhört
 
 Ein Sprachmodell behauptet viel, und vieles davon klingt richtig. Beweisen muss man es trotzdem. Bei einem gewöhnlichen Fehler kennst du das Verfahren: Du schreibst den Test, der den Defekt zeigt, er wird rot, dann reparierst du, bis er grün ist. Der rote Test ist der Beweis, dass der Fehler echt war, und der grüne, dass er weg ist.
 
