@@ -116,7 +116,7 @@ Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter die Fähigkeit, 
 
 ## Was die Werkzeuge wirklich können
 
-Mein Plädoyer steht und fällt mit einer Frage: Taugen diese Werkzeuge überhaupt etwas? Wäre die Antwort nein, wäre der ganze Streit um Schranken müßig. Sie ist aber ja, und sie ist belegt.
+Mein Plädoyer steht und fällt mit einer Frage: Taugen diese Werkzeuge überhaupt etwas? Wäre die Antwort nein, wäre der ganze Streit um Schranken müßig.
 
 Googles Projekt **Big Sleep** meldete im November 2024 den [ersten Fund](https://projectzero.google/2024/10/from-naptime-to-big-sleep.html) dieser Art, einen ausnutzbaren Stack Buffer Underflow in SQLite. Die Einordnung des Teams: „We believe this is the first public example of an AI agent finding a previously unknown exploitable memory-safety issue in widely used real-world software." Bemerkenswert ist der Zusatz, dass die Stelle 150 CPU-Stunden Fuzzing überstanden hatte, ohne aufzufallen. Zur Redlichkeit gehört die Selbsteinschätzung derselben Quelle: „these are highly experimental results", und ein zielgerichteter Fuzzer sei derzeit vermutlich mindestens genauso wirksam.
 
