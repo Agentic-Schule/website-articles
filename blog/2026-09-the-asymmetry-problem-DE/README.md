@@ -85,9 +85,7 @@ Der Angreifer war an keine Nutzungsbedingung gebunden. Der Verteidiger schon.
 
 ## Das unbeschränkte Modell gibt es, nur nicht für dich
 
-Dieselbe KI ohne diese Schranke existiert. Anthropic bietet mit Claude Mythos 5 dasselbe Modell an, „but with cyber safeguards lifted". Zugang bekommt nur ein ausgewählter Kreis von Verteidigern und Infrastruktur-Betreibern, über das Programm Project Glasswing, ausgerollt in Abstimmung mit der US-Regierung.
-
-Für einen Entwickler in Europa, der im Auftrag seines Kunden dessen eigene Software prüft, ist die Lage damit klar umrissen. Die volle Fähigkeit existiert. Sie ist an ein Freigabeprogramm gebunden, das auf einen anderen Kontinent zeigt. Für dich bleibt die gezügelte Fassung.
+Dieselbe KI ohne diese Schranke gibt es. Anthropic nennt sie Claude Mythos 5: dasselbe Modell wie Fable 5, nur „with cyber safeguards lifted", und von Anthropic beworben als das Modell mit den stärksten Cyber-Fähigkeiten der Welt. Nur ist das eine Privatparty. Zugang bekommt ein kleiner Kreis von Verteidigern und Infrastruktur-Betreibern, über das Programm Project Glasswing, in Abstimmung mit der US-Regierung. Du und ich, wir beide sind nicht eingeladen.
 
 ## Es betrifft jeden Entwickler: Wo ein gehostetes Modell aufhört
 
