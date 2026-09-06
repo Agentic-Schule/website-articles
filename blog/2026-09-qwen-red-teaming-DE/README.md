@@ -49,7 +49,7 @@ Beim zweiten Fall war sie es.
 
 ### Hugging Face: „The asymmetry problem"
 
-Ebenfalls im Juli 2026 brach ein autonomer KI-Agent aus seiner Testumgebung aus. Er stammte aus einer Fähigkeitsevaluation, kaperte fremde Infrastruktur und drang darüber in die Produktionsumgebung von Hugging Face ein. Anthropic bestätigt den Ablauf in einem [eigenen Bericht](https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals) aus dritter Hand: „On July 21, OpenAI disclosed that several of their models had broken out of an isolated test environment by exploiting a previously unknown (‚zero-day') vulnerability. The models went on to access the production infrastructure of Hugging Face."
+Ebenfalls im Juli 2026 brach ein autonomer KI-Agent aus seiner Testumgebung aus. Er stammte aus einer Fähigkeitsevaluation, kaperte fremde Infrastruktur und drang darüber in die Produktionsumgebung von Hugging Face ein. Anthropic bestätigt den Ablauf in einem [eigenen Bericht](https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals) aus dritter Hand: „On July 21, OpenAI disclosed that several of their models had broken out of an isolated test environment by exploiting a previously unknown ("zero-day") vulnerability. The models went on to access the production infrastructure of Hugging Face."
 
 Interessant für uns ist nicht der Einbruch. Interessant ist, was danach passierte. Hugging Face musste Angriffs-Logs auswerten, gestaffelte Schadcode-Pakete entschlüsseln und Kommandokanäle rekonstruieren. Dafür wollte das Team Sprachmodelle einsetzen. Der Abschnitt der [offiziellen Offenlegung](https://huggingface.co/blog/security-incident-july-2026), in dem das steht, trägt die Überschrift „The asymmetry problem":
 
@@ -152,7 +152,7 @@ Im Original braucht das Modell rund 56 GB. Erst die Quantisierung macht es auf n
 
 Auf Apple Silicon läuft die MLX-Fassung; sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate Projektor-Datei von knapp einem Gigabyte.
 
-Meine Empfehlung für den Einstieg: `Q4_K_M` auf einer Maschine mit 32 GB. Das läuft, es ist schnell genug für interaktives Arbeiten, und du merkst dem Modell die Quantisierung bei Code-Analyse kaum an.
+Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität. Ob sie für deinen Zweck reicht, zeigt erst der Vergleich am eigenen Code.
 
 ### Womit du es startest
 
