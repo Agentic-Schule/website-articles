@@ -29,23 +29,25 @@ Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-
 
 Diesen Sommer gab es zwei Meldungen, die mich besonders beeindruckt haben. Sie kamen wenige Tage auseinander, aus verschiedenen Ecken der Sicherheitswelt, und führen doch zur selben Frage. In der IT-Sicherheit brennt es gerade, und diese Fälle zeigen, wo. Dokumentiert haben beide die Beteiligten selbst.
 
-### Coldcard: fünf Jahre schwacher Zufall
+### Coldcard: die Bitcoin waren weg
 
-Der einzige Daseinszweck einer solchen Wallet ist es, einen geheimen Schlüssel zu erzeugen und zu verwahren. Genau dieser Schritt war bei der Coldcard jahrelang kaputt.
+Eine Hardware-Wallet hat eine einzige Aufgabe: den privaten Schlüssel schützen, unter allen Umständen. Sie ist die letzte Bastion. Sie soll auch dann sicher bleiben, wenn dein eigener Rechner längst kompromittiert ist. Diese Messlatte liegt aus gutem Grund so hoch. Viele Bitcoiner halten ihre gesamten Ersparnisse auf der Blockchain, und dahinter steht am Ende dieser eine Schlüssel.
 
-Bei einer Umstellung im März 2021 landete die Schlüsselerzeugung auf dem allgemeinen Software-Zufallsgenerator von MicroPython statt auf dem Hardware-Zufallsgenerator des Geräts. Die Ursache ist ein Präprozessor-Detail, über das schon viele gestolpert sind: `#ifndef` prüft, **ob** ein Makro definiert ist, und nicht, welchen Wert es hat. Coinkite hatte `MICROPY_HW_ENABLE_RNG` auf `0` gesetzt, in der Annahme, den Software-Pfad damit abzuschalten. Der Hersteller stellt in seinem [technischen Bericht](https://blog.coinkite.com/entropy-technical-backgrounder/) klar: „There was no intentional weak-entropy fallback."
+Die Coldcard gilt unter Bitcoinern als eine der sichersten dieser Geräte. Und genau sie hatte ein massives Problem: Das Geheimnis war nicht wirklich geheim. Es war von Anfang an erratbar. Für eine Hardware-Wallet ist das die denkbar größte Katastrophe.
 
-Die Folge ist der Grund, warum dieser Fehler so weh tut. Statt der angestrebten 128 Bit Entropie schätzt Coinkite den tatsächlichen Suchraum auf den älteren Geräten auf etwa 40 Bit, auf den neueren auf etwa 72. Das ist keine theoretische Schwäche. Wer den Suchraum kennt, rechnet die Schlüssel nach.
+Wie erratbar? Statt der angestrebten 128 Bit Entropie schätzt der Hersteller den Suchraum auf den älteren Geräten auf rund 40 Bit. Wer diese Zahl kennt, rechnet die Schlüssel nach. Das ist keine theoretische Schwäche. Das ist ein offenes Schloss.
 
-Gefunden wurde der Fehler von außen, und zwar erst, als das Geld schon abfloss. Das Engineering-Team von Block beschreibt seinen [Befund](https://engineering.block.xyz/blog/predictable-rng-fallback-and-32-bit-reseed-in-coldcard-firmware) so: „Following reports from COLDCARD users, and working alongside other security researchers, Block's Bitcoin Engineering and Security teams root-caused vulnerabilities that allow for theft of Bitcoin from COLDCARD users." In der Zeitleiste steht für denselben Tag der Auslöser: Man wurde auf Berichte von Nutzern aufmerksam, die ihre Bestände verloren.
+Jahrelang fiel das niemandem auf. Dann, mitten in der Zeit leistungsfähiger KI, wird ausgerechnet diese Lücke gefunden. An einen Zufall glaube ich da nicht. Beweisen lässt es sich nicht, denn die Angreifer können wir nicht fragen, die legen es darauf an, keine Spuren zu hinterlassen. Aber der Quelltext der Coldcard war immer offen, und Coinkite zieht denselben Schluss, ausdrücklich als Vermutung:
 
-Und jetzt kommt die Passage, die diesen Artikel ausgelöst hat. Coinkite schreibt im selben Bericht über den mutmaßlichen Angreifer und über sich selbst:
+> „The COLDCARD source code has always been open and publicly available, so we have to assume that someone used AI to review previous versions of our firmware and stumbled upon this issue. A few weeks ago, we used one of the best available AI models to review our code for security issues, and it did not find this bug or anything serious."
 
-> „The COLDCARD source code has always been open and publicly available, so we have to assume that someone used AI to review previous versions of our firmware and stumbled upon this issue. A few weeks ago, we used one of the best available AI models to review our code for security issues, and it did not find this bug or anything serious. Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
+Bekannt wurde der Fehler auf die schlimmstmögliche Weise: Die Bitcoin verschwanden. Kein Audit hat ihn gefunden und kein Bug-Report. Es waren die leeren Wallets. Das Engineering-Team von Block wurde auf Nutzer aufmerksam, die ihre Bestände verloren, und rekonstruierte von dort die Ursache.
 
-Drei Dinge stehen darin, und ich trenne sie sauber. Dass eine KI dem Angreifer geholfen hat, ist eine Vermutung des Herstellers und kein Beleg; das Wort „assume" steht da mit Absicht. Dass die Verteidiger dasselbe Werkzeug hatten, ist dagegen eine Tatsachenaussage. Und der Befund, der am meisten schmerzt: Das Modell hat geantwortet, es hat den Fehler nur nicht gesehen. Bei Coldcard war Verweigerung nicht das Problem.
+Und die Ursache ist ärgerlich klein. Es lief das falsche Binary, weil ein Makro falsch gesetzt war. `#ifndef` prüft, **ob** ein Makro definiert ist, nicht welchen Wert es hat. Coinkite setzte `MICROPY_HW_ENABLE_RNG` auf `0`, in der Annahme, den schwachen Software-Zufall damit abzuschalten. Hineinkompiliert wurde er trotzdem. Der Hersteller stellt klar: „There was no intentional weak-entropy fallback." (Nebenbei: genau wegen solcher Fälle habe ich in C nie gern mit Makros gearbeitet. Makros sind Bugs mit Ansage, wenn du mich fragst.)
 
-Beim zweiten Fall war sie es.
+Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Open-Source-Entwickler hatten den Fehler nicht gefunden. Ein oder mehrere Angreifer hatten ihn. Zwischen den beiden Seiten bestand eine Informationsasymmetrie, und die eine Seite hat sie in bare Münze verwandelt.
+
+Verweigert hat hier übrigens kein Modell. Das ist der Unterschied zum zweiten Fall.
 
 ### Hugging Face: „The asymmetry problem"
 
