@@ -8,12 +8,11 @@
   body {
     font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
     background:
-      radial-gradient(58% 55% at 76% 46%, rgba(217,119,87,0.28), transparent 60%),
+      radial-gradient(58% 55% at 74% 46%, rgba(217,119,87,0.26), transparent 60%),
       radial-gradient(50% 60% at 18% 92%, rgba(126,96,196,0.12), transparent 60%),
       linear-gradient(155deg,#221a16 0%,#160f0c 58%,#0d0908 100%);
     color:#fff; position:relative;
   }
-  /* dezenter Punkt-Grid (gleiche DNA wie die Geschwister-Header) */
   .grid { position:absolute; inset:0;
     background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
     background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
@@ -26,7 +25,7 @@
   .sub { margin-top:24px; font-size:24px; font-weight:500; color:#c3b7ae; letter-spacing:-.2px; line-height:1.35; }
   .by { margin-top:36px; font-size:19px; color:#8c8079; }
   .by b { color:#cbbfb6; font-weight:600; }
-  .art { position:absolute; right:26px; top:0; height:675px; width:540px; }
+  .art { position:absolute; right:30px; top:0; height:675px; width:520px; }
 </style>
 </head>
 <body>
@@ -35,53 +34,51 @@
     <div class="left">
       <div class="kicker">agentic<span class="dot">.</span>schule</div>
       <h1>The Asymmetry<br><span class="accent">Problem</span></h1>
-      <div class="sub">Wenn nur die Angreifer<br>freie Werkzeuge haben</div>
+      <div class="sub">Wenn nur die Angreifer<br>freie KI-Werkzeuge haben</div>
       <div class="by">von <b>Johannes Hoppe</b></div>
     </div>
   </div>
 
   <div class="art">
-    <svg width="540" height="675" viewBox="0 0 540 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.38"/>
+        <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.34"/>
           <stop offset="60%" stop-color="#d97757" stop-opacity="0.10"/>
           <stop offset="100%" stop-color="#d97757" stop-opacity="0"/>
         </radialGradient>
-        <marker id="a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-          <path d="M0 0 L10 5 L0 10 z" fill="#d97757"/>
-        </marker>
-        <marker id="a-mute" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0 0 L10 5 L0 10 z" fill="#8c7f77"/>
-        </marker>
       </defs>
 
-      <circle cx="180" cy="338" r="150" fill="url(#glow)"/>
+      <circle cx="270" cy="330" r="205" fill="url(#glow)"/>
 
-      <!-- der gemeinsame Kern: dasselbe Modell fuer beide Seiten -->
-      <circle cx="180" cy="338" r="52" fill="#1d1713" stroke="#d97757" stroke-width="2.2"/>
-      <text x="180" y="332" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#e0916f">gleiche</text>
-      <text x="180" y="352" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#e0916f">Fähigkeit</text>
+      <!-- Standfuss + Saeule + Drehpunkt -->
+      <rect x="220" y="486" width="100" height="10" rx="5" fill="#8c7f77"/>
+      <rect x="264" y="336" width="12" height="152" rx="6" fill="#8c7f77"/>
+      <circle cx="270" cy="330" r="9" fill="#cbbfb6"/>
 
-      <!-- obere Spur: Angreifer, freie Bahn durch das offene Tor -->
-      <path d="M232 300 C 300 250, 360 232, 430 232" stroke="#d97757" stroke-width="2.6" fill="none" marker-end="url(#a-coral)"/>
-      <!-- offenes Tor (zwei Pfosten, kein Riegel) -->
-      <rect x="356" y="206" width="4" height="52" rx="2" fill="#d97757"/>
-      <rect x="392" y="206" width="4" height="52" rx="2" fill="#d97757"/>
-      <text x="250" y="214" text-anchor="start" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#cbbfb6">Angreifer</text>
-      <text x="250" y="236" text-anchor="start" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#8c8079">lokal, ohne Schranken</text>
+      <!-- Balken, gekippt: links (Angreifer) hoch, rechts (Verteidiger) tief -->
+      <line x1="140" y1="292" x2="400" y2="368" stroke="#e58a68" stroke-width="6" stroke-linecap="round"/>
 
-      <!-- untere Spur: Verteidiger, prallt an der geschlossenen Schranke ab -->
-      <path d="M232 376 C 300 426, 350 444, 402 444" stroke="#8c7f77" stroke-width="2.4" fill="none" marker-end="url(#a-mute)"/>
-      <!-- geschlossene Schranke -->
-      <rect x="410" y="404" width="6" height="80" rx="3" fill="#d97757"/>
-      <rect x="416" y="418" width="70" height="10" rx="5" fill="#d97757" transform="rotate(12 416 423)"/>
-      <g stroke="#d97757" stroke-width="3.4" stroke-linecap="round">
-        <path d="M436 448 L452 470"/>
-        <path d="M452 448 L436 470"/>
-      </g>
-      <text x="250" y="470" text-anchor="start" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#cbbfb6">Verteidiger</text>
-      <text x="250" y="492" text-anchor="start" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#8c8079">Cloud, überwacht</text>
+      <!-- linke Schale: Angreifer, oben, leicht und frei -->
+      <line x1="140" y1="292" x2="112" y2="372" stroke="#8c7f77" stroke-width="1.8"/>
+      <line x1="140" y1="292" x2="168" y2="372" stroke="#8c7f77" stroke-width="1.8"/>
+      <path d="M104 372 Q140 402 176 372" fill="none" stroke="#d97757" stroke-width="2.6"/>
+      <!-- offenes Schloss / frei -->
+      <circle cx="140" cy="352" r="10" fill="none" stroke="#d97757" stroke-width="2.4"/>
+      <path d="M140 352 m0 -10 a10 10 0 0 1 10 10" fill="none" stroke="#d97757" stroke-width="2.4" opacity="0.9"/>
+      <text x="140" y="430" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#e0916f">Angreifer</text>
+      <text x="140" y="451" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#8c8079">frei, ohne Limit</text>
+
+      <!-- rechte Schale: Verteidiger, unten, von Regeln beschwert -->
+      <line x1="400" y1="368" x2="372" y2="452" stroke="#8c7f77" stroke-width="1.8"/>
+      <line x1="400" y1="368" x2="428" y2="452" stroke="#8c7f77" stroke-width="1.8"/>
+      <path d="M364 452 Q400 482 436 452" fill="none" stroke="#8c7f77" stroke-width="2.6"/>
+      <!-- Gewichte = Regeln, Guardrails, Limits -->
+      <rect x="378" y="428" width="44" height="9" rx="2" fill="#8c7f77"/>
+      <rect x="384" y="416" width="32" height="9" rx="2" fill="#8c7f77" opacity="0.8"/>
+      <rect x="389" y="404" width="22" height="9" rx="2" fill="#8c7f77" opacity="0.6"/>
+      <text x="400" y="512" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#cbbfb6">Verteidiger</text>
+      <text x="400" y="533" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#8c8079">Regeln, Limits, Aufsicht</text>
     </svg>
   </div>
 </body>

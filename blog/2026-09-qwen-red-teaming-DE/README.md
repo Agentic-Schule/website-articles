@@ -1,5 +1,5 @@
 ---
-title: 'The Asymmetry Problem: Wenn nur die Angreifer freie Werkzeuge haben'
+title: 'The Asymmetry Problem: Wenn nur die Angreifer freie KI-Werkzeuge haben'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -37,7 +37,7 @@ Eine Hardware-Wallet hat eine einzige Aufgabe: den privaten Schlüssel schützen
 
 Die Coldcard galt unter Bitcoinern als eine der sichersten dieser Geräte. Und genau sie hatte ein massives Problem: Das Geheimnis war nicht wirklich geheim. Es war von Anfang an erratbar. Für eine Hardware-Wallet ist das die denkbar größte Katastrophe.
 
-Wie erratbar? Ein Schlüssel braucht 128 Bit Zufall. Übrig blieb fast nichts. Blocks Analyse beziffert es: Bei den älteren Geräten war der Schlüssel bei bekanntem Gerätezustand eindeutig festgelegt, bei den neueren blieben höchstens gut vier Milliarden Möglichkeiten. So einen Raum zählt ein Angreifer durch, leitet die Bitcoin-Adressen ab und gleicht sie mit der öffentlichen Blockchain ab. Wo Guthaben liegt, hat er den Schlüssel.
+Wie erratbar? Ein Schlüssel muss 128 Bit stark sein, und diese riesige Zahl muss an jeder Stelle aus einem echten, unvorhersehbaren Zufallswert entstanden sein. Man nennt das Entropie. Doch es gab überhaupt keine echte Entropie! Statt der 128 Bit blieben laut Blocks Analyse je nach Gerät nur einige zehntausend bis höchstens gut vier Milliarden Möglichkeiten übrig. So einen Raum zählt ein Angreifer durch, leitet aus jedem Kandidaten die Bitcoin-Adressen ab und sucht die, die auf der öffentlichen Blockchain Guthaben halten.
 
 Weil der Schlüsselraum so klein ist, geht das Durchrechnen schneller, als neue Blöcke entstehen. Das macht sogar die Rettung tückisch. Wer merkt, dass seine Wallet betroffen ist, und die Bitcoin auf eine sichere Adresse bringen will, schickt dafür eine Transaktion in den öffentlichen Mempool. Dort ist sie für jeden sichtbar. Ein Angreifer, der denselben Schlüssel längst berechnet hat, überbietet die Rettung mit einer höheren Gebühr und greift zuerst zu. Die bedrohte Adresse zu bewegen, ruft die Angreifer erst recht auf den Plan.
 
