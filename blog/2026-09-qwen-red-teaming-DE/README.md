@@ -19,7 +19,7 @@ header: header.jpg
 
 Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-Wallet Coldcard, einen Satz, der mich seitdem beschäftigt: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
-**Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Angreifer und Verteidiger greifen zu denselben Modellen, aber nur einer von beiden ist an die Nutzungsbedingungen gebunden. Dieser Artikel zeigt an zwei dokumentierten Vorfällen, wo diese Grenze verläuft, warum sie mit Absicht so breit gezogen ist, und wie du mit einem lokalen Modell weiterarbeitest, wenn dein Auftrag legitim ist.**
+**Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Dieselben Fähigkeiten stehen beiden Seiten offen, aber der Angreifer nutzt sie ohne Schranken, der Verteidiger nur in der gezügelten Fassung aus der Cloud. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar. Danach zeige ich, wie jeder mit einem lokalen Modell den Nachteil verkleinert, solange sein Auftrag legitim ist.**
 
 ## Inhalt
 
@@ -198,7 +198,7 @@ Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und 
 
 ## Fazit
 
-Der Satz von Coinkite trifft den Kern, und er lässt sich noch zuspitzen. Beide Seiten greifen zu denselben Modellen. Aber nur eine Seite hält sich an Nutzungsbedingungen, und nur eine Seite bekommt einen Klassifikator vorgeschaltet, der bewusst zu früh anspringt. Anthropic beschreibt diesen Sicherheitsabstand offen und begründet ihn gut. Die Rechnung dafür zahlt der Verteidiger.
+Der Satz von Coinkite trifft den Kern, und er lässt sich noch zuspitzen. Dieselben Fähigkeiten stehen beiden Seiten offen. Aber nur eine Seite bekommt einen Klassifikator vorgeschaltet, der bewusst zu früh anspringt, und nur eine Seite hält sich daran. Der Angreifer nimmt die Fassung ohne Schranken. Anthropic beschreibt diesen Sicherheitsabstand offen und begründet ihn gut. Die Rechnung dafür zahlt der Verteidiger.
 
 Meine Konsequenz ist nicht, den gehosteten Assistenten abzuschaffen. Er ist für den Alltag stärker und bequemer. Meine Konsequenz ist, für den Fall gerüstet zu sein, in dem er abwinkt. Ein lokales Qwen 3.8 auf der eigenen Maschine ist in einer Stunde eingerichtet und kostet dich außer Speicherplatz nichts. Es ist die Versicherung dagegen, dass dein Werkzeug ausgerechnet in dem Moment aussetzt, in dem es ernst wird.
 
