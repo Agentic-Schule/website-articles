@@ -30,7 +30,7 @@ Führt eine ungezügelte KI ohne jede Einschränkung am Ende zum Untergang der M
 
 ## Zwei Beispiele aus dem heißen Sommer 2026
 
-Diese beiden Vorfälle haben mich besonders beeindruckt. Unterschiedlicher könnten sie kaum sein. Und doch laufen beide auf dieselbe Frage hinaus.
+KI ist ein Dauerthema, gerade im Sommerloch. Das ist klar. Aber ich denke schon, dass die Aufregung berechtigt ist. Die Qualität der Angriffe in jüngster Zeit ist beängstigend und zugleich faszinierend. Zwischen all den News haben mich diese beiden Vorfälle besonders beeindruckt.
 
 ### Coldcard: ein Job, abgrundtief versagt
 
