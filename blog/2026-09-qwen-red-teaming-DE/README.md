@@ -17,7 +17,9 @@ language: de
 header: header.jpg
 ---
 
-Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-Wallet Coldcard, einen Satz, der mich seitdem beschäftigt: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
+In der IT-Sicherheit brennt es gerade akut.
+
+Ein Hardware-Hersteller brachte es diesen Sommer auf den Punkt, nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
 **Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Guardrails und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar. Danach zeige ich, wie jeder mit einem lokalen Modell den Nachteil verkleinert.**
 
@@ -27,13 +29,13 @@ Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-
 
 ## Zwei Beispiele aus dem heißen Sommer 2026
 
-In der IT-Sicherheit brennt es gerade akut, und dies hier sind nur zwei Beispiele. Beide haben mich besonders beeindruckt. Sie kamen wenige Tage auseinander, aus verschiedenen Ecken der Sicherheitswelt, und führen doch zur selben Frage.
+Beide haben mich besonders beeindruckt. Sie kamen wenige Tage auseinander, aus verschiedenen Ecken der Sicherheitswelt, und führen doch zur selben Frage.
 
 ### Coldcard: ein Job, abgrundtief versagt
 
 Eine Hardware-Wallet hat eine einzige Aufgabe: den privaten Schlüssel schützen, unter allen Umständen. Sie ist die letzte Bastion. Sie soll auch dann sicher bleiben, wenn dein eigener Rechner längst kompromittiert ist. Diese Messlatte liegt aus gutem Grund so hoch. Viele Bitcoiner halten ihre gesamten Ersparnisse auf der Blockchain, und dahinter steht am Ende dieser eine Schlüssel.
 
-Die Coldcard gilt unter Bitcoinern als eine der sichersten dieser Geräte. Und genau sie hatte ein massives Problem: Das Geheimnis war nicht wirklich geheim. Es war von Anfang an erratbar. Für eine Hardware-Wallet ist das die denkbar größte Katastrophe.
+Die Coldcard galt unter Bitcoinern als eine der sichersten dieser Geräte. Und genau sie hatte ein massives Problem: Das Geheimnis war nicht wirklich geheim. Es war von Anfang an erratbar. Für eine Hardware-Wallet ist das die denkbar größte Katastrophe.
 
 Wie erratbar? Statt der angestrebten 128 Bit Entropie schätzt der Hersteller den Suchraum auf den älteren Geräten auf rund 40 Bit. Wer diese Zahl kennt, rechnet die Schlüssel nach. Das ist keine theoretische Schwäche. Das ist ein offenes Schloss.
 
