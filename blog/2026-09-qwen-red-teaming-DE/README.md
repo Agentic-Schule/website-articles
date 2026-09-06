@@ -19,7 +19,7 @@ header: header.jpg
 
 Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-Wallet Coldcard, einen Satz, der mich seitdem beschäftigt: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
-**Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Guardrails und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar. Danach zeige ich, wie jeder mit einem lokalen Modell den Nachteil verkleinert, solange sein Auftrag legitim ist.**
+**Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Guardrails und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar. Danach zeige ich, wie jeder mit einem lokalen Modell den Nachteil verkleinert.**
 
 ## Inhalt
 
