@@ -53,6 +53,12 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - **Emojis funktional und sparsam,** nie als Deko-Streusel: `🇩🇪`/`🇬🇧` für den Sprachlink, `⚠️` Warnung, `💡`/`ℹ️` Info, `❌`/`✅` falsch/richtig, gelegentlich `😅`/`😎` für Selbstironie.
 - Hinweise als Blockquote-Callout mit Präfix: `> **💡 Tipp:**`, `> **⚠️ Achtung:**`, `> **❌ Fehlermeldung:**`.
 
+## Bilder und Bildunterschriften
+
+- **Jedes eingebundene Bild bekommt eine Bildunterschrift.** Der Blog rendert dafür das Markdown-Title-Attribut, den Text in Anführungszeichen hinter der Bild-URL: `![Alt-Text](bild.png "Bildunterschrift")`. Diese Unterschrift erscheint sichtbar unter dem Bild.
+- **Alt-Text und Unterschrift haben verschiedene Aufgaben.** Der Alt-Text beschreibt das Bild nüchtern und vollständig für Screenreader und Suchmaschinen (bei einem Screenshot mit Text den Text wörtlich). Die Unterschrift ordnet ein, kommentiert oder pointiert, im selben Ton wie der Fließtext, gern mit trockenem Humor.
+- **Ausnahme Lizenz-Attribution:** Muss unter einem Bild eine Quelle mit Link stehen (etwa CC-BY-Fotos von Wikimedia Commons), kommt die Credit-Zeile als `<small>`-Zeile direkt unter das Bild, weil das Title-Attribut keine Links rendern kann. Die beschreibende Unterschrift bleibt trotzdem im Title.
+
 ## Lieblingswörter
 
 „elegant", „übrigens", „sogenannt", „keine Sorge", „Doch"/„Aber" als Pivot-Satzanfang. Rhetorische Frage als Übergang, die sofort beantwortet wird: „Warum hilft das? Weil …".
