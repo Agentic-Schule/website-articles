@@ -17,7 +17,7 @@ language: de
 header: header.jpg
 ---
 
-Im [vorigen Artikel](https://agentic.schule/blog/2026-09-qwen-red-teaming) stand das Dilemma: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell, der Verteidiger bleibt an der Cloud-Schranke stehen. Die Konsequenz war klar. Jetzt bauen wir sie.
+Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) stand das Dilemma: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell, der Verteidiger bleibt an der Cloud-Schranke stehen. Die Konsequenz war klar. Jetzt bauen wir sie.
 
 **Dieser Artikel zeigt, wie du ein offenes Modell lokal aufsetzt, was „unzensiert" technisch wirklich bedeutet, und wo die rechtlichen Grenzen verlaufen. Damit du deine eigene Software prüfen kannst, ohne dass ein Anbieter dir dazwischenfunkt, und ohne dass dein Code den Rechner verlässt.**
 
@@ -84,7 +84,7 @@ Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und 
 
 ## Fazit
 
-Ein offenes Modell auf der eigenen Maschine ist in einer Stunde eingerichtet und kostet dich außer Speicherplatz nichts. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-09-qwen-red-teaming): Es verweigert nicht, und dein Code bleibt, wo er hingehört. „Unzensiert" ist dabei die Ausnahme, nicht der Anfang. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
+Ein offenes Modell auf der eigenen Maschine ist in einer Stunde eingerichtet und kostet dich außer Speicherplatz nichts. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-09-the-asymmetry-problem): Es verweigert nicht, und dein Code bleibt, wo er hingehört. „Unzensiert" ist dabei die Ausnahme, nicht der Anfang. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
 
 Das Werkzeug allein macht aber noch keinen guten Red-Teamer. Ein Modell, das nichts verweigert, kann auch mehr anrichten, sobald es Werkzeuge in die Hand bekommt. In welchem Rahmen so ein Agent laufen darf, und warum die naheliegende Antwort „läuft doch in einer VM" nur die halbe Miete ist, steht im [nächsten Teil](https://agentic.schule/blog/2026-09-strix-pentest-agent) am Beispiel eines Pentest-Agenten.
 
