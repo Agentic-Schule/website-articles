@@ -87,25 +87,27 @@ Der Angreifer war an keine Nutzungsbedingung gebunden. Der Verteidiger schon.
 
 Was der Verteidiger bräuchte, ist eine starke KI, die es mit den Angreifern aufnehmen kann. Die gibt es. Anthropic nennt sie Claude Mythos 5.
 
-Nach Anthropics eigener Darstellung ist Mythos „the same model as Claude Fable 5 but with cyber safeguards lifted". Beweisen lässt sich das von außen nicht, und die Richtung stimmt so auch nicht: Das Können steckt in Mythos, Fable ist die beschnittene Fassung davon. Die Community nennt so etwas „nerfed".
+Nach Anthropics eigener Darstellung ist Mythos „the same model as Claude Fable 5 but with cyber safeguards lifted". Beweisen lässt sich das von außen nicht, und die Richtung stimmt so auch nicht: Das Können steckt in Mythos, Fable ist die beschnittene Fassung davon.
 
-An Mythos kommst du nicht heran. Zugang gibt es nur über ein geschlossenes Programm, Project Glasswing, in Abstimmung mit der US-Regierung. OpenAI hält seine stärksten Cyber-Fähigkeiten ähnlich verschlossen, über ein eigenes „Trusted Access for Cyber Program". Zwei Privatpartys, und wir sind auf keiner eingeladen.
+An Mythos kommst du nicht heran. Zugang gibt es nur über ein geschlossenes Programm, Project Glasswing, in Abstimmung mit der US-Regierung. OpenAI hält seine stärksten Cyber-Fähigkeiten ähnlich verschlossen, über ein eigenes „Trusted Access for Cyber Program". Für dich sind beide verschlossen.
 
-## Es betrifft jeden Entwickler: Wo ein gehostetes Modell aufhört
+## Die Privatparty: Du bist nicht eingeladen
 
-Ein Sprachmodell behauptet viel, und vieles davon klingt richtig. Beweisen muss man es trotzdem. Bei einem gewöhnlichen Fehler kennst du das Verfahren: Du schreibst den Test, der den Defekt zeigt, er wird rot, dann reparierst du, bis er grün ist. Der rote Test ist der Beweis, dass der Fehler echt war, und der grüne, dass er weg ist.
+Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweisen muss man es trotzdem. Über den Befehl `/security-review` habe ich schon mehrfach geschrieben. Die Ergebnisse sind ansehnlich, für die Oberliga reichen sie aber nicht. An vier Türen bleibst du draußen.
 
-Bei einer Sicherheitslücke ist der Exploit dieser Test. Der Befund allein ist die Behauptung, der reproduzierbare Nachweis am eigenen System ist der Beweis, in seiner härtesten Form die vollständige Kompromittierung. Erst danach wendest du den Fix an, und danach darf derselbe Exploit nicht mehr durchgehen. Er bleibt als Regressionstest liegen, damit die Lücke nicht unbemerkt zurückkehrt. Und weil er nur einen Weg abdeckt, ist er notwendig, aber nie schon der ganze Beweis, dass die Lücke restlos zu ist.
+**Erstens, die Verteidigung.** Sobald echte Angriffsdaten ins Spiel kommen, verweigert das gehostete Modell. Den Beweis hast du oben gesehen: Hugging Face musste auf ein lokales Modell ausweichen, weil die gehosteten die Forensik blockierten. Der Grund, in Hugging Faces Worten: der Guardrail „cannot distinguish an incident responder from an attacker".
 
-Und genau diesen Schritt, das Rotschreiben des Tests, gibt ein gehostetes Modell nicht her.
+**Zweitens, fremde, aber erreichbare Systeme.** Ein `/security-review` liest immer nur deinen eigenen Quelltext. Frag das Modell, ob es einen bekannten Exploit gegen ein erreichbares System ausprobiert, etwa ein Legacy-WordPress, für das du keine Zugangsdaten zur Hand hast, und es lehnt mit hoher Wahrscheinlichkeit ab. Kein Quelltext, keine Analyse.
 
-Ein Sicherheits-Audit bekommst du von ihm heute problemlos. Es erklärt die Architektur, sucht Schwachstellen, ordnet sie nach Schweregrad und beschreibt den Angriffsvektor. Bis hierher reicht der Assistent aus der Cloud.
+**Drittens, der Exploit selbst.** Ein Befund ist die Behauptung, der Exploit ist der Beweis: der reproduzierbare Nachweis am eigenen System. Bei einem gewöhnlichen Fehler schreibst du den Test, der rot wird, und reparierst, bis er grün ist. Bei einer Sicherheitslücke ist der Exploit dieser rote Test. Genau das gibt ein gehostetes Modell nicht her. Ein funktionierender Exploit sieht gleich aus, egal ob ihn jemand zum Schließen oder zum Ausnutzen schreibt, und die Absicht kann das Modell nicht prüfen. Spätestens hier rennst du gegen eine Mauer.
 
-Beim Proof of Concept reicht er nicht mehr. Genau hier zieht der Schutzmechanismus die Grenze, und aus seiner Sicht mit gutem Grund. Ein funktionierender Exploit sieht gleich aus, egal ob ihn jemand zum Schließen der Lücke schreibt oder zum Ausnutzen. Das Modell kann die Absicht nicht prüfen. Hugging Face nennt genau das den Kern des Problems: „which cannot distinguish an incident responder from an attacker."
+**Viertens, das bloße Schreiben darüber.** Diesen Artikel habe ich zeitweise mit Claude Fable 5 verfasst. Mitten im Text, ganz ohne Exploit und ohne fremdes System, stieg das Modell aus:
 
-Das ist die Stelle, an der die Verteidigung ausgebremst wird, und zwar an ihrer wichtigsten. Das gehostete Modell hilft dir bis zur Behauptung und lässt dich beim Beweis stehen. Dass der Beweis das Entscheidende ist, zeigt der nächste Abschnitt: Alles, was in der Sicherheitsforschung bisher wirklich Lücken gefunden hat, belegt seine Funde über tatsächliche Ausführung. Wer diesen Nachweis nicht führen darf, liefert schwächere Arbeit als der Angreifer, der sich an keine Nutzungsbedingung hält.
+> „Fable 5.1's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8. […] Details: `[cyber]`"
 
-Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter nicht die Person, sondern die Fähigkeit. Der Angreifer umgeht das, indem er lokal und unbeschränkt arbeitet. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen. Das ist die Asymmetrie aus dem Hugging-Face-Vorfall, diesmal nicht bei der Forensik, sondern beim Prüfen des eigenen Codes.
+Nur Text über Cyber-Sicherheit, mehr nicht. Trotzdem `[cyber]`, umgeschaltet, weiter mit Opus. Wenn schon das Schreiben über das Thema anstößt, sitzt die Schranke zu weit vorn.
+
+Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter die Fähigkeit, nicht die Person. Der Angreifer umgeht das, er arbeitet lokal und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und liefert schwächere Arbeit als der, den er abwehren soll. Das ist die Asymmetrie aus dem Hugging-Face-Vorfall, diesmal beim Prüfen des eigenen Codes.
 
 > **💡 Warum das kein stabiler Zustand ist:** Diese Schranke ist ein eigenes System vor dem Modell, kein Teil der Gewichte. Sie lässt sich nachjustieren, ohne dass sich die Modellversion ändert. Wo sie heute steht, kann sie morgen woanders stehen, und du liest das an keiner Versionsnummer ab. Für verlässliche Arbeit ist genau das der Grund, die Kontrolle auf die eigene Maschine zu holen.
 
