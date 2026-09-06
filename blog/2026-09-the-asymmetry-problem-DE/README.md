@@ -50,7 +50,7 @@ Vorbei ist der Vorfall aktuell noch nicht. Solange betroffene Adressen noch Guth
 
 Und hier gibt es keine Ausrede für den Hersteller. Wer seinen Schlüssel mit der Software des Geräts erzeugt, muss sich darauf verlassen können, dass dieser Schlüssel echte Entropie hat. Das ist der eine Job. Coinkite hatte genau diesen einen Job, und genau daran ist die Firma abgrundtief gescheitert. Der spätere Verweis, man hätte den Zufall ja auch selbst würfeln können, ändert daran nichts. Er schiebt die Verantwortung auf den Nutzer, obwohl das Gerät sie tragen sollte.
 
-Die Software der Coldcard ist Open-Source. Dennoch fiel der Bug jahrelang niemandem auf. Dann, mitten in der Zeit leistungsfähiger KI, wird ausgerechnet diese Lücke gefunden. Da war ein LLM im Spiel. An einen Zufall glaube ich da nicht. Beweisen lässt sich das nicht, die Angreifer wollen keine Spuren hinterlassen. Für ein Interview stehen sie ohnehin nicht zur Verfügung. Aber Coinkite vermutet dasselbe:
+Die Software der Coldcard ist Open-Source. Dennoch fiel der Bug jahrelang niemandem auf. Dann, mitten in der Zeit leistungsfähiger KI, wird ausgerechnet diese Lücke gefunden. Da war ein LLM im Spiel. An einen Zufall glaube ich hier nicht. Beweisen lässt sich das nicht, die Angreifer wollen keine Spuren hinterlassen. Für ein Interview stehen sie ohnehin nicht zur Verfügung. Aber Coinkite vermutet dasselbe:
 
 > „The COLDCARD source code has always been open and publicly available, so we have to assume that someone used AI to review previous versions of our firmware and stumbled upon this issue. A few weeks ago, we used one of the best available AI models to review our code for security issues, and it did not find this bug or anything serious."
 
