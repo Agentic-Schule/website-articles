@@ -104,7 +104,7 @@ Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprac
 
 ![Fable 5.1's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8. Send feedback with /feedback or learn more. Details: \[cyber\]](fable-cyber-block.png "Original-Screenshot, aufgenommen beim Schreiben dieses Artikels.")
 
-Der Klassifikator ist strunzdumm. Nur das Schreiben über Security-Themen reicht aus für eine Verweigerung. Genau dieser Text, den du gerade liest, hat ihn schon getriggert. Trotzdem `[cyber]`, umgeschaltet, weiter mit Opus. Wenn schon das Schreiben über das Thema anstößt, sitzt die Schranke zu weit vorn. Es ist wirklich lächerlich. Fable 5.1 kann ich persönlich überhaupt nicht empfehlen. Das ist schon Arbeitsverweigerung!
+Der Klassifikator ist strunzdumm. Nur das Schreiben über Security-Themen reicht aus für eine Verweigerung. Genau dieser Text, den du gerade liest, hat ihn schon getriggert. Wenn schon das Schreiben über das Thema anstößt, sitzt die Schranke zu weit vorn. Es ist wirklich lächerlich. Fable 5.1 kann ich persönlich überhaupt nicht empfehlen. Das ist schon Arbeitsverweigerung!
 
 Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter die Fähigkeit, nicht die Person. Der Angreifer umgeht das, er arbeitet lokal und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und liefert schwächere Arbeit als der, den er abwehren soll. Das ist die Asymmetrie aus dem Hugging-Face-Vorfall, diesmal beim Prüfen des eigenen Codes. Wieder im Vorteil: die Seite, die sich an keine Regel hält.
 
