@@ -45,7 +45,7 @@ Ein Beispiel für eine echte Kante: „Lies das Datenbankschema aus und generier
 
 Und eins ohne Kante: „Prüfe jede Route-Datei auf fehlende Auth-Checks." Keine Datei liest das Ergebnis einer anderen. Lauter unabhängige Aufgaben, die ein lineares Skript ohne Not hintereinanderhängt. Ein Graph lässt sie nebeneinander laufen.
 
-![Von der Linie zum Graphen: Knoten erledigen die Arbeit, Kanten sind die Abhängigkeiten dazwischen.](knoten-kanten.svg)
+![Zwei Diagramme nebeneinander: links die Linie, eine Kette aus den Schritten 1, 2, 3, bei der jeder Schritt auf den vorigen wartet; rechts der Graph, in dem unabhängige Knoten gleichzeitig laufen und über Kanten wieder zusammenführen.](knoten-kanten.svg "Von der Linie zum Graphen: Knoten erledigen die Arbeit, Kanten sind die Abhängigkeiten dazwischen.")
 
 Neu ist dieses Prinzip nicht. Build-Systeme wie `make` bauen seit Jahrzehnten aus genau solchen Abhängigkeiten einen Graphen und erledigen alles Unabhängige parallel. Und auch für Agenten hat es Anthropic längst nüchtern aufgeschrieben, in [„Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents): dort heißt das Muster *Parallelization* (unabhängige Teilaufgaben gleichzeitig) und *Orchestrator-Workers* (eine zentrale Instanz zerlegt die Aufgabe, verteilt sie an Worker und fügt die Ergebnisse zusammen). Ein neues Wort braucht es dafür also nicht, und doch ist genau eines entstanden. (Meine Vermutung: weil es cool klingt.)
 
