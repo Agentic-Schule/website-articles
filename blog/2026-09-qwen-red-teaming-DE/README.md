@@ -79,15 +79,7 @@ Die Asymmetrie fasst Hugging Face in einem Satz zusammen:
 
 Der Angreifer kannte keine Nutzungsbedingung. Der Verteidiger schon. Bleibt die Frage, warum ein Modell bei legitimer Arbeit so reagiert. Die Antwort steht öffentlich, und sie ist überraschend genau.
 
-## Warum das Modell abwinkt
-
-Anthropic hat mit Claude Fable 5 im Juni 2026 ein Modell veröffentlicht, das offensiv mit seinen Sicherheitsmaßnahmen wirbt. In der [Ankündigung](https://www.anthropic.com/news/claude-fable-5-mythos-5) steht, welche Themen betroffen sind:
-
-> „When Fable's classifiers detect a request related to cybersecurity, biology and chemistry, or distillation, the response is automatically handled by Claude Opus 4.8 instead. Users will be informed whenever this occurs."
-
-Drei Bereiche also: Cybersicherheit, Biologie und Chemie, sowie der Versuch, das Modell zum Training eines Konkurrenzmodells auszulesen. Technisch ist das keine Verweigerung im klassischen Sinn. Es ist eine Umleitung auf ein schwächeres Modell, und Anthropic begründet sie damit, dass eine Antwort von Opus 4.8 immer noch besser sei als gar keine. Wie weit der Cyber-Klassifikator greift, steht ebenfalls dort: „we designed our cybersecurity classifiers to cover both exploitation and offensive cyber tasks in a broader sense."
-
-### Der Sicherheitsabstand ist Absicht
+## Der Sicherheitsabstand ist Absicht
 
 Der entscheidende Absatz steht im Bericht zur [Wiederinbetriebnahme](https://www.anthropic.com/news/redeploying-fable-5) Ende Juni. Er erklärt das Verhalten, über das sich so viele Entwickler wundern:
 
