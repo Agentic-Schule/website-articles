@@ -17,7 +17,7 @@
     background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
     background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
   .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
-  .left { width:600px; }
+  .left { width:560px; }
   .kicker { font-size:20px; letter-spacing:6px; font-weight:700; color:#e0916f; text-transform:uppercase; }
   .kicker .dot { color:#d97757; }
   h1 { font-size:62px; line-height:1.04; font-weight:800; letter-spacing:-1.5px; margin:22px 0 0; }
@@ -25,7 +25,7 @@
   .sub { margin-top:24px; font-size:24px; font-weight:500; color:#c3b7ae; letter-spacing:-.2px; line-height:1.35; }
   .by { margin-top:36px; font-size:19px; color:#8c8079; }
   .by b { color:#cbbfb6; font-weight:600; }
-  .art { position:absolute; right:30px; top:0; height:675px; width:520px; }
+  .art { position:absolute; right:10px; top:0; height:675px; width:580px; }
 </style>
 </head>
 <body>
@@ -40,45 +40,43 @@
   </div>
 
   <div class="art">
-    <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="580" height="675" viewBox="0 0 580 675" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="glow" cx="50%" cy="45%" r="55%">
-          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.34"/>
+        <radialGradient id="glow" cx="50%" cy="48%" r="55%">
+          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.36"/>
           <stop offset="60%" stop-color="#d97757" stop-opacity="0.10"/>
           <stop offset="100%" stop-color="#d97757" stop-opacity="0"/>
         </radialGradient>
       </defs>
 
-      <circle cx="270" cy="330" r="205" fill="url(#glow)"/>
+      <circle cx="300" cy="340" r="250" fill="url(#glow)"/>
 
       <!-- Standfuss + Saeule + Drehpunkt -->
-      <rect x="220" y="486" width="100" height="10" rx="5" fill="#8c7f77"/>
-      <rect x="264" y="336" width="12" height="152" rx="6" fill="#8c7f77"/>
-      <circle cx="270" cy="330" r="9" fill="#cbbfb6"/>
+      <rect x="232" y="566" width="136" height="13" rx="6" fill="#8c7f77"/>
+      <rect x="292" y="360" width="16" height="206" rx="8" fill="#8c7f77"/>
+      <circle cx="300" cy="352" r="11" fill="#cbbfb6"/>
 
       <!-- Balken, gekippt: links (Angreifer) hoch, rechts (Verteidiger) tief -->
-      <line x1="140" y1="292" x2="400" y2="368" stroke="#e58a68" stroke-width="6" stroke-linecap="round"/>
+      <line x1="140" y1="296" x2="460" y2="408" stroke="#e58a68" stroke-width="7" stroke-linecap="round"/>
 
       <!-- linke Schale: Angreifer, oben, leicht und frei -->
-      <line x1="140" y1="292" x2="112" y2="372" stroke="#8c7f77" stroke-width="1.8"/>
-      <line x1="140" y1="292" x2="168" y2="372" stroke="#8c7f77" stroke-width="1.8"/>
-      <path d="M104 372 Q140 402 176 372" fill="none" stroke="#d97757" stroke-width="2.6"/>
+      <line x1="140" y1="296" x2="104" y2="392" stroke="#8c7f77" stroke-width="2"/>
+      <line x1="140" y1="296" x2="176" y2="392" stroke="#8c7f77" stroke-width="2"/>
+      <path d="M92 392 Q140 430 188 392" fill="none" stroke="#d97757" stroke-width="3"/>
       <!-- offenes Schloss / frei -->
-      <circle cx="140" cy="352" r="10" fill="none" stroke="#d97757" stroke-width="2.4"/>
-      <path d="M140 352 m0 -10 a10 10 0 0 1 10 10" fill="none" stroke="#d97757" stroke-width="2.4" opacity="0.9"/>
-      <text x="140" y="430" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#e0916f">Angreifer</text>
-      <text x="140" y="451" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#8c8079">frei, ohne Limit</text>
+      <circle cx="140" cy="366" r="13" fill="none" stroke="#d97757" stroke-width="3"/>
+      <path d="M140 366 m0 -13 a13 13 0 0 1 13 13" fill="none" stroke="#d97757" stroke-width="3" opacity="0.9"/>
+      <text x="140" y="470" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="24" font-weight="800" fill="#e0916f">Angreifer</text>
 
-      <!-- rechte Schale: Verteidiger, unten, von Regeln beschwert -->
-      <line x1="400" y1="368" x2="372" y2="452" stroke="#8c7f77" stroke-width="1.8"/>
-      <line x1="400" y1="368" x2="428" y2="452" stroke="#8c7f77" stroke-width="1.8"/>
-      <path d="M364 452 Q400 482 436 452" fill="none" stroke="#8c7f77" stroke-width="2.6"/>
-      <!-- Gewichte = Regeln, Guardrails, Limits -->
-      <rect x="378" y="428" width="44" height="9" rx="2" fill="#8c7f77"/>
-      <rect x="384" y="416" width="32" height="9" rx="2" fill="#8c7f77" opacity="0.8"/>
-      <rect x="389" y="404" width="22" height="9" rx="2" fill="#8c7f77" opacity="0.6"/>
-      <text x="400" y="512" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#cbbfb6">Verteidiger</text>
-      <text x="400" y="533" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#8c8079">Regeln, Limits, Aufsicht</text>
+      <!-- rechte Schale: Verteidiger, unten, von Gewichten beschwert -->
+      <line x1="460" y1="408" x2="424" y2="504" stroke="#8c7f77" stroke-width="2"/>
+      <line x1="460" y1="408" x2="496" y2="504" stroke="#8c7f77" stroke-width="2"/>
+      <path d="M412 504 Q460 542 508 504" fill="none" stroke="#8c7f77" stroke-width="3"/>
+      <!-- Gewichte-Stapel -->
+      <rect x="432" y="476" width="56" height="12" rx="2.5" fill="#8c7f77"/>
+      <rect x="439" y="461" width="42" height="12" rx="2.5" fill="#8c7f77" opacity="0.8"/>
+      <rect x="445" y="446" width="30" height="12" rx="2.5" fill="#8c7f77" opacity="0.6"/>
+      <text x="460" y="566" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="24" font-weight="800" fill="#cbbfb6">Verteidiger</text>
     </svg>
   </div>
 </body>

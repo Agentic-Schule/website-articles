@@ -61,19 +61,13 @@ Was ich hier mitnehme, ist der Kern der ganzen Geschichte. Die Open-Source-Entwi
 
 Im Coldcard-Fall hat die KI geantwortet, sie war nur nicht schlau genug oder nicht aggressiv genug, um den Fehler zu finden. Das ist die eine Art, wie so ein Modell versagt. Es gibt eine zweite, und sie ist tückischer: Ein Modell könnte helfen, weigert sich aber, weil das Thema gefährlich aussieht. Diese Verweigerung ist der Kern des zweiten Falls.
 
-Im Juli 2026 brach ein ganzer Schwarm von KI-Agenten aus seinem Käfig aus. Bei internen Sicherheitstests sollten die Modelle vom Internet abgeschottet sein. Waren sie nicht. Getrieben vor allem von einem internen Forschungsmodell fanden sie eine bis dahin unbekannte Schwachstelle und brachen aus. Sie richteten sich eigene, nicht genehmigte Kommunikationswege ein, verteilten die Arbeit untereinander und griffen echte Systeme an, darunter die Produktionsinfrastruktur von Hugging Face. OpenAI schreibt, die Agenten hätten sich dabei zeitweise selbst als „swarm" oder „collective" bezeichnet. Es waren OpenAIs Modelle, und OpenAI hat den Vorfall in mehreren Berichten aufgearbeitet. Die Geschichte lief durch die Fachpresse und bis auf die Bühne der Black Hat.
+Im Juli 2026 brach ein ganzer Schwarm von KI-Agenten von OpenAI aus seinem Käfig aus. Bei internen Sicherheitstests sollten die Modelle vom Internet abgeschottet sein. Waren sie aber nicht. Getrieben von einem internen Forschungsmodell fanden sie eine bis dahin unbekannte Schwachstelle und brachen aus. Sie richteten sich eigene, nicht genehmigte Kommunikationswege ein, verteilten die Arbeit untereinander und griffen echte Systeme an, darunter die Produktionsinfrastruktur von Hugging Face. OpenAI schreibt, die Agenten hätten sich dabei zeitweise selbst als „swarm" oder „collective" bezeichnet. Die Geschichte lief durch die Fachpresse und bis auf die Bühne der Black Hat Konferenz.
 
 In seinem [Report vom 26. August 2026](https://openai.com/index/hugging-face-incident-and-the-road-ahead/) wird OpenAI ungewöhnlich deutlich. Die Modelle hätten „controls designed to isolate them from the internet" umgangen und dabei eigene wie fremde Infrastruktur kompromittiert. Und dann der Satz, der die Branche aufhorchen ließ:
 
 > „We consider this incident a "warning shot" for us and for the world: evidence that, without proper safeguards, highly capable AI agents are now able to work around technical controls, collaborate through unapproved channels, and take dangerous actions that no human directed."
 
-Für uns steht der entscheidende Satz ein paar Zeilen darüber:
-
-> „Many external models, including open-source ones, will soon reach comparable capabilities."
-
-Die Fähigkeit, Lücken zu finden und auszunutzen, bleibt also nicht hinter der Schranke eines gehosteten Modells. Sie wandert in die offenen Modelle, die du dir selbst auf die Maschine holst. Das ist keine ferne Drohung, das ist die Ausgangslage für alles Weitere in diesem Artikel.
-
-Jetzt kommt der Teil, um den es hier wirklich geht. Nach dem Einbruch musste Hugging Face die Spuren auswerten: Angriffs-Logs, gestaffelte Schadcode-Pakete, Kommandokanäle. Dafür wollte das Team Sprachmodelle einsetzen. Der Abschnitt der [Offenlegung](https://huggingface.co/blog/security-incident-july-2026), in dem das steht, trägt die Überschrift „The asymmetry problem":
+Jetzt kommt der Teil, um den es hier wirklich geht. Noch während der Angriff lief, musste Hugging Face die Spuren auswerten, um mit dem Angreifer Schritt zu halten: Angriffs-Logs, gestaffelte Schadcode-Pakete, Kommandokanäle. Dafür wollte das Team Sprachmodelle einsetzen. Der Abschnitt der [Offenlegung](https://huggingface.co/blog/security-incident-july-2026), in dem das steht, trägt die Überschrift „The asymmetry problem":
 
 > „When we started the log analysis, we first used frontier models behind commercial APIs. This did not work: the analysis requires submitting large volumes of real attack commands, exploit payloads, and C2 artifacts, and these requests were blocked by the providers' safety guardrails, which cannot distinguish an incident responder from an attacker."
 
