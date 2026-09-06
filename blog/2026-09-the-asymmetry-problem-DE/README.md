@@ -106,7 +106,7 @@ Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprac
 
 Der Klassifikator ist strunzdumm. Nur das Schreiben über Security-Themen reicht aus für eine Verweigerung. Genau dieser Text, den du gerade liest, hat ihn schon getriggert. Wenn schon das Schreiben über das Thema anstößt, sitzt die Schranke zu weit vorn. Es ist wirklich lächerlich. Fable 5.1 kann ich persönlich überhaupt nicht empfehlen. Das ist schon Arbeitsverweigerung!
 
-Weil sich die Absicht nicht prüfen lässt, sperrt der Anbieter die Fähigkeit, nicht die Person. Der Angreifer umgeht das, er arbeitet lokal und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und liefert schwächere Arbeit als der, den er abwehren soll. Das ist die Asymmetrie aus dem Hugging-Face-Vorfall, diesmal beim Prüfen des eigenen Codes. Wieder im Vorteil: die Seite, die sich an keine Regel hält.
+Der Anbieter kann nicht sehen, ob du angreifst oder dich wehrst. Also blockt er für alle gleich. Der Angreifer umgeht das, er arbeitet lokal mit Open-Weight-Modellen und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und muss auf schwächere, ältere Modelle wie Opus ausweichen.
 
 > **💡 Warum das kein stabiler Zustand ist:** Diese Schranke ist ein eigenes System vor dem Modell, kein Teil der Gewichte. Sie lässt sich nachjustieren, ohne dass sich die Modellversion ändert. Wo sie heute steht, kann sie morgen woanders stehen, und du liest das an keiner Versionsnummer ab. Für verlässliche Arbeit ist genau das der Grund, die Kontrolle auf die eigene Maschine zu holen.
 
