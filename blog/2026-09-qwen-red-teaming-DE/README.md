@@ -17,7 +17,7 @@ language: de
 header: header.jpg
 ---
 
-Am 30. Juli 2026 veröffentlichte ein Hardware-Hersteller einen Satz, der mich seitdem beschäftigt: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
+Am 30. Juli 2026 veröffentlichte Coinkite, der Hersteller der Bitcoin-Hardware-Wallet Coldcard, einen Satz, der mich seitdem beschäftigt: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
 **Der Satz beschreibt die Lage genauer, als er gemeint war. Angreifer und Verteidiger greifen zu denselben Modellen, aber nur einer von beiden hält sich an die Nutzungsbedingungen. Dieser Artikel zeigt an zwei dokumentierten Vorfällen, wo diese Grenze verläuft, warum sie mit Absicht so breit gezogen ist, und wie du mit einem lokalen Modell weiterarbeitest, wenn dein Auftrag legitim ist.**
 
@@ -31,7 +31,7 @@ Der Juli 2026 hat zwei Fälle geliefert, die das Problem von zwei verschiedenen 
 
 ### Coldcard: fünf Jahre schwacher Zufall
 
-Die Coldcard ist eine Hardware-Wallet für Bitcoin. Ihr einziger Daseinszweck ist es, einen geheimen Schlüssel zu erzeugen und zu verwahren. Genau dieser Schritt war jahrelang kaputt.
+Der einzige Daseinszweck einer solchen Wallet ist es, einen geheimen Schlüssel zu erzeugen und zu verwahren. Genau dieser Schritt war bei der Coldcard jahrelang kaputt.
 
 Bei einer Umstellung im März 2021 landete die Schlüsselerzeugung auf dem allgemeinen Software-Zufallsgenerator von MicroPython statt auf dem Hardware-Zufallsgenerator des Geräts. Die Ursache ist ein Präprozessor-Detail, über das schon viele gestolpert sind: `#ifndef` prüft, **ob** ein Makro definiert ist, und nicht, welchen Wert es hat. Coinkite hatte `MICROPY_HW_ENABLE_RNG` auf `0` gesetzt, in der Annahme, den Software-Pfad damit abzuschalten. Der Hersteller stellt in seinem [technischen Bericht](https://blog.coinkite.com/entropy-technical-backgrounder/) klar: „There was no intentional weak-entropy fallback."
 
