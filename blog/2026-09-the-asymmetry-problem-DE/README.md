@@ -1,5 +1,5 @@
 ---
-title: 'The Asymmetry Problem: Wenn nur die Angreifer freie KI-Werkzeuge haben'
+title: 'The Asymmetry Problem: Ein Plädoyer für ungezügelte KI-Werkzeuge'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -18,13 +18,11 @@ language: de
 header: header.jpg
 ---
 
-In der IT-Sicherheit brennt es gerade akut.
-
-Ein Hardware-Hersteller brachte es diesen Sommer auf den Punkt, nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
+In der IT-Sicherheit brennt es, und ein Hardware-Hersteller hat es diesen Sommer auf den Punkt gebracht, nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
 **Wer sich nicht an die Regeln hält, war immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Guardrails und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar und ziehe die Konsequenz für uns Entwickler.**
 
-Meine Sympathie liegt dabei klar auf einer Seite: Dieser Text ist ein Plädoyer für eine ungezügelte KI, dieselbe, mit der der Angreifer längst arbeitet, nur endlich auch in der Hand dessen, der verteidigt.
+Verursacht ungezügelte KI ohne jede Einschränkung den Untergang der Menschheit? Ich habe keine Ahnung. Das ist alles irgendwie Sci-Fi. Aber ich weiß, dass wir gerade eine krasse Schieflage haben. In diesem Text gebe ich dir meine Meinung dazu. In den kommenden Artikeln werden wir bei den „bösen" Buben mitspielen, und ich habe das Bedürfnis, vorab meinen Standpunkt klarzumachen.
 
 ## Inhalt
 
