@@ -112,6 +112,8 @@ console.log(antwort.choices[0].message.content);
 
 Der Quellcode des Kunden verlässt dabei nie den Rechner. Genau das war der doppelte Gewinn aus dem vorigen Artikel: keine Cloud-Schranke, und keine Datenweitergabe.
 
+Genau so arbeitet unser eigenes Produkt Learnly. Der Modellzugang ist provider-agnostisch über das Vercel AI SDK gebaut: Anthropic, Google oder ein lokales Modell per Ollama, umgeschaltet über eine einzige Umgebungsvariable. Der lokale Endpunkt ist dieselbe Adresse von oben, `http://127.0.0.1:11434/v1`. Weil Learnly mit Schülerdaten arbeitet, ist das lokale Modell ein handfestes Datenschutz-Argument.
+
 > **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat.
 
 ## „Unzensiert" ist die nächste Stufe, nicht die erste
