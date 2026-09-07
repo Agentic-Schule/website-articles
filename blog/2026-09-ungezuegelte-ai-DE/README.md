@@ -51,15 +51,15 @@ Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du sie herunterlädst
 
 Das dichte Modell **Qwen3.8-27B** steht unter **Apache 2.0**. Das ist die Variante für den Berateralltag, weil diese Lizenz keine Umsatzschwellen und keine Nutzungsvorbehalte kennt. Es hat rund 27,8 Milliarden Parameter, ein natives Kontextfenster von 262.144 Token, und es ist ein Vision-Modell, kann also auch Screenshots lesen. Das Nachdenken ist standardmäßig aktiv. Wie tief das Modell nachdenkt, steuerst du beim Aufruf über den Parameter `reasoning_effort` mit den Stufen `low`, `medium` und `xhigh`. Mehr Tiefe heißt mehr Denk-Token und damit mehr Rechenzeit, aber lokal keine höhere Rechnung. Das ist dasselbe Prinzip wie das erweiterte Nachdenken, das du aus Claude Code kennst.
 
-Daneben gibt es das große Mixture-of-Experts-Modell mit rund 2,4 Billionen Parametern. Es steht unter einer eigenen Lizenz mit einer Umsatzklausel; für die reine interne Nutzung ist sie unproblematisch, für ein Produkt darüber hinaus musst du sie lesen. Für die Arbeit am eigenen Code auf eigener Hardware ist die 27B-Variante ohnehin die praktikable Wahl.
+Daneben gibt es das große Mixture-of-Experts-Modell mit rund 2,4 Billionen Parametern. Es steht unter einer eigenen Lizenz mit einer Umsatzklausel. Die Kurzfassung: Intern nutzen darfst du es frei. Eine separate Lizenz von Qwen brauchst du erst, wenn du damit den Modellzugang weiterverkaufst oder einen eigenständigen KI-Arbeitsassistenten baust, und dabei über 50 Millionen US-Dollar Jahresumsatz machst. Für die Arbeit am eigenen Code auf eigener Hardware ist die 27B-Variante ohnehin die praktikable Wahl.
 
 ### Welche Quantisierung auf welche Maschine passt
 
-Im Original braucht das Modell rund 56 GB. Erst die Quantisierung macht es auf normaler Hardware brauchbar: Sie rundet die Modellgewichte von hoher auf niedrigere Präzision, etwa von 16 auf 4 Bit pro Wert. Das senkt den Speicherbedarf drastisch und kostet nur wenig Qualität. Die verbreiteten Stufen im GGUF-Format:
+In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisierung macht es auf normaler Hardware brauchbar: Sie rundet die Modellgewichte von hoher auf niedrigere Präzision, etwa von 16 auf 4 Bit pro Wert. Das senkt den Speicherbedarf drastisch und kostet nur wenig Qualität. Die verbreiteten Stufen im GGUF-Format:
 
 | Stufe | Größe | Passt auf |
 | --- | --- | --- |
-| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory |
+| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory, läuft auf meinem [Mac mini M4](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) |
 | `Q5_K_M` | 19,8 GB | 24 GB VRAM knapp, 32 GB komfortabel |
 | `Q6_K` | 22,0 GB | 32 GB aufwärts |
 | `Q8_0` | 29,0 GB | 36 GB aufwärts |
@@ -80,7 +80,7 @@ Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-T
 
 ### Weg 2: Die Kommandozeile, für Skripte und Dauerbetrieb
 
-Für den Dauerbetrieb ist die Kommandozeile die bessere Wahl. **llama.cpp** lädt das Modell direkt von Hugging Face und startet den Server in einem Befehl:
+Für den Dauerbetrieb ist die Kommandozeile die bessere Wahl. **llama.cpp** installierst du auf dem Mac mit `brew install llama.cpp`, unter Linux und Windows lädst du die fertigen Binaries von der [Releases-Seite](https://github.com/ggml-org/llama.cpp/releases). Es lädt das Modell direkt von Hugging Face und startet den Server in einem Befehl:
 
 ```bash
 llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
@@ -88,7 +88,7 @@ llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
 
 Der Schalter `-hf` zieht das angegebene Repository, `:Q4_K_M` wählt die Quantisierungsstufe (ohne Angabe nimmt llama.cpp ohnehin `Q4_K_M`). Die separate Vision-Projektor-Datei holt es automatisch dazu. Danach lauscht der Server auf `http://127.0.0.1:8080` und spricht dieselbe OpenAI-kompatible Sprache wie LM Studio.
 
-Noch kürzer ist **Ollama**. Ein Befehl lädt und startet das Modell:
+Noch kürzer ist **Ollama**. Auf dem Mac genügt `brew install ollama`, unter Linux `curl -fsSL https://ollama.com/install.sh | sh`, für Windows gibt es einen Installer auf [ollama.com](https://ollama.com/download). Danach lädt und startet ein Befehl das Modell:
 
 ```bash
 ollama run qwen3.8:27b
