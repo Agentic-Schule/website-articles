@@ -131,7 +131,7 @@ Der Angreifer fragt niemanden um Erlaubnis. Er arbeitet lokal, ohne Schranken, b
 
 Genau darum geht es im nächsten Teil: um [ungezügelte KI](https://agentic.schule/blog/2026-09-ungezuegelte-ai) in verantwortungsvoller Hand. Wie du ein offenes Modell lokal aufsetzt, was „unzensiert" technisch wirklich bedeutet, und wo die rechtlichen Grenzen verlaufen. Wir tragen als Entwickler eine hohe Verantwortung. Ich will ihr nachkommen.
 
-Mission: Red Team.
+Mission: Red Team. 🥷 Das wird ein Spaß!
 
 Wo ist dir ein Modell zuletzt bei legitimer Arbeit in die Quere gekommen? Schreib mir, ich sammle die Fälle.
 
