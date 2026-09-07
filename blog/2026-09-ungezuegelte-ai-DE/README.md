@@ -82,7 +82,7 @@ Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-T
 
 ### Weg 2: Die Kommandozeile, für Skripte und Dauerbetrieb
 
-Für den Dauerbetrieb ist die Kommandozeile die bessere Wahl. **llama.cpp** installierst du auf dem Mac mit `brew install llama.cpp`, unter Linux und Windows lädst du die fertigen Binaries von der [Releases-Seite](https://github.com/ggml-org/llama.cpp/releases). Es lädt das Modell direkt von Hugging Face und startet den Server in einem Befehl:
+Für den Dauerbetrieb ist die Kommandozeile die bessere Wahl. **llama.cpp** ist der schlanke Inferenz-Motor in C und C++, der GGUF-Modelle direkt ausführt und die Grundlage vieler anderer Werkzeuge bildet. Du installierst es auf dem Mac mit `brew install llama.cpp`, unter Linux und Windows lädst du die fertigen Binaries von der [Releases-Seite](https://github.com/ggml-org/llama.cpp/releases). Es lädt das Modell direkt von Hugging Face und startet den Server in einem Befehl:
 
 ```bash
 llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
@@ -90,7 +90,7 @@ llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
 
 Der Schalter `-hf` zieht das angegebene Repository, `:Q4_K_M` wählt die Quantisierungsstufe (ohne Angabe nimmt llama.cpp ohnehin `Q4_K_M`). Die separate Vision-Projektor-Datei holt es automatisch dazu. Danach lauscht der Server auf `http://127.0.0.1:8080` und spricht dieselbe OpenAI-kompatible Sprache wie LM Studio.
 
-Noch kürzer ist **[Ollama](https://ollama.com)**, der wohl populärste Weg, ein Modell lokal laufen zu lassen. Stell es dir wie Docker für Sprachmodelle vor: ein eigener Katalog und ein einziger `run`-Befehl. Auf dem Mac genügt `brew install ollama`, unter Linux `curl -fsSL https://ollama.com/install.sh | sh`, für Windows gibt es einen Installer auf [ollama.com](https://ollama.com/download). Danach lädt und startet ein Befehl das Modell:
+Noch kürzer ist **[Ollama](https://ollama.com)**, der wohl populärste Weg, ein Modell lokal laufen zu lassen. Der ähnliche Name stiftet gern Verwirrung: llama.cpp ist der Motor, Ollama die bequeme Schicht darüber. Beide Namen stammen aus der Welle, die Metas Llama-Modelle ausgelöst haben. Stell es dir wie Docker für Sprachmodelle vor: ein eigener Katalog und ein einziger `run`-Befehl. Auf dem Mac genügt `brew install ollama`, unter Linux `curl -fsSL https://ollama.com/install.sh | sh`, für Windows gibt es einen Installer auf [ollama.com](https://ollama.com/download). Danach lädt und startet ein Befehl das Modell:
 
 ```bash
 ollama run qwen3.8:27b
