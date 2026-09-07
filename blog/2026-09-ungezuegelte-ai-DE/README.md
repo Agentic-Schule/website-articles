@@ -19,11 +19,23 @@ header: header.jpg
 
 Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) stand das Dilemma: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell, der Verteidiger bleibt an der Cloud-Schranke stehen. Die Konsequenz war klar. Jetzt bauen wir sie.
 
-**Dieser Artikel zeigt, wie du ein offenes Modell lokal aufsetzt, was „unzensiert" technisch wirklich bedeutet, und wo die rechtlichen Grenzen verlaufen. Damit du deine eigene Software prüfen kannst, ohne dass ein Anbieter dir dazwischenfunkt, und ohne dass dein Code den Rechner verlässt.**
+**„Unzensiert" meint drei Schranken, die ein gehosteter Assistent zwischen dich und die Antwort stellt: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Dieser Artikel zeigt, wie ein lokales Modell die ersten beiden von selbst abräumt, warum die dritte Handarbeit ist, und wo die rechtlichen Grenzen liegen.**
 
 ## Inhalt
 
 [[toc]]
+
+## Was „unzensiert" bedeutet
+
+„Unzensiert" klingt nach einem einzelnen Schalter, ist aber dreierlei. Ein gehosteter Assistent hält dich an drei Stellen zurück, von außen nach innen.
+
+**Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem im ersten Teil das Schreiben dieses Textes zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
+
+**Zweitens der System-Prompt.** Gehostete Assistenten laufen mit einer versteckten Anweisung, die du nicht abschalten kannst und in der auch „verweigere Folgendes" stehen kann. Lokal wählst du den System-Prompt selbst, oder lässt ihn ganz weg.
+
+**Drittens das antrainierte Verhalten.** Die Verweigerung steckt zusätzlich in den Gewichten des Modells, dort hat sie das Training verankert. Diese Schranke trägt auch ein lokal betriebenes Modell noch mit sich. Sie zu entfernen heißt, die Gewichte selbst zu verändern, und dafür gibt es die Abliteration.
+
+Die ersten beiden Schranken fallen automatisch, sobald das Modell auf deiner Maschine läuft. Die dritte ist die Ausnahme und verlangt Handarbeit. Also bauen wir zuerst das, was die ersten beiden abräumt: ein offenes Modell auf der eigenen Maschine.
 
 ## Welches Modell nehmen?
 
@@ -72,7 +84,7 @@ Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist 
 
 ### Weg 1: LM Studio, die grafische Oberfläche
 
-Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lade es herunter, installiere es, und such im Modell-Katalog nach `Qwen3.8 27B`. Wähle eine GGUF-Quantisierung wie `Q4_K_M`, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
+Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lass dich vom Namen nicht irritieren: Die aktuelle Ausgabe heißt *Bionic* und wirbt als „Agent for Work and Code". Das ist dasselbe LM Studio, du lädst genau das Richtige. Lade es herunter, installiere es, und such im Modell-Katalog nach `Qwen3.8 27B`. Wähle eine GGUF-Quantisierung wie `Q4_K_M`, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
 
 ![Die Oberfläche von LM Studio: links eine Projektliste, in der Mitte ein Chat, unten das Modell-Auswahlfeld, rechts die Vorschau eines erzeugten PDF-Dokuments.](lm-studio.png "LM Studio bündelt Modellsuche, Chat und lokalen Server in einer Oberfläche. Das aktive Modell wählst du unten im Eingabefeld.")
 
@@ -124,15 +136,23 @@ console.log(antwort.choices[0].message.content);
 
 Der Quellcode des Kunden verlässt dabei nie den Rechner. Genau das war der doppelte Gewinn aus dem vorigen Artikel: keine Cloud-Schranke, und keine Datenweitergabe.
 
-Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das Vercel AI SDK gebaut, sodass sich jedes Modell frei einstellen lässt. Für den Jugendschutz-Klassifizierer, der die Schüler-Chats prüft, ist ein lokales Modell vorgesehen: ein `gemma3` über Ollama auf dem eigenen Server. Kein Schülertext geht dafür an einen Cloud-Dienst. Das ist das Datenschutz-Argument dieses Artikels, in Produktion.
+Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das Vercel AI SDK gebaut, sodass sich jedes Modell frei einstellen lässt. Und hier kommt der selbst vorgeschaltete Klassifizierer aus Schranke 1 ins Spiel: Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, ist ein lokales Modell vorgesehen, ein `gemma3` über Ollama auf dem eigenen Server. Kein Schülertext geht dafür an einen Cloud-Dienst. Das ist das Datenschutz-Argument dieses Artikels, in Produktion.
 
 Und du bleibst damit nicht beim Chat stehen. Dieselbe Schnittstelle sprechen auch agentische Coding-Werkzeuge, die Dateien bearbeiten und Befehle ausführen. Den Ablauf, den du von Claude Code kennst, gibst du also nicht auf, nur das Modell dahinter läuft jetzt lokal. Möglich macht das die Werkzeug-Nutzung des Modells selbst (function calling).
 
 > **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat.
 
-## „Unzensiert" ist die nächste Stufe, nicht die erste
+## Zwei Schranken sind gefallen
 
-Jetzt zum Begriff, der bei offenen Modellen für die meiste Aufregung sorgt. Für Qwen 3.8 existieren zahlreiche sogenannte **abliterierte** Varianten. Der Begriff kommt von *ablation*, dem gezielten Entfernen: Solchen Modellen wurde die Verweigerung dauerhaft herausoperiert. Die Technik dahinter ist gut untersucht. Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Rechnet man diese Richtung aus den Gewichten heraus, ist die Sperre weg. Das Paper spricht dabei von „minimal effect on other capabilities".
+Läuft das Modell auf deiner Maschine, ist die erste Schranke schon Geschichte: Kein Klassifizierer des Anbieters liest mehr mit, und keine Anfrage wird dir abgewiesen.
+
+Bleibt die zweite, der System-Prompt. Bei einem lokalen Modell gehört er dir. In LM Studio steht dafür ein eigenes Systemfeld, über die API ist es die `system`-Rolle in den `messages`. Dort setzt du deine eigenen Regeln, oder du lässt das Feld leer und arbeitest ganz ohne Vorgaben. Der versteckte „verweigere Folgendes"-Zusatz, den ein gehosteter Assistent immer mitführt, fehlt schlicht.
+
+Damit sind zwei der drei Schranken weg, allein dadurch, dass das Modell bei dir läuft. Bleibt die dritte. Sie sitzt tiefer, in den Gewichten selbst.
+
+## Schranke 3: Das antrainierte Verhalten
+
+Nur ein Eingriff in die Gewichte entfernt diese Schranke. Dafür existieren zahlreiche sogenannte **abliterierte** Varianten. Der Begriff kommt von *ablation*, dem gezielten Entfernen: Solchen Modellen wurde die Verweigerung dauerhaft herausoperiert. Die Technik dahinter ist gut untersucht. Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Rechnet man diese Richtung aus den Gewichten heraus, ist die Sperre weg. Das Paper spricht dabei von „minimal effect on other capabilities".
 
 Technisch ist das ein Eingriff ins Gehirn des Modells. Ein modernes Modell ist durch sein Training stark gezähmt. Der Fachbegriff dafür ist *Alignment*: meist per RLHF (Reinforcement Learning from Human Feedback) wird es auf Hilfsbereitschaft und Harmlosigkeit ausgerichtet. Die Abliteration schneidet einen Teil davon wieder heraus. Danach kann das Modell einen völlig anderen Ton anschlagen. Es wird pampig wie ein Reddit-Kommentar, oder es kippt in den Tonfall eines Image-Boards, bis hin zu offenem Rassismus. Das ist kein Defekt: Dieser Stoff steckt längst in den Trainingsdaten, das Alignment hat ihn nur zugedeckt.
 
@@ -162,7 +182,7 @@ Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und 
 
 ## Fazit
 
-Ein offenes Modell auf der eigenen Maschine ist in einer Stunde eingerichtet und kostet dich außer Speicherplatz nichts. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-09-the-asymmetry-problem): Es verweigert nicht, und dein Code bleibt, wo er hingehört. „Unzensiert" ist dabei die Ausnahme, nicht der Anfang. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
+Ein offenes Modell auf der eigenen Maschine ist in einer Stunde eingerichtet und kostet dich außer Speicherplatz nichts. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-09-the-asymmetry-problem): Es verweigert nicht, und dein Code bleibt, wo er hingehört. Zwei der drei Schranken fallen dabei von selbst, der Klassifizierer und der System-Prompt. Die dritte, das antrainierte Verhalten, verlangt Abliteration und bleibt die Ausnahme. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
 
 Das Werkzeug allein macht aber noch keinen guten Red-Teamer. Ein Modell, das nichts verweigert, kann auch mehr anrichten, sobald es Werkzeuge in die Hand bekommt. In welchem Rahmen so ein Agent laufen darf, und warum die naheliegende Antwort „läuft doch in einer VM" nur die halbe Miete ist, steht im [nächsten Teil](https://agentic.schule/blog/2026-09-strix-pentest-agent) am Beispiel eines Pentest-Agenten.
 
