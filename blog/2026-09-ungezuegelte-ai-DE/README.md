@@ -84,11 +84,13 @@ Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist 
 
 ### Weg 1: LM Studio, die grafische Oberfläche
 
-Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lass dich vom Namen nicht irritieren: Die aktuelle Ausgabe heißt *Bionic* und sieht anders aus als ältere Versionen, mit dem Chat stärker im Vordergrund. Für den Einstieg ist das ein Vorteil, weniger Knöpfe und ein schnellerer Start. Es ist trotzdem dasselbe LM Studio, du lädst genau das Richtige. Lade es herunter, installiere es, und such im Modell-Katalog nach `Qwen3.8 27B`. Wähle eine GGUF-Quantisierung wie `Q4_K_M`, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
+Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lass dich vom Namen nicht irritieren: Die aktuelle Ausgabe heißt *Bionic* und sieht anders aus als ältere Versionen, mit dem Chat stärker im Vordergrund. Für den Einstieg ist das ein Vorteil, weniger Knöpfe und ein schnellerer Start. Es ist trotzdem dasselbe LM Studio, du lädst genau das Richtige. Lade es herunter und installiere es.
 
-![Die Oberfläche von LM Studio: links eine Projektliste, in der Mitte ein Chat, unten das Modell-Auswahlfeld, rechts die Vorschau eines erzeugten PDF-Dokuments.](lm-studio.png "LM Studio bündelt Modellsuche, Chat und lokalen Server in einer Oberfläche. Das aktive Modell wählst du unten im Eingabefeld.")
+![Der Startbildschirm von LM Studio Bionic: ein leeres Fenster mit einem zentralen Eingabefeld „Ask Bionic to do something" und einer Modellauswahl.](lm-studio-start.png "Der neue Bionic-Startbildschirm, wirklich sehr aufgeräumt.")
 
-<small>Screenshot: [LM Studio](https://lmstudio.ai)</small>
+Im Modell-Katalog suchst du nach `Qwen3.8 27B`. Sehr praktisch: LM Studio blendet auf Wunsch nur Modelle ein, die auf deine Hardware passen, und markiert die empfohlene Variante. So lädst du nicht versehentlich etwas herunter, das dann gar nicht läuft. Nimm die als *Recommended* markierte Fassung, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
+
+![Der Explore-Bereich von LM Studio: links die Modellliste, rechts die Details und Download-Optionen zu Qwen3.8 27B. Ein angehakter Filter „Only include Staff Picks that fit on a known device" beschränkt die Liste auf Modelle, die auf das eigene Gerät passen.](lm-studio-explore.png "Der Download-Bereich mit „Staff Picks". Ein Filter zeigt nur Modelle, die auf die eigene Hardware passen. Qwen3.8 27B ist als „Full GPU Offload Possible" markiert.")
 
 Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-Tab den lokalen Server ein. LM Studio stellt dann eine OpenAI-kompatible Schnittstelle unter `http://localhost:1234/v1` bereit. Diese Adresse brauchen wir gleich in Weg 3 wieder.
 
