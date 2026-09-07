@@ -113,7 +113,7 @@ Wir brauchen also dieselbe Fähigkeit wie der Angreifer, nur ohne den Klassifika
 
 ## „Aber das bewaffnet doch die Angreifer"
 
-Ein Einwand liegt auf der Hand: Wer offene, unbeschränkte Modelle verteidigt, gibt sie auch dem Angreifer in die Hand. Das stimmt, und es ändert trotzdem nichts. Der Angreifer hat diese Modelle längst, er wartet nicht auf meine Zustimmung. Die Asymmetrie entsteht erst dadurch, dass allein der Verteidiger an der Schranke stehen bleibt. Wer die Fähigkeit nur auf einer Seite künstlich klein hält, vergrößert die Lücke, statt sie zu schließen.
+Ein Einwand liegt auf der Hand: Wer offene, unbeschränkte Modelle verteidigt, gibt sie auch dem Angreifer in die Hand. Das stimmt, und es ändert trotzdem nichts. Der Angreifer hat diese Modelle. Die Büchse der Pandora ist längst offen. Die Asymmetrie entsteht erst dadurch, dass allein der Verteidiger an der Schranke stehen bleibt. Wer die Fähigkeit nur auf einer Seite künstlich klein hält, vergrößert die Lücke, statt sie zu schließen.
 
 **Aber die Angreifer haben mehr Ressourcen.** Auch das stimmt. Der Angreifer finanziert seine Rechenzeit aus der Beute, und wenn Millionen winken, sind ein paar Regale voller GPUs irrelevant. Manche sind staatliche Akteure. Auf nackte Rechenleistung gewinnt der kleine Hersteller dieses Rennen nie, und ein lokales Modell allein ändert das nicht.
 
