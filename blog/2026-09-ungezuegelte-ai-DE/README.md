@@ -27,7 +27,7 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 ## Welches Modell nehmen?
 
-Für lokale Sicherheitsarbeit kommen viele offene Modelle infrage. Ich greife drei heraus, jedes aus einem anderen Grund:
+Offene Modelle für lokale Sicherheitsarbeit gibt es reichlich. Drei stelle ich dir hier vor, jedes aus einem anderen Grund:
 
 | Modell | Lizenz | Bauart | Kontext | Rolle |
 | --- | --- | --- | --- | --- |
