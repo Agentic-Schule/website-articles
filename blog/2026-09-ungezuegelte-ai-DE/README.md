@@ -88,7 +88,9 @@ Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lass dich vom 
 
 ![Der Startbildschirm von LM Studio Bionic: ein leeres Fenster mit einem zentralen Eingabefeld „Ask Bionic to do something" und einer Modellauswahl.](lm-studio-start.png "Der neue Bionic-Startbildschirm, wirklich sehr aufgeräumt.")
 
-Im Modell-Katalog suchst du nach `Qwen3.8 27B`. Sehr praktisch: LM Studio blendet auf Wunsch nur Modelle ein, die auf deine Hardware passen, und markiert die empfohlene Variante. So lädst du nicht versehentlich etwas herunter, das dann gar nicht läuft. Nimm die als *Recommended* markierte Fassung, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
+Im Modell-Katalog suchst du nach `Qwen3.8 27B`. Und hier hat LM Studio spürbar dazugelernt: Ein Filter blendet auf Wunsch nur die Modelle ein, die auf deine Hardware passen, gemessen am freien Speicher deines Rechners. Damit fällt das alte Ärgernis weg, ein Modell zu ziehen, das dann gar nicht startet.
+
+Klickst du Qwen3.8 27B an, zeigt die rechte Spalte die Download-Optionen. LM Studio empfiehlt dir eine zu deiner Maschine passende Variante, auf Apple Silicon die MLX-Fassung in 4 Bit mit rund 16 GB. Ein grünes „Full GPU Offload Possible" heißt, dass das ganze Modell auf der Grafikeinheit läuft und damit die volle Geschwindigkeit erreicht. Darunter stehen die Fähigkeiten des Modells: Vision, Tools und Reasoning. Nimm die als *Recommended* markierte Fassung, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
 
 ![Der Explore-Bereich von LM Studio: links die Modellliste, rechts die Details und Download-Optionen zu Qwen3.8 27B. Ein angehakter Filter „Only include Staff Picks that fit on a known device" beschränkt die Liste auf Modelle, die auf das eigene Gerät passen.](lm-studio-explore.png "Der Download-Bereich mit „Staff Picks". Ein Filter zeigt nur Modelle, die auf die eigene Hardware passen. Qwen3.8 27B ist als „Full GPU Offload Possible" markiert.")
 
