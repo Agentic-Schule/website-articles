@@ -125,7 +125,7 @@ Ein frisches Beispiel dafür lieferte Core Lightning Ende August 2026: ein [Sich
 
 Der Satz vom Anfang lässt mich nicht los: „only helped the bad guys". Das ist der Zustand, den ich nicht hinnehmen will.
 
-Als Entwickler bin ich dafür verantwortlich, meine Software sicher zu halten. Das ist meine Pflicht, und ich nehme sie ernst. Was ich nicht einsehe: dass ein Anbieter mir vorschreibt, was ich dafür tun und lassen darf.
+Als Entwickler bin ich dafür verantwortlich, meine Software sicher zu halten. Was ich nicht einsehe: dass ein Anbieter mir vorschreibt, was ich dafür tun und lassen darf.
 
 Der Angreifer fragt niemanden um Erlaubnis. Er arbeitet lokal, ohne Schranken, begrenzt nur durch seine Rechenkapazität. Bleibe ich als Verteidiger an der Cloud-Schranke stehen, liefere ich schwächere Arbeit als er, und das ausgerechnet bei der Sache, für die ich geradestehe. Die Fähigkeit, die ich brauche, gibt es längst. Sie läuft auf offenen Modellen auf meiner eigenen Maschine. Bisher lag der Vorteil bei dem, der sich an keine Regel hält. Genau das will ich drehen.
 
