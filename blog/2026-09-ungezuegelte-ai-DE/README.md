@@ -66,6 +66,10 @@ Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist 
 
 Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lade es herunter, installiere es, und such im Modell-Katalog nach `Qwen3.8 27B`. Wähle eine GGUF-Quantisierung wie `Q4_K_M`, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
 
+![Die Oberfläche von LM Studio: links eine Projektliste, in der Mitte ein Chat, unten das Modell-Auswahlfeld, rechts die Vorschau eines erzeugten PDF-Dokuments.](lm-studio.png "LM Studio bündelt Modellsuche, Chat und lokalen Server in einer Oberfläche. Das aktive Modell wählst du unten im Eingabefeld.")
+
+<small>Screenshot: [LM Studio](https://lmstudio.ai)</small>
+
 Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-Tab den lokalen Server ein. LM Studio stellt dann eine OpenAI-kompatible Schnittstelle unter `http://localhost:1234/v1` bereit. Diese Adresse brauchen wir gleich in Weg 3 wieder.
 
 ### Weg 2: Die Kommandozeile, für Skripte und Dauerbetrieb
@@ -112,7 +116,7 @@ console.log(antwort.choices[0].message.content);
 
 Der Quellcode des Kunden verlässt dabei nie den Rechner. Genau das war der doppelte Gewinn aus dem vorigen Artikel: keine Cloud-Schranke, und keine Datenweitergabe.
 
-Genau so arbeitet unser eigenes Produkt Learnly. Der Modellzugang ist provider-agnostisch über das Vercel AI SDK gebaut: Anthropic, Google oder ein lokales Modell per Ollama, umgeschaltet über eine einzige Umgebungsvariable. Der lokale Endpunkt ist dieselbe Adresse von oben, `http://127.0.0.1:11434/v1`. Weil Learnly mit Schülerdaten arbeitet, ist das lokale Modell ein handfestes Datenschutz-Argument.
+Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das Vercel AI SDK gebaut: Anthropic, Google oder ein lokales Modell per Ollama, umgeschaltet über eine einzige Umgebungsvariable. Der lokale Endpunkt ist dieselbe Adresse von oben, `http://127.0.0.1:11434/v1`. Weil Learnly mit Schülerdaten arbeitet, ist das lokale Modell ein handfestes Datenschutz-Argument.
 
 > **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat.
 
