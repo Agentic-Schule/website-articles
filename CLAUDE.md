@@ -40,7 +40,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - **Englische Fachbegriffe bleiben englisch**, bei Erstnennung kursiv und kurz deutsch erklärt: „den JIT-Modus (Just-in-Time)", „(engl. *Context Summarization*)". Akronyme bei Erstnennung ausschreiben.
 - API-Namen und Befehle in Inline-Code (`rxResource()`, `/loop`). Bindestrich-Kopplung hält englische Begriffe deutsch-grammatisch: „MCP-Server", „AI-Agenten".
 - **Code als Vorher/Nachher** mit sprechenden Kommentaren und `❌`/`✅` für falsch/richtig. Eine durchgehende Beispiel-Domäne (im Buch: BookMonkey).
-- Alltagsmetaphern, um Technik greifbar zu machen: „Stell es dir so vor: …".
+- **Analogien und Alltagsmetaphern nur sparsam und nie ungefragt.** Wir beschreiben die Dinge exakt, so wie sie sind, statt sie mit ungenauen Vergleichen zu vereinfachen (etwa „X ist das GitHub für Y" oder „das Docker für Z"). Solche bereichsfremden Vergleiche sind technisch oft ungenau und stiften mehr Verwirrung als Klärung. Bietet sich im Einzelfall wirklich eine Analogie an, dann nur nach Rücksprache mit Johannes.
 
 ## Gedankenstrich, Antithese, Floskeln
 
