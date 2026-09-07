@@ -84,7 +84,7 @@ Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist 
 
 ### Weg 1: LM Studio, die grafische Oberfläche
 
-Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lass dich vom Namen nicht irritieren: Die aktuelle Ausgabe heißt *Bionic* und wirbt als „Agent for Work and Code". Das ist dasselbe LM Studio, du lädst genau das Richtige. Lade es herunter, installiere es, und such im Modell-Katalog nach `Qwen3.8 27B`. Wähle eine GGUF-Quantisierung wie `Q4_K_M`, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
+Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lass dich vom Namen nicht irritieren: Die aktuelle Ausgabe heißt *Bionic* und sieht anders aus als ältere Versionen, mit dem Chat stärker im Vordergrund. Es ist trotzdem dasselbe LM Studio, du lädst genau das Richtige. Lade es herunter, installiere es, und such im Modell-Katalog nach `Qwen3.8 27B`. Wähle eine GGUF-Quantisierung wie `Q4_K_M`, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
 
 ![Die Oberfläche von LM Studio: links eine Projektliste, in der Mitte ein Chat, unten das Modell-Auswahlfeld, rechts die Vorschau eines erzeugten PDF-Dokuments.](lm-studio.png "LM Studio bündelt Modellsuche, Chat und lokalen Server in einer Oberfläche. Das aktive Modell wählst du unten im Eingabefeld.")
 
