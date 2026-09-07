@@ -123,7 +123,7 @@ Ein frisches Beispiel dafür lieferte Core Lightning Ende August 2026: ein [Sich
 
 ## Fazit: Wo ich stehe
 
-Der Satz vom Anfang lässt mich nicht los, der über die gleichen Werkzeuge, die „only helped the bad guys". Das ist der Zustand, den ich nicht hinnehmen will.
+Der Satz vom Anfang lässt mich nicht los: „only helped the bad guys". Das ist der Zustand, den ich nicht hinnehmen will.
 
 Als Entwickler bin ich dafür verantwortlich, meine Software sicher zu halten. Das ist meine Pflicht, und ich nehme sie ernst. Was ich nicht einsehe: dass ein Anbieter mir vorschreibt, was ich dafür tun und lassen darf.
 
