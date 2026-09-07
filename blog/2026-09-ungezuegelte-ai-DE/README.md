@@ -84,7 +84,9 @@ Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist 
 
 ### Weg 1: LM Studio, die grafische Oberfläche
 
-Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten. Die klassische **LM Studio** läuft auf Mac, Linux und Windows und bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start. Bionic gibt es aktuell nur für den Mac. Wenn du einen hast, probier es aus, die Screenshots hier zeigen genau diese Ausgabe.
+Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten. Die klassische **LM Studio** läuft auf Mac, Linux und Windows und bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start. Bionic gibt es aktuell nur für den Mac. Wenn du einen hast, probier es aus.
+
+![Die Download-Seite von LM Studio: oben „Download LM Studio Bionic" mit einem Button nur für macOS, darunter die klassische „Download LM Studio" mit Auswahl für macOS, Windows und Linux.](lm-studio-download.png "Beide Varianten stehen zur Wahl: das neue Bionic nur für den Mac, die klassische LM Studio für alle Plattformen.")
 
 ![Der Startbildschirm von LM Studio Bionic: ein leeres Fenster mit einem zentralen Eingabefeld „Ask Bionic to do something" und einer Modellauswahl.](lm-studio-start.png "Der neue Bionic-Startbildschirm, wirklich sehr aufgeräumt.")
 
