@@ -41,6 +41,8 @@ Ein **dichtes** Modell (engl. *dense*) rechnet für jedes Token mit allen seinen
 
 Genau daran scheitert der lokale Betrieb der beiden großen Modelle. GLM-5.2 und DeepSeek-V4 haben je 256 Experten, das sind die Modelle, die Profis wie Hugging Face auf dicker eigener Infrastruktur fahren. Qwen 3.8-27B ist dicht und mit rund 28 Milliarden Parametern das einzige der drei, das quantisiert noch auf einer normalen Maschine läuft. Deshalb geht es im Folgenden um Qwen.
 
+Ein Wort zur Erwartung, falls du von Claude Code kommst: Ein 27-Milliarden-Modell auf dem eigenen Laptop ist nicht das Spitzenmodell aus der Cloud, das du gewohnt bist. Es ist kleiner, und auf normaler Hardware antwortet es langsamer. Für eine fokussierte Aufgabe reicht das trotzdem, vor allem für genau die, die dir ein gehosteter Assistent gerade verweigert.
+
 ## Qwen 3.8 auf der eigenen Maschine
 
 Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Der Reihe nach: welche Variante, welche Quantisierung, und dann drei Wege, das Modell tatsächlich zu starten.
@@ -121,6 +123,8 @@ console.log(antwort.choices[0].message.content);
 Der Quellcode des Kunden verlässt dabei nie den Rechner. Genau das war der doppelte Gewinn aus dem vorigen Artikel: keine Cloud-Schranke, und keine Datenweitergabe.
 
 Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das Vercel AI SDK gebaut, sodass sich jedes Modell frei einstellen lässt. Für den Jugendschutz-Klassifizierer, der die Schüler-Chats prüft, ist ein lokales Modell vorgesehen: ein `gemma3` über Ollama auf dem eigenen Server. Kein Schülertext geht dafür an einen Cloud-Dienst. Das ist das Datenschutz-Argument dieses Artikels, in Produktion.
+
+Und du bleibst damit nicht beim Chat stehen. Dieselbe Schnittstelle sprechen auch agentische Coding-Werkzeuge, die Dateien bearbeiten und Befehle ausführen. Den Ablauf, den du von Claude Code kennst, gibst du also nicht auf, nur das Modell dahinter läuft jetzt lokal. Möglich macht das die Werkzeug-Nutzung des Modells selbst (function calling).
 
 > **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat.
 
