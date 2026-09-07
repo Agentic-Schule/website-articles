@@ -62,9 +62,55 @@ Auf Apple Silicon läuft die MLX-Fassung; sie liegt in 4 Bit bei etwa 16 GB und 
 
 Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität. Ob sie für deinen Zweck reicht, zeigt erst der Vergleich am eigenen Code.
 
-### Womit du es startest
+### Weg 1: LM Studio, die grafische Oberfläche
 
-Für den ersten Versuch reicht **[LM Studio](https://lmstudio.ai)**, weil es Modell-Download, Server und Chat in einer Oberfläche zusammenfasst. Die Bedienung ist weitgehend selbsterklärend: Modell suchen, herunterladen, im Chat loslegen. Für den Dauerbetrieb nutze ich lieber einen Server, der eine OpenAI-kompatible Schnittstelle anbietet, denn dann kannst du deine bestehenden Werkzeuge einfach umbiegen. Auf Apple Silicon ist MLX die schnellere Variante, unter Linux mit Nvidia-Karte llama.cpp.
+Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Lade es herunter, installiere es, und such im Modell-Katalog nach `Qwen3.8 27B`. Wähle eine GGUF-Quantisierung wie `Q4_K_M`, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
+
+Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-Tab den lokalen Server ein. LM Studio stellt dann eine OpenAI-kompatible Schnittstelle unter `http://localhost:1234/v1` bereit. Diese Adresse brauchen wir gleich in Weg 3 wieder.
+
+### Weg 2: Die Kommandozeile, für Skripte und Dauerbetrieb
+
+Für den Dauerbetrieb ist die Kommandozeile die bessere Wahl. **llama.cpp** lädt das Modell direkt von Hugging Face und startet den Server in einem Befehl:
+
+```bash
+llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
+```
+
+Der Schalter `-hf` zieht das angegebene Repository, `:Q4_K_M` wählt die Quantisierungsstufe (ohne Angabe nimmt llama.cpp ohnehin `Q4_K_M`). Die separate Vision-Projektor-Datei holt es automatisch dazu. Danach lauscht der Server auf `http://127.0.0.1:8080` und spricht dieselbe OpenAI-kompatible Sprache wie LM Studio.
+
+Noch kürzer ist **Ollama**. Ein Befehl lädt und startet das Modell:
+
+```bash
+ollama run qwen3.8:27b
+```
+
+Ollama hält im Hintergrund einen Server auf Port `11434` bereit, die OpenAI-kompatible Schnittstelle liegt unter `http://localhost:11434/v1`. Auf Apple Silicon gibt es die Varianten mit dem Kürzel `mlx`, die dort spürbar schneller laufen.
+
+### Weg 3: Aus dem eigenen Code heraus
+
+Alle drei Wege enden bei derselben Schnittstelle, und das ist der eigentliche Trick. Ein OpenAI-kompatibler Endpunkt heißt: Dein Code, der bisher gegen die Cloud von OpenAI oder Anthropic lief, braucht nur eine neue Basis-Adresse. Kein neues SDK, kein Umschreiben.
+
+Mit dem offiziellen OpenAI-SDK sieht das so aus:
+
+```typescript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'http://localhost:1234/v1', // LM Studio; Ollama: Port 11434, llama.cpp: Port 8080
+  apiKey: 'lokal-egal',                // wird nicht geprüft, darf aber nicht leer sein
+});
+
+const antwort = await client.chat.completions.create({
+  model: 'qwen3.8-27b', // der Name, den dein Server anzeigt
+  messages: [
+    { role: 'user', content: 'Prüfe diese Funktion auf Schwachstellen: …' },
+  ],
+});
+
+console.log(antwort.choices[0].message.content);
+```
+
+Der Quellcode des Kunden verlässt dabei nie den Rechner. Genau das war der doppelte Gewinn aus dem vorigen Artikel: keine Cloud-Schranke, und keine Datenweitergabe.
 
 > **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat.
 
@@ -75,6 +121,8 @@ Jetzt zum Begriff, um den sich alles dreht. Für Qwen 3.8 existieren zahlreiche 
 Technisch ist das ein Eingriff ins Gehirn des Modells. Ein modernes Modell ist durch sein Training stark gezähmt. Der Fachbegriff dafür ist *Alignment*: meist per RLHF (Reinforcement Learning from Human Feedback) wird es auf Hilfsbereitschaft und Harmlosigkeit ausgerichtet. Die Abliteration schneidet einen Teil davon wieder heraus. Danach kann das Modell einen völlig anderen Ton anschlagen. Es wird pampig wie ein Reddit-Kommentar, oder es kippt in den Tonfall eines Image-Boards, bis hin zu offenem Rassismus. Das ist kein Defekt: Dieser Stoff steckt längst in den Trainingsdaten, das Alignment hat ihn nur zugedeckt.
 
 Und hier ist die Stelle, an der ich Vorsicht empfehle. Das Paper misst diese minimale Auswirkung nicht an Code- oder Security-Aufgaben. Für die Frage, ob ein abliteriertes Modell deinen Code genauso gut analysiert wie das Original, gibt es keine belastbare Messung. Wer eine solche Variante einsetzt, tauscht eine bekannte Einschränkung gegen eine unbekannte.
+
+Wenn du eine solche Variante trotzdem ausprobieren willst, erkennst du sie auf Hugging Face am Namen. Die Schlüsselwörter sind `abliterated` und `uncensored`, manchmal auch der Name des Werkzeugs, mit dem der Eingriff gemacht wurde, etwa `Heretic`. Eine Suche nach `Qwen3.8 abliterated` liefert Dutzende Treffer. Der mit Abstand fleißigste Anbieter ist `huihui-ai`, der ganze Modellfamilien in abliterierter Form nachzieht. Die übrigen Repos stammen überwiegend von Einzelpersonen und kleinen Accounts. Und das ist der wunde Punkt: Wer die Gewichte verändert hat und wie sauber, lässt sich von außen kaum prüfen. Du lädst das Gehirn eines Modells, an dem ein Fremder operiert hat.
 
 Deshalb der wichtigste Punkt zuerst, ein Detail aus dem Hugging-Face-Vorfall des vorigen Artikels, das leicht übersehen wird: **Das Team hat kein abliteriertes Modell gebraucht.** Es hat ein ganz normales offenes Modell genommen und auf eigener Hardware betrieben. Das hat gereicht, weil der Klassifikator des Anbieters bei einem selbst betriebenen Modell schlicht nicht existiert.
 
