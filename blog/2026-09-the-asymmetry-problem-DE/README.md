@@ -109,7 +109,7 @@ Das ist strunzdumm, das ist schon Arbeitsverweigerung. Fable 5.1 kann ich persö
 
 Fassen wir es zusammen: Der Anbieter kann nicht sehen, ob du angreifst oder dich wehrst. Also blockt er für alle gleich. Der Angreifer umgeht das, er arbeitet lokal mit Open-Weight-Modellen und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und muss auf schwächere, ältere Modelle wie Opus ausweichen.
 
-Wir brauchen also dieselbe Fähigkeit wie der Angreifer, nur ohne den Klassifikator dazwischen. Ob sie wirklich taugt, probiere ich in den nächsten Artikeln mit dir zusammen aus.
+Wir brauchen also dieselbe Fähigkeit wie der Angreifer, nur ohne den Klassifikator dazwischen. **Ob sie wirklich taugt? Das finden wir in den nächsten Artikeln gemeinsam heraus.**
 
 ## „Aber das bewaffnet doch die Angreifer"
 
