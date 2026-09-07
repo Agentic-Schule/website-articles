@@ -25,9 +25,21 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 [[toc]]
 
+## Welches Modell nehmen?
+
+Für lokale Sicherheitsarbeit kommen mehrere offene Modelle infrage. Drei sind aktuell die heißesten Kandidaten:
+
+| Modell | Lizenz | Bauart | Kontext | Rolle |
+| --- | --- | --- | --- | --- |
+| Qwen 3.8-27B | Apache 2.0 | dicht, ~28 Mrd. Parameter | 262 k | läuft auf normaler Hardware |
+| GLM-5.2 | MIT | MoE, 256 Experten | ~1 Mio. | im Hugging-Face-Vorfall bewährt |
+| DeepSeek-V4-Flash | MIT | MoE, 256 Experten | ~1 Mio. | Download-Spitzenreiter, stark bei Code |
+
+Die Lizenz ist bei allen dreien permissiv, das ist nicht der Knackpunkt. Entscheidend ist die Bauart. GLM-5.2 und DeepSeek-V4 sind große Mixture-of-Experts-Modelle: sehr fähig, aber sie müssen sämtliche Experten im Speicher halten. Das sind die Modelle, die Profis wie Hugging Face auf dicker eigener Infrastruktur fahren. Qwen 3.8-27B ist dicht und mit rund 28 Milliarden Parametern das einzige der drei, das quantisiert noch auf einer normalen Maschine läuft. Deshalb geht es im Folgenden um Qwen.
+
 ## Qwen 3.8 auf der eigenen Maschine
 
-Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba und für unseren Zweck der interessanteste Kandidat, weil eine Variante unter einer echten Open-Source-Lizenz steht.
+Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba.
 
 ### Welche Variante du nehmen willst
 
@@ -37,7 +49,7 @@ Daneben gibt es das große Mixture-of-Experts-Modell mit rund 2,4 Billionen Para
 
 ### Welche Quantisierung auf welche Maschine passt
 
-Im Original braucht das Modell rund 56 GB. Erst die Quantisierung macht es auf normaler Hardware brauchbar. Die verbreiteten Stufen im GGUF-Format:
+Im Original braucht das Modell rund 56 GB. Erst die Quantisierung macht es auf normaler Hardware brauchbar: Sie rundet die Modellgewichte von hoher auf niedrigere Präzision, etwa von 16 auf 4 Bit pro Wert. Das senkt den Speicherbedarf drastisch und kostet nur wenig Qualität. Die verbreiteten Stufen im GGUF-Format:
 
 | Stufe | Größe | Passt auf |
 | --- | --- | --- |
@@ -52,13 +64,13 @@ Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist 
 
 ### Womit du es startest
 
-Für den ersten Versuch reicht **LM Studio**, weil es Modell-Download, Server und Chat in einer Oberfläche zusammenfasst. Für den Dauerbetrieb nutze ich lieber einen Server, der eine OpenAI-kompatible Schnittstelle anbietet, denn dann kannst du deine bestehenden Werkzeuge einfach umbiegen. Auf Apple Silicon ist MLX die schnellere Variante, unter Linux mit Nvidia-Karte llama.cpp.
+Für den ersten Versuch reicht **[LM Studio](https://lmstudio.ai)**, weil es Modell-Download, Server und Chat in einer Oberfläche zusammenfasst. Die Bedienung ist weitgehend selbsterklärend: Modell suchen, herunterladen, im Chat loslegen. Für den Dauerbetrieb nutze ich lieber einen Server, der eine OpenAI-kompatible Schnittstelle anbietet, denn dann kannst du deine bestehenden Werkzeuge einfach umbiegen. Auf Apple Silicon ist MLX die schnellere Variante, unter Linux mit Nvidia-Karte llama.cpp.
 
-> **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat. Das ist der einzige Vergleich, der für dich zählt.
+> **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat.
 
 ## „Unzensiert" ist die nächste Stufe, nicht die erste
 
-Jetzt zum Begriff, um den sich alles dreht. Für Qwen 3.8 existieren zahlreiche sogenannte **abliterierte** Varianten. Die Technik dahinter ist gut untersucht. Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Wer jede Gewichtsmatrix, die in den Residual-Strom schreibt, gegen diese Richtung orthogonalisiert, entfernt die Verweigerung dauerhaft aus den Gewichten. Das Paper spricht von „minimal effect on other capabilities".
+Jetzt zum Begriff, um den sich alles dreht. Für Qwen 3.8 existieren zahlreiche sogenannte **abliterierte** Varianten. Der Begriff kommt von *ablation*, dem gezielten Entfernen: Solchen Modellen wurde die Verweigerung dauerhaft herausoperiert. Die Technik dahinter ist gut untersucht. Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Rechnet man diese Richtung aus den Gewichten heraus, ist die Sperre weg. Das Paper spricht dabei von „minimal effect on other capabilities".
 
 Und hier ist die Stelle, an der ich Vorsicht empfehle. Das Paper misst diese minimale Auswirkung nicht an Code- oder Security-Aufgaben. Für die Frage, ob ein abliteriertes Modell deinen Code genauso gut analysiert wie das Original, gibt es keine belastbare Messung. Wer eine solche Variante einsetzt, tauscht eine bekannte Einschränkung gegen eine unbekannte.
 
