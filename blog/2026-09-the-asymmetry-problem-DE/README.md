@@ -100,7 +100,7 @@ Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprac
 
 **Drittens, der Exploit selbst.** Ein Befund ist die Behauptung, der Exploit ist der Beweis. Bei einem gewöhnlichen Softwarebug schreibst du den Test, der rot wird, und reparierst, bis er grün ist. Bei einer Sicherheitslücke ist der Exploit dieser rote Test. Genau das gibt ein gehostetes Modell nicht her. Ein Exploit sieht gleich aus, ob zum Schließen oder zum Ausnutzen, und die Absicht sieht das Modell nicht. Spätestens hier rennst du gegen eine Mauer.
 
-**Viertens, das bloße Schreiben darüber.** Diesen Artikel habe ich zeitweise mit Claude Fable 5 verfasst. Mitten im Text, ganz ohne Exploit und ohne fremdes System, stieg das Modell aus:
+**Viertens, das bloße Schreiben darüber.** Diesen Artikel habe ich zeitweise mit Claude Fable 5.1 verfasst. Mitten im Text, ganz ohne Exploit und ohne fremdes System, stieg das Modell aus:
 
 ![Fable 5.1's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8. Send feedback with /feedback or learn more. Details: \[cyber\]](fable-cyber-block.png "Original-Screenshot, aufgenommen beim Schreiben dieses Artikels.")
 
