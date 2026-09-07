@@ -39,7 +39,7 @@ Die Lizenz ist bei allen dreien permissiv, das ist nicht der Knackpunkt. Entsche
 
 ## Qwen 3.8 auf der eigenen Maschine
 
-Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba.
+Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Der Reihe nach: welche Variante, welche Quantisierung, und dann drei Wege, das Modell tatsächlich zu starten.
 
 ### Welche Variante du nehmen willst
 
@@ -122,7 +122,7 @@ Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsat
 
 ## „Unzensiert" ist die nächste Stufe, nicht die erste
 
-Jetzt zum Begriff, um den sich alles dreht. Für Qwen 3.8 existieren zahlreiche sogenannte **abliterierte** Varianten. Der Begriff kommt von *ablation*, dem gezielten Entfernen: Solchen Modellen wurde die Verweigerung dauerhaft herausoperiert. Die Technik dahinter ist gut untersucht. Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Rechnet man diese Richtung aus den Gewichten heraus, ist die Sperre weg. Das Paper spricht dabei von „minimal effect on other capabilities".
+Jetzt zum Begriff, der bei offenen Modellen für die meiste Aufregung sorgt. Für Qwen 3.8 existieren zahlreiche sogenannte **abliterierte** Varianten. Der Begriff kommt von *ablation*, dem gezielten Entfernen: Solchen Modellen wurde die Verweigerung dauerhaft herausoperiert. Die Technik dahinter ist gut untersucht. Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Rechnet man diese Richtung aus den Gewichten heraus, ist die Sperre weg. Das Paper spricht dabei von „minimal effect on other capabilities".
 
 Technisch ist das ein Eingriff ins Gehirn des Modells. Ein modernes Modell ist durch sein Training stark gezähmt. Der Fachbegriff dafür ist *Alignment*: meist per RLHF (Reinforcement Learning from Human Feedback) wird es auf Hilfsbereitschaft und Harmlosigkeit ausgerichtet. Die Abliteration schneidet einen Teil davon wieder heraus. Danach kann das Modell einen völlig anderen Ton anschlagen. Es wird pampig wie ein Reddit-Kommentar, oder es kippt in den Tonfall eines Image-Boards, bis hin zu offenem Rassismus. Das ist kein Defekt: Dieser Stoff steckt längst in den Trainingsdaten, das Alignment hat ihn nur zugedeckt.
 
@@ -130,7 +130,7 @@ Und hier ist die Stelle, an der ich Vorsicht empfehle. Das Paper misst diese min
 
 Wenn du eine solche Variante trotzdem ausprobieren willst, erkennst du sie auf Hugging Face am Namen. Die Schlüsselwörter sind `abliterated` und `uncensored`, manchmal auch der Name des Werkzeugs, mit dem der Eingriff gemacht wurde, etwa `Heretic`. Eine Suche nach `Qwen3.8 abliterated` liefert Dutzende Treffer. Der mit Abstand fleißigste Anbieter ist `huihui-ai`, der ganze Modellfamilien in abliterierter Form nachzieht. Die übrigen Repos stammen überwiegend von Einzelpersonen und kleinen Accounts. Und das ist der wunde Punkt: Wer die Gewichte verändert hat und wie sauber, lässt sich von außen kaum prüfen. Du lädst das Gehirn eines Modells, an dem ein Fremder operiert hat.
 
-Deshalb der wichtigste Punkt zuerst, ein Detail aus dem Hugging-Face-Vorfall des vorigen Artikels, das leicht übersehen wird: **Das Team hat kein abliteriertes Modell gebraucht.** Es hat ein ganz normales offenes Modell genommen und auf eigener Hardware betrieben. Das hat gereicht, weil der Klassifikator des Anbieters bei einem selbst betriebenen Modell schlicht nicht existiert.
+Der wichtigste Punkt aber steckt in einem Detail aus dem Hugging-Face-Vorfall des vorigen Artikels, das leicht übersehen wird: **Das Team hat kein abliteriertes Modell gebraucht.** Es hat ein ganz normales offenes Modell genommen und auf eigener Hardware betrieben. Das hat gereicht, weil der Klassifikator des Anbieters bei einem selbst betriebenen Modell schlicht nicht existiert.
 
 Die Reihenfolge lautet also: erst selbst hosten, dann messen, ob es reicht. Abliteration ist die Stufe danach und braucht eine eigene Begründung.
 
