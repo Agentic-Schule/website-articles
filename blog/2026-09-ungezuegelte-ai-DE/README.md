@@ -49,7 +49,7 @@ Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Der Reihe nach: welche Vari
 
 ### Welche Variante du nehmen willst
 
-Das dichte Modell **Qwen3.8-27B** steht unter **Apache 2.0**. Das ist die Variante für den Berateralltag, weil diese Lizenz keine Umsatzschwellen und keine Nutzungsvorbehalte kennt. Es hat rund 27,8 Milliarden Parameter, ein natives Kontextfenster von 262.144 Token, und es ist ein Vision-Modell, kann also auch Screenshots lesen. Das Nachdenken ist standardmäßig aktiv und lässt sich über einen `reasoning_effort` steuern. Das ist dasselbe Prinzip wie das erweiterte Nachdenken, das du aus Claude Code kennst.
+Das dichte Modell **Qwen3.8-27B** steht unter **Apache 2.0**. Das ist die Variante für den Berateralltag, weil diese Lizenz keine Umsatzschwellen und keine Nutzungsvorbehalte kennt. Es hat rund 27,8 Milliarden Parameter, ein natives Kontextfenster von 262.144 Token, und es ist ein Vision-Modell, kann also auch Screenshots lesen. Das Nachdenken ist standardmäßig aktiv. Wie tief das Modell nachdenkt, steuerst du beim Aufruf über den Parameter `reasoning_effort` mit den Stufen `low`, `medium` und `xhigh`. Das ist dasselbe Prinzip wie das erweiterte Nachdenken, das du aus Claude Code kennst.
 
 Daneben gibt es das große Mixture-of-Experts-Modell mit rund 2,4 Billionen Parametern. Es steht unter einer eigenen Lizenz mit einer Umsatzklausel; für die reine interne Nutzung ist sie unproblematisch, für ein Produkt darüber hinaus musst du sie lesen. Für die Arbeit am eigenen Code auf eigener Hardware ist die 27B-Variante ohnehin die praktikable Wahl.
 
