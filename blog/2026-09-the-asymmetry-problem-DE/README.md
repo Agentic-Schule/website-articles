@@ -101,11 +101,11 @@ Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprac
 
 **Drittens, der Exploit selbst.** Ein Befund ist die Behauptung, der Exploit ist der Beweis. Bei einem gewöhnlichen Softwarebug schreibst du den Test, der rot wird, und reparierst, bis er grün ist. Bei einer Sicherheitslücke ist der Exploit dieser rote Test. Genau das gibt ein gehostetes Modell nicht her. Ein Exploit sieht gleich aus, ob zum Schließen oder zum Ausnutzen. Und selbst wenn du deine guten Absichten erläuterst, weist dich das Modell ab. Spätestens hier rennst du gegen eine Mauer.
 
-**Viertens, das bloße Schreiben darüber.** Diesen Artikel habe ich zeitweise mit Claude Fable 5.1 verfasst. Mitten im Text, ganz ohne Exploit und ohne fremdes System, stieg das Modell aus:
+**Viertens, du darfst nicht einmal darüber schreiben.** Selbst reiner Text über das Problem wird klassifiziert. Du kannst nicht einmal eine Mail aufsetzen, die eine Lücke sauber beschreibt, um die richtigen Leute zu instruieren. Der Beweis liegt direkt vor dir: Diesen Artikel habe ich zeitweise mit Claude Fable 5.1 verfasst, und mitten im Text, ganz ohne Exploit und ohne fremdes System, stieg das Modell aus:
 
 ![Fable 5.1's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8. Send feedback with /feedback or learn more. Details: \[cyber\]](fable-cyber-block.png "Original-Screenshot, aufgenommen beim Schreiben dieses Artikels.")
 
-Der Klassifikator ist strunzdumm. Nur das Schreiben über Security-Themen reicht aus für eine Verweigerung. Genau dieser Text, den du gerade liest, hat ihn schon getriggert. Es ist wirklich lächerlich. Fable 5.1 kann ich persönlich überhaupt nicht empfehlen. Das ist schon Arbeitsverweigerung!
+Genau dieser Text, den du gerade liest, hat den Klassifikator schon getriggert. Das ist strunzdumm, das ist schon Arbeitsverweigerung. Fable 5.1 kann ich persönlich nicht empfehlen.
 
 Der Anbieter kann nicht sehen, ob du angreifst oder dich wehrst. Also blockt er für alle gleich. Der Angreifer umgeht das, er arbeitet lokal mit Open-Weight-Modellen und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und muss auf schwächere, ältere Modelle wie Opus ausweichen.
 
