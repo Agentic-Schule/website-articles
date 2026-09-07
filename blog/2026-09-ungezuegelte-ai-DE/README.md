@@ -27,7 +27,9 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 ## Welches Modell nehmen?
 
-Offene Modelle für lokale Sicherheitsarbeit gibt es reichlich. Drei stelle ich dir hier vor, jedes aus einem anderen Grund:
+An einem Namen kommst du bei offenen Modellen heute nicht mehr vorbei: **[Hugging Face](https://huggingface.co)**. Die Plattform ist der zentrale Umschlagplatz für offene Modelle, im Grunde ein GitHub für KI-Modelle. Dort liegt so gut wie jedes offene Modell zum Download bereit, mit Modellkarte, Lizenz und allen Quantisierungen. Auch die Werkzeuge weiter unten ziehen ihre Modelle direkt von dort.
+
+Offene Modelle für lokale Sicherheitsarbeit gibt es also reichlich. Drei stelle ich dir hier vor, jedes aus einem anderen Grund:
 
 | Modell | Lizenz | Bauart | Kontext | Rolle |
 | --- | --- | --- | --- | --- |
