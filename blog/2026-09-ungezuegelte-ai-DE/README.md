@@ -73,7 +73,7 @@ In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisieru
 
 | Stufe | Größe | Passt auf |
 | --- | --- | --- |
-| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory, läuft auf meinem [Mac mini M4](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) |
+| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory, auf meinem [Mac mini M4](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) mit knappem Puffer |
 | `Q5_K_M` | 19,8 GB | 24 GB VRAM knapp, 32 GB komfortabel |
 | `Q6_K` | 22,0 GB | 32 GB aufwärts |
 | `Q8_0` | 29,0 GB | 36 GB aufwärts |
@@ -81,6 +81,8 @@ In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisieru
 Auf Apple Silicon läuft die MLX-Fassung; sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate Projektor-Datei von knapp einem Gigabyte.
 
 Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität. Ob sie für deinen Zweck reicht, zeigt erst der Vergleich am eigenen Code.
+
+> **⚠️ Achtung, Speicher-Puffer:** „Passt für die Inferenz" heißt nicht „der Rest des Systems bleibt bequem". Ein 16-GB-Modell auf einem 32-GB-Rechner lässt wenig Luft für macOS, Browser und alles andere. Läuft das Modell auf demselben Mac, der auch deinen Desktop treibt, kann starker Speicherdruck die grafische Oberfläche so aushungern, dass macOS sie per Watchdog neu startet, also ein harter Reboot. Lass genug Speicher frei: kleinere Quantisierung, Speicherfresser schließen, oder das Modell auf einer Maschine fahren, an der du gerade nicht arbeitest.
 
 ### Weg 1: LM Studio, die grafische Oberfläche
 
