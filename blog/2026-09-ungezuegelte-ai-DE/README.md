@@ -92,7 +92,9 @@ Am naheliegendsten ist **[Hugging Face](https://huggingface.co)** selbst, diesel
 
 Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[Replicate](https://replicate.com)** rechnet sekundengenau ab und lässt offene Modelle per API laufen, ohne dass du etwas betreiben musst. **[RunPod](https://www.runpod.io)** hat die günstigsten rohen GPUs, bis hinunter zur RTX 4090, plus eine Serverless-Variante. Eingerichtet ist jeder Dienst anders, deshalb hier nur einer im Detail.
 
-> **⚠️ Achtung, der Code verlässt wieder die Maschine.** Sobald du in die Cloud gehst, ist das Datenschutz-Argument dieses Artikels dahin: Dein Code und deine Daten laufen wieder auf fremder Hardware. Für eigenen Test- oder Bastelcode ist das kein Problem. Für Kundencode brauchst du einen Anbieter mit EU-Rechenzentrum und Auftragsverarbeitungsvertrag, etwa Scaleway oder OVHcloud, sonst bleibt es beim lokalen Betrieb.
+> **⚠️ Achtung, der Code verlässt wieder die Maschine.** Sobald du in die Cloud gehst, ist das Datenschutz-Argument dieses Artikels dahin: Dein Code und deine Daten laufen wieder auf fremder Hardware. Für eigenen Test- oder Bastelcode ist das kein Problem. Für Kundencode brauchst du einen Anbieter mit EU-Rechenzentrum und Auftragsverarbeitungsvertrag, sonst bleibt es beim lokalen Betrieb.
+
+Konkret: **[Scaleway](https://www.scaleway.com)** aus Frankreich vermietet eine L4 (24 GB, dieselbe Klasse wie bei Hugging Face) für 0,79 € pro Stunde, stundenweise abgerechnet, im EU-Rechenzentrum und mit Auftragsverarbeitungsvertrag. **[OVHcloud](https://www.ovhcloud.com)** ist die naheliegende Alternative mit demselben GPU-Angebot. So bleiben Code und Daten in Europa.
 
 Auf der eigenen Maschine geht es aber meistens doch, und dafür zeige ich dir jetzt drei Wege.
 
