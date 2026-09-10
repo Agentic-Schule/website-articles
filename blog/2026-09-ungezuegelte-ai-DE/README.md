@@ -82,7 +82,9 @@ Auf Apple Silicon läuft die MLX-Fassung; sie liegt in 4 Bit bei etwa 16 GB und 
 
 Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität. Ob sie für deinen Zweck reicht, zeigt erst der Vergleich am eigenen Code.
 
-> **⚠️ Achtung, Speicher-Puffer:** „Passt für die Inferenz" heißt nicht „der Rest des Systems bleibt bequem". Ein 16-GB-Modell auf einem 32-GB-Rechner lässt wenig Luft für macOS, Browser und alles andere. Läuft das Modell auf demselben Mac, der auch deinen Desktop treibt, kann starker Speicherdruck die grafische Oberfläche so aushungern, dass macOS sie per Watchdog neu startet, also ein harter Reboot. Lass genug Speicher frei: kleinere Quantisierung, Speicherfresser schließen, ### Reicht die eigene Maschine nicht? GPU mieten
+> **⚠️ Achtung, Speicher-Puffer:** „Passt für die Inferenz" heißt nicht „der Rest des Systems bleibt bequem". Ein 16-GB-Modell auf einem 32-GB-Rechner lässt wenig Luft für macOS, Browser und alles andere. Läuft das Modell auf demselben Mac, der auch deinen Desktop treibt, kann starker Speicherdruck die grafische Oberfläche so aushungern, dass macOS sie per Watchdog neu startet, also ein harter Reboot. Lass genug Speicher frei: kleinere Quantisierung, Speicherfresser schließen, oder das Modell auf einer Maschine fahren, an der du gerade nicht arbeitest.
+
+### Reicht die eigene Maschine nicht? GPU mieten
 
 Manchmal reicht der eigene Rechner nicht, sei es, weil die großen MoE-Modelle ohnehin nicht hineinpassen, oder weil du deinen Arbeitsrechner nicht lahmlegen willst. Dann mietest du dir für den einen Lauf eine GPU und schaltest sie danach wieder ab.
 
