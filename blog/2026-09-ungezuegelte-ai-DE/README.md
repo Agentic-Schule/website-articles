@@ -86,7 +86,7 @@ Für den Einstieg bietet sich also `Q4_K_M` auf einer Maschine mit 32 GB an. Das
 
 ### Reicht die eigene Maschine nicht? GPU mieten
 
-Manchmal reicht der eigene Rechner nicht, sei es, weil die großen MoE-Modelle ohnehin nicht hineinpassen, oder weil du deinen Arbeitsrechner nicht lahmlegen willst. Dann mietest du dir für den einen Lauf eine GPU und schaltest sie danach wieder ab.
+Manchmal reicht der eigene Rechner nicht, sei es, weil die großen MoE-Modelle ohnehin nicht hineinpassen, oder weil du deinen Arbeitsrechner nicht lahmlegen willst. Und der Rechner ist wirklich, wirklich lahmgelegt. Du musst alles andere deaktivieren, nicht mal eben Chrome und Photoshop offen halten. Auf einmal musst du mit dem Speicher knausern. Das ist sehr frustrierend. Dann mietest du dir für den einen Lauf eine GPU und schaltest sie danach wieder ab.
 
 Am naheliegendsten ist **[Hugging Face](https://huggingface.co)** selbst, dieselbe Plattform, von der du das Modell ohnehin lädst. Du deployst es mit wenigen Klicks auf gemieteter Hardware, und die Preise sind moderat: eine Nvidia T4 (16 GB) kostet 0,40 $ pro Stunde, eine L4 (24 GB, genug für ein quantisiertes Qwen) 0,80 $ pro Stunde. Die Kostenfalle entschärft die Abrechnung selbst: Inference Endpoints skalieren auf null, ohne Last zahlst du nichts. Für den ganz kleinen Einstieg gibt es sogar geteilte GPU-Zeit („ZeroGPU") im PRO-Abo für 9 $ im Monat.
 
