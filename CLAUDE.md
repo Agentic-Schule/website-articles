@@ -23,7 +23,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - Optionale Mittel für Meinungs- und Deep-Dive-Artikel: gescheiterte Versuche durchspielen, bevor die Lösung kommt, oder Varianten als nummerierte „Idee 1 … Idee 5" gegenüberstellen. Kein Muss.
 - **Brückensätze am Sektionsende**, die die nächste Sektion ankündigen. „Doch bei aller Begeisterung: Claude Code ist nicht perfekt."
 - **Überschriften als Frage, Imperativ/Infinitiv oder „Thema: Untertitel".** „Warum ein Terminal?", „Den MCP-Server einrichten", „Herausforderung: veraltetes Wissen". Kapitel schließen mit „Fazit" oder „Was haben wir gelernt?".
-- **Abschluss:** persönliches Urteil plus Handlungsaufruf („Fang einfach an."), danach Feedback-Einladung und eine Danksagung in `<small>`.
+- **Abschluss:** persönliches Urteil plus Handlungsaufruf („Fang einfach an."), danach eine Feedback-Einladung.
 
 ## Ton: ehrlich statt werblich
 
