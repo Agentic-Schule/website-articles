@@ -96,7 +96,7 @@ Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[
 
 Zwei europäische Anbieter erfüllen das: **[Scaleway](https://www.scaleway.com)** aus Frankreich vermietet eine L4 (24 GB, dieselbe Klasse wie bei Hugging Face) für 0,79 € pro Stunde, stundenweise abgerechnet und mit Auftragsverarbeitungsvertrag. **[OVHcloud](https://www.ovhcloud.com)** ist die naheliegende Alternative mit demselben GPU-Angebot. So bleiben Code und Daten in Europa. Versprechen können sie alle viel, und ich persönlich gebe darauf nicht viel.
 
-Auf der eigenen Maschine geht es aber meistens doch, und dafür zeige ich dir jetzt drei Wege.
+Auf der eigenen Maschine geht es aber meistens doch, mit etwas Geduld. Dafür zeige ich dir jetzt drei Wege.
 
 ### Weg 1: LM Studio, die grafische Oberfläche
 
