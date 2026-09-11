@@ -31,7 +31,7 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 **Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil beim Schreiben dieses Textes zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
 
-**Zweitens der System-Prompt.** Gehostete Assistenten laufen mit einer versteckten Anweisung, die du nicht abschalten kannst und in der auch „verweigere Folgendes" stehen kann. Lokal wählst du den System-Prompt selbst, oder lässt ihn ganz weg.
+**Zweitens der System-Prompt.** Gehostete Assistenten laufen mit einer versteckten Anweisung, die du nicht abschalten kannst und in der auch „verweigere Folgendes" stehen kann. Versteckt heißt nicht unsichtbar: In [Sammlungen extrahierter System-Prompts](https://github.com/asgeirtj/system_prompts_leaks) kannst du nachlesen, was da drinsteht. Lokal wählst du den System-Prompt dagegen selbst, oder lässt ihn ganz weg.
 
 **Drittens das antrainierte Verhalten.** Die Verweigerung steckt zusätzlich in den Gewichten des Modells, dort hat sie das Training verankert. Diese Schranke trägt auch ein lokal betriebenes Modell noch mit sich. Sie zu entfernen heißt, die Gewichte selbst zu verändern, und dafür gibt es die Abliteration.
 
