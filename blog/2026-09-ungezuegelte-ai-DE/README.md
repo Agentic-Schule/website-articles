@@ -35,7 +35,7 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 **Drittens das antrainierte Verhalten.** Die Verweigerung steckt zusätzlich in den Gewichten des Modells, dort hat sie das Training verankert. Diese Schranke trägt auch ein lokal betriebenes Modell noch mit sich. Sie zu entfernen heißt, die Gewichte selbst zu verändern, und dafür gibt es die Abliteration.
 
-Die ersten beiden Schranken fallen automatisch, sobald das Modell auf deiner Maschine läuft. Die dritte ist die Ausnahme und verlangt Handarbeit. Also bauen wir zuerst das, was die ersten beiden abräumt: ein offenes Modell auf der eigenen Maschine.
+Die ersten beiden Schranken fallen automatisch, sobald das Modell auf deiner Maschine läuft. Die dritte ist die Ausnahme und verlangt Handarbeit. Also bauen wir zuerst genau das: den lokalen Betrieb.
 
 ## Welches Modell nehmen?
 
@@ -106,7 +106,7 @@ Ganz unten sitzt **llama.cpp**, eine schlanke Inferenz-Engine in C und C++, die 
 llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
 ```
 
-Der Schalter `-hf` zieht das angegebene Repository, `:Q4_K_M` wählt die Quantisierungsstufe (ohne Angabe nimmt llama.cpp ohnehin `Q4_K_M`). Die separate Vision-Projektor-Datei holt es automatisch dazu. Danach lauscht der Server auf `http://127.0.0.1:8080` und spricht eine OpenAI-kompatible Sprache.
+Der Schalter `-hf` zieht das angegebene Repository, `:Q4_K_M` wählt die Quantisierungsstufe (ohne Angabe nimmt llama.cpp ohnehin `Q4_K_M`). Die separate Vision-Projektor-Datei kommt automatisch mit. Danach lauscht der Server auf `http://127.0.0.1:8080` und spricht eine OpenAI-kompatible Sprache.
 
 ### Weg 2: Ollama, der Komfort auf der Kommandozeile
 
