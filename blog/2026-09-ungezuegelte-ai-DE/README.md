@@ -59,7 +59,7 @@ Ein Wort zur Erwartung, falls du von Claude Code kommst: Ein 27-Milliarden-Model
 
 ## Qwen 3.8 auf der eigenen Maschine
 
-Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir drei Wege, das Modell tatsächlich zu starten.
+Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir vier Wege, das Modell tatsächlich zu starten.
 
 ### Welche Variante du nehmen willst
 
@@ -96,11 +96,31 @@ Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[
 
 Zwei europäische Anbieter erfüllen das: **[Scaleway](https://www.scaleway.com)** aus Frankreich vermietet eine L4 (24 GB, dieselbe Klasse wie bei Hugging Face) für 0,79 € pro Stunde, stundenweise abgerechnet und mit Auftragsverarbeitungsvertrag. **[OVHcloud](https://www.ovhcloud.com)** ist die naheliegende Alternative mit demselben GPU-Angebot. So bleiben Code und Daten in Europa. Versprechen können sie alle viel, und ich persönlich gebe darauf nicht viel.
 
-Auf der eigenen Maschine geht es aber meistens doch, mit etwas Geduld. Dafür zeige ich dir jetzt drei Wege.
+Auf der eigenen Maschine geht es aber meistens doch, mit etwas Geduld. Dafür zeige ich dir jetzt vier Wege, von der nackten Engine bis zum eigenen Code.
 
-### Weg 1: LM Studio, die grafische Oberfläche
+### Weg 1: llama.cpp, der Unterbau
 
-Der einfachste Einstieg ist **[LM Studio](https://lmstudio.ai)**. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten. Die klassische **LM Studio** läuft auf Mac, Linux und Windows und bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start. Bionic gibt es aktuell nur für den Mac. Wenn du einen hast, probier es aus.
+Ganz unten sitzt **llama.cpp**, eine schlanke Inferenz-Engine in C und C++, die GGUF-Modelle direkt ausführt. Sie ist die Grundlage, auf der die bequemeren Werkzeuge der nächsten beiden Wege aufsetzen. Direkt genutzt ist sie am wenigsten komfortabel, dafür am nächsten an der Maschine und ideal für Skripte und Server. Du installierst sie auf dem Mac mit `brew install llama.cpp`, unter Linux und Windows lädst du die fertigen Binaries von der [Releases-Seite](https://github.com/ggml-org/llama.cpp/releases). Ein einziger Befehl lädt das Modell direkt von Hugging Face und startet den Server:
+
+```bash
+llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
+```
+
+Der Schalter `-hf` zieht das angegebene Repository, `:Q4_K_M` wählt die Quantisierungsstufe (ohne Angabe nimmt llama.cpp ohnehin `Q4_K_M`). Die separate Vision-Projektor-Datei holt es automatisch dazu. Danach lauscht der Server auf `http://127.0.0.1:8080` und spricht eine OpenAI-kompatible Sprache.
+
+### Weg 2: Ollama, der Komfort auf der Kommandozeile
+
+Bequemer wird es mit **[Ollama](https://ollama.com)**, dem wohl populärsten Weg, ein Modell lokal laufen zu lassen. Der ähnliche Name ist kein Zufall: Ollama setzt auf llama.cpp auf und ergänzt einen eigenen Modell-Katalog und die Modellverwaltung. Beide Namen stammen aus der Welle, die Metas Llama-Modelle ausgelöst haben. Auf dem Mac genügt `brew install ollama`, unter Linux `curl -fsSL https://ollama.com/install.sh | sh`, für Windows gibt es einen Installer auf [ollama.com](https://ollama.com/download). Danach lädt und startet ein Befehl das Modell:
+
+```bash
+ollama run qwen3.8:27b
+```
+
+Ollama hält im Hintergrund einen Server auf Port `11434` bereit, die OpenAI-kompatible Schnittstelle liegt unter `http://localhost:11434/v1`. Auf Apple Silicon gibt es die Varianten mit dem Kürzel `mlx`, die dort spürbar schneller laufen.
+
+### Weg 3: LM Studio, die grafische Oberfläche
+
+Wer lieber ein Fenster als ein Terminal hat, nimmt **[LM Studio](https://lmstudio.ai)**. Auch LM Studio führt GGUF-Modelle über llama.cpp aus, MLX-Modelle über Apples MLX. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten. Die klassische **LM Studio** läuft auf Mac, Linux und Windows und bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start. Bionic gibt es aktuell nur für den Mac. Wenn du einen hast, probier es aus.
 
 ![Die Download-Seite von LM Studio: oben „Download LM Studio Bionic" mit einem Button nur für macOS, darunter die klassische „Download LM Studio" mit Auswahl für macOS, Windows und Linux.](lm-studio-download.png "Beide Varianten stehen zur Wahl: das neue Bionic nur für den Mac, die klassische LM Studio für alle Plattformen.")
 
@@ -112,29 +132,11 @@ Klickst du Qwen3.8 27B an, zeigt die rechte Spalte die Download-Optionen. LM Stu
 
 ![Der Explore-Bereich von LM Studio: links die Modellliste, rechts die Details und Download-Optionen zu Qwen3.8 27B. Ein angehakter Filter „Only include Staff Picks that fit on a known device" beschränkt die Liste auf Modelle, die auf das eigene Gerät passen.](lm-studio-explore.png "Der Download-Bereich mit „Staff Picks“. Ein Filter zeigt nur Modelle, die auf die eigene Hardware passen. Qwen3.8 27B ist als „Full GPU Offload Possible“ markiert.")
 
-Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-Tab den lokalen Server ein. LM Studio stellt dann eine OpenAI-kompatible Schnittstelle unter `http://localhost:1234/v1` bereit. Diese Adresse brauchen wir gleich in Weg 3 wieder.
+Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-Tab den lokalen Server ein. LM Studio stellt dann eine OpenAI-kompatible Schnittstelle unter `http://localhost:1234/v1` bereit. Diese Adresse brauchen wir gleich in Weg 4 wieder.
 
-### Weg 2: Die Kommandozeile, für Skripte und Dauerbetrieb
+### Weg 4: Aus dem eigenen Code heraus
 
-Für den Dauerbetrieb ist die Kommandozeile die bessere Wahl. **llama.cpp** ist eine schlanke Inferenz-Engine in C und C++, die GGUF-Modelle direkt ausführt. Sie ist die Grundlage vieler anderer Werkzeuge: Selbst das grafische LM Studio aus Weg 1 baut darauf auf. Du installierst es auf dem Mac mit `brew install llama.cpp`, unter Linux und Windows lädst du die fertigen Binaries von der [Releases-Seite](https://github.com/ggml-org/llama.cpp/releases). Es lädt das Modell direkt von Hugging Face und startet den Server mit nur einem Befehl:
-
-```bash
-llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
-```
-
-Der Schalter `-hf` zieht das angegebene Repository, `:Q4_K_M` wählt die Quantisierungsstufe (ohne Angabe nimmt llama.cpp ohnehin `Q4_K_M`). Die separate Vision-Projektor-Datei holt es automatisch dazu. Danach lauscht der Server auf `http://127.0.0.1:8080` und spricht dieselbe OpenAI-kompatible Sprache wie LM Studio.
-
-Noch kürzer ist **[Ollama](https://ollama.com)**, der wohl populärste Weg, ein Modell lokal laufen zu lassen. Der ähnliche Name stiftet gern Verwirrung: llama.cpp ist die Inferenz-Engine, Ollama setzt darauf auf und ergänzt einen eigenen Modell-Katalog und die Modellverwaltung. Beide Namen stammen aus der Welle, die Metas Llama-Modelle ausgelöst haben. Auf dem Mac genügt `brew install ollama`, unter Linux `curl -fsSL https://ollama.com/install.sh | sh`, für Windows gibt es einen Installer auf [ollama.com](https://ollama.com/download). Danach lädt und startet ein Befehl das Modell:
-
-```bash
-ollama run qwen3.8:27b
-```
-
-Ollama hält im Hintergrund einen Server auf Port `11434` bereit, die OpenAI-kompatible Schnittstelle liegt unter `http://localhost:11434/v1`. Auf Apple Silicon gibt es die Varianten mit dem Kürzel `mlx`, die dort spürbar schneller laufen.
-
-### Weg 3: Aus dem eigenen Code heraus
-
-Alle drei Wege enden bei derselben Schnittstelle, und das ist der eigentliche Trick. Ein OpenAI-kompatibler Endpunkt heißt: Dein Code, der bisher gegen die Cloud von OpenAI oder Anthropic lief, braucht nur eine neue Basis-Adresse. Kein neues SDK, kein Umschreiben.
+Die ersten drei Wege enden bei derselben Schnittstelle, und das ist der eigentliche Trick. Ein OpenAI-kompatibler Endpunkt heißt: Dein Code, der bisher gegen die Cloud von OpenAI oder Anthropic lief, braucht nur eine neue Basis-Adresse. Kein neues SDK, kein Umschreiben.
 
 Mit dem offiziellen OpenAI-SDK sieht das so aus:
 
@@ -156,13 +158,9 @@ const antwort = await client.chat.completions.create({
 console.log(antwort.choices[0].message.content);
 ```
 
-Der Quellcode des Kunden verlässt dabei nie den Rechner. Genau das war der doppelte Gewinn aus dem vorigen Artikel: keine Cloud-Schranke, und keine Datenweitergabe.
+Der Quellcode des Kunden verlässt dabei nie den Rechner. Und dieselbe Adresse trägst du genauso in agentische Coding-Werkzeuge ein, die Dateien bearbeiten und Befehle ausführen: Der Ablauf, den du von Claude Code kennst, bleibt, nur das Modell dahinter läuft lokal. Nötig ist dafür nur, dass das Modell Werkzeuge aufrufen kann, und das beherrscht Qwen (function calling).
 
-Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das Vercel AI SDK gebaut, sodass sich jedes Modell frei einstellen lässt. Und hier kommt der selbst vorgeschaltete Klassifizierer aus Schranke 1 ins Spiel: Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, ist ein lokales Modell vorgesehen, ein `gemma3` über Ollama auf dem eigenen Server. Kein Schülertext geht dafür an einen Cloud-Dienst. Das ist das Datenschutz-Argument dieses Artikels, in Produktion.
-
-Und du bleibst damit nicht beim Chat stehen. Dieselbe Schnittstelle sprechen auch agentische Coding-Werkzeuge, die Dateien bearbeiten und Befehle ausführen. Den Ablauf, den du von Claude Code kennst, gibst du also nicht auf, nur das Modell dahinter läuft jetzt lokal. Möglich macht das die Werkzeug-Nutzung des Modells selbst (function calling).
-
-> **🛠️ Selbst ausprobieren:** Fang mit einer Frage an, die dein gehosteter Assistent gerade abgelehnt hat.
+Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das [Vercel AI SDK](https://ai-sdk.dev) gebaut, jedes Modell ist frei einstellbar. Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, läuft ein lokales `gemma3` über Ollama auf dem eigenen Server, diese Klassifizierung verlässt uns also nie. Und was an das eigentliche Chat-Modell geht, wird vorher anonymisiert: Klarnamen, allen voran die der Schüler, ersetzen wir durch Platzhalter, bevor irgendein Modell den Text sieht.
 
 ## Zwei Schranken sind gefallen
 
