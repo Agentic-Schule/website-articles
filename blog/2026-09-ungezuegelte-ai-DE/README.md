@@ -59,7 +59,7 @@ Ein Wort zur Erwartung, falls du von Claude Code kommst: Ein 27-Milliarden-Model
 
 ## Qwen 3.8 auf der eigenen Maschine
 
-Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du sie herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir drei Wege, das Modell tatsächlich zu starten.
+Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir drei Wege, das Modell tatsächlich zu starten.
 
 ### Welche Variante du nehmen willst
 
