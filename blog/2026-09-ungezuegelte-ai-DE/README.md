@@ -17,9 +17,9 @@ language: de
 header: header.jpg
 ---
 
-Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) stand das Dilemma: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell, der Verteidiger bleibt an der Cloud-Schranke stehen. Die Konsequenz war klar. Jetzt bauen wir sie.
+Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) habe ich folgendes Dilemma aufgezeigt: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell und kennt keine Grenzen. Der Verteidiger dagegen sitzt bei einem Cloud-Anbieter fest, dessen Modell bei heiklen Sicherheitsthemen abblockt. Die Konsequenz daraus ist einfach: Der Verteidiger muss sich dieselbe Freiheit zurückholen, ein offenes Modell auf der eigenen Maschine, das nicht abblockt und den Code nicht aus der Hand gibt.
 
-**„Unzensiert" meint drei Schranken, die ein gehosteter Assistent zwischen dich und die Antwort stellt: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Dieser Artikel zeigt, wie ein lokales Modell die ersten beiden von selbst abräumt, warum die dritte Handarbeit ist, und wo die rechtlichen Grenzen liegen.**
+**Genau das bauen wir jetzt. „Unzensiert" meint dabei drei Schranken, die ein gehosteter Assistent zwischen dich und die Antwort stellt: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Dieser Artikel zeigt, wie ein lokales Modell die ersten beiden von selbst abräumt, warum die dritte Handarbeit ist, und wo die rechtlichen Grenzen liegen.**
 
 ## Inhalt
 
@@ -29,7 +29,7 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 „Unzensiert" klingt nach einem einzelnen Schalter, ist aber dreierlei. Ein gehosteter Assistent hält dich an drei Stellen zurück, von außen nach innen.
 
-**Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem im ersten Teil das Schreiben dieses Textes zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
+**Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil beim Schreiben dieses Textes zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
 
 **Zweitens der System-Prompt.** Gehostete Assistenten laufen mit einer versteckten Anweisung, die du nicht abschalten kannst und in der auch „verweigere Folgendes" stehen kann. Lokal wählst du den System-Prompt selbst, oder lässt ihn ganz weg.
 
