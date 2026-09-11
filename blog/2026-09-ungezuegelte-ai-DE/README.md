@@ -80,7 +80,7 @@ In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisieru
 
 Auf Apple Silicon läuft die MLX-Fassung; sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate Projektor-Datei von knapp einem Gigabyte.
 
-Für den Einstieg bietet sich `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität. Ob sie für deinen Zweck reicht, zeigt erst der Vergleich am eigenen Code.
+Für den Einstieg bietet sich also `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität. Ob sie für deinen Zweck reicht, zeigt erst der Vergleich am eigenen Code.
 
 > **⚠️ Achtung, Speicher-Puffer:** „Passt für die Inferenz" heißt nicht „der Rest des Systems bleibt bequem". Ein 16-GB-Modell auf einem 32-GB-Rechner lässt wenig Luft für macOS, Browser und alles andere. Läuft das Modell auf demselben Mac, der auch deinen Desktop treibt, kann starker Speicherdruck die grafische Oberfläche so aushungern, dass macOS sie per Watchdog neu startet, also ein harter Reboot. Lass genug Speicher frei: kleinere Quantisierung, Speicherfresser schließen, oder das Modell auf einer Maschine fahren, an der du gerade nicht arbeitest.
 
