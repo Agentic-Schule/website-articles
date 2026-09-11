@@ -94,7 +94,7 @@ Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[
 
 > **⚠️ Achtung, der Code verlässt wieder die Maschine.** Sobald du in die Cloud gehst, ist das Datenschutz-Argument dieses Artikels dahin: Dein Code und deine Daten laufen wieder auf fremder Hardware. Für eigenen Test- oder Bastelcode ist das kein Problem. Für Kundencode brauchst du einen Anbieter mit EU-Rechenzentrum und Auftragsverarbeitungsvertrag, sonst musst du beim lokalen Betrieb bleiben.
 
-Zwei europäische Anbieter erfüllen das: **[Scaleway](https://www.scaleway.com)** aus Frankreich vermietet eine L4 (24 GB, dieselbe Klasse wie bei Hugging Face) für 0,79 € pro Stunde, stundenweise abgerechnet und mit Auftragsverarbeitungsvertrag. **[OVHcloud](https://www.ovhcloud.com)** ist die naheliegende Alternative mit demselben GPU-Angebot. So bleiben Code und Daten in Europa.
+Zwei europäische Anbieter erfüllen das: **[Scaleway](https://www.scaleway.com)** aus Frankreich vermietet eine L4 (24 GB, dieselbe Klasse wie bei Hugging Face) für 0,79 € pro Stunde, stundenweise abgerechnet und mit Auftragsverarbeitungsvertrag. **[OVHcloud](https://www.ovhcloud.com)** ist die naheliegende Alternative mit demselben GPU-Angebot. So bleiben Code und Daten in Europa. Versprechen können sie alle viel, und ich persönlich gebe darauf nicht viel.
 
 Auf der eigenen Maschine geht es aber meistens doch, und dafür zeige ich dir jetzt drei Wege.
 
