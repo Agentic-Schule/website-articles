@@ -73,7 +73,7 @@ In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisieru
 
 | Stufe | Größe | Passt auf |
 | --- | --- | --- |
-| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory, auf meinem [Mac mini M4](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) mit knappem Puffer |
+| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory, auf meinem [Mac mini M4](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) mit knappem Puffer. Es geht, aber es ist zäh. |
 | `Q5_K_M` | 19,8 GB | 24 GB VRAM knapp, 32 GB komfortabel |
 | `Q6_K` | 22,0 GB | 32 GB aufwärts |
 | `Q8_0` | 29,0 GB | 36 GB aufwärts |
