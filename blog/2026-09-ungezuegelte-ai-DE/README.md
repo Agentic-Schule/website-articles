@@ -27,7 +27,7 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 ## Was „unzensiert" bedeutet
 
-„Unzensiert" klingt nach einem einzelnen Schalter, ist aber vielschichtig. Ein gehosteter Assistent hält dich an mindestens den folgenden drei Stellen zurück, von außen nach innen.
+„Unzensiert" klingt nach einem einzelnen Schalter, ist aber vielschichtig. Manche Schranken greifen schon, bevor das Gespräch beginnt: Ob du überhaupt Zugang bekommst, hängt vom Herkunftsland ab. Die großen Anbieter veröffentlichen dafür Länderlisten. Und die stärksten Cyber-Fähigkeiten geben sie nur nach einer Bewerbung frei, wie beim [Project Glasswing](https://www.anthropic.com/glasswing) aus dem ersten Teil. Beides fällt lokal von selbst weg. Bleiben die Schranken im Gespräch selbst: An mindestens den folgenden drei hält dich ein gehosteter Assistent zurück, von außen nach innen.
 
 **Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil beim Schreiben dieses Textes zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
 
