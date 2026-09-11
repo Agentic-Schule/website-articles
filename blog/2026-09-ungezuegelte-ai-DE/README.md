@@ -200,7 +200,7 @@ Ein lokales Modell macht aus einem unzulässigen Pen-Test keinen zulässigen. Dr
 
 > **⚠️ Achtung:** Für Modelle der Mythos-Klasse hat Anthropic eine Aufbewahrung sämtlichen Datenverkehrs über 30 Tage zur Pflicht gemacht, auf eigenen und auf fremden Oberflächen. Das ist als Schutzmaßnahme gegen Jailbreaks nachvollziehbar.
 
-Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und er löst die Frage, wo der Code des Kunden landet — nämlich nirgendwo. Nichts verlässt deinen Computer.
+Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und er löst die Frage, wo der Code des Kunden landet — nämlich nirgendwo. Nichts verlässt deinen Computer.<!-- STIL: Gedankenstrich hier bewusst gesetzt und freigegeben, nicht automatisch entfernen. -->
 
 ## Fazit
 
