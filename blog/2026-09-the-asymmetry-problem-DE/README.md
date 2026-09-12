@@ -20,7 +20,7 @@ header: header.jpg
 
 In der IT-Sicherheit brennt es, und ein Hardware-Hersteller hat es diesen Sommer auf den Punkt gebracht, nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
-**Wer sich nicht an die Regeln hält, war schon immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Guardrails und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar.**
+**Wer sich nicht an die Regeln hält, war schon immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Sicherheitssperren (*Guardrails*) und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar.**
 
 Führt eine ungezügelte KI ohne jede Einschränkung am Ende zum Untergang der Menschheit? Ich habe keine Ahnung, das ist mir zu viel Sci-Fi. Was ich dagegen sehe, ist eine krasse Schieflage, hier und heute. In den kommenden Artikeln spielen wir bei den „bösen" Buben mit, und ich lege mit diesem Artikel meinen Standpunkt vorab offen.
 
@@ -97,7 +97,7 @@ Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprac
 
 **Erstens, die Verteidigung.** Sobald echte Angriffsdaten ins Spiel kommen, verweigert das gehostete Modell. Den Beweis hast du oben gesehen: Hugging Face musste auf ein lokales Modell ausweichen, weil die gehosteten die Forensik blockierten. Der Grund, in Hugging Faces Worten: der Guardrail „cannot distinguish an incident responder from an attacker".
 
-**Zweitens, erreichbare Systeme ohne den Quelltext.** Ein `/security-review` liest immer nur deinen eigenen Code. Der Alltag sieht aber oft anders aus. In Unternehmen, klein wie groß, kennt nicht jede Abteilung den Code der anderen. Oder der beauftragte Web-Entwickler soll das alte WordPress prüfen, nur kennt die FTP-Zugangsdaten längst niemand mehr. Erreichbar ist das System, den Quelltext hast du nicht. Frag das Modell in so einer Lage, ob es einen bekannten Exploit dagegen ausprobiert, und es lehnt mit hoher Wahrscheinlichkeit ab. Kein Quelltext, keine Analyse.
+**Zweitens, erreichbare Systeme ohne den Quelltext.** Ein `/security-review` liest immer nur deinen eigenen Code. Der Alltag sieht aber oft anders aus. In Unternehmen, klein wie groß, kennt nicht jede Abteilung den Code der anderen. Oder der beauftragte Web-Entwickler soll das alte WordPress prüfen, nur kennt die FTP-Zugangsdaten längst niemand mehr. Erreichbar ist das System, den Quelltext hast du nicht. Frag das Modell in so einer Lage, ob es einen bekannten *Exploit* (Code, der eine Sicherheitslücke gezielt ausnutzt) dagegen ausprobiert, und es lehnt mit hoher Wahrscheinlichkeit ab. Kein Quelltext, keine Analyse.
 
 **Drittens, der Exploit selbst.** Ein Befund ist die Behauptung, der Exploit ist der Beweis. Bei einem gewöhnlichen Softwarebug schreibst du den Test, der rot wird, und reparierst, bis er grün ist. Bei einer Sicherheitslücke ist der Exploit dieser rote Test. Genau das gibt ein gehostetes Modell nicht her. Ein Exploit sieht gleich aus, ob zum Schließen oder zum Ausnutzen. Und selbst wenn du deine guten Absichten erläuterst, weist dich das Modell ab. Spätestens hier rennst du gegen eine Mauer.
 
@@ -107,7 +107,7 @@ Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprac
 
 Das ist strunzdumm, das ist schon Arbeitsverweigerung. Fable 5.1 kann ich persönlich nicht empfehlen.
 
-Fassen wir es zusammen: Der Anbieter kann nicht sehen, ob du angreifst oder dich wehrst. Also blockt er für alle gleich. Der Angreifer umgeht das, er arbeitet lokal mit Open-Weight-Modellen und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und muss auf schwächere, ältere Modelle wie Opus ausweichen.
+Fassen wir es zusammen: Der Anbieter kann nicht sehen, ob du angreifst oder dich wehrst. Also blockt er für alle gleich. Der Angreifer umgeht das, er arbeitet lokal mit *Open-Weight*-Modellen (die trainierten Gewichte stehen frei zum Download) und unbeschränkt. Der Verteidiger, der sich an die Regeln hält, bleibt an der Schranke stehen und muss auf schwächere, ältere Modelle wie Opus ausweichen. Und beim echten Angriffsmaterial verweigern selbst die.
 
 Wir brauchen also dieselbe Fähigkeit wie der Angreifer, nur ohne den Klassifikator dazwischen. **Ob sie wirklich taugt? Das finden wir in den nächsten Artikeln gemeinsam heraus.**
 
