@@ -29,7 +29,7 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 „Unzensiert" klingt nach einem einzelnen Schalter, ist aber vielschichtig. Manche Schranken greifen schon, bevor das Gespräch beginnt: Ob du überhaupt Zugang bekommst, hängt vom Herkunftsland ab. Die großen Anbieter veröffentlichen dafür Länderlisten. Und die stärksten Cyber-Fähigkeiten geben sie nur nach einer Bewerbung frei, wie beim [Project Glasswing](https://www.anthropic.com/glasswing) aus dem ersten Teil. Beides fällt lokal von selbst weg. Bleiben die Schranken im Gespräch selbst: An mindestens den folgenden drei hält dich ein gehosteter Assistent zurück, von außen nach innen.
 
-**Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil beim Schreiben dieses Textes zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
+**Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
 
 **Zweitens der System-Prompt.** Gehostete Assistenten laufen mit einer festen Anweisung, die du nicht ändern kannst und die dem Modell auch vorschreibt, was es ablehnen soll. Die Community hat die Prompts der großen Anbieter längst extrahiert, in [dieser Sammlung](https://github.com/asgeirtj/system_prompts_leaks) kannst du die Benimmregeln der Modelle genau nachlesen. Lokal wählst du den System-Prompt dagegen selbst, oder lässt ihn ganz weg.
 
@@ -45,21 +45,21 @@ Offene Modelle für lokale Sicherheitsarbeit gibt es also reichlich. Drei stelle
 
 | Modell | Lizenz | Bauart | Kontext | Rolle |
 | --- | --- | --- | --- | --- |
-| Qwen 3.8-27B | Apache 2.0 | dicht, ~28 Mrd. Parameter | 262 k | läuft auf normaler Hardware |
+| Qwen3.8-27B | Apache 2.0 | dicht, ~28 Mrd. Parameter | 262 k | läuft auf normaler Hardware |
 | GLM-5.2 | MIT | MoE, 256 Experten | ~1 Mio. | im Hugging-Face-Vorfall bewährt |
-| DeepSeek-V4-Flash | MIT | MoE, 256 Experten | ~1 Mio. | Download-Spitzenreiter, stark bei Code |
+| DeepSeek-V4-Flash | MIT | MoE, 256 Experten | ~1 Mio. | sehr hohe Downloadzahlen, stark bei Code |
 
 Die Lizenz ist bei allen dreien großzügig, das ist nicht der Knackpunkt. Entscheidend ist die Bauart, und dafür lohnen sich zwei Begriffe, die du auf Hugging Face ständig liest.
 
 Ein **dichtes** Modell (engl. *dense*) rechnet für jedes Token mit allen seinen Parametern. Sein Speicherbedarf ist damit direkt seine Größe, gut abschätzbar. Ein **Mixture-of-Experts**-Modell (kurz *MoE*) ist dagegen in viele Experten aufgeteilt, von denen pro Token nur wenige rechnen. Das macht es schnell, hat aber einen Haken: Im Speicher liegen müssen trotzdem alle Experten gleichzeitig.
 
-Genau daran scheitert der lokale Betrieb der beiden großen Modelle. GLM-5.2 und DeepSeek-V4 haben je 256 Experten, das sind die Modelle, die Profis wie Hugging Face auf dicker eigener Infrastruktur fahren. Qwen 3.8-27B ist dicht und mit rund 28 Milliarden Parametern das einzige der drei, das quantisiert noch auf einer normalen Maschine läuft. Deshalb geht es im Folgenden um Qwen.
+Genau daran scheitert der lokale Betrieb der beiden großen Modelle. GLM-5.2 und DeepSeek-V4 haben je 256 Experten, das sind die Modelle, die Profis wie Hugging Face auf dicker eigener Infrastruktur fahren. Qwen3.8-27B ist dicht und mit rund 28 Milliarden Parametern das einzige der drei, das quantisiert noch auf einer normalen Maschine läuft. Deshalb geht es im Folgenden um Qwen.
 
 Ein Wort zur Erwartung, falls du von Claude Code kommst: Ein 27-Milliarden-Modell auf dem eigenen Laptop ist nicht das Spitzenmodell aus der Cloud, das du gewohnt bist. Es ist kleiner, und auf normaler Hardware antwortet es langsamer. Für eine fokussierte Aufgabe reicht das trotzdem, vor allem für genau die, die dir ein gehosteter Assistent gerade verweigert.
 
-## Qwen 3.8 auf der eigenen Maschine
+## Qwen3.8 auf der eigenen Maschine
 
-Qwen 3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir, wie du das Modell tatsächlich startest.
+Qwen3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir, wie du das Modell tatsächlich startest.
 
 ### Welche Variante du nehmen willst
 
@@ -90,7 +90,7 @@ Manchmal reicht der eigene Rechner nicht, sei es, weil die großen MoE-Modelle o
 
 Am naheliegendsten ist **[Hugging Face](https://huggingface.co)** selbst, dieselbe Plattform, von der du das Modell ohnehin lädst. Du deployst es mit wenigen Klicks auf gemieteter Hardware, und die Preise sind moderat: eine Nvidia T4 (16 GB) kostet 0,40 $ pro Stunde, eine L4 (24 GB, genug für ein quantisiertes Qwen) 0,80 $ pro Stunde. Die typische Kostenfalle beim Mieten ist die vergessene Maschine, die im Leerlauf weiter abrechnet. Genau die entschärft Hugging Face: Inference Endpoints skalieren auf null, ohne Last zahlst du nichts. Für den ganz kleinen Einstieg gibt es sogar geteilte GPU-Zeit („ZeroGPU") im PRO-Abo für 9 $ im Monat.
 
-Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[Replicate](https://replicate.com)** rechnet sekundengenau ab und lässt offene Modelle per API laufen, ohne dass du etwas betreiben musst. **[RunPod](https://www.runpod.io)** hat die günstigsten rohen GPUs, bis hinunter zur RTX 4090, plus eine Serverless-Variante. Eingerichtet wird jeder Dienst anders, deshalb hier nur einer im Detail.
+Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[Replicate](https://replicate.com)** rechnet sekundengenau ab und lässt offene Modelle per API laufen, ohne dass du etwas betreiben musst. **[RunPod](https://www.runpod.io)** hat sehr günstige rohe GPUs, bis hinunter zur RTX 4090, plus eine Serverless-Variante. Eingerichtet wird jeder Dienst anders, deshalb hier nur einer im Detail.
 
 > **⚠️ Achtung, der Code verlässt wieder die Maschine.** Sobald du in die Cloud gehst, ist das Datenschutz-Argument dieses Artikels dahin: Dein Code und deine Daten laufen wieder auf fremder Hardware. Für eigenen Test- oder Bastelcode ist das kein Problem. Für Kundencode brauchst du einen Anbieter mit EU-Rechenzentrum und Auftragsverarbeitungsvertrag, sonst musst du beim lokalen Betrieb bleiben.
 
@@ -120,9 +120,7 @@ Ollama hält im Hintergrund einen Server auf Port `11434` bereit, die OpenAI-kom
 
 ### Weg 3: LM Studio, die grafische Oberfläche
 
-Wer lieber ein Fenster als ein Terminal hat, nimmt **[LM Studio](https://lmstudio.ai)**. Auch LM Studio führt GGUF-Modelle über llama.cpp aus, MLX-Modelle über Apples MLX. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten. Die klassische **LM Studio** läuft auf Mac, Linux und Windows und bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start. Bionic gibt es aktuell nur für den Mac. Wenn du einen hast, probier es aus.
-
-![Die Download-Seite von LM Studio: oben „Download LM Studio Bionic" mit einem Button nur für macOS, darunter die klassische „Download LM Studio" mit Auswahl für macOS, Windows und Linux.](lm-studio-download.png "Beide Varianten stehen zur Wahl: das neue Bionic nur für den Mac, die klassische LM Studio für alle Plattformen.")
+Wer lieber ein Fenster als ein Terminal hat, nimmt **[LM Studio](https://lmstudio.ai)**. Auch LM Studio führt GGUF-Modelle über llama.cpp aus, MLX-Modelle über Apples MLX. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten, beide für Mac, Windows und Linux. Die klassische **LM Studio** bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start, probier es ruhig aus.
 
 ![Der Startbildschirm von LM Studio Bionic: ein leeres Fenster mit einem zentralen Eingabefeld „Ask Bionic to do something" und einer Modellauswahl.](lm-studio-start.png "Der neue Bionic-Startbildschirm, wirklich sehr aufgeräumt.")
 
@@ -158,7 +156,7 @@ const antwort = await client.chat.completions.create({
 console.log(antwort.choices[0].message.content);
 ```
 
-Der Quellcode des Kunden verlässt dabei nie den Rechner. Und dieselbe Adresse trägst du genauso in agentische Coding-Werkzeuge ein, die Dateien bearbeiten und Befehle ausführen: Der Ablauf, den du von Claude Code kennst, bleibt, nur das Modell dahinter läuft lokal. Nötig ist dafür nur, dass das Modell Werkzeuge aufrufen kann, und das beherrscht Qwen (function calling).
+Der Quellcode des Kunden verlässt dabei nie den Rechner. Und dieselbe Adresse trägst du genauso in agentische Coding-Werkzeuge ein, die Dateien bearbeiten und Befehle ausführen: Der Ablauf, den du von Claude Code kennst, bleibt, nur das Modell dahinter läuft lokal. Nötig ist dafür nur, dass das Modell Werkzeuge aufrufen kann, und das beherrscht Qwen (*function calling*).
 
 Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das [Vercel AI SDK](https://ai-sdk.dev) gebaut, jedes Modell ist frei einstellbar. Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, läuft ein lokales `gemma3` über Ollama auf dem eigenen Server, diese Klassifizierung verlässt uns also nie. Und was an das eigentliche Chat-Modell geht, wird vorher anonymisiert: Klarnamen, allen voran die der Schüler, ersetzen wir durch Platzhalter, bevor irgendein Modell den Text sieht.
 
@@ -198,7 +196,7 @@ Ein lokales Modell macht aus einem unzulässigen Pen-Test keinen zulässigen. Dr
 
 **Der Datenschutz ist das stärkste Argument für lokal.** Kundencode ist in aller Regel Auftragsverarbeitung nach Art. 28 DSGVO und oft zusätzlich Geschäftsgeheimnis im Sinne des GeschGehG, was „angemessene Geheimhaltungsmaßnahmen" voraussetzt. Die Datenschutzkonferenz formuliert in ihrer Orientierungshilfe zu KI-Anwendungen unmissverständlich: „Technisch geschlossene Systeme sind daher aus datenschutzrechtlicher Sicht vorzugswürdig."
 
-> **⚠️ Achtung:** Für Modelle der Mythos-Klasse hat Anthropic eine Aufbewahrung sämtlichen Datenverkehrs über 30 Tage zur Pflicht gemacht, auf eigenen und auf fremden Oberflächen. Das ist als Schutzmaßnahme gegen Jailbreaks nachvollziehbar.
+> **⚠️ Achtung:** Wer Anthropics [Claude Mythos 5.1](https://www.anthropic.com/claude/mythos) nutzt, muss standardmäßig eine 30-tägige Datenaufbewahrung zur Sicherheitsüberwachung akzeptieren. Als Schutzmaßnahme gegen Missbrauch ist das nachvollziehbar.
 
 Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und er löst die Frage, wo der Code des Kunden landet — nämlich nirgendwo. Nichts verlässt deinen Computer.<!-- STIL: Gedankenstrich hier bewusst gesetzt und freigegeben, nicht automatisch entfernen. -->
 
