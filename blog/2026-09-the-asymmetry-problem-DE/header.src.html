@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(58% 55% at 74% 46%, rgba(217,119,87,0.26), transparent 60%),
+      radial-gradient(50% 60% at 18% 92%, rgba(126,96,196,0.12), transparent 60%),
+      linear-gradient(155deg,#221a16 0%,#160f0c 58%,#0d0908 100%);
+    color:#fff; position:relative;
+  }
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:560px; }
+  .kicker { font-size:20px; letter-spacing:6px; font-weight:700; color:#e0916f; text-transform:uppercase; }
+  .kicker .dot { color:#d97757; }
+  h1 { font-size:62px; line-height:1.04; font-weight:800; letter-spacing:-1.5px; margin:22px 0 0; }
+  h1 .accent { color:#e58a68; }
+  .sub { margin-top:24px; font-size:24px; font-weight:500; color:#c3b7ae; letter-spacing:-.2px; line-height:1.35; }
+  .by { margin-top:36px; font-size:19px; color:#8c8079; }
+  .by b { color:#cbbfb6; font-weight:600; }
+  .art { position:absolute; right:10px; top:0; height:675px; width:580px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="left">
+      <div class="kicker">agentic<span class="dot">.</span>schule</div>
+      <h1>The Asymmetry<br><span class="accent">Problem</span></h1>
+      <div class="sub">Ein Plädoyer für<br>ungezügelte KI-Werkzeuge</div>
+      <div class="by">von <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <div class="art">
+    <svg width="580" height="675" viewBox="0 0 580 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="48%" r="55%">
+          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.36"/>
+          <stop offset="60%" stop-color="#d97757" stop-opacity="0.10"/>
+          <stop offset="100%" stop-color="#d97757" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <g transform="translate(0,-52)">
+      <circle cx="300" cy="340" r="250" fill="url(#glow)"/>
+
+      <!-- Standfuss + Saeule + Drehpunkt -->
+      <rect x="232" y="566" width="136" height="13" rx="6" fill="#8c7f77"/>
+      <rect x="292" y="360" width="16" height="206" rx="8" fill="#8c7f77"/>
+      <circle cx="300" cy="352" r="11" fill="#cbbfb6"/>
+
+      <!-- Balken, gekippt: links (Angreifer) hoch, rechts (Verteidiger) tief -->
+      <line x1="140" y1="296" x2="460" y2="408" stroke="#e58a68" stroke-width="7" stroke-linecap="round"/>
+
+      <!-- linke Schale: Angreifer, oben, leicht und frei -->
+      <line x1="140" y1="296" x2="104" y2="392" stroke="#8c7f77" stroke-width="2"/>
+      <line x1="140" y1="296" x2="176" y2="392" stroke="#8c7f77" stroke-width="2"/>
+      <path d="M92 392 Q140 430 188 392" fill="none" stroke="#d97757" stroke-width="3"/>
+      <!-- offenes Schloss / frei -->
+      <circle cx="140" cy="366" r="13" fill="none" stroke="#d97757" stroke-width="3"/>
+      <path d="M140 366 m0 -13 a13 13 0 0 1 13 13" fill="none" stroke="#d97757" stroke-width="3" opacity="0.9"/>
+      <text x="140" y="470" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="24" font-weight="800" fill="#e0916f">Angreifer</text>
+
+      <!-- rechte Schale: Verteidiger, unten, von Gewichten beschwert -->
+      <line x1="460" y1="408" x2="424" y2="504" stroke="#8c7f77" stroke-width="2"/>
+      <line x1="460" y1="408" x2="496" y2="504" stroke="#8c7f77" stroke-width="2"/>
+      <path d="M412 504 Q460 542 508 504" fill="none" stroke="#8c7f77" stroke-width="3"/>
+      <!-- Gewichte-Stapel -->
+      <rect x="432" y="476" width="56" height="12" rx="2.5" fill="#8c7f77"/>
+      <rect x="439" y="461" width="42" height="12" rx="2.5" fill="#8c7f77" opacity="0.8"/>
+      <rect x="445" y="446" width="30" height="12" rx="2.5" fill="#8c7f77" opacity="0.6"/>
+      <text x="460" y="566" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="24" font-weight="800" fill="#cbbfb6">Verteidiger</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
