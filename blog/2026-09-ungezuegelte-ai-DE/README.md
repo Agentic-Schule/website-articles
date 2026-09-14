@@ -80,7 +80,7 @@ In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisieru
 
 Beide Spalten der Tabelle meinen den schnellen Speicher, in den das Modell passen muss, und dafür gibt es zwei Wege. Der eine ist eine dedizierte Grafikkarte mit genug *VRAM*, dem eigenen Videospeicher der Karte. Der andere ist ein Mac mit Apple Silicon, dessen *Unified Memory* sich Prozessor und Grafikeinheit teilen. Es läuft also auf eins von beidem hinaus: eine gute Grafikkarte oder ein gut ausgestatteter Mac.
 
-Auf Apple Silicon läuft die MLX-Fassung; sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate Projektor-Datei von knapp einem Gigabyte.
+Auf Apple Silicon läuft die *MLX*-Fassung (Apples ML-Framework); sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate Projektor-Datei von knapp einem Gigabyte.
 
 Für den Einstieg bietet sich also `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität.
 
@@ -198,7 +198,7 @@ Ein Gegenargument gehört an dieser Stelle dazu, und es kommt von der anderen Se
 
 ## Der rechtliche Rahmen
 
-Ein lokales Modell macht aus einem unzulässigen Pen-Test keinen zulässigen. Drei Punkte solltest du im Kopf haben.
+Ein lokales Modell macht aus einem unzulässigen Penetrationstest (Pen-Test) keinen zulässigen. Drei Punkte solltest du im Kopf haben.
 
 **Der Auftrag entscheidet.** In Deutschland zielt § 202c StGB auf den Zweck eines Werkzeugs und nicht auf seine Eignung. Das Bundesverfassungsgericht hat das im Beschluss 2 BvR 2233/07 vom 18. Mai 2009 klargestellt. Wer im Auftrag des Betreibers dessen System prüft, handelt nicht „unbefugt". Daraus ergibt sich: Die Beauftragung liegt schriftlich vor, und darin sind Umfang, Zeitraum und die geprüften Systeme benannt.
 
