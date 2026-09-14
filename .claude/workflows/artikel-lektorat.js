@@ -158,7 +158,7 @@ Behaupteter Mangel: ${fd.issue}
 `;
   const factual = `Das ist eine TATSACHENbehauptung. Zu prüfen: ${fd.claimToVerify || fd.quote}
 Verifiziere AUSSCHLIESSLICH an der PRIMÄRQUELLE. GitHub nur über das gh CLI, nie WebFetch auf github.com.
-Webseiten mit curl -sL -A "Mozilla/5.0"; wenn die Seite blockiert oder JS-gerendert ist, lade per ToolSearch "select:mcp__playwright__browser_navigate,mcp__playwright__browser_evaluate" die Playwright-MCP-Tools und lies document.body.innerText. Suchmaschinen-Snippets zählen NICHT als Endbeleg.
+Webseiten rufst du über unseren Standard-Wrapper ab: web-direct curl -sL -A "Mozilla/5.0"; wenn die Seite blockiert oder JS-gerendert ist, lade per ToolSearch "select:mcp__playwright__browser_navigate,mcp__playwright__browser_evaluate" die Playwright-MCP-Tools und lies document.body.innerText. Suchmaschinen-Snippets zählen NICHT als Endbeleg.
 Erfinde nichts und erfinde keine plausibel klingenden Gegen-Fakten.
 Verdikt: FAKT-FALSCH (Artikel-Aussage nachweislich falsch), FAKT-KORREKT (Artikel-Aussage stimmt, der Befund war ein Fehlalarm) oder FAKT-UNBESTAETIGT (keine Primärquelle auffindbar).
 stands=true nur, wenn die Artikel-Aussage falsch ist ODER stark und unbelegbar. Trage in source die URL und ein wörtliches Zitat der Quelle ein.`;
