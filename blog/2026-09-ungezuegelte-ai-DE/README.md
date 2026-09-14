@@ -19,7 +19,7 @@ header: header.jpg
 
 Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) habe ich folgendes Dilemma aufgezeigt: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell und kennt keine Grenzen. Der Verteidiger dagegen sitzt bei einem Cloud-Anbieter fest, dessen Modell bei heiklen Sicherheitsthemen abblockt. Die Konsequenz daraus ist einfach: Der Verteidiger muss sich dieselbe Freiheit zurückholen, ein offenes Modell auf der eigenen Maschine, das nicht abblockt und weder Code noch Daten aus der Hand gibt.
 
-**Genau das bauen wir jetzt. Ein gehosteter Assistent stellt gleich mehrere Schranken zwischen dich und die Antwort. Drei davon nimmt sich dieser Artikel vor: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Er zeigt, wie ein lokales Modell die ersten beiden von selbst abräumt, warum die dritte Handarbeit ist, und wo die rechtlichen Grenzen liegen.**
+**Genau das bauen wir jetzt. Ein gehosteter Assistent stellt gleich mehrere Schranken zwischen dich und die Antwort: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Wir räumen sie alle aus dem Weg und betrachten danach die rechtlichen Grenzen.**
 
 ## Inhalt
 
@@ -27,21 +27,21 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 ## Was „unzensiert" bedeutet
 
-„Unzensiert" klingt nach einem einzelnen Schalter, ist aber vielschichtig. Manche Schranken greifen schon, bevor das Gespräch beginnt: Ob du überhaupt Zugang bekommst, hängt vom Herkunftsland ab. Die großen Anbieter veröffentlichen dafür Länderlisten. Und die stärksten Cyber-Fähigkeiten geben sie nur nach einer Bewerbung frei, wie beim [Project Glasswing](https://www.anthropic.com/glasswing) aus dem ersten Teil. Beides fällt lokal von selbst weg. Bleiben die Schranken im Gespräch selbst: An mindestens den folgenden drei hält dich ein gehosteter Assistent zurück, von außen nach innen.
+„Unzensiert" klingt nach einem einzelnen Schalter, ist aber vielschichtig. Manche Schranken greifen schon, bevor das Gespräch beginnt: Ob du überhaupt Zugang bekommst, hängt zum Beispiel schon von deinem Herkunftsland ab. Die großen Anbieter veröffentlichen dafür Länderlisten. Und die stärksten Cyber-Fähigkeiten geben sie nur nach einer Bewerbung frei, wie beim [Project Glasswing](https://www.anthropic.com/glasswing), das wir bereits im ersten Teil kurz angerissen haben. Beides fällt lokal von selbst weg. Bleiben die Schranken im Gespräch selbst, von außen nach innen.
 
-**Erstens der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei Learnly, dazu unten mehr.
+**Der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei unserer Eigenentwicklung learnly.school, dazu unten mehr.
 
-**Zweitens der System-Prompt.** Gehostete Assistenten laufen mit einer festen Anweisung, die du nicht ändern kannst und die dem Modell auch vorschreibt, was es ablehnen soll. Die Community hat die Prompts der großen Anbieter längst extrahiert, in [dieser Sammlung](https://github.com/asgeirtj/system_prompts_leaks) kannst du die Benimmregeln der Modelle genau nachlesen. Lokal wählst du den System-Prompt dagegen selbst, oder lässt ihn ganz weg.
+**Der System-Prompt.** Gehostete Assistenten laufen mit einer festen Anweisung, die du nicht ändern kannst und die dem Modell auch vorschreibt, was es ablehnen soll. Die Community hat die Prompts der großen Anbieter längst extrahiert, in [dieser Sammlung](https://github.com/asgeirtj/system_prompts_leaks) kannst du die Benimmregeln der Modelle genau nachlesen. Lokal wählst du den System-Prompt dagegen selbst, oder lässt ihn ganz weg.
 
-**Drittens das antrainierte Verhalten.** Die Verweigerung steckt zusätzlich in den Gewichten des Modells, dort hat sie das Training verankert. Diese Schranke trägt auch ein lokal betriebenes Modell noch mit sich. Sie zu entfernen heißt, die Gewichte selbst zu verändern, und dafür gibt es die Abliteration.
+**Das antrainierte Verhalten.** Die Verweigerung steckt zusätzlich in den Gewichten des Modells, dort hat sie das Training verankert. Diese Schranke trägt auch ein lokal betriebenes Modell noch mit sich. Sie zu entfernen heißt, die Gewichte selbst zu verändern, und dafür gibt es die sogenannte Abliteration.
 
-Die ersten beiden Schranken fallen automatisch, sobald das Modell auf deiner Maschine läuft. Die dritte ist die Ausnahme und verlangt Handarbeit. Also bauen wir zuerst genau das: den lokalen Betrieb.
+Klassifizierer und System-Prompt fallen automatisch, sobald das Modell auf deiner Maschine läuft. Das antrainierte Verhalten ist die Ausnahme: Hier musst du das richtige Modell wählen und besondere Sicherheitsmechanismen einbauen. Also bauen wir zuerst genau das: den lokalen Betrieb.
 
 ## Welches Modell nehmen?
 
 An einem Namen kommst du bei offenen Modellen heute nicht mehr vorbei: **[Hugging Face](https://huggingface.co)**. Die Plattform hostet offene Modelle und Datensätze. Jedes Modell hat dort eine eigene Seite mit Modellkarte, Lizenz und den Modelldateien zum Download, in verschiedenen Formaten und Quantisierungen (verkleinerten Fassungen). So gut wie jedes offene Modell liegt dort, und auch die Werkzeuge weiter unten ziehen ihre Modelle meist direkt von dort.
 
-Offene Modelle für lokale Sicherheitsarbeit gibt es also reichlich. Drei stelle ich dir hier vor, jedes aus einem anderen Grund:
+Offene Modelle für lokale Sicherheitsarbeit gibt es also reichlich. Hier meine persönliche Auswahl:
 
 | Modell | Lizenz | Bauart | Kontext | Rolle |
 | --- | --- | --- | --- | --- |
@@ -59,7 +59,7 @@ Ein Wort zur Erwartung, falls du von Claude Code kommst: Ein 27-Milliarden-Model
 
 ## Qwen3.8 auf der eigenen Maschine
 
-Qwen3.8 ist die aktuelle Modellfamilie von Alibaba. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir, wie du das Modell tatsächlich startest.
+Qwen3.8 ist die aktuelle Modellfamilie von Alibaba. Es zeigt in vielen Disziplinen ordentliche Ergebnisse: agentisches Arbeiten, Recherche und Programmierung. All das kann es. Ich empfehle es für den Einstieg. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir, wie du das Modell tatsächlich startest.
 
 ### Welche Variante du nehmen willst
 
@@ -73,16 +73,18 @@ In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisieru
 
 | Stufe | Größe | Passt auf |
 | --- | --- | --- |
-| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory, auf meinem [Mac mini M4](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) mit knappem Puffer. Es geht, aber es ist zäh. |
+| `Q4_K_M` | 16,5 GB | 24 GB VRAM, 32 GB Unified Memory, auf meinem [Mac mini M4](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini), da bleibt wenig frei. Es geht, aber es ist zäh. |
 | `Q5_K_M` | 19,8 GB | 24 GB VRAM knapp, 32 GB komfortabel |
 | `Q6_K` | 22,0 GB | 32 GB aufwärts |
 | `Q8_0` | 29,0 GB | 36 GB aufwärts |
+
+Beide Spalten der Tabelle meinen den schnellen Speicher, in den das Modell passen muss, und dafür gibt es zwei Wege. Der eine ist eine dedizierte Grafikkarte mit genug *VRAM*, dem eigenen Videospeicher der Karte. Der andere ist ein Mac mit Apple Silicon, dessen *Unified Memory* sich Prozessor und Grafikeinheit teilen. Es läuft also auf eins von beidem hinaus: eine gute Grafikkarte oder ein gut ausgestatteter Mac.
 
 Auf Apple Silicon läuft die MLX-Fassung; sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate Projektor-Datei von knapp einem Gigabyte.
 
 Für den Einstieg bietet sich also `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität.
 
-> **⚠️ Achtung, Speicher-Puffer:** „Passt für die Inferenz" heißt nicht „der Rest des Systems bleibt bequem". Ein 16-GB-Modell auf einem 32-GB-Rechner lässt wenig Luft für macOS, Browser und alles andere. Läuft das Modell auf demselben Mac, der auch deinen Desktop treibt, kann starker Speicherdruck die grafische Oberfläche so aushungern, dass macOS sie per Watchdog neu startet, also ein harter Reboot. Lass genug Speicher frei: kleinere Quantisierung, Speicherfresser schließen, oder das Modell auf einer Maschine fahren, an der du gerade nicht arbeitest.
+> **⚠️ Achtung, geteilter Speicher:** „Passt für die Inferenz" heißt nicht „der Rest des Systems bleibt bequem". Auf einem Mac liegt das Modell im selben RAM wie macOS, Browser und alles andere. Ein 16-GB-Modell auf einem 32-GB-Mac lässt da wenig Luft. Läuft das Modell auf demselben Mac, der auch deinen Desktop treibt, kann starker Speicherdruck die grafische Oberfläche so aushungern, dass macOS sie per Watchdog neu startet, also ein harter Reboot. Lass genug RAM frei: kleinere Quantisierung, Speicherfresser schließen, oder das Modell auf einer Maschine fahren, an der du gerade nicht arbeitest.
 
 ### Reicht die eigene Maschine nicht? GPU mieten
 
@@ -90,17 +92,17 @@ Manchmal reicht der eigene Rechner nicht, sei es, weil die großen MoE-Modelle o
 
 Am naheliegendsten ist **[Hugging Face](https://huggingface.co)** selbst, dieselbe Plattform, von der du das Modell ohnehin lädst. Du deployst es mit wenigen Klicks auf gemieteter Hardware, und die Preise sind moderat: eine Nvidia T4 (16 GB) kostet 0,40 $ pro Stunde, eine L4 (24 GB, genug für ein quantisiertes Qwen) 0,80 $ pro Stunde. Die typische Kostenfalle beim Mieten ist die vergessene Maschine, die im Leerlauf weiter abrechnet. Genau die entschärft Hugging Face: Inference Endpoints skalieren auf null, ohne Last zahlst du nichts. Für den ganz kleinen Einstieg gibt es sogar geteilte GPU-Zeit („ZeroGPU") im PRO-Abo für 9 $ im Monat.
 
-Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[Replicate](https://replicate.com)** rechnet sekundengenau ab und lässt offene Modelle per API laufen, ohne dass du etwas betreiben musst. **[RunPod](https://www.runpod.io)** hat sehr günstige rohe GPUs, bis hinunter zur RTX 4090, plus eine Serverless-Variante. Eingerichtet wird jeder Dienst anders, deshalb hier nur einer im Detail.
+Zwei Alternativen, falls du mehr Kontrolle oder noch weniger Aufwand willst: **[Replicate](https://replicate.com)** rechnet sekundengenau ab und lässt offene Modelle per API laufen, ohne dass du etwas betreiben musst. **[RunPod](https://www.runpod.io)** hat sehr günstige rohe GPUs, bis hinunter zur RTX 4090, plus eine Serverless-Variante. Eingerichtet wird jeder Dienst ein wenig anders. Wünschst du dir eine konkrete Anleitung, wie man einen dieser Anbieter einrichtet? Schreib mir, dann kommt der Artikel gerne als Nächstes.
 
 > **⚠️ Achtung, der Code verlässt wieder die Maschine.** Sobald du in die Cloud gehst, ist das Datenschutz-Argument dieses Artikels dahin: Dein Code und deine Daten laufen wieder auf fremder Hardware. Für eigenen Test- oder Bastelcode ist das kein Problem. Für Kundencode brauchst du einen Anbieter mit EU-Rechenzentrum und Auftragsverarbeitungsvertrag, sonst musst du beim lokalen Betrieb bleiben.
 
-Zwei europäische Anbieter erfüllen das: **[Scaleway](https://www.scaleway.com)** aus Frankreich vermietet eine L4 (24 GB, dieselbe Klasse wie bei Hugging Face) für 0,79 € pro Stunde, stundenweise abgerechnet und mit Auftragsverarbeitungsvertrag. **[OVHcloud](https://www.ovhcloud.com)** ist die naheliegende Alternative mit demselben GPU-Angebot. So bleiben Code und Daten in Europa. Versprechen können sie alle viel, und ich persönlich gebe darauf nicht viel.
+Zwei europäische Anbieter werben mit hohem Datenschutz: **[Scaleway](https://www.scaleway.com)** aus Frankreich vermietet eine L4 (24 GB, dieselbe Klasse wie bei Hugging Face) für 0,79 € pro Stunde, stundenweise abgerechnet und mit Auftragsverarbeitungsvertrag. **[OVHcloud](https://www.ovhcloud.com)** ist eine weitere Alternative mit demselben GPU-Angebot. So bleiben Code und Daten in Europa. Ob ein EU-Standort samt Zertifikat den Schutz wirklich erhöht, sehe ich skeptisch. Beides ist vor allem eine rechtliche Zusage. Dass staatliche Stellen nicht trotzdem mitlesen, schließt es nicht aus. Diese Skepsis gilt generell, wo „Hosting in Europa" allein das Argument ist.
 
 Auf der eigenen Maschine geht es aber meistens doch, mit etwas Geduld. Dafür zeige ich dir jetzt vier Wege, von der nackten Engine bis zum eigenen Code.
 
 ### Weg 1: llama.cpp, der Unterbau
 
-Ganz unten sitzt **llama.cpp**, eine schlanke Inferenz-Engine in C und C++, die GGUF-Modelle direkt ausführt. Sie ist die Grundlage, auf der die bequemeren Werkzeuge der nächsten beiden Wege aufsetzen. Direkt genutzt ist sie am wenigsten komfortabel, dafür am nächsten an der Maschine und ideal für Skripte und Server. Du installierst sie auf dem Mac mit `brew install llama.cpp`, unter Linux und Windows lädst du die fertigen Binaries von der [Releases-Seite](https://github.com/ggml-org/llama.cpp/releases). Ein einziger Befehl lädt das Modell direkt von Hugging Face und startet den Server:
+Ganz unten in unserem Stack: **llama.cpp**, eine schlanke Inferenz-Engine in C und C++, die GGUF-Modelle direkt ausführt. Sie ist die Grundlage, auf der die bequemeren Werkzeuge der nächsten beiden Wege aufsetzen. Direkt genutzt ist sie am wenigsten komfortabel. Du installierst sie auf dem Mac mit `brew install llama.cpp`, unter Linux und Windows lädst du die fertigen Binaries von der [Releases-Seite](https://github.com/ggml-org/llama.cpp/releases). Ein einziger Befehl lädt das Modell direkt von Hugging Face und startet den Server:
 
 ```bash
 llama serve -hf unsloth/Qwen3.8-27B-GGUF:Q4_K_M
@@ -118,13 +120,15 @@ ollama run qwen3.8:27b
 
 Ollama hält im Hintergrund einen Server auf Port `11434` bereit, die OpenAI-kompatible Schnittstelle liegt unter `http://localhost:11434/v1`. Auf Apple Silicon gibt es die Varianten mit dem Kürzel `mlx`, die dort spürbar schneller laufen.
 
+Der Server ist zugleich das, was Ollama von llama.cpp abhebt: Er lädt ein Modell beim ersten Aufruf, hält es einige Minuten warm und entlädt es danach von selbst. Mehrere Modelle kann er gleichzeitig vorhalten, und du wechselst zwischen ihnen mit einem einzigen `ollama run`. llama.cpp lädt dagegen ein Modell pro Serverstart.
+
 ### Weg 3: LM Studio, die grafische Oberfläche
 
 Wer lieber ein Fenster als ein Terminal hat, nimmt **[LM Studio](https://lmstudio.ai)**. Auch LM Studio führt GGUF-Modelle über llama.cpp aus, MLX-Modelle über Apples MLX. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten, beide für Mac, Windows und Linux. Die klassische **LM Studio** bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start, probier es ruhig aus.
 
 ![Der Startbildschirm von LM Studio Bionic: ein leeres Fenster mit einem zentralen Eingabefeld „Ask Bionic to do something" und einer Modellauswahl.](lm-studio-start.png "Der neue Bionic-Startbildschirm, wirklich sehr aufgeräumt.")
 
-Im Modell-Katalog suchst du nach `Qwen3.8 27B`. Und hier hat LM Studio spürbar dazugelernt: Ein Filter blendet auf Wunsch nur die Modelle ein, die auf deine Hardware passen, gemessen am freien Speicher deines Rechners. Damit fällt das alte Ärgernis weg, ein Modell zu ziehen, das dann gar nicht startet.
+Im Modell-Katalog suchst du nach `Qwen3.8 27B`. Und hier hat LM Studio spürbar dazugelernt: Ein Filter blendet auf Wunsch nur die Modelle ein, die auf deine Hardware passen, gemessen am verfügbaren Speicher deines Rechners. Damit fällt das alte Ärgernis weg, ein Modell zu ziehen, das dann gar nicht startet.
 
 Klickst du Qwen3.8-27B an, zeigt die rechte Spalte die Download-Optionen. LM Studio empfiehlt dir eine zu deiner Maschine passende Variante, auf Apple Silicon die MLX-Fassung in 4 Bit mit rund 16 GB. Ein grünes „Full GPU Offload Possible" heißt, dass das ganze Modell auf der Grafikeinheit läuft und damit die volle Geschwindigkeit erreicht. Darunter stehen die Fähigkeiten des Modells: Vision, Tools und Reasoning. Nimm die als *Recommended* markierte Fassung, lade sie herunter, und leg im Chat direkt los. Die Bedienung ist weitgehend selbsterklärend.
 
@@ -134,7 +138,7 @@ Sobald ein anderes Werkzeug das Modell nutzen soll, schaltest du im Entwickler-T
 
 ### Weg 4: Aus dem eigenen Code heraus
 
-Die ersten drei Wege enden bei derselben Schnittstelle, und das ist der eigentliche Trick. Ein OpenAI-kompatibler Endpunkt heißt: Dein Code, der bisher gegen die Cloud von OpenAI oder Anthropic lief, braucht nur eine neue Basis-Adresse. Kein neues SDK, kein Umschreiben.
+Die ersten drei Wege enden bei derselben Schnittstelle, und das ist der Trick. Ein OpenAI-kompatibler Endpunkt heißt: Wer sein Programm mit dem `openai`-Paket gebaut hat, ändert nur die Basis-Adresse, und schon läuft es lokal.
 
 Mit dem offiziellen OpenAI-SDK sieht das so aus:
 
@@ -156,27 +160,33 @@ const antwort = await client.chat.completions.create({
 console.log(antwort.choices[0].message.content);
 ```
 
+Die drei Punkte stehen für den Code selbst. Für eine schnelle Prüfung packst du den kompletten Datei-Inhalt direkt in den Prompt, so geht es am schnellsten.
+
 Der Quellcode des Kunden verlässt dabei nie den Rechner. Und dieselbe Adresse trägst du genauso in agentische Coding-Werkzeuge ein, die Dateien bearbeiten und Befehle ausführen: Der Ablauf, den du von Claude Code kennst, bleibt, nur das Modell dahinter läuft lokal. Nötig ist dafür nur, dass das Modell Werkzeuge aufrufen kann, und das beherrscht Qwen (*function calling*).
+
+Aber wer führt die Werkzeuge aus, das Modell oder der Server? Weder noch, und darin steckt der Kern von function calling. Du meldest dem Modell an, welche Werkzeuge es hat, jedes mit Namen, Beschreibung und erwarteten Parametern, etwa `lies_datei` oder `führe_befehl_aus`. Der Server reicht diese Liste an das Modell weiter. Passt eine Aufgabe dazu, gibt das Modell eine strukturierte Anfrage aus: „Ruf `lies_datei` mit diesem Pfad auf." Es entscheidet also nur, was dran ist. Ausführen musst du selbst, in deinem Code: die Datei lesen, den Befehl starten, das Ergebnis als weitere Nachricht zurückgeben. Dann rechnet das Modell weiter und fragt das nächste Werkzeug an. Diese Schleife ist das Agentische.
+
+Der Server fasst deine Festplatte dabei nie an. Schickst du ihm „scanne das Verzeichnis", passiert von allein nichts. Erst deine Werkzeuge machen daraus echte Aktionen. Und du stopfst auch nicht das ganze Projekt vorab in den Kontext: Das Modell fragt gezielt nach, dein Code liefert Stück für Stück. Genau diese beiden Schichten, das Anmelden und das Ausführen, übernimmt ein Werkzeug wie Claude Code für dich. Das lokale Modell füllt nur die Entscheider-Rolle, der Server ist die Durchreiche. Deshalb genügt es, die Basis-Adresse umzubiegen.
 
 Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das [Vercel AI SDK](https://ai-sdk.dev) gebaut, jedes Modell ist frei einstellbar. Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, läuft ein lokales `gemma3` über Ollama auf dem eigenen Server, diese Klassifizierung verlässt uns also nie. Und was an das eigentliche Chat-Modell geht, wird vorher anonymisiert: Klarnamen, allen voran die der Schüler, ersetzen wir durch Platzhalter, bevor irgendein Modell den Text sieht.
 
-## Zwei Schranken sind gefallen
+## Klassifizierer und System-Prompt sind gefallen
 
 Läuft das Modell auf deiner Maschine, ist die erste Schranke schon Geschichte: Kein Klassifizierer des Anbieters liest mehr mit, und keine deiner Anfragen wird abgewiesen.
 
 Bleibt die zweite, der System-Prompt. Bei einem lokalen Modell gehört er dir. In LM Studio steht dafür ein eigenes Systemfeld, über die API ist es die `system`-Rolle in den `messages`. Dort setzt du deine eigenen Regeln, oder du lässt das Feld leer und arbeitest ganz ohne Vorgaben. Die vorgegebenen Ablehnungsregeln, die ein gehosteter Assistent immer mitführt, fehlen schlicht.
 
-Damit sind zwei der drei Schranken weg, allein dadurch, dass das Modell bei dir läuft. Bleibt die dritte. Sie sitzt tiefer, in den Gewichten selbst.
+Damit sind Klassifizierer und System-Prompt weg, allein dadurch, dass das Modell bei dir läuft. Bleibt das antrainierte Verhalten. Es sitzt tiefer, in den Gewichten selbst.
 
-## Schranke 3: Das antrainierte Verhalten
+## Das antrainierte Verhalten
 
-Diese Schranke steckt im Modell selbst, das Training hat sie dort verankert. Ein modernes Modell ist stark gezähmt, der Fachbegriff dafür ist *Alignment*: meist per RLHF (Reinforcement Learning from Human Feedback) wird es auf Hilfsbereitschaft und Harmlosigkeit ausgerichtet. Diese antrainierte Verweigerung bleibt auch bei lokalem Betrieb erhalten.
+Diese Schranke steckt im Modell selbst, das Training hat sie dort verankert. Ein modernes Modell ist stark gezähmt, der Fachbegriff dafür ist *Alignment*: meist per RLHF (Reinforcement Learning from Human Feedback) wird es auf Hilfsbereitschaft und Harmlosigkeit ausgerichtet. Diese Harmlosigkeit, die im Umkehrschluss eine antrainierte Verweigerung ist, bleibt auch bei lokalem Betrieb erhalten.
 
 Entfernen lässt sie sich nur direkt an den Gewichten. Technisch ist das also ein Eingriff ins Gehirn des Modells. Dafür existieren zahlreiche sogenannte **abliterierte** Varianten. Der Begriff kommt von *ablation*, dem gezielten Entfernen. Die Technik ist gut untersucht: Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Rechnet man diese Richtung aus den Gewichten heraus, ist die Sperre weg. Das Paper spricht dabei von „minimal effect on other capabilities".
 
 Die Abliteration schneidet dabei einen Teil des Alignments heraus, und danach kann das Modell einen völlig anderen Ton anschlagen. Es wird pampig wie ein Reddit-Kommentar, oder es kippt in den Tonfall eines Image-Boards, bis hin zu offenem Rassismus. Das ist kein Defekt: Dieser Stoff steckt längst in den Trainingsdaten, das Alignment hat ihn nur zugedeckt.
 
-Und hier ist die Stelle, an der ich Vorsicht empfehle. Das Paper misst diese minimale Auswirkung nicht an Code- oder Security-Aufgaben. Für die Frage, ob ein abliteriertes Modell deinen Code genauso gut analysiert wie das Original, gibt es keine belastbare Messung. Wer eine solche Variante einsetzt, erhält ein Modell, das nicht die üblichen Qualitätstests überstanden hat.
+Und hier ist die Stelle, an der ich Vorsicht empfehle. Das Paper misst diese minimale Auswirkung nicht an Code- oder Security-Aufgaben. Für die Frage, ob ein abliteriertes Modell deinen Code genauso gut analysiert wie das Original, gibt es keine belastbare Messung. Wer eine solche Variante einsetzt, erhält ein Modell, das so nicht durch die üblichen Qualitätstests gekommen wäre.
 
 Wenn du eine solche Variante trotzdem ausprobieren willst, erkennst du sie auf Hugging Face am Namen. Die Schlüsselwörter sind `abliterated` und `uncensored`, manchmal auch der Name des Werkzeugs, mit dem der Eingriff gemacht wurde, etwa `Heretic`. Eine Suche nach `Qwen3.8 abliterated` liefert Dutzende Treffer. Der mit Abstand fleißigste ist `huihui-ai`, ein Hugging-Face-Account mit weit über hundert abliterierten Modellen. Wer dahintersteckt, bleibt im Dunkeln: Das Profil nennt nur ein X-Konto und die Absicht, „model ablations" zu erforschen, sonst nichts. Die übrigen Repos stammen überwiegend von Einzelpersonen und kleinen Accounts. Und das ist der wunde Punkt: Wer die Gewichte verändert hat und wie sauber, lässt sich von außen kaum prüfen. Du lädst das Gehirn eines Modells, an dem ein Fremder operiert hat.
 
@@ -184,7 +194,7 @@ Der wichtigste Punkt aber steckt in einem Detail des vorigen Artikels, das leich
 
 Die Reihenfolge lautet also: erst selbst hosten, dann messen, ob es reicht. Abliteration ist die Stufe danach und braucht eine echt gute Begründung. Das Modell kann theoretisch sogar gegen dich arbeiten. Also gib ihm nicht zu viele Rechte.
 
-Ein Gegenargument gehört an dieser Stelle dazu, und es kommt von der anderen Seite. Dario Amodei nennt in seiner [Position zu offenen Gewichten](https://www.anthropic.com/news/position-open-weights-models) offene Modelle ohne gefährliche Fähigkeiten ausdrücklich ein öffentliches Gut, benennt im selben Text aber das Risiko für die gefährlichen: Bei offenen Gewichten lassen sich Schutzmechanismen kaum anwenden, die Nutzung kaum überwachen, und einmal veröffentlichte Gewichte kann niemand zurückholen. Das ist exakt die Eigenschaft, die dem Verteidiger hilft. Sie hilft dem Angreifer genauso. Wer lokal arbeitet, übernimmt diese Verantwortung selbst.
+Ein Gegenargument gehört an dieser Stelle dazu, und es kommt von der anderen Seite. Dario Amodei nennt in seiner [Position zu offenen Gewichten](https://www.anthropic.com/news/position-open-weights-models) offene Modelle ohne gefährliche Fähigkeiten ausdrücklich ein öffentliches Gut, benennt im selben Text aber das Risiko für die gefährlichen: Bei offenen Gewichten lassen sich Schutzmechanismen kaum anwenden, die Nutzung kaum überwachen, und einmal veröffentlichte Gewichte kann niemand zurückholen. Das ist exakt die Eigenschaft, die dem Verteidiger hilft. Sie hilft dem Angreifer genauso. Wer lokal arbeitet, muss noch mehr Verantwortung übernehmen.
 
 ## Der rechtliche Rahmen
 
@@ -202,11 +212,11 @@ Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und 
 
 ## Fazit
 
-Ein offenes Modell auf der eigenen Maschine ist in einer Stunde eingerichtet und kostet dich außer Speicherplatz nichts. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-09-the-asymmetry-problem): Es verweigert nicht, und dein Code und deine Daten bleiben, wo sie hingehören. Zwei der drei Schranken fallen dabei von selbst, der Klassifizierer und der System-Prompt. Die dritte, das antrainierte Verhalten, verlangt Abliteration und sollte die Ausnahme bleiben. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
+Ein offenes Modell auf der eigenen Maschine ist leicht eingerichtet und kostet dich außer Speicherplatz nichts. Allerdings brauchst du dafür einen leistungsfähigen Computer. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-09-the-asymmetry-problem): Es verweigert nicht, und dein Code und deine Daten bleiben, wo sie hingehören. Klassifizierer und System-Prompt fallen dabei von selbst. Das antrainierte Verhalten verlangt Abliteration und sollte die Ausnahme bleiben. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
 
 Das Werkzeug allein macht aber noch keinen guten Red-Teamer, also jemanden, der die eigenen Systeme angreift, um ihre Schwächen zu finden. Ein Modell, das nichts verweigert, kann auch mehr anrichten, sobald es Werkzeuge in die Hand bekommt. In welchem Rahmen so ein Agent laufen darf, und warum die naheliegende Antwort „läuft doch in einer VM" nur die halbe Miete ist, steht im [nächsten Teil](https://agentic.schule/blog/2026-09-strix-pentest-agent) am Beispiel eines Pentest-Agenten.
 
-**So könntest du einsteigen: Nimm dir ein Repository, bei dem dir ein gehosteter Assistent zuletzt in die Quere gekommen ist, und lass dieselbe Frage lokal laufen.** Schnell wird das nicht, aber diesmal entscheidest du, ob eine Antwort kommt.
+**So könntest du einsteigen: Nimm dir ein Repository, bei dem dir ein gehosteter Assistent zuletzt in die Quere gekommen ist, und lass dieselbe Frage lokal laufen.** Im Vergleich zu gehosteten Anbietern wirst du Geduld benötigen, aber diesmal entscheidest du, ob eine Antwort kommt.
 
 Wie ist dein lokales Setup? Ich sammle die Aufbauten und schreibe gerne darüber.
 
