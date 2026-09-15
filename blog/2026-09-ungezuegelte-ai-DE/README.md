@@ -19,7 +19,7 @@ header: header.jpg
 
 Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) habe ich folgendes Dilemma aufgezeigt: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell und kennt keine Grenzen. Der Verteidiger dagegen sitzt bei einem Cloud-Anbieter fest, dessen Modell bei heiklen Sicherheitsthemen abblockt. Die Konsequenz daraus ist einfach: Der Verteidiger muss sich dieselbe Freiheit zurückholen, ein offenes Modell auf der eigenen Maschine, das nicht abblockt und weder Code noch Daten aus der Hand gibt.
 
-**Genau das bauen wir jetzt. Ein gehosteter Assistent stellt gleich mehrere Schranken zwischen dich und die Antwort: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Wir räumen sie alle aus dem Weg und betrachten danach die rechtlichen Grenzen.**
+**Das bauen wir jetzt. Ein gehosteter Assistent stellt gleich mehrere Schranken zwischen dich und die Antwort: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Wir räumen sie alle aus dem Weg und betrachten danach die rechtlichen Grenzen.**
 
 ## Inhalt
 
@@ -46,14 +46,14 @@ Offene Modelle für lokale Sicherheitsarbeit gibt es also reichlich. Hier meine 
 | Modell | Lizenz | Bauart | Kontext | Rolle |
 | --- | --- | --- | --- | --- |
 | Qwen3.8-27B | Apache 2.0 | dicht, ~28 Mrd. Parameter | 262 k | läuft auf normaler Hardware |
-| GLM-5.2 | MIT | MoE, 256 Experten | ~1 Mio. | bei realer Sicherheitsforensik erprobt |
+| GLM-5.2 | MIT | Mixture-of-Experts (MoE), 256 Experten | ~1 Mio. | bei realer Sicherheitsforensik erprobt |
 | DeepSeek-V4-Flash | MIT | MoE, 256 Experten | ~1 Mio. | sehr hohe Downloadzahlen, stark bei Code |
 
 Die Lizenz ist bei allen dreien großzügig, das ist nicht der Knackpunkt. Entscheidend ist die Bauart, und dafür lohnen sich zwei Begriffe, die du auf Hugging Face ständig liest.
 
 Ein **dichtes** Modell (engl. *dense*) rechnet für jedes Token mit allen seinen Parametern. Sein Speicherbedarf ist damit direkt seine Größe, gut abschätzbar. Ein **Mixture-of-Experts**-Modell (kurz *MoE*) ist dagegen in viele Experten aufgeteilt, von denen pro Token nur wenige rechnen. Das macht es schnell, hat aber einen Haken: Im Speicher liegen müssen trotzdem alle Experten gleichzeitig.
 
-Genau daran scheitert der lokale Betrieb der beiden großen Modelle. GLM-5.2 und DeepSeek-V4-Flash haben je 256 Experten, das sind die Modelle, die Profis wie Hugging Face auf dicker eigener Infrastruktur fahren. Qwen3.8-27B ist dicht und mit rund 28 Milliarden Parametern das einzige der drei, das quantisiert noch auf einer normalen Maschine läuft. Deshalb geht es im Folgenden um Qwen.
+Daran scheitert der lokale Betrieb der beiden großen Modelle. GLM-5.2 und DeepSeek-V4-Flash haben je 256 Experten, das sind die Modelle, die Profis wie Hugging Face auf dicker eigener Infrastruktur fahren. Qwen3.8-27B ist dicht und mit rund 28 Milliarden Parametern das einzige der drei, das quantisiert noch auf einer normalen Maschine läuft. Deshalb geht es im Folgenden um Qwen.
 
 Ein Wort zur Erwartung, falls du von Claude Code kommst: Ein 27-Milliarden-Modell auf dem eigenen Laptop ist nicht das Spitzenmodell aus der Cloud, das du gewohnt bist. Es ist kleiner, und auf normaler Hardware antwortet es langsamer. Für eine fokussierte Aufgabe reicht das trotzdem, vor allem für genau die, die dir ein gehosteter Assistent gerade verweigert.
 
@@ -80,7 +80,7 @@ In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisieru
 
 Beide Spalten der Tabelle meinen den schnellen Speicher, in den das Modell passen muss, und dafür gibt es zwei Wege. Der eine ist eine dedizierte Grafikkarte mit genug *VRAM*, dem eigenen Videospeicher der Karte. Der andere ist ein Mac mit Apple Silicon, dessen *Unified Memory* sich Prozessor und Grafikeinheit teilen. Es läuft also auf eins von beidem hinaus: eine gute Grafikkarte oder ein gut ausgestatteter Mac.
 
-Auf Apple Silicon läuft die *MLX*-Fassung (Apples ML-Framework); sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate Projektor-Datei von knapp einem Gigabyte.
+Auf Apple Silicon läuft die *MLX*-Fassung (Apples ML-Framework); sie liegt in 4 Bit bei etwa 16 GB und in 8 Bit bei etwa 30 GB. Wenn du die Bildfähigkeit nutzen willst, brauchst du zusätzlich die separate *Projektor*-Datei von knapp einem Gigabyte, die die Bildeingabe an das Sprachmodell koppelt.
 
 Für den Einstieg bietet sich also `Q4_K_M` auf einer Maschine mit 32 GB an. Das ist schnell genug für interaktives Arbeiten, und diese Stufe gilt bei Code-Aufgaben allgemein als guter Kompromiss zwischen Größe und Qualität.
 
@@ -88,7 +88,7 @@ Für den Einstieg bietet sich also `Q4_K_M` auf einer Maschine mit 32 GB an. Das
 
 ### Reicht die eigene Maschine nicht? GPU mieten
 
-Manchmal reicht der eigene Rechner nicht, sei es, weil die großen MoE-Modelle ohnehin nicht hineinpassen, oder weil du deinen Arbeitsrechner nicht lahmlegen willst. Und der Rechner ist wirklich, wirklich lahmgelegt. Du musst alles andere deaktivieren, nicht mal eben Chrome und Photoshop offen halten. Auf einmal musst du mit dem Speicher knausern. Das ist sehr frustrierend. Der Ausweg: Du mietest dir für den einen Lauf eine GPU und schaltest sie danach wieder ab.
+Manchmal reicht der eigene Rechner nicht, sei es, weil die großen MoE-Modelle ohnehin nicht hineinpassen, oder weil du deinen Arbeitsrechner nicht lahmlegen willst. Und lahmgelegt ist er dann wirklich: Alles andere muss zu, für Chrome und Photoshop nebenher bleibt kein Speicher. Der Ausweg: Du mietest dir für den einen Lauf eine GPU und schaltest sie danach wieder ab.
 
 Am naheliegendsten ist **[Hugging Face](https://huggingface.co)** selbst, dieselbe Plattform, von der du das Modell ohnehin lädst. Du deployst es mit wenigen Klicks auf gemieteter Hardware, und die Preise sind moderat: eine Nvidia T4 (16 GB) kostet 0,40 $ pro Stunde, eine L4 (24 GB, genug für ein quantisiertes Qwen) 0,80 $ pro Stunde. Die typische Kostenfalle beim Mieten ist die vergessene Maschine, die im Leerlauf weiter abrechnet. Genau die entschärft Hugging Face: Inference Endpoints skalieren auf null, ohne Last zahlst du nichts. Für den ganz kleinen Einstieg gibt es sogar geteilte GPU-Zeit („ZeroGPU") im PRO-Abo für 9 $ im Monat.
 
@@ -126,7 +126,7 @@ Der Server ist zugleich das, was Ollama von llama.cpp abhebt: Er lädt ein Model
 
 Wer lieber ein Fenster als ein Terminal hat, nimmt **[LM Studio](https://lmstudio.ai)**. Auch LM Studio führt GGUF-Modelle über llama.cpp aus, MLX-Modelle über Apples MLX. Auf der [Download-Seite](https://lmstudio.ai/download) stehen zwei Varianten, beide für Mac, Windows und Linux. Die klassische **LM Studio** bündelt Chat, Modell-Download und einen lokalen Server. Daneben gibt es das neue **LM Studio Bionic**, eine auf Agenten und offene Modelle zugeschnittene Ausgabe mit deutlich aufgeräumterer Oberfläche. Für den Einstieg ist die schlankere Oberfläche ein Vorteil, weniger Knöpfe und ein schnellerer Start, probier es ruhig aus.
 
-![Der Startbildschirm von LM Studio Bionic: ein leeres Fenster mit einem zentralen Eingabefeld „Ask Bionic to do something" und einer Modellauswahl.](lm-studio-start.png "Der neue Bionic-Startbildschirm, wirklich sehr aufgeräumt.")
+![Der Startbildschirm von LM Studio Bionic: ein leeres Fenster mit einem zentralen Eingabefeld „Ask Bionic to do something" und einer Modellauswahl.](lm-studio-start.png "Der neue Bionic-Startbildschirm, betont schlicht.")
 
 Im Modell-Katalog suchst du nach `Qwen3.8 27B`. Und hier hat LM Studio spürbar dazugelernt: Ein Filter blendet auf Wunsch nur die Modelle ein, die auf deine Hardware passen, gemessen am verfügbaren Speicher deines Rechners. Damit fällt das alte Ärgernis weg, ein Modell zu ziehen, das dann gar nicht startet.
 
@@ -168,7 +168,7 @@ Aber wer führt die Werkzeuge aus, das Modell oder der Server? Weder noch, und d
 
 Der Server fasst deine Festplatte dabei nie an. Schickst du ihm „scanne das Verzeichnis", passiert von allein nichts. Erst deine Werkzeuge machen daraus echte Aktionen. Und du stopfst auch nicht das ganze Projekt vorab in den Kontext: Das Modell fragt gezielt nach, dein Code liefert Stück für Stück. Genau diese beiden Schichten, das Anmelden und das Ausführen, übernimmt ein Werkzeug wie Claude Code für dich. Das lokale Modell füllt nur die Entscheider-Rolle, der Server ist die Durchreiche. Deshalb genügt es, die Basis-Adresse umzubiegen.
 
-Genau so arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das [Vercel AI SDK](https://ai-sdk.dev) gebaut, jedes Modell ist frei einstellbar. Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, läuft ein lokales `gemma3` über Ollama auf dem eigenen Server, diese Klassifizierung verlässt uns also nie. Und was an das eigentliche Chat-Modell geht, wird vorher anonymisiert: Klarnamen, allen voran die der Schüler, ersetzen wir durch Platzhalter, bevor irgendein Modell den Text sieht.
+So arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das [Vercel AI SDK](https://ai-sdk.dev) gebaut, jedes Modell ist frei einstellbar. Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, läuft ein lokales `gemma3` über Ollama auf dem eigenen Server, diese Klassifizierung verlässt uns also nie. Und was an das eigentliche Chat-Modell geht, wird vorher anonymisiert: Klarnamen, allen voran die der Schüler, ersetzen wir durch Platzhalter, bevor irgendein Modell den Text sieht.
 
 ## Klassifizierer und System-Prompt sind gefallen
 
@@ -208,7 +208,7 @@ Ein lokales Modell macht aus einem unzulässigen Penetrationstest (Pen-Test) kei
 
 > **⚠️ Achtung:** Wer Anthropics [Claude Mythos 5.1](https://www.anthropic.com/claude/mythos) nutzt, muss standardmäßig eine 30-tägige Datenaufbewahrung zur Sicherheitsüberwachung akzeptieren. Als Schutzmaßnahme gegen Missbrauch ist das nachvollziehbar.
 
-Genau hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und er löst die Frage, wo der Code des Kunden landet — nämlich nirgendwo. Nichts verlässt deinen Computer.<!-- STIL: Gedankenstrich hier bewusst gesetzt und freigegeben, nicht automatisch entfernen. -->
+Hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und er löst die Frage, wo der Code des Kunden landet — nämlich nirgendwo. Nichts verlässt deinen Computer.<!-- STIL: Gedankenstrich hier bewusst gesetzt und freigegeben, nicht automatisch entfernen. -->
 
 ## Fazit
 
