@@ -27,7 +27,7 @@ Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) 
 
 ## Was „unzensiert" bedeutet
 
-„Unzensiert" klingt nach einem einzelnen Schalter, ist aber vielschichtig. Manche Schranken greifen schon, bevor das Gespräch beginnt: Ob du überhaupt Zugang bekommst, hängt zum Beispiel schon von deinem Herkunftsland ab. Die großen Anbieter veröffentlichen dafür Länderlisten. Und die stärksten Cyber-Fähigkeiten geben sie nur nach einer Bewerbung frei, wie beim [Project Glasswing](https://www.anthropic.com/glasswing), das wir bereits im ersten Teil kurz angerissen haben. Beides fällt lokal von selbst weg. Bleiben die Schranken im Gespräch selbst, von außen nach innen.
+„Unzensiert" klingt nach einem einzelnen Schalter, ist aber vielschichtig. Manche Schranken greifen schon, bevor das Gespräch beginnt: Ob du überhaupt Zugang bekommst, hängt zum Beispiel schon von deinem Herkunftsland ab. Die großen Anbieter veröffentlichen dafür [Länderlisten](https://www.anthropic.com/supported-countries). Und die stärksten Cyber-Fähigkeiten geben sie nur nach einer Bewerbung frei, wie beim [Project Glasswing](https://www.anthropic.com/glasswing), das wir bereits im ersten Teil kurz angerissen haben. Beides fällt lokal von selbst weg. Bleiben die Schranken im Gespräch selbst, von außen nach innen.
 
 **Der Klassifizierer.** Ein separates Modell liest mit, prüft deine Eingabe und die Antwort, und blockiert bei Verdacht. Das ist der `[cyber]`-Block, an dem ich im ersten Teil zeitweise scheiterte. Ein lokal betriebenes Modell hat so etwas grundsätzlich nicht, niemand liest mit. Umgekehrt kannst du dir freiwillig selbst einen vorschalten, wenn du einen brauchst. Genau das tun wir bei unserer Eigenentwicklung learnly.school, dazu unten mehr.
 
@@ -61,13 +61,13 @@ Ein Wort zur Erwartung, falls du von Claude Code kommst: Ein 27-Milliarden-Model
 
 Qwen3.8 ist die aktuelle Modellfamilie von Alibaba. Es zeigt in vielen Disziplinen ordentliche Ergebnisse: agentisches Arbeiten, Recherche und Programmierung. All das kann es. Ich empfehle es für den Einstieg. Bevor du es herunterlädst, fallen ein paar Entscheidungen an: welche Variante und welche Quantisierung. Danach zeige ich dir, wie du das Modell tatsächlich startest.
 
-### Welche Variante du nehmen willst
+### Welche Variante nehmen?
 
 Das dichte Modell **Qwen3.8-27B** steht unter **Apache 2.0**. Das ist die Variante für den Berateralltag, weil diese Lizenz keine Umsatzschwellen und keine Nutzungsvorbehalte kennt. Es hat rund 27,8 Milliarden Parameter, ein natives Kontextfenster von 262.144 Token, und es ist ein Vision-Modell, kann also auch Screenshots lesen. Das Nachdenken ist standardmäßig aktiv. Wie tief das Modell nachdenkt, steuerst du beim Aufruf über den Parameter `reasoning_effort` mit den Stufen `low`, `medium` und `xhigh`. Mehr Tiefe heißt mehr Denk-Token und damit mehr Rechenzeit. Das ist dasselbe Prinzip wie das erweiterte Nachdenken, das du aus Claude Code kennst.
 
 Daneben gibt es das große Mixture-of-Experts-Modell mit rund 2,4 Billionen Parametern. Es steht unter einer eigenen Lizenz mit einer Umsatzklausel. Die Kurzfassung: Intern darfst du es frei nutzen. Eine separate Lizenz von Qwen brauchst du erst, wenn du damit einen *Inferenz*-Dienst betreibst, also das Modell als Dienst für andere laufen lässt, oder einen eigenständigen KI-Arbeitsassistenten baust, und dabei über 50 Millionen US-Dollar Jahresumsatz machst. Also alles eher Probleme, die ich gerne hätte. Für die Arbeit am eigenen Code auf eigener Hardware ist die 27B-Variante ohnehin die praktikable Wahl.
 
-### Welche Quantisierung auf welche Maschine passt
+### Welche Quantisierung passt auf welche Maschine?
 
 In voller Präzision belegt das Modell rund 56 GB Speicher. Erst die Quantisierung macht es auf normaler Hardware brauchbar: Sie rundet die Modellgewichte von hoher auf niedrigere Präzision, etwa von 16 auf 4 Bit pro Wert. Das senkt den Speicherbedarf drastisch und kostet nur wenig Qualität. Verteilt werden die quantisierten Modelle als **GGUF**-Dateien. Das ist ein binäres Dateiformat, das die Gewichte und alle Metadaten zum Laden in einer Datei bündelt, gelesen von llama.cpp und den darauf aufbauenden Werkzeugen. Die verbreiteten Stufen:
 

@@ -18,7 +18,7 @@ language: de
 header: header.jpg
 ---
 
-In der IT-Sicherheit brennt es, und ein Hardware-Hersteller hat es diesen Sommer auf den Punkt gebracht, nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
+In der IT-Sicherheit brennt es, und ein Hardware-Hersteller hat es diesen Sommer [auf den Punkt gebracht](https://blog.coinkite.com/entropy-technical-backgrounder/), nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
 **Wer sich nicht an die Regeln hält, war schon immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Sicherheitssperren (*Guardrails*) und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar.**
 
@@ -93,7 +93,7 @@ Was der Verteidiger bräuchte, ist eine starke KI, die es mit den Angreifern auf
 
 ## Die Privatparty: Du bist nicht eingeladen
 
-Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweisen muss man es trotzdem. Über den Befehl `/security-review` habe ich schon mehrfach geschrieben. Die Ergebnisse sind ansehnlich, für die Oberliga reichen sie aber nicht. An vier Türen bleibst du draußen.
+Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweisen muss man es trotzdem. Über den Befehl [`/security-review`](https://agentic.schule/blog/2026-09-graph-engineering) habe ich schon mehrfach geschrieben. Die Ergebnisse sind ansehnlich, für die Oberliga reichen sie aber nicht. An vier Türen bleibst du draußen.
 
 **Erstens, die Verteidigung.** Sobald echte Angriffsdaten ins Spiel kommen, verweigert das gehostete Modell. Den Beweis hast du oben gesehen: Hugging Face musste auf ein lokales Modell ausweichen, weil die gehosteten die Forensik blockierten. Der Grund, in Hugging Faces Worten: der Guardrail „cannot distinguish an incident responder from an attacker".
 
