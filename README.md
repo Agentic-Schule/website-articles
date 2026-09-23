@@ -45,6 +45,9 @@ Ergebnis ist `header.jpg` (2400×1350). Voraussetzung: einmalig `cd tools && npm
 (holt `playwright-core`) und ein installierter Google Chrome. Achtung: Der Build kopiert Artikel-Ordner komplett nach `dist/`,
 die Quelldateien werden also mit veröffentlicht (harmlos, aber gut zu wissen).
 
+Markenfarben, Logo, eine Kopiervorlage und die Schritt-für-Schritt-Anleitung für ein neues Banner
+stehen in [`docs/banner.md`](docs/banner.md).
+
 ## Lokal bauen
 
 ```bash
