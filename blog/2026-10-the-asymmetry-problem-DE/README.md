@@ -129,7 +129,7 @@ Als Entwickler bin ich dafür verantwortlich, meine Software sicher zu halten. W
 
 Der Angreifer fragt niemanden um Erlaubnis. Er arbeitet lokal, ohne Schranken, begrenzt nur durch seine Rechenkapazität. Bleibe ich als Verteidiger an der Cloud-Schranke stehen, liefere ich schwächere Arbeit als er, und das ausgerechnet bei der Sache, für die ich geradestehe. Die Fähigkeit, die ich brauche, gibt es längst. Sie läuft auf offenen Modellen und zur Not halt auf meiner eigenen Maschine. Bisher lag der Vorteil bei dem, der sich an keine Regel hält. Genau dieses Asymmetry Problem sollten wir gemeinsam wieder drehen!
 
-Darum geht es im nächsten Teil: um [ungezügelte KI](https://agentic.schule/blog/2026-10-ungezuegelte-ai) in verantwortungsvoller Hand. Wie du ein offenes Modell lokal aufsetzt, was „unzensiert" technisch wirklich bedeutet, und wo die rechtlichen Grenzen verlaufen. Wir tragen als Entwickler eine hohe Verantwortung. Ich will ihr nachkommen.
+Darum geht es im nächsten Teil: um [ungezügelte KI](https://agentic.schule/blog/2026-10-unleashed-ai) in verantwortungsvoller Hand. Wie du ein offenes Modell lokal aufsetzt, was „unzensiert" technisch wirklich bedeutet, und wo die rechtlichen Grenzen verlaufen. Wir tragen als Entwickler eine hohe Verantwortung. Ich will ihr nachkommen.
 
 Mission: Red Team. 🥷 Das wird ein Spaß!
 
