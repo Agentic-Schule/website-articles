@@ -60,3 +60,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 ## Zweisprachigkeit
 
 Viele Artikel liegen in zwei Ordnern (`-DE`/`-EN`). Beide Fassungen bleiben strukturgleich (gleiche Überschriften, gleiche Reihenfolge). Zitate aus englischen Quellen bleiben in beiden Fassungen zeichengenau im Original.
+
+## Banner (Artikel-Header)
+
+Jeder Artikel bekommt ein Header-Bild im agentic.schule-Look: tiefes Lila-Schwarz mit einem Verlauf von Lila nach Magenta, Logo oben links, rechts eine schlichte artikel-eigene Illustration. Die verbindlichen Markenfarben, das Logo, eine Kopiervorlage und die Render-Pipeline stehen in **[`docs/banner.md`](docs/banner.md)**. Ein neues Banner immer nach dieser Vorgabe bauen.
