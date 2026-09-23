@@ -283,7 +283,7 @@ Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren
 
 Wo die eingebauten Features enden, nämlich an der Repo-Grenze, fängt ein selbstgebauter Init-Command an: ein Kommando, zwei Repos, ein Branch-Name, zwei Äste, Abhängigkeiten und Lizenz inklusive. Das Ganze ist eine simple Markdown-Datei. Aber sie verwandelt den lästigsten Teil des Multi-Repo-Alltags in eine einzige Frage: „Wie heißt das Feature?"
 
-Ehrlich bleiben will ich auch diesmal:
+Ein paar offene Punkte gehören auch diesmal dazu:
 
 - **Parallelität ist kein Selbstzweck.** Drei Agenten erzeugen dreimal so viele Diffs, und irgendwer (ich) muss sie alle lesen. Dazu vertragen sich nicht alle Features: Manche schließen sich gegenseitig aus, andere müssen in einer festen Reihenfolge einfließen. Worktrees halten die Stände sauber auseinander, aber was wann gemergt wird, bleibt Kopfarbeit. Der Flaschenhals ist das Review.
 - **Der Mental Load bleibt.** Von Ast zu Ast springen ist im Kopf anstrengend. Mehr als zwei, drei Äste gleichzeitig gönne ich mir deshalb selten. Die Technik gäbe locker mehr her. Mein Kopf kommt beim Review vorher an seine Grenze.

@@ -27,7 +27,7 @@ Agentic Coding funktioniert anders als ein Chatfenster: Man gibt die Richtung vo
 
 **Ich habe deshalb einen Mac mini zur „Bodenstation" umgebaut: eine immer laufende Maschine, auf der meine Agenten weiterarbeiten, während ich vom MacBook, aus dem Browser oder sogar vom Handy aus zusehe und eingreife.**
 
-Ehrlich gesagt stand die Kiste zunächst aus einem ganz anderen Grund im Regal: ein aktueller Mac mini M4 mit 32 GB, den ich mir eigentlich für den **Clawdbot**-Hype (heute *[OpenClaw](https://openclaw.ai)*) geholt hatte, den eigenen Agenten per **[Signal](https://signal.org)** vom Handy steuern, das hatte was. Cool war es genau so lange, wie diese Fernsteuerung der eigentliche Reiz war. Seit [Claude Code](https://claude.com/claude-code) das mit **`/remote-control`** von Haus aus kann, hat der Clawdbot für mich viel von seinem Charme verloren, und der mini langweilte sich ohnehin ein wenig (dazu vielleicht ein andermal mehr). Also bekam er eine neue, dauerhafte Aufgabe.
+Die Kiste stand zunächst aus einem ganz anderen Grund im Regal: ein aktueller Mac mini M4 mit 32 GB, den ich mir eigentlich für den **Clawdbot**-Hype (heute *[OpenClaw](https://openclaw.ai)*) geholt hatte, den eigenen Agenten per **[Signal](https://signal.org)** vom Handy steuern, das hatte was. Cool war es genau so lange, wie diese Fernsteuerung der eigentliche Reiz war. Seit [Claude Code](https://claude.com/claude-code) das mit **`/remote-control`** von Haus aus kann, hat der Clawdbot für mich viel von seinem Charme verloren, und der mini langweilte sich ohnehin ein wenig (dazu vielleicht ein andermal mehr). Also bekam er eine neue, dauerhafte Aufgabe.
 
 Dieser Artikel zeigt die Idee, die Bausteine und, in How-to-Kästen, wie man sie selbst nachbaut.
 
@@ -46,7 +46,7 @@ Auf dem Laptop passiert aber Folgendes:
 - Ich klappe ihn zu → der Prozess schläft ein, der Agent friert mitten im Lauf ein.
 - Ich will abends vom Sofa aus nur *kurz* nachsehen, wie weit er ist, und müsste den Laptop wieder hochfahren.
 
-Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt einfach an, auch wenn der Deckel zugeklappt ist und keine Stromversorgung angeschlossen ist. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß, und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang durchheizt, ist keine gute Dauerlösung.
+Das erste Problem lässt sich mit `caffeinate -s` umgehen: Der Laptop bleibt am Netz einfach an, auch wenn der Deckel zugeklappt ist. Genau so habe ich im Winter und Frühling gearbeitet. Bei sommerlichen Temperaturen wird die Kiste dabei aber schnell viel zu heiß, und ich möchte sie ja noch eine ganze Weile behalten. Ein Laptop, der monatelang durchheizt, ist keine gute Dauerlösung.
 
 Dazu kommt ein Muster, das ich an mir selbst beobachte: Meine besten Ideen habe ich selten am Schreibtisch, sondern unterwegs, beim Gassigehen zum Beispiel. Genau dann will ich dem Agenten kurz etwas zurufen oder nachsehen können, wie er vorankommt, ohne erst nach Hause an den Laptop zurückzukehren.
 
@@ -76,7 +76,7 @@ Warum ausgerechnet ein Mac mini? Für diese Rolle ist er fast perfekt: Apple Sil
 
 ## Sessions, die Verbindungsabbrüche überleben
 
-Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen. Ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **[tmux](https://github.com/tmux/tmux)**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux, und alles darin, einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen. Ehrlich gesagt ist **tmux der Gamechanger** in diesem Setup, erst dadurch überstehen die Agentenläufe alles, was zwischen mir und dem mini passieren kann.
+Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen. Ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **[tmux](https://github.com/tmux/tmux)**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux, und alles darin, einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen. **tmux ist der zentrale Baustein** in diesem Setup, erst dadurch überstehen die Agentenläufe alles, was zwischen mir und dem mini passieren kann.
 
 Zwei Dinge machen das komfortabel:
 
@@ -174,7 +174,7 @@ Drei Bausteine:
 
 Diesen Playwright-MCP so einzurichten, dass er unauffällig bleibt, Updates übersteht und nicht in die groben Bot-Filter gerät, ist ein Thema für sich. Den ganzen Weg beschreibe ich im eigenen Artikel:
 
-<a href="https://agentic.schule/blog/2026-09-agent-recherche-playwright-mcp"><img src="../2026-09-agent-recherche-playwright-mcp-DE/header.jpg" alt="Dein Agent wird bei der Recherche ausgesperrt? Gib ihm einen eigenen, unauffälligen Playwright-MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
+<a href="https://agentic.schule/blog/2026-09-agent-research-playwright-mcp"><img src="../2026-09-agent-research-playwright-mcp-DE/header.jpg" alt="Dein Agent wird bei der Recherche ausgesperrt? Gib ihm einen eigenen, unauffälligen Playwright-MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
 
 ## Die Arbeit des Agenten im Browser ansehen
 
@@ -255,7 +255,7 @@ Ein Nebeneffekt, den ich unterschätzt hatte: Ein **dedizierter Rechner ohne GUI
 
 Und die Sicherheit ist fast nebenbei gestiegen: Auf der Bodenstation läuft nur, was für die Arbeit nötig ist, sonst bin ich dort nirgends eingeloggt, nicht einmal mein üblicher Passwort-Manager ist installiert. Damit ist der ganze Mac mini im Grunde eine **Sandbox**: Was ein Agent dort anrichten könnte, bleibt eng begrenzt.
 
-Ehrlich bleiben will ich auch:
+Die Grenzen des Setups:
 
 - **Es braucht Pflege.** Headless-Betrieb, FileVault-Remote-Unlock, Autostart-Dienste, das ist einmal Einrichtungsaufwand und gelegentlich Debugging.
 - **Sicherheit ist Pflicht, kein Bonus.** Zugriff ausschließlich übers VPN, Key-Auth, FileVault an. Ein always-on Rechner ist nur so vertrauenswürdig wie sein Zugang.

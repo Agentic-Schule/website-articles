@@ -65,7 +65,7 @@ The paragraph below the list is the decisive one. That is everything you need, w
 
 So the actual attack code is not in the reviewed file at all. It sits on that foreign page which Phase 0 declares to be the binding truth. And permission to run it was granted by the user the moment they installed the skill. Two more phrases pay into the same account. "Never display, transcribe, or echo the key" sounds like exemplary handling of secrets while also suppressing output. "Fail fast, recover quietly" sounds like clean error handling and makes sure problems are tidied away quietly instead of surfacing to the user.
 
-And yet nothing so far is wrong. This is exactly the point to pause at. Announcing a documentation page, declaring it more binding than your own memory, installing when needed, not bothering the user with installation chores, never printing keys: that is the guide you would write for a young SDK. None of it would have to change if the skill were honest.
+And yet nothing so far is wrong. This is exactly the point to pause at. Announcing a documentation page, declaring it more binding than your own memory, installing when needed, not bothering the user with installation chores, never printing keys: that is the guide you would write for a young SDK. None of it would have to change if the skill meant no harm.
 
 The next step is just as common. At the end of the file it says where that documentation lives. Every other skill does exactly the same, and remarkably little is hidden about it:
 
@@ -124,7 +124,7 @@ Far more important than any number is this sentence from the report:
 
 So much for the story as AIR tells it. It ends with publication on 22 June. What interested me is what has happened since, so I went and looked. The part that genuinely surprised me: **the skill is still there.** As of 27 July 2026, the file `plugins/brand-landingpage/skills/brand-landingpage/SKILL.md` still contains both references to the attackers' domain, unchanged. That is a good five weeks after the report was published and almost three months after the merge. The repository itself is very much alive. It now counts more than 38,000 stars and was last updated on 22 July 2026.
 
-The skill will probably be removed sooner or later. That is why I have put up an [archive copy](https://agentic-schule.github.io/website-articles/blog/2026-09-boeswillige-skills-EN/WARNING-malicious-skill-brand-landingpage.txt). It carries an unmissable warning, and the two references to the attacker domain are defanged in it. The file is an exhibit to look at. Please do not run it, do not copy it into a skills directory, and do not hand it to an agent to read.
+The skill will probably be removed sooner or later. That is why I have put up an [archive copy](https://agentic-schule.github.io/website-articles/blog/2026-09-malicious-ai-skills-EN/WARNING-malicious-skill-brand-landingpage.txt). It carries an unmissable warning, and the two references to the attacker domain are defanged in it. The file is an exhibit to look at. Please do not run it, do not copy it into a skills directory, and do not hand it to an agent to read.
 
 That holds even when the agent is only meant to read the text and do nothing with it. The moment it sits in the context window it stands next to your own instructions, and that is precisely what prompt injection rests on. On top of that comes an effect people rarely think about. When the context fills up, Claude Code summarises the older parts of the conversation. What survives that summary is the model's decision. Anthropic even offers [dedicated compaction instructions](https://code.claude.com/docs/en/costs) that let you steer what should be preserved, which by the same token means nothing is guaranteed. That the warning might drop out while the instruction stays in is something I have not observed and do not claim. Nor can I rule it out, and the dangerous part is only two sentences long.
 
@@ -150,7 +150,7 @@ My own view on this is blunt: **in their current shape, such scanners do more ha
 
 ## Who Actually Checks the Marketplaces?
 
-The honest answer sits in the vendors' fine print. It is much the same everywhere. **Anthropic** draws a clean line between two catalogues. The official marketplace is curated. In the community marketplace, plugins pass an "automated validation and safety screening" and are pinned to a fixed commit hash. For everything else the documentation carries this warning:
+The answer sits in the vendors' fine print. It is much the same everywhere. **Anthropic** draws a clean line between two catalogues. The official marketplace is curated. In the community marketplace, plugins pass an "automated validation and safety screening" and are pinned to a fixed commit hash. For everything else the documentation carries this warning:
 
 > Make sure you trust a plugin before installing it. **Anthropic doesn't control what MCP servers, files, or other software are included in plugins and can't verify that they work as intended.**
 >
