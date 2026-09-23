@@ -8,9 +8,9 @@
   body {
     font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
     background:
-      radial-gradient(60% 55% at 74% 42%, rgba(217,119,87,0.30), transparent 60%),
-      radial-gradient(50% 60% at 22% 95%, rgba(126,96,196,0.12), transparent 60%),
-      linear-gradient(155deg,#221a16 0%,#160f0c 58%,#0d0908 100%);
+      radial-gradient(60% 55% at 74% 42%, rgba(98,38,176,0.34), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(233,4,100,0.16), transparent 60%),
+      linear-gradient(155deg,#241a33 0%,#1b1525 58%,#0d0913 100%);
     color:#fff; position:relative;
   }
   /* dezenter Punkt-Grid (gleiche DNA wie die Geschwister-Header) */
@@ -19,25 +19,25 @@
     background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
   .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
   .left { width:600px; }
-  .kicker { font-size:20px; letter-spacing:6px; font-weight:700; color:#e0916f; text-transform:uppercase; }
-  .kicker .dot { color:#d97757; }
+  .brand { position:absolute; top:60px; left:78px; height:56px; width:auto; z-index:2; }
   h1 { font-size:70px; line-height:1.04; font-weight:800; letter-spacing:-1.5px; margin:22px 0 0; }
-  h1 .accent { color:#e58a68; }
-  .sub { margin-top:24px; font-size:25px; font-weight:500; color:#c3b7ae; letter-spacing:-.2px; line-height:1.35; }
-  .by { margin-top:38px; font-size:19px; color:#8c8079; }
-  .by b { color:#cbbfb6; font-weight:600; }
+  h1 .accent { background:linear-gradient(92deg,#a06bff 0%,#e90464 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { margin-top:24px; font-size:25px; font-weight:500; color:#c4b8d6; letter-spacing:-.2px; line-height:1.35; }
+  .by { margin-top:38px; font-size:19px; color:#8f84a6; }
+  .by b { color:#cfc3e6; font-weight:600; }
   .art { position:absolute; right:34px; top:0; height:675px; width:520px; }
   /* offizielles Claude-Logo, via CSS-mask in Claude-Coral: der Agent im hervorgehobenen Knoten */
-  .agent { position:absolute; left:254px; top:158px; width:30px; height:30px; background:#d97757;
+  .agent { position:absolute; left:254px; top:158px; width:30px; height:30px; background:#e90464;
     mask:url("claude.svg") center/contain no-repeat;
-    filter:drop-shadow(0 0 12px rgba(217,119,87,0.7)); }
+    filter:drop-shadow(0 0 12px rgba(233,4,100,0.7)); }
 </style>
 </head>
 <body>
   <div class="grid"></div>
+  <img class="brand" src="logo-agentic-schule.png" alt="agentic.schule">
   <div class="wrap">
     <div class="left">
-      <div class="kicker">agentic<span class="dot">.</span>schule</div>
       <h1>Graph<br><span class="accent">Engineering</span></h1>
       <div class="sub">Viel Hype um ein altes Prinzip:<br>parallele Agenten orchestrieren</div>
       <div class="by">von <b>Johannes Hoppe</b></div>
@@ -48,9 +48,9 @@
     <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#e88a63" stop-opacity="0.45"/>
-          <stop offset="55%" stop-color="#d97757" stop-opacity="0.13"/>
-          <stop offset="100%" stop-color="#d97757" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#9a6cff" stop-opacity="0.45"/>
+          <stop offset="55%" stop-color="#e90464" stop-opacity="0.13"/>
+          <stop offset="100%" stop-color="#e90464" stop-opacity="0"/>
         </radialGradient>
       </defs>
 
@@ -59,29 +59,29 @@
 
       <!-- der Graph: Aufgabe -> drei parallele Knoten -> Ergebnis -->
       <!-- Kanten: Fan-out -->
-      <path d="M118 318 L238 190" stroke="#d97757" stroke-width="2.6" fill="none"/>
-      <path d="M238 190 l-10.5 -2.5 l4.5 9.5 z" fill="#d97757"/>
-      <line x1="122" y1="330" x2="236" y2="330" stroke="#8c7f77" stroke-width="2.2"/>
-      <path d="M236 330 l-10 -5 v10 z" fill="#8c7f77"/>
-      <path d="M118 342 L238 470" stroke="#8c7f77" stroke-width="2.2" fill="none"/>
-      <path d="M238 470 l-4.5 -9.5 l-6 8 z" fill="#8c7f77"/>
+      <path d="M118 318 L238 190" stroke="#e90464" stroke-width="2.6" fill="none"/>
+      <path d="M238 190 l-10.5 -2.5 l4.5 9.5 z" fill="#e90464"/>
+      <line x1="122" y1="330" x2="236" y2="330" stroke="#8f84a6" stroke-width="2.2"/>
+      <path d="M236 330 l-10 -5 v10 z" fill="#8f84a6"/>
+      <path d="M118 342 L238 470" stroke="#8f84a6" stroke-width="2.2" fill="none"/>
+      <path d="M238 470 l-4.5 -9.5 l-6 8 z" fill="#8f84a6"/>
       <!-- Kanten: Zusammenführen -->
-      <path d="M298 190 L418 318" stroke="#d97757" stroke-width="2.6" fill="none"/>
-      <path d="M418 318 l-4.5 -9.5 l-6 8 z" fill="#d97757"/>
-      <line x1="300" y1="330" x2="414" y2="330" stroke="#8c7f77" stroke-width="2.2"/>
-      <path d="M414 330 l-10 -5 v10 z" fill="#8c7f77"/>
-      <path d="M298 470 L418 342" stroke="#8c7f77" stroke-width="2.2" fill="none"/>
-      <path d="M418 342 l-10.5 2.5 l4.5 -9.5 z" fill="#8c7f77"/>
+      <path d="M298 190 L418 318" stroke="#e90464" stroke-width="2.6" fill="none"/>
+      <path d="M418 318 l-4.5 -9.5 l-6 8 z" fill="#e90464"/>
+      <line x1="300" y1="330" x2="414" y2="330" stroke="#8f84a6" stroke-width="2.2"/>
+      <path d="M414 330 l-10 -5 v10 z" fill="#8f84a6"/>
+      <path d="M298 470 L418 342" stroke="#8f84a6" stroke-width="2.2" fill="none"/>
+      <path d="M418 342 l-10.5 2.5 l4.5 -9.5 z" fill="#8f84a6"/>
 
       <!-- Knoten -->
-      <circle cx="95" cy="330" r="28" fill="#1d1713" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-      <circle cx="268" cy="172" r="30" fill="#2a1c14" stroke="#d97757" stroke-width="2.6"/>
-      <circle cx="268" cy="330" r="28" fill="#1d1713" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-      <circle cx="268" cy="488" r="28" fill="#1d1713" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-      <circle cx="445" cy="330" r="28" fill="#1d1713" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+      <circle cx="95" cy="330" r="28" fill="#211830" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+      <circle cx="268" cy="172" r="30" fill="#2a2140" stroke="#e90464" stroke-width="2.6"/>
+      <circle cx="268" cy="330" r="28" fill="#211830" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+      <circle cx="268" cy="488" r="28" fill="#211830" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+      <circle cx="445" cy="330" r="28" fill="#211830" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
 
       <!-- Häkchen im Ergebnis-Knoten -->
-      <path d="M433 331 l8 9 l14 -18" stroke="#d97757" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M433 331 l8 9 l14 -18" stroke="#e90464" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>
     <div class="agent"></div>
   </div>
