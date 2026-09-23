@@ -173,7 +173,7 @@ Three building blocks:
 
 Setting up this Playwright MCP so that it stays unobtrusive, survives updates, and does not land in the crude bot filters is a topic of its own. I describe the whole path in a dedicated article:
 
-<a href="https://agentic.schule/blog/2026-09-agent-recherche-playwright-mcp"><img src="../2026-09-agent-recherche-playwright-mcp-EN/header.jpg" alt="Your agent gets locked out during research? Give it its own, unobtrusive Playwright MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
+<a href="https://agentic.schule/blog/2026-09-agent-research-playwright-mcp"><img src="../2026-09-agent-research-playwright-mcp-EN/header.jpg" alt="Your agent gets locked out during research? Give it its own, unobtrusive Playwright MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
 
 ## Viewing the Agent's Work in the Browser
 

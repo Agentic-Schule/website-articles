@@ -72,7 +72,7 @@ Das Angular-Team hat ein fertiges Eval-Werkzeug für generierten Web-Code gebaut
 
 Lohnt sich der Einsatz? Wenn du nur einen Prompt für ein einzelnes Repo baust, ist das ganz bestimmt überdimensioniert. Spannend wird es, wenn du etwa die Prompts im Unternehmen über mehrere Projekte vereinheitlichen und harmonisieren willst. Denn dann gibt es garantiert unterschiedliche Auffassungen darüber, was „gut" ist und was besser funktioniert. In dieser Situation zählt genau eines: harte Fakten. Nimm die verschiedenen Prompts, lass sie gegeneinander antreten und belege, was tatsächlich die besseren Ergebnisse liefert.
 
-Meine Vermutung übrigens: Das Angular-Team hat seine [offiziellen Skills](https://github.com/angular/skills) (mehr dazu im [Skills-Artikel](https://agentic.schule/blog/2026-09-boeswillige-skills)) ganz bestimmt mehrfach durch genau dieses Werkzeug gejagt, um ein optimales Ergebnis zu bekommen.
+Meine Vermutung übrigens: Das Angular-Team hat seine [offiziellen Skills](https://github.com/angular/skills) (mehr dazu im [Skills-Artikel](https://agentic.schule/blog/2026-09-malicious-ai-skills)) ganz bestimmt mehrfach durch genau dieses Werkzeug gejagt, um ein optimales Ergebnis zu bekommen.
 
 <p style="display:flex;gap:2%;justify-content:center;margin:1.5em 0;">
   <img src="wcs-report-angular.png" alt="Web-Codegen-Scorer-Report für Angular: Gesamt-Score 97, darunter Balken für Build, Runtime, Security und Accessibility" style="width:49%;height:auto;align-self:flex-start;">
@@ -144,7 +144,7 @@ Falls dir das alles bekannt vorkommt: Claude Code setzt diese Techniken im Allta
 
 ## Die perfekte CLAUDE.md
 
-Okay, die Überschrift hat viel versprochen und wird es nicht halten: Die eine perfekte `CLAUDE.md` wird es nicht geben, dafür ist jedes Projekt zu einzigartig. Und dass ich kein Fan von riesigen Skill-Sammlungen bin, weißt du als aufmerksamer Leser [meiner Artikel](https://agentic.schule/blog/2026-09-boeswillige-skills) bereits. Das alles ist Context Rot und kein Signal.
+Okay, die Überschrift hat viel versprochen und wird es nicht halten: Die eine perfekte `CLAUDE.md` wird es nicht geben, dafür ist jedes Projekt zu einzigartig. Und dass ich kein Fan von riesigen Skill-Sammlungen bin, weißt du als aufmerksamer Leser [meiner Artikel](https://agentic.schule/blog/2026-09-malicious-ai-skills) bereits. Das alles ist Context Rot und kein Signal.
 
 Aber: Wenn du meinen [Kurs](https://agentic.schule/build-with-ai/online) besuchst, zeige ich dir gerne Custom Prompts aus meinen Kundenprojekten, und wir besprechen gemeinsam, was gut funktioniert und was nicht. Ich freue mich auf deinen Besuch!
 

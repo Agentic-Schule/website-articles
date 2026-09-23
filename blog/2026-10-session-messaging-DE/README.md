@@ -139,7 +139,7 @@ Die Doku grenzt das Feature selbst ab, und diese Liste ist es wert, gelesen zu w
 - Willst du **eine Konversation woanders fortsetzen**, nimm `--resume`.
 - Willst du ein **koordiniertes Team**, das Claude selbst aufsetzt und beaufsichtigt, nimm Agent Teams. Die sind allerdings noch experimentell und standardmäßig aus, du musst sie über die Umgebungsvariable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` einschalten.
 - Willst du **viele Sitzungen an einem Ort beobachten**, nimm die Agent View.
-- Willst du **selbst vom Handy steuern**, nimm Remote Control, siehe dazu die zehn Befehle in meinem [Befehle-Artikel](https://agentic.schule/blog/2026-10-claude-code-befehle).
+- Willst du **selbst vom Handy steuern**, nimm Remote Control, siehe dazu die zehn Befehle in meinem [Befehle-Artikel](https://agentic.schule/blog/2026-10-claude-code-commands).
 - Willst du **externe Ereignisse hineinreichen**, etwa CI-Ergebnisse, nimm Channels.
 
 Cross-Session Messaging ist für den Fall dazwischen. Du startest und steuerst deine Sitzungen selbst. Eine davon erfährt mitten in der Arbeit etwas, das eine andere gerade braucht.

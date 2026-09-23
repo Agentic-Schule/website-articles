@@ -174,7 +174,7 @@ Drei Bausteine:
 
 Diesen Playwright-MCP so einzurichten, dass er unauffällig bleibt, Updates übersteht und nicht in die groben Bot-Filter gerät, ist ein Thema für sich. Den ganzen Weg beschreibe ich im eigenen Artikel:
 
-<a href="https://agentic.schule/blog/2026-09-agent-recherche-playwright-mcp"><img src="../2026-09-agent-recherche-playwright-mcp-DE/header.jpg" alt="Dein Agent wird bei der Recherche ausgesperrt? Gib ihm einen eigenen, unauffälligen Playwright-MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
+<a href="https://agentic.schule/blog/2026-09-agent-research-playwright-mcp"><img src="../2026-09-agent-research-playwright-mcp-DE/header.jpg" alt="Dein Agent wird bei der Recherche ausgesperrt? Gib ihm einen eigenen, unauffälligen Playwright-MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
 
 ## Die Arbeit des Agenten im Browser ansehen
 

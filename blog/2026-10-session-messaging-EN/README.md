@@ -139,7 +139,7 @@ The docs draw the boundaries themselves, and this list is worth reading before y
 - Want to **continue a conversation elsewhere**? Use `--resume`.
 - Want a **coordinated team** that Claude sets up and supervises itself? Use agent teams. They are still experimental and off by default, so you have to enable them through the `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` environment variable.
 - Want to **watch many sessions in one place**? Use the agent view.
-- Want to **steer a session yourself from your phone**? Use Remote Control, see the ten commands in my [commands article](https://agentic.schule/blog/2026-10-claude-code-befehle).
+- Want to **steer a session yourself from your phone**? Use Remote Control, see the ten commands in my [commands article](https://agentic.schule/blog/2026-10-claude-code-commands).
 - Want to **push external events in**, such as CI results? Use channels.
 
 Cross-session messaging is for the case in between. You start and steer your sessions yourself. One of them learns something mid-task that another one needs right now.

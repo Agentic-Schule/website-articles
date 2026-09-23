@@ -72,7 +72,7 @@ The Angular team has built a ready-made eval tool for generated web code: the [W
 
 Is it worth using? If you are only building one prompt for a single repo, it is certainly oversized. It gets interesting when you want to unify and harmonize the prompts across several projects in a company. Because then there will be different opinions about what is "good" and what works better, guaranteed. In that situation, exactly one thing counts: hard facts. Take the various prompts, let them compete against each other, and prove what actually delivers the better results.
 
-My guess, by the way: the Angular team has most certainly run its [official skills](https://github.com/angular/skills) (more on those in my [skills article](https://agentic.schule/blog/2026-09-boeswillige-skills)) through exactly this tool several times to get an optimal result.
+My guess, by the way: the Angular team has most certainly run its [official skills](https://github.com/angular/skills) (more on those in my [skills article](https://agentic.schule/blog/2026-09-malicious-ai-skills)) through exactly this tool several times to get an optimal result.
 
 <p style="display:flex;gap:2%;justify-content:center;margin:1.5em 0;">
   <img src="wcs-report-angular.png" alt="Web Codegen Scorer report for Angular: overall score 97, with bars for build, runtime, security, and accessibility" style="width:49%;height:auto;align-self:flex-start;">
@@ -144,7 +144,7 @@ If all of this sounds familiar: Claude Code applies these techniques in everyday
 
 ## The perfect CLAUDE.md
 
-Okay, the heading promised a lot and will not deliver: the one perfect `CLAUDE.md` will not exist, every project is too unique for that. And that I am no fan of giant skill collections is something you, as an attentive reader of [my articles](https://agentic.schule/blog/2026-09-boeswillige-skills), already know. All of that is context rot, not signal.
+Okay, the heading promised a lot and will not deliver: the one perfect `CLAUDE.md` will not exist, every project is too unique for that. And that I am no fan of giant skill collections is something you, as an attentive reader of [my articles](https://agentic.schule/blog/2026-09-malicious-ai-skills), already know. All of that is context rot, not signal.
 
 But: if you attend my [course](https://agentic.schule/build-with-ai/online), I will gladly show you custom prompts from my client projects, and together we will discuss what works well and what doesn't. I am looking forward to your visit!
 
