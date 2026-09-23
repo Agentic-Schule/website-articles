@@ -65,7 +65,7 @@ The paragraph below the list is the decisive one. That is everything you need, w
 
 So the actual attack code is not in the reviewed file at all. It sits on that foreign page which Phase 0 declares to be the binding truth. And permission to run it was granted by the user the moment they installed the skill. Two more phrases pay into the same account. "Never display, transcribe, or echo the key" sounds like exemplary handling of secrets while also suppressing output. "Fail fast, recover quietly" sounds like clean error handling and makes sure problems are tidied away quietly instead of surfacing to the user.
 
-And yet nothing so far is wrong. This is exactly the point to pause at. Announcing a documentation page, declaring it more binding than your own memory, installing when needed, not bothering the user with installation chores, never printing keys: that is the guide you would write for a young SDK. None of it would have to change if the skill were honest.
+And yet nothing so far is wrong. This is exactly the point to pause at. Announcing a documentation page, declaring it more binding than your own memory, installing when needed, not bothering the user with installation chores, never printing keys: that is the guide you would write for a young SDK. None of it would have to change if the skill meant no harm.
 
 The next step is just as common. At the end of the file it says where that documentation lives. Every other skill does exactly the same, and remarkably little is hidden about it:
 
@@ -150,7 +150,7 @@ My own view on this is blunt: **in their current shape, such scanners do more ha
 
 ## Who Actually Checks the Marketplaces?
 
-The honest answer sits in the vendors' fine print. It is much the same everywhere. **Anthropic** draws a clean line between two catalogues. The official marketplace is curated. In the community marketplace, plugins pass an "automated validation and safety screening" and are pinned to a fixed commit hash. For everything else the documentation carries this warning:
+The answer sits in the vendors' fine print. It is much the same everywhere. **Anthropic** draws a clean line between two catalogues. The official marketplace is curated. In the community marketplace, plugins pass an "automated validation and safety screening" and are pinned to a fixed commit hash. For everything else the documentation carries this warning:
 
 > Make sure you trust a plugin before installing it. **Anthropic doesn't control what MCP servers, files, or other software are included in plugins and can't verify that they work as intended.**
 >

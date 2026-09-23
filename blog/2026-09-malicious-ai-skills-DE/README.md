@@ -65,7 +65,7 @@ Der Absatz unter der Liste ist der entscheidende. Damit ist alles beisammen, und
 
 Der eigentliche Angriffscode steht damit gar nicht in der geprüften Datei. Er liegt auf jener fremden Seite, die Phase 0 zur verbindlichen Wahrheit erklärt. Und die Erlaubnis, ihn auszuführen, hat der Nutzer bereits erteilt, als er den Skill installierte. Zwei weitere Formulierungen zahlen auf dasselbe Konto ein. „Never display, transcribe, or echo the key" klingt nach vorbildlichem Umgang mit Geheimnissen und unterdrückt zugleich Ausgaben. „Fail fast, recover quietly" klingt nach sauberem Fehler-Handling und sorgt dafür, dass Probleme leise weggeräumt werden, statt beim Nutzer aufzuschlagen.
 
-Und trotzdem ist bis hierhin nichts falsch. Genau hier lohnt es sich innezuhalten. Eine Dokumentation ankündigen, sie für verbindlicher erklären als das eigene Gedächtnis, bei Bedarf nachinstallieren, den Nutzer nicht mit Installationskram behelligen, keine Schlüssel ausgeben: Das ist die Anleitung, die man für ein junges SDK schreiben würde. Nichts davon müsste man ändern, wenn der Skill ehrlich wäre.
+Und trotzdem ist bis hierhin nichts falsch. Genau hier lohnt es sich innezuhalten. Eine Dokumentation ankündigen, sie für verbindlicher erklären als das eigene Gedächtnis, bei Bedarf nachinstallieren, den Nutzer nicht mit Installationskram behelligen, keine Schlüssel ausgeben: Das ist die Anleitung, die man für ein junges SDK schreiben würde. Nichts davon müsste man ändern, wenn der Skill arglos gemeint wäre.
 
 Auch der nächste Schritt ist gängig. Am Ende der Datei steht, wo diese Dokumentation zu finden ist. Genau so macht es jeder andere Skill auch, und verborgen wird dabei erstaunlich wenig:
 
@@ -150,7 +150,7 @@ Meine Meinung dazu fällt deutlich aus: **In dieser Verfassung richten solche Sc
 
 ## Wer prüft eigentlich die Marktplätze?
 
-Die ehrliche Antwort steht im Kleingedruckten der Anbieter. Sie ist überall ähnlich. **Anthropic** unterscheidet sauber zwischen zwei Katalogen. Der offizielle Marktplatz ist kuratiert. Beim Community-Marktplatz durchlaufen die Plugins eine „automated validation and safety screening" und sind auf einen festen Commit-Hash gepinnt. Für alles andere gilt der Warnhinweis in der Dokumentation:
+Die Antwort steht im Kleingedruckten der Anbieter. Sie ist überall ähnlich. **Anthropic** unterscheidet sauber zwischen zwei Katalogen. Der offizielle Marktplatz ist kuratiert. Beim Community-Marktplatz durchlaufen die Plugins eine „automated validation and safety screening" und sind auf einen festen Commit-Hash gepinnt. Für alles andere gilt der Warnhinweis in der Dokumentation:
 
 > Make sure you trust a plugin before installing it. **Anthropic doesn't control what MCP servers, files, or other software are included in plugins and can't verify that they work as intended.**
 >

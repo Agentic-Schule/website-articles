@@ -282,7 +282,7 @@ The supreme discipline. Two test runs on a shared database sabotage each other: 
 
 Where the built-in features end, namely at the repo boundary, a self-built init command begins: one command, two repos, one branch name, two worktrees, dependencies and license included. The whole thing is one simple Markdown file. But it turns the most tedious part of everyday multi-repo work into a single question: "What's the feature called?"
 
-I want to stay honest this time, too:
+A few open points belong here this time, too:
 
 - **Parallelism is not an end in itself.** Three agents produce three times as many diffs, and somebody (me) has to read them all. On top of that, not all features get along: some are mutually exclusive, others have to land in a fixed order. Worktrees keep the states cleanly apart, but what gets merged when remains headwork. The bottleneck is the review.
 - **The mental load stays.** Hopping from branch to branch is hard work in your head. That's why I rarely allow myself more than two or three branches at a time. The technology could easily handle more. My head hits its limit at review time well before that.

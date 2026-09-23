@@ -26,7 +26,7 @@ Agentic Coding works differently from a chat window: you set the direction, and 
 
 **That's why I turned a Mac mini into a "ground station": an always-running machine on which my agents keep working, while I watch and step in from the MacBook, the browser, or even my phone.**
 
-To be honest, the box was initially sitting on the shelf for a completely different reason: a current Mac mini M4 with 32 GB that I had actually bought to join the **Clawdbot** hype (today *[OpenClaw](https://openclaw.ai)*), controlling your own agent from your phone via **[Signal](https://signal.org)**, that had something to it. It was cool exactly as long as that remote control was the main appeal. Since [Claude Code](https://claude.com/claude-code) can do the same out of the box with **`/remote-control`**, the Clawdbot has lost much of its charm for me, and the mini was getting a bit bored anyway (maybe more on that another time). So it got a new, permanent job.
+The box was initially sitting on the shelf for a completely different reason: a current Mac mini M4 with 32 GB that I had actually bought to join the **Clawdbot** hype (today *[OpenClaw](https://openclaw.ai)*), controlling your own agent from your phone via **[Signal](https://signal.org)**, that had something to it. It was cool exactly as long as that remote control was the main appeal. Since [Claude Code](https://claude.com/claude-code) can do the same out of the box with **`/remote-control`**, the Clawdbot has lost much of its charm for me, and the mini was getting a bit bored anyway (maybe more on that another time). So it got a new, permanent job.
 
 This article shows the idea, the building blocks, and, in how-to boxes, how to build it yourself.
 
@@ -45,7 +45,7 @@ On the laptop, though, this is what happens:
 - I fold it shut → the process goes to sleep, the agent freezes mid-run.
 - In the evening I just want to *quickly* check from the couch how far it's gotten, and would have to boot the laptop back up.
 
-The first problem can be worked around with `caffeinate -s`: the laptop simply stays on even with the lid closed and no power connected. That's exactly how I worked in winter and spring. But at summer temperatures the thing quickly gets far too hot, and I'd like to keep it for a good while longer. A laptop running hot for months is not a good permanent solution.
+The first problem can be worked around with `caffeinate -s`: the laptop simply stays on with the lid closed, as long as it stays plugged in. That's exactly how I worked in winter and spring. But at summer temperatures the thing quickly gets far too hot, and I'd like to keep it for a good while longer. A laptop running hot for months is not a good permanent solution.
 
 On top of that, there's a pattern I notice in myself: my best ideas rarely come at the desk, but on the go, while walking the dog, for example. That's exactly when I want to quickly toss the agent something or check on its progress, without first heading home to the laptop.
 
@@ -75,7 +75,7 @@ Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon d
 
 ## Sessions That Survive Connection Drops
 
-Moving to a remote machine does, however, introduce a problem that never existed locally: the connection to it can drop. A Wi-Fi switch (office → train → home) is enough, and a normal SSH terminal is dead. The answer to that is **[tmux](https://github.com/tmux/tmux)**, a terminal multiplexer. Instead of starting my programs directly in the SSH session, they run *inside* tmux on the mini. If the connection drops, tmux, and everything in it, simply keeps running. On the next dock-in I reattach as if nothing had happened. Honestly, **tmux is the game changer** in this setup, only through it do the agent runs survive everything that can go wrong between me and the mini.
+Moving to a remote machine does, however, introduce a problem that never existed locally: the connection to it can drop. A Wi-Fi switch (office → train → home) is enough, and a normal SSH terminal is dead. The answer to that is **[tmux](https://github.com/tmux/tmux)**, a terminal multiplexer. Instead of starting my programs directly in the SSH session, they run *inside* tmux on the mini. If the connection drops, tmux, and everything in it, simply keeps running. On the next dock-in I reattach as if nothing had happened. **tmux is the central building block** of this setup, only through it do the agent runs survive everything that can go wrong between me and the mini.
 
 Two things make it comfortable:
 
@@ -254,7 +254,7 @@ A side effect I had underestimated: a **dedicated machine with no GUI and no oth
 
 And security went up almost as a side effect: on the ground station, only what's needed for work runs, I'm not logged in anywhere else there, not even my usual password manager is installed. That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained.
 
-I want to stay honest, too:
+The limits of this setup:
 
 - **It needs maintenance.** Headless operation, FileVault remote unlock, autostart services, that's a one-time setup effort and occasional debugging.
 - **Security is a must, not a bonus.** Access exclusively via the VPN, key auth, FileVault on. An always-on machine is only as trustworthy as its access.

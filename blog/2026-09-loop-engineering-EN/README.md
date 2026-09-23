@@ -33,7 +33,7 @@ Up front, to set the scope: I focus mainly on Claude Code here. Other agents hav
 
 ## What loop engineering means
 
-The tightest definition comes from Addy Osmani of Google's Chrome team, who [spelled the term out in an article](https://addyosmani.com/blog/loop-engineering/):
+The tightest definition comes from Addy Osmani, who works on Claude Code at Anthropic today and spent over a decade at Google before that, including on the Chrome team. He [spelled the term out in an article](https://addyosmani.com/blog/loop-engineering/):
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
