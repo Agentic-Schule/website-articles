@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-09-26
+published: 2026-10-04
 keywords:
   - Lokale Modelle
   - Qwen
@@ -17,7 +17,7 @@ language: de
 header: header.jpg
 ---
 
-Im [vorigen Artikel](https://agentic.schule/blog/2026-09-the-asymmetry-problem) habe ich folgendes Dilemma aufgezeigt: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell und kennt keine Grenzen. Der Verteidiger dagegen sitzt bei einem Cloud-Anbieter fest, dessen Modell bei heiklen Sicherheitsthemen abblockt. Die Konsequenz daraus ist einfach: Der Verteidiger muss sich dieselbe Freiheit zurückholen, ein offenes Modell auf der eigenen Maschine, das nicht abblockt und weder Code noch Daten aus der Hand gibt.
+Im [vorigen Artikel](https://agentic.schule/blog/2026-10-the-asymmetry-problem) habe ich folgendes Dilemma aufgezeigt: Der Angreifer arbeitet mit einem lokalen, unbeschränkten Modell und kennt keine Grenzen. Der Verteidiger dagegen sitzt bei einem Cloud-Anbieter fest, dessen Modell bei heiklen Sicherheitsthemen abblockt. Die Konsequenz daraus ist einfach: Der Verteidiger muss sich dieselbe Freiheit zurückholen, ein offenes Modell auf der eigenen Maschine, das nicht abblockt und weder Code noch Daten aus der Hand gibt.
 
 **Das bauen wir jetzt. Ein gehosteter Assistent stellt gleich mehrere Schranken zwischen dich und die Antwort: einen Klassifizierer, einen unabschaltbaren System-Prompt und ein antrainiertes Verweigern. Wir räumen sie alle aus dem Weg und betrachten danach die rechtlichen Grenzen.**
 
@@ -212,9 +212,9 @@ Hier zahlt der lokale Betrieb doppelt ein. Er löst die Verweigerung, und er lö
 
 ## Fazit
 
-Ein offenes Modell auf der eigenen Maschine ist leicht eingerichtet und kostet dich außer Speicherplatz nichts. Allerdings brauchst du dafür einen leistungsfähigen Computer. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-09-the-asymmetry-problem): Es verweigert nicht, und dein Code und deine Daten bleiben, wo sie hingehören. Klassifizierer und System-Prompt fallen dabei von selbst. Das antrainierte Verhalten verlangt Abliteration und sollte die Ausnahme bleiben. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
+Ein offenes Modell auf der eigenen Maschine ist leicht eingerichtet und kostet dich außer Speicherplatz nichts. Allerdings brauchst du dafür einen leistungsfähigen Computer. Es ist die Antwort auf das Dilemma aus dem [ersten Teil](https://agentic.schule/blog/2026-10-the-asymmetry-problem): Es verweigert nicht, und dein Code und deine Daten bleiben, wo sie hingehören. Klassifizierer und System-Prompt fallen dabei von selbst. Das antrainierte Verhalten verlangt Abliteration und sollte die Ausnahme bleiben. Für die allermeiste Sicherheitsarbeit reicht das ganz normale offene Modell, selbst betrieben.
 
-Das Werkzeug allein macht aber noch keinen guten Red-Teamer, also jemanden, der die eigenen Systeme angreift, um ihre Schwächen zu finden. Ein Modell, das nichts verweigert, kann auch mehr anrichten, sobald es Werkzeuge in die Hand bekommt. In welchem Rahmen so ein Agent laufen darf, und warum die naheliegende Antwort „läuft doch in einer VM" nur die halbe Miete ist, steht im [nächsten Teil](https://agentic.schule/blog/2026-09-strix-pentest-agent) am Beispiel eines Pentest-Agenten.
+Das Werkzeug allein macht aber noch keinen guten Red-Teamer, also jemanden, der die eigenen Systeme angreift, um ihre Schwächen zu finden. Ein Modell, das nichts verweigert, kann auch mehr anrichten, sobald es Werkzeuge in die Hand bekommt. In welchem Rahmen so ein Agent laufen darf, und warum die naheliegende Antwort „läuft doch in einer VM" nur die halbe Miete ist, steht im [nächsten Teil](https://agentic.schule/blog/2026-10-strix-pentest-agent) am Beispiel eines Pentest-Agenten.
 
 **So könntest du einsteigen: Nimm dir ein Repository, bei dem dir ein gehosteter Assistent zuletzt in die Quere gekommen ist, und lass dieselbe Frage lokal laufen.** Im Vergleich zu gehosteten Anbietern wirst du Geduld benötigen, aber diesmal entscheidest du, ob eine Antwort kommt.
 
