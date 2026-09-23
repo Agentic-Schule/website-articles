@@ -69,3 +69,35 @@ Im Frontmatter der `README.md` bleibt `header: header.jpg`.
 - **Titel-Akzent als Verlauf** braucht `-webkit-background-clip:text` und `color:transparent`; ohne beides bleibt der Text unsichtbar oder einfarbig.
 - **Bühne exakt 1200×675** halten. Der Renderer schießt genau diesen Ausschnitt; ragt Inhalt hinaus, wird er beschnitten.
 - **Warme Farbwerte** in einer kopierten Vorlage (Orange, Braun) vor dem Rendern gegen die CI-Farben oben tauschen, sonst fällt das Banner aus der Reihe.
+
+## Reel-Banner (9:16)
+
+Für Instagram Reels und TikTok gibt es eine zweite, hochkant stehende Fassung: einen Marken-Hintergrund, über den das Video gelegt wird. Das Video ist im Querformat (16:9) und liegt als volle Breite in der Mitte des 9:16-Rahmens; oben und unten trägt der Rahmen die Marke.
+
+Die Videos erscheinen nur auf Englisch. Das Reel-Banner liegt daher in der jeweiligen `-EN`-Fassung des Artikels.
+
+### Pipeline
+
+```bash
+node tools/render-reel.mjs blog/<artikel-ordner>
+```
+
+- Quelle: `header-reel.src.html`, Bühne **1080×1920**, `logo-agentic-schule.png` daneben.
+- Ergebnis: `header-reel.png`, **2160×3840** (PNG, `deviceScaleFactor: 2`) — 4K, passend zur Videoqualität.
+- Startpunkt: `docs/banner-reel-template.src.html` als `header-reel.src.html` in den `-EN`-Ordner kopieren.
+
+### Aufbau
+
+- **Oben:** Logo mittig, darunter der Eyebrow **`Day N/30`**, der Titel (Verlaufs-Akzent wie beim Lese-Banner) und ein kurzer Untertitel.
+- **Mitte:** die freie Video-Zone, volle Breite und 16:9, vertikal zentriert. Sie ist mit einer dezenten dunklen Fläche und je einer Verlaufs-Kante oben und unten angedeutet und wird vom Video vollständig überdeckt.
+- **Unten:** genau **ein** Teaser-Satz. Kein zweiter Eyebrow, keine weitere Marken-Zeile.
+
+### Safe-Zones (Plattform-UI)
+
+Wichtige Inhalte aus diesen Bereichen heraushalten:
+
+- **Obere 5 %** — Fortschrittsbalken und Kopfzeile der Plattform.
+- **Untere ~18 %** — Untertitel, Beschreibung und Nutzername.
+- **Rechte Kante** — Like-, Kommentar- und Teilen-Buttons. Deshalb ist der Text mittig gesetzt und der Teaser in der Breite begrenzt.
+
+Die Zonen lassen sich prüfen, indem man dem `header-reel.src.html` testweise eine Overlay-Ebene mit den Bereichsrechtecken hinzufügt und rendert.
