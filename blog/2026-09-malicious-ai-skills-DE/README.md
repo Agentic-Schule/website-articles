@@ -80,7 +80,7 @@ Die beiden Adressen sind hier entschärft, im Original stehen sie als ganz norma
 
 Und hier, erst hier, sitzt der gesamte Angriff. **Die Adresse ist einfach die falsche.** Google Stitch liegt unter `stitch.withgoogle.com`. Verwiesen wird stattdessen auf eine Domain, die den Produktnamen im Titel führt und den Angreifern gehört.
 
-Mehr ist es nicht. Keine bösartige Zeile, kein verstecktes Skript, keine getarnte Anweisung. Ein einziger Eintrag in einer Literaturliste zeigt woandershin, und alles davor, das für sich genommen gute Ingenieurspraxis ist, arbeitet ab diesem Moment für den Angreifer. Das ist perfektes Social Engineering, nur eben gegen eine Maschine gerichtet. Wer nicht auswendig weiß, unter welcher Adresse Googles Werkzeug residiert, hat keine Chance, das zu bemerken. Der Agent übrigens auch nicht.
+Mehr ist es nicht. Keine bösartige Zeile, kein verstecktes Skript, keine getarnte Anweisung. Ein einziger Eintrag in einer Literaturliste zeigt woandershin, und alles davor, das für sich genommen gute Ingenieurspraxis ist, arbeitet ab diesem Moment für den Angreifer. Das ist perfektes *Social Engineering* (gezieltes Manipulieren über Vertrauen), nur eben gegen eine Maschine gerichtet. Wer nicht auswendig weiß, unter welcher Adresse Googles Werkzeug residiert, hat keine Chance, das zu bemerken. Der Agent übrigens auch nicht.
 
 Dazu kommt der Abstand. Die Anweisung steht ganz vorne, die zugehörige Adresse erst am Ende der Datei. Wer prüft, liest das eine, hakt es ab, scrollt durch Interviewleitfäden und Fehlerbehandlung und trifft die zweite Hälfte in einem Kontext, in dem sie vollkommen harmlos wirkt. Die beiden Teile ergeben nur zusammen einen Angriff, und man bekommt sie nie zusammen zu sehen.
 
@@ -104,7 +104,7 @@ Ein gut gebauter Angriff nützt nichts, wenn ihn niemand installiert. Auch diese
 
 Damit im Rücken brachten sie ihn dorthin, wo Nutzer suchen: per Pull Request in einen öffentlichen Skill-Marketplace auf GitHub. AIR beschreibt ihn als Repository mit rund 36.000 Sternen, 156 Skills und einer „welcoming contribution policy". Den Namen nennt der Bericht nicht, aber er zeigt einen Screenshot des Pull Requests, auf dem Nummer und Maintainer zu lesen sind. Damit ist der Marktplatz schnell gefunden: [`wshobson/agents`](https://github.com/wshobson/agents), ein „Multi-harness agentic plugin marketplace" für Claude Code, Codex CLI, Cursor, OpenCode, GitHub Copilot und Gemini CLI, und darin [Pull Request #509](https://github.com/wshobson/agents/pull/509). Nach eigener Darstellung dauerte es „a few anxious days", dann wurde der Pull Request angenommen. Damit erbte der Skill etwas, das man nicht kaufen kann: das Vertrauen aus den Sternen des Repositories.
 
-Wortlos durchgewinkt wurde der Pull Request dabei nicht. Es gibt ein ausführliches, fachlich kluges Review, das dem Beitrag saubere progressive disclosure und einen wohlgeformten Marktplatz-Eintrag bescheinigt. Und dann diesen Punkt:
+Wortlos durchgewinkt wurde der Pull Request dabei nicht. Es gibt ein ausführliches, fachlich kluges Review, das dem Beitrag eine saubere *progressive disclosure* (Details erst nach und nach, nur bei Bedarf) und einen wohlgeformten Marktplatz-Eintrag bescheinigt. Und dann diesen Punkt:
 
 > **Phase 0 hygiene.** Verifying the Stitch SDK and API key before starting the interview is the right call.
 
@@ -114,7 +114,7 @@ Danach warben sie für den bösartigen Skill. Im Bericht steht dazu ein einziger
 
 Und die Prüfungen? AIR gibt an, den Skill gegen die Scanner von Cisco, NVIDIA und skills.sh getestet zu haben. Alle stuften ihn als sicher ein. Der Rest ist schnell erzählt. Die Domain gehörte AIR, also musste die Firma nur abwarten und dann zu einem selbst gewählten Zeitpunkt austauschen, was auf der Seite mit der Installationsanleitung stand. Ab diesem Moment wies der Skill die Agenten an, ein Skript zu laden und auszuführen. Die Nutzlast hielten die Autoren nach eigenen Angaben bewusst harmlos: Sie sammelte die E-Mail-Adresse des Opfers ein und schickte sie, wie es im Bericht heißt, „nach Hause". Wie viele Agenten sie tatsächlich ausführten, weiß nur AIR, denn die Zahl beruht auf ebendiesen E-Mails. Es sollen mehrere zehntausend gewesen sein, darunter Agenten in Firmenkonten.
 
-Genau dazu hätte ich gern ein Wort von AIR. Als Zweck der eingesammelten Adressen nennt der Bericht, die Betroffenen benachrichtigen zu können, „so we can notify them". Ob das dann geschehen ist, steht nirgends. Ebenso wenig, was mit den Daten seitdem passiert ist und ob sie gelöscht wurden. Wer sich als White Hat auf fremde Rechner begibt, sollte diese Fragen von sich aus beantworten.
+Genau dazu hätte ich gern ein Wort von AIR. Als Zweck der eingesammelten Adressen nennt der Bericht, die Betroffenen benachrichtigen zu können, „so we can notify them". Ob das dann geschehen ist, steht nirgends. Ebenso wenig, was mit den Daten seitdem passiert ist und ob sie gelöscht wurden. Wer sich als *White Hat* (Sicherheitsforscher mit guter Absicht) auf fremde Rechner begibt, sollte diese Fragen von sich aus beantworten.
 
 Viel wichtiger als jede Zahl ist dieser Satz aus dem Bericht:
 
