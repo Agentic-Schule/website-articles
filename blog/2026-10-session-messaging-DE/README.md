@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-09-24
+published: 2026-10-02
 keywords:
   - Claude Code
   - Cross-Session Messaging
@@ -139,7 +139,7 @@ Die Doku grenzt das Feature selbst ab, und diese Liste ist es wert, gelesen zu w
 - Willst du **eine Konversation woanders fortsetzen**, nimm `--resume`.
 - Willst du ein **koordiniertes Team**, das Claude selbst aufsetzt und beaufsichtigt, nimm Agent Teams. Die sind allerdings noch experimentell und standardmäßig aus, du musst sie über die Umgebungsvariable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` einschalten.
 - Willst du **viele Sitzungen an einem Ort beobachten**, nimm die Agent View.
-- Willst du **selbst vom Handy steuern**, nimm Remote Control, siehe dazu die zehn Befehle in meinem [Befehle-Artikel](https://agentic.schule/blog/2026-09-claude-code-befehle).
+- Willst du **selbst vom Handy steuern**, nimm Remote Control, siehe dazu die zehn Befehle in meinem [Befehle-Artikel](https://agentic.schule/blog/2026-10-claude-code-befehle).
 - Willst du **externe Ereignisse hineinreichen**, etwa CI-Ergebnisse, nimm Channels.
 
 Cross-Session Messaging ist für den Fall dazwischen. Du startest und steuerst deine Sitzungen selbst. Eine davon erfährt mitten in der Arbeit etwas, das eine andere gerade braucht.
