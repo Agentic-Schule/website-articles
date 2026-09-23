@@ -1,6 +1,6 @@
 # Recherche: Sitzungen schreiben einander Nachrichten
 
-Quellenarchiv für den Artikel `blog/2026-09-session-messaging-DE/`. Alles am 4. September 2026 an den Primärquellen geprüft: offizielle Doku (Volltext per Playwright), Changelog des Claude-Code-Repos (per `gh api`), Release-Daten (npm), Binary 2.1.260 (`strings`).
+Quellenarchiv für den Artikel `blog/2026-10-session-messaging-DE/`. Alles am 4. September 2026 an den Primärquellen geprüft: offizielle Doku (Volltext per Playwright), Changelog des Claude-Code-Repos (per `gh api`), Release-Daten (npm), Binary 2.1.260 (`strings`).
 
 ## Wie das Feature heißt
 
