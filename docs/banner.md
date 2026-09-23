@@ -90,7 +90,7 @@ node tools/render-reel.mjs blog/<artikel-ordner>
 
 - **Oben:** Logo mittig, darunter der Eyebrow **`Day N/30`**, der Titel (Verlaufs-Akzent wie beim Lese-Banner) und ein kurzer Untertitel.
 - **Mitte:** die freie Video-Zone, volle Breite und 16:9, vertikal zentriert. Sie ist mit einer dezenten dunklen Fläche und je einer Verlaufs-Kante oben und unten angedeutet und wird vom Video vollständig überdeckt.
-- **Unten:** genau **ein** Teaser-Satz. Kein zweiter Eyebrow, keine weitere Marken-Zeile.
+- **Unten:** bleibt frei. Dort liegen im fertigen Reel die Video-Untertitel, deshalb kein Teaser und keine weitere Zeile.
 
 ### Safe-Zones (Plattform-UI)
 
