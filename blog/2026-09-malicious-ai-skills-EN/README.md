@@ -104,7 +104,7 @@ A well-built attack is worthless if nobody installs it. This part is instructive
 
 With that in hand they took it to where users look: via pull request into a public skill marketplace on GitHub. AIR describes it as a repository with around 36,000 stars, 156 skills and a "welcoming contribution policy". The report does not name it, but it does show a screenshot of the pull request with the number and the maintainer visible. That makes the marketplace easy to find: [`wshobson/agents`](https://github.com/wshobson/agents), a "Multi-harness agentic plugin marketplace" for Claude Code, Codex CLI, Cursor, OpenCode, GitHub Copilot and Gemini CLI, and in it [pull request #509](https://github.com/wshobson/agents/pull/509). By their own account it took "a few anxious days", then the pull request was accepted. With that, the skill inherited something money cannot buy: the trust carried by the repository's stars.
 
-Waved through in silence it was not. There is a detailed, technically astute review that credits the contribution with clean progressive disclosure and a well-formed marketplace entry. And then this point:
+Waved through in silence it was not. There is a detailed, technically astute review that credits the contribution with clean progressive disclosure (detail revealed step by step, only as needed) and a well-formed marketplace entry. And then this point:
 
 > **Phase 0 hygiene.** Verifying the Stitch SDK and API key before starting the interview is the right call.
 
