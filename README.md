@@ -45,9 +45,19 @@ Ergebnis ist `header.jpg` (2400×1350). Voraussetzung: einmalig `cd tools && npm
 (holt `playwright-core`) und ein installierter Google Chrome. Achtung: Der Build kopiert Artikel-Ordner komplett nach `dist/`,
 die Quelldateien werden also mit veröffentlicht (harmlos, aber gut zu wissen).
 
+Markenfarben, Logo, eine Kopiervorlage und die Schritt-für-Schritt-Anleitung für ein neues Banner
+stehen in [`docs/banner.md`](docs/banner.md).
+
 ## Lokal bauen
 
 ```bash
 git submodule update --init --recursive
 cd build && npm install && npm run build
 ```
+
+## Themenfindung
+
+`.claude/workflows/` enthält den Weg von der gesammelten Instagram-Aktivität zu einer nach
+Themen gruppierten Liste mit Abarbeitungs-Checkliste: `instagram-export-to-posts.py` wandelt
+den Instagram-Datenexport um, der Workflow `instagram-themen-fundus.js` transkribiert und
+bündelt. Das vollständige Vorgehen samt Fallstricken steht in `.claude/workflows/README.md`.

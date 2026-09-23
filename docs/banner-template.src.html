@@ -1,0 +1,74 @@
+<!doctype html>
+<!--
+  agentic.schule Banner-Vorlage. Kopiere diese Datei als header.src.html in einen
+  Artikel-Ordner und lege logo-agentic-schule.png daneben (aus docs/ kopieren).
+  Rendern:  node tools/render-header.mjs blog/<artikel-ordner>
+  Farben und Regeln: docs/banner.md
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    /* Marken-Hintergrund: lila Schein oben rechts, Magenta-Hauch unten links, tiefes Lila-Schwarz */
+    background:
+      radial-gradient(60% 55% at 74% 42%, rgba(98,38,176,0.34), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(233,4,100,0.16), transparent 60%),
+      linear-gradient(155deg,#241a33 0%,#1b1525 58%,#0d0913 100%);
+    color:#fff; position:relative;
+  }
+  /* dezentes Punkt-Grid, gemeinsame DNA aller Header der Serie */
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  /* Logo oben links, mit Abstand von der Ecke */
+  .brand { position:absolute; top:60px; left:78px; height:56px; width:auto; z-index:2; }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:620px; }
+  h1 { font-size:60px; line-height:1.06; font-weight:800; letter-spacing:-1.2px; margin:22px 0 0; }
+  /* Signatur-Verlauf Lila -> Magenta auf dem betonten Titelteil */
+  h1 .accent { background:linear-gradient(92deg,#a06bff 0%,#e90464 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { margin-top:24px; font-size:27px; font-weight:500; color:#c4b8d6; letter-spacing:-.2px; }
+  .by { margin-top:40px; font-size:19px; color:#8f84a6; }
+  .by b { color:#cfc3e6; font-weight:600; }
+  .art { position:absolute; right:44px; top:0; height:675px; width:520px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <img class="brand" src="logo-agentic-schule.png" alt="agentic.schule">
+  <div class="wrap">
+    <div class="left">
+      <h1>Titelzeile eins<br><span class="accent">betonter Teil</span></h1>
+      <div class="sub">Untertitel in einem kurzen Satz</div>
+      <div class="by">von <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <!--
+    Rechte Bildhälfte: pro Artikel eine eigene, schlichte SVG-Illustration (520x675).
+    Farb-Semantik: Lila (#9a6cff / #6226b0 / #7a2ec9) fürs Normale/Neutrale,
+    Magenta (#e90464 / #a80248) für den Kern, die Gefahr oder die Pointe.
+    Beispiel als Platzhalter: ein Glow und ein Kartenobjekt.
+  -->
+  <div class="art">
+    <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#9a6cff" stop-opacity="0.45"/>
+          <stop offset="55%" stop-color="#6226b0" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#6226b0" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="260" cy="300" r="180" fill="url(#glow)"/>
+      <rect x="150" y="230" width="220" height="150" rx="16" fill="#211830" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+      <rect x="176" y="330" width="150" height="9" rx="4" fill="rgba(233,4,100,0.75)"/>
+      <rect x="176" y="352" width="110" height="9" rx="4" fill="rgba(255,255,255,0.12)"/>
+    </svg>
+  </div>
+</body>
+</html>
