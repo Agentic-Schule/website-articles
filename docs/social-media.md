@@ -15,6 +15,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 - **Der Hook kommt zuerst.** Fast alle, die einen Post oder ein Reel sehen, folgen dir nicht und kennen die Serie nicht. Keine Vorstellung, kein „Tag 1 von 30" am Anfang. Die Serie steht in der Caption.
 - **Kurz und auf den Kern.** Ein Post erzählt den Artikel nicht nach. Er setzt das Thema, zeigt den einen Kern und macht neugierig auf die Auflösung.
 - **Das bewährte Muster ist die Knobelaufgabe, aufs Äußerste verdichtet:** Der Post besteht aus zwei Sätzen, dem Link und einem Bild. Satz 1 stellt die Frage direkt an den Leser („Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff?"). Satz 2 leitet zum Artikel über („Hast du den Angriff nicht gefunden? Dann lies besser diesen Artikel:"). Das Bild ist die Aufgabe: ein Screenshot des echten Materials, etwas zum Anschauen und Mitsuchen. Die Frage bleibt offen, die Auflösung steht im Artikel.
+- **Den Post-Typ abwechseln, nicht jeden Tag eine Knobelaufgabe.** Die Knobelaufgabe mit Screenshot passt, wenn der Artikel ein zeigbares Stück Material hat (eine Datei, einen Befehl, eine Ausgabe). Geht es um ein Setup, eine Erfahrung oder eine Meinung, passt die **offene Frage** besser: eine Frage an den Leser („Wo laufen eigentlich deine AI-Agenten, wenn du den Laptop zuklappst?"), ein Satz zur eigenen Lösung, der Link. Als Bild reicht dann das Header-Bild oder ein Foto.
 - **Den Wortlaut der Frage von Tag zu Tag variieren** („Siehst du …?", „Findest du …?", „Ich wette, du hättest … nicht gefunden"). Dreißigmal derselbe Einstieg nutzt sich ab.
 - **Echtes Material statt Platzhalter.** Wörtliche Zitate, echte Zeilennummern, echte Namen. Ein Platzhalter wie „innocent-looking-domain.com" verrät die Lösung schon im Namen. Im Text werden gefährliche Adressen wie im Artikel entschärft (`stitch-design[.]ai`), damit kein klickbarer Link entsteht. Im Bild bleibt die echte Adresse stehen, dort lässt sie sich nicht anklicken.
 - **Der Post muss trotzdem für sich stehen.** Reine Neugier ohne Substanz wirkt wie Clickbait. Das gezeigte Material ist der Grund, weiterzulesen.
@@ -149,6 +150,23 @@ https://agentic.schule/blog/<slug>
 I have a little puzzle for you! <Question, e.g. "Do you see a … in the following …?"> <höchstens ein passendes Emoji>
 
 <Not sure …?> Then you should read this article: https://agentic.schule/en/blog/<slug>
+```
+
+**Offene Frage, LinkedIn (DE)**, dazu Header-Bild oder Foto
+
+```
+<Frage an den Leser, z. B. „Wo laufen eigentlich deine AI-Agenten, wenn du den Laptop zuklappst?">
+
+<Ein, zwei Sätze zur eigenen Lösung.> Wie das funktioniert, liest du hier:
+https://agentic.schule/blog/<slug>
+```
+
+**Offene Frage, X (EN)**
+
+```
+<Question to the reader, e.g. "Where do your AI agents run when you close your laptop?">
+
+<One or two sentences about your own solution.> Here's the whole setup: https://agentic.schule/en/blog/<slug>
 ```
 
 **Instagram Reels (EN)**

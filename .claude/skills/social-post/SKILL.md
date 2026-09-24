@@ -18,11 +18,11 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
 ## Ablauf
 
 1. **Artikel lesen:** `blog/<slug>-EN/README.md` komplett, dazu `blog/<slug>-DE/README.md` für den LinkedIn-Post. Fehlt eine Fassung, melde das. Ohne EN-Fassung gibt es kein Video und keinen X-Post, ohne DE-Fassung keinen LinkedIn-Post.
-2. **Den Kern finden:** das eine Stück echtes Material, an dem sich der Trick zeigen lässt (z. B. zwei Zeilen einer Datei, ein Befehl, eine Ausgabe). Daraus wird die Knobelaufgabe, eine Frage direkt an den Leser („Siehst du …?"). Den Wortlaut von Tag zu Tag variieren.
+2. **Den Kern und den Post-Typ finden:** Gibt es ein zeigbares Stück echtes Material (zwei Zeilen einer Datei, ein Befehl, eine Ausgabe), wird daraus die **Knobelaufgabe** („Siehst du …?"). Geht es um ein Setup, eine Erfahrung oder eine Meinung, wird es die **offene Frage** („Wo laufen eigentlich deine …?"). Nicht jeden Tag denselben Typ, und den Wortlaut variieren.
 3. **Entwerfen**, gemäß `docs/social-media.md` (Tag 1 dort ist das Muster):
-   - LinkedIn-Post (DE) und X-Post (EN): je zwei Sätze nach der Vorlage (Knobelfrage, Überleitungssatz) plus Link, höchstens ein passendes Emoji am Ende der Frage. X höchstens 280 Zeichen (Link zählt 23; nachzählen).
-   - Bildvorlage für LinkedIn und X: welche Datei, welche Zeilen wörtlich, was durch `[...]` ersetzt wird; der entscheidende Teil unten. Johannes macht den Screenshot im Editor.
-   - Video-Skript (EN, etwa 25 Sekunden, Knobelaufgabe, Schluss: „Find the full article on my website: agentic.schule") und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
+   - LinkedIn-Post (DE) und X-Post (EN) nach der passenden Vorlage im Playbook (Knobelaufgabe oder offene Frage), kurz, mit Link, höchstens ein passendes Emoji. X höchstens 280 Zeichen (Link zählt 23; nachzählen).
+   - Bei der Knobelaufgabe eine Bildvorlage für LinkedIn und X: welche Datei, welche Zeilen wörtlich, was durch `[...]` ersetzt wird; der entscheidende Teil unten. Johannes macht den Screenshot im Editor. Bei der offenen Frage reicht das Header-Bild oder ein Foto.
+   - Video-Skript (EN, etwa 25 Sekunden, Schluss: „Find the full article on my website: agentic.schule") und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
    - Captions für Instagram und TikTok, optional Titel und Beschreibung für YouTube Shorts.
    - Aufs Äußerste verdichten. Emojis nur wie im Playbook. Gefährliche Adressen im Text entschärfen (`[.]`).
 4. **Faktencheck:** Jede Aussage muss in der jeweiligen Sprachfassung des Artikels stehen. Zahlen, Namen und Zuspitzungen einzeln gegen den Artikeltext abgleichen. Zitate und Zeilennummern gegen die verlinkte Quelle prüfen, zeitabhängige Aussagen („bis heute", „still live") gegen den aktuellen Stand, etwa per `gh`. Was nicht gedeckt ist, fliegt raus oder wird entschärft.
