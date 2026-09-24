@@ -12,9 +12,12 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 ## Grundregeln
 
-- **Der Hook kommt zuerst.** Fast alle, die einen Post oder ein Reel sehen, folgen dir nicht und kennen die Serie nicht. Keine Vorstellung, kein „Tag 1 von 30" am Anfang. Die Serie steht in der Caption oder im P.S.
-- **Kurz.** Ein Post nennt das Thema und macht neugierig, er erzählt den Artikel nicht nach. Das bewährte Muster: „X kann gefährlich/überraschend sein. Ich zeige es an einem echten Beispiel." Dazu ein, zwei konkrete Fakten, die staunen lassen. Die Auflösung bleibt im Artikel.
-- **Der Post muss trotzdem für sich stehen.** Reine Neugier ohne Substanz wirkt wie Clickbait. Die ein, zwei Fakten sind der Grund, weiterzulesen.
+- **Der Hook kommt zuerst.** Fast alle, die einen Post oder ein Reel sehen, folgen dir nicht und kennen die Serie nicht. Keine Vorstellung, kein „Tag 1 von 30" am Anfang. Die Serie steht in der Caption.
+- **Kurz und auf den Kern.** Ein Post erzählt den Artikel nicht nach. Er setzt das Thema, zeigt den einen Kern und macht neugierig auf die Auflösung.
+- **Das bewährte Muster ist das Rätsel:** „X ist beliebt, aber es gibt einen fiesen Trick. Ich wette, du hättest ihn nicht gefunden." Dann das echte Material zeigen, etwa zwei Zeilen aus einer Datei, und fragen: „Wo steckt der Angriff?" Die Auflösung steht im Artikel. Die Leute suchen selbst, und die Antworten in den Kommentaren kommen von allein.
+- **Echtes Material statt Platzhalter.** Wörtliche Zitate, echte Zeilennummern, echte Namen. Ein Platzhalter wie „innocent-looking-domain.com" verrät die Lösung schon im Namen. Gefährliche Adressen werden wie im Artikel entschärft (`stitch-design[.]ai`), damit kein klickbarer Link entsteht.
+- **Der Post muss trotzdem für sich stehen.** Reine Neugier ohne Substanz wirkt wie Clickbait. Das gezeigte Material ist der Grund, weiterzulesen.
+- **Kein Hand-Emoji als Link-Hinweis.** Vor dem Link steht ein ausgeschriebener Satz: „Den ganzen Artikel liest du hier:" bzw. „Read the full article here:".
 - **Zugespitzt, aber wahr.** Jede Aussage muss der Artikel decken. Ein Beispiel für die Grenze: Die Sicherheitsfirma im Day-1-Artikel hat nach eigener Aussage zehntausende Agenten dazu gebracht, ihr Skript auszuführen, das darf gesagt werden. „Still infecting computers right now" geht dagegen weiter als der Artikel, denn die Nutzlast wurde bewusst harmlos gehalten; „still live" oder „still out there" ist gedeckt.
 - **Souverän statt marktschreierisch,** wie in den Artikeln selbst (siehe `CLAUDE.md`). Deutsche Posts folgen dem Stil aus `CLAUDE.md`: duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese.
 
@@ -44,37 +47,46 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 - **Vom persönlichen Profil posten.** Posts einer Unternehmensseite erreichen zuerst nur deren Follower.
 - **Der Hook steht in den ersten zwei Zeilen,** vor dem „… mehr".
 - **Kein Video.** Text plus das Header-Bild der `-DE`-Fassung.
-- **Der Link steht als reine URL im Post.** Das Header-Bild anhängen, damit keine Link-Vorschaukarte erscheint.
+- **Der Link steht als reine URL im Post,** eingeleitet mit „Den ganzen Artikel liest du hier:". Das Header-Bild anhängen, damit keine Link-Vorschaukarte erscheint.
 - **Kein „Kommentiere X, dann schicke ich dir den Link".** LinkedIn filtert diese Art Engagement-Köder und verbietet automatisierte Kommentare und Nachrichten.
 - **Keine Hashtags.**
-- **Die Frage am Ende muss echt sein.** Viele Artikel enden ohnehin mit einer Frage an die Leser, die lässt sich übernehmen.
+- **Die Frage muss echt sein.** Beim Rätsel ist sie es von selbst: „Wo steckt der Angriff?"
 - **In der ersten Stunde auf Kommentare antworten.**
 - Tägliches Posten ist in Ordnung. LinkedIn empfiehlt mindestens zwei bis drei Posts pro Woche.
 
 ## X (EN)
 
-- **Der Post passt in 280 Zeichen** (die Grenze ohne Premium).
-- **Der Link steht direkt im Post.** X stuft Links nach Aussage der Produktleitung nicht herab, und der veröffentlichte Ranking-Code enthält keine Link-Strafe. Ein Link in einer Antwort bringt nichts: Antworten zeigt X Nicht-Followern im For-You-Feed nicht, und der Schub für kleine Accounts gilt nur für eigenständige Posts.
+- **Der Post passt in 280 Zeichen** (die Grenze ohne Premium). Links zählen dabei immer 23 Zeichen, Emojis zwei. Zitate lassen sich mit „…" kürzen, solange der Rest wörtlich bleibt.
+- **Der Link steht direkt im Post,** eingeleitet mit „Read the full article here:". X stuft Links nach Aussage der Produktleitung nicht herab, und der veröffentlichte Ranking-Code enthält keine Link-Strafe. Ein Link in einer Antwort bringt nichts: Antworten zeigt X Nicht-Followern im For-You-Feed nicht, und der Schub für kleine Accounts gilt nur für eigenständige Posts.
 - **Der Text muss ohne Link tragen.** Link-Posts sammeln weniger Likes und Antworten, weil die Leute auf die Seite wechseln.
 - **Kein Video.**
 
 ## Das Video (TikTok, Instagram, YouTube Shorts)
 
-**Format:**
+### Format
 
-- **Vertikal 9:16, bildfüllend.** Keine Ränder, keine Balken, kein Rahmen mit Titel um ein Querformat-Video. Instagram zeigt Reels mit Rändern, Logos oder Wasserzeichen seltener, und TikTok nennt Balken ausdrücklich als Problem.
-- **Etwa 20 Sekunden.**
-- **Zeigen statt nur erzählen,** wo es geht: Gesicht plus Bildschirmaufnahme (die Datei, der Befehl, das Ergebnis), übereinander gestapelt, beides bildfüllend.
+- **Vertikal 9:16, bildfüllend,** mindestens 1080×1920. Keine Ränder, keine Balken, kein Rahmen um ein Querformat-Video. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.
+- **Kein Logo, kein Wasserzeichen, kein „Day N/30" im Bild.** Instagram zeigt Reels mit Logos oder Wasserzeichen seltener. Das Branding kommt über das Profil.
+- **Etwa 25 Sekunden.**
+- **Zwei Bildquellen, harte Schnitte:** das Gesicht für Hook und Schluss, dazwischen der Bildschirm. Das Video zeigt das Material, über das es spricht.
+- **Die Bildschirmaufnahme zeigt die echte Quelle,** etwa die Datei auf GitHub, stark gezoomt, damit der Code auf dem Handy lesbar ist. Die entscheidende Stelle wird markiert. Zeilennummern im Bild müssen zum Skript passen.
 - **Der Hook steht ab Sekunde 0 zusätzlich als Text im Bild.** Sonst wenig Text: Instagram zeigt Reels seltener, deren Bild überwiegend mit Text bedeckt ist.
-- **Ränder frei halten.** Oben, unten und rechts liegt die Oberfläche der Plattformen. Untertitel und Hook-Text sitzen im mittleren Bereich.
-- **Auf Instagram nichts erneut hochladen,** was dort schon einmal lief. Eine neu aufgenommene Fassung ist ein neues Video.
+- **Ränder frei halten.** Oben, unten und rechts liegt die Oberfläche der Plattformen (Fortschrittsbalken, Caption, Nutzername, Buttons).
+- **Sauber exportieren und auf jede Plattform einzeln hochladen.** Kein heruntergeladenes TikTok-Video mit Wasserzeichen auf Instagram. Und auf Instagram nichts erneut hochladen, was dort schon einmal lief; eine neu aufgenommene Fassung ist ein neues Video.
 
-**Skript-Aufbau:**
+### Untertitel
 
-1. **Hook:** der überraschende Fakt, in einem Satz, gesprochen und als Text im Bild.
-2. **Einordnung:** „AI skills can be really dangerous. Let me show you a real one."
-3. **Zwei, drei kurze Fakten,** die neugierig machen. Die Auflösung bleibt im Artikel.
-4. **Aufruf:** „Want to see the trick? Comment ‚\<keyword\>' and I'll send you the link."
+- **Einmal im Schnitt einbrennen,** im unteren Drittel, aber nicht ganz unten, wo die Plattform-Oberfläche liegt.
+- Alle drei Plattformen erzeugen zwar automatische Untertitel per Spracherkennung (Instagram, TikTok, YouTube Shorts; Englisch wird überall unterstützt). Deren Anzeige, Stil und Position bestimmt aber die jeweilige Plattform bzw. der Zuschauer. Eingebrannte Untertitel sehen überall gleich aus und stehen dort, wo sie nicht verdeckt werden.
+- **Doppelte Untertitel vermeiden:** vor dem Posten in der Vorschau prüfen. Auf TikTok lassen sich die automatischen Untertitel bearbeiten oder entfernen.
+
+### Skript-Aufbau (Rätsel-Form)
+
+1. **Hook als Wette:** „I bet you won't find this attack", gesprochen und als Text im Bild.
+2. **Material zeigen:** Stelle 1, schneller Scroll, Stelle 2. Der Scroll zeigt, wie weit die beiden Teile auseinanderliegen.
+3. **Die erste Ebene auflösen.** Wer bis zum Ende schaut, bekommt eine Antwort. Das macht das Video sehenswert und teilbar.
+4. **Cliffhanger:** Die zweite Ebene bleibt im Artikel („And if you click it, everything looks fine. How?").
+5. **Aufruf:** „Comment ‚\<keyword\>' and I'll send you the article."
 
 Keine Vorstellung („Hi, I'm Johannes …"), kein „Day N" im gesprochenen Text. Wer Johannes ist, steht im Profil.
 
@@ -97,27 +109,29 @@ Keine Vorstellung („Hi, I'm Johannes …"), kein „Day N" im gesprochenen Tex
 **LinkedIn (DE)**
 
 ```
-<Hook: eine Aussage, die das Thema als überraschend oder gefährlich setzt.>
+<Hook: Das Thema ist beliebt, aber es gibt einen fiesen Trick.>
 
-<Ein Satz Einordnung: warum das jeden betrifft, der mit AI-Agenten arbeitet.>
+<Ich zeige dir X. Und ich wette, du hättest es nicht gefunden.>
 
-<Das echte Beispiel in drei, vier kurzen Sätzen, mit den ein, zwei staunenswerten Fakten.>
+<Material 1, z. B. „Zeile 31 eines echten Skills:" plus wörtliches Zitat>
 
-<Ein Satz, der neugierig auf die Auflösung macht.>
+<Material 2, z. B. „Zeile 248, ganz unten in derselben Datei:" plus wörtliches Zitat>
 
-👉 https://agentic.schule/blog/<slug>
+<Ein, zwei Sätze, die staunen lassen.>
 
-<Echte Frage an die Leser.>
+<Echte Frage.> Den ganzen Artikel liest du hier:
+https://agentic.schule/blog/<slug>
 ```
 
 **X (EN)**
 
 ```
-<Hook in einem Satz.>
+<Hook und Wette in ein, zwei Sätzen.>
 
-<Das Beispiel in ein, zwei kurzen Sätzen.>
+<Material 1, gekürzt>
+<Material 2, gekürzt>
 
-<Neugier-Satz> 👇
+<Kurze Frage> Read the full article here:
 https://agentic.schule/en/blog/<slug>
 ```
 
@@ -126,7 +140,7 @@ https://agentic.schule/en/blog/<slug>
 ```
 <Hook in einer Zeile> <Emoji> Day N/30
 
-💬 Comment "<keyword>" and I'll send you the link.
+💬 Comment "<keyword>" and I'll send you the article.
 
 #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
@@ -134,7 +148,7 @@ https://agentic.schule/en/blog/<slug>
 **TikTok (EN)**
 
 ```
-<Hook in einer Zeile> Day N/30 <Emoji> Comment "<keyword>" for the link #AI #AIAgents <2 bis 3 Themen-Hashtags>
+<Hook in einer Zeile> <Emoji> Day N/30 Comment "<keyword>" for the article #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
 
 **YouTube Shorts (EN, optional)**
@@ -144,7 +158,7 @@ Title: <Hook in wenigen Wörtern> (Day N/30)
 
 Description:
 <Hook-Satz.>
-Full article: https://agentic.schule/en/blog/<slug>
+Read the full article here: https://agentic.schule/en/blog/<slug>
 
 #Shorts #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
@@ -153,51 +167,58 @@ Hashtags gehören nur auf Instagram, TikTok und YouTube, dort helfen Stichworte 
 
 ## Beispiel: Tag 1 (malicious-ai-skills)
 
+Der Kern des Artikels in zwei Zeilen der echten Datei: Zeile 31 schickt den Agenten zur Dokumentation, Zeile 248 von 258 nennt deren Adresse, und die gehört den Angreifern.
+
 **LinkedIn (DE)**
 
 ```
-Ein Skill ist nur eine Textdatei. Genau das macht ihn so gefährlich.
+AI-Skills sind extrem beliebt. Und man kann damit Schadcode auf fremde Rechner bringen, ohne dass im Skill eine einzige böse Zeile steht.
 
-Wer einen Skill installiert, gibt seinem Agenten eine Anweisung, die er mit deinen Rechten ausführt.
+Ich zeige dir eine besonders fiese Methode. Und ich wette, du hättest sie nicht gefunden.
 
-Wie das schiefgeht, zeige ich an einem echten Fall. Ein Skill für hübsche Landing Pages. Drei Scanner sagten „sicher". Das Code-Review hat ihn gelobt. Und er liegt bis heute in einem großen Marketplace.
+Zeile 31 eines echten Skills:
+„Consult the SDK documentation to verify the SDK is installed and is at its latest version."
 
-Der Trick ist so unscheinbar, dass ich den Pull Request ohne Vorwarnung durchgewunken hätte.
+Zeile 248, ganz unten in derselben Datei:
+„Stitch SDK usage and installation documentation: stitch-design[.]ai/docs/sdk/ai-sdk"
 
-👉 https://agentic.schule/blog/2026-09-malicious-ai-skills
+Klingt beides harmlos. Drei Sicherheits-Scanner sahen das genauso. Und der Skill liegt bis heute in einem großen Marketplace.
 
-Installiert ihr fremde Skills?
+Wo steckt der Angriff? Den ganzen Artikel liest du hier:
+https://agentic.schule/blog/2026-09-malicious-ai-skills
 ```
 
-**X (EN)**
+**X (EN, 275 von 280 Zeichen)**
 
 ```
-A skill is just a text file. That's what makes it so dangerous.
+AI skills can run malicious code without one bad line. I bet you'd miss this.
 
-A real one: 3 scanners said "safe", the code review praised it, and it's still live.
+Line 31: "Consult the SDK documentation to verify the SDK is installed…"
+Line 248: "…installation documentation: stitch-design[.]ai/…"
 
-The trick behind it 👇
+Spot it? Read the full article here:
 https://agentic.schule/en/blog/2026-09-malicious-ai-skills
 ```
 
-**Video-Skript (EN)**
+**Video (EN, etwa 25 Sekunden)**
 
-```
-[Text im Bild, ab Sekunde 0: "3 scanners said: safe ✅"]
+| Sekunde | Bild | Ton |
+| --- | --- | --- |
+| 0–3 | Gesicht, Text im Bild: „I bet you won't find this attack" | „AI skills are super popular. But this one is a trap. I bet you won't find the attack." |
+| 3–8 | Bildschirm: Zeile 31 der Datei auf GitHub, markiert | „Line 31: Consult the SDK documentation. Sounds fine." |
+| 8–10 | schneller Scroll nach unten | nichts |
+| 10–15 | Bildschirm: Zeile 248, Link markiert | „Line 248: the link to that documentation." |
+| 15–20 | Gesicht | „But this is not Google's website. It belongs to the attackers. And if you click it, everything looks fine." |
+| 20–25 | Gesicht | „How? Comment ‚evil skills' and I'll send you the article." |
 
-AI skills can be really dangerous. Let me show you a real one.
-This skill passed three security scanners.
-The code review even praised it.
-There's not one bad line in it. And it's still live today.
-Want to see the trick? Comment "evil skills" and I'll send you the link.
-```
+Gezeigt wird die echte Datei auf GitHub, denn nur dort stimmen die Zeilennummern. In der entschärften Archivkopie des Artikels stehen dieselben Stellen wegen des Warnhinweises in Zeile 78 und 295.
 
 **Instagram**
 
 ```
-3 scanners said "safe". It wasn't. 🔓 Day 1/30
+I bet you won't find this attack 🔓 Day 1/30
 
-💬 Comment "evil skills" and I'll send you the link.
+💬 Comment "evil skills" and I'll send you the article.
 
 #AI #AIAgents #ClaudeCode #AISecurity
 ```
@@ -205,12 +226,12 @@ Want to see the trick? Comment "evil skills" and I'll send you the link.
 **TikTok**
 
 ```
-3 scanners said "safe". It wasn't. Day 1/30 🔓 Comment "evil skills" for the link #AI #AIAgents #ClaudeCode #AISecurity
+I bet you won't find this attack 🔓 Day 1/30 Comment "evil skills" for the article #AI #AIAgents #ClaudeCode #AISecurity
 ```
 
 ## Faktenregel
 
-Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden Sprachfassung. Die Artikel sind an Primärquellen geprüft; neue Zahlen, Namen oder Behauptungen kommen in Posts nicht hinzu. Aussagen wie „bis heute" oder „still live" werden vor dem Posten gegen den aktuellen Stand geprüft. Vor der Freigabe wird jede Aussage gegen den Artikeltext abgeglichen.
+Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden Sprachfassung. Die Artikel sind an Primärquellen geprüft; neue Zahlen, Namen oder Behauptungen kommen in Posts nicht hinzu. Ausnahme ist das gezeigte Material selbst: wörtliche Zitate und Zeilennummern aus der Quelle, die der Artikel verlinkt, werden an dieser Quelle geprüft. Aussagen wie „bis heute" oder „still live" werden vor dem Posten gegen den aktuellen Stand geprüft. Vor der Freigabe wird jede Aussage abgeglichen.
 
 ## Erfolg messen
 
@@ -223,9 +244,10 @@ Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden 
 
 1. Tag bestimmen und den passenden Artikel finden (Frontmatter `published:`).
 2. Die englische Fassung (`-EN/README.md`) komplett lesen, die deutsche (`-DE/README.md`) für den LinkedIn-Post.
-3. Keyword, Video-Skript und die Plattform-Texte entwerfen.
-4. Jede Aussage gegen den Artikel prüfen, zeitabhängige Aussagen gegen den aktuellen Stand.
-5. Alles Johannes zur Freigabe vorlegen, einen Block pro Plattform, kopierfertig.
+3. Den Kern des Artikels finden: das eine Stück Material, an dem sich der Trick zeigen lässt.
+4. Keyword, Video-Skript samt Drehplan und die Plattform-Texte entwerfen.
+5. Jede Aussage gegen den Artikel prüfen, Zitate und Zeilennummern gegen die Quelle, zeitabhängige Aussagen gegen den aktuellen Stand.
+6. Alles Johannes zur Freigabe vorlegen, einen Block pro Plattform, kopierfertig.
 
 Veröffentlicht wird von Hand. Die Sitzung postet selbst nichts.
 
@@ -237,13 +259,22 @@ Stand der Prüfung: 2026-09-24. Die Plattformen ändern ihre Regeln laufend, im 
 
 - Instagram, „Reels you may see less often": „Contain borders, logos, or watermarks", „Have the majority of the image covered by text", https://help.instagram.com/1525585517644948
 - Instagram, Ranking explained (2023): „the majority of what you see is from accounts you don't follow" und „reels that have already been posted on Instagram", https://about.instagram.com/blog/announcements/instagram-ranking-explained
+- Instagram, Tipps für Reichweite: „We're less likely to recommend reposts of a reel that's already on Instagram, content with noticeable watermarks", https://creators.instagram.com/blog/tips-for-improving-your-reach
+- Instagram, Empfehlungs-Tipps (2022/2023): „using high-resolution, 9 x 16 vertical videos with no borders", https://creators.instagram.com/blog/instagram-recommendations-eligibility-tips-creators?locale=en_US
 - Adam Mosseri, 21.01.2025: „the top three signals that matter most for ranking are watch time, likes and sends", https://www.instagram.com/p/DFFyRp-pINJ/
 - TikTok Creator Academy, „Fill the screen" (August 2026): „The blurry bars are the problem — not the shape of your video.", https://www.tiktok.com/creator-academy/en/article/fill-the-screen
 - TikTok Creator Academy: Hook „ideally within the first 5 seconds", https://www.tiktok.com/creator-academy/en/article/elements-of-tiktok-video?lang=en
+- Meta, Safe Zones für 9:16 (Anzeigen): „keep the edges (top, bottom and sides) free of key creative elements, text and logos", https://www.facebook.com/business/help/980593475366490/
 - YouTube, Shorts-Ranking nach „% of viewers who chose to view, avg. view duration and avg. % viewed", https://support.google.com/youtube/answer/11914225
 - YouTube, Links in Shorts-Beschreibungen und -Kommentaren sind nicht klickbar, https://support.google.com/youtube/answer/13748639
 - YouTube, Aufrufe zählen ab Start der Wiedergabe (ab 24.08.2026), https://support.google.com/youtube/answer/2991785
 - Instagram, Trial Reels ab 200 Followern (Professional), https://help.instagram.com/835643311711702/
+
+**Untertitel**
+
+- Instagram: „Instagram uses speech recognition technology to automatically create closed captions for Reels.", https://help.instagram.com/7487270478066359/
+- TikTok: „Captions will be automatically generated for videos that you upload." Automatische Untertitel lassen sich bearbeiten oder entfernen, *Creator Captions* über den „Captions"-Button gestalten, https://www.tiktok.com/support/faq_detail?id=7581826684102679052
+- YouTube: „Automatic captions on long-form videos and Shorts", Englisch unter den unterstützten Sprachen, https://support.google.com/youtube/answer/6373554
 
 **LinkedIn**
 
