@@ -21,13 +21,15 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
 2. **Den Kern finden:** das eine Stück echtes Material, an dem sich der Trick zeigen lässt (z. B. zwei Zeilen einer Datei, ein Befehl, eine Ausgabe). Daraus wird das Rätsel: „Ich wette, du hättest es nicht gefunden."
 3. **Entwerfen**, gemäß `docs/social-media.md` (Tag 1 dort ist das Muster):
    - LinkedIn-Post (DE), Link auf die `-DE`-Fassung, eingeleitet mit „Den ganzen Artikel liest du hier:".
-   - X-Post (EN), höchstens 280 Zeichen (Link zählt 23, Emoji 2; nachzählen), eingeleitet mit „Read the full article here:".
+   - X-Post (EN), höchstens 280 Zeichen (Link zählt 23; nachzählen), eingeleitet mit „Read the full article here:".
    - Kommentar-Keyword (ein, zwei Wörter), Video-Skript (EN, etwa 25 Sekunden, Rätsel-Form) und Drehplan als Tabelle: Sekunde, Bild (Gesicht oder Bildschirm), Ton.
    - Captions für Instagram und TikTok, optional Titel und Beschreibung für YouTube Shorts.
-   - Kurz halten und kein Hand-Emoji als Link-Hinweis. Gefährliche Adressen entschärfen (`[.]`).
+   - Kurz halten, keine Emojis. Gefährliche Adressen entschärfen (`[.]`).
 4. **Faktencheck:** Jede Aussage muss in der jeweiligen Sprachfassung des Artikels stehen. Zahlen, Namen und Zuspitzungen einzeln gegen den Artikeltext abgleichen. Zitate und Zeilennummern gegen die verlinkte Quelle prüfen, zeitabhängige Aussagen („bis heute", „still live") gegen den aktuellen Stand, etwa per `gh`. Was nicht gedeckt ist, fliegt raus oder wird entschärft.
 5. **Stil prüfen:** Der deutsche Post folgt `CLAUDE.md` (duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese, echte Umlaute). Die englischen Texte nutzen einfache Wörter, die Johannes spontan so sagen würde.
 6. **Vorlegen:** Ein kopierfertiger Block pro Element (LinkedIn, X, Keyword, Video-Skript mit Drehplan, Instagram, TikTok, optional YouTube Shorts), dazu die beiden Links und der Pfad zum Header-Bild der `-DE`-Fassung für LinkedIn.
+
+7. **Regeln nachziehen:** Nach der Freigabe die Korrekturen durchgehen, die nach einer allgemeinen Regel klangen, und sie Johannes als neue Playbook-Regeln vorschlagen. Nach Zustimmung in `docs/social-media.md` an der passenden Stelle eintragen und direkt auf `main` committen (Details dort unter „Feedback und neue Regeln").
 
 ## Grenzen
 

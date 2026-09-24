@@ -17,7 +17,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 - **Das bewährte Muster ist das Rätsel:** „X ist beliebt, aber es gibt einen fiesen Trick. Ich wette, du hättest ihn nicht gefunden." Dann das echte Material zeigen, etwa zwei Zeilen aus einer Datei, und fragen: „Wo steckt der Angriff?" Die Auflösung steht im Artikel. Die Leute suchen selbst, und die Antworten in den Kommentaren kommen von allein.
 - **Echtes Material statt Platzhalter.** Wörtliche Zitate, echte Zeilennummern, echte Namen. Ein Platzhalter wie „innocent-looking-domain.com" verrät die Lösung schon im Namen. Gefährliche Adressen werden wie im Artikel entschärft (`stitch-design[.]ai`), damit kein klickbarer Link entsteht.
 - **Der Post muss trotzdem für sich stehen.** Reine Neugier ohne Substanz wirkt wie Clickbait. Das gezeigte Material ist der Grund, weiterzulesen.
-- **Kein Hand-Emoji als Link-Hinweis.** Vor dem Link steht ein ausgeschriebener Satz: „Den ganzen Artikel liest du hier:" bzw. „Read the full article here:".
+- **Keine Emojis.** Weder im Post noch in der Caption noch als Text im Video. Vor dem Link steht ein ausgeschriebener Satz: „Den ganzen Artikel liest du hier:" bzw. „Read the full article here:".
 - **Zugespitzt, aber wahr.** Jede Aussage muss der Artikel decken. Ein Beispiel für die Grenze: Die Sicherheitsfirma im Day-1-Artikel hat nach eigener Aussage zehntausende Agenten dazu gebracht, ihr Skript auszuführen, das darf gesagt werden. „Still infecting computers right now" geht dagegen weiter als der Artikel, denn die Nutzlast wurde bewusst harmlos gehalten; „still live" oder „still out there" ist gedeckt.
 - **Souverän statt marktschreierisch,** wie in den Artikeln selbst (siehe `CLAUDE.md`). Deutsche Posts folgen dem Stil aus `CLAUDE.md`: duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese.
 
@@ -56,7 +56,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 ## X (EN)
 
-- **Der Post passt in 280 Zeichen** (die Grenze ohne Premium). Links zählen dabei immer 23 Zeichen, Emojis zwei. Zitate lassen sich mit „…" kürzen, solange der Rest wörtlich bleibt.
+- **Der Post passt in 280 Zeichen** (die Grenze ohne Premium). Links zählen dabei immer 23 Zeichen. Zitate lassen sich mit „…" kürzen, solange der Rest wörtlich bleibt.
 - **Der Link steht direkt im Post,** eingeleitet mit „Read the full article here:". X stuft Links nach Aussage der Produktleitung nicht herab, und der veröffentlichte Ranking-Code enthält keine Link-Strafe. Ein Link in einer Antwort bringt nichts: Antworten zeigt X Nicht-Followern im For-You-Feed nicht, und der Schub für kleine Accounts gilt nur für eigenständige Posts.
 - **Der Text muss ohne Link tragen.** Link-Posts sammeln weniger Likes und Antworten, weil die Leute auf die Seite wechseln.
 - **Kein Video.**
@@ -138,9 +138,9 @@ https://agentic.schule/en/blog/<slug>
 **Instagram Reels (EN)**
 
 ```
-<Hook in einer Zeile> <Emoji> Day N/30
+<Hook in einer Zeile>. Day N/30
 
-💬 Comment "<keyword>" and I'll send you the article.
+Comment "<keyword>" and I'll send you the article.
 
 #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
@@ -148,7 +148,7 @@ https://agentic.schule/en/blog/<slug>
 **TikTok (EN)**
 
 ```
-<Hook in einer Zeile> <Emoji> Day N/30 Comment "<keyword>" for the article #AI #AIAgents <2 bis 3 Themen-Hashtags>
+<Hook in einer Zeile>. Day N/30. Comment "<keyword>" for the article #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
 
 **YouTube Shorts (EN, optional)**
@@ -216,9 +216,9 @@ Gezeigt wird die echte Datei auf GitHub, denn nur dort stimmen die Zeilennummern
 **Instagram**
 
 ```
-I bet you won't find this attack 🔓 Day 1/30
+I bet you won't find this attack. Day 1/30
 
-💬 Comment "evil skills" and I'll send you the article.
+Comment "evil skills" and I'll send you the article.
 
 #AI #AIAgents #ClaudeCode #AISecurity
 ```
@@ -226,7 +226,7 @@ I bet you won't find this attack 🔓 Day 1/30
 **TikTok**
 
 ```
-I bet you won't find this attack 🔓 Day 1/30 Comment "evil skills" for the article #AI #AIAgents #ClaudeCode #AISecurity
+I bet you won't find this attack. Day 1/30. Comment "evil skills" for the article #AI #AIAgents #ClaudeCode #AISecurity
 ```
 
 ## Faktenregel
@@ -240,6 +240,12 @@ Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden 
 - **YouTube Shorts:** „Viewed vs. swiped away" zählt. Die reine Aufrufzahl sagt wenig, denn seit dem 24. August 2026 zählt jeder gestartete Abspielvorgang als Aufruf.
 - **LinkedIn und X:** Impressionen und Antworten, nicht nur Likes.
 
+## Feedback und neue Regeln
+
+- **Korrekturen für einen einzelnen Post** („Hook zu lahm", „kürzer") gibt Johannes im Chat. Die Sitzung überarbeitet, bis er freigibt. Drei, vier Runden sind normal.
+- **Korrekturen, die immer gelten sollen,** werden Regeln in diesem Playbook. Am Ende jeder Sitzung schlägt die Sitzung vor, welche Korrekturen nach einer allgemeinen Regel klangen. Nach Johannes' Zustimmung trägt sie die Regel hier ein, an der passenden Stelle und ohne Hinweis darauf, was vorher galt.
+- **Playbook-Änderungen werden direkt auf `main` committet,** ohne Pull Request. Vorher `git branch --show-current` prüfen: Andere Sitzungen nutzen denselben Checkout. Steht er auf einem fremden Branch, über ein temporäres `git worktree` auf `main` committen und den Branch des Checkouts nicht wechseln.
+
 ## Ablauf einer Sitzung
 
 1. Tag bestimmen und den passenden Artikel finden (Frontmatter `published:`).
@@ -248,6 +254,7 @@ Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden 
 4. Keyword, Video-Skript samt Drehplan und die Plattform-Texte entwerfen.
 5. Jede Aussage gegen den Artikel prüfen, Zitate und Zeilennummern gegen die Quelle, zeitabhängige Aussagen gegen den aktuellen Stand.
 6. Alles Johannes zur Freigabe vorlegen, einen Block pro Plattform, kopierfertig.
+7. Nach der Freigabe allgemeine Korrekturen als neue Regeln vorschlagen und nach Zustimmung ins Playbook übernehmen (siehe „Feedback und neue Regeln").
 
 Veröffentlicht wird von Hand. Die Sitzung postet selbst nichts.
 
