@@ -42,7 +42,7 @@ Grundlage ist der Signatur-Verlauf der Website: **tiefes Lila-Schwarz → Lila �
 Feste Bestandteile, gleiche DNA über die ganze Serie:
 
 - **Hintergrund:** der dunkle Verlauf plus zwei radiale Scheine (lila oben rechts, Magenta-Hauch unten links) und ein dezentes, weiches Punkt-Grid.
-- **Logo oben links:** `logo-agentic-schule.png`, absolut positioniert mit Abstand zur Ecke (`top:60px; left:78px; height:56px`), nicht in die Ecke geklemmt. Es ersetzt eine frühere Text-Zeile („agentic.schule" in Versalien).
+- **Logo oben links:** `logo-agentic-schule.png`, absolut positioniert mit Abstand zur Ecke (`top:60px; left:78px; height:56px`), nicht in die Ecke geklemmt.
 - **Textblock links,** vertikal zentriert: Titel (`h1`, 60px, fett, ein betonter Teil im Lila-Magenta-Verlauf), ein Untertitel-Satz, darunter „von **Johannes Hoppe**".
 - **Illustration rechts:** eine schlichte, artikel-eigene SVG (520×675), die das Thema in wenigen Formen erzählt. Kein Stockmaterial, keine Deko.
 
@@ -69,35 +69,3 @@ Im Frontmatter der `README.md` bleibt `header: header.jpg`.
 - **Titel-Akzent als Verlauf** braucht `-webkit-background-clip:text` und `color:transparent`; ohne beides bleibt der Text unsichtbar oder einfarbig.
 - **Bühne exakt 1200×675** halten. Der Renderer schießt genau diesen Ausschnitt; ragt Inhalt hinaus, wird er beschnitten.
 - **Warme Farbwerte** in einer kopierten Vorlage (Orange, Braun) vor dem Rendern gegen die CI-Farben oben tauschen, sonst fällt das Banner aus der Reihe.
-
-## Reel-Banner (9:16)
-
-Für Instagram Reels und TikTok gibt es eine zweite, hochkant stehende Fassung: einen Marken-Hintergrund, über den das Video gelegt wird. Das Video ist im Querformat (16:9) und liegt als volle Breite in der Mitte des 9:16-Rahmens; oben und unten trägt der Rahmen die Marke.
-
-Die Videos erscheinen nur auf Englisch. Das Reel-Banner liegt daher in der jeweiligen `-EN`-Fassung des Artikels.
-
-### Pipeline
-
-```bash
-node tools/render-reel.mjs blog/<artikel-ordner>
-```
-
-- Quelle: `header-reel.src.html`, Bühne **1080×1920**, `logo-agentic-schule.png` daneben.
-- Ergebnis: `header-reel.png`, **2160×3840** (PNG, `deviceScaleFactor: 2`) — 4K, passend zur Videoqualität.
-- Startpunkt: `docs/banner-reel-template.src.html` als `header-reel.src.html` in den `-EN`-Ordner kopieren.
-
-### Aufbau
-
-- **Oben:** Logo mittig, darunter der Eyebrow **`Day N/30`**, der Titel (Verlaufs-Akzent wie beim Lese-Banner) und ein kurzer Untertitel.
-- **Mitte:** die freie Video-Zone, volle Breite und 16:9, vertikal zentriert. Sie ist mit einer dezenten dunklen Fläche und je einer Verlaufs-Kante oben und unten angedeutet und wird vom Video vollständig überdeckt.
-- **Unten:** bleibt frei. Dort liegen im fertigen Reel die Video-Untertitel, deshalb kein Teaser und keine weitere Zeile.
-
-### Safe-Zones (Plattform-UI)
-
-Wichtige Inhalte aus diesen Bereichen heraushalten:
-
-- **Obere 5 %** — Fortschrittsbalken und Kopfzeile der Plattform.
-- **Untere ~18 %** — Untertitel, Beschreibung und Nutzername.
-- **Rechte Kante** — Like-, Kommentar- und Teilen-Buttons. Deshalb ist der Text mittig gesetzt und der Teaser in der Breite begrenzt.
-
-Die Zonen lassen sich prüfen, indem man dem `header-reel.src.html` testweise eine Overlay-Ebene mit den Bereichsrechtecken hinzufügt und rendert.
