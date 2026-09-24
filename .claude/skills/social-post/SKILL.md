@@ -20,14 +20,14 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
 1. **Artikel lesen:** `blog/<slug>-EN/README.md` komplett, dazu `blog/<slug>-DE/README.md` für den LinkedIn-Post. Fehlt eine Fassung, melde das. Ohne EN-Fassung gibt es kein Video und keinen X-Post, ohne DE-Fassung keinen LinkedIn-Post.
 2. **Den Kern finden:** das eine Stück echtes Material, an dem sich der Trick zeigen lässt (z. B. zwei Zeilen einer Datei, ein Befehl, eine Ausgabe). Daraus wird die Knobelaufgabe, eine Frage direkt an den Leser („Siehst du …?"). Den Wortlaut von Tag zu Tag variieren.
 3. **Entwerfen**, gemäß `docs/social-media.md` (Tag 1 dort ist das Muster):
-   - LinkedIn-Post (DE), Link auf die `-DE`-Fassung, eingeleitet mit „Den ganzen Artikel liest du hier:".
-   - X-Post (EN), höchstens 280 Zeichen (Link zählt 23; nachzählen), eingeleitet mit „Read the full article here:".
+   - LinkedIn-Post (DE) und X-Post (EN): je zwei Sätze nach der Vorlage (Knobelfrage, Überleitungssatz) plus Link, höchstens ein passendes Emoji am Ende der Frage. X höchstens 280 Zeichen (Link zählt 23; nachzählen).
+   - Bildvorlage für LinkedIn und X: welche Datei, welche Zeilen wörtlich, was durch `[...]` ersetzt wird; der entscheidende Teil unten. Johannes macht den Screenshot im Editor.
    - Kommentar-Keyword (ein, zwei Wörter), Video-Skript (EN, etwa 25 Sekunden, Knobelaufgabe) und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
    - Captions für Instagram und TikTok, optional Titel und Beschreibung für YouTube Shorts.
-   - Kurz halten, keine Emojis. Gefährliche Adressen entschärfen (`[.]`).
+   - Aufs Äußerste verdichten. Emojis nur wie im Playbook. Gefährliche Adressen im Text entschärfen (`[.]`).
 4. **Faktencheck:** Jede Aussage muss in der jeweiligen Sprachfassung des Artikels stehen. Zahlen, Namen und Zuspitzungen einzeln gegen den Artikeltext abgleichen. Zitate und Zeilennummern gegen die verlinkte Quelle prüfen, zeitabhängige Aussagen („bis heute", „still live") gegen den aktuellen Stand, etwa per `gh`. Was nicht gedeckt ist, fliegt raus oder wird entschärft.
 5. **Stil prüfen:** Der deutsche Post folgt `CLAUDE.md` (duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese, echte Umlaute). Die englischen Texte nutzen einfache Wörter, die Johannes spontan so sagen würde.
-6. **Vorlegen:** Ein kopierfertiger Block pro Element (LinkedIn, X, Keyword, Video-Skript mit Drehplan, Instagram, TikTok, optional YouTube Shorts), dazu die beiden Links und der Pfad zum Header-Bild der `-DE`-Fassung für LinkedIn.
+6. **Vorlegen:** Ein kopierfertiger Block pro Element (LinkedIn, X, Bildvorlage, Keyword, Video-Skript mit Drehplan, Instagram, TikTok, optional YouTube Shorts), dazu die beiden Links.
 
 7. **Regeln nachziehen:** Nach der Freigabe die Korrekturen durchgehen, die nach einer allgemeinen Regel klangen, und sie Johannes als neue Playbook-Regeln vorschlagen. Nach Zustimmung in `docs/social-media.md` an der passenden Stelle eintragen und direkt auf `main` committen (Details dort unter „Feedback und neue Regeln").
 

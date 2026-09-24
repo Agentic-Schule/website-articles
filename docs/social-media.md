@@ -14,11 +14,12 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 - **Der Hook kommt zuerst.** Fast alle, die einen Post oder ein Reel sehen, folgen dir nicht und kennen die Serie nicht. Keine Vorstellung, kein „Tag 1 von 30" am Anfang. Die Serie steht in der Caption.
 - **Kurz und auf den Kern.** Ein Post erzählt den Artikel nicht nach. Er setzt das Thema, zeigt den einen Kern und macht neugierig auf die Auflösung.
-- **Das bewährte Muster ist die Knobelaufgabe:** eine Frage direkt an den Leser, etwa „Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff?" Dann das echte Material zeigen, etwa zwei Zeilen aus einer Datei, und einen kleinen Tipp geben. Die Auflösung steht im Artikel. Die Leute suchen selbst, und die Antworten in den Kommentaren kommen von allein.
+- **Das bewährte Muster ist die Knobelaufgabe, aufs Äußerste verdichtet:** Der Post besteht aus zwei Sätzen, dem Link und einem Bild. Satz 1 stellt die Frage direkt an den Leser („Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff?"). Satz 2 leitet zum Artikel über („Hast du den Angriff nicht gefunden? Dann lies besser diesen Artikel:"). Das Bild ist die Aufgabe: ein Screenshot des echten Materials, etwas zum Anschauen und Mitsuchen. Die Frage bleibt offen, die Auflösung steht im Artikel.
 - **Den Wortlaut der Frage von Tag zu Tag variieren** („Siehst du …?", „Findest du …?", „Ich wette, du hättest … nicht gefunden"). Dreißigmal derselbe Einstieg nutzt sich ab.
-- **Echtes Material statt Platzhalter.** Wörtliche Zitate, echte Zeilennummern, echte Namen. Ein Platzhalter wie „innocent-looking-domain.com" verrät die Lösung schon im Namen. Gefährliche Adressen werden wie im Artikel entschärft (`stitch-design[.]ai`), damit kein klickbarer Link entsteht.
+- **Echtes Material statt Platzhalter.** Wörtliche Zitate, echte Zeilennummern, echte Namen. Ein Platzhalter wie „innocent-looking-domain.com" verrät die Lösung schon im Namen. Im Text werden gefährliche Adressen wie im Artikel entschärft (`stitch-design[.]ai`), damit kein klickbarer Link entsteht. Im Bild bleibt die echte Adresse stehen, dort lässt sie sich nicht anklicken.
 - **Der Post muss trotzdem für sich stehen.** Reine Neugier ohne Substanz wirkt wie Clickbait. Das gezeigte Material ist der Grund, weiterzulesen.
-- **Keine Emojis.** Weder im Post noch in der Caption noch als Text im Video. Vor dem Link steht ein ausgeschriebener Satz: „Den ganzen Artikel liest du hier:" bzw. „Read the full article here:".
+- **Höchstens ein Emoji, am Ende der Knobelfrage und passend zum Thema** (Tag 1: ☠️). Keine Hand-Emojis, keine Deko-Emojis, keine Emojis als Text im Video.
+- **Vor dem Link steht ein ausgeschriebener Satz,** der zum Artikel überleitet: „Hast du den Angriff nicht gefunden? Dann lies besser diesen Artikel:" bzw. „Not sure what the attack is? Then you should read this article:".
 - **Zugespitzt, aber wahr.** Jede Aussage muss der Artikel decken. Ein Beispiel für die Grenze: Die Sicherheitsfirma im Day-1-Artikel hat nach eigener Aussage zehntausende Agenten dazu gebracht, ihr Skript auszuführen, das darf gesagt werden. „Still infecting computers right now" geht dagegen weiter als der Artikel, denn die Nutzlast wurde bewusst harmlos gehalten; „still live" oder „still out there" ist gedeckt.
 - **Souverän statt marktschreierisch,** wie in den Artikeln selbst (siehe `CLAUDE.md`). Deutsche Posts folgen dem Stil aus `CLAUDE.md`: duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese.
 
@@ -34,8 +35,8 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 | Plattform | Sprache | Format | Link | Aufruf |
 | --- | --- | --- | --- | --- |
-| LinkedIn | DE | Text + `header.jpg` der `-DE`-Fassung | reine URL im Post | echte Frage zum Thema, kein Keyword |
-| X | EN | Text, höchstens 280 Zeichen | im Post | keiner |
+| LinkedIn | DE | zwei Sätze + Screenshot | reine URL im Post | Knobelfrage, kein Keyword |
+| X | EN | zwei Sätze + derselbe Screenshot, höchstens 280 Zeichen | im Post | Knobelfrage, kein Keyword |
 | TikTok | EN | vertikales Video | keiner klickbar | Keyword, DMs von Hand |
 | Instagram Reels | EN | dasselbe Video | per Keyword-DM | Keyword |
 | YouTube Shorts (optional) | EN | dasselbe Video | in der Beschreibung, nicht klickbar | Keyword-Kommentare öffentlich mit der URL beantworten |
@@ -43,24 +44,35 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 **Facebook:** Das automatische Crossposting von Instagram nach Facebook bleibt aus. Meta stuft „Kommentiere ein bestimmtes Wort" auf Facebook ausdrücklich als *Comment Baiting* ein und senkt die Reichweite solcher Posts.
 
+## Das Bild (LinkedIn und X)
+
+Das Bild trägt die Knobelaufgabe. Johannes erstellt es selbst im Editor; die Sitzung gibt vor, welche Datei, welche Zeilen und was ausgelassen wird.
+
+- **Ein Screenshot der echten Quelle im Editor** (VS Code, dunkles Theme, große Schrift), so wie die Datei wirklich aussieht.
+- **Auf das Nötigste gekürzt.** Nur die Zeilen, die die Aufgabe braucht, wörtlich. Ausgelassenes wird durch `[...]` ersetzt. Das `[...]` zeigt nebenbei, wie weit die Teile auseinanderliegen.
+- **Der entscheidende Teil steht unten.** Wer sucht, findet ihn zuletzt.
+- **Auf dem Handy lesbar:** wenige Zeilen, große Schrift.
+- **Dasselbe Bild für LinkedIn und X.**
+- Beispiel Tag 1: [`docs/social-media-beispiel-tag-1.png`](social-media-beispiel-tag-1.png)
+
 ## LinkedIn (DE)
 
 - **Vom persönlichen Profil posten.** Posts einer Unternehmensseite erreichen zuerst nur deren Follower.
 - **Der Hook steht in den ersten zwei Zeilen,** vor dem „… mehr".
-- **Kein Video.** Text plus das Header-Bild der `-DE`-Fassung.
-- **Der Link steht als reine URL im Post,** eingeleitet mit „Den ganzen Artikel liest du hier:". Das Header-Bild anhängen, damit keine Link-Vorschaukarte erscheint.
+- **Kein Video.** Zwei Sätze plus Screenshot (siehe „Das Bild").
+- **Der Link steht als reine URL im Post,** eingeleitet mit dem Überleitungssatz. Das Bild anhängen; bietet LinkedIn zusätzlich eine Link-Vorschaukarte an, diese entfernen.
 - **Kein „Kommentiere X, dann schicke ich dir den Link".** LinkedIn filtert diese Art Engagement-Köder und verbietet automatisierte Kommentare und Nachrichten.
 - **Keine Hashtags.**
-- **Die Frage muss echt sein.** Bei der Knobelaufgabe ist sie es von selbst: „Hast du den Angriff gefunden?"
+- **Die Frage muss echt sein.** Bei der Knobelaufgabe ist sie es von selbst.
 - **In der ersten Stunde auf Kommentare antworten.**
 - Tägliches Posten ist in Ordnung. LinkedIn empfiehlt mindestens zwei bis drei Posts pro Woche.
 
 ## X (EN)
 
 - **Der Post passt in 280 Zeichen** (die Grenze ohne Premium). Links zählen dabei immer 23 Zeichen. Zitate lassen sich mit „…" kürzen, solange der Rest wörtlich bleibt.
-- **Der Link steht direkt im Post,** eingeleitet mit „Read the full article here:". X stuft Links nach Aussage der Produktleitung nicht herab, und der veröffentlichte Ranking-Code enthält keine Link-Strafe. Ein Link in einer Antwort bringt nichts: Antworten zeigt X Nicht-Followern im For-You-Feed nicht, und der Schub für kleine Accounts gilt nur für eigenständige Posts.
-- **Der Text muss ohne Link tragen.** Link-Posts sammeln weniger Likes und Antworten, weil die Leute auf die Seite wechseln.
-- **Kein Video.**
+- **Der Link steht direkt im Post,** eingeleitet mit dem Überleitungssatz. X stuft Links nach Aussage der Produktleitung nicht herab, und der veröffentlichte Ranking-Code enthält keine Link-Strafe. Ein Link in einer Antwort bringt nichts: Antworten zeigt X Nicht-Followern im For-You-Feed nicht, und der Schub für kleine Accounts gilt nur für eigenständige Posts.
+- **Text und Bild müssen ohne Link tragen.** Link-Posts sammeln weniger Likes und Antworten, weil die Leute auf die Seite wechseln.
+- **Kein Video.** Zwei Sätze plus derselbe Screenshot wie auf LinkedIn.
 
 ## Das Video (TikTok, Instagram, YouTube Shorts)
 
@@ -122,31 +134,21 @@ Keine Vorstellung („Hi, I'm Johannes …"), kein „Day N" im gesprochenen Tex
 
 ## Vorlagen
 
-**LinkedIn (DE)**
+**LinkedIn (DE)**, dazu der Screenshot
 
 ```
-<Knobelaufgabe als Frage an den Leser, z. B. „Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem … einen …?">
+Ich habe eine kleine Knobelaufgabe für dich! <Frage an den Leser, z. B. „Siehst du in folgendem … einen …?"> <höchstens ein passendes Emoji>
 
-<Material 1, z. B. „Zeile 31 eines echten Skills:" plus wörtliches Zitat>
-
-<Material 2, z. B. „Zeile 248, ganz unten in derselben Datei:" plus wörtliches Zitat>
-
-Ein kleiner Tipp: <ein Hinweis>. <Ein, zwei Sätze, die staunen lassen.>
-
-<Hast du … gefunden?> Den ganzen Artikel liest du hier:
+<Nicht gefunden?> Dann lies besser diesen Artikel:
 https://agentic.schule/blog/<slug>
 ```
 
-**X (EN)**
+**X (EN)**, dazu derselbe Screenshot
 
 ```
-<Knobelaufgabe als Frage, z. B. „A little puzzle for you: can you spot …?">
+I have a little puzzle for you! <Question, e.g. "Do you see a … in the following …?"> <höchstens ein passendes Emoji>
 
-<Material 1, gekürzt>
-<Material 2, gekürzt>
-
-<Kurzer Tipp.> Read the full article here:
-https://agentic.schule/en/blog/<slug>
+<Not sure …?> Then you should read this article: https://agentic.schule/en/blog/<slug>
 ```
 
 **Instagram Reels (EN)**
@@ -183,34 +185,24 @@ Hashtags gehören nur auf Instagram, TikTok und YouTube, dort helfen Stichworte 
 
 Der Kern des Artikels in zwei Zeilen der echten Datei: Zeile 31 schickt den Agenten zur Dokumentation, Zeile 248 von 258 nennt deren Adresse, und die gehört den Angreifern.
 
-**LinkedIn (DE)**
+**LinkedIn (DE)**, dazu der Screenshot
 
 ```
-Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff?
+Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff? ☠️
 
-Zeile 31 eines echten Skills:
-„Consult the SDK documentation to verify the SDK is installed and is at its latest version."
-
-Zeile 248, ganz unten in derselben Datei:
-„Stitch SDK usage and installation documentation: stitch-design[.]ai/docs/sdk/ai-sdk"
-
-Ein kleiner Tipp: Eine böse Zeile gibt es nicht. Trotzdem haben Agenten mit diesem Skill ein fremdes Skript geladen und ausgeführt. Drei Sicherheits-Scanner haben nichts gefunden. Und der Skill liegt bis heute in einem großen Marketplace.
-
-Hast du den Angriff gefunden? Den ganzen Artikel liest du hier:
+Hast du den Angriff nicht gefunden? Dann lies besser diesen Artikel:
 https://agentic.schule/blog/2026-09-malicious-ai-skills
 ```
 
-**X (EN, 274 von 280 Zeichen)**
+**X (EN)**, dazu derselbe Screenshot
 
 ```
-A little puzzle for you: can you spot the attack in this AI skill?
+I have a little puzzle for you! Do you see a dangerous attack in the following AI skill? ☠️
 
-Line 31: "Consult the SDK documentation to verify the SDK is installed…"
-Line 248: "…installation documentation: stitch-design[.]ai/…"
-
-Hint: no bad line. Read the full article here:
-https://agentic.schule/en/blog/2026-09-malicious-ai-skills
+Not sure what the attack is? Then you should read this article: https://agentic.schule/en/blog/2026-09-malicious-ai-skills
 ```
+
+**Der Screenshot** ([`docs/social-media-beispiel-tag-1.png`](social-media-beispiel-tag-1.png)): `SKILL.md` in VS Code. Oben der Abschnitt „Getting Stitch Ready" mit den Schritten 1 und 2 (Zeilen 27 bis 32 der echten Datei), dann `[...]`, unten der Abschnitt „Stitch Documentation" mit dem Link auf die echte Domain (Zeilen 246 bis 248).
 
 **Video (EN, etwa 25 Sekunden, Split-Screen)**
 
@@ -277,7 +269,7 @@ Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden 
 1. Tag bestimmen und den passenden Artikel finden (Frontmatter `published:`).
 2. Die englische Fassung (`-EN/README.md`) komplett lesen, die deutsche (`-DE/README.md`) für den LinkedIn-Post.
 3. Den Kern des Artikels finden: das eine Stück Material, an dem sich der Trick zeigen lässt.
-4. Keyword, Video-Skript samt Drehplan und die Plattform-Texte entwerfen.
+4. Bildvorlage, Plattform-Texte, Keyword und Video-Skript samt Drehplan entwerfen.
 5. Jede Aussage gegen den Artikel prüfen, Zitate und Zeilennummern gegen die Quelle, zeitabhängige Aussagen gegen den aktuellen Stand.
 6. Alles Johannes zur Freigabe vorlegen, einen Block pro Plattform, kopierfertig.
 7. Nach der Freigabe allgemeine Korrekturen als neue Regeln vorschlagen und nach Zustimmung ins Playbook übernehmen (siehe „Feedback und neue Regeln").
