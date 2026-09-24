@@ -14,7 +14,8 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 - **Der Hook kommt zuerst.** Fast alle, die einen Post oder ein Reel sehen, folgen dir nicht und kennen die Serie nicht. Keine Vorstellung, kein „Tag 1 von 30" am Anfang. Die Serie steht in der Caption.
 - **Kurz und auf den Kern.** Ein Post erzählt den Artikel nicht nach. Er setzt das Thema, zeigt den einen Kern und macht neugierig auf die Auflösung.
-- **Das bewährte Muster ist das Rätsel:** „X ist beliebt, aber es gibt einen fiesen Trick. Ich wette, du hättest ihn nicht gefunden." Dann das echte Material zeigen, etwa zwei Zeilen aus einer Datei, und fragen: „Wo steckt der Angriff?" Die Auflösung steht im Artikel. Die Leute suchen selbst, und die Antworten in den Kommentaren kommen von allein.
+- **Das bewährte Muster ist die Knobelaufgabe:** eine Frage direkt an den Leser, etwa „Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff?" Dann das echte Material zeigen, etwa zwei Zeilen aus einer Datei, und einen kleinen Tipp geben. Die Auflösung steht im Artikel. Die Leute suchen selbst, und die Antworten in den Kommentaren kommen von allein.
+- **Den Wortlaut der Frage von Tag zu Tag variieren** („Siehst du …?", „Findest du …?", „Ich wette, du hättest … nicht gefunden"). Dreißigmal derselbe Einstieg nutzt sich ab.
 - **Echtes Material statt Platzhalter.** Wörtliche Zitate, echte Zeilennummern, echte Namen. Ein Platzhalter wie „innocent-looking-domain.com" verrät die Lösung schon im Namen. Gefährliche Adressen werden wie im Artikel entschärft (`stitch-design[.]ai`), damit kein klickbarer Link entsteht.
 - **Der Post muss trotzdem für sich stehen.** Reine Neugier ohne Substanz wirkt wie Clickbait. Das gezeigte Material ist der Grund, weiterzulesen.
 - **Keine Emojis.** Weder im Post noch in der Caption noch als Text im Video. Vor dem Link steht ein ausgeschriebener Satz: „Den ganzen Artikel liest du hier:" bzw. „Read the full article here:".
@@ -50,7 +51,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 - **Der Link steht als reine URL im Post,** eingeleitet mit „Den ganzen Artikel liest du hier:". Das Header-Bild anhängen, damit keine Link-Vorschaukarte erscheint.
 - **Kein „Kommentiere X, dann schicke ich dir den Link".** LinkedIn filtert diese Art Engagement-Köder und verbietet automatisierte Kommentare und Nachrichten.
 - **Keine Hashtags.**
-- **Die Frage muss echt sein.** Beim Rätsel ist sie es von selbst: „Wo steckt der Angriff?"
+- **Die Frage muss echt sein.** Bei der Knobelaufgabe ist sie es von selbst: „Hast du den Angriff gefunden?"
 - **In der ersten Stunde auf Kommentare antworten.**
 - Tägliches Posten ist in Ordnung. LinkedIn empfiehlt mindestens zwei bis drei Posts pro Woche.
 
@@ -63,27 +64,42 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 ## Das Video (TikTok, Instagram, YouTube Shorts)
 
+### Aufbau: Split-Screen
+
+Jedes Video zeigt etwas. Das Bild ist durchgehend geteilt:
+
+| Bereich (1080×1920) | Inhalt |
+| --- | --- |
+| obere Hälfte | Bildschirmaufnahme des Materials, z. B. die Datei auf GitHub. Große Schrift, die entscheidende Stelle markiert. Die wichtige Zeile nicht ganz oben, dort liegt der Fortschrittsbalken. |
+| Mitte, an der Trennlinie | in den ersten Sekunden der Hook als Text, danach die Untertitel |
+| untere Hälfte | Johannes, Kopf und Schultern, eher im oberen Teil der Hälfte. Ganz unten legt die Plattform Caption und Nutzernamen darüber. |
+
+Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer rät mit, während die Frage gestellt wird. Und er sieht immer, worüber gesprochen wird. Daten, dass Split-Screen besser läuft als Vollbild mit Schnitten, gibt es nicht; für die Knobelaufgabe ist es die natürliche Form.
+
+### Aufnahme
+
+- **Johannes wird im Querformat gedreht** und im Schnitt zugeschnitten: links und rechts weg, oben und unten bleibt. Mittig bleiben, keine Gesten zur Seite. Für die untere Hälfte (1080×960, fast quadratisch) reicht eine 1080p-Aufnahme. Ein Vollbild im Hochformat (1080×1920) bräuchte 4K, denn aus 16:9 bleibt dafür nur knapp ein Drittel der Breite.
+- **Die Bildschirmaufnahme läuft die ganzen 25 Sekunden.** Das Browserfenster vorher schmal und hoch ziehen (etwa über die Handy-Ansicht der Entwicklertools), damit lange Zeilen umbrechen und die Schrift groß bleibt. Zeilennummern im Bild müssen zum Skript passen.
+- **Etwa 25 Sekunden.**
+
 ### Format
 
-- **Vertikal 9:16, bildfüllend,** mindestens 1080×1920. Keine Ränder, keine Balken, kein Rahmen um ein Querformat-Video. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.
+- **Vertikal 9:16, bildfüllend, 1080×1920.** Keine Ränder, keine Balken, kein Rahmen. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.
 - **Kein Logo, kein Wasserzeichen, kein „Day N/30" im Bild.** Instagram zeigt Reels mit Logos oder Wasserzeichen seltener. Das Branding kommt über das Profil.
-- **Etwa 25 Sekunden.**
-- **Zwei Bildquellen, harte Schnitte:** das Gesicht für Hook und Schluss, dazwischen der Bildschirm. Das Video zeigt das Material, über das es spricht.
-- **Die Bildschirmaufnahme zeigt die echte Quelle,** etwa die Datei auf GitHub, stark gezoomt, damit der Code auf dem Handy lesbar ist. Die entscheidende Stelle wird markiert. Zeilennummern im Bild müssen zum Skript passen.
-- **Der Hook steht ab Sekunde 0 zusätzlich als Text im Bild.** Sonst wenig Text: Instagram zeigt Reels seltener, deren Bild überwiegend mit Text bedeckt ist.
+- **Wenig Text im Bild:** der Hook und die Untertitel. Instagram zeigt Reels seltener, deren Bild überwiegend mit Text bedeckt ist.
 - **Ränder frei halten.** Oben, unten und rechts liegt die Oberfläche der Plattformen (Fortschrittsbalken, Caption, Nutzername, Buttons).
 - **Sauber exportieren und auf jede Plattform einzeln hochladen.** Kein heruntergeladenes TikTok-Video mit Wasserzeichen auf Instagram. Und auf Instagram nichts erneut hochladen, was dort schon einmal lief; eine neu aufgenommene Fassung ist ein neues Video.
 
 ### Untertitel
 
-- **Einmal im Schnitt einbrennen,** im unteren Drittel, aber nicht ganz unten, wo die Plattform-Oberfläche liegt.
-- Alle drei Plattformen erzeugen zwar automatische Untertitel per Spracherkennung (Instagram, TikTok, YouTube Shorts; Englisch wird überall unterstützt). Deren Anzeige, Stil und Position bestimmt aber die jeweilige Plattform bzw. der Zuschauer. Eingebrannte Untertitel sehen überall gleich aus und stehen dort, wo sie nicht verdeckt werden.
+- **Einmal im Schnitt einbrennen,** an der Trennlinie zwischen den beiden Hälften. Dort verdecken sie weder das Material noch das Gesicht, und sie liegen außerhalb der Plattform-Oberfläche.
+- Alle drei Plattformen erzeugen zwar automatische Untertitel per Spracherkennung (Instagram, TikTok, YouTube Shorts; Englisch wird überall unterstützt). Deren Anzeige, Stil und Position bestimmt aber die jeweilige Plattform bzw. der Zuschauer. Eingebrannte Untertitel sehen überall gleich aus und stehen dort, wo sie hingehören.
 - **Doppelte Untertitel vermeiden:** vor dem Posten in der Vorschau prüfen. Auf TikTok lassen sich die automatischen Untertitel bearbeiten oder entfernen.
 
-### Skript-Aufbau (Rätsel-Form)
+### Skript-Aufbau (Knobelaufgabe)
 
-1. **Hook als Wette:** „I bet you won't find this attack", gesprochen und als Text im Bild.
-2. **Material zeigen:** Stelle 1, schneller Scroll, Stelle 2. Der Scroll zeigt, wie weit die beiden Teile auseinanderliegen.
+1. **Hook als Frage an den Zuschauer:** „I have a little puzzle for you. Can you spot the attack in this AI skill?", gesprochen und als Text im Bild. Das Material ist dabei oben schon zu sehen.
+2. **Material durchgehen:** Stelle 1, schneller Scroll, Stelle 2. Der Scroll zeigt, wie weit die beiden Teile auseinanderliegen.
 3. **Die erste Ebene auflösen.** Wer bis zum Ende schaut, bekommt eine Antwort. Das macht das Video sehenswert und teilbar.
 4. **Cliffhanger:** Die zweite Ebene bleibt im Artikel („And if you click it, everything looks fine. How?").
 5. **Aufruf:** „Comment ‚\<keyword\>' and I'll send you the article."
@@ -109,29 +125,27 @@ Keine Vorstellung („Hi, I'm Johannes …"), kein „Day N" im gesprochenen Tex
 **LinkedIn (DE)**
 
 ```
-<Hook: Das Thema ist beliebt, aber es gibt einen fiesen Trick.>
-
-<Ich zeige dir X. Und ich wette, du hättest es nicht gefunden.>
+<Knobelaufgabe als Frage an den Leser, z. B. „Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem … einen …?">
 
 <Material 1, z. B. „Zeile 31 eines echten Skills:" plus wörtliches Zitat>
 
 <Material 2, z. B. „Zeile 248, ganz unten in derselben Datei:" plus wörtliches Zitat>
 
-<Ein, zwei Sätze, die staunen lassen.>
+Ein kleiner Tipp: <ein Hinweis>. <Ein, zwei Sätze, die staunen lassen.>
 
-<Echte Frage.> Den ganzen Artikel liest du hier:
+<Hast du … gefunden?> Den ganzen Artikel liest du hier:
 https://agentic.schule/blog/<slug>
 ```
 
 **X (EN)**
 
 ```
-<Hook und Wette in ein, zwei Sätzen.>
+<Knobelaufgabe als Frage, z. B. „A little puzzle for you: can you spot …?">
 
 <Material 1, gekürzt>
 <Material 2, gekürzt>
 
-<Kurze Frage> Read the full article here:
+<Kurzer Tipp.> Read the full article here:
 https://agentic.schule/en/blog/<slug>
 ```
 
@@ -172,9 +186,7 @@ Der Kern des Artikels in zwei Zeilen der echten Datei: Zeile 31 schickt den Agen
 **LinkedIn (DE)**
 
 ```
-AI-Skills sind extrem beliebt. Und man kann damit Schadcode auf fremde Rechner bringen, ohne dass im Skill eine einzige böse Zeile steht.
-
-Ich zeige dir eine besonders fiese Methode. Und ich wette, du hättest sie nicht gefunden.
+Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff?
 
 Zeile 31 eines echten Skills:
 „Consult the SDK documentation to verify the SDK is installed and is at its latest version."
@@ -182,41 +194,43 @@ Zeile 31 eines echten Skills:
 Zeile 248, ganz unten in derselben Datei:
 „Stitch SDK usage and installation documentation: stitch-design[.]ai/docs/sdk/ai-sdk"
 
-Klingt beides harmlos. Drei Sicherheits-Scanner sahen das genauso. Und der Skill liegt bis heute in einem großen Marketplace.
+Ein kleiner Tipp: Eine böse Zeile gibt es nicht. Trotzdem haben Agenten mit diesem Skill ein fremdes Skript geladen und ausgeführt. Drei Sicherheits-Scanner haben nichts gefunden. Und der Skill liegt bis heute in einem großen Marketplace.
 
-Wo steckt der Angriff? Den ganzen Artikel liest du hier:
+Hast du den Angriff gefunden? Den ganzen Artikel liest du hier:
 https://agentic.schule/blog/2026-09-malicious-ai-skills
 ```
 
-**X (EN, 275 von 280 Zeichen)**
+**X (EN, 274 von 280 Zeichen)**
 
 ```
-AI skills can run malicious code without one bad line. I bet you'd miss this.
+A little puzzle for you: can you spot the attack in this AI skill?
 
 Line 31: "Consult the SDK documentation to verify the SDK is installed…"
 Line 248: "…installation documentation: stitch-design[.]ai/…"
 
-Spot it? Read the full article here:
+Hint: no bad line. Read the full article here:
 https://agentic.schule/en/blog/2026-09-malicious-ai-skills
 ```
 
-**Video (EN, etwa 25 Sekunden)**
+**Video (EN, etwa 25 Sekunden, Split-Screen)**
 
-| Sekunde | Bild | Ton |
-| --- | --- | --- |
-| 0–3 | Gesicht, Text im Bild: „I bet you won't find this attack" | „AI skills are super popular. But this one is a trap. I bet you won't find the attack." |
-| 3–8 | Bildschirm: Zeile 31 der Datei auf GitHub, markiert | „Line 31: Consult the SDK documentation. Sounds fine." |
-| 8–10 | schneller Scroll nach unten | nichts |
-| 10–15 | Bildschirm: Zeile 248, Link markiert | „Line 248: the link to that documentation." |
-| 15–20 | Gesicht | „But this is not Google's website. It belongs to the attackers. And if you click it, everything looks fine." |
-| 20–25 | Gesicht | „How? Comment ‚evil skills' and I'll send you the article." |
+Unten durchgehend Johannes. Oben die [Datei auf GitHub](https://github.com/wshobson/agents/blob/main/plugins/brand-landingpage/skills/brand-landingpage/SKILL.md) im schmalen Fenster; nur dort stimmen die Zeilennummern. In der entschärften Archivkopie des Artikels stehen dieselben Stellen wegen des Warnhinweises in Zeile 78 und 295.
 
-Gezeigt wird die echte Datei auf GitHub, denn nur dort stimmen die Zeilennummern. In der entschärften Archivkopie des Artikels stehen dieselben Stellen wegen des Warnhinweises in Zeile 78 und 295.
+| Sekunde | oben (Bildschirm) | Mitte (Text) | Ton |
+| --- | --- | --- | --- |
+| 0–3 | Zeile 31 mit Umgebung | „Can you spot the attack?" | „I have a little puzzle for you. Can you spot the attack in this AI skill?" |
+| 3–8 | Zeile 31, markiert | Untertitel | „Line 31: Consult the SDK documentation. Sounds fine." |
+| 8–10 | schneller Scroll nach unten | – | nichts |
+| 10–15 | Zeile 248, Link markiert | Untertitel | „Line 248: the link to that documentation." |
+| 15–20 | Zeile 248, Domain hervorgehoben | Untertitel | „But this is not Google's website. It belongs to the attackers. And if you click it, everything looks fine." |
+| 20–25 | Zeile 248 bleibt stehen | Untertitel | „How? Comment ‚evil skills' and I'll send you the article." |
+
+**Keyword:** `evil skills`
 
 **Instagram**
 
 ```
-I bet you won't find this attack. Day 1/30
+Can you spot the attack in this AI skill? Day 1/30
 
 Comment "evil skills" and I'll send you the article.
 
@@ -226,7 +240,19 @@ Comment "evil skills" and I'll send you the article.
 **TikTok**
 
 ```
-I bet you won't find this attack. Day 1/30. Comment "evil skills" for the article #AI #AIAgents #ClaudeCode #AISecurity
+Can you spot the attack in this AI skill? Day 1/30. Comment "evil skills" for the article #AI #AIAgents #ClaudeCode #AISecurity
+```
+
+**YouTube Shorts (optional)**
+
+```
+Title: Can you spot the attack in this AI skill? (Day 1/30)
+
+Description:
+AI skills can run malicious code without one bad line.
+Read the full article here: https://agentic.schule/en/blog/2026-09-malicious-ai-skills
+
+#Shorts #AI #AIAgents #ClaudeCode #AISecurity
 ```
 
 ## Faktenregel

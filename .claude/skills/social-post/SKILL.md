@@ -18,11 +18,11 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
 ## Ablauf
 
 1. **Artikel lesen:** `blog/<slug>-EN/README.md` komplett, dazu `blog/<slug>-DE/README.md` für den LinkedIn-Post. Fehlt eine Fassung, melde das. Ohne EN-Fassung gibt es kein Video und keinen X-Post, ohne DE-Fassung keinen LinkedIn-Post.
-2. **Den Kern finden:** das eine Stück echtes Material, an dem sich der Trick zeigen lässt (z. B. zwei Zeilen einer Datei, ein Befehl, eine Ausgabe). Daraus wird das Rätsel: „Ich wette, du hättest es nicht gefunden."
+2. **Den Kern finden:** das eine Stück echtes Material, an dem sich der Trick zeigen lässt (z. B. zwei Zeilen einer Datei, ein Befehl, eine Ausgabe). Daraus wird die Knobelaufgabe, eine Frage direkt an den Leser („Siehst du …?"). Den Wortlaut von Tag zu Tag variieren.
 3. **Entwerfen**, gemäß `docs/social-media.md` (Tag 1 dort ist das Muster):
    - LinkedIn-Post (DE), Link auf die `-DE`-Fassung, eingeleitet mit „Den ganzen Artikel liest du hier:".
    - X-Post (EN), höchstens 280 Zeichen (Link zählt 23; nachzählen), eingeleitet mit „Read the full article here:".
-   - Kommentar-Keyword (ein, zwei Wörter), Video-Skript (EN, etwa 25 Sekunden, Rätsel-Form) und Drehplan als Tabelle: Sekunde, Bild (Gesicht oder Bildschirm), Ton.
+   - Kommentar-Keyword (ein, zwei Wörter), Video-Skript (EN, etwa 25 Sekunden, Knobelaufgabe) und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
    - Captions für Instagram und TikTok, optional Titel und Beschreibung für YouTube Shorts.
    - Kurz halten, keine Emojis. Gefährliche Adressen entschärfen (`[.]`).
 4. **Faktencheck:** Jede Aussage muss in der jeweiligen Sprachfassung des Artikels stehen. Zahlen, Namen und Zuspitzungen einzeln gegen den Artikeltext abgleichen. Zitate und Zeilennummern gegen die verlinkte Quelle prüfen, zeitabhängige Aussagen („bis heute", „still live") gegen den aktuellen Stand, etwa per `gh`. Was nicht gedeckt ist, fliegt raus oder wird entschärft.
