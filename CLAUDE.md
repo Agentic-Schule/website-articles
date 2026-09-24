@@ -64,3 +64,7 @@ Viele Artikel liegen in zwei Ordnern (`-DE`/`-EN`). Beide Fassungen bleiben stru
 ## Banner (Artikel-Header)
 
 Jeder Artikel bekommt ein Header-Bild im agentic.schule-Look: tiefes Lila-Schwarz mit einem Verlauf von Lila nach Magenta, Logo oben links, rechts eine schlichte artikel-eigene Illustration. Die verbindlichen Markenfarben, das Logo, eine Kopiervorlage und die Render-Pipeline stehen in **[`docs/banner.md`](docs/banner.md)**. Ein neues Banner immer nach dieser Vorgabe bauen.
+
+## Social Media (Reels und Posts)
+
+Die Promotion der Artikel (Video-Skript, Reel-Banner, Posts für YouTube Shorts, Instagram, TikTok und LinkedIn) läuft in einer eigenen Sitzung nach **[`docs/social-media.md`](docs/social-media.md)**, am einfachsten über den Skill `/social-post`. In dieser Sitzung werden Artikel nur gelesen, nie geändert, und es wird nichts veröffentlicht.
