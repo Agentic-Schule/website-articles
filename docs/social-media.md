@@ -37,12 +37,12 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 | --- | --- | --- | --- | --- |
 | LinkedIn | DE | zwei Sätze + Screenshot | reine URL im Post | Knobelfrage, kein Keyword |
 | X | EN | zwei Sätze + derselbe Screenshot, höchstens 280 Zeichen | im Post | Knobelfrage, kein Keyword |
-| TikTok | EN | vertikales Video | keiner klickbar | Keyword, DMs von Hand |
-| Instagram Reels | EN | dasselbe Video | per Keyword-DM | Keyword |
-| YouTube Shorts (optional) | EN | dasselbe Video | in der Beschreibung, nicht klickbar | Keyword-Kommentare öffentlich mit der URL beantworten |
+| TikTok | EN | vertikales Video | `agentic.schule` im Video und in der Caption | „Find the full article on my website: agentic.schule" |
+| Instagram Reels | EN | dasselbe Video | `agentic.schule` im Video und in der Caption | derselbe Satz |
+| YouTube Shorts (optional) | EN | dasselbe Video | in der Beschreibung, nicht klickbar | derselbe Satz |
 | Facebook | – | kein eigener Aufwand | – | – |
 
-**Facebook:** Das automatische Crossposting von Instagram nach Facebook bleibt aus. Meta stuft „Kommentiere ein bestimmtes Wort" auf Facebook ausdrücklich als *Comment Baiting* ein und senkt die Reichweite solcher Posts.
+**Facebook:** Das automatische Crossposting von Instagram nach Facebook bleibt aus. Facebook ist kein Zielkanal.
 
 ## Das Bild (LinkedIn und X)
 
@@ -114,17 +114,17 @@ Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer 
 2. **Material durchgehen:** Stelle 1, schneller Scroll, Stelle 2. Der Scroll zeigt, wie weit die beiden Teile auseinanderliegen.
 3. **Die erste Ebene auflösen.** Wer bis zum Ende schaut, bekommt eine Antwort. Das macht das Video sehenswert und teilbar.
 4. **Cliffhanger:** Die zweite Ebene bleibt im Artikel („And if you click it, everything looks fine. How?").
-5. **Aufruf:** „Comment ‚\<keyword\>' and I'll send you the article."
+5. **Aufruf:** „Find the full article on my website: agentic.schule", dazu `agentic.schule` als Text im Bild in den letzten Sekunden.
 
 Keine Vorstellung („Hi, I'm Johannes …"), kein „Day N" im gesprochenen Text. Wer Johannes ist, steht im Profil.
 
-## Das Kommentar-Keyword
+## Der Aufruf auf den Kurzvideo-Plattformen
 
-- Ein oder zwei Wörter aus dem Thema, leicht zu tippen, z. B. „evil skills". Dasselbe Keyword auf allen Kurzvideo-Plattformen.
-- **Instagram:** Die DM kommt per Automatisierung (ManyChat). DMs an Nicht-Follower landen im Anfrage-Ordner, das ist normal.
-- **TikTok:** ManyChat lässt sich in der EU nicht mit TikTok verbinden, also DMs von Hand. Einen Link in der Bio gibt es erst ab 1.000 Followern oder mit verifiziertem Business-Account.
-- **YouTube Shorts:** Es gibt keinen DM-Weg. Auf Keyword-Kommentare öffentlich mit der URL antworten.
-- **LinkedIn und X:** kein Keyword, der Link steht im Post.
+- **Überall derselbe Satz:** „Find the full article on my website: agentic.schule". Gesprochen am Ende des Videos, dazu `agentic.schule` als Text im Bild, und derselbe Satz in der Caption.
+- **Kein Kommentar-Keyword, keine DM-Automatisierung.** Die Website funktioniert auf jeder Plattform gleich, DMs nicht: Auf TikTok lässt sich ManyChat aus der EU nicht verbinden, DMs von Instagram an Nicht-Follower landen im Anfrage-Ordner, Shorts haben gar keinen DM-Weg, und Meta stuft „Kommentiere ein bestimmtes Wort" auf Facebook als *Comment Baiting* ein. Kommentare gehören laut Instagram ohnehin nicht zu den drei wichtigsten Ranking-Signalen.
+- **Voraussetzung:** Der neue Artikel steht auf agentic.schule ganz oben und ist ohne Suchen zu finden.
+- **Fragt jemand in den Kommentaren nach dem Link,** öffentlich mit der Adresse antworten.
+- **LinkedIn und X:** Der Link steht im Post.
 
 ## Links
 
@@ -156,7 +156,7 @@ I have a little puzzle for you! <Question, e.g. "Do you see a … in the followi
 ```
 <Hook in einer Zeile>. Day N/30
 
-Comment "<keyword>" and I'll send you the article.
+Find the full article on my website: agentic.schule
 
 #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
@@ -164,7 +164,7 @@ Comment "<keyword>" and I'll send you the article.
 **TikTok (EN)**
 
 ```
-<Hook in einer Zeile>. Day N/30. Comment "<keyword>" for the article #AI #AIAgents <2 bis 3 Themen-Hashtags>
+<Hook in einer Zeile>. Day N/30. Full article on agentic.schule #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
 
 **YouTube Shorts (EN, optional)**
@@ -215,16 +215,14 @@ Unten durchgehend Johannes. Oben die [Datei auf GitHub](https://github.com/wshob
 | 8–10 | schneller Scroll nach unten | – | nichts |
 | 10–15 | Zeile 248, Link markiert | Untertitel | „Line 248: the link to that documentation." |
 | 15–20 | Zeile 248, Domain hervorgehoben | Untertitel | „But this is not Google's website. It belongs to the attackers. And if you click it, everything looks fine." |
-| 20–25 | Zeile 248 bleibt stehen | Untertitel | „How? Comment ‚evil skills' and I'll send you the article." |
-
-**Keyword:** `evil skills`
+| 20–25 | Zeile 248 bleibt stehen | `agentic.schule` | „How? Find the full article on my website: agentic.schule." |
 
 **Instagram**
 
 ```
 Can you spot the attack in this AI skill? Day 1/30
 
-Comment "evil skills" and I'll send you the article.
+Find the full article on my website: agentic.schule
 
 #AI #AIAgents #ClaudeCode #AISecurity
 ```
@@ -232,7 +230,7 @@ Comment "evil skills" and I'll send you the article.
 **TikTok**
 
 ```
-Can you spot the attack in this AI skill? Day 1/30. Comment "evil skills" for the article #AI #AIAgents #ClaudeCode #AISecurity
+Can you spot the attack in this AI skill? Day 1/30. Full article on agentic.schule #AI #AIAgents #ClaudeCode #AISecurity
 ```
 
 **YouTube Shorts (optional)**
@@ -269,7 +267,7 @@ Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden 
 1. Tag bestimmen und den passenden Artikel finden (Frontmatter `published:`).
 2. Die englische Fassung (`-EN/README.md`) komplett lesen, die deutsche (`-DE/README.md`) für den LinkedIn-Post.
 3. Den Kern des Artikels finden: das eine Stück Material, an dem sich der Trick zeigen lässt.
-4. Bildvorlage, Plattform-Texte, Keyword und Video-Skript samt Drehplan entwerfen.
+4. Bildvorlage, Plattform-Texte und Video-Skript samt Drehplan entwerfen.
 5. Jede Aussage gegen den Artikel prüfen, Zitate und Zeilennummern gegen die Quelle, zeitabhängige Aussagen gegen den aktuellen Stand.
 6. Alles Johannes zur Freigabe vorlegen, einen Block pro Plattform, kopierfertig.
 7. Nach der Freigabe allgemeine Korrekturen als neue Regeln vorschlagen und nach Zustimmung ins Playbook übernehmen (siehe „Feedback und neue Regeln").
@@ -317,7 +315,7 @@ Stand der Prüfung: 2026-09-24. Die Plattformen ändern ihre Regeln laufend, im 
 - Nikita Bier (X), 19.10.2025: Link-Posts bekommen weniger Signale, „the post should stand alone as great content", https://x.com/nikitabier/status/1979994223224209709
 - Ranking-Code `xai-org/x-algorithm`: `home-mixer/filters/oon_retweet_reply_filter.rs` (Antworten von Nicht-Gefolgten fallen aus For You), `home-mixer/scorers/author_cold_start.rs` (Schub für Accounts mit höchstens 1.000 Followern, nur eigenständige Posts)
 
-**Keyword und DMs**
+**Aufruf, Keyword und DMs**
 
 - Meta, Engagement-Köder auf Facebook: „Comment baiting: Asking people to comment with specific answers", https://www.facebook.com/business/help/259911614709806
 - Meta, Private Replies auf Instagram: Nachrichten an Nicht-Follower landen im „Request folder", https://developers.facebook.com/docs/instagram-platform/private-replies/
