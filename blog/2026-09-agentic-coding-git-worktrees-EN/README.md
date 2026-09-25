@@ -102,10 +102,10 @@ The local tools bet on worktrees, the cloud services on throwaway VMs, where a d
 [Claude Code](https://claude.com/claude-code) now has worktrees firmly built in and has given them a [dedicated docs page](https://code.claude.com/docs/en/worktrees). The most important entry point is a CLI flag:
 
 ```bash
-claude --worktree feature-auth     # short: claude -w feature-auth
+claude --worktree shop-4711-checkout     # short: claude -w shop-4711-checkout
 ```
 
-This creates a worktree `.claude/worktrees/feature-auth/` below the repo, on a new branch `worktree-feature-auth`, and starts Claude right inside it. Do the same in a second terminal with a different name, and you have [two cleanly isolated sessions](https://code.claude.com/docs/en/common-workflows#run-parallel-sessions-with-worktrees). If you omit the name, Claude rolls one itself, something like `bright-running-fox`. On exit, Claude cleans up: an unchanged worktree of an unnamed session is removed automatically; otherwise it asks whether directory and branch should stay.
+This creates a worktree `.claude/worktrees/shop-4711-checkout/` below the repo, on a new branch `worktree-shop-4711-checkout`, and starts Claude right inside it. Do the same in a second terminal with a different name, and you have [two cleanly isolated sessions](https://code.claude.com/docs/en/common-workflows#run-parallel-sessions-with-worktrees). If you omit the name, Claude rolls one itself, something like `bright-running-fox`. On exit, Claude cleans up: an unchanged worktree of an unnamed session is removed automatically; otherwise it asks whether directory and branch should stay.
 
 It works just as well mid-session: ask Claude to "please work in a worktree for this", and it creates one itself and switches into it (behind the scenes, a tool called `EnterWorktree` takes care of that).
 
