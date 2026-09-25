@@ -54,6 +54,7 @@ Das Bild trägt die Knobelaufgabe. Johannes erstellt es selbst im Editor; die Si
 - **Der entscheidende Teil steht unten.** Wer sucht, findet ihn zuletzt.
 - **Auf dem Handy lesbar:** wenige Zeilen, große Schrift.
 - **Dasselbe Bild für LinkedIn und X.**
+- **Alternativ ein Social-Banner im Look des Header-Bilds,** etwa mit einem Befehl in groß als Blickfang: `social.src.html` im `-DE`-Ordner des Artikels (1200×675, Assets relativ daneben), gerendert mit `node tools/render-social.mjs blog/<ordner>` zu `social.jpg`. Beispiel Tag 3: `claude --worktree feature-name`.
 - Beispiel Tag 1: [`docs/social-media-beispiel-tag-1.png`](social-media-beispiel-tag-1.png)
 
 ## LinkedIn (DE)

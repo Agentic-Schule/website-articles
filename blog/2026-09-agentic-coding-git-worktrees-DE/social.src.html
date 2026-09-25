@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Social-Bild für LinkedIn und X (Tag 3). Rendern: node tools/render-header.mjs mit social.src.html, siehe docs/social-media.md -->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(60% 55% at 74% 42%, rgba(98,38,176,0.34), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(233,4,100,0.16), transparent 60%),
+      linear-gradient(155deg,#241a33 0%,#1b1525 58%,#0d0913 100%);
+    color:#fff; position:relative;
+  }
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .brand { position:absolute; top:60px; left:78px; height:56px; width:auto; z-index:2; }
+  .tree { position:absolute; right:78px; top:30px; opacity:.55; }
+  .term { position:absolute; left:78px; right:78px; top:190px; height:330px;
+    background:#211830; border:1.5px solid rgba(255,255,255,0.10); border-radius:22px;
+    box-shadow:0 30px 80px rgba(0,0,0,.45), 0 0 60px rgba(122,46,201,.25); }
+  .dots { position:absolute; top:24px; left:28px; display:flex; gap:12px; }
+  .dots i { width:16px; height:16px; border-radius:50%; background:rgba(255,255,255,0.18); display:block; }
+  .cmd { position:absolute; left:56px; right:40px; top:96px;
+    font-family:"SF Mono",Menlo,Monaco,"JetBrains Mono",monospace; font-weight:700;
+    font-size:74px; line-height:1.15; letter-spacing:-1px; white-space:nowrap; font-variant-ligatures:none; font-feature-settings:"liga" 0, "calt" 0; }
+  .p { color:#e90464; }
+  .c { color:#ffffff; }
+  .f { color:#c3a3ff; }
+  .n { background:linear-gradient(92deg,#a06bff 0%,#e90464 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .cursor { display:inline-block; width:38px; height:74px; background:#e90464; opacity:.9;
+    vertical-align:-10px; margin-left:10px; }
+  .line2 { margin-top:6px; padding-left:92px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <svg class="tree" width="210" height="150" viewBox="0 0 420 300" fill="none">
+    <line x1="210" y1="300" x2="210" y2="170" stroke="#8f84a6" stroke-width="4" stroke-linecap="round"/>
+    <path d="M210 170 C210 110, 70 120, 70 40" stroke="#c3a3ff" stroke-width="4" stroke-linecap="round"/>
+    <path d="M210 170 L210 20" stroke="#c3a3ff" stroke-width="4" stroke-linecap="round"/>
+    <path d="M210 170 C210 120, 350 130, 350 70" stroke="#c3a3ff" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="210" cy="170" r="8" fill="#e90464"/>
+  </svg>
+  <img class="brand" src="logo-agentic-schule.png" alt="agentic.schule">
+  <div class="term">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="cmd">
+      <div><span class="p">$</span> <span class="c">claude</span> <span class="f"><span style="letter-spacing:8px">--</span>worktree</span></div>
+      <div class="line2"><span class="n">feature-name</span><span class="cursor"></span></div>
+    </div>
+  </div>
+</body>
+</html>
