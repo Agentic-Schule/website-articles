@@ -15,7 +15,7 @@ language: en
 header: header.jpg
 ---
 
-The `/slash` is the most powerful key in Claude Code, because it is how you start a slash command. Here we go!
+To me, the `/slash` is the most important key in Claude Code, because it is how you start a slash command. Here we go!
 
 **Claude Code ships with far more slash commands than the usual beginner lists show. Here are ten that I use constantly, each with the one move that makes it valuable.**
 
@@ -25,7 +25,7 @@ The `/slash` is the most powerful key in Claude Code, because it is how you star
 
 ## 1. `/code-review`: your diff on the test bench
 
-Checks the current state of your branch for real defects, and optionally a PR, a branch, or a path instead. You pass the effort as the first argument, for example `/code-review max`; without one, the level you typed last applies, and otherwise the session's effort. Depending on model and effort, the review either works through its angles one after another or fans them out across parallel agents, and with `ultra` it runs as a multi-agent review in the cloud.
+Checks the current state of your branch for real defects, and optionally a PR, a branch, or a path instead. You pass the *effort*, meaning the thinking depth (more on that in section 8), as the first argument, for example `/code-review max`; without one, the level you typed last applies, and otherwise the session's effort. Depending on model and effort, the review either works through its angles one after another or fans them out across parallel agents, and with `ultra` it runs as a multi-agent review in the cloud. That level needs a direct Claude account with access enabled, runs in its own cloud session, and is billed separately; the command description states the price up front.
 
 > **💡 Tip:** `--fix` applies the findings straight to your working tree, `--comment` posts them as inline comments on the PR. And while it is called code review, it works just as well for prose. It has read this article, too.
 
@@ -39,7 +39,7 @@ Runs a pure security review of the pending changes on the branch, no arguments n
 
 The only bundled workflow, and a showcase of what Claude Code can do in terms of orchestration: it fans web searches out across several angles, fetches the sources, checks the claims against each other, and delivers a cited report instead of a list of hits. How such a workflow is built is covered in the [graph article](https://agentic.schule/blog/2026-09-graph-engineering).
 
-> **💡 Tip:** Phrase the question as concretely as possible, including context and time frame. The workflow then splits it into search angles by itself. While it runs, you simply keep working.
+> **💡 Tip:** Phrase the question as concretely as possible, including context and time frame. The workflow then splits it into search angles by itself. While it runs, you simply keep working. The report is only as good as its sources, though: verify the key claims yourself before you adopt them.
 
 ## 4. `/loop`: the loop
 
@@ -63,7 +63,7 @@ Goes over the changed code and tidies up: reuse, simplification, efficiency, and
 
 Picks the model for the session, sure. Less known: the same dialog also holds the effort selector, with the arrow keys all the way up to `ultracode`. So you set model and thinking depth in one place.
 
-Even less known: your current model is inherited by the subagents of your dynamic workflows, unless the workflow script says otherwise. So if you would rather not burn your entire Fable 5 limit in a single session, set a model like Opus or even Sonnet here as soon as the task is simple enough. In the script itself, both can be forced per agent, model and effort. For twenty agents that mechanically operate a website, that is exactly what belongs in the script: small model, low effort, expensive thinking only where it counts.
+Even less known: your current model is inherited by the subagents of your dynamic workflows, unless the workflow script says otherwise. So if you would rather not burn your entire Fable 5 limit in a single session (Fable 5 is the most capable generally available Claude model and has its own weekly allowance), set a model like Opus or even Sonnet here as soon as the task is simple enough. In the script itself, both can be forced per agent, model and effort. For a whole swarm of agents that mechanically operate a website, that is exactly what belongs in the script: small model, low effort, expensive thinking only where it counts.
 
 > **💡 Tip:** Which model runs at which effort noticeably influences how far commands like `/code-review` parallelize. Details on that in the [graph engineering article](https://agentic.schule/blog/2026-09-graph-engineering).
 
@@ -85,13 +85,13 @@ Connects the running session to claude.ai/code or the Claude app: scan the QR co
 
 > **💡 Tip:** `/rc` is enough to type, that is the official alias.
 
-There is also the CLI command of the same name, `claude remote-control`, and it does something different: the slash command hooks up the one session running in front of you. The CLI command instead starts a host where you open **new** sessions from your phone. The help (`claude remote-control --help`) shows how far this goes: `--spawn` picks between `same-dir`, `worktree`, and `session`, so in worktree mode every new session gets its own git working area, `--capacity` caps the concurrent sessions (32 by default), `--permission-mode` sets the permissions for sessions started this way, and `--continue` reattaches to the host last used here. If you only want to take your running session to the sofa, stick with `/rc`. And if you prefer your sessions side by side in the local terminal (like me), each in its own tmux window, the host is of no help either.
+There is also the CLI command of the same name, `claude remote-control`, and it does something different: the slash command hooks up the one session running in front of you. The CLI command instead starts a host where you open **new** sessions from your phone. The help (`claude remote-control --help`) shows how far this goes: `--spawn` picks between `same-dir`, `worktree`, and `session`, so in worktree mode every new session gets its own git working area, `--capacity` caps the concurrent sessions (32 by default), `--permission-mode` sets the permissions for sessions started this way, and `--continue` reattaches to the host last used here. If you only want to take your running session to the sofa, stick with `/rc`. And if you prefer your sessions side by side in the local terminal (like me), each in its own window of the terminal multiplexer tmux, the host is of no help either.
 
 ## Conclusion
 
 Ten commands, one pattern: Claude Code has long been able to do more than most people call up. The reviews check, the loops and goals keep going, the workflows fan out, `/model` and `/effort` determine how much brainpower goes into all of it, and via remote control you watch from your phone. Next time you start up, just hit the slash and read the list from top to bottom. These ten are my picks, yours will certainly look different in the end. And if you would rather go through them together instead of alone: that is exactly what we do in the course at [agentic.schule](https://agentic.schule/build-with-ai/online), on your own project.
 
-> **💡 Bonus, learned the hard way today:** `/usage` shows cost, plan usage, and what is currently counting against your limits. It also answers to `/cost` and `/stats`. Anyone working a lot with agents should check it more often than I did today. 😅
+> **💡 Bonus:** `/usage` shows cost, plan usage, and what is currently counting against your limits. It also answers to `/cost` and `/stats`. Anyone working a lot with agents should check it regularly.
 
 **Which one is missing from the list?** Bring it on, I am glad to hear from you.
 

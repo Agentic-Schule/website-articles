@@ -15,7 +15,7 @@ language: de
 header: header.jpg
 ---
 
-Der `/Schrägstrich` ist die mächtigste Taste in Claude Code, denn damit startest du einen Slash-Command. Los geht's!
+Der `/Schrägstrich` ist für mich die wichtigste Taste in Claude Code, denn damit startest du einen Slash-Befehl (engl. *Slash Command*). Los geht's!
 
 **Claude Code bringt deutlich mehr Slash-Befehle mit, als die üblichen Einsteiger-Listen zeigen. Hier sind zehn, die ich selbst ständig benutze, jeder mit dem einen Handgriff, der ihn wertvoll macht.**
 
@@ -25,7 +25,7 @@ Der `/Schrägstrich` ist die mächtigste Taste in Claude Code, denn damit starte
 
 ## 1. `/code-review`: der Diff auf dem Prüfstand
 
-Prüft den aktuellen Stand deines Branches auf echte Fehler, wahlweise auch einen PR, einen Branch oder einen Pfad. Den Effort gibst du als erstes Argument mit, etwa `/code-review max`; ohne Angabe gilt der zuletzt getippte Level und sonst der Effort der Sitzung. Je nach Modell und Effort arbeitet der Review seine Blickwinkel nacheinander ab oder fächert sie auf parallele Agenten auf, und mit `ultra` läuft er als Multi-Agenten-Review in der Cloud.
+Prüft den aktuellen Stand deines Branches auf echte Fehler, wahlweise auch einen PR, einen Branch oder einen Pfad. Den *Effort*, also die Denk-Tiefe (mehr dazu in Abschnitt 8), gibst du als erstes Argument mit, etwa `/code-review max`; ohne Angabe gilt der zuletzt getippte Level und sonst der Effort der Sitzung. Je nach Modell und Effort arbeitet der Review seine Blickwinkel nacheinander ab oder fächert sie auf parallele Agenten auf, und mit `ultra` läuft er als Multi-Agenten-Review in der Cloud. Diese Stufe braucht ein direktes Claude-Konto mit Freischaltung, läuft in einer eigenen Cloud-Sitzung und wird extra abgerechnet; den Preis nennt die Befehlsbeschreibung vorab.
 
 > **💡 Tipp:** `--fix` wendet die Funde direkt im Arbeitsverzeichnis an, `--comment` postet sie als Inline-Kommentare in den PR. Und der Befehl heißt zwar Code-Review, funktioniert aber genauso gut für Texte. Diesen Artikel hier hat er auch gelesen.
 
@@ -39,7 +39,7 @@ Macht einen reinen Sicherheits-Review der anstehenden Änderungen auf dem Branch
 
 Der einzige mitgelieferte Workflow, und ein Schaustück dafür, was Claude Code an Orchestrierung kann: Er fächert Websuchen über mehrere Suchwinkel auf, holt die Quellen, prüft die Behauptungen gegeneinander und liefert am Ende einen zitierten Bericht statt einer Trefferliste. Wie so ein Workflow aufgebaut ist, steht im [Graph-Artikel](https://agentic.schule/blog/2026-09-graph-engineering).
 
-> **💡 Tipp:** Formuliere die Frage so konkret wie möglich, samt Kontext und Zeitraum. Der Workflow zerlegt sie dann selbst in Suchwinkel. Während er läuft, arbeitest du einfach weiter.
+> **💡 Tipp:** Formuliere die Frage so konkret wie möglich, samt Kontext und Zeitraum. Der Workflow zerlegt sie dann selbst in Suchwinkel. Während er läuft, arbeitest du einfach weiter. Der Bericht ist allerdings nur so gut wie seine Quellen: Zentrale Behauptungen prüfst du vor der Übernahme selbst nach.
 
 ## 4. `/loop`: die Schleife
 
@@ -63,7 +63,7 @@ Geht über den geänderten Code und räumt auf: Wiederverwendung, Vereinfachung,
 
 Wählt das Modell der Sitzung, klar. Weniger bekannt: Im selben Dialog steckt auch der Effort-Regler, mit den Pfeiltasten bis hinauf zu `ultracode`. Modell und Denk-Tiefe stellst du also an einer Stelle ein.
 
-Noch weniger bekannt: Dein aktuelles Modell wird an die Subagenten deiner dynamischen Workflows vererbt, sofern das Workflow-Skript nichts anderes vorgibt. Wenn du also nicht dein gesamtes Fable-5-Limit in einer einzigen Sitzung verschleudern willst, stell hier ein Modell wie Opus oder sogar Sonnet ein, sobald die Aufgabe einfach genug ist. Im Skript selbst lässt sich beides pro Agent erzwingen, Modell und Effort. Für zwanzig Agenten, die stumpf eine Webseite bedienen, gehört genau das ins Skript: kleines Modell, niedriger Effort, teures Denken nur dort, wo es zählt.
+Noch weniger bekannt: Dein aktuelles Modell wird an die Subagenten deiner dynamischen Workflows vererbt, sofern das Workflow-Skript nichts anderes vorgibt. Wenn du also nicht dein gesamtes Fable-5-Limit in einer einzigen Sitzung verschleudern willst (Fable 5 ist das leistungsstärkste allgemein verfügbare Claude-Modell und hat ein eigenes Wochenkontingent), stell hier ein Modell wie Opus oder sogar Sonnet ein, sobald die Aufgabe einfach genug ist. Im Skript selbst lässt sich beides pro Agent erzwingen, Modell und Effort. Für eine ganze Schar Agenten, die stumpf eine Webseite bedienen, gehört genau das ins Skript: kleines Modell, niedriger Effort, teures Denken nur dort, wo es zählt.
 
 > **💡 Tipp:** Welches Modell mit welchem Effort läuft, entscheidet spürbar mit, wie stark Befehle wie `/code-review` parallelisieren. Details dazu im [Graph-Engineering-Artikel](https://agentic.schule/blog/2026-09-graph-engineering).
 
@@ -85,13 +85,13 @@ Verbindet die laufende Sitzung mit claude.ai/code oder der Claude-App: QR-Code m
 
 > **💡 Tipp:** Zum Tippen reicht `/rc`, das ist der offizielle Alias.
 
-Daneben gibt es den gleichnamigen CLI-Befehl `claude remote-control`, und der macht etwas anderes: Der Slash-Befehl hängt die eine Sitzung ans Handy, die gerade vor dir läuft. Der CLI-Befehl startet stattdessen einen Host, bei dem du vom Handy aus **neue** Sitzungen aufmachst. Die Hilfe (`claude remote-control --help`) zeigt, wie weit das geht: `--spawn` wählt zwischen `same-dir`, `worktree` und `session`, jede neue Sitzung bekommt im Worktree-Modus also ihren eigenen Git-Arbeitsbereich, `--capacity` deckelt die gleichzeitigen Sitzungen (Standard 32), `--permission-mode` legt die Rechte der so gestarteten Sitzungen fest, und `--continue` hängt sich wieder an den zuletzt hier genutzten Host. Wer nur seine laufende Sitzung aufs Sofa mitnehmen will, bleibt bei `/rc`. Und wer seine Sitzungen lieber lokal im Terminal nebeneinander hat (also ich), jede in einem eigenen tmux-Window, dem nützt der Host leider ebenfalls nichts.
+Daneben gibt es den gleichnamigen CLI-Befehl `claude remote-control`, und der macht etwas anderes: Der Slash-Befehl hängt die eine Sitzung ans Handy, die gerade vor dir läuft. Der CLI-Befehl startet stattdessen einen Host, bei dem du vom Handy aus **neue** Sitzungen aufmachst. Die Hilfe (`claude remote-control --help`) zeigt, wie weit das geht: `--spawn` wählt zwischen `same-dir`, `worktree` und `session`, jede neue Sitzung bekommt im Worktree-Modus also ihren eigenen Git-Arbeitsbereich, `--capacity` deckelt die gleichzeitigen Sitzungen (Standard 32), `--permission-mode` legt die Rechte der so gestarteten Sitzungen fest, und `--continue` hängt sich wieder an den zuletzt hier genutzten Host. Wer nur seine laufende Sitzung aufs Sofa mitnehmen will, bleibt bei `/rc`. Und wer seine Sitzungen lieber lokal im Terminal nebeneinander hat (also ich), jede in einem eigenen Fenster des Terminal-Multiplexers tmux, dem nützt der Host leider ebenfalls nichts.
 
 ## Fazit
 
 Zehn Befehle, ein Muster: Claude Code kann längst mehr, als die meisten davon abrufen. Die Reviews prüfen, die Schleifen und Ziele halten durch, die Workflows fächern auf, `/model` und `/effort` bestimmen, mit wie viel Hirnschmalz das alles passiert, und per Remote Control schaust du vom Handy aus zu. Drück beim nächsten Start einfach den Schrägstrich und lies die Liste einmal von oben nach unten. Diese zehn sind meine Auswahl, deine sieht am Ende bestimmt anders aus. Und wenn du sie lieber gemeinsam durchgehst, statt allein: Genau das machen wir im Kurs der [agentic.schule](https://agentic.schule/build-with-ai/online), am eigenen Projekt.
 
-> **💡 Bonus, und heute selbst gelernt:** `/usage` zeigt Kosten, Plan-Verbrauch und was gerade auf deine Limits einzahlt. Es hört auch auf `/cost` und `/stats`. Wer viel mit Agenten arbeitet, sollte da öfter draufschauen, als ich es heute getan habe. 😅
+> **💡 Bonus:** `/usage` zeigt Kosten, Plan-Verbrauch und was gerade auf deine Limits einzahlt. Es hört auch auf `/cost` und `/stats`. Wer viel mit Agenten arbeitet, schaut da regelmäßig drauf.
 
 **Welcher fehlt dir in der Liste?** Immer her damit, ich freue mich über jede Nachricht.
 
