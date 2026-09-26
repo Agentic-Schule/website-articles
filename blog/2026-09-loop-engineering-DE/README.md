@@ -63,7 +63,7 @@ In Claude Code gibt es drei Wege, eine Sitzung weiterlaufen zu lassen; `/loop` i
 | `/loop` | wenn ein Zeitintervall verstrichen ist | du stoppst, oder Claude hält die Arbeit für erledigt |
 | Stop-Hook | sobald der vorige Zug fertig ist | dein eigenes Skript oder dein Prompt entscheidet |
 
-Der Unterschied zwischen den ersten beiden ist der wichtigste im ganzen Thema. `/loop` **wartet**. `/goal` startet den nächsten Zug sofort.
+Aus meiner Sicht ist der Unterschied zwischen den ersten beiden der entscheidende. `/loop` **wartet**. `/goal` startet den nächsten Zug sofort.
 
 Dazu kommt ein zweiter Unterschied, der leicht übersehen wird. `/goal` prüft die Abbruchbedingung mit einem eigenen Modell. In der Dokumentation steht es so:
 
@@ -77,7 +77,7 @@ Und noch eine Unterscheidung, die in der Praxis für Verwirrung sorgt. Die Dokum
 
 > auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
 
-Dass der Agent aufhört zu fragen, ob er weitermachen soll, kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt. Damit die Schleife wirklich ohne dich weiterläuft und du nicht ständig Enter drücken musst, wechsle in den **Auto Mode**: mit `Shift+Tab` durch die [Berechtigungsmodi](https://code.claude.com/docs/en/permission-modes), bis „auto" dasteht. Ein Klassifizierer gibt die Aufrufe dann frei.
+Dass der Agent aufhört zu fragen, ob er weitermachen soll, kommt von der Schleife. Dass er nicht bei jedem einzelnen Werkzeugaufruf nachfragt, kommt vom Berechtigungsmodus. Wer nur eine Schleife setzt und sich wundert, dass trotzdem ständig Dialoge aufpoppen, hat die beiden verwechselt. Damit die Schleife wirklich ohne dich weiterläuft und du nicht ständig Enter drücken musst, wechsle in den **Auto Mode**: mit `Shift+Tab` durch die [Berechtigungsmodi](https://code.claude.com/docs/en/permission-modes), bis „auto" dasteht. Dann prüft ein zweites Modell im Hintergrund, der sogenannte Klassifizierer (engl. *Classifier*), jeden Werkzeugaufruf an deiner Stelle und gibt ihn frei oder blockiert ihn.
 
 Bleibt der dritte Weg. Ein Stop-Hook ist ein Skript oder ein Prompt in deiner `settings.json`, das bei jedem Zugende feuert, in jeder Sitzung, und das Anhalten blockieren kann. `/goal` ist im Grunde genau so ein Hook, nur auf eine Sitzung und eine Bedingung eingedampft. Wie du dir einen eigenen baust, steht weiter unten.
 
@@ -214,7 +214,7 @@ Das ist der ganze Mechanismus, in drei Teilen. Die Bedingung wird zur Arbeitsanw
 
 Drumherum liegen ein paar Werte, die die Doku bestätigen oder ergänzen. Die Konstante für die maximale Länge der Bedingung steht auf 4000 Zeichen. Der Statuseintrag heißt `goal_status` und tritt in mehreren Ausprägungen auf: beim Setzen nur mit `met` und `condition`, beim Abschluss zusätzlich mit `reason`, `iterations`, `durationMs` und `tokens`, dazu ein Feld `failed`. Und zwei Voraussetzungen nennt die Doku ausdrücklich: `/goal` läuft nur in vertrauenswürdigen Arbeitsverzeichnissen, und es verweigert den Dienst, wenn Hooks per `disableAllHooks` oder `allowManagedHooksOnly` eingeschränkt sind. In beiden Fällen sagt dir der Befehl, warum.
 
-Zwei Grenzen gehören dazu. Ein Ziel kann enden, ohne erreicht zu sein: Hält das prüfende Modell die Bedingung für unmöglich, wird der Eintrag als gescheitert markiert und die Schleife endet. Und es gibt eine harte Obergrenze. Laut Changelog endet der Zug mit einer Warnung, nachdem der Stop-Hook achtmal hintereinander blockiert hat, einstellbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+Zwei Grenzen gehören dazu. Ein Ziel kann enden, ohne erreicht zu sein: Hält das prüfende Modell die Bedingung für unmöglich, wird der Eintrag als gescheitert markiert und die Schleife endet. Und es gibt eine harte Obergrenze. Laut [Changelog](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) (Version 2.1.143) endet der Zug mit einer Warnung, nachdem der Stop-Hook achtmal hintereinander blockiert hat, einstellbar über `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 **Was für beide gilt.** Die Selbsttaktung hängt an einem serverseitig ausgespielten Schalter namens `tengu_kairos_loop_dynamic`. Im Programm steht dazu ein Rückfallwert, der aber nur greift, wenn die Konfiguration vom Server gar nicht erreichbar ist. Im Normalfall entscheidet der Server. Der Schalter steuert dabei mehr, als man denkt: Ist er aus, tut `ScheduleWakeup` schlicht nichts, und schon der Hilfetext ändert sich. Nur mit gesetztem Schalter trägt die Beschreibung von `/loop` den Zusatz „Omit the interval to let the model self-pace." Ohne den Schalter nennt sie dort einen Vorgabewert von zehn Minuten.
 
