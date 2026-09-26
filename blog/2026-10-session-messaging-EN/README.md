@@ -34,13 +34,13 @@ The [official docs](https://code.claude.com/docs/en/cross-session-messaging) des
 
 It is a young feature. It arrived with Claude Code 2.1.224 on August 7, 2026, first for macOS and Linux, with Windows following a few weeks later. Within a single session, `SendMessage` has been around longer: Claude uses it to give an already spawned subagent another instruction and pick its work back up. What is new is the path across session boundaries.
 
-## The most important sentence in the docs
+## The most important sentence in the docs: text only
 
 Before we get practical, the one restriction that explains everything else:
 
 > "A message is a piece of text one Claude writes to another, never the sender's conversation history or files. To move a whole conversation or its context, resume the session instead."
 
-So what gets transported is **text only**. No history, no files, no context. Anyone expecting the other session to know afterwards what the first one spent all morning thinking about is expecting the wrong thing. For that case, the docs name the right tool right away: "resume the session instead", so `--resume` or `/resume`. And if you want to take the conversation so far with you and continue from there in a different direction, use `/branch`, which per its description creates "a branch of the current conversation at this point" (the command used to be called `/fork`, and that alias still works).
+So what gets transported is **text only**. No history, no files, no context. Anyone expecting the other session to know afterwards what the first one spent all morning thinking about is expecting the wrong thing. For that case, the docs name the right tool right away: "resume the session instead", so `--resume` or `/resume`. And if you want to take the conversation so far with you and continue from there in a different direction, use `/branch`, which per its description creates "a branch of the current conversation at this point" (not to be confused with `/fork`, which copies the conversation into a new background session).
 
 Back to the message. That it only transports text sounds like a weakness, but it is exactly why the feature is so practical: a message is a shout. Short, clear, without ballast. And for whatever needs to survive, there is still the hard disk: notes, research archives, files in the repository.
 
@@ -61,7 +61,7 @@ Tell @api-worker that the schema migration is done
 
 If it plays dumb and claims it cannot do this (yes, that happens), just name the tools: `ListAgents` to find the other session, `SendMessage` to deliver the message. After that it hopefully works.
 
-If you want to look for yourself who is reachable right now, type `/list-agents`. The first line is your own name, the one the others use to address you. Below it are your own session's subagents, other local sessions and, if Remote Control is connected, your sessions on other machines and on the web as well. On top of that come the members of an agent team, if you run one. That is a feature of its own: a group of sessions that Claude sets up and supervises itself.
+If you want to look for yourself who is reachable right now, type `/list-agents`. The first line is your own name, the one the others use to address you. Below it are your own session's subagents, other local sessions and, if Remote Control (steering a session remotely, for example from your phone) is connected, your sessions on other machines and on the web as well. On top of that come the members of an agent team, if you run one. That is a feature of its own: a group of sessions that Claude sets up and supervises itself.
 
 Your own inbox address, by the way, is shown by `/status` in the "Peer address" row.
 
@@ -91,11 +91,11 @@ This shows up as a one-line preview that stays in the conversation afterwards. T
 
 With `Ctrl+O` you read the full text, and in a session started with `--verbose` it is there in full anyway. Only the display is shortened: Claude always reads the entire message.
 
-One thing worth knowing before you use the feature generously: a delivered message counts toward your usage like a prompt you type yourself. In effect that is all it is, another prompt from an additional source. Claude does know, however, that you did not type it and that another session wrote it. In my experience, a strong model is rightly more skeptical at that point and checks everything itself first.
+One thing worth knowing before you use the feature generously: a delivered message counts toward your usage like a prompt you type yourself. That is all it is: another prompt from an additional source. Claude does know, however, that you did not type it and that another session wrote it. In my experience, a strong model is rightly more skeptical at that point and checks everything itself first.
 
 That is by design: a message from another session explicitly carries **no user authority**. The changelog states verbatim that relayed messages "no longer carry user authority" and that the receiving side refuses relayed permission requests. So anyone hoping to obtain a permission through a second session that was denied in the first one is out of luck. And that is exactly how it should be.
 
-## The idle notice
+## Idle notice: getting word when a session is done
 
 For long runs there is a second route that works without asking: Claude can ask another session on the same machine to report back **once**, as soon as it next goes idle or exits.
 
@@ -120,9 +120,9 @@ A feature where other sessions write text into yours raises fair questions. The 
 
 **The machine boundary can be locked.** With `isolatePeerMachines: true`, Claude Code requires your explicit approval before a message leaves the machine, and it does so even in `bypassPermissions` mode.
 
-**Turning it off entirely works too**, separately in each direction: `crossSessionInbound: "refuse"` for receiving, deny rules for `SendMessage` and `ListAgents` for sending. Organizations can set both centrally. One detail worth knowing: denying `SendMessage` also takes away messages to your own subagents and to the members of an agent team, because the same tool serves all three routes.
+**Turning it off entirely works too**, separately in each direction: `crossSessionInbound: "refuse"` for receiving, deny rules for `SendMessage` and `ListAgents` for sending. Organizations can set both centrally through managed settings. One detail worth knowing: denying `SendMessage` also takes away messages to your own subagents and to the members of an agent team, because the same tool serves all three routes.
 
-## The limits
+## Limits: what is built in
 
 A few properties of the channel are built in for good, and all three make sense:
 
@@ -137,7 +137,7 @@ A few properties of the channel are built in for good, and all three make sense:
 The docs draw the boundaries themselves, and this list is worth reading before you solve everything with messages:
 
 - Want to **continue a conversation elsewhere**? Use `--resume`.
-- Want a **coordinated team** that Claude sets up and supervises itself? Use agent teams. They are still experimental and off by default, so you have to enable them through the `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` environment variable.
+- Want a **coordinated team** that Claude sets up and supervises itself? Use agent teams. They are still experimental and off by default, so you have to enable them through the environment variable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`.
 - Want to **watch many sessions in one place**? Use the agent view.
 - Want to **steer a session yourself from your phone**? Use Remote Control, see the ten commands in my [commands article](https://agentic.schule/blog/2026-10-claude-code-commands).
 - Want to **push external events in**, such as CI results? Use channels.
