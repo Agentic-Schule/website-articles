@@ -73,7 +73,7 @@ The mini sits without a monitor and without a keyboard among the rest of my home
 
 Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon delivers a lot of performance for the money, the box is **tiny** and fits in any corner, runs **absolutely silently** (I never hear the fan in everyday use), and sips so little **power** that running it 24/7 barely shows up on the bill. At idle it draws just a handful of watts. Exactly what you want from a machine that never turns off.
 
-## Sessions That Survive Connection Drops
+## Surviving Connection Drops
 
 Moving to a remote machine does, however, introduce a problem that never existed locally: the connection to it can drop. A Wi-Fi switch (office → train → home) is enough, and a normal SSH terminal is dead. The answer to that is **[tmux](https://github.com/tmux/tmux)**, a terminal multiplexer. Instead of starting my programs directly in the SSH session, they run *inside* tmux on the mini. If the connection drops, tmux, and everything in it, simply keeps running. On the next dock-in I reattach as if nothing had happened. **tmux is the central building block** of this setup, only through it do the agent runs survive everything that can go wrong between me and the mini.
 
@@ -122,7 +122,7 @@ I rarely use that direct terminal route, though. Most of the time I work more co
 
 > **📱 Phone trick (Termux):** Termux has no Ctrl key. It lives on **Volume-Down**, so `Vol-Down + C` for `Ctrl-C`, `Vol-Down + R` for `Ctrl-R`. The extra key row (ESC/CTRL/TAB/arrows) appears with a swipe up. Thank me later! 😄
 
-## Everything Duplicated, Always in Sync
+## Everything Duplicated: Always in Sync
 
 Up to here I could *access* the mini from anywhere. But the real kicker is that my big MacBook Pro is not a mere terminal, but a **true mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror feels like a permanent, second-by-second backup. Damn, that's good, with one important caveat I'll get to below.
 
@@ -154,7 +154,7 @@ What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `bui
 
 > **⚠️ And the promised caveat: a mirror is not a backup.** A bidirectional sync also replicates deletions and broken files faithfully. The newer version wins, an empty one if need be. So what once really saved me was not the mirror but Syncthing's **file versioning** (`.stversions`): before every overwrite it stores the old state with a timestamp. And because that history is **local per device** and is not synced along, in a pinch one machine still had what the other had already lost. That still does not replace a real off-device backup, but it has brought back a chat history I had already given up on.
 
-## Headless Services That Just Run
+## Running Services Headless
 
 An agent is only as good as the environment it's allowed to work in. On the mini it should find a **complete dev stack**: database, [Docker](https://www.docker.com), browser. And that without anyone logging in at a screen. Because the mini has no logged-in desktop at all.
 
@@ -212,7 +212,7 @@ Some apps, however, call their backend **hardcoded at `http://localhost:PORT`**,
 > ```
 > From the browser's point of view everything is then `localhost`, exactly as the app expects.
 
-## A Day With the Ground Station
+## In Practice: A Day With the Ground Station
 
 What does it feel like day to day? Roughly like this:
 

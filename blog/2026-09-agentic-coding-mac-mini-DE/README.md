@@ -74,7 +74,7 @@ Der mini steht ohne Monitor und ohne Tastatur bei meiner übrigen Haustechnik, n
 
 Warum ausgerechnet ein Mac mini? Für diese Rolle ist er fast perfekt: Apple Silicon liefert richtig viel Leistung fürs Geld, er ist **winzig** und passt in jede Ecke, läuft **absolut leise** (den Lüfter höre ich im Alltag nie) und ist so **stromsparend**, dass der Dauerbetrieb kaum auf der Rechnung auffällt. Im Leerlauf zieht er nur eine Handvoll Watt. Genau das, was man für eine Maschine will, die nie ausgeht.
 
-## Sessions, die Verbindungsabbrüche überleben
+## Verbindungsabbrüche überstehen
 
 Der Umzug auf eine entfernte Maschine handelt sich allerdings ein Problem ein, das es lokal nie gab: Die Verbindung dorthin kann abreißen. Ein WLAN-Wechsel (Büro → Bahn → Zuhause) genügt, und ein normales SSH-Terminal ist tot. Die Antwort darauf ist **[tmux](https://github.com/tmux/tmux)**, ein Terminal-Multiplexer. Statt meine Programme direkt in der SSH-Sitzung zu starten, laufen sie *innerhalb* von tmux auf dem mini. Reißt die Verbindung, läuft tmux, und alles darin, einfach weiter. Beim nächsten Andocken hänge ich mich wieder an, als wäre nichts gewesen. **tmux ist der zentrale Baustein** in diesem Setup, erst dadurch überstehen die Agentenläufe alles, was zwischen mir und dem mini passieren kann.
 
@@ -123,7 +123,7 @@ Diesen direkten Terminal-Weg nutze ich aber selten. Meist arbeite ich auf dem Ha
 
 > **📱 Handy-Kniff (Termux):** Termux hat keine Strg-Taste. Sie liegt auf **Leiser (Volume-Down)**, also `Vol-Down + C` für `Ctrl-C`, `Vol-Down + R` für `Ctrl-R`. Die Extra-Tastenzeile (ESC/CTRL/TAB/Pfeile) blendet man mit einem Wisch nach oben ein. Dankt mir später! 😄
 
-## Alles doppelt, immer synchron
+## Alles doppelt: immer synchron
 
 Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein großes MacBook Pro kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen, auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen, großer Mac und mini sind ja immer synchron. Ganz nebenbei wirkt dieser Spiegel wie ein permanentes, sekundenscharfes Backup. Geiler Scheiß, mit einem wichtigen Aber, zu dem ich unten komme.
 
@@ -155,7 +155,7 @@ Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `t
 
 > **⚠️ Und das versprochene Aber: ein Spiegel ist kein Backup.** Ein bidirektionaler Sync repliziert eben auch Löschungen und kaputte Dateien originalgetreu. Die neuere Version gewinnt, notfalls auch eine leere. Was mich einmal wirklich gerettet hat, war deshalb nicht der Spiegel, sondern Syncthings **Datei-Versionierung** (`.stversions`): Vor jedem Überschreiben legt sie den alten Stand mit Zeitstempel ab. Und weil diese Historie **pro Gerät lokal** liegt und nicht mitgesynct wird, hatte im Ernstfall die eine Maschine noch, was die andere schon verloren hatte. Ein echtes Off-Device-Backup ersetzt das trotzdem nicht, aber es hat mir schon eine totgeglaubte Chat-Historie zurückgeholt.
 
-## Headless-Dienste, die einfach laufen
+## Dienste headless betreiben
 
 Ein Agent ist nur so gut wie die Umgebung, in der er arbeiten darf. Auf dem mini soll er einen **vollständigen Dev-Stack** vorfinden: Datenbank, [Docker](https://www.docker.com), Browser. Und zwar ohne dass sich jemand am Bildschirm anmeldet. Denn der mini hat gar keinen angemeldeten Desktop.
 
@@ -213,7 +213,7 @@ Manche Apps rufen ihr Backend allerdings **fest auf `http://localhost:PORT`**, a
 > ```
 > Aus Sicht des Browsers ist dann alles `localhost`, genau wie es die App erwartet.
 
-## Ein Tag mit der Bodenstation
+## Praxis: ein Tag mit der Bodenstation
 
 Wie fühlt sich das im Alltag an? Ungefähr so:
 
