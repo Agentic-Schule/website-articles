@@ -34,7 +34,7 @@ The [official docs](https://code.claude.com/docs/en/cross-session-messaging) des
 
 It is a young feature. It arrived with Claude Code 2.1.224 on August 7, 2026, first for macOS and Linux, with Windows following a few weeks later. Within a single session, `SendMessage` has been around longer: Claude uses it to give an already spawned subagent another instruction and pick its work back up. What is new is the path across session boundaries.
 
-## The most important sentence in the docs
+## The most important sentence in the docs: text only
 
 Before we get practical, the one restriction that explains everything else:
 
@@ -95,7 +95,7 @@ One thing worth knowing before you use the feature generously: a delivered messa
 
 That is by design: a message from another session explicitly carries **no user authority**. The changelog states verbatim that relayed messages "no longer carry user authority" and that the receiving side refuses relayed permission requests. So anyone hoping to obtain a permission through a second session that was denied in the first one is out of luck. And that is exactly how it should be.
 
-## The idle notice
+## Idle notice: getting word when a session is done
 
 For long runs there is a second route that works without asking: Claude can ask another session on the same machine to report back **once**, as soon as it next goes idle or exits.
 
@@ -122,7 +122,7 @@ A feature where other sessions write text into yours raises fair questions. The 
 
 **Turning it off entirely works too**, separately in each direction: `crossSessionInbound: "refuse"` for receiving, deny rules for `SendMessage` and `ListAgents` for sending. Organizations can set both centrally through managed settings. One detail worth knowing: denying `SendMessage` also takes away messages to your own subagents and to the members of an agent team, because the same tool serves all three routes.
 
-## The limits
+## Limits: what is built in
 
 A few properties of the channel are built in for good, and all three make sense:
 

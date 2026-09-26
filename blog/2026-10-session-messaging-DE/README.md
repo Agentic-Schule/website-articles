@@ -34,7 +34,7 @@ Die [offizielle Doku](https://code.claude.com/docs/en/cross-session-messaging) b
 
 Es ist ein junges Feature. Eingeführt wurde es mit Claude Code 2.1.224 am 7. August 2026, zunächst für macOS und Linux, Windows folgte wenige Wochen später. Innerhalb einer Sitzung gab es `SendMessage` schon länger: Damit schickt Claude einem bereits gestarteten Subagenten eine weitere Anweisung und nimmt dessen Arbeit wieder auf. Neu ist der Weg über Sitzungsgrenzen hinweg.
 
-## Der wichtigste Satz der Doku
+## Der wichtigste Satz der Doku: nur Text
 
 Bevor es praktisch wird, die eine Einschränkung, die alles andere erklärt:
 
@@ -95,7 +95,7 @@ Eine Sache, die man wissen sollte, bevor man das Feature großzügig einsetzt: E
 
 Das ist so gewollt: Eine Nachricht aus einer anderen Sitzung trägt ausdrücklich **keine Nutzer-Autorität**. Im Changelog steht dazu wörtlich, dass weitergereichte Nachrichten „no longer carry user authority" und die empfangende Seite weitergereichte Rechte-Anfragen ablehnt. Wer also hofft, sich über eine zweite Sitzung eine Genehmigung zu erschleichen, die in der ersten verweigert wurde, hat schlechte Karten. Genau so gehört es sich auch.
 
-## Der Idle-Melder
+## Idle-Melder: Bescheid bekommen, wenn eine Sitzung fertig ist
 
 Für lange Läufe gibt es einen zweiten Weg, der ohne Nachfragen auskommt: Claude kann eine andere Sitzung auf derselben Maschine bitten, sich **einmalig** zu melden, sobald sie das nächste Mal in den Leerlauf geht oder endet.
 
@@ -122,7 +122,7 @@ Ein Feature, bei dem andere Sitzungen Text in deine schreiben, wirft berechtigte
 
 **Ganz abschalten geht auch**, in beide Richtungen getrennt: `crossSessionInbound: "refuse"` fürs Empfangen, Deny-Regeln für `SendMessage` und `ListAgents` fürs Senden. Für Organisationen lässt sich beides zentral über die Managed Settings setzen. Ein Detail, das man dabei kennen sollte: Wer `SendMessage` verbietet, nimmt sich auch die Nachrichten an die eigenen Subagenten und an die Mitglieder eines Agenten-Teams, weil dasselbe Werkzeug alle drei Wege bedient.
 
-## Die Grenzen
+## Grenzen: was fest eingebaut ist
 
 Ein paar Eigenschaften des Kanals sind fest eingebaut, und alle drei ergeben Sinn:
 
