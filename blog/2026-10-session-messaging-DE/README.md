@@ -20,7 +20,7 @@ Deine Agenten arbeiten an überschneidenden Aufgaben, etwa an zwei Features für
 
 **Seit August können sich Claude-Code-Sitzungen gegenseitig Nachrichten schicken. Claude reicht die Erkenntnis selbst weiter, statt dass du sie von einem Fenster ins nächste kopierst (oder eine Datei als Briefkasten missbrauchst).**
 
-Das Feature heißt Cross-Session Messaging, es ist standardmäßig an, und es ist bewusst schmal gebaut: Es überträgt Text, sonst nichts.
+Das Feature heißt *Cross-Session Messaging* (Nachrichten über Sitzungsgrenzen hinweg), es ist standardmäßig an, und es ist bewusst schmal gebaut: Es überträgt Text, sonst nichts.
 
 ## Inhalt
 
@@ -40,7 +40,7 @@ Bevor es praktisch wird, die eine Einschränkung, die alles andere erklärt:
 
 > „A message is a piece of text one Claude writes to another, never the sender's conversation history or files. To move a whole conversation or its context, resume the session instead."
 
-Übertragen wird also **nur Text**. Keine Historie, keine Dateien, kein Kontext. Wer erwartet, dass die andere Sitzung anschließend weiß, worüber die erste den ganzen Vormittag nachgedacht hat, erwartet das Falsche. Die Doku nennt für diesen Fall auch gleich das richtige Werkzeug: „resume the session instead", also `--resume` beziehungsweise `/resume`. Und wer den bisherigen Verlauf mitnehmen und von dort aus in eine andere Richtung weiterarbeiten will, nimmt `/branch`, das laut Beschreibung „a branch of the current conversation at this point" anlegt (früher hieß der Befehl `/fork`, der Alias funktioniert weiterhin).
+Übertragen wird also **nur Text**. Keine Historie, keine Dateien, kein Kontext. Wer erwartet, dass die andere Sitzung anschließend weiß, worüber die erste den ganzen Vormittag nachgedacht hat, erwartet das Falsche. Die Doku nennt für diesen Fall auch gleich das richtige Werkzeug: „resume the session instead", also `--resume` beziehungsweise `/resume`. Und wer den bisherigen Verlauf mitnehmen und von dort aus in eine andere Richtung weiterarbeiten will, nimmt `/branch`, das laut Beschreibung „a branch of the current conversation at this point" anlegt (nicht zu verwechseln mit `/fork`, das die Konversation in eine neue Hintergrund-Sitzung kopiert).
 
 Zurück zur Nachricht. Dass sie nur Text überträgt, klingt nach einer Schwäche, ist aber genau der Grund, warum das Feature so praktisch ist: Eine Nachricht ist ein Zuruf. Kurz, klar, ohne Ballast. Und für das, was überleben soll, gibt es weiterhin die Festplatte: Notizen, Recherche-Archive, Dateien im Repository.
 
@@ -61,7 +61,7 @@ Sag @api-worker, dass die Schema-Migration durch ist
 
 Stellt er sich dumm und behauptet, er könne das nicht (ja, das kommt vor), nenn ihm einfach die Werkzeuge beim Namen: `ListAgents`, um die andere Sitzung zu finden, `SendMessage`, um die Nachricht zuzustellen. Danach klappt es hoffentlich.
 
-Wer selbst nachsehen will, wer gerade erreichbar ist, tippt `/list-agents`. Die erste Zeile ist der eigene Name, also der, unter dem dich die anderen ansprechen. Darunter stehen die Subagenten der eigenen Sitzung, andere lokale Sitzungen und, sofern Remote Control verbunden ist, auch deine Sitzungen auf anderen Rechnern und im Web. Dazu kommen die Mitglieder eines Agenten-Teams, falls du eines betreibst. Das ist ein eigenes Feature: eine Gruppe von Sitzungen, die Claude selbst aufsetzt und beaufsichtigt.
+Wer selbst nachsehen will, wer gerade erreichbar ist, tippt `/list-agents`. Die erste Zeile ist der eigene Name, also der, unter dem dich die anderen ansprechen. Darunter stehen die Subagenten der eigenen Sitzung, andere lokale Sitzungen und, sofern *Remote Control* (die Fernsteuerung einer Sitzung, etwa vom Handy) verbunden ist, auch deine Sitzungen auf anderen Rechnern und im Web. Dazu kommen die Mitglieder eines Agenten-Teams, falls du eines betreibst. Das ist ein eigenes Feature: eine Gruppe von Sitzungen, die Claude selbst aufsetzt und beaufsichtigt.
 
 Die eigene Inbox-Adresse zeigt übrigens `/status` in der Zeile „Peer address".
 
@@ -91,7 +91,7 @@ Sichtbar wird das als einzeilige Vorschau, die dauerhaft in der Konversation ste
 
 Mit `Ctrl+O` liest du den vollen Text, in einer Sitzung mit `--verbose` steht er ohnehin komplett da. Verkürzt wird nur die Anzeige: Claude liest immer die ganze Nachricht.
 
-Eine Sache, die man wissen sollte, bevor man das Feature großzügig einsetzt: Eine zugestellte Nachricht zählt aufs Kontingent wie ein Prompt, den du selbst tippst. Im Endeffekt ist es auch nichts anderes, nämlich ein weiterer Prompt aus einer zusätzlichen Quelle. Claude weiß dabei allerdings, dass nicht du ihn getippt hast, sondern eine andere Sitzung. Erfahrungsgemäß ist ein starkes Modell an dieser Stelle zu Recht skeptischer und prüft erst einmal alles selbst nach.
+Eine Sache, die man wissen sollte, bevor man das Feature großzügig einsetzt: Eine zugestellte Nachricht zählt aufs Kontingent wie ein Prompt, den du selbst tippst. Es ist auch nichts anderes: ein weiterer Prompt aus einer zusätzlichen Quelle. Claude weiß dabei allerdings, dass nicht du ihn getippt hast, sondern eine andere Sitzung. Erfahrungsgemäß ist ein starkes Modell an dieser Stelle zu Recht skeptischer und prüft erst einmal alles selbst nach.
 
 Das ist so gewollt: Eine Nachricht aus einer anderen Sitzung trägt ausdrücklich **keine Nutzer-Autorität**. Im Changelog steht dazu wörtlich, dass weitergereichte Nachrichten „no longer carry user authority" und die empfangende Seite weitergereichte Rechte-Anfragen ablehnt. Wer also hofft, sich über eine zweite Sitzung eine Genehmigung zu erschleichen, die in der ersten verweigert wurde, hat schlechte Karten. Genau so gehört es sich auch.
 
@@ -120,7 +120,7 @@ Ein Feature, bei dem andere Sitzungen Text in deine schreiben, wirft berechtigte
 
 **Die Maschinengrenze lässt sich verriegeln.** Mit `isolatePeerMachines: true` verlangt Claude Code deine ausdrückliche Zustimmung, bevor eine Nachricht den Rechner verlässt, und zwar selbst im `bypassPermissions`-Modus.
 
-**Ganz abschalten geht auch**, in beide Richtungen getrennt: `crossSessionInbound: "refuse"` fürs Empfangen, Deny-Regeln für `SendMessage` und `ListAgents` fürs Senden. Für Organisationen lässt sich beides zentral setzen. Ein Detail, das man dabei kennen sollte: Wer `SendMessage` verbietet, nimmt sich auch die Nachrichten an die eigenen Subagenten und an die Mitglieder eines Agenten-Teams, weil dasselbe Werkzeug alle drei Wege bedient.
+**Ganz abschalten geht auch**, in beide Richtungen getrennt: `crossSessionInbound: "refuse"` fürs Empfangen, Deny-Regeln für `SendMessage` und `ListAgents` fürs Senden. Für Organisationen lässt sich beides zentral über die Managed Settings setzen. Ein Detail, das man dabei kennen sollte: Wer `SendMessage` verbietet, nimmt sich auch die Nachrichten an die eigenen Subagenten und an die Mitglieder eines Agenten-Teams, weil dasselbe Werkzeug alle drei Wege bedient.
 
 ## Die Grenzen
 
@@ -137,7 +137,7 @@ Ein paar Eigenschaften des Kanals sind fest eingebaut, und alle drei ergeben Sin
 Die Doku grenzt das Feature selbst ab, und diese Liste ist es wert, gelesen zu werden, bevor man alles mit Nachrichten löst:
 
 - Willst du **eine Konversation woanders fortsetzen**, nimm `--resume`.
-- Willst du ein **koordiniertes Team**, das Claude selbst aufsetzt und beaufsichtigt, nimm Agent Teams. Die sind allerdings noch experimentell und standardmäßig aus, du musst sie über die Umgebungsvariable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` einschalten.
+- Willst du ein **koordiniertes Team**, das Claude selbst aufsetzt und beaufsichtigt, nimm Agent Teams. Die sind allerdings noch experimentell und standardmäßig aus, du musst sie über die Umgebungsvariable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` einschalten.
 - Willst du **viele Sitzungen an einem Ort beobachten**, nimm die Agent View.
 - Willst du **selbst vom Handy steuern**, nimm Remote Control, siehe dazu die zehn Befehle in meinem [Befehle-Artikel](https://agentic.schule/blog/2026-10-claude-code-commands).
 - Willst du **externe Ereignisse hineinreichen**, etwa CI-Ergebnisse, nimm Channels.
