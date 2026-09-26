@@ -95,14 +95,14 @@ Praktischerweise gewinnt der eigene Server ohnehin: Die Dokumentation nennt als 
 > claude mcp add playwright --scope user -- \
 >   npx @playwright/mcp@latest --config ~/.config/playwright-mcp/config.json
 > ```
-> Alles nach dem `--` ist der Startbefehl des Servers. Das mitgelieferte Plugin schaltet man in `~/.claude/settings.json` ab:
+> Alles nach dem `--` ist der Startbefehl des Servers. Die `config.json` legen wir weiter unten an. Das mitgelieferte Plugin schaltet man in `~/.claude/settings.json` ab:
 > ```json
 > { "enabledPlugins": { "playwright@claude-plugins-official": false } }
 > ```
 > Oder man installiert einfach das offizielle Plugin wieder. Funktioniert genauso.
 > Danach zeigt `claude mcp list` den eigenen Server, im Idealfall mit `✔ Connected`.
 
-## Unauffällig ist nicht unsichtbar
+## Tarnen: unauffällig, aber nicht unsichtbar
 
 Jetzt wollen wir den Chrome ein wenig tarnen. Zwei Handgriffe genügen, um die drei Verräter loszuwerden.
 
@@ -120,7 +120,7 @@ Der Rest ist ein kleines Skript, das vor jedem Seitenaufbau läuft:
 >   get: () => ['de-DE', 'de', 'en-US', 'en']
 > });
 > ```
-> Der User-Agent lässt sich hier bewusst nicht setzen, denn er steckt im Request-Header und wird gesendet, bevor JavaScript überhaupt läuft. Dafür ist die Konfiguration zuständig.
+> Der User-Agent lässt sich hier bewusst nicht setzen, denn er steckt im Request-Header und wird gesendet, bevor JavaScript überhaupt läuft. Dafür ist die Konfiguration zuständig. Ich lege die Datei unter `~/bin/pw-stealth.js` ab, dort erwartet sie auch das Setup-Skript weiter unten.
 
 **Doch die Tarnung hat eine Grenze:** Gegen echtes Bot-Management hilft das nicht. Systeme wie Cloudflare Turnstile oder DataDome schauen sich den TLS-Fingerabdruck an, messen Mausbewegungen und Timings und stellen aktive Rechenaufgaben. Zwei Zeilen JavaScript beeindrucken sie nicht, und das ist auch gut so. Wer eine solche Sperre vor sich hat, hat eine klare Antwort bekommen: Diese Seite möchte nicht automatisiert gelesen werden. Dann ist Schluss, unabhängig davon, was technisch ginge.
 
@@ -191,7 +191,7 @@ Die erste Bedingung erklärt das vollständig. Ohne gesetztes Budget kehrt die F
 > ```
 > `outputDir` lenkt die Dateien zentral nach `/tmp`, `outputMaxSize` (hier 200 MB) schaltet das Aufräumen überhaupt erst ein. `channel: chrome` nutzt den installierten Chrome statt eines Testbrowsers, `isolated: true` gibt jeder Sitzung ein frisches Profil im Arbeitsspeicher, was Sperrkonflikte bei parallelen Sessions vermeidet. Die Versionsnummer im `userAgent` (`<version>`) trägt das Setup-Skript unten passend zur Maschine ein.
 
-> **⚠️ Beim Debuggen daran denken:** Die Konfiguration wird beim Start des Servers gelesen. Wer sie ändert und sich wundert, dass nichts passiert, debuggt gegen den falschen Prozess. Gelöst ist das durch ein Neuverbinden des Servers, das die Konfiguration frisch einliest.
+> **⚠️ Beim Debuggen daran denken:** Die Konfiguration wird beim Start des Servers gelesen. Wer sie ändert und sich wundert, dass nichts passiert, debuggt gegen den falschen Prozess. Gelöst ist das durch ein Neuverbinden des Servers, das die Konfiguration frisch einliest. In Claude Code geht das über `/mcp` und dort im Menü des Servers über „Reconnect".
 
 ## Einrichtung: ein Skript pro Maschine
 

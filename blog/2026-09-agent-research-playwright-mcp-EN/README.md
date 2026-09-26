@@ -95,14 +95,14 @@ Conveniently, your own server wins anyway: the documentation gives the order as 
 > claude mcp add playwright --scope user -- \
 >   npx @playwright/mcp@latest --config ~/.config/playwright-mcp/config.json
 > ```
-> Everything after the `--` is the server's start command. You switch the bundled plugin off in `~/.claude/settings.json`:
+> Everything after the `--` is the server's start command. We create the `config.json` further down. You switch the bundled plugin off in `~/.claude/settings.json`:
 > ```json
 > { "enabledPlugins": { "playwright@claude-plugins-official": false } }
 > ```
 > Or you just install the official plugin again. Works just as well.
 > After that, `claude mcp list` shows your own server, ideally with `✔ Connected`.
 
-## Unobtrusive is not invisible
+## Disguise: unobtrusive, but not invisible
 
 Now let's disguise the Chrome a little. Two moves are enough to get rid of the three giveaways.
 
@@ -120,7 +120,7 @@ The rest is a small script that runs before every page load:
 >   get: () => ['de-DE', 'de', 'en-US', 'en']
 > });
 > ```
-> The user agent deliberately cannot be set here, because it sits in the request header and goes out before any JavaScript even runs. The configuration takes care of that.
+> The user agent deliberately cannot be set here, because it sits in the request header and goes out before any JavaScript even runs. The configuration takes care of that. I keep the file at `~/bin/pw-stealth.js`, which is also where the setup script further down expects it.
 
 **But the disguise has a limit:** it does nothing against serious bot management. Systems like Cloudflare Turnstile or DataDome look at the TLS fingerprint, measure mouse movements and timings, and pose active computational challenges. Two lines of JavaScript do not impress them, and that is a good thing. Anyone facing a barrier like that has been given a clear answer: this site does not want to be read by automation. That is where it ends, regardless of what would be technically possible.
 
@@ -191,7 +191,7 @@ The first condition explains it completely. With no budget set, the function ret
 > ```
 > `outputDir` routes the files centrally to `/tmp`, `outputMaxSize` (200 MB here) is what turns the cleanup on in the first place. `channel: chrome` uses the installed Chrome instead of a test browser, `isolated: true` gives each session a fresh profile in memory, which avoids lock conflicts with parallel sessions. The setup script below fills in the version number in the `userAgent` (`<version>`) to match the machine.
 
-> **⚠️ Keep in mind when debugging:** the configuration is read when the server starts. If you change it and wonder why nothing happens, you are debugging against the wrong process. The fix is to reconnect the server, which reads the configuration fresh.
+> **⚠️ Keep in mind when debugging:** the configuration is read when the server starts. If you change it and wonder why nothing happens, you are debugging against the wrong process. The fix is to reconnect the server, which reads the configuration fresh. In Claude Code, open `/mcp` and choose "Reconnect" in the server's menu.
 
 ## Setup: one script per machine
 
