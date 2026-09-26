@@ -77,7 +77,7 @@ Zwei Dinge sollte man außerdem wissen:
 
 Worktrees gab es lange vor den KI-Agenten. Klassisch nutzt man sie für den Hotfix neben dem laufenden Feature oder um einen Pull Request auszuchecken, ohne den eigenen Stand anzufassen. Mit Agenten kommt ein neuer Dauerzustand dazu: Der persönliche Rechner beherbergt auf einmal ein ganzes agentisches Team, und jedes Teammitglied braucht seinen eigenen Checkout.
 
-## Was die Tools daraus machen
+## Was machen die Tools daraus?
 
 Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition (und viele weitere) haben das längst erkannt. **Lokal heißt Isolation git worktree, in der Cloud heißt sie eigene VM oder eigener Container.**
 
@@ -253,7 +253,7 @@ Ein paar Anmerkungen dazu:
 
 Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisionen, die nicht im Dateisystem passieren, denn auch mit getrennten Verzeichnissen teilen sich alle Agenten weiterhin einen Computer: seine Ports, seine Datenbanken, seine Lizenzen.
 
-### Abhängigkeiten sind pro Worktree fällig
+### Abhängigkeiten: pro Worktree fällig
 
 `node_modules` im Frontend, `bin/` und `obj/` im Backend: alles gitignored, also überall neu. Das kostet ein paar Minuten und ordentlich Plattenplatz. Der Lohn dafür: Jeder Worktree hat exakt die Abhängigkeiten seines Branches und nichts leakt zwischen den Features.
 
@@ -273,7 +273,7 @@ Spätestens wenn zwei Äste gleichzeitig *in Betrieb* sind, wird es eng: Beide A
 
 Technisch ist das schnell verdrahtet: beim Frontend `ng serve --port 4201`, beim Backend die URL per Umgebungsvariable (`ASPNETCORE_URLS`), beim Datenbank-Container das Port-Mapping im Compose-File. Wichtig ist nur Konsequenz: Das Frontend eines Astes muss auch auf die API **desselben** Astes zeigen (Proxy-Konfiguration beziehungsweise environment-Datei), sonst testet man fröhlich gegen das falsche Backend und wundert sich über Geisterdaten.
 
-### Parallele E2E-Läufe
+### Parallele End-to-End-Tests
 
 Die Königsdisziplin. Zwei Testläufe auf einer gemeinsamen Datenbank sabotieren sich gegenseitig: Der eine räumt gerade die Testdaten ab, auf die der andere wartet. Wer parallel testen will, braucht getrennte Datenbank-Instanzen pro Ast, oder wenigstens sauber getrennte Daten-Buckets innerhalb einer Instanz. Mit dem Port-Schema von oben ist die getrennte Instanz meist der einfachere Weg: zweiten Container hochziehen, Port eintragen, fertig.
 

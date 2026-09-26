@@ -76,7 +76,7 @@ Two more things worth knowing:
 
 Worktrees existed long before the AI agents. Classically, you use them for the hotfix next to the running feature, or to check out a pull request without touching your own state. With agents, a new permanent situation joins the list: the personal computer suddenly hosts a whole agentic team, and every team member needs its own checkout.
 
-## What the Tools Make of It
+## What Do the Tools Make of It?
 
 Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition (and many others) noticed this long ago. **Locally, isolation means git worktree; in the cloud, it means a dedicated VM or container.**
 
@@ -252,7 +252,7 @@ A few remarks:
 
 The worktrees are in place, two agents are working on two branches. What remains are the collisions that don't happen in the file system, because even with separate directories, all agents still share one computer: its ports, its databases, its licenses.
 
-### Dependencies Are Due per Worktree
+### Dependencies: Due per Worktree
 
 `node_modules` in the frontend, `bin/` and `obj/` in the backend: all gitignored, so all new everywhere. That costs a few minutes and a good chunk of disk space. The reward: every worktree has exactly the dependencies of its branch and nothing leaks between features.
 
@@ -272,7 +272,7 @@ At the latest when two branches are supposed to be *up and running* at the same 
 
 Technically, this is wired up quickly: `ng serve --port 4201` for the frontend, the URL via environment variable (`ASPNETCORE_URLS`) for the backend, the port mapping in the compose file for the database container. The only thing that matters is consistency: the frontend of a branch must also point to the API of the **same** branch (proxy configuration or environment file), or you'll happily test against the wrong backend and wonder about ghost data.
 
-### Parallel E2E Runs
+### Parallel End-to-End Tests
 
 The supreme discipline. Two test runs on a shared database sabotage each other: one clears away the test data the other is waiting for. If you want to test in parallel, you need separate database instances per branch, or at least cleanly separated data buckets within one instance. With the port scheme above, the separate instance is usually the easier path: spin up a second container, enter the port, done.
 
