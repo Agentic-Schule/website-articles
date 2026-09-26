@@ -53,7 +53,7 @@ How seriously Willison means it shows in an episode from May 2025: Under the tit
 
 In October 2025, Willison [proposed a counter-term of his own](https://simonwillison.net/2025/Oct/7/vibe-engineering/). For him, vibe coding is by now firmly established as the practice without guardrails: "the fast, loose and irresponsible way of building software with AI—entirely prompt-driven, and with no attention paid to how the code actually works." For the other end of the spectrum he suggested: "I propose we call this vibe engineering, with my tongue only partially in my cheek." Meaning "a different, harder and more sophisticated way of working with AI tools to build production software", self-irony included ("Is this a stupid name? Yeah, probably."). The evolution of the term kept going, by the way: an update from February 2026 in the same post notes that "Agentic Engineering" is winning out.
 
-## And then the line blurs after all
+## Does the line blur after all?
 
 The story has a third act, and it is what makes it truly interesting. In May 2026, Willison published ["Vibe coding and agentic engineering are getting closer than I’d like"](https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/) and confessed: "Weirdly though, those things have started to blur for me already, which is quite upsetting." The reason: "The problem is that as the coding agents get more reliable, I’m not reviewing every line of code that they write anymore, even for my production level stuff."
 

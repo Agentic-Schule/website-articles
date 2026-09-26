@@ -53,7 +53,7 @@ Wie ernst Willison das meint, zeigt eine Episode vom Mai 2025: Unter dem Titel [
 
 Im Oktober 2025 legte Willison [selbst einen Gegenbegriff nach](https://simonwillison.net/2025/Oct/7/vibe-engineering/). Vibe Coding ist für ihn inzwischen fest etabliert als Praxis ohne Leitplanken: „the fast, loose and irresponsible way of building software with AI—entirely prompt-driven, and with no attention paid to how the code actually works." Für das andere Ende des Spektrums schlug er vor: „I propose we call this vibe engineering, with my tongue only partially in my cheek." Gemeint ist „a different, harder and more sophisticated way of working with AI tools to build production software", inklusive Selbstironie („Is this a stupid name? Yeah, probably."). Die Begriffs-Evolution ging danach übrigens weiter: Ein Update vom Februar 2026 im selben Post notiert, dass sich inzwischen „Agentic Engineering" durchsetzt.
 
-## Und dann verschwimmt die Grenze doch
+## Verschwimmt die Grenze am Ende doch?
 
 Die Geschichte hat einen dritten Akt, und der macht sie erst richtig interessant. Im Mai 2026 veröffentlichte Willison [„Vibe coding and agentic engineering are getting closer than I’d like"](https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/) und gestand: „Weirdly though, those things have started to blur for me already, which is quite upsetting." Der Grund: „The problem is that as the coding agents get more reliable, I’m not reviewing every line of code that they write anymore, even for my production level stuff."
 
