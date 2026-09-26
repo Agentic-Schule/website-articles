@@ -170,7 +170,7 @@ Der Server fasst deine Festplatte dabei nie an. Schickst du ihm „scanne das Ve
 
 So arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das [Vercel AI SDK](https://ai-sdk.dev) gebaut, jedes Modell ist frei einstellbar. Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, läuft ein lokales `gemma3` über Ollama auf dem eigenen Server, diese Klassifizierung verlässt uns also nie. Und was an das eigentliche Chat-Modell geht, wird vorher anonymisiert: Klarnamen, allen voran die der Schüler, ersetzen wir durch Platzhalter, bevor irgendein Modell den Text sieht.
 
-## Klassifizierer und System-Prompt sind gefallen
+## Klassifizierer und System-Prompt: lokal schon gefallen
 
 Läuft das Modell auf deiner Maschine, ist die erste Schranke schon Geschichte: Kein Klassifizierer des Anbieters liest mehr mit, und keine deiner Anfragen wird abgewiesen.
 
