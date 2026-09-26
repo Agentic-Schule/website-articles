@@ -20,9 +20,9 @@ header: header.jpg
 
 In der IT-Sicherheit brennt es, und ein Hardware-Hersteller hat es diesen Sommer [auf den Punkt gebracht](https://blog.coinkite.com/entropy-technical-backgrounder/), nachdem seinen Kunden reihenweise Geld gestohlen worden war: „Both attackers and defenders have the same AI tools, but today it did not help us, and only helped the bad guys."
 
-**Wer sich nicht an die Regeln hält, war schon immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Sicherheitssperren (*Guardrails*) und Rate-Limits, und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar.**
+**Wer sich nicht an die Regeln hält, war schon immer im Vorteil. Bei KI-Werkzeugen bekommt diese alte Weisheit eine neue Schärfe: Der Verteidiger nimmt die Version aus der Cloud, mit vorgegebenem System-Prompt, Sicherheitssperren (*Guardrails*) und Mengenbegrenzungen (*Rate-Limits*), und der Anbieter liest mit. Der Angreifer geht lokal, ohne fremden System-Prompt, auf Wunsch ohne Guardrails, begrenzt nur durch seine Rechenkapazität. An zwei dokumentierten Vorfällen mache ich dieses Dilemma greifbar.**
 
-Führt eine ungezügelte KI ohne jede Einschränkung am Ende zum Untergang der Menschheit? Ich habe keine Ahnung, das ist mir zu viel Sci-Fi. Was ich dagegen sehe, ist eine krasse Schieflage, hier und heute. In den kommenden Artikeln spielen wir bei den „bösen" Buben mit, und ich lege mit diesem Artikel meinen Standpunkt vorab offen.
+Führt eine ungezügelte KI ohne jede Einschränkung am Ende zum Untergang der Menschheit? Ich habe keine Ahnung, das ist mir zu viel Sci-Fi. Was ich dagegen sehe, ist eine krasse Schieflage, hier und heute. In den kommenden Artikeln spielen wir bei den „bösen" Buben mit. Das nennt sich *Red Teaming*: Man nimmt kontrolliert die Perspektive des Angreifers ein, um die eigene Verteidigung zu prüfen. Mit diesem Artikel lege ich meinen Standpunkt vorab offen.
 
 ## Inhalt
 
@@ -87,7 +87,7 @@ Die Asymmetrie fasst Hugging Face in einem Satz zusammen:
 
 Der Angreifer war an keine Nutzungsbedingung gebunden. Der Verteidiger schon.
 
-## Das unbeschränkte Modell gibt es, nur nicht für dich
+## Das unbeschränkte Modell: nur nicht für dich
 
 Was der Verteidiger bräuchte, ist eine starke KI, die es mit den Angreifern aufnehmen kann. Die gibt es. Anthropic nennt sie [Claude Mythos 5](https://www.anthropic.com/claude/mythos), sein Modell für Cyber- und Biologie-Forschung. Mythos und das reguläre Fable sind dasselbe Modell, sie unterscheiden sich nur in den Sicherheitsvorkehrungen. Anthropic schreibt es selbst: „Claude Fable 5.1 is the same underlying model as Claude Mythos 5.1 with safeguards for cybersecurity and biology." Fable ist also die beschnittene Fassung, Mythos die volle. An Mythos kommst du nicht heran. Der Zugang läuft über ein geschlossenes Programm, [Project Glasswing](https://www.anthropic.com/glasswing), beschränkt auf wenige geprüfte Organisationen und in Abstimmung mit der US-Regierung. OpenAI hält seine stärksten Cyber-Fähigkeiten ähnlich verschlossen, über sein eigenes Programm [Trusted Access for Cyber](https://openai.com/index/trusted-access-for-cyber/). Für dich sind beide verschlossen.
 
