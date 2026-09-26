@@ -25,7 +25,7 @@ To me, the `/slash` is the most important key in Claude Code, because it is how 
 
 ## 1. `/code-review`: your diff on the test bench
 
-Checks the current state of your branch for real defects, and optionally a PR, a branch, or a path instead. You pass the *effort*, meaning the thinking depth (more on that in section 8), as the first argument, for example `/code-review max`; without one, the level you typed last applies, and otherwise the session's effort. Depending on model and effort, the review either works through its angles one after another or fans them out across parallel agents, and with `ultra` it runs as a multi-agent review in the cloud.
+Checks the current state of your branch for real defects, and optionally a PR, a branch, or a path instead. You pass the *effort*, meaning the thinking depth (more on that in section 8), as the first argument, for example `/code-review max`; without one, the level you typed last applies, and otherwise the session's effort. Depending on model and effort, the review either works through its angles one after another or fans them out across parallel agents, and with `ultra` it runs as a multi-agent review in the cloud. That level needs a direct Claude account with access enabled, runs in its own cloud session, and is billed separately; the command description states the price up front.
 
 > **💡 Tip:** `--fix` applies the findings straight to your working tree, `--comment` posts them as inline comments on the PR. And while it is called code review, it works just as well for prose. It has read this article, too.
 
@@ -39,7 +39,7 @@ Runs a pure security review of the pending changes on the branch, no arguments n
 
 The only bundled workflow, and a showcase of what Claude Code can do in terms of orchestration: it fans web searches out across several angles, fetches the sources, checks the claims against each other, and delivers a cited report instead of a list of hits. How such a workflow is built is covered in the [graph article](https://agentic.schule/blog/2026-09-graph-engineering).
 
-> **💡 Tip:** Phrase the question as concretely as possible, including context and time frame. The workflow then splits it into search angles by itself. While it runs, you simply keep working.
+> **💡 Tip:** Phrase the question as concretely as possible, including context and time frame. The workflow then splits it into search angles by itself. While it runs, you simply keep working. The report is only as good as its sources, though: verify the key claims yourself before you adopt them.
 
 ## 4. `/loop`: the loop
 
