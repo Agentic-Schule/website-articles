@@ -44,7 +44,7 @@ Mit einem klassischen Einzel-Checkout haben wir jetzt drei schlechte Optionen:
 
 Selbst ohne Notfall nervt der klassische Context-Switch: stash, checkout, `npm install`, weil der andere Branch andere Abhängigkeiten hat, die IDE indexiert neu. Wer so arbeitet, hat wenig Komfort.
 
-Dazu kommt ein Luxusproblem: Frontier-Modelle mit ordentlich Reasoning sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Bei zwei Agenten im selben Arbeitsverzeichnis wird aus der erhofften Parallelität ein Wettrennen um dieselben Dateien. Obendrein schließen sich manche Features gegenseitig aus und andere dürfen nur in einer bestimmten Reihenfolge einfließen. Zwei halbfertige Features im selben Verzeichnis ergeben einen Mischzustand, den es im fertigen Produkt nie geben wird. Und ausgerechnet dagegen laufen dann Builds und Tests.
+Dazu kommt ein Luxusproblem: *Frontier-Modelle* (die jeweils leistungsstärksten KI-Modelle) mit ordentlich *Reasoning* (mehrstufigem Nachdenken vor der Antwort) sind gründlich, aber gemächlich. Kommandos wie `/code-review` laufen bei mir schon mal absurd lange. Die natürliche Reaktion: parallelisieren. Während Session eins das Review fährt, soll Session zwei das nächste Feature anfangen. Nur: Bei zwei Agenten im selben Arbeitsverzeichnis wird aus der erhofften Parallelität ein Wettrennen um dieselben Dateien. Obendrein schließen sich manche Features gegenseitig aus und andere dürfen nur in einer bestimmten Reihenfolge einfließen. Zwei halbfertige Features im selben Verzeichnis ergeben einen Mischzustand, den es im fertigen Produkt nie geben wird. Und ausgerechnet dagegen laufen dann Builds und Tests.
 
 Der naive Ausweg wäre, das Repo einfach mehrfach zu klonen. Das funktioniert, ist aber verschwenderisch (jede Kopie schleppt ihr eigenes `.git` mit, und gefetcht wird auch mehrfach) und vor allem unnötig: git hat für genau diesen Fall seit Jahren ein Bordmittel.
 
@@ -83,7 +83,7 @@ Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition (und viele weitere) h
 
 | Tool | Paralleles Arbeiten | Isolation |
 |---|---|---|
-| [Claude Code](https://code.claude.com/docs/en/worktrees) | parallele Sessions per `--worktree`, isolierte Subagenten | git worktrees unter `.claude/worktrees/`, Desktop-App: automatisch pro Session |
+| [Claude Code](https://code.claude.com/docs/en/worktrees) | parallele Sessions per `--worktree`, isolierte Subagenten | git worktrees unter `.claude/worktrees/`, Desktop-App: Worktree-Option pro Session |
 | [Cursor](https://cursor.com/changelog/2-0) | bis zu acht Agenten auf einen Prompt | git worktrees oder Remote-Maschinen, isolierte Kopie pro Agent |
 | [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | Cloud agent: Änderungen auf einem Branch, dann PR | ephemere GitHub-Actions-Umgebung pro Session |
 | [VS Code](https://code.visualstudio.com/docs/agents/agent-types/copilot-cli) | Background-Agents (Copilot CLI, Claude) | wählbare Worktree-Isolation je Session |
@@ -96,7 +96,7 @@ Anthropic, Microsoft, Google, OpenAI, Cursor und Cognition (und viele weitere) h
 
 (Stand: Juli 2026. Die Feature-Lage ändert sich in diesem Feld gefühlt wöchentlich, die Links führen jeweils zur offiziellen Doku.)
 
-Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Blind verlassen sollte man sich auf die Isolation trotzdem nicht: Claude Code etwa nutzt Worktrees nicht immer von allein, mal kommt der Agent selbst auf die Idee, mal nicht. Wie so vieles beim Vibe Coding lässt sich die Wahrscheinlichkeit aber gezielt erhöhen: **Einfach dazusagen, dass Worktrees eingesetzt werden sollen.** Wie das konkret aussieht, zeigen die folgenden Abschnitte, zuerst beim Werkzeug meiner Wahl.
+Die lokalen Tools setzen auf Worktrees, die Cloud-Dienste auf Wegwerf-VMs, dort ist eine eigene VM ohnehin der offensichtlichste Weg. Blind verlassen sollte man sich auf die Isolation trotzdem nicht: Claude Code etwa nutzt Worktrees nicht immer von allein, mal kommt der Agent selbst auf die Idee, mal nicht. Wie so vieles beim *Vibe Coding* (dem Entwickeln per Zuruf an den Agenten) lässt sich die Wahrscheinlichkeit aber gezielt erhöhen: **Einfach dazusagen, dass Worktrees eingesetzt werden sollen.** Wie das konkret aussieht, zeigen die folgenden Abschnitte, zuerst beim Werkzeug meiner Wahl.
 
 ### Der Claude-Code-Weg
 
@@ -128,7 +128,7 @@ Richtig elegant wird es bei [Subagenten](https://code.claude.com/docs/en/sub-age
 
 Ein Detail aus der Praxis: Weil ein frischer Worktree ohne die gitignorierten Dateien startet, `.env` zum Beispiel, gibt es `.worktreeinclude`, eine Datei im Projektstamm in `.gitignore`-Syntax. Was dort steht und selbst gitignored ist, kopiert Claude Code beim Anlegen automatisch in jeden neuen Worktree (getrackte Dateien dupliziert es bewusst nie).
 
-In der Desktop-App ist das Prinzip übrigens schon Standard: Dort bekommt jede neue parallele Session automatisch ihren eigenen Worktree. Und falls du wie ich zuerst danach suchst: Einen Slash-Command `/worktree` gibt es nicht, das Flag beim Start und der Zuruf in der Session decken alles ab.
+In der Desktop-App ist das Prinzip übrigens ein Schalter: Beim Start einer neuen Session wählst du neben dem Branch-Namen die Option **worktree**, und die Session bekommt ihren eigenen Worktree. Und falls du wie ich zuerst danach suchst: Einen Slash-Command `/worktree` gibt es nicht, das Flag beim Start und der Zuruf in der Session decken alles ab.
 
 ### Der Antigravity-Weg
 
@@ -259,7 +259,7 @@ Die Worktrees stehen, zwei Agenten arbeiten auf zwei Ästen. Bleiben die Kollisi
 
 ### Kommerzielle Lizenzen, die node_modules patchen
 
-Der Fallstrick, der uns wirklich erwischt hat: [Kendo UI](https://www.telerik.com/kendo-angular-ui) legt seine Lizenz-Aktivierung als gepatchte Dateien unter `node_modules/@progress/kendo-licensing/` ab. Die Aktivierung lebt also im Installationsartefakt statt im Repo und ein frischer Worktree beginnt bei null. Fairerweise: Findet Telerik den Key von selbst (als `telerik-license.txt` oder Umgebungsvariable), erledigt ein Postinstall-Script das gleich beim `npm install`. Bei uns kapselt ihn ein eigenes npm-Script, also heißt es: nach jedem `npm install` in jedem Worktree neu aktivieren, sonst rendern die Komponenten mit Wasserzeichen und Lizenz-Warnung. Die Lehre verallgemeinert sich gut: Was ein frisches `npm install` überschreibt oder vergisst, muss der Init-Command pro Worktree wiederherstellen.
+Das ist eine echte Falle: [Kendo UI](https://www.telerik.com/kendo-angular-ui) legt seine Lizenz-Aktivierung als gepatchte Dateien unter `node_modules/@progress/kendo-licensing/` ab. Die Aktivierung lebt also im Installationsartefakt statt im Repo und ein frischer Worktree beginnt bei null. Fairerweise: Findet Telerik den Key von selbst (als `telerik-license.txt` oder Umgebungsvariable), erledigt ein Postinstall-Script das gleich beim `npm install`. Bei uns kapselt ihn ein eigenes npm-Script, also heißt es: nach jedem `npm install` in jedem Worktree neu aktivieren, sonst rendern die Komponenten mit Wasserzeichen und Lizenz-Warnung. Die Lehre verallgemeinert sich gut: Was ein frisches `npm install` überschreibt oder vergisst, muss der Init-Command pro Worktree wiederherstellen.
 
 ### Eigene Ports für jeden Ast
 
