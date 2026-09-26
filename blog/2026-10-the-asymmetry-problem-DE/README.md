@@ -81,7 +81,7 @@ Die Angreifer waren also ungezügelt. Aber wie schaute es auf der Seite der Vert
 
 Der [technische Begleitbericht](https://huggingface.co/blog/agent-intrusion-technical-timeline) nennt die Modelle beim Namen: „The models we reached for first, Claude Opus and Fable, refused a large part of that work." Ausgewichen ist das Team schlussendlich auf ein offenes Modell auf eigener Infrastruktur, GLM-5.2. Damit gelangen Auswertung und Abwehr, sofern die Story wirklich so stimmt. (Der PR-Anteil ist hier nicht klein: OpenAI führt vor, wie potent seine Modelle sind, Hugging Face spielt dasselbe Lied, und dass ausgerechnet ein lokales Modell die Lage rettete, passt einem Anbieter offener Modelle natürlich bestens. Aber gut, nehmen wir beide Darstellungen einfach so hin, wie sie geschildert sind.)
 
-Die Asymmetrie fasst Hugging Face in einem Satz zusammen:
+Die Asymmetrie fasst Hugging Face in einem Satz zusammen. Die Offenlegung erschien Mitte Juli, also lange vor OpenAIs Report. Wessen Agenten da angriffen, wusste Hugging Face zu diesem Zeitpunkt noch nicht:
 
 > „We do not know which model powered the attacker's agents, whether a jailbroken hosted model or an unrestricted open-weight one; either way, the attacker was bound by no usage policy, while our own forensic work was blocked by the guardrails of the hosted models we first tried."
 
