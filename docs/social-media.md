@@ -275,6 +275,18 @@ Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden 
 - **YouTube Shorts:** „Viewed vs. swiped away" zählt. Die reine Aufrufzahl sagt wenig, denn seit dem 24. August 2026 zählt jeder gestartete Abspielvorgang als Aufruf.
 - **LinkedIn und X:** Impressionen und Antworten, nicht nur Likes.
 
+## GDE-Reporting in Advocu
+
+Johannes ist Google Developer Expert und meldet jede Aktivität in Advocu, mit dem Ziel GDE für AI. Die Sitzung legt dafür über das Advocu-MCP Entwürfe an (`advocu_create_draft`); Änderungen an bestehenden Einträgen laufen über `advocu_update_activity` und müssen von Johannes im Freigabe-Server bestätigt werden. Freigabe-Links immer mit dem Host `http://clawdis-mac-mini.fritz.box:8080/<id>` angeben.
+
+- **Nur veröffentlichte Tage melden.** Ein Artikel wird erst eingetragen, wenn sein Tag erschienen ist.
+- **Ein Eintrag pro Tag,** Typ `content-creation`, Content Type „Articles", mit der englischen URL. Die deutsche Fassung steht am Ende der Beschreibung.
+- **Titel:** Artikeltitel der EN-Fassung plus „(AI Series, Day N/30)", z. B. „Anatomy of a Malicious AI Skill: An Attack That Is Still Live (AI Series, Day 1/30)".
+- **Tags:** immer `AI`, dazu passend `Build with AI`, `Web - AI for Web Developers` und Themen-Tags aus der Liste des MCP (z. B. `AI - Antigravity`, `Open Source`).
+- **Datum:** `published:` aus dem Frontmatter. **Leser:** 100, bis echte Zahlen vorliegen.
+- **Beschreibung:** „Day N of my 30-day series on agentic.schule: one new article about AI for developers every day, in English and German." Dann zwei, drei Sätze Zusammenfassung, gegen den Artikel geprüft, und „German version: <DE-URL>".
+- Vor dem Anlegen mit `advocu_list_activities` prüfen, ob der Tag schon eingetragen ist.
+
 ## Feedback und neue Regeln
 
 - **Korrekturen für einen einzelnen Post** („Hook zu lahm", „kürzer") gibt Johannes im Chat. Die Sitzung überarbeitet, bis er freigibt. Drei, vier Runden sind normal.
