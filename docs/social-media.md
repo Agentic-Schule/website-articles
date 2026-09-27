@@ -219,7 +219,7 @@ Subscribe: a new one drops every weekday.
 #Shorts #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
 
-- **„(Day N/30)" gehört immer in den Titel,** auch auf YouTube. Der Titel folgt derselben Faktenregel wie jeder Post: nur, was der Artikel deckt.
+- **YouTube-Titel dürfen reißerischer sein** als die übrigen Posts (etwa „This Malicious AI Skill Is Still Infecting Computers 😳"); die Wahl liegt bei Johannes. „(Day N/30)" im Titel ist erwünscht, aber kein Muss. Die Sitzung schlägt einen Titel vor, meldet Johannes' eigene Titel aber nicht als Lücke oder Fehler.
 - „Subscribe: a new one drops every weekday." passt zur Werktags-Serie; „tomorrow" stimmt freitags nicht.
 
 Hashtags gehören nur auf Instagram, TikTok und YouTube, dort helfen Stichworte bei der Suche.
@@ -300,7 +300,7 @@ Subscribe: a new one drops every weekday.
 | X | https://x.com/JohannesHoppe |
 | Bluesky | https://bsky.app/profile/johanneshoppe.de |
 
-Nach jeder Veröffentlichung prüft die Sitzung ungefragt, ob der Tag auf allen sechs Kanälen erschienen ist, und meldet nur die Lücken. Bluesky über die öffentliche API, YouTube über den RSS-Feed, X und Instagram über den Playwright-MCP; LinkedIn (Login-Wand) und TikTok (Captcha) sind nicht prüfbar. Dabei auch die Titel und Texte gegen die Faktenregel lesen.
+Nach jeder Veröffentlichung prüft die Sitzung ungefragt, ob der Tag auf allen sechs Kanälen erschienen ist, und meldet nur die Lücken. Bluesky über die öffentliche API, YouTube über den RSS-Feed, X und Instagram über den Playwright-MCP; LinkedIn (Login-Wand) und TikTok (Captcha) sind nicht prüfbar. Dabei auch die Texte gegen die Faktenregel lesen; YouTube-Titel sind davon ausgenommen (siehe YouTube Shorts).
 
 ## Faktenregel
 

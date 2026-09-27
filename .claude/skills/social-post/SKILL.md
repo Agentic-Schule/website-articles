@@ -24,7 +24,7 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
    - Bei der Knobelaufgabe eine Bildvorlage für LinkedIn und X: welche Datei, welche Zeilen wörtlich, was durch `[...]` ersetzt wird; der entscheidende Teil unten. Johannes macht den Screenshot im Editor. Bei der offenen Frage reicht das Header-Bild oder ein Foto.
    - Video-Skript (EN, etwa 25 Sekunden, Schluss: „Find the full article on my website: agentic.schule") und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
    - Bluesky-Post (EN): Text wie auf X, höchstens 300 Zeichen inklusive voller URL (nachzählen).
-   - Captions für Instagram und TikTok, Titel (mit „(Day N/30)") und Beschreibung für YouTube Shorts.
+   - Captions für Instagram und TikTok, Titelvorschlag (gern zugespitzt, „(Day N/30)" erwünscht) und Beschreibung für YouTube Shorts.
    - Aufs Äußerste verdichten. Emojis nur wie im Playbook. Gefährliche Adressen im Text entschärfen (`[.]`).
 4. **Faktencheck:** Jede Aussage muss in der jeweiligen Sprachfassung des Artikels stehen. Zahlen, Namen und Zuspitzungen einzeln gegen den Artikeltext abgleichen. Zitate und Zeilennummern gegen die verlinkte Quelle prüfen, zeitabhängige Aussagen („bis heute", „still live") gegen den aktuellen Stand, etwa per `gh`. Was nicht gedeckt ist, fliegt raus oder wird entschärft.
 5. **Stil prüfen:** Der deutsche Post folgt `CLAUDE.md` (duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese, echte Umlaute). Die englischen Texte nutzen einfache Wörter, die Johannes spontan so sagen würde.
