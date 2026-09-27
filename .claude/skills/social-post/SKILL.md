@@ -31,8 +31,6 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
 
 7. **Regeln nachziehen:** Nach der Freigabe die Korrekturen durchgehen, die nach einer allgemeinen Regel klangen, und sie Johannes als neue Playbook-Regeln vorschlagen. Nach Zustimmung in `docs/social-media.md` an der passenden Stelle eintragen und direkt auf `main` committen (Details dort unter „Feedback und neue Regeln").
 
-8. **Advocu:** Ist der Tag bereits erschienen und noch nicht in Advocu eingetragen, einen Entwurf nach `docs/social-media.md` („GDE-Reporting in Advocu") vorschlagen und nach Johannes' Okay anlegen.
-
 ## Grenzen
 
 - **Artikel nicht ändern.** Fällt ein Fehler im Artikel auf, nenne ihn mit Datei und Zeile; behoben wird er in einer Artikel-Sitzung.
