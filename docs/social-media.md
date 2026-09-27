@@ -7,6 +7,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 ## Die Serie
 
 - **30 Artikel über AI für Entwickler, einer pro Werktag.** Samstag und Sonntag bleiben frei: Wochenenden sind heilig, und zu Geschäftszeiten ist die Interaktion auf LinkedIn und X höher.
+- **Artikel mit Datum in der Zukunft sind gewollt.** Die Website zeigt sie sofort an, damit Suchmaschinen sie schon vor ihrem Tag indexieren können. Das `published:`-Datum steuert nur Anzeige, Sortierung und den Tag der Promotion. Kein Hinweis darauf nötig.
 - **Der Tag ergibt sich aus dem Erscheinungsdatum:** Tag N ist der N-te Werktag (Montag bis Freitag) ab dem 2026-09-23, abzulesen an `published:` im Frontmatter. Tag 1 ist Mittwoch, der 2026-09-23, Tag 4 Montag, der 2026-09-28, Tag 30 Dienstag, der 2026-11-03.
 
 | Woche | Mo | Di | Mi | Do | Fr |
