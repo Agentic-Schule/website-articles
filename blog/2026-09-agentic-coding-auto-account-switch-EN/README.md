@@ -144,16 +144,16 @@ The setup confirmed this principle twice. Once deliberately, by forking and read
 
 ## Within the Rules
 
-The setup is deliberately built to stay within Anthropic's rules. Every point where it hooks in is officially intended:
+The setup goes right up to the limits of Anthropic's rules, but deliberately stays within them. Every point where it hooks in is officially intended:
 
 - **Claude Code stays unmodified.** No patch, no tampering with the program. Even for vendors who build Claude Code into their own products, Anthropic draws the line exactly here: "The Claude Code binary must not be modified." ([legal notes](https://code.claude.com/docs/en/legal-and-compliance#can-customers-offer-claude-code-in-their-products))
 - **Every sign-in goes through Anthropic's own login.** That is what the [legal notes on Claude Code](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use) require: "sign-in to a Claude account must complete through Anthropic's own flow". After that, `cswap` only keeps the tokens that Claude Code stores on disk anyway. It automates what you could do by hand: `/logout`, `/login`, keep working.
 - **The proxy uses an official path.** According to the [documentation](https://code.claude.com/docs/en/network-config), Claude Code explicitly supports TLS-inspection proxies, via `HTTPS_PROXY` and a custom CA. The proxy sits outside Claude Code and only changes the traffic.
 - **These are exclusively my own subscriptions.** Nobody else gets access. The [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) clearly forbid sharing accounts: "You may not share your Account login information […] or make your Account available to anyone else."
 
-## The Downsides
+## The Fine Print
 
-But for all the joy about the seamless switch: the setup comes at a price.
+But for all the joy about the seamless switch: there are a few things you should know.
 
 - **There is no explicit approval.** The rule for third-party developers is broadly worded: "developers may not collect, store, or intermediate Claude.ai credentials or session tokens". Taken literally, it would hit any tool that stores a token. My reading is that it targets products routing other users through their subscriptions. Anthropic reserves the right to enforce measures "without prior notice".
 - **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. That is the price of not trusting someone else's auto-update.
