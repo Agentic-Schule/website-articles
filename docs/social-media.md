@@ -287,6 +287,23 @@ Johannes ist Google Developer Expert und meldet jede Aktivität in Advocu, mit d
 - **Beschreibung:** „Day N of my 30-day series on agentic.schule: one new article about AI for developers every day, in English and German." Dann zwei, drei Sätze Zusammenfassung, gegen den Artikel geprüft, und „German version: <DE-URL>".
 - Vor dem Anlegen mit `advocu_list_activities` prüfen, ob der Tag schon eingetragen ist.
 
+### Advocu-Tags
+
+Advocu erlaubt für neue Einträge nur **aktive** Tags (Stand 2026-09-27, aus der Tag-Liste der Plattform). Inaktive Tags wie `AI - Agents`, `AI - LLM`, `AI - Generative AI`, `AI - Gemini CLI`, `AI - Responsible AI`, `Web Security`, `App Security`, `RxJS` oder `Web Technologies` hängen noch an alten Einträgen, lassen sich aber nicht mehr vergeben.
+
+**Für die AI-Serie typisch:** `AI` (immer), `Build with AI`, `Web - AI for Web Developers`, dazu je nach Thema `AI - Antigravity`, `AI - Gemini`, `AI - Agent Development Kit (ADK)`, `AI - AI Studio`, `Open Source`, `Web - DevTools & Browser Automation`, `Cloud - AI Tools`, `Cloud - Security`, `Angular`, `Web`.
+
+**Alle aktiven Tags:**
+
+- **AI:** `AI`, `AI - Agent Development Kit (ADK)`, `AI - AI Studio`, `AI - Antigravity`, `AI - Colab`, `AI - Gemini`, `AI - Gemini Enterprise Agent Platform`, `AI - Gemma`, `AI - Genkit`, `AI - JAX`, `AI - Kaggle`, `AI - Keras`, `AI - LiteRT`, `AI - MediaPipe`, `AI - TPU`, `AI - TorchTPU`, `AI - vLLM`, `Build with AI`
+- **Web:** `Web`, `Web - AI for Web Developers`, `Web - Browser Extensions`, `Web - CSS & UI`, `Web - DevTools & Browser Automation`, `Web - Fugu/PWA APIs`, `Web - Identity`, `Web - Performance`, `Angular`, `UX / UI Design`
+- **Cloud:** `Google Cloud`, `Cloud - AI Tools`, `Cloud - API Gateways`, `Cloud - App Development`, `Cloud - Compute, Networking, Storage`, `Cloud - Data`, `Cloud - Operations & Management`, `Cloud - Security`, `Cloud - Serverless & Containers`, `Cloud Study Jam`
+- **Firebase:** `Firebase`, `Firebase - AI Logic`, `Firebase - AI Monitoring`, `Firebase - App Check`, `Firebase - App Distribution`, `Firebase - App Hosting`, `Firebase - Authentication`, `Firebase - Cloud Messaging`, `Firebase - Crashlytics`, `Firebase - Firestore`, `Firebase - Functions`, `Firebase - Performance`, `Firebase - Realtime Database`, `Firebase - Remote Config`, `Firebase - SQL Connect`
+- **Android und Mobile:** `Android`, `Android - Adaptive`, `Android - Developer Productivity`, `Android - Differentiated`, `Android - Intelligent`, `Dart - Flutter`, `AR/VR`
+- **Workspace:** `Google Workspace`, `Workspace - Add Ons`, `Workspace - AppSheet`, `Workspace - Google Apps Script`, `Workspace - Google Workspace (REST) APIs`
+- **Identity und Payments:** `Identity`, `Identity - Google OAuth`, `Identity - Sign in with Google`, `Payments`, `Payments - Google Pay`, `Payments - Google Wallet`
+- **Sonstige:** `Golang`, `Google Maps Platform`, `Earth Engine`, `Open Source`, `Diversity & Inclusion`, `International Women's Day`, `DevFest`, `Google I/O Extended`, `ML Study Jams`, `Road to Google Developers Certification`
+
 ## Feedback und neue Regeln
 
 - **Korrekturen für einen einzelnen Post** („Hook zu lahm", „kürzer") gibt Johannes im Chat. Die Sitzung überarbeitet, bis er freigibt. Drei, vier Runden sind normal.
