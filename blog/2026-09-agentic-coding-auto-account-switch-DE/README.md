@@ -99,9 +99,14 @@ Die Lösung heißt [`cswap-pin`](https://github.com/codeslake/cswap-pin) und sta
 cswap pin 1          # Remote Control und Artefakte bleiben auf Konto 1
 ```
 
-Die Anbindung an `cswap` liegt zum Zeitpunkt dieses Artikels als [offener Pull Request](https://github.com/realiti4/claude-swap/pull/210) im Upstream-Projekt. Bis zum Merge gibt es `cswap pin` also nur, wenn du den PR in deinen Fork übernimmst und `cswap` mit dem Extra `pin` installierst: `pipx install './claude-swap[pin]'`. So läuft es bei mir.
+Die Anbindung an `cswap` liegt zum Zeitpunkt dieses Artikels als [offener Pull Request](https://github.com/realiti4/claude-swap/pull/210) im Upstream-Projekt. Bis zum Merge gibt es `cswap pin` also nur, wenn du den PR in deinen Fork von `claude-swap` übernimmst. Den Proxy selbst installiere ich ebenfalls aus einem eigenen Fork und hänge ihn in dieselbe Umgebung:
 
-Was das technisch bedeutet, gehört offen auf den Tisch: Der Proxy ist ein *Man-in-the-Middle* (MITM). Er entschlüsselt die HTTPS-Verbindung zu Anthropic lokal. Dafür nutzt er eine eigene Zertifizierungsstelle (engl. *Certificate Authority*, CA). Ihr vertrauen nur die Claude-Sitzungen, denen der Proxy sie per `NODE_EXTRA_CA_CERTS` mitgibt. Das ist dasselbe Verfahren, das Firmen-Proxys nutzen, und Claude Code unterstützt es [offiziell](https://code.claude.com/docs/en/network-config) über `HTTPS_PROXY` und `NODE_EXTRA_CA_CERTS`. Der Proxy sieht damit den Anthropic-Verkehr im Klartext. Auch ihn habe ich geforkt und gelesen, bevor er auf die Kiste durfte. Bei einem Werkzeug, das den Datenverkehr sieht, ist das Pflicht.
+```bash
+gh repo fork codeslake/cswap-pin --clone
+pipx inject claude-swap ./cswap-pin
+```
+
+Was das technisch bedeutet, gehört offen auf den Tisch: Der Proxy ist ein *Man-in-the-Middle* (MITM). Er entschlüsselt die HTTPS-Verbindung zu Anthropic lokal. Dafür nutzt er eine eigene Zertifizierungsstelle (engl. *Certificate Authority*, CA). Sie ist nicht systemweit installiert. Claude Code bekommt sie per `NODE_EXTRA_CA_CERTS` mitgeteilt. Das ist dasselbe Verfahren, das Firmen-Proxys nutzen, und Claude Code unterstützt es [offiziell](https://code.claude.com/docs/en/network-config) über `HTTPS_PROXY` und `NODE_EXTRA_CA_CERTS`. Der Proxy sieht damit den Anthropic-Verkehr im Klartext. Auch ihn habe ich geforkt und gelesen, bevor er auf die Kiste durfte. Es sind also zwei Forks in meinem Account. Bei einem Werkzeug, das den Datenverkehr sieht, ist das Pflicht.
 
 ## Der Autopilot: Ground Control tankt selbst um
 
@@ -123,7 +128,7 @@ Mit `--once` macht der Befehl genau einen Durchlauf und beendet sich. Cooldown u
 <integer>60</integer>
 ```
 
-Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann erreicht Konto 1 die Schwelle, der Dienst schaltet auf Konto 2, und ich arbeite weiter. Ich merke davon nichts.
+Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann erreicht Konto 1 die Schwelle, der Dienst schaltet auf das praktisch unberührte Konto 2, und ich arbeite weiter. Ich merke davon nichts.
 
 ## Fehlalarm: Die Agenten wittern einen Angriff
 
@@ -135,9 +140,15 @@ Das ist ein Feature. Die Agenten konnten nicht wissen, woher der Proxy stammt. A
 
 Hatten sie recht? Das lässt sich prüfen, statt zu beschwichtigen. Ein Abruf von `example.com` durch den Proxy kommt mit dem *echten* öffentlichen Zertifikat zurück. Hätte der Proxy hier mitgelesen, wäre es seines gewesen. Auch der Quelltext bestätigt das: Der Proxy entschlüsselt **ausschließlich** `api.anthropic.com`. Jeden anderen Host reicht er als blinden Tunnel durch.
 
-Der Verkehr war also echt. Der Alarm zeigt trotzdem eine Falle: Setzt du die Proxy-Variablen global, laufen auch alle Web-Abrufe durch den Proxy. Der Pin braucht aber nur die Verbindung zu Anthropic. Darum laufen die Web-Abrufe der Recherche-Agenten ohne die Proxy-Variablen und gehen direkt ans Ziel.
+Der Verkehr war also echt. Der Alarm zeigt trotzdem eine Falle: Setzt du die Proxy-Variablen und die CA für Claude Code, erbt sie jede Shell, die ein Agent startet. Jeder Befehl sieht dann den Proxy, und jeder Download läuft durch ihn. Der Pin braucht aber nur den Claude-Prozess selbst. Darum entfernt eine einzige Zeile in `~/.zshenv` die Variablen aus jeder Agenten-Shell:
 
-Und hier kehrt ein Prinzip aus Teil 1 zurück: **Erzähl den Agenten nie vom rosa Elefanten.** Weiß eine Session von einem exotischen Setup, erklärt sie sich jedes Problem zuerst damit. Darum erkläre ich den Agenten nicht, dass der Proxy harmlos ist. Stattdessen sehen die Web-Abrufe den Proxy gar nicht mehr. Den Elefanten sieht weiterhin nur Ground Control.
+```bash
+unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS
+```
+
+Die Shell-Befehle der Agenten laufen bei mir über zsh, und zsh liest `~/.zshenv` bei jedem Aufruf. Der Claude-Prozess behält den Pin, die Agenten sehen ihn in ihren Shells nicht mehr.
+
+Und hier kehrt ein Prinzip aus Teil 1 zurück: **Erzähl den Agenten nie vom rosa Elefanten.** Weiß eine Session von einem exotischen Setup, erklärt sie sich jedes Problem zuerst damit. Darum erkläre ich den Agenten nicht, dass der Proxy harmlos ist. Stattdessen sehen die Agenten in ihren Shells den Proxy gar nicht mehr. Den Elefanten sieht weiterhin nur Ground Control.
 
 ## Ein Prinzip: Vertraue keinem Werkzeug blind deine Schlüssel an
 

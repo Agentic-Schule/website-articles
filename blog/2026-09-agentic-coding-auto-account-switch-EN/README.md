@@ -27,7 +27,7 @@ header: header.jpg
 
 ## The Problem: One Tank Is No Longer Enough
 
-In the [first part](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) I turned a Mac mini into a "ground station", after Bowie's *Space Oddity* also called *Ground Control*: a machine that is always on and on which my agents keep working. I am Major Tom and dock in from the MacBook, the browser or my phone. At the very end there was a casual sentence: because the agent is reachable at any time, I've been "ruthlessly maxing out" the generous limits of the Claude Max subscription.
+In the [first part](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini) I turned a Mac mini into a "ground station", after Bowie's *Space Oddity* also called *Ground Control*: a machine that is always on and on which my agents keep working. I am Major Tom and dock in from the MacBook, the browser or my phone. At the very end there was a casual sentence: because the agent is reachable at any time, I've been "ruthlessly maxing out" the generous limits of the Claude Max subscription.
 
 This part picks up here. A setup that is always on has a predictable side effect: it uses more. The agents keep working at night, I throw in tasks while on the road, several sessions run in parallel. The 5-hour window and above all the weekly limit of the Max subscription are generous. They are not infinite.
 
@@ -76,7 +76,7 @@ The browser login per account is the only step no tool can take off your hands. 
 
 The most important question: where does network traffic go? The source code only contains Anthropic's own endpoints (`api.anthropic.com`, `platform.claude.com`) and a version check against PyPI. No third-party domain, no telemetry. The package is published through PyPI's *Trusted Publishing* from a GitHub workflow, and the repo comes with an extensive test suite. So far, so trustworthy.
 
-Still, I don't pull a tool that holds my keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update slips in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/blog/2026-09-malicious-ai-skills). That's why I take the clean route:
+Still, I don't pull a tool that holds my keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update slips in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/en/blog/2026-09-malicious-ai-skills). That's why I take the clean route:
 
 ```bash
 # fork into your own account and check out the reviewed state locally
@@ -98,9 +98,14 @@ The solution is called [`cswap-pin`](https://github.com/codeslake/cswap-pin) and
 cswap pin 1          # Remote Control and artifacts stay on account 1
 ```
 
-At the time of this article, the integration into `cswap` is an [open pull request](https://github.com/realiti4/claude-swap/pull/210) in the upstream project. Until it is merged, `cswap pin` only exists if you merge the PR into your fork and install `cswap` with the `pin` extra: `pipx install './claude-swap[pin]'`. That is how it runs on my machine.
+At the time of this article, the integration into `cswap` is an [open pull request](https://github.com/realiti4/claude-swap/pull/210) in the upstream project. Until it is merged, `cswap pin` only exists if you merge the PR into your fork of `claude-swap`. I install the proxy itself from a fork of my own as well and inject it into the same environment:
 
-What this means technically belongs on the table: the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). Only the Claude sessions trust it, because the proxy hands it to them via `NODE_EXTRA_CA_CERTS`. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. I forked and read this one too before it was allowed on the box. For a tool that sees your traffic, that is mandatory.
+```bash
+gh repo fork codeslake/cswap-pin --clone
+pipx inject claude-swap ./cswap-pin
+```
+
+What this means technically belongs on the table: the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. Claude Code is told about it via `NODE_EXTRA_CA_CERTS`. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. I forked and read this one too before it was allowed on the box. So there are two forks in my account. For a tool that sees your traffic, that is mandatory.
 
 ## The Autopilot: Ground Control Refuels on Its Own
 
@@ -122,7 +127,7 @@ With `--once` the command runs exactly one pass and exits. The tool stores coold
 <integer>60</integer>
 ```
 
-In daily use the result is unspectacular, and that is how it should be. At some point account 1 reaches the threshold, the service switches to account 2, and I keep working. I don't notice a thing.
+In daily use the result is unspectacular, and that is how it should be. At some point account 1 reaches the threshold, the service switches to the practically untouched account 2, and I keep working. I don't notice a thing.
 
 ## False Alarm: The Agents Suspect an Attack
 
@@ -134,9 +139,15 @@ That is a feature. The agents had no way of knowing where the proxy came from. F
 
 Were they right? That can be checked instead of explained away. A request to `example.com` through the proxy comes back with the *real* public certificate. Had the proxy been reading along, it would have been its own. The source code confirms it as well: the proxy decrypts **only** `api.anthropic.com`. It passes every other host through as a blind tunnel.
 
-So the traffic was genuine. Still, the alarm points to a trap: if you set the proxy variables globally, all web requests go through the proxy as well. But the pin only needs the connection to Anthropic. That's why the research agents' web requests run without the proxy variables and go straight to their destination.
+So the traffic was genuine. Still, the alarm points to a trap: if you set the proxy variables and the CA for Claude Code, every shell an agent starts inherits them. Every command then sees the proxy, and every download goes through it. But the pin only needs the Claude process itself. That's why a single line in `~/.zshenv` removes the variables from every agent shell:
 
-And here a principle from part 1 returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. That's why I don't explain to the agents that the proxy is harmless. Instead, the web requests don't see the proxy at all anymore. Only Ground Control still sees the elephant.
+```bash
+unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS
+```
+
+On my machine the agents' shell commands run through zsh, and zsh reads `~/.zshenv` on every invocation. The Claude process keeps the pin; the agents no longer see it in their shells.
+
+And here a principle from part 1 returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. That's why I don't explain to the agents that the proxy is harmless. Instead, the agents don't see the proxy in their shells at all anymore. Only Ground Control still sees the elephant.
 
 ## A Principle: Never Blindly Hand a Tool Your Keys
 
@@ -175,7 +186,7 @@ By the way, while writing I once again had a Bowie song in my head. This time it
 
 <small>If the player doesn't load: [watch directly on YouTube](https://youtu.be/HyMm4rJemtI).</small>
 
-**Questions, feedback, your own tinkering?** Bring it on. And in case you missed part 1: [that's where the ground station was built.](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)
+**Questions, feedback, your own tinkering?** Bring it on. And in case you missed part 1: [that's where the ground station was built.](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)
 
 <small>**Thanks** to realiti4 for `claude-swap` and to Junyong Lee for `cswap-pin`. Both projects are open, tested and easy to read. That is what makes it possible not to have to trust them blindly.</small>
 
