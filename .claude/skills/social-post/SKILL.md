@@ -1,6 +1,6 @@
 ---
 name: social-post
-description: "Erstellt für einen Tag der 30-Tage-Serie den deutschen LinkedIn-Post, den englischen X-Post, das englische Video-Skript samt Drehplan und die Captions für TikTok, Instagram und YouTube Shorts. Nutzen, wenn Johannes einen Artikel promoten will, z. B. „/social-post 2“, „/social-post malicious-ai-skills“, „social media für Tag 3“ oder „make the posts for today's article“."
+description: "Erstellt für einen Tag der 30-Tage-Serie den deutschen LinkedIn-Post, den englischen X- und Bluesky-Post, das englische Video-Skript samt Drehplan und die Captions für TikTok, Instagram und YouTube Shorts. Nutzen, wenn Johannes einen Artikel promoten will, z. B. „/social-post 2“, „/social-post malicious-ai-skills“, „social media für Tag 3“ oder „make the posts for today's article“."
 ---
 
 # /social-post
@@ -23,11 +23,12 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
    - LinkedIn-Post (DE) und X-Post (EN) nach der passenden Vorlage im Playbook (Knobelaufgabe oder offene Frage), kurz, mit Link, höchstens ein passendes Emoji. X höchstens 280 Zeichen (Link zählt 23; nachzählen).
    - Bei der Knobelaufgabe eine Bildvorlage für LinkedIn und X: welche Datei, welche Zeilen wörtlich, was durch `[...]` ersetzt wird; der entscheidende Teil unten. Johannes macht den Screenshot im Editor. Bei der offenen Frage reicht das Header-Bild oder ein Foto.
    - Video-Skript (EN, etwa 25 Sekunden, Schluss: „Find the full article on my website: agentic.schule") und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
-   - Captions für Instagram und TikTok, optional Titel und Beschreibung für YouTube Shorts.
+   - Bluesky-Post (EN): Text wie auf X, höchstens 300 Zeichen inklusive voller URL (nachzählen).
+   - Captions für Instagram und TikTok, Titel (mit „(Day N/30)") und Beschreibung für YouTube Shorts.
    - Aufs Äußerste verdichten. Emojis nur wie im Playbook. Gefährliche Adressen im Text entschärfen (`[.]`).
 4. **Faktencheck:** Jede Aussage muss in der jeweiligen Sprachfassung des Artikels stehen. Zahlen, Namen und Zuspitzungen einzeln gegen den Artikeltext abgleichen. Zitate und Zeilennummern gegen die verlinkte Quelle prüfen, zeitabhängige Aussagen („bis heute", „still live") gegen den aktuellen Stand, etwa per `gh`. Was nicht gedeckt ist, fliegt raus oder wird entschärft.
 5. **Stil prüfen:** Der deutsche Post folgt `CLAUDE.md` (duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese, echte Umlaute). Die englischen Texte nutzen einfache Wörter, die Johannes spontan so sagen würde.
-6. **Vorlegen:** Ein kopierfertiger Block pro Element (LinkedIn, X, Bildvorlage, Video-Skript mit Drehplan, Instagram, TikTok, optional YouTube Shorts), dazu die beiden Links.
+6. **Vorlegen:** Ein kopierfertiger Block pro Element (LinkedIn, X, Bluesky, Bildvorlage, Video-Skript mit Drehplan, Instagram, TikTok, YouTube Shorts), dazu die beiden Links.
 
 7. **Regeln nachziehen:** Nach der Freigabe die Korrekturen durchgehen, die nach einer allgemeinen Regel klangen, und sie Johannes als neue Playbook-Regeln vorschlagen. Nach Zustimmung in `docs/social-media.md` an der passenden Stelle eintragen und direkt auf `main` committen (Details dort unter „Feedback und neue Regeln").
 
