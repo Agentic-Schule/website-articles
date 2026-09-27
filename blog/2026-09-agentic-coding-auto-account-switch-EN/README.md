@@ -1,5 +1,5 @@
 ---
-title: 'Agentic Coding Around the Clock: Refueling in Mid-Flight'
+title: 'Agentic Coding Around the Clock: Maxing Out Multiple Claude Max Plans Without Interruption'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
@@ -19,7 +19,7 @@ language: en
 header: header.jpg
 ---
 
-**A ground station that never shuts down burns fuel around the clock. Sooner or later the tank runs dry. This article shows how Claude Code switches between two Max subscriptions while it keeps running, automatically and without `/logout`. Remote Control survives the switch. And it shows why I give no advance trust to tools that handle my access keys.**
+**A ground station that never shuts down burns fuel around the clock. Sooner or later the tank runs dry. This article shows how Claude Code switches between multiple Max subscriptions while it keeps running, automatically and without `/logout`. Remote Control survives the switch. And it shows why I give no advance trust to tools that handle my access keys.**
 
 ## Contents
 
@@ -31,11 +31,11 @@ In the [first part](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mi
 
 This part picks up here. A setup that is always on has a predictable side effect: it uses more. The agents keep working at night, I throw in tasks while on the road, several sessions run in parallel. The 5-hour window and above all the weekly limit of the Max subscription are generous. They are not infinite.
 
-The obvious solution is a **second Max subscription**. Two tanks instead of one. But Claude Code only ever knows *one* signed-in account. Switching means `/logout`, then `/login`, then the OAuth flow in the browser. Every single time. The running work stands still, and the browser wants attention.
+The obvious solution is a **second Max subscription**, or a third or fourth if needed. Several tanks instead of one. But Claude Code only ever knows *one* signed-in account. Switching means `/logout`, then `/login`, then the OAuth flow in the browser. Every single time. The running work stands still, and the browser wants attention.
 
 On top of that comes a second, more annoying effect: an account switch cuts the **Remote Control connection**. That is the feature from part 1 that lets me watch from my phone. One switch, and the session on the phone is gone. The same goes for artifacts, the pages Claude Code publishes on claude.ai. They belong to an account as well.
 
-So the goal sounds simple: **switch between two subscriptions while running, without signing out and without losing remote control.**
+So the goal sounds simple: **switch between multiple subscriptions while running, without signing out and without losing remote control.**
 
 ## No Router Needed: Claude Code Re-Reads the Credentials
 
@@ -45,13 +45,14 @@ That doesn't take a router. The key is a detail: **Claude Code re-reads its cred
 
 In practice this means: whoever swaps this file switches the account. No restart and no `/login`.
 
-## Setting Up Two Subscriptions to Switch
+## Setting Up Multiple Subscriptions to Switch
 
-The open source tool [`claude-swap`](https://github.com/realiti4/claude-swap) takes care of that (command: `cswap`, MIT license). It stores the credentials for each account and swaps them on demand. How I install it is shown in the next section. You sign in **once** per subscription, after that this is enough:
+The open source tool [`claude-swap`](https://github.com/realiti4/claude-swap) takes care of that (command: `cswap`, MIT license). It stores the credentials for each account and swaps them on demand. It is not limited to two accounts. I work with two; the principle stays the same with three or four. How I install it is shown in the next section. You sign in **once** per subscription, after that this is enough:
 
 ```bash
 cswap switch 2      # from the next message on, everything runs on subscription 2
 cswap switch 1      # back
+cswap switch        # rotate to the next account
 cswap list          # usage (5h/7d) of all accounts
 ```
 
@@ -63,6 +64,7 @@ This is how you register the accounts:
 cswap add            # add the current account as slot 1
 # in Claude Code, run /login once with the second account
 cswap add            # add the second account as slot 2
+# for every further account: /login, then cswap add
 cswap switch 1       # back to subscription 1
 ```
 
@@ -174,7 +176,7 @@ But for all the joy about the seamless switch: there are a few things you should
 
 ## Conclusion: Flying On Without a Refueling Stop
 
-The goal is reached: two Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout`-`/login` dance, no break in the flow. Ground Control refuels, Major Tom flies on.
+The goal is reached: multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout`-`/login` dance, no break in the flow. Ground Control refuels, Major Tom flies on.
 
 For me the gain clearly outweighs the cost. The ground station keeps running, no matter which tank is burning right now. The agents' alarm confirms the principle: healthy distrust belongs where tools hold your keys.
 

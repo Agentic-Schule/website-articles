@@ -1,5 +1,5 @@
 ---
-title: 'Agentic Coding rund um die Uhr: Der Tankwechsel im Flug'
+title: 'Agentic Coding rund um die Uhr: Mehrere Claude-Max-Abos ausreizen, ohne Unterbrechung'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -20,7 +20,7 @@ language: de
 header: header.jpg
 ---
 
-**Eine Bodenstation, die nie ausgeht, verbrennt rund um die Uhr Treibstoff. Irgendwann ist der Tank leer. Dieser Artikel zeigt, wie Claude Code im laufenden Betrieb zwischen zwei Max-Abos wechselt, automatisch und ohne `/logout`. Remote Control überlebt den Wechsel. Und er zeigt, warum ich Werkzeugen, die meine Zugangsschlüssel anfassen, keinen Vertrauensvorschuss gebe.**
+**Eine Bodenstation, die nie ausgeht, verbrennt rund um die Uhr Treibstoff. Irgendwann ist der Tank leer. Dieser Artikel zeigt, wie Claude Code im laufenden Betrieb zwischen mehreren Max-Abos wechselt, automatisch und ohne `/logout`. Remote Control überlebt den Wechsel. Und er zeigt, warum ich Werkzeugen, die meine Zugangsschlüssel anfassen, keinen Vertrauensvorschuss gebe.**
 
 ## Inhalt
 
@@ -32,11 +32,11 @@ Im [ersten Teil](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) ha
 
 Hier setzt dieser Teil an. Ein Setup, das immer läuft, hat eine vorhersehbare Nebenwirkung: Es verbraucht mehr. Die Agenten arbeiten nachts weiter, unterwegs werfe ich Aufgaben hinein, mehrere Sessions laufen parallel. Das 5-Stunden-Fenster und vor allem das Wochenlimit der Max-Subscription sind großzügig. Unendlich sind sie nicht.
 
-Die naheliegende Lösung ist ein **zweites Max-Abo**. Zwei Tanks statt einem. Doch Claude Code kennt immer nur *ein* angemeldetes Konto. Wechseln heißt: `/logout`, dann `/login`, dann der OAuth-Flow im Browser. Jedes Mal. Die laufende Arbeit steht still, und der Browser will bedient werden.
+Die naheliegende Lösung ist ein **zweites Max-Abo**, bei Bedarf auch ein drittes oder viertes. Mehrere Tanks statt einem. Doch Claude Code kennt immer nur *ein* angemeldetes Konto. Wechseln heißt: `/logout`, dann `/login`, dann der OAuth-Flow im Browser. Jedes Mal. Die laufende Arbeit steht still, und der Browser will bedient werden.
 
 Dazu kommt ein zweiter, unangenehmerer Effekt: Ein Kontowechsel trennt die **Remote-Control-Verbindung**. Das ist das Feature aus Teil 1, mit dem ich vom Handy aus zusehe. Ein Wechsel, und die Session auf dem Telefon ist weg. Dasselbe gilt für Artefakte, also Seiten, die Claude Code auf claude.ai veröffentlicht. Auch sie gehören einem Konto.
 
-Das Ziel klingt also simpel: **im laufenden Betrieb zwischen zwei Abos umschalten, ohne Abmelden und ohne die Fernsteuerung zu verlieren.**
+Das Ziel klingt also simpel: **im laufenden Betrieb zwischen mehreren Abos umschalten, ohne Abmelden und ohne die Fernsteuerung zu verlieren.**
 
 ## Kein Router nötig: Claude Code liest die Credentials neu
 
@@ -46,13 +46,14 @@ Dafür braucht es keinen Router. Der Schlüssel liegt in einem Detail: **Claude 
 
 Konkret heißt das: Wer diese Datei austauscht, wechselt das Konto. Ohne Neustart und ohne `/login`.
 
-## Zwei Abos im Wechsel einrichten
+## Mehrere Abos im Wechsel einrichten
 
-Das erledigt das Open-Source-Tool [`claude-swap`](https://github.com/realiti4/claude-swap) (Befehl: `cswap`, MIT-Lizenz). Es sichert pro Konto die Credentials und tauscht sie auf Zuruf aus. Wie ich es installiere, zeigt der nächste Abschnitt. Du meldest dich **einmal** pro Abo an, danach genügt:
+Das erledigt das Open-Source-Tool [`claude-swap`](https://github.com/realiti4/claude-swap) (Befehl: `cswap`, MIT-Lizenz). Es sichert pro Konto die Credentials und tauscht sie auf Zuruf aus. Es ist nicht auf zwei Konten beschränkt. Ich arbeite mit zwei, das Prinzip bleibt bei drei oder vier gleich. Wie ich es installiere, zeigt der nächste Abschnitt. Du meldest dich **einmal** pro Abo an, danach genügt:
 
 ```bash
 cswap switch 2      # ab der nächsten Nachricht läuft alles über Abo 2
 cswap switch 1      # zurück
+cswap switch        # reihum zum nächsten Konto
 cswap list          # Auslastung (5h/7d) aller Konten
 ```
 
@@ -64,6 +65,7 @@ Die Konten registrierst du so:
 cswap add            # das aktuelle Konto als Slot 1 aufnehmen
 # in Claude Code einmal /login mit dem zweiten Konto
 cswap add            # das zweite Konto als Slot 2 aufnehmen
+# für jedes weitere Konto: /login, dann cswap add
 cswap switch 1       # zurück auf Abo 1
 ```
 
@@ -175,7 +177,7 @@ Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du k
 
 ## Fazit: Weiterfliegen ohne Tankstopp
 
-Das Ziel ist erreicht: zwei Max-Abos, ein Kontowechsel im laufenden Betrieb, automatisch bevor ein Limit greift, und Remote Control überlebt den Wechsel. Kein `/logout`-`/login`-Tanz mehr, kein Bruch im Flow. Ground Control tankt um, Major Tom fliegt weiter.
+Das Ziel ist erreicht: mehrere Max-Abos, ein Kontowechsel im laufenden Betrieb, automatisch bevor ein Limit greift, und Remote Control überlebt den Wechsel. Kein `/logout`-`/login`-Tanz mehr, kein Bruch im Flow. Ground Control tankt um, Major Tom fliegt weiter.
 
 Für mich überwiegt der Gewinn klar. Die Bodenstation läuft weiter, egal welcher Tank gerade brennt. Der Alarm der Agenten bestätigt dabei das Prinzip: Gesundes Misstrauen gehört dorthin, wo Werkzeuge deine Schlüssel in der Hand halten.
 

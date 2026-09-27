@@ -26,7 +26,7 @@
   .by { margin-top:40px; font-size:19px; color:#8f84a6; }
   .by b { color:#cfc3e6; font-weight:600; }
   .art { position:absolute; right:44px; top:0; height:675px; width:520px; }
-  .logo { position:absolute; left:222px; top:92px; width:76px; height:76px;
+  .logo { position:absolute; left:262px; top:92px; width:76px; height:76px;
     background:#e90464;
     -webkit-mask:url("claude.svg") center/contain no-repeat;
     mask:url("claude.svg") center/contain no-repeat;
@@ -40,7 +40,7 @@
   <div class="wrap">
     <div class="left">
       <h1>Agentic&nbsp;Coding<br><span class="accent">Around the Clock</span></h1>
-      <div class="sub">Refueling in Mid-Flight</div>
+      <div class="sub">Multiple Max Plans, Zero Interruptions</div>
       <div class="by">by <b>Johannes Hoppe</b></div>
     </div>
   </div>
@@ -76,27 +76,33 @@
         <circle cx="496" cy="330" r="4.5" fill="#b98cff"/>
       </g>
 
-      <circle cx="260" cy="130" r="110" fill="url(#glow)"/>
+      <circle cx="300" cy="130" r="110" fill="url(#glow)"/>
 
       <!-- Line from Claude to both tanks -->
-      <path d="M260 184 L260 214 M150 214 L370 214 M150 214 L150 250 M370 214 L370 250" stroke="#8f84a6" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+      <path d="M300 184 L300 214 M150 214 L450 214 M150 214 L150 250 M300 214 L300 250 M450 214 L450 250" stroke="#8f84a6" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
 
-      <!-- Tank 1: almost empty -->
-      <rect x="92" y="250" width="116" height="250" rx="26" fill="#211830" stroke="#7a2ec9" stroke-width="3"/>
-      <clipPath id="t1"><rect x="95" y="253" width="110" height="244" rx="23"/></clipPath>
-      <rect x="95" y="455" width="110" height="42" fill="url(#fuelLow)" clip-path="url(#t1)"/>
+      <!-- Tank 1: almost empty / fast leer -->
+      <rect x="106" y="250" width="88" height="250" rx="24" fill="#211830" stroke="#7a2ec9" stroke-width="3"/>
+      <clipPath id="t1"><rect x="109" y="253" width="82" height="244" rx="21"/></clipPath>
+      <rect x="109" y="455" width="82" height="42" fill="url(#fuelLow)" clip-path="url(#t1)"/>
 
-      <!-- Tank 2: full, active -->
-      <rect x="312" y="250" width="116" height="250" rx="26" fill="#211830" stroke="#b98cff" stroke-width="3"/>
-      <clipPath id="t2"><rect x="315" y="253" width="110" height="244" rx="23"/></clipPath>
-      <rect x="315" y="290" width="110" height="207" fill="url(#fuelFull)" clip-path="url(#t2)"/>
+      <!-- Tank 2: full, active / voll, aktiv -->
+      <rect x="256" y="250" width="88" height="250" rx="24" fill="#211830" stroke="#b98cff" stroke-width="3"/>
+      <clipPath id="t2"><rect x="259" y="253" width="82" height="244" rx="21"/></clipPath>
+      <rect x="259" y="290" width="82" height="207" fill="url(#fuelFull)" clip-path="url(#t2)"/>
 
-      <!-- The switch: arc from tank 1 to tank 2 -->
-      <path d="M168 572 C 208 640, 312 640, 352 580" stroke="url(#flow)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#head)"/>
+      <!-- Tank 3: full, standby / voll, in Reserve -->
+      <rect x="406" y="250" width="88" height="250" rx="24" fill="#211830" stroke="#7a2ec9" stroke-width="3"/>
+      <clipPath id="t3"><rect x="409" y="253" width="82" height="244" rx="21"/></clipPath>
+      <rect x="409" y="290" width="82" height="207" fill="url(#fuelLow)" clip-path="url(#t3)"/>
+
+      <!-- The switch / Der Wechsel -->
+      <path d="M154 572 C 185 640, 265 640, 294 580" stroke="url(#flow)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#head)"/>
     </svg>
     <div class="logo"></div>
-    <div class="tag" style="left:136px; top:516px; color:#8f84a6;">1</div>
-    <div class="tag" style="left:356px; top:516px; color:#e0cfff;">2</div>
+    <div class="tag" style="left:144px; top:516px; color:#8f84a6;">1</div>
+    <div class="tag" style="left:294px; top:516px; color:#e0cfff;">2</div>
+    <div class="tag" style="left:444px; top:516px; color:#8f84a6;">3</div>
   </div>
 </body>
 </html>
