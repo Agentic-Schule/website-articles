@@ -2,6 +2,8 @@
 
 Jeder Artikel der Serie wird auf LinkedIn, X, TikTok und Instagram beworben, optional zusätzlich auf YouTube Shorts. Diese Arbeit läuft in einer eigenen Sitzung. Dort werden die Artikel nur gelesen, nie geändert. Fällt beim Lesen ein Fehler im Artikel auf, wird er notiert und in einer Artikel-Sitzung behoben.
 
+**Rollen:** Die Artikel-Sitzung schreibt die Artikel mit Johannes, die Social-Media-Sitzung macht Posts, Videos und Reporting. Bei grundlegenden Änderungen (Erscheinungsdatum, Titel oder Slug, Artikel fällt weg oder kommt dazu, starker inhaltlicher Umbau) stimmen sich beide Sitzungen per Nachricht ab.
+
 Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt durch den Ablauf unten. Die Belege für jede Regel stehen am Ende dieses Dokuments.
 
 ## Die Serie
