@@ -111,18 +111,18 @@ What this means technically belongs on the table: the proxy is a *man-in-the-mid
 
 Switching by hand is nice. The gain lies in the automation: `cswap auto` checks the usage and switches **on its own** to the subscription with the most headroom as soon as the active account reaches a threshold. By default it sits at 90 percent of the 5-hour or weekly window.
 
-With `--once` the command runs exactly one pass and exits. The tool stores cooldown and state on disk. That fits `launchd`, the service manager of macOS, and no terminal has to stay open. On my machine it runs every minute as a LaunchDaemon, a system service that starts without anyone logging in. The `UserName` key is important: without it, a LaunchDaemon runs as root and swaps the credentials in the wrong home directory.
+With `--once` the command runs exactly one pass and exits. The tool stores cooldown and state on disk. That fits `launchd`, the service manager of macOS, and no terminal has to stay open. On my machine it runs every minute as a LaunchDaemon, a system service that starts without anyone logging in. The `UserName` key is important: without it, a LaunchDaemon runs as root and swaps the credentials in the wrong home directory. In the example, `YOUR-NAME` stands for your user name.
 
 ```xml
 <key>ProgramArguments</key>
 <array>
-  <string>/Users/johanneshoppe/.local/bin/cswap</string>
+  <string>/Users/YOUR-NAME/.local/bin/cswap</string>
   <string>auto</string>
   <string>--once</string>
   <string>--json</string>
 </array>
 <key>UserName</key>
-<string>johanneshoppe</string>
+<string>YOUR-NAME</string>
 <key>StartInterval</key>
 <integer>60</integer>
 ```
