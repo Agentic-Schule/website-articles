@@ -11,8 +11,8 @@ Promotion eines Artikels der agentic.schule-Serie. Maßstab ist **`docs/social-m
 
 Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** (`malicious-ai-skills`). Ohne Argument gilt der heutige Tag.
 
-- Tagesnummer → Artikel: Tag N erscheint am 2026-09-23 plus (N − 1) Tage. Suche die Ordner, deren `published:` diesem Datum entspricht.
-- Slug → Tag: aus `published:` des gefundenen Ordners zurückrechnen.
+- Tagesnummer → Artikel: Tag N erscheint am N-ten Werktag (Mo bis Fr) ab dem 2026-09-23; die Tabelle in `docs/social-media.md` („Die Serie") zeigt das Datum. Suche die Ordner, deren `published:` diesem Datum entspricht.
+- Slug → Tag: aus `published:` des gefundenen Ordners zurückrechnen, nur Werktage zählen.
 - Liegt der Artikel noch auf einem offenen Branch und nicht auf `main`, sag das und frag, ob du trotzdem entwerfen sollst.
 
 ## Ablauf

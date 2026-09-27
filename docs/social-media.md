@@ -6,8 +6,18 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 ## Die Serie
 
-- **30 Tage, jeden Tag ein Artikel** über AI für Entwickler.
-- **Der Tag ergibt sich aus dem Erscheinungsdatum:** Tag N = Anzahl Tage seit dem 2026-09-23 plus 1, berechnet aus `published:` im Frontmatter. Der 2026-09-23 ist also Tag 1, der 2026-10-01 Tag 9.
+- **30 Artikel über AI für Entwickler, einer pro Werktag.** Samstag und Sonntag bleiben frei: Wochenenden sind heilig, und zu Geschäftszeiten ist die Interaktion auf LinkedIn und X höher.
+- **Der Tag ergibt sich aus dem Erscheinungsdatum:** Tag N ist der N-te Werktag (Montag bis Freitag) ab dem 2026-09-23, abzulesen an `published:` im Frontmatter. Tag 1 ist Mittwoch, der 2026-09-23, Tag 4 Montag, der 2026-09-28, Tag 30 Dienstag, der 2026-11-03.
+
+| Woche | Mo | Di | Mi | Do | Fr |
+| --- | --- | --- | --- | --- | --- |
+| 21.–25.09. | | | 1 | 2 | 3 |
+| 28.09.–02.10. | 4 | 5 | 6 | 7 | 8 |
+| 05.–09.10. | 9 | 10 | 11 | 12 | 13 |
+| 12.–16.10. | 14 | 15 | 16 | 17 | 18 |
+| 19.–23.10. | 19 | 20 | 21 | 22 | 23 |
+| 26.–30.10. | 24 | 25 | 26 | 27 | 28 |
+| 02.–03.11. | 29 | 30 | | | |
 - Welcher Artikel an welchem Tag erscheint, steht damit allein im Frontmatter. Eine separate Liste gibt es nicht.
 
 ## Grundregeln
