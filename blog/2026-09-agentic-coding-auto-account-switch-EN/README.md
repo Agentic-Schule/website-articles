@@ -142,11 +142,20 @@ Condensed into one sentence: **A tool that touches your access keys or your traf
 
 The setup confirmed this principle twice. Once deliberately, by forking and reading the tools. And once spontaneously through the agents, whose false alarm missed on the facts but asked the right question. In an agentic setup, distrust is hygiene.
 
+## Within the Rules
+
+The setup is deliberately built to stay within Anthropic's rules. Every point where it hooks in is officially intended:
+
+- **Claude Code stays unmodified.** No patch, no tampering with the program. Even for vendors who build Claude Code into their own products, Anthropic draws the line exactly here: "The Claude Code binary must not be modified." ([legal notes](https://code.claude.com/docs/en/legal-and-compliance#can-customers-offer-claude-code-in-their-products))
+- **Every sign-in goes through Anthropic's own login.** That is what the [legal notes on Claude Code](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use) require: "sign-in to a Claude account must complete through Anthropic's own flow". After that, `cswap` only keeps the tokens that Claude Code stores on disk anyway. It automates what you could do by hand: `/logout`, `/login`, keep working.
+- **The proxy uses an official path.** According to the [documentation](https://code.claude.com/docs/en/network-config), Claude Code explicitly supports TLS-inspection proxies, via `HTTPS_PROXY` and a custom CA. The proxy sits outside Claude Code and only changes the traffic.
+- **These are exclusively my own subscriptions.** Nobody else gets access. The [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) clearly forbid sharing accounts: "You may not share your Account login information […] or make your Account available to anyone else."
+
 ## The Downsides
 
 But for all the joy about the seamless switch: the setup comes at a price.
 
-- **The terms of use are vague on this point.** The [legal notes on Claude Code](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use) say about third-party developers: "developers may not collect, store, or intermediate Claude.ai credentials or session tokens — sign-in to a Claude account must complete through Anthropic's own flow". Taken literally, that would hit any tool that keeps a token on disk. My reading is that it targets products routing other users through their subscriptions. `cswap`, by contrast, only automates what you could do by hand: `/logout`, `/login`, keep working. Sign-in always goes through Anthropic's own flow, and the tokens are the same ones Claude Code stores on its own anyway. The pin proxy, in turn, sits outside Claude Code. The program stays unmodified, and according to the [documentation](https://code.claude.com/docs/en/network-config) Claude Code explicitly supports TLS-inspection proxies. The proxy only changes the traffic: on the routes for Remote Control and artifacts it inserts the token of another one of your *own* accounts. None of this is an approval from Anthropic. According to the same page, Anthropic reserves the right to enforce measures "without prior notice". What the [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) clearly forbid is sharing: "You may not share your Account login information […] or make your Account available to anyone else." So keep your hands off that.
+- **There is no explicit approval.** The rule for third-party developers is broadly worded: "developers may not collect, store, or intermediate Claude.ai credentials or session tokens". Taken literally, it would hit any tool that stores a token. My reading is that it targets products routing other users through their subscriptions. Anthropic reserves the right to enforce measures "without prior notice".
 - **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. That is the price of not trusting someone else's auto-update.
 - **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. It is acceptable because I have read the code and its reach is limited to the bare minimum.
 

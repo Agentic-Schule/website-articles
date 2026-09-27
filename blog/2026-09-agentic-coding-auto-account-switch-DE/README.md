@@ -143,11 +143,20 @@ Auf einen Satz verdichtet: **Ein Werkzeug, das deine Zugangsschlüssel oder dein
 
 Das Setup hat dieses Prinzip zweimal bestätigt. Einmal bewusst, durch das Forken und Lesen der Tools. Und einmal spontan durch die Agenten, deren Fehlalarm zwar in der Sache danebenlag, aber die richtige Frage stellte. Misstrauen ist in einem agentischen Setup Hygiene.
 
+## Innerhalb der Regeln
+
+Das Setup ist bewusst so gebaut, dass es sich an Anthropics Vorgaben hält. Jede Stelle, an der es ansetzt, ist offiziell vorgesehen:
+
+- **Claude Code bleibt unverändert.** Kein Patch, kein Eingriff ins Programm. Selbst für Anbieter, die Claude Code in eigene Produkte einbauen, zieht Anthropic genau hier die Linie: „The Claude Code binary must not be modified." ([Rechtshinweise](https://code.claude.com/docs/en/legal-and-compliance#can-customers-offer-claude-code-in-their-products))
+- **Jede Anmeldung läuft über Anthropics eigenen Login.** Das verlangen die [Rechtshinweise zu Claude Code](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use): „sign-in to a Claude account must complete through Anthropic's own flow". `cswap` sichert danach nur die Tokens, die Claude Code ohnehin selbst auf der Platte ablegt. Es automatisiert, was du auch von Hand tun könntest: `/logout`, `/login`, weiterarbeiten.
+- **Der Proxy nutzt einen offiziellen Weg.** Proxys mit TLS-Inspektion unterstützt Claude Code laut [Dokumentation](https://code.claude.com/docs/en/network-config) ausdrücklich, über `HTTPS_PROXY` und eine eigene CA. Der Proxy sitzt außerhalb von Claude Code und ändert nur den Datenverkehr.
+- **Es sind ausschließlich meine eigenen Abos.** Niemand sonst bekommt Zugang. Das Teilen von Konten verbieten die [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) klar: „You may not share your Account login information […] or make your Account available to anyone else."
+
 ## Die Schattenseiten
 
 Doch bei aller Freude über den nahtlosen Wechsel: Das Setup hat seinen Preis.
 
-- **Die Nutzungsbedingungen sind an dieser Stelle vage.** In den [Rechtshinweisen zu Claude Code](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use) steht über Drittentwickler: „developers may not collect, store, or intermediate Claude.ai credentials or session tokens — sign-in to a Claude account must complete through Anthropic's own flow". Wörtlich genommen träfe das jedes Tool, das einen Token auf der Platte ablegt. Gemeint sind nach meiner Lesart Produkte, die fremde Nutzer über ihre Abos leiten. `cswap` automatisiert dagegen nur, was du auch von Hand tun könntest: `/logout`, `/login`, weiterarbeiten. Die Anmeldung läuft dabei immer über Anthropics eigenen Flow, und die Tokens sind dieselben, die Claude Code ohnehin selbst speichert. Der Pin-Proxy wiederum sitzt außerhalb von Claude Code. Das Programm bleibt unverändert, und Proxys mit TLS-Inspektion unterstützt Claude Code laut [Dokumentation](https://code.claude.com/docs/en/network-config) ausdrücklich. Der Proxy ändert nur den Datenverkehr: Auf den Routen für Remote Control und Artefakte setzt er den Token eines anderen *eigenen* Kontos ein. Eine Freigabe durch Anthropic ist das alles nicht. Anthropic behält sich laut derselben Seite vor, Maßnahmen „without prior notice" durchzusetzen. Klar verboten ist in den [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) dagegen das Teilen: „You may not share your Account login information […] or make your Account available to anyone else." Davon also Finger weg.
+- **Eine ausdrückliche Freigabe gibt es nicht.** Die Regel für Drittentwickler ist weit gefasst: „developers may not collect, store, or intermediate Claude.ai credentials or session tokens". Wörtlich genommen träfe sie jedes Tool, das einen Token speichert. Gemeint sind nach meiner Lesart Produkte, die fremde Nutzer über ihre Abos leiten. Anthropic behält sich vor, Maßnahmen „without prior notice" durchzusetzen.
 - **Eigene Forks kosten Pflege.** Bei jedem Upstream-Update heißt es: Diff lesen, neu installieren. Das ist der Preis dafür, keinem fremden Auto-Update zu vertrauen.
 - **Der Proxy sieht den Anthropic-Verkehr im Klartext.** Das gilt für jeden Proxy mit TLS-Inspektion, auch für die in Firmennetzen. Tragbar ist das, weil ich den Code gelesen habe und die Reichweite auf das Nötigste beschränkt ist.
 
