@@ -4,6 +4,12 @@ Dieses Repo enthält Blog-Artikel, die unter Johannes Hoppes Namen erscheinen. J
 
 Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: keine LLM-Floskeln, echte Umlaute, keine manuellen Zeilenumbrüche, jede Tatsachenbehauptung an der Primärquelle geprüft.
 
+## Substanz vor allem
+
+- **Kein Gelaber, keine Possen. Harte Fakten und Infos, die der Leser wirklich braucht:** Befehle, Konfiguration, Zahlen aus Primärquellen, konkrete Schritte.
+- **Frag dich bei jedem Absatz: Will das überhaupt jemand wissen? Bringt es dem Leser einen konkreten Mehrwert?** Wenn nein, raus damit. Lieber ein kurzer, praktischer Artikel als eine lange Kolumne.
+- **Keine pseudo-intellektuellen Essays.** Ein breiter, essayistischer Einstieg ist die seltene Ausnahme für ein echtes Meinungsstück, nicht der Normalfall. Der Normalfall ist praktisch, konkret und auf den Punkt.
+
 ## Anrede und Perspektive
 
 - **Durchgehend duzen.** Kein „Sie".
