@@ -196,7 +196,7 @@ Das wirkt, wenn die Shell-Befehle deiner Agenten über zsh laufen, denn zsh lies
 
 Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#ein-prinzip-erzähl-den-agenten-nie-vom-rosa-elefanten) zurück: **Erzähl den Agenten nie vom rosa Elefanten.** Weiß eine Session von einem exotischen Setup, erklärt sie sich jedes Problem zuerst damit. Erklär den Agenten deshalb nicht, dass der Proxy harmlos ist. Sorg lieber dafür, dass sie ihn in ihren Shells gar nicht erst sehen. Von dem rosa Elefanten weißt dann nur du.
 
-## Ein Prinzip: Vertraue keinem Werkzeug blind deine Schlüssel an
+## Mein Prinzip: Vertraue keinem Werkzeug blind deine Schlüssel an
 
 **Ein Werkzeug, das deine Zugangsschlüssel oder deinen Datenverkehr anfasst, bekommt keinen Vertrauensvorschuss. Forke es, lies den Code, installiere aus deiner Kopie und aktualisiere nur bewusst.**
 

@@ -195,7 +195,7 @@ This works when your agents' shell commands run through zsh, because zsh reads `
 
 And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#a-principle-never-tell-the-agents-about-the-pink-elephant) returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. So don't explain to the agents that the proxy is harmless. Rather make sure they don't see it in their shells in the first place. Then only you know about the pink elephant.
 
-## A Principle: Never Blindly Hand a Tool Your Keys
+## My Principle: Never Blindly Hand a Tool Your Keys
 
 **A tool that touches your access keys or your traffic gets no advance trust. Fork it, read the code, install from your copy and only update on purpose.**
 
