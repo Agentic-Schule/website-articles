@@ -29,7 +29,7 @@ header: header.jpg
 
 ### Check First: `/usage`
 
-`/usage` shows how far along you are. According to the [command reference](https://code.claude.com/docs/en/commands), it shows "session cost, plan usage limits, and activity stats" and breaks down what counts against your plan limits. It even runs while Claude is responding. Know this number before you pick one of the following paths.
+`/usage` shows how far along you are. As you can see in the [command reference](https://code.claude.com/docs/en/commands), it shows "session cost, plan usage limits, and activity stats" and breaks down what counts against your plan limits. It even runs while Claude is responding. Know this number before you pick one of the following paths.
 
 ### Choose Model and Effort Deliberately
 
