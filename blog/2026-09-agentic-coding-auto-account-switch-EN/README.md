@@ -227,12 +227,6 @@ For me the gain clearly outweighs the cost. With two 20x subscriptions I hardly 
 
 If you hit the limit yourself: check with `/usage` how far along you are, and with `cswap list` how much headroom all accounts have together. Before every large workflow, decide which model and which effort your agents start with. And read the code before you give it your keys.
 
-By the way, while writing I once again had a Bowie song in my head, just like in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini). This time it's the sequel to *Space Oddity*, in which Major Tom returns. Here you go, your earworm:
-
-<iframe src="https://www.youtube.com/embed/HyMm4rJemtI" title="David Bowie – Ashes to Ashes (Official Video)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
-
-<small>If the player doesn't load: [watch directly on YouTube](https://youtu.be/HyMm4rJemtI).</small>
-
 **Questions, feedback, your own tinkering?** Bring it on. And how the Mac mini this all runs on is set up is described in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini).
 
 <small>**Thanks** to realiti4 for `claude-swap` and to Junyong Lee for `cswap-pin`. Both projects are open, tested and easy to read. That is what makes it possible not to have to trust them blindly.</small>

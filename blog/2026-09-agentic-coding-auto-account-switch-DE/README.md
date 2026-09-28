@@ -228,12 +228,6 @@ Für mich überwiegt der Gewinn klar. Mit zwei 20x-Abos stoße ich kaum noch an 
 
 Wenn du selbst ans Limit stößt: Sieh mit `/usage` nach, wie weit du bist, und mit `cswap list`, wie viel Spielraum alle Konten zusammen haben. Leg vor jedem großen Workflow fest, mit welchem Modell und welchem Effort deine Agenten loslegen. Und lies den Code, bevor du ihm deine Schlüssel gibst.
 
-Übrigens hatte ich beim Schreiben wieder einen Bowie-Song im Ohr, wie schon bei [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini). Diesmal ist es die Fortsetzung von *Space Oddity*, in der Major Tom zurückkehrt. Bitte sehr, dein Ohrwurm:
-
-<iframe src="https://www.youtube.com/embed/HyMm4rJemtI" title="David Bowie – Ashes to Ashes (Official Video)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
-
-<small>Falls der Player nicht lädt: [direkt auf YouTube ansehen](https://youtu.be/HyMm4rJemtI).</small>
-
 **Fragen, Feedback, eigene Basteleien?** Immer her damit. Und wie der Mac mini aufgebaut ist, auf dem das alles läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini).
 
 <small>**Danke** an realiti4 für `claude-swap` und an Junyong Lee für `cswap-pin`. Beide Projekte sind offen, getestet und gut lesbar. Das macht es möglich, ihnen nicht blind vertrauen zu müssen.</small>
