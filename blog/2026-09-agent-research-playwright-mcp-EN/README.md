@@ -22,7 +22,7 @@ Sound familiar? You send your agent off to do some web research, and it gets loc
 
 **When a site deliberately locks you out, that is its good right. But most of the time the operator only wants to keep out the big bot farms, the ones whose traffic causes real trouble. Your agent, with its handful of requests, causes none of that trouble, yet it lands in the same filter and gets swept up with them. The reason lies with the agent's browser: to any simple bot check, a default Playwright launch looks like a suspicious machine. The fix is your own, dedicated Playwright MCP that behaves as normally as a human's browser.**
 
-This article shows how a default headless browser gives itself away (with concrete values), how to set up your own MCP so updates cannot break it, and where the limit of this whole exercise lies.
+This article shows how a default headless browser (a browser without a visible window) gives itself away (with concrete values), how to set up your own MCP so updates cannot break it, and where the limit of this whole exercise lies.
 
 ## Contents
 
@@ -64,7 +64,7 @@ A freshly started Playwright browser carries, among other things, three traits t
 | `navigator.webdriver` | `true` | `undefined` |
 | `navigator.languages` | `["en-US","en"]` | `["de-DE","de","en-US","en"]` |
 
-These default values are a problem. The word **HeadlessChrome** sits in the user agent and goes to the server with every single request. Detecting it takes no sophisticated analysis, a simple text match is enough: no normal user browses headless. **`navigator.webdriver`** is a standardised flag that the browser sets itself when it is remote-controlled, and a bit of JS reads it out in no time. And the language list `["en-US","en"]`? On its own it is no proof, because plenty of people really do have English set as their only language. It only becomes a signal in combination. A typical heuristic compares the browser language against the geolocation of the IP: a visit from Germany that reports US English only does not fit together well. On top of that, the default list is the same on every Playwright installation. So on its own the language list stays weak. Together with the other traits it becomes one more building block in the overall picture.
+These default values are a problem. The word **HeadlessChrome** sits in the user agent and goes to the server with every single request. Detecting it takes no sophisticated analysis, a simple text match is enough: no normal user browses headless. **`navigator.webdriver`** is a standardised flag that the browser sets itself when it is remote-controlled, and a bit of JS reads it out in no time. And the language list `["en-US","en"]`? On its own it is no proof, because plenty of people really do have English set as their only language. It only becomes a signal in combination. A typical heuristic compares the browser language against the geolocation of the IP: a visit from Germany that reports US English only does not fit together well. On top of that, the list does not pick up the machine's language settings: my machine has German set as its second system language, yet the agent's browser leaves it out. So on its own the language list stays weak. Together with the other traits it becomes one more building block in the overall picture.
 
 The crucial point: **these traits say nothing about intent.** But they make it very easy to spot automation. When an operator filters crudely, it locks out the friendly reader just as much as the mass scraper.
 
@@ -95,14 +95,14 @@ Conveniently, your own server wins anyway: the documentation gives the order as 
 > claude mcp add playwright --scope user -- \
 >   npx @playwright/mcp@latest --config ~/.config/playwright-mcp/config.json
 > ```
-> Everything after the `--` is the server's start command. You switch the bundled plugin off in `~/.claude/settings.json`:
+> Everything after the `--` is the server's start command. We create the `config.json` further down. You switch the bundled plugin off in `~/.claude/settings.json`:
 > ```json
 > { "enabledPlugins": { "playwright@claude-plugins-official": false } }
 > ```
 > Or you just install the official plugin again. Works just as well.
 > After that, `claude mcp list` shows your own server, ideally with `✔ Connected`.
 
-## Unobtrusive is not invisible
+## Disguise: unobtrusive, but not invisible
 
 Now let's disguise the Chrome a little. Two moves are enough to get rid of the three giveaways.
 
@@ -120,7 +120,7 @@ The rest is a small script that runs before every page load:
 >   get: () => ['de-DE', 'de', 'en-US', 'en']
 > });
 > ```
-> The user agent deliberately cannot be set here, because it sits in the request header and goes out before any JavaScript even runs. The configuration takes care of that.
+> The user agent deliberately cannot be set here, because it sits in the request header and goes out before any JavaScript even runs. The configuration takes care of that. I keep the file at `~/bin/pw-stealth.js`, which is also where the setup script further down expects it.
 
 **But the disguise has a limit:** it does nothing against serious bot management. Systems like Cloudflare Turnstile or DataDome look at the TLS fingerprint, measure mouse movements and timings, and pose active computational challenges. Two lines of JavaScript do not impress them, and that is a good thing. Anyone facing a barrier like that has been given a clear answer: this site does not want to be read by automation. That is where it ends, regardless of what would be technically possible.
 
@@ -191,7 +191,7 @@ The first condition explains it completely. With no budget set, the function ret
 > ```
 > `outputDir` routes the files centrally to `/tmp`, `outputMaxSize` (200 MB here) is what turns the cleanup on in the first place. `channel: chrome` uses the installed Chrome instead of a test browser, `isolated: true` gives each session a fresh profile in memory, which avoids lock conflicts with parallel sessions. The setup script below fills in the version number in the `userAgent` (`<version>`) to match the machine.
 
-> **⚠️ Keep in mind when debugging:** the configuration is read when the server starts. If you change it and wonder why nothing happens, you are debugging against the wrong process. The fix is to reconnect the server, which reads the configuration fresh.
+> **⚠️ Keep in mind when debugging:** the configuration is read when the server starts. If you change it and wonder why nothing happens, you are debugging against the wrong process. The fix is to reconnect the server, which reads the configuration fresh. In Claude Code, open `/mcp` and choose "Reconnect" in the server's menu.
 
 ## Setup: one script per machine
 
@@ -276,7 +276,7 @@ What holds here too:
 - **It stays hands-on work.** The user agent is tied to the installed Chrome version and goes stale with every update. That is why the script generates it instead of hard-coding it.
 - **Fairness should stay!** `robots.txt`, terms of service, and a calm request rate are the condition for this way of working being OK with me.
 
-In the end it comes down to a small repair with a big effect: the agent no longer lands in the crude filter that never meant it.
+In the end it comes down to a small repair with a big effect: the agent no longer lands in the crude filter that never meant it. So give your agent its own Playwright MCP; the building blocks are all above.
 
 By the way, this research browser runs on my end permanently on a machine that never shuts off. How that ground station is built is described in the companion article ["Agentic coding around the clock: the Mac mini as a ground station"](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini).
 
