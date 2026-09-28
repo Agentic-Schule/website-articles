@@ -177,7 +177,7 @@ Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann errei
 
 ## Fehlalarm: Die Agenten wittern einen Angriff
 
-Auf dem mini lief ein mehrstufiger Lektorats-Workflow: Recherche-Agenten prüften die Fakten eines Artikels im Web. Dabei schlugen diese Agenten **Alarm**. Sie hielten die abgerufenen Inhalte für manipuliert und führten die Proxy-Umgebungsvariablen und die fremde CA als Beleg für einen Angriff an.
+Meine Agenten machten gerade einen `/deep-research`, als sie **Alarm** schlugen. Sie hielten die abgerufenen Inhalte für manipuliert und führten die Proxy-Umgebungsvariablen und die fremde CA als Beleg für einen Angriff an.
 
 Das ist kein Bug, sondern ein lobenswertes Verhalten. Meine Subagenten waren misstrauisch, weil da ein komischer Proxy auftauchte. Wild, dass Software heutzutage so reagieren kann. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
 
