@@ -197,7 +197,7 @@ And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agenti
 
 ## My Principle: Never Blindly Hand a Tool Your Keys
 
-**A tool that touches your access keys or your traffic gets no advance trust. Fork it, read the code, install from your copy and only update on purpose.**
+**A tool that touches your access keys or your traffic is at the very top of my list of software I fundamentally don't trust. Sorry, but not sorry. Fork it, read the code, install from your copy and only update on purpose.**
 
 That is how I handle every tool that gets at my keys. With their alarm, my agents asked exactly this question, by the way: what is this foreign proxy doing in my traffic? In an agentic setup, distrust is hygiene.
 

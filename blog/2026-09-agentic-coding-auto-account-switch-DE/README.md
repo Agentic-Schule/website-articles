@@ -198,7 +198,7 @@ Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agen
 
 ## Mein Prinzip: Vertraue keinem Werkzeug blind deine Schlüssel an
 
-**Ein Werkzeug, das deine Zugangsschlüssel oder deinen Datenverkehr anfasst, bekommt keinen Vertrauensvorschuss. Forke es, lies den Code, installiere aus deiner Kopie und aktualisiere nur bewusst.**
+**Ein Werkzeug, das deine Zugangsschlüssel oder deinen Datenverkehr anfasst, steht bei mir ganz oben auf der Liste von Software, der ich grundsätzlich nicht über den Weg traue. Sorry, but not sorry. Forke es, lies den Code, installiere aus deiner Kopie und aktualisiere nur bewusst.**
 
 So gehe ich bei jedem Werkzeug vor, das an meine Schlüssel kommt. Meine Agenten haben mit ihrem Alarm übrigens genau diese Frage gestellt: Was macht dieser fremde Proxy in meinem Datenverkehr? Misstrauen ist in einem agentischen Setup Hygiene.
 
