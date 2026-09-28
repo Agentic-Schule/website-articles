@@ -44,7 +44,9 @@ Das Abo spielt in einer anderen Liga. Anthropic schrieb bei der Einführung der 
 
 ### Kein `/limit-reset`
 
-Seit September taucht in Claude Code ein Befehl auf, der in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) und in keinem Changelog steht: `/limit-reset`. Er ist im Befehlsmenü versteckt. Ein Blick in Claude Code 2.1.283 zeigt, dass sich dahinter zwei Programme verbergen, die jeweils ein Feature-Schalter auf dem Server freigibt:
+Seit September taucht in Claude Code der Befehl `/limit-reset` auf. Dokumentiert ist er kaum: Er steht in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) und in keinem Changelog, im Befehlsmenü ist er versteckt. Limit-Resets selbst bewirbt Anthropic dagegen offensiv auf Social Media ([X](https://x.com/claudeai/status/2102435538120691886)). Meine Vermutung: auch deshalb, weil OpenAI dasselbe anbietet. In Codex lassen sich verdiente Resets seit Juni direkt über `/usage` einlösen ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). Einmal „Gehe über Los“ klingt ja auch ziemlich verlockend.
+
+Ein Blick in Claude Code 2.1.283 zeigt, dass sich hinter `/limit-reset` zwei Programme verbergen, die jeweils ein Feature-Schalter auf dem Server freigibt:
 
 - **Ein wöchentlicher Reset des 5-Stunden-Limits.** Der Hinweis im Programm lautet „reset your session limit now · uses weekly limit · 1/week", die Erfolgsmeldung endet mit „your weekly limit still applies". Das Wochenlimit bleibt also unberührt.
 - **Ein Kontingent an Resets mit Ablaufdatum.** Es füllt die Limits wieder auf („{resets} left · use by {date}"). Wer es bekommt, entscheidet Anthropic.
