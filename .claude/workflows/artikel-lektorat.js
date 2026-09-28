@@ -106,7 +106,8 @@ const DIMENSIONS = [
 - Das Wort "ehrlich" im Artikeltext. Verboten: der Autor liefert Fakten; das Etikett "ehrlich" legt nahe, es gäbe auch Geschöntes. Die Sache direkt benennen.
 - Pannen-Erzählungen, die den souveränen Ton brechen: "mir ist das passiert", "das hat mich Ärger gekostet", "erst beim zweiten Mal verstand ich", "meine naive Intuition war ...". Fallen gehören als Wissen präsentiert ("das ist eine Falle: ..."), nicht als erlittene Lektion. Trockene Selbstironie und "ich bevorzuge ..." bleiben erlaubt.
 - Unbelegte Superlative und Zahlen zur Ausschmückung. Zahlen nur, wenn fürs Verständnis nötig UND belegt; sonst qualitativ. Superlative ohne Beleg gehören gehedgt ("in der Regel", "meist", "sehr hoch").
-- Recherche-Eigenlob im Text ("sorgfältig verifiziert", "die spannendste Erkenntnis meiner Recherche").`,
+- Recherche-Eigenlob im Text ("sorgfältig verifiziert", "die spannendste Erkenntnis meiner Recherche").
+- Prüfe zusätzlich gegen die Muster in der Datei unter FLOSKEL-LISTE (Modewörter, Einstiege/Übergänge/Schlüsse, Kontrastfiguren, Bild statt Aussage, Verstärker, Form). KONTEXTREGEL: Ein Wort ist erst dann eine Floskel, wenn es nichts aussagt ("die tatsächliche Zahl" ist Sachinhalt, "das ist tatsächlich wichtig" ist Füllung). Was die Liste unter "Ausdrücklich erlaubt" nennt, ist KEIN Befund.`,
   },
   {
     key: 'fakten',
@@ -179,7 +180,7 @@ for (const f of files) for (const d of DIMENSIONS) items.push({ f, d });
 const reviewed = await pipeline(
   items,
   (it) =>
-    agent(`${SHARED}\n\nZIELDATEI: ${it.f}\nSCHREIBRICHTLINIE: ${repoRootOf(it.f)}/CLAUDE.md\n\n${it.d.prompt}`, {
+    agent(`${SHARED}\n\nZIELDATEI: ${it.f}\nSCHREIBRICHTLINIE: ${repoRootOf(it.f)}/CLAUDE.md${it.d.key === 'floskeln' ? `\nFLOSKEL-LISTE: ${repoRootOf(it.f)}/docs/ki-floskeln.md` : ''}\n\n${it.d.prompt}`, {
       label: `lektorat:${short(it.f)}:${it.d.key}`,
       phase: 'Lektorat',
       schema: FINDINGS_SCHEMA,
