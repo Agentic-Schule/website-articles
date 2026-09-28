@@ -1,6 +1,6 @@
 # Recherche: Prompt Engineering und Context Engineering
 
-Ergebnis des /deep-research-Laufs vom 3. September 2026 (5 Suchwinkel, 21 Quellen geholt, 101 Claims extrahiert, 25 verifiziert: 24 bestätigt mit 3-0-Votes wörtlich an den Live-Quellen, 1 widerlegt). Diese Datei ist das Quellenarchiv für den Artikel `blog/2026-09-prompt-context-engineering-DE/`.
+Ergebnis des /deep-research-Laufs vom 3. September 2026 (5 Suchwinkel, 21 Quellen geholt, 101 Claims extrahiert, 25 verifiziert: 24 bestätigt mit 3-0-Votes wörtlich an den Live-Quellen, 1 widerlegt). Diese Datei ist das Quellenarchiv für den Artikel `blog/2026-10-prompt-context-engineering-DE/`.
 
 ## Die zwölf verifizierten Bausteine
 

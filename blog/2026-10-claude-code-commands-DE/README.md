@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-10-06
+published: 2026-10-07
 keywords:
   - Claude Code
   - Slash-Befehle
@@ -31,19 +31,19 @@ Prüft den aktuellen Stand deines Branches auf echte Fehler, wahlweise auch eine
 
 ## 2. `/security-review`: die Sicherheitsbrille
 
-Macht einen reinen Sicherheits-Review der anstehenden Änderungen auf dem Branch, ganz ohne Argumente. Das Besondere ist die Disziplin dahinter: Mehrere Prüf-Perspektiven suchen Schwachstellen, danach filtert eine eigene Runde die falschen Alarme aus. Gemeldet wird nur, was mit hoher Konfidenz wirklich ausnutzbar wäre. Zusammen mit `/code-review` gehören die beiden zu den wichtigsten Leitplanken, wenn die KI den Code schreibt, siehe dazu meinen [Vibe-Coding-Artikel](https://agentic.schule/blog/2026-09-vibe-coding).
+Macht einen reinen Sicherheits-Review der anstehenden Änderungen auf dem Branch, ganz ohne Argumente. Das Besondere ist die Disziplin dahinter: Mehrere Prüf-Perspektiven suchen Schwachstellen, danach filtert eine eigene Runde die falschen Alarme aus. Gemeldet wird nur, was mit hoher Konfidenz wirklich ausnutzbar wäre. Zusammen mit `/code-review` gehören die beiden zu den wichtigsten Leitplanken, wenn die KI den Code schreibt, siehe dazu meinen [Vibe-Coding-Artikel](https://agentic.schule/blog/2026-10-vibe-coding).
 
 > **💡 Tipp:** Vor jedem Merge in Richtung Produktion einmal laufen lassen. Ein leerer Bericht ist hier ein gutes Ergebnis und kein enttäuschendes.
 
 ## 3. `/deep-research`: die Recherche-Maschine
 
-Der einzige mitgelieferte Workflow, und ein Schaustück dafür, was Claude Code an Orchestrierung kann: Er fächert Websuchen über mehrere Suchwinkel auf, holt die Quellen, prüft die Behauptungen gegeneinander und liefert am Ende einen zitierten Bericht statt einer Trefferliste. Wie so ein Workflow aufgebaut ist, steht im [Graph-Artikel](https://agentic.schule/blog/2026-09-graph-engineering).
+Der einzige mitgelieferte Workflow, und ein Schaustück dafür, was Claude Code an Orchestrierung kann: Er fächert Websuchen über mehrere Suchwinkel auf, holt die Quellen, prüft die Behauptungen gegeneinander und liefert am Ende einen zitierten Bericht statt einer Trefferliste. Wie so ein Workflow aufgebaut ist, steht im [Graph-Artikel](https://agentic.schule/blog/2026-10-graph-engineering).
 
 > **💡 Tipp:** Formuliere die Frage so konkret wie möglich, samt Kontext und Zeitraum. Der Workflow zerlegt sie dann selbst in Suchwinkel. Während er läuft, arbeitest du einfach weiter. Der Bericht ist allerdings nur so gut wie seine Quellen: Zentrale Behauptungen sollte man vor der Übernahme immer noch selbst nachprüfen.
 
 ## 4. `/loop`: die Schleife
 
-Wiederholt einen Prompt im festen Intervall (`/loop 5m prüfe den Deploy`) oder lässt Claude selbst takten, wenn du das Intervall weglässt. Damit erledigt der Agent harte Aufgaben in vielen Anläufen, notfalls die ganze Nacht gegen die CI. Was dahintersteckt, habe ich in einem eigenen Artikel auseinandergenommen: [Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering).
+Wiederholt einen Prompt im festen Intervall (`/loop 5m prüfe den Deploy`) oder lässt Claude selbst takten, wenn du das Intervall weglässt. Damit erledigt der Agent harte Aufgaben in vielen Anläufen, notfalls die ganze Nacht gegen die CI. Was dahintersteckt, habe ich in einem eigenen Artikel auseinandergenommen: [Loop Engineering](https://agentic.schule/blog/2026-10-loop-engineering).
 
 > **💡 Tipp:** Die Abbruchbedingung ist die eigentliche Arbeit. „Bis die CI wieder grün ist" funktioniert, „bis es gut ist" dreht sich im Kreis.
 
@@ -65,7 +65,7 @@ Wählt das Modell der Sitzung, klar. Weniger bekannt: Im selben Dialog steckt au
 
 Noch weniger bekannt: Dein aktuelles Modell wird an die Subagenten deiner dynamischen Workflows vererbt, sofern das Workflow-Skript nichts anderes vorgibt. Wenn du also nicht dein gesamtes Fable-5-Limit in einer einzigen Sitzung verschleudern willst (Fable 5 ist das leistungsstärkste allgemein verfügbare Claude-Modell und hat ein eigenes Wochenkontingent), stell hier ein Modell wie Opus oder sogar Sonnet ein, sobald die Aufgabe einfach genug ist. Im Skript selbst lässt sich beides pro Agent erzwingen, Modell und Effort. Für eine ganze Schar Agenten, die stumpf eine Webseite bedienen, gehört genau das ins Skript: kleines Modell, niedriger Effort, teures Denken nur dort, wo es zählt.
 
-> **💡 Tipp:** Welches Modell mit welchem Effort läuft, entscheidet spürbar mit, wie stark Befehle wie `/code-review` parallelisieren. Details dazu im [Graph-Engineering-Artikel](https://agentic.schule/blog/2026-09-graph-engineering).
+> **💡 Tipp:** Welches Modell mit welchem Effort läuft, entscheidet spürbar mit, wie stark Befehle wie `/code-review` parallelisieren. Details dazu im [Graph-Engineering-Artikel](https://agentic.schule/blog/2026-10-graph-engineering).
 
 ## 8. `/effort`: die Denk-Tiefe der Sitzung
 

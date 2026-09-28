@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-10-02
+published: 2026-10-06
 keywords:
   - Vibe Coding
   - Agentic Coding
@@ -81,15 +81,15 @@ Was heißt das nun konkret? Die folgenden Leitplanken machen den Unterschied zwi
 
 **1. Diffs lesen.** Die Minimalregel, und die exakte Umkehrung von Karpathys „I don't read the diffs anymore". Dazu Willisons Commit-Test: Was du nicht erklären kannst, committest du nicht.
 
-**2. Gib dem Agenten einen Check.** Die [offizielle Claude-Code-Doku](https://code.claude.com/docs/en/best-practices) bringt es auf den Punkt: „Give Claude a check it can run: tests, a build, a screenshot to compare. It’s the difference between a session you watch and one you walk away from." Ohne prüfbares Signal wirst du selbst zum Prüfstand, wörtlich: „you become the verification loop: every mistake waits for you to notice it." Tests, Build-Exit-Codes, Linter und Screenshot-Vergleiche schließen die Schleife, ganz im Sinne meines [Loop-Artikels](https://agentic.schule/blog/2026-09-loop-engineering).
+**2. Gib dem Agenten einen Check.** Die [offizielle Claude-Code-Doku](https://code.claude.com/docs/en/best-practices) bringt es auf den Punkt: „Give Claude a check it can run: tests, a build, a screenshot to compare. It’s the difference between a session you watch and one you walk away from." Ohne prüfbares Signal wirst du selbst zum Prüfstand, wörtlich: „you become the verification loop: every mistake waits for you to notice it." Tests, Build-Exit-Codes, Linter und Screenshot-Vergleiche schließen die Schleife, ganz im Sinne meines [Loop-Artikels](https://agentic.schule/blog/2026-10-loop-engineering).
 
-**3. Tests zuerst.** Willison beobachtet [in seinem vibe-engineering-Post](https://simonwillison.net/2025/Oct/7/vibe-engineering/), dass „LLMs actively reward existing top tier software engineering practices", allen voran automatisierte Tests: Mit stabiler Test-Suite fliegen die Agenten, ohne sie behauptet der Agent gerne, etwas funktioniere, ohne es je geprüft zu haben. Wie man die Qualität der Anweisungen selbst misst, statt nach Bauchgefühl zu urteilen, steht im [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-09-prompt-context-engineering): *Evals* (systematische Evaluationen).
+**3. Tests zuerst.** Willison beobachtet [in seinem vibe-engineering-Post](https://simonwillison.net/2025/Oct/7/vibe-engineering/), dass „LLMs actively reward existing top tier software engineering practices", allen voran automatisierte Tests: Mit stabiler Test-Suite fliegen die Agenten, ohne sie behauptet der Agent gerne, etwas funktioniere, ohne es je geprüft zu haben. Wie man die Qualität der Anweisungen selbst misst, statt nach Bauchgefühl zu urteilen, steht im [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-10-prompt-context-engineering): *Evals* (systematische Evaluationen).
 
 **4. Deckel auf die Iterationen.** Eine [peer-reviewte Studie](https://arxiv.org/abs/2506.11022) (IEEE ISTAS 2025) hat gemessen, dass Code unsicherer wird, wenn ein LLM ihn in Schleife ohne Menschen „verbessert"; ihre Empfehlung lautet wörtlich „Restrict consecutive LLM-only iterations to 3 maximum", danach Human Review. Eine Einzelstudien-Leitlinie, aber sie deckt sich mit der Alltagserfahrung: Wenn der Agent lange allein vor sich hin optimiert, wird es selten besser. Zwischendrin selbst draufschauen.
 
 **5. Begrenze den Schaden.** Anthropic setzt bei Claude Code auf [Sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) mit Dateisystem- und Netzwerk-Isolation, ausdrücklich auch als Schutz gegen *Prompt Injection* (untergeschobene Anweisungen aus verarbeiteten Inhalten). Laut Anthropic reduzieren die definierten Grenzen in der internen Nutzung die Berechtigungs-Nachfragen um 84 Prozent; der Agent arbeitet also freier und trotzdem eingezäunt. Die konsequenteste Ausbaustufe: Mein Agent hat einen eigenen Rechner, nachzulesen im [Bodenstation-Artikel](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini).
 
-**6. Lass eine zweite Instanz prüfen.** Befehle wie `/code-review` und `/security-review` sind ein zusätzliches Sicherheitsnetz. Wirklich frisch ist der Blick allerdings nur, wenn dafür Sub-Agenten mit eigenem Kontextfenster starten; wann das passiert und warum es den Unterschied macht, steht im [Graph-Artikel](https://agentic.schule/blog/2026-09-graph-engineering). Aber bitte immer bedenken: Reviews ersetzen das eigene Lesen nicht, sie ergänzen es.
+**6. Lass eine zweite Instanz prüfen.** Befehle wie `/code-review` und `/security-review` sind ein zusätzliches Sicherheitsnetz. Wirklich frisch ist der Blick allerdings nur, wenn dafür Sub-Agenten mit eigenem Kontextfenster starten; wann das passiert und warum es den Unterschied macht, steht im [Graph-Artikel](https://agentic.schule/blog/2026-10-graph-engineering). Aber bitte immer bedenken: Reviews ersetzen das eigene Lesen nicht, sie ergänzen es.
 
 > **💡 Merke:** Wer den Code tippt, ist zweitrangig. Gute Software wird daraus erst, wenn jemand liest, testet und die Verantwortung trägt. KI kann keine Verantwortung tragen.
 
@@ -101,7 +101,7 @@ Zeit für ein Beispiel aus der eigenen Praxis. Unsere Lernplattform [learnly.sch
 
 Hinter den guten Vibes steckt eine ganze Werkbank:
 
-- **Geschichtete Custom Prompts:** drei `CLAUDE.md`-Dateien (Projekt, Backend, Frontend) plus ein zentrales Referenzdokument, als Pflichtlektüre für jede Session markiert. Wie diese Schichten zusammenspielen, steht im [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-09-prompt-context-engineering).
+- **Geschichtete Custom Prompts:** drei `CLAUDE.md`-Dateien (Projekt, Backend, Frontend) plus ein zentrales Referenzdokument, als Pflichtlektüre für jede Session markiert. Wie diese Schichten zusammenspielen, steht im [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-10-prompt-context-engineering).
 - **Strenge Typisierung:** TypeScript überall, `any` ist als harte Regel verboten. Der Compiler ist der billigste Reviewer, den es gibt.
 - **Getrennte Schichten mit Vertrag:** Backend (NestJS, Drizzle ORM) und Frontend (Angular) sind sauber getrennt, die API ist per Swagger/OpenAPI dokumentiert, und der Frontend-Client wird daraus generiert. Der dokumentierte Workflow arbeitet sich von unten nach oben durch: „Complete each layer fully before moving up." Datenbank-Views verstecken Komplexität vor dem Agenten.
 - **Vibe-kompatible Patterns:** bewusst simple, effektive Bausteine wie `rxResource` statt cleverer Eigenkonstruktionen. Was der Agent oft gesehen hat, baut er zuverlässig. (Ich persönlich erzwinge dabei [`rxResourceFixed`](https://angular.schule/blog/2025-10-rx-resource-is-broken#the-solution-rxresourcefixed-it-actually-works), meine verbesserte Fassung des Originals.)
@@ -134,7 +134,7 @@ grep -vi 'goblins' > "$instructions" && \
 codex -m gpt-5.5 -c "model_instructions_file=\"$instructions\""
 ```
 
-Und damit zurück zur Software-Entwicklung, denn die Lehre gilt dort genauso: Arbeite um Himmels willen nicht mit Negativbeispielen. Das gilt in den Prompts, und es gilt im Code. Womit wir beim Thema Clean Code wären: Soll der Agent guten Code produzieren, muss das Repository sauberen Code enthalten. Einem Menschen kannst du vielleicht ein `// FIXME: bad code, remove this later` hinschreiben, und er blättert kopfschüttelnd weiter. Bei einem LLM hast du ein Riesenproblem: Es hat den Mist gelesen. Mieser Code ist ein riesiger rosa Elefant. Oder um mein Zitat aus dem [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-09-prompt-context-engineering) zu wiederholen:
+Und damit zurück zur Software-Entwicklung, denn die Lehre gilt dort genauso: Arbeite um Himmels willen nicht mit Negativbeispielen. Das gilt in den Prompts, und es gilt im Code. Womit wir beim Thema Clean Code wären: Soll der Agent guten Code produzieren, muss das Repository sauberen Code enthalten. Einem Menschen kannst du vielleicht ein `// FIXME: bad code, remove this later` hinschreiben, und er blättert kopfschüttelnd weiter. Bei einem LLM hast du ein Riesenproblem: Es hat den Mist gelesen. Mieser Code ist ein riesiger rosa Elefant. Oder um mein Zitat aus dem [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-10-prompt-context-engineering) zu wiederholen:
 
 > **Clean Code is not dead. It's context engineering now.**
 >

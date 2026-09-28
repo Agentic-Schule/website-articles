@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-09-29
+published: 2026-10-01
 keywords:
   - Prompt Engineering
   - Context Engineering
@@ -21,7 +21,7 @@ Garbage in, garbage out: hardly any phrase from computer science fits language m
 
 **There are two hype terms in circulation for exactly that: prompt engineering and context engineering. Yet behind both lies real craft. Prompt engineering: phrase the instruction clearly, back it with examples, and measure the result. Context engineering: curate everything the model gets to see, because the context window is a finite resource.**
 
-This is the opening part of the series about the engineering terms of the agent world. It continues with the loop ([Loop Engineering](https://agentic.schule/en/blog/2026-09-loop-engineering)) and the graph ([Graph Engineering](https://agentic.schule/en/blog/2026-09-graph-engineering)). Each part stands on its own.
+This is the opening part of the series about the engineering terms of the agent world. It continues with the loop ([Loop Engineering](https://agentic.schule/en/blog/2026-10-loop-engineering)) and the graph ([Graph Engineering](https://agentic.schule/en/blog/2026-10-graph-engineering)). Each part stands on its own.
 
 ## Contents
 
@@ -134,11 +134,11 @@ For agents that work over hours, even the best curation eventually stops being e
 
 **Structured note-taking:** the agent writes notes outside the context window and reads them back in later; a to-do list, a `NOTES.md`. Anthropic's showcase: Claude plays Pokémon and keeps maps, goals, and combat strategies in its own notes across thousands of game steps, surviving every context reset. Every developer will have seen this: Claude loves creating such notes. Invariably in `ALLCAPS.md`. You should clean them up regularly though, because such a plan goes stale quickly and can then contain misinformation.
 
-**Multi-agent architectures:** instead of one agent holding everything in its own window, sub-agents handle focused subtasks with a fresh window and return only a distilled summary. More on that in the [graph article](https://agentic.schule/en/blog/2026-09-graph-engineering).
+**Multi-agent architectures:** instead of one agent holding everything in its own window, sub-agents handle focused subtasks with a fresh window and return only a distilled summary. More on that in the [graph article](https://agentic.schule/en/blog/2026-10-graph-engineering).
 
 ## You are doing this already
 
-If all of this sounds familiar: Claude Code applies these techniques in everyday work, and you use them along the way. The `CLAUDE.md` is curated permanent context, exactly the "smallest possible set of high-signal tokens" for your project. Compaction kicks in automatically when the window fills up, and with `/compact` you trigger it yourself. The agent's to-do lists are note-taking. And subagents together with *workflows* (scripts that orchestrate many subagents at once, see the [graph article](https://agentic.schule/en/blog/2026-09-graph-engineering)) are the multi-agent architecture.
+If all of this sounds familiar: Claude Code applies these techniques in everyday work, and you use them along the way. The `CLAUDE.md` is curated permanent context, exactly the "smallest possible set of high-signal tokens" for your project. Compaction kicks in automatically when the window fills up, and with `/compact` you trigger it yourself. The agent's to-do lists are note-taking. And subagents together with *workflows* (scripts that orchestrate many subagents at once, see the [graph article](https://agentic.schule/en/blog/2026-10-graph-engineering)) are the multi-agent architecture.
 
 > **💡 Remember:** when the next prompt struggles, don't add more words first. Check what the model is currently seeing. Usually the window is the problem, and then curating helps more than phrasing.
 
@@ -152,7 +152,7 @@ But: if you attend my [course](https://agentic.schule/build-with-ai/online), I w
 
 Two buzzwords, one craft. Prompt engineering means: clear instructions, examples, measured by evals. Context engineering means: the window is finite, so curate what goes in, tight and informative. Both are freely available in the primary sources, and neither needs a paid course. (Except at [agentic.schule](https://agentic.schule)! 😉)
 
-This article is the first part of the series: **prompt and context** determine what the model sees. It continues with the **loop**, which drives a line into the depth until the goal stands ([Loop Engineering](https://agentic.schule/en/blog/2026-09-loop-engineering)), and the **graph**, which fans independent work out into the breadth ([Graph Engineering](https://agentic.schule/en/blog/2026-09-graph-engineering)). Three tools, three shapes of work, and all three start with the same question: what does the model need to know to make the next step a good one?
+This article is the first part of the series: **prompt and context** determine what the model sees. It continues with the **loop**, which drives a line into the depth until the goal stands ([Loop Engineering](https://agentic.schule/en/blog/2026-10-loop-engineering)), and the **graph**, which fans independent work out into the breadth ([Graph Engineering](https://agentic.schule/en/blog/2026-10-graph-engineering)). Three tools, three shapes of work, and all three start with the same question: what does the model need to know to make the next step a good one?
 
 **Questions, feedback, prompt recipes of your own?** Bring them on, I am glad to hear from you.
 
