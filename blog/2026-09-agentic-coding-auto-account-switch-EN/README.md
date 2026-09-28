@@ -19,7 +19,7 @@ language: en
 header: header.jpg
 ---
 
-**Your weekly limit in Claude Code is almost reached? Don't worry, there is a solution. Usage credits and `/limit-reset` are not it. This article shows how to set up your environment with two open source tools so that Claude Code switches between multiple Max subscriptions: automatically, shortly before the limit, without a manual `/login` and without Remote Control, the remote control from your phone, dropping.**
+**Your weekly limit in Claude Code is almost reached? Don't worry, there is a solution. Usage credits and `/limit-reset` are not it. This article shows how to set up your environment with two open source tools so that Claude Code switches between multiple Max subscriptions: automatically, shortly before the limit, without a manual `/login` and without Remote Control being interrupted.**
 
 ## Contents
 
