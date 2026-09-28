@@ -119,7 +119,7 @@ Der Browser-Login pro Konto ist der einzige Schritt, den du manuell durchführen
 
 Die wichtigste Frage: Wohin geht der Netzwerkverkehr? Im Quelltext stehen nur Anthropics eigene Endpunkte (`api.anthropic.com`, `platform.claude.com`) und ein Versions-Check bei PyPI. Keine fremde Domain, keine Telemetrie. Das Paket wird über PyPIs *Trusted Publishing* aus einem GitHub-Workflow veröffentlicht, und das Repo bringt eine umfangreiche Testsuite mit. So weit, so vertrauenswürdig.
 
-Ein Tool, das deine Schlüssel hält, solltest du nicht per Auto-Update aus einer fremden Pipeline beziehen. Das größere Risiko sind künftige Releases: Ein bösartiges Update kommt als beiläufiges Upgrade herein. Das ist ein klassischer *Supply-Chain-Angriff*, also ein Angriff über die Lieferkette. Wie so etwas aussieht, zeigt der Artikel über [böswillige AI-Skills](https://agentic.schule/blog/2026-09-malicious-ai-skills). Geh deshalb den sauberen Weg:
+Ein Tool, das deine Schlüssel hält, solltest du nicht per Auto-Update aus einer fremden Pipeline beziehen. Das größere Risiko sind künftige Releases: Ein bösartiges Update könnte als beiläufiges Upgrade hereinkommen. Das ist ein klassischer *Supply-Chain-Angriff*, also ein Angriff über die Lieferkette. Wie so etwas aussieht, zeigt der Artikel über [böswillige AI-Skills](https://agentic.schule/blog/2026-09-malicious-ai-skills). Geh deshalb den sauberen Weg:
 
 ```bash
 # in den eigenen Account forken und den geprüften Stand lokal auschecken

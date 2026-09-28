@@ -118,7 +118,7 @@ The browser login per account is the only step you have to do manually.
 
 The most important question: where does network traffic go? The source code only contains Anthropic's own endpoints (`api.anthropic.com`, `platform.claude.com`) and a version check against PyPI. No third-party domain, no telemetry. The package is published through PyPI's *Trusted Publishing* from a GitHub workflow, and the repo comes with an extensive test suite. So far, so trustworthy.
 
-You should not pull a tool that holds your keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update slips in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/en/blog/2026-09-malicious-ai-skills). So take the clean route:
+You should not pull a tool that holds your keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update could slip in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/en/blog/2026-09-malicious-ai-skills). So take the clean route:
 
 ```bash
 # fork into your own account and check out the reviewed state locally
