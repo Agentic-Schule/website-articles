@@ -197,7 +197,7 @@ Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agen
 
 **Ein Werkzeug, das deine Zugangsschlüssel oder deinen Datenverkehr anfasst, bekommt keinen Vertrauensvorschuss. Forke es, lies den Code, installiere aus deiner Kopie und aktualisiere nur bewusst.**
 
-Das Setup hat dieses Prinzip zweimal bestätigt. Einmal bewusst, durch das Forken und Lesen der Tools. Und einmal durch die Agenten, deren Alarm die richtige Frage stellte. Misstrauen ist in einem agentischen Setup Hygiene.
+So gehe ich bei jedem Werkzeug vor, das an meine Schlüssel kommt. Meine Agenten haben mit ihrem Alarm übrigens dieselbe Frage gestellt. Misstrauen ist in einem agentischen Setup Hygiene.
 
 Bleibt die Frage, ob Anthropic so ein Setup überhaupt erlaubt.
 

@@ -196,7 +196,7 @@ And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agenti
 
 **A tool that touches your access keys or your traffic gets no advance trust. Fork it, read the code, install from your copy and only update on purpose.**
 
-The setup confirmed this principle twice. Once deliberately, by forking and reading the tools. And once through the agents, whose alarm asked the right question. In an agentic setup, distrust is hygiene.
+That is how I handle every tool that gets at my keys. With their alarm, my agents asked the very same question, by the way. In an agentic setup, distrust is hygiene.
 
 That leaves the question of whether Anthropic allows a setup like this at all.
 
