@@ -151,7 +151,7 @@ gh repo fork codeslake/cswap-pin --clone
 pipx inject claude-swap ./cswap-pin
 ```
 
-Technically, the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. `cswap pin` writes the proxy address and the CA into the `env` block of `~/.claude.json`, and Claude Code applies them to its own process. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. Fork and read this one too before it is allowed on the box. For a tool that sees your traffic, that is mandatory. In the end, there are two forks in your account.
+Technically, the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. `cswap pin` writes the proxy address and the CA into the `env` block of `~/.claude.json`, and Claude Code applies them to its own process. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. Fork and read this one too before it is allowed on the box. For a tool that sees your traffic, that is mandatory. In the end, there are ideally two forks in your account.
 
 ## Switching Automatically: `cswap auto` as a Service
 
