@@ -19,7 +19,7 @@ language: en
 header: header.jpg
 ---
 
-**Your weekly limit in Claude Code is almost reached? Don't worry, there is a solution. Usage credits and `/limit-reset` are not it. This article shows how Claude Code switches between multiple Max subscriptions instead: automatically, shortly before the limit, without `/logout` and without Remote Control dropping.**
+**Your weekly limit in Claude Code is almost reached? Don't worry, there is a solution. Usage credits and `/limit-reset` are not it. This article shows how Claude Code switches between multiple Max subscriptions instead: automatically, shortly before the limit, without `/logout` and without Remote Control, the remote control from your phone, dropping.**
 
 ## Contents
 
@@ -33,7 +33,7 @@ header: header.jpg
 
 ### Choose Model and Effort Deliberately
 
-The cheapest lever comes before all others: not every task needs the strongest model at the highest effort. According to the [documentation](https://code.claude.com/docs/en/workflows), your session's model also applies to the agents of your workflows unless something else is specified. So tell Claude explicitly which agents start with which model and which effort. Simple work such as clicking through a web page runs on a small model at low effort. Expensive thinking stays where it counts. Details are in the article on [10 Claude Code commands](https://agentic.schule/en/blog/2026-10-claude-code-commands#7-model-more-than-just-picking-a-model), section `/model`.
+The cheapest lever comes before all others: not every task needs the strongest model at the highest *effort*, meaning how much reasoning the model puts into each answer. According to the [documentation](https://code.claude.com/docs/en/workflows), your session's model also applies to the agents of your workflows unless something else is specified. Workflows are scripts that Claude Code uses to start many sub-agents in parallel. So tell Claude explicitly which agents start with which model and which effort. With a *dynamic workflow*, whose script Claude writes itself, one sentence to the main conversation is enough, for example "run the research agents with Sonnet at medium effort". Claude puts that into the workflow script and starts the agents accordingly. Simple work such as clicking through a web page runs on a small model at low effort. Expensive thinking stays where it counts. Details are in the article on [10 Claude Code commands](https://agentic.schule/en/blog/2026-10-claude-code-commands#7-model-more-than-just-picking-a-model), section `/model`.
 
 ### No Usage Credits
 
@@ -48,7 +48,7 @@ Since September, a command has been showing up in Claude Code that is in no [com
 - **A weekly reset of the 5-hour limit.** The notice in the program reads "reset your session limit now · uses weekly limit · 1/week", and the success message ends with "your weekly limit still applies". So the weekly limit stays untouched.
 - **An allowance of resets with an expiry date.** It refills the limits ("{resets} left · use by {date}"). Anthropic decides who gets it.
 
-Whether you may use a reset is also decided by the server. The code contains rejection reasons, among them `tier`, `tenure` (account age), `other_experiment` and `not_limited`, meaning "not at the limit yet". None of this is shown. In each of these cases the message reads "A session-limit reset isn't available right now." That is exactly what the reports are piling up about: at least four open issues since early September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), none with an answer from Anthropic. Users suspect an A/B test: "I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
+Whether you may use a reset is also decided by the server. The code contains rejection reasons, among them `tier`, `tenure` (account age), `other_experiment` and `not_at_wall`, meaning "not at the limit yet". None of this is shown. In each of these cases the message reads "A session-limit reset isn't available right now." That is exactly what the reports are piling up about: at least four open issues since early September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), none with an answer from Anthropic. Users suspect an A/B test: "I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
 Officially, there is something else: on September 22, Anthropic gave all Pro, Max and Team customers a one-time reset, redeemable until October 22 under *Settings → Usage* ([X](https://x.com/ClaudeDevs/status/2102438803013333469)). According to the [Help Center](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset), depending on the offer it resets either the 5-hour or the weekly limit. You can only redeem it in the browser or in Claude Desktop, because the button "isn’t currently available on Claude Mobile or in Claude Code in your terminal or IDE". If you have one, take it.
 
@@ -62,13 +62,13 @@ That leaves the path that actually holds up: a **second Max subscription**, or a
 
 Claude Code only ever knows *one* signed-in account. Switching means `/logout`, then `/login`, then the OAuth flow in the browser. Until then, the work stands still.
 
-Worse is the moment the limit hits in the middle of the work. On my setup the agents run around the clock on a [Mac mini that never shuts down](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini). When an account reaches its limit, running sub-agents stop with "Agent terminated early due to an API error: You've hit your session limit". According to numerous issue reports and painful experience of my own, often only a fragment of their work comes back, and it has to be started again ([#94770](https://github.com/anthropics/claude-code/issues/94770), [#74162](https://github.com/anthropics/claude-code/issues/74162), [#78231](https://github.com/anthropics/claude-code/issues/78231)). In [#94222](https://github.com/anthropics/claude-code/issues/94222) a user analyzed six of their sessions: "449 subagents were cut off, only 8 were resumed by id […] The other 438 were re-dispatched from scratch."
+Worse is the moment the limit hits in the middle of the work. On my setup the agents run around the clock on a Mac mini that never shuts down. How it is set up is described in [part 1 of this series](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini). When an account reaches its limit, running sub-agents stop with "Agent terminated early due to an API error: You've hit your session limit". According to numerous issue reports and painful experience of my own, often only a fragment of their work comes back, and it has to be started again ([#94770](https://github.com/anthropics/claude-code/issues/94770), [#74162](https://github.com/anthropics/claude-code/issues/74162), [#78231](https://github.com/anthropics/claude-code/issues/78231)). In [#94222](https://github.com/anthropics/claude-code/issues/94222) a user analyzed six of their sessions: "449 subagents were cut off, only 8 were resumed by id […] The other 438 were re-dispatched from scratch."
 
-This is especially annoying with a wide fan-out. If you start many agents in parallel with an expensive model, exactly that run pushes your account to the limit. If it breaks off, the work is gone, and a second run costs the tokens all over again. So before every large run, decide which model and which effort the agents start with. With a dynamic workflow, one sentence to the main conversation is enough, for example "run the research agents with Sonnet at medium effort". Claude puts that into the script and starts the agents accordingly. Without such an instruction, according to the [documentation](https://code.claude.com/docs/en/workflows), every agent runs on your session's model. More on this in the article on [10 Claude Code commands](https://agentic.schule/en/blog/2026-10-claude-code-commands#7-model-more-than-just-picking-a-model), section `/model`. Why such a run costs a lot is explained in the article on [Graph Engineering](https://agentic.schule/en/blog/2026-09-graph-engineering#when-a-graph-is-worth-it-and-when-not).
+This is especially annoying with a wide fan-out. If you start many agents in parallel with an expensive model, exactly that run pushes your account to the limit. If it breaks off, the work is gone, and a second run costs the tokens all over again. So before every large run, decide which model and which effort the agents start with, as described above under "Choose Model and Effort Deliberately". Why such a run costs a lot is explained in the article on [Graph Engineering](https://agentic.schule/en/blog/2026-09-graph-engineering#when-a-graph-is-worth-it-and-when-not).
 
 On top of that, an account switch cuts the **Remote Control connection** that lets me watch from my phone. The same goes for artifacts, the pages Claude Code publishes on claude.ai. They belong to an account as well.
 
-So the goal is: **switch to another subscription automatically before the limit, without signing out, without cancelled agents and without losing remote control.** That takes two tools: one that swaps the sign-in while running, and one that keeps Remote Control on one account while doing so.
+So the goal is: **switch to another subscription automatically before the limit, without signing out, ideally without cancelled agents and without losing remote control.** That takes two tools: one that swaps the sign-in while running, and one that keeps Remote Control on one account while doing so.
 
 ## No Router Needed: Claude Code Re-Reads the Credentials
 
@@ -101,7 +101,7 @@ cswap add            # add the second account as slot 2
 cswap switch 1       # back to subscription 1
 ```
 
-> **⚠️ Warning:** Do not run `/logout` before the second `/login`. According to the [`claude-swap` instructions](https://github.com/realiti4/claude-swap#add-more-accounts), Claude Code may revoke the refresh token of the account you are leaving.
+> **⚠️ Warning:** Do not run `/logout` before the second `/login`. According to the [`claude-swap` instructions](https://github.com/realiti4/claude-swap#add-more-accounts), Claude Code may revoke the refresh token of the account you are leaving. Claude Code uses this token to renew expired credentials; without it, the saved slot would be worthless.
 
 The browser login per account is the only step no tool can take off your hands. After that it's done.
 
@@ -125,7 +125,7 @@ pipx install ./claude-swap
 
 ## Remote Control: The Pin Holds the Session
 
-That leaves the second problem: the account switch cuts remote control. The reason is structural. A Remote Control session belongs to the account whose token created it. Swap the account, and phone and web lose the session, while orphaned sessions pile up on the old account. The same goes for artifacts: after a switch, republishing fails.
+That leaves the second problem: the account switch cuts remote control. The reason is structural. A Remote Control session belongs to the account whose token created it. Swap the account, and phone and web lose the session, while orphaned sessions pile up on the old account (as described in the [cswap-pin README](https://github.com/codeslake/cswap-pin#the-problem)). The same goes for artifacts: after a switch, republishing fails.
 
 The solution is called [`cswap-pin`](https://github.com/codeslake/cswap-pin) and comes from Junyong Lee. It is a **local proxy** that does exactly one thing: on Anthropic's routes for Remote Control and artifacts it inserts the token of the *pinned* account. The inference via `/v1/messages` passes through unchanged. It keeps following the switch. Ownership of the cloud objects stays put, the compute load moves.
 
@@ -136,19 +136,25 @@ cswap pin 1          # Remote Control and artifacts stay on account 1
 At the time of this article, the integration into `cswap` is an [open pull request](https://github.com/realiti4/claude-swap/pull/210) in the upstream project. Until it is merged, `cswap pin` only exists if you merge the PR into your fork of `claude-swap`. I install the proxy itself from a fork of my own as well and inject it into the same environment:
 
 ```bash
+cd claude-swap
+gh pr checkout 210 --repo realiti4/claude-swap   # bring the pull request into the fork
+pipx install --force .
+cd ..
 gh repo fork codeslake/cswap-pin --clone
 pipx inject claude-swap ./cswap-pin
 ```
 
-What this means technically belongs on the table: the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. Claude Code is told about it via `NODE_EXTRA_CA_CERTS`. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. I forked and read this one too before it was allowed on the box. So there are two forks in my account. For a tool that sees your traffic, that is mandatory.
+Technically, the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. `cswap pin` writes the proxy address and the CA into the `env` block of `~/.claude.json`, and Claude Code applies them to its own process. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. I forked and read this one too before it was allowed on the box. So there are two forks in my account. For a tool that sees your traffic, that is mandatory.
 
 ## Switching Automatically: `cswap auto` as a Service
 
 Switching by hand is nice. The gain lies in the automation: `cswap auto` checks the usage and switches **on its own** to the subscription with the most headroom as soon as the active account reaches a threshold. By default it sits at 90 percent of the 5-hour or weekly window.
 
-With `--once` the command runs exactly one pass and exits. The tool stores cooldown and state on disk. That fits `launchd`, the service manager of macOS, and no terminal has to stay open. On my machine it runs every minute as a LaunchDaemon, a system service that starts without anyone logging in. The `UserName` key is important: without it, a LaunchDaemon runs as root and swaps the credentials in the wrong home directory. In the example, `YOUR-NAME` stands for your user name.
+With `--once` the command runs exactly one pass and exits. The tool stores the minimum pause between two switches (*cooldown*) and its state on disk, which is why a single pass per minute is enough. That fits `launchd`, the service manager of macOS, and no terminal has to stay open. On my machine it runs every minute as a LaunchDaemon, a system service that starts without anyone logging in. The `UserName` key is important: without it, a LaunchDaemon runs as root and swaps the credentials in the wrong home directory. The file belongs in `/Library/LaunchDaemons/` and is loaded with `sudo launchctl bootstrap system /Library/LaunchDaemons/cswap-auto.plist`. In the example, `YOUR-NAME` stands for your user name.
 
 ```xml
+<key>Label</key>
+<string>cswap-auto</string>
 <key>ProgramArguments</key>
 <array>
   <string>/Users/YOUR-NAME/.local/bin/cswap</string>
@@ -166,13 +172,11 @@ In daily use the result is unspectacular, and that is how it should be. At some 
 
 ## False Alarm: The Agents Suspect an Attack
 
-The best twist came from the agents themselves.
-
 The mini was running a multi-stage editing workflow: research agents check the facts of an article on the web. During that, these agents raised the **alarm**. They considered the fetched content tampered with and cited the proxy environment variables and the foreign CA as evidence of an attack.
 
 That is a feature. The agents had no way of knowing where the proxy came from. From their point of view a man-in-the-middle with its own CA was sitting there, and that *could* have been malware. That is how a vigilant reviewer should react.
 
-Were they right? That can be checked instead of explained away. A request to `example.com` through the proxy comes back with the *real* public certificate. Had the proxy been reading along, it would have been its own. The source code confirms it as well: the proxy decrypts **only** `api.anthropic.com`. It passes every other host through as a blind tunnel.
+Were they right? That can be checked. A request to `example.com` through the proxy comes back with the *real* public certificate. Had the proxy been reading along, it would have been its own. The source code confirms it as well: the proxy decrypts **only** `api.anthropic.com`. It passes every other host through as a blind tunnel.
 
 So the traffic was genuine. Still, the alarm points to a trap: if you set the proxy variables and the CA for Claude Code, every shell an agent starts inherits them. Every command then sees the proxy, and every download goes through it. But the pin only needs the Claude process itself. That's why a single line in `~/.zshenv` removes the variables from every agent shell:
 
@@ -182,7 +186,7 @@ unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXT
 
 On my machine the agents' shell commands run through zsh, and zsh reads `~/.zshenv` on every invocation. The Claude process keeps the pin; the agents no longer see it in their shells.
 
-And here a principle from part 1 returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. That's why I don't explain to the agents that the proxy is harmless. Instead, the agents don't see the proxy in their shells at all anymore. Only I still know about the elephant.
+And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#a-principle-never-tell-the-agents-about-the-pink-elephant) returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. That's why I don't explain to the agents that the proxy is harmless. Instead, the agents don't see the proxy in their shells at all anymore. Only I still know about the elephant.
 
 ## A Principle: Never Blindly Hand a Tool Your Keys
 
@@ -190,9 +194,11 @@ And here a principle from part 1 returns: **never tell the agents about the pink
 
 The setup confirmed this principle twice. Once deliberately, by forking and reading the tools. And once through the agents, whose alarm asked the right question. In an agentic setup, distrust is hygiene.
 
+That leaves the question of whether Anthropic allows a setup like this at all.
+
 ## Within the Rules
 
-The setup goes right up to the limits of Anthropic's rules, but deliberately stays within them. Every point where it hooks in is officially intended:
+The setup goes right up to the limits of Anthropic's rules, but in my reading stays within them. It only hooks in where Claude Code openly supports it:
 
 - **Claude Code stays unmodified.** No patch, no tampering with the program. Even for vendors who build Claude Code into their own products, Anthropic draws the line here: "The Claude Code binary must not be modified." ([legal notes](https://code.claude.com/docs/en/legal-and-compliance#can-customers-offer-claude-code-in-their-products))
 - **Every sign-in goes through Anthropic's own login.** That is what the [legal notes on Claude Code](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use) require: "sign-in to a Claude account must complete through Anthropic's own flow". After that, `cswap` only keeps the tokens that Claude Code stores on disk anyway. It automates what you could do by hand: `/logout`, `/login`, keep working.
@@ -204,14 +210,16 @@ The setup goes right up to the limits of Anthropic's rules, but deliberately sta
 But for all the joy about the seamless switch: there are a few things you should know.
 
 - **There is no explicit approval.** The rule for third-party developers is broadly worded: "developers may not collect, store, or intermediate Claude.ai credentials or session tokens". Taken literally, it would hit any tool that stores a token. My reading is that it targets products routing other users through their subscriptions. Anthropic reserves the right to enforce measures "without prior notice".
+- **More accounts don't mean infinite.** Once all accounts are at the threshold, `cswap auto` finds no target and reports it with exit code 3 ("no viable target / all exhausted"). And every additional subscription costs its full price.
+- **The pin depends on an open pull request.** Until PR #210 is merged, `cswap pin` only runs from your own fork.
 - **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. That is the price of not trusting someone else's auto-update.
 - **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. It is acceptable because I have read the code and its reach is limited to the bare minimum.
 
 ## Conclusion
 
-Multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout` and `/login`, no more cancelled agents.
+Multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout` and `/login`, and as a rule no more cancelled agents.
 
-For me the gain clearly outweighs the cost. With two 20x subscriptions I hardly ever hit a weekly limit, and I never have to look at usage credits. The agents' alarm confirms the principle: healthy distrust belongs where tools hold your keys.
+For me the gain clearly outweighs the cost. With two 20x subscriptions I hardly ever hit a weekly limit, and I never have to look at usage credits.
 
 If you hit the limit yourself: check with `/usage` how far along you are, and with `cswap list` how much headroom all accounts have together. Before every large run, decide which model and which effort your agents start with. And read the code before you give it your keys.
 
