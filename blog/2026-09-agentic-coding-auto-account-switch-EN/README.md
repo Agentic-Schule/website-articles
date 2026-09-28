@@ -232,7 +232,7 @@ If you hit the limit yourself: check with `/usage` how far along you are, and wi
 
 **Questions, feedback, your own tinkering?** Bring it on. And how the Mac mini this all runs on is set up is described in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini).
 
-<small>**Thanks** to realiti4 for `claude-swap` and to Junyong Lee for `cswap-pin`. Both projects are open, tested and easy to read. That is what makes it possible not to have to trust them blindly.</small>
+<small>**Thanks** to realiti4 for `claude-swap` and to Junyong Lee for `cswap-pin`. Both projects are open, properly tested and easy to read. Recommended!</small>
 
 ---
 

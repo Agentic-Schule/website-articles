@@ -233,7 +233,7 @@ Wenn du selbst ans Limit stößt: Sieh mit `/usage` nach, wie weit du bist, und 
 
 **Fragen, Feedback, eigene Basteleien?** Immer her damit. Und wie der Mac mini aufgebaut ist, auf dem das alles läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini).
 
-<small>**Danke** an realiti4 für `claude-swap` und an Junyong Lee für `cswap-pin`. Beide Projekte sind offen, getestet und gut lesbar. Das macht es möglich, ihnen nicht blind vertrauen zu müssen.</small>
+<small>**Danke** an realiti4 für `claude-swap` und an Junyong Lee für `cswap-pin`. Beide Projekte sind offen, ordentlich getestet und gut lesbar. Empfehlenswert!</small>
 
 ---
 
