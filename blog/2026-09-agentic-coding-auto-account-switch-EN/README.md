@@ -31,6 +31,10 @@ header: header.jpg
 
 `/usage` shows how far along you are. According to the [command reference](https://code.claude.com/docs/en/commands), it shows "session cost, plan usage limits, and activity stats" and breaks down what counts against your plan limits. It even runs while Claude is responding. Know this number before you pick one of the following paths.
 
+### Choose Model and Effort Deliberately
+
+The cheapest lever comes before all others: not every task needs the strongest model at the highest effort. According to the [documentation](https://code.claude.com/docs/en/workflows), your session's model also applies to the agents of your workflows unless something else is specified. So tell Claude explicitly which agents start with which model and which effort. Simple work such as clicking through a web page runs on a small model at low effort. Expensive thinking stays where it counts. Details are in the article on [10 Claude Code commands](https://agentic.schule/en/blog/2026-10-claude-code-commands#7-model-more-than-just-picking-a-model), section `/model`.
+
 ### No Usage Credits
 
 The obvious button is `/usage-credits`, formerly `/extra-usage`. It lets you keep working past the limit for a fee. According to the [Help Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans), usage credits are billed "at standard API rates", on top of your subscription. Prepaid [bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) "save up to 30%", but they remain API prices with a discount.
@@ -207,7 +211,7 @@ Multiple Max subscriptions, an account switch while running, automatically befor
 
 For me the gain clearly outweighs the cost. With two 20x subscriptions I hardly ever hit a weekly limit, and I never have to look at usage credits. The agents' alarm confirms the principle: healthy distrust belongs where tools hold your keys.
 
-If you hit the limit yourself: check with `/usage` how far along you are, and with `cswap list` how much headroom all accounts have together. And read the code before you give it your keys.
+If you hit the limit yourself: check with `/usage` how far along you are, and with `cswap list` how much headroom all accounts have together. Before every large run, decide which model and which effort your agents start with. And read the code before you give it your keys.
 
 By the way, while writing I once again had a Bowie song in my head, just like in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini). This time it's the sequel to *Space Oddity*, in which Major Tom returns. Here you go, your earworm:
 

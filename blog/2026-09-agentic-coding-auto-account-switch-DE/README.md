@@ -32,6 +32,10 @@ header: header.jpg
 
 Wie weit du bist, zeigt `/usage`. Laut [Befehlsübersicht](https://code.claude.com/docs/en/commands) zeigt der Befehl „session cost, plan usage limits, and activity stats" und schlüsselt auf, was gegen die Limits deines Plans zählt. Er läuft sogar, während Claude gerade antwortet. Diesen Wert solltest du kennen, bevor du dich für einen der folgenden Wege entscheidest.
 
+### Modell und Effort bewusst wählen
+
+Der günstigste Hebel kommt vor allen anderen: Nicht jede Aufgabe braucht das stärkste Modell mit dem höchsten Effort. Das Modell deiner Session gilt laut [Dokumentation](https://code.claude.com/docs/en/workflows) auch für die Agenten deiner Workflows, sofern nichts anderes festgelegt ist. Sag Claude deshalb ausdrücklich, welche Agenten mit welchem Modell und welchem Effort loslegen. Einfache Arbeit wie das Durchklicken einer Webseite läuft mit einem kleinen Modell und niedrigem Effort. Teures Denken bleibt dort, wo es zählt. Details stehen im Artikel über [10 Claude-Code-Befehle](https://agentic.schule/blog/2026-10-claude-code-commands#7-model-mehr-als-nur-modellwahl), Abschnitt `/model`.
+
 ### Keine Usage-Credits
 
 Der naheliegende Knopf heißt `/usage-credits`, früher `/extra-usage`. Damit arbeitest du nach dem Limit gegen Bezahlung weiter. Laut [Hilfe-Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) werden Usage-Credits „at standard API rates" abgerechnet, zusätzlich zum Abo. Vorab gekaufte [Bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) sparen „up to 30%", bleiben aber API-Preise mit Rabatt.
@@ -208,7 +212,7 @@ Mehrere Max-Abos, ein Kontowechsel im laufenden Betrieb, automatisch bevor ein L
 
 Für mich überwiegt der Gewinn klar. Mit zwei 20x-Abos stoße ich kaum noch an ein Wochenlimit, und auf Usage-Credits muss ich nie schauen. Der Alarm der Agenten bestätigt dabei das Prinzip: Gesundes Misstrauen gehört dorthin, wo Werkzeuge deine Schlüssel in der Hand halten.
 
-Wenn du selbst ans Limit stößt: Sieh mit `/usage` nach, wie weit du bist, und mit `cswap list`, wie viel Spielraum alle Konten zusammen haben. Und lies den Code, bevor du ihm deine Schlüssel gibst.
+Wenn du selbst ans Limit stößt: Sieh mit `/usage` nach, wie weit du bist, und mit `cswap list`, wie viel Spielraum alle Konten zusammen haben. Leg vor jedem großen Lauf fest, mit welchem Modell und welchem Effort deine Agenten loslegen. Und lies den Code, bevor du ihm deine Schlüssel gibst.
 
 Übrigens hatte ich beim Schreiben wieder einen Bowie-Song im Ohr, wie schon bei [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini). Diesmal ist es die Fortsetzung von *Space Oddity*, in der Major Tom zurückkehrt. Bitte sehr, dein Ohrwurm:
 
