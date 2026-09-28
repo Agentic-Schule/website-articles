@@ -8,4 +8,6 @@ LAYOUT (same in every scene)
 - Divider line at y 960: this is where all text goes. Captions sit centered on the divider, max two lines, large bold white text with a dark outline or dark background box. Nothing important in the bottom 300px (platform caption and username cover it) or at the right edge (buttons).
 
 CAPTIONS
-- Burned-in captions from the transcript, centered on the divider, for the whole video
+- Burned-in captions from the transcript, centered on the divider, for the whole video.
+- Style: large bold white text with a dark outline or dark background box, max two lines, a few words at a time.
+- Highlight the currently spoken word in pink, hex #E90464 (the agentic.schule magenta). All other words stay white.
