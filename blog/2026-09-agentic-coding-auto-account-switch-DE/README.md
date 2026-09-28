@@ -85,7 +85,7 @@ Dazu kommt: Ein Kontowechsel trennt die **Remote-Control-Verbindung**, mit der i
 
 Das Ziel ist also: **rechtzeitig vor dem Limit automatisch auf ein anderes Abo wechseln, ohne Abmelden, möglichst ohne abgebrochene Agenten und ohne die Fernsteuerung zu verlieren.** Dafür braucht es zwei Werkzeuge: eines, das die Anmeldung im laufenden Betrieb tauscht, und eines, das Remote Control dabei auf einem Konto hält.
 
-![Wochenlimit voll? Zwei Tools helfen: claude-swap wechselt das Konto im laufenden Betrieb, cswap-pin hält Remote Control verbunden.](zwei-tools.jpg)
+![Wochenlimit voll? Zwei Tools helfen. 1: claude-swap, github.com/realiti4/claude-swap, wechselt das Konto im laufenden Betrieb. 2: cswap-pin, github.com/codeslake/cswap-pin, hält Remote Control verbunden.](zwei-tools.jpg "Zwei Werkzeuge, ein Ziel: weiterarbeiten, egal welches Konto gerade dran ist.")
 
 ## Tool 1 (`claude-swap`): Mehrere Abos im Wechsel einrichten
 

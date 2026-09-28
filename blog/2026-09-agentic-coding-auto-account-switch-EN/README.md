@@ -84,7 +84,7 @@ On top of that, an account switch cuts the **Remote Control connection** that le
 
 So the goal is: **switch to another subscription automatically before the limit, without signing out, ideally without cancelled agents and without losing remote control.** That takes two tools: one that swaps the sign-in while running, and one that keeps Remote Control on one account while doing so.
 
-![Weekly limit maxed out? Two tools fix it: claude-swap switches accounts on the fly, cswap-pin keeps Remote Control alive.](two-tools.jpg)
+![Weekly limit maxed out? Two tools fix it. 1: claude-swap, github.com/realiti4/claude-swap, switches accounts on the fly. 2: cswap-pin, github.com/codeslake/cswap-pin, keeps Remote Control alive.](two-tools.jpg "Two tools, one goal: keep working, no matter which account is up.")
 
 ## Tool 1 (`claude-swap`): Setting Up Multiple Subscriptions to Switch
 
