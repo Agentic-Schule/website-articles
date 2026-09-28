@@ -221,7 +221,7 @@ Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du k
 - **Mehr Konten heißt nicht unendlich.** Sind alle Konten an der Schwelle, findet `cswap auto` kein Ziel mehr und meldet das laut `cswap auto --help` mit Exit-Code 3 („no viable target / all exhausted“). Und jedes weitere Abo kostet seinen vollen Preis.
 - **Der Pin hängt an einem offenen Pull Request.** Bis PR #210 gemergt ist, läuft `cswap pin` nur aus dem eigenen Fork. Aber ich forke ja eh gerne.
 - **Eigene Forks kosten Pflege.** Bei jedem Upstream-Update heißt es: Diff lesen, neu installieren. Oder ignorieren, denn never change a running system.
-- **Der Proxy sieht den Anthropic-Verkehr im Klartext.** Das gilt für jeden Proxy mit TLS-Inspektion, auch für die in Firmennetzen. Tragbar ist das nur, wenn du den Code gelesen hast und die Reichweite auf das Nötigste beschränkt ist.
+- **Der Proxy sieht den Anthropic-Verkehr im Klartext.** Das gilt für jeden Proxy mit TLS-Inspektion, auch für die in Firmennetzen. Soweit ich das überblicke, enthalten beide Tools keinen schädlichen Code. Aber vertrau da besser nicht mir, sondern mach deine eigenen Prüfungen, gern mit Claude. :-)
 
 ## Fazit
 

@@ -220,7 +220,7 @@ But for all the joy about the seamless switch: there are a few things you should
 - **More accounts don't mean infinite.** Once all accounts are at the threshold, `cswap auto` finds no target and reports it with exit code 3 ("no viable target / all exhausted"), according to `cswap auto --help`. And every additional subscription costs its full price.
 - **The pin depends on an open pull request.** Until PR #210 is merged, `cswap pin` only runs from your own fork. But I like forking anyway.
 - **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. Or ignore it, because never change a running system.
-- **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. It is only acceptable if you have read the code and its reach is limited to the bare minimum.
+- **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. As far as I can tell, neither tool contains malicious code. But better not trust me on that; do your own checks, ideally with Claude. :-)
 
 ## Conclusion
 
