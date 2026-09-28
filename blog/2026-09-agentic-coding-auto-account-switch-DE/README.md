@@ -156,7 +156,7 @@ Technisch ist der Proxy ein *Man-in-the-Middle* (MITM). Er entschlüsselt die HT
 
 ## Automatisch wechseln: `cswap auto` als Dienst
 
-Umschalten von Hand ist nett. Aber ich will ja gerade, dass es auch ohne mein Zutun weitergeht. Dafür gibt es `cswap auto`: Es prüft die Auslastung und schaltet **von selbst** auf das Abo mit dem meisten Spielraum, sobald das aktive Konto eine Schwelle erreicht. Standardmäßig liegt sie bei 90 Prozent des 5-Stunden- oder Wochenfensters.
+Fast geschafft! Der schwierigste Teil ist durch, jetzt brauchen wir noch etwas Komfort. Umschalten von Hand ist nett. Aber ich will ja gerade, dass es auch ohne mein Zutun weitergeht. Dafür gibt es `cswap auto`: Es prüft die Auslastung und schaltet **von selbst** auf das Abo mit dem meisten Spielraum, sobald das aktive Konto eine Schwelle erreicht. Standardmäßig liegt sie bei 90 Prozent des 5-Stunden- oder Wochenfensters.
 
 Mit `--once` macht der Befehl genau einen Durchlauf und beendet sich. Die Mindestpause zwischen zwei Wechseln (*Cooldown*) und den Zustand speichert das Tool auf der Platte, darum reicht ein einzelner Durchlauf pro Minute. Das passt zu `launchd`, dem Dienst-Manager von macOS, und kein Terminal muss offen bleiben. Bei mir läuft das als LaunchDaemon im Minutentakt, also als Systemdienst, der ohne Anmeldung startet. Wichtig ist der Schlüssel `UserName`: Ohne ihn läuft ein LaunchDaemon als root und tauscht die Credentials im falschen Home-Verzeichnis. Die Datei gehört nach `/Library/LaunchDaemons/` und wird mit `sudo launchctl bootstrap system /Library/LaunchDaemons/cswap-auto.plist` geladen. Im Beispiel steht `DEIN-NAME` für deinen Benutzernamen. Es zeigt nur die entscheidenden Schlüssel innerhalb von `<dict>`.
 

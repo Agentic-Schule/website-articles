@@ -155,7 +155,7 @@ Technically, the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS co
 
 ## Switching Automatically: `cswap auto` as a Service
 
-Switching by hand is nice. But the whole point is that things keep going without me stepping in. That is what `cswap auto` is for: it checks the usage and switches **on its own** to the subscription with the most headroom as soon as the active account reaches a threshold. By default it sits at 90 percent of the 5-hour or weekly window.
+Almost there! The hardest part is done, now we need a bit of comfort. Switching by hand is nice. But the whole point is that things keep going without me stepping in. That is what `cswap auto` is for: it checks the usage and switches **on its own** to the subscription with the most headroom as soon as the active account reaches a threshold. By default it sits at 90 percent of the 5-hour or weekly window.
 
 With `--once` the command runs exactly one pass and exits. The tool stores the minimum pause between two switches (*cooldown*) and its state on disk, which is why a single pass per minute is enough. That fits `launchd`, the service manager of macOS, and no terminal has to stay open. On my machine it runs every minute as a LaunchDaemon, a system service that starts without anyone logging in. The `UserName` key is important: without it, a LaunchDaemon runs as root and swaps the credentials in the wrong home directory. The file belongs in `/Library/LaunchDaemons/` and is loaded with `sudo launchctl bootstrap system /Library/LaunchDaemons/cswap-auto.plist`. In the example, `YOUR-NAME` stands for your user name. It only shows the relevant keys inside `<dict>`.
 
