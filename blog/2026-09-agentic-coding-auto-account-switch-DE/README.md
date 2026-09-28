@@ -61,7 +61,7 @@ Selbst ein funktionierender Reset verschafft dir nur einmal Luft. Wer jede Woche
 
 Bleibt der Weg, der wirklich trägt: ein **zweites Max-Abo**, bei Bedarf auch ein drittes oder viertes. Jedes bringt sein volles Kontingent zum Abo-Preis mit.
 
-Wie schnell ein Anbieter die Tür schließen kann, zeigt gerade OpenAI: Seit dem 10. September nimmt es keine neuen Kunden für ChatGPT Pro $200 (Pro 20X) mehr an, Bestandskunden behalten ihr Abo ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). Wenn du mit einem weiteren Max-Abo liebäugelst, hol es dir deshalb lieber früher als später. Sonst ärgerst du dich womöglich, dass du kein Bestandskunde bist.
+Wie schnell ein Anbieter die Tür schließen kann, zeigt gerade OpenAI: Seit dem 10. September nimmt es keine neuen Kunden für ChatGPT Pro $200 (Pro 20X) mehr an, Bestandskunden behalten ihr Abo ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). Auch Anthropic unterscheidet zwischen neuen und bestehenden Kunden. Im April testete es bei rund 2 % der Neuanmeldungen einen Pro-Plan ohne Claude Code, mit dem Hinweis „Existing Pro and Max subscribers aren't affected" ([X](https://x.com/TheAmolAvasare/status/2046724659039932830)). Und die Gutschrift für die neuen Cloud Sessions ging im September nur an „existing subscribers" ([X](https://x.com/ClaudeDevs/status/2102871550974427462)). Wenn du mit einem weiteren Max-Abo liebäugelst, hol es dir deshalb lieber früher als später. Sonst ärgerst du dich womöglich, dass du kein Bestandskunde bist.
 
 Doch wie wechselst du zwischen den Abos, ohne dass die Arbeit stillsteht? Die Antwort liegt auf deiner Festplatte.
 

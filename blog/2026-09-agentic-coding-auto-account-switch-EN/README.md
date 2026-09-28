@@ -60,7 +60,7 @@ Even a working reset only buys you breathing room once. If you hit the limit eve
 
 That leaves the path that actually holds up: a **second Max subscription**, or a third or fourth if needed. Each one brings its full allowance at the subscription price.
 
-How quickly a provider can close the door is being shown by OpenAI right now: since September 10, it no longer accepts new customers for ChatGPT Pro $200 (Pro 20X), while existing subscribers keep their plan ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). If you are toying with the idea of another Max subscription, get it sooner rather than later. Otherwise you might end up annoyed that you are not an existing customer.
+How quickly a provider can close the door is being shown by OpenAI right now: since September 10, it no longer accepts new customers for ChatGPT Pro $200 (Pro 20X), while existing subscribers keep their plan ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). Anthropic also distinguishes between new and existing customers. In April it tested a Pro plan without Claude Code on about 2% of new sign-ups, noting "Existing Pro and Max subscribers aren't affected" ([X](https://x.com/TheAmolAvasare/status/2046724659039932830)). And in September, the credit for the new cloud sessions only went to "existing subscribers" ([X](https://x.com/ClaudeDevs/status/2102871550974427462)). If you are toying with the idea of another Max subscription, get it sooner rather than later. Otherwise you might end up annoyed that you are not an existing customer.
 
 But how do you switch between the subscriptions without the work standing still? The answer is on your disk.
 
