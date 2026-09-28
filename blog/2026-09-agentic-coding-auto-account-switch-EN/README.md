@@ -185,7 +185,7 @@ In my opinion, that is not a bug but commendable behavior. My subagents were sus
 
 Were they right? That can be checked. A request to `example.com` through the proxy comes back with the *real* public certificate. You can check this with `curl -v --proxy http://127.0.0.1:$(cswap pin --get_port) https://example.com` and a look at the certificate's issuer. Had the proxy been reading along, it would have been its own. The source code confirms it as well: the proxy decrypts **only** `api.anthropic.com`. It passes every other host through as a blind tunnel.
 
-So the traffic is fine in principle. But also completely unnecessary: why should the agents use the proxy for every request? The alarm revealed a trap: if you set the proxy variables and the CA for Claude Code, every shell an agent starts inherits them. Every command then sees the proxy, and every download goes through it. But the pin only needs the Claude process itself. So remove the variables from every agent shell with a single line in `~/.zshenv`:
+So the traffic is fine in principle. But also completely unnecessary: why should the agents use the proxy for every request? The alarm revealed a technical wart that we want to fix: if you set the proxy variables and the CA for Claude Code, every shell an agent starts inherits them. Every command then sees the proxy, and every download goes through it. But the pin only needs the Claude process itself. So remove the variables from every agent shell with a single line in `~/.zshenv`:
 
 ```bash
 unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS

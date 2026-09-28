@@ -186,7 +186,7 @@ Das ist meiner Meinung nach kein Bug, sondern ein lobenswertes Verhalten. Meine 
 
 Hatten sie recht? Das lässt sich prüfen. Ein Abruf von `example.com` durch den Proxy kommt mit dem *echten* öffentlichen Zertifikat zurück. Prüfen lässt sich das mit `curl -v --proxy http://127.0.0.1:$(cswap pin --get_port) https://example.com` und einem Blick auf den Aussteller des Zertifikats. Hätte der Proxy hier mitgelesen, wäre es seines gewesen. Auch der Quelltext bestätigt das: Der Proxy entschlüsselt **ausschließlich** `api.anthropic.com`. Jeden anderen Host reicht er als blinden Tunnel durch.
 
-Der Verkehr ist also prinzipiell in Ordnung. Aber auch völlig unnötig: Warum sollen die Agenten für jeden Request den Proxy verwenden? Der Alarm zeigte eine Falle auf: Setzt du die Proxy-Variablen und die CA für Claude Code, erbt sie jede Shell, die ein Agent startet. Jeder Befehl sieht dann den Proxy, und jeder Download läuft durch ihn. Der Pin braucht aber nur den Claude-Prozess selbst. Entferne die Variablen deshalb mit einer einzigen Zeile in `~/.zshenv` aus jeder Agenten-Shell:
+Der Verkehr ist also prinzipiell in Ordnung. Aber auch völlig unnötig: Warum sollen die Agenten für jeden Request den Proxy verwenden? Der Alarm zeigte eine technische Unschönheit auf, die wir beheben wollen: Setzt du die Proxy-Variablen und die CA für Claude Code, erbt sie jede Shell, die ein Agent startet. Jeder Befehl sieht dann den Proxy, und jeder Download läuft durch ihn. Der Pin braucht aber nur den Claude-Prozess selbst. Entferne die Variablen deshalb mit einer einzigen Zeile in `~/.zshenv` aus jeder Agenten-Shell:
 
 ```bash
 unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS
