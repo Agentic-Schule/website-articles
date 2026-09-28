@@ -19,7 +19,7 @@ language: en
 header: header.jpg
 ---
 
-**Your weekly limit in Claude Code is almost reached? Don't worry, there is a solution. Usage credits and `/limit-reset` are not it. This article shows how to set up your environment with two open source tools so that Claude Code switches between multiple Max subscriptions: automatically, shortly before the limit, without a manual `/login` and without Remote Control being interrupted.**
+**About to hit your weekly limit in Claude Code? Don't worry, there is a solution. Usage credits and `/limit-reset` are not it. This article shows how to set up your environment with two open source tools so that Claude Code switches between multiple Max subscriptions: automatically, shortly before the limit, without a manual `/login` and without Remote Control being interrupted.**
 
 ## Contents
 
@@ -41,11 +41,11 @@ The cheapest lever comes before all others: not every task needs the strongest m
 
 The obvious route is the command `/usage-credits`, formerly `/extra-usage`. Alternatively, you can enable usage credits on claude.ai under *Settings → Usage*, optionally with automatic top-ups (*Auto-reload*). It lets you keep working past the limit for a fee. According to the [Help Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans), usage credits are billed "at standard API rates", on top of your subscription. Prepaid [bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) "save up to 30%", but they remain API prices with only a small discount.
 
-The subscription plays in a different league. When Anthropic introduced the weekly limits, it wrote itself: "one user consumed tens of thousands in model usage on a $200 plan" ([X, July 28, 2025](https://x.com/AnthropicAI/status/1949898511287226425)). If you regularly hit the weekly limit, in my view there is no constellation in which usage credits come out cheaper than another subscription.
+The subscription plays in a different league. When Anthropic introduced the weekly limits, it wrote itself: "one user consumed tens of thousands in model usage on a $200 plan" ([X, July 28, 2025](https://x.com/AnthropicAI/status/1949898511287226425)). If you regularly hit the weekly limit, in my view there is no scenario in which usage credits come out cheaper than another subscription.
 
 ### No `/limit-reset`
 
-Claude Code has a command called `/limit-reset`. It is barely documented: it is in no [command reference](https://code.claude.com/docs/en/commands) and no changelog, and it is hidden in the command menu. Anthropic, on the other hand, actively promotes limit resets themselves on social media. My guess: partly because OpenAI offers the same thing. In Codex, earned resets can be redeemed directly via `/usage` since June ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). And a free "Pass Go" does sound pretty tempting.
+Claude Code has a command called `/limit-reset`. It is barely documented: it is in no [command reference](https://code.claude.com/docs/en/commands) and no changelog, and it is hidden in the command menu. Anthropic, on the other hand, actively promotes limit resets themselves on social media. My guess: partly because OpenAI offers the same thing. In Codex, earned resets can be redeemed directly via `/usage` since June ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). And a free trip past "Go" does sound pretty tempting.
 
 A look into the code of Claude Code shows two variants behind `/limit-reset`, each unlocked by a feature flag on the server:
 
@@ -54,13 +54,13 @@ A look into the code of Claude Code shows two variants behind `/limit-reset`, ea
 
 Whether you may use a reset is also decided by the server. The code contains rejection reasons, among them `tier`, `tenure` (account age), `other_experiment` and `not_at_wall`, meaning "not at the limit yet". None of this is shown. In each of these cases the message reads "A session-limit reset isn't available right now." On my setup, the first Max subscription accepted the command and the second one did not, without any reason given. Not very transparent. Most likely it was the account age, meaning `tenure`. Reports about resets refused without a reason are piling up: at least four open issues since early September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), none with an answer from Anthropic. Users suspect an A/B test: "I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
-Even a working reset only buys you breathing room once. If you hit the limit every week, you will be there again next week. Frustration is pre-programmed here.
+Even a working reset only buys you breathing room once. If you hit the limit every week, you will be there again next week. That's a recipe for frustration.
 
 ### The Ultimate Solution: Another Max Subscription
 
 That leaves the path that actually holds up: a **second Max subscription**, or a third or fourth if needed. Each one brings its full allowance at the subscription price.
 
-How quickly a provider can close the door is being shown by OpenAI right now: since September 10, it no longer accepts new customers for ChatGPT Pro $200 (Pro 20X), while existing subscribers keep their plan ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). Anthropic also distinguishes between new and existing customers. In April it tested a Pro plan without Claude Code on about 2% of new sign-ups, noting "Existing Pro and Max subscribers aren't affected" ([X](https://x.com/TheAmolAvasare/status/2046724659039932830)). And in September, the credit for the new cloud sessions only went to "existing subscribers" ([X](https://x.com/ClaudeDevs/status/2102871550974427462)). If you are toying with the idea of another Max subscription, get it sooner rather than later. Otherwise you might end up annoyed that you are not an existing customer.
+OpenAI is showing right now how quickly a provider can close the door: since September 10, it no longer accepts new customers for ChatGPT Pro $200 (Pro 20X), while existing subscribers keep their plan ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). Anthropic also distinguishes between new and existing customers. In April it tested a Pro plan without Claude Code on about 2% of new sign-ups, noting "Existing Pro and Max subscribers aren't affected" ([X](https://x.com/TheAmolAvasare/status/2046724659039932830)). And in September, the credit for the new cloud sessions only went to "existing subscribers" ([X](https://x.com/ClaudeDevs/status/2102871550974427462)). If you are toying with the idea of another Max subscription, get it sooner rather than later. Otherwise you might end up annoyed that you are not an existing customer.
 
 But how do you switch between the subscriptions without the work standing still? The answer is on your disk.
 
@@ -114,7 +114,7 @@ The browser login per account is the only step you have to do manually.
 
 ## Trust Is Good, Forking Is Better
 
-`cswap` handles your **OAuth tokens**, the keys to your accounts. The author of the tool is surely a very trustworthy person. Still, I trust nobody here. A `pipx install claude-swap` straight from PyPI does not get into my house. I'd rather check the code, fork it and build everything myself. That much time has to be found.
+`cswap` handles your **OAuth tokens**, the keys to your accounts. The author of the tool is surely a very trustworthy person. Still, I trust nobody here. A `pipx install claude-swap` straight from PyPI is not getting anywhere near my machine. I'd rather check the code, fork it and build everything myself. It's worth the time.
 
 The most important question: where does network traffic go? The source code only contains Anthropic's own endpoints (`api.anthropic.com`, `platform.claude.com`) and a version check against PyPI. No third-party domain, no telemetry. The package is published through PyPI's *Trusted Publishing* from a GitHub workflow, and the repo comes with an extensive test suite. So far, so trustworthy.
 
@@ -217,9 +217,9 @@ The setup goes right up to the limits of Anthropic's rules, but in my reading st
 But for all the joy about the seamless switch: there are a few things you should know.
 
 - **There is no explicit approval.** The rule for third-party developers is broadly worded: "developers may not collect, store, or intermediate Claude.ai credentials or session tokens" ([Claude Code docs, "Legal and compliance"](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use)). Taken literally, it would hit any tool that stores a token. My reading is that it targets products routing other users through their subscriptions. Anthropic reserves the right to enforce measures "without prior notice".
-- **More accounts don't mean infinite.** Once all accounts are at the threshold, `cswap auto` finds no target and reports it with exit code 3 ("no viable target / all exhausted"), according to `cswap auto --help`. And every additional subscription costs its full price.
+- **More accounts don't mean unlimited.** Once all accounts are at the threshold, `cswap auto` finds no target and reports it with exit code 3 ("no viable target / all exhausted"), according to `cswap auto --help`. And every additional subscription costs its full price.
 - **The pin depends on an open pull request.** Until PR #210 is merged, `cswap pin` only runs from your own fork. But I like forking anyway.
-- **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. Or ignore it, because never change a running system.
+- **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. Or ignore it, because after all: never change a running system.
 - **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. As far as I can tell, neither tool contains malicious code. But better not trust me on that; do your own checks, ideally with Claude. :-)
 
 ## Conclusion
