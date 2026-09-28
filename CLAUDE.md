@@ -54,6 +54,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - **Kein Gedankenstrich-Einschub als Stilmittel.** Statt eines dramatischen Strichs entweder zwei ganze Sätze oder ein Semikolon. Ein Strich ist ganz selten erlaubt, wenn er sich wirklich anbietet; die Länge des Strichs ist egal. Der Grund: der Gedankenstrich gilt heute als typisches LLM-Zeichen.
 - **Keine „nicht X, sondern Y"-Antithese als rhetorischer Effekt.** Als rein sachliche Technik-Aussage ist „nicht permanent, sondern nur bei Bedarf" in Ordnung.
 - Keine Zusammenfassungs- und Autoritätsfloskeln („Kurz gesagt" als Deckel, „Es ist wichtig zu verstehen", „In einer Welt, in der …"). Signalphrasen wie „Konkret heißt das:", „Die gute Nachricht:", „Die Lösung:" sind dagegen echter Teil des Stils.
+- **Weitere KI-Floskeln** (Modewörter, Standard-Einstiege und -Schlüsse, Bild statt Aussage, leere Verstärker, Dreierreihen, „von X bis Y"-Spannen) stehen mit DE/EN-Wortlisten in [`docs/ki-floskeln.md`](docs/ki-floskeln.md). Ein Wort ist erst dann eine Floskel, wenn es nichts aussagt.
 
 ## Emojis und Kästen
 
@@ -83,6 +84,8 @@ Workflow({ name: 'artikel-lektorat', args: ['/absoluter/pfad/blog/<ordner>-DE/RE
 ```
 
 In der Regel wird die DE-Fassung geprüft, die EN-Fassung zieht die Befunde strukturgleich nach. Faktenbefunde werden vor dem Einarbeiten selbst an der Primärquelle nachgeprüft.
+
+Die Floskel-Dimension prüft zusätzlich gegen [`docs/ki-floskeln.md`](docs/ki-floskeln.md).
 
 ## Banner (Artikel-Header)
 
