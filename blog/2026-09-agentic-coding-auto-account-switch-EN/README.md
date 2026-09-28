@@ -224,7 +224,7 @@ But for all the joy about the seamless switch: there are a few things you should
 
 ## Conclusion
 
-Multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout` and `/login`, and as a rule no more cancelled agents.
+Multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout` and `/login`. And I haven't had a single cancelled agent in weeks.
 
 For me the gain clearly outweighs the cost. With two 20x subscriptions I hardly ever hit a weekly limit, and I never have to look at usage credits.
 

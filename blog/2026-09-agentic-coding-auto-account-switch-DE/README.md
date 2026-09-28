@@ -225,7 +225,7 @@ Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du k
 
 ## Fazit
 
-Mehrere Max-Abos, ein Kontowechsel im laufenden Betrieb, automatisch bevor ein Limit greift, und Remote Control überlebt den Wechsel. Kein `/logout` und `/login` mehr, und in der Regel keine abgebrochenen Agenten.
+Mehrere Max-Abos, ein Kontowechsel im laufenden Betrieb, automatisch bevor ein Limit greift, und Remote Control überlebt den Wechsel. Kein `/logout` und `/login` mehr. Und ich hatte über Wochen keine abgebrochenen Agenten mehr.
 
 Für mich überwiegt der Gewinn klar. Mit zwei 20x-Abos stoße ich kaum noch an ein Wochenlimit, und auf Usage-Credits muss ich nie schauen.
 
