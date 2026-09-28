@@ -52,9 +52,7 @@ A look into Claude Code 2.1.283 shows two programs behind `/limit-reset`, each u
 
 Whether you may use a reset is also decided by the server. The code contains rejection reasons, among them `tier`, `tenure` (account age), `other_experiment` and `not_at_wall`, meaning "not at the limit yet". None of this is shown. In each of these cases the message reads "A session-limit reset isn't available right now." On my setup, the first Max subscription accepted the command and the second one did not, without any reason given. Not very transparent. Most likely it was the account age, meaning `tenure`. That is exactly what the reports are piling up about: at least four open issues since early September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), none with an answer from Anthropic. Users suspect an A/B test: "I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
-Officially, there is something else: on September 22, Anthropic gave all Pro, Max and Team customers a one-time reset, redeemable until October 22 under *Settings → Usage* ([X](https://x.com/ClaudeDevs/status/2102438803013333469)). According to the [Help Center](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset), depending on the offer it resets either the 5-hour or the weekly limit. You can only redeem it in the browser or in Claude Desktop, because the button "isn’t currently available on Claude Mobile or in Claude Code in your terminal or IDE". If you have one, take it.
-
-Even a working reset only buys you breathing room once, though. If you hit the limit every week, you will be there again next week.
+Even a working reset only buys you breathing room once. If you hit the limit every week, you will be there again next week.
 
 ### Another Max Subscription
 

@@ -53,9 +53,7 @@ Ein Blick in Claude Code 2.1.283 zeigt, dass sich hinter `/limit-reset` zwei Pro
 
 Ob du einen Reset nutzen darfst, entscheidet ebenfalls der Server. Im Code sind Ablehnungsgründe hinterlegt, darunter `tier`, `tenure` (Kontoalter), `other_experiment` und `not_at_wall`, also „noch nicht am Limit". Angezeigt wird davon nichts. Die Meldung lautet in jedem dieser Fälle „A session-limit reset isn't available right now." Bei mir hat das erste Max-Abo den Befehl akzeptiert, das zweite nicht, ohne jede Begründung. Nicht sehr transparent. Vermutlich lag es am Kontoalter, also an `tenure`. Genau darüber häufen sich die Berichte: mindestens vier offene Issues seit Anfang September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), keines mit einer Antwort von Anthropic. Nutzer vermuten einen A/B-Test: „I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
-Offiziell gibt es dagegen etwas anderes: Am 22. September hat Anthropic allen Pro-, Max- und Team-Kunden einen einmaligen Reset geschenkt, einlösbar bis zum 22. Oktober unter *Settings → Usage* ([X](https://x.com/ClaudeDevs/status/2102438803013333469)). Laut [Hilfe-Center](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset) setzt er je nach Angebot das 5-Stunden- oder das Wochenlimit zurück. Einlösen lässt er sich nur im Browser oder in Claude Desktop, denn der Knopf „isn’t currently available on Claude Mobile or in Claude Code in your terminal or IDE". Hast du einen, nimm ihn mit.
-
-Selbst ein funktionierender Reset verschafft dir aber nur einmal Luft. Wer jede Woche ans Limit stößt, steht in der nächsten Woche wieder dort.
+Selbst ein funktionierender Reset verschafft dir nur einmal Luft. Wer jede Woche ans Limit stößt, steht in der nächsten Woche wieder dort.
 
 ### Ein weiteres Max-Abo
 
