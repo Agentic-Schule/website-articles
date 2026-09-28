@@ -70,7 +70,7 @@ One of the big advantages of Claude Code: your chats live on your disk. Claude C
 
 So account and chats are separate. You can sign out, sign back in and keep working with *your* chats, even with a different account. That is the trick everything else builds on.
 
-> **💡 Tip:** Back up your chats, they are your capital. By default Claude Code deletes them after 30 days. And a hard shutdown can destroy a chat. I know that from my own experience. How I back up my chat histories and raise `cleanupPeriodDays` is described in [part 1 of this series](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#everything-duplicated-always-in-sync).
+> **💡 Tip:** Back up your chats, they are your capital. By default Claude Code deletes them after 30 days. And a hard shutdown can destroy a chat. I know that from my own experience. I described how I back up my chat histories and raise `cleanupPeriodDays` in [part 1 of this series](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#everything-duplicated-always-in-sync).
 
 ## The Problem: Switching Between Accounts
 

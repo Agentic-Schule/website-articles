@@ -71,7 +71,7 @@ Einer der großen Vorteile von Claude Code: Deine Chats liegen auf deiner Festpl
 
 Konto und Chats sind also voneinander getrennt. Du kannst dich abmelden, wieder anmelden und mit *deinen* Chats weitermachen, auch mit einem anderen Konto. Das ist der Trick, auf dem alles Weitere beruht.
 
-> **💡 Tipp:** Mach ein Backup deiner Chats, sie sind dein Kapital. Claude Code löscht sie standardmäßig nach 30 Tagen. Und ein harter Shutdown kann einen Chat zerstören. Das kenne ich aus eigener Erfahrung. Wie ich meine Chat-Verläufe sichere und `cleanupPeriodDays` hochsetze, steht in [Teil 1 dieser Reihe](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#alles-doppelt-immer-synchron).
+> **💡 Tipp:** Mach ein Backup deiner Chats, sie sind dein Kapital. Claude Code löscht sie standardmäßig nach 30 Tagen. Und ein harter Shutdown kann einen Chat zerstören. Das kenne ich aus eigener Erfahrung. Wie ich meine Chat-Verläufe sichere und `cleanupPeriodDays` hochsetze, habe ich in [Teil 1 dieser Reihe](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#alles-doppelt-immer-synchron) beschrieben.
 
 ## Das Problem: der Wechsel zwischen den Konten
 
