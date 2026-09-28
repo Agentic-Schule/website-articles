@@ -103,11 +103,17 @@ Wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap
 Die Konten registrierst du so:
 
 ```bash
-cswap add            # das aktuelle Konto als Slot 1 aufnehmen
-# in Claude Code einmal /login mit dem zweiten Konto
-cswap add            # das zweite Konto als Slot 2 aufnehmen
-# für jedes weitere Konto: /login, dann cswap add
-cswap switch 1       # zurück auf Abo 1
+# 1. Claude Code ist mit dem ersten Konto angemeldet
+cswap add            # Konto 1 als Slot 1 aufnehmen
+
+# 2. In Claude Code: /login mit dem zweiten Konto (vorher kein /logout!)
+cswap add            # Konto 2 als Slot 2 aufnehmen
+
+# 3. In Claude Code: /login mit dem dritten Konto
+cswap add            # Konto 3 als Slot 3 aufnehmen
+
+cswap list           # alle Konten mit ihrer Auslastung
+cswap switch 1       # zurück auf Konto 1
 ```
 
 > **⚠️ Achtung:** Vor dem zweiten `/login` kein `/logout` ausführen. Laut der [Anleitung von `claude-swap`](https://github.com/realiti4/claude-swap#add-more-accounts) kann Claude Code dabei den Refresh-Token des Kontos widerrufen, das du gerade verlässt. Mit diesem Token erneuert Claude Code abgelaufene Zugangsdaten, ohne ihn wäre der gesicherte Slot wertlos.

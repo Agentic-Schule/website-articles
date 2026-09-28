@@ -102,11 +102,17 @@ Important: all sessions share **one** global credential file. A `cswap switch` t
 This is how you register the accounts:
 
 ```bash
-cswap add            # add the current account as slot 1
-# in Claude Code, run /login once with the second account
-cswap add            # add the second account as slot 2
-# for every further account: /login, then cswap add
-cswap switch 1       # back to subscription 1
+# 1. Claude Code is signed in with the first account
+cswap add            # add account 1 as slot 1
+
+# 2. In Claude Code: /login with the second account (no /logout before!)
+cswap add            # add account 2 as slot 2
+
+# 3. In Claude Code: /login with the third account
+cswap add            # add account 3 as slot 3
+
+cswap list           # all accounts with their usage
+cswap switch 1       # back to account 1
 ```
 
 > **⚠️ Warning:** Do not run `/logout` before the second `/login`. According to the [`claude-swap` instructions](https://github.com/realiti4/claude-swap#add-more-accounts), Claude Code may revoke the refresh token of the account you are leaving. Claude Code uses this token to renew expired credentials; without it, the saved slot would be worthless.
