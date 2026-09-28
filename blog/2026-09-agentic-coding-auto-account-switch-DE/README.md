@@ -28,7 +28,7 @@ header: header.jpg
 
 ## Wochenlimit erreicht: Was hilft und was nicht
 
-Das Wochenlimit ist **der** schlimmste Produktivitätskiller.
+Das Wochenlimit ist **der** schlimmste Produktivitätskiller. Kaum laufen deine Agenten richtig, ist mitten in der Woche Schluss, und bis zum Reset steht alles still. Lass uns das beheben.
 
 ### Erst nachsehen: `/usage`
 

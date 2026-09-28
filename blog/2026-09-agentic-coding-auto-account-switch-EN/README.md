@@ -27,7 +27,7 @@ header: header.jpg
 
 ## Weekly Limit Reached: What Helps and What Doesn't
 
-The weekly limit is **the** worst productivity killer.
+The weekly limit is **the** worst productivity killer. Just when your agents are really getting going, everything stops in the middle of the week, and nothing moves until the reset. Let's fix that.
 
 ### Check First: `/usage`
 
