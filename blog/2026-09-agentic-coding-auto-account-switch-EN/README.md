@@ -43,14 +43,16 @@ The subscription plays in a different league. When Anthropic introduced the week
 
 ### No `/limit-reset`
 
-For a few weeks now, a command has been showing up that is not in any [command reference](https://code.claude.com/docs/en/commands): `/limit-reset`. It is hidden in the command menu. A look into Claude Code 2.1.283 shows two programs behind it, each unlocked by a feature flag on the server:
+Since September, a command has been showing up in Claude Code that is in no [command reference](https://code.claude.com/docs/en/commands) and no changelog: `/limit-reset`. It is hidden in the command menu. A look into Claude Code 2.1.283 shows two programs behind it, each unlocked by a feature flag on the server:
 
 - **A weekly reset of the 5-hour limit.** The notice in the program reads "reset your session limit now · uses weekly limit · 1/week", and the success message ends with "your weekly limit still applies". So the weekly limit stays untouched.
 - **An allowance of resets with an expiry date.** It refills the limits ("{resets} left · use by {date}"). Anthropic decides who gets it.
 
-Whether you may use a reset is also decided by the server. The code contains rejection reasons, among them `tier`, `tenure` (account age), `other_experiment` and `not_limited`, meaning "not at the limit yet". None of this is shown. In each of these cases the message reads "A session-limit reset isn't available right now." That is exactly what the reports are piling up about, for example in [#95810](https://github.com/anthropics/claude-code/issues/95810) and [#97348](https://github.com/anthropics/claude-code/issues/97348).
+Whether you may use a reset is also decided by the server. The code contains rejection reasons, among them `tier`, `tenure` (account age), `other_experiment` and `not_limited`, meaning "not at the limit yet". None of this is shown. In each of these cases the message reads "A session-limit reset isn't available right now." That is exactly what the reports are piling up about: at least four open issues since early September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), none with an answer from Anthropic. Users suspect an A/B test: "I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
-Even a working reset only buys you breathing room once. If you hit the limit every week, you will be there again next week.
+Officially, there is something else: on September 22, Anthropic gave all Pro, Max and Team customers a one-time reset, redeemable until October 22 under *Settings → Usage* ([X](https://x.com/ClaudeDevs/status/2102438803013333469)). According to the [Help Center](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset), depending on the offer it resets either the 5-hour or the weekly limit. You can only redeem it in the browser or in Claude Desktop, because the button "isn’t currently available on Claude Mobile or in Claude Code in your terminal or IDE". If you have one, take it.
+
+Even a working reset only buys you breathing room once, though. If you hit the limit every week, you will be there again next week.
 
 ### Another Max Subscription
 

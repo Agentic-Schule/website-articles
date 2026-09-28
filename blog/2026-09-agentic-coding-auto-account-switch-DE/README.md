@@ -44,14 +44,16 @@ Das Abo spielt in einer anderen Liga. Anthropic schrieb bei der Einführung der 
 
 ### Kein `/limit-reset`
 
-Seit einigen Wochen taucht ein Befehl auf, der in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) steht: `/limit-reset`. Er ist im Befehlsmenü versteckt. Ein Blick in Claude Code 2.1.283 zeigt, dass sich dahinter zwei Programme verbergen, die jeweils ein Feature-Schalter auf dem Server freigibt:
+Seit September taucht in Claude Code ein Befehl auf, der in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) und in keinem Changelog steht: `/limit-reset`. Er ist im Befehlsmenü versteckt. Ein Blick in Claude Code 2.1.283 zeigt, dass sich dahinter zwei Programme verbergen, die jeweils ein Feature-Schalter auf dem Server freigibt:
 
 - **Ein wöchentlicher Reset des 5-Stunden-Limits.** Der Hinweis im Programm lautet „reset your session limit now · uses weekly limit · 1/week", die Erfolgsmeldung endet mit „your weekly limit still applies". Das Wochenlimit bleibt also unberührt.
 - **Ein Kontingent an Resets mit Ablaufdatum.** Es füllt die Limits wieder auf („{resets} left · use by {date}"). Wer es bekommt, entscheidet Anthropic.
 
-Ob du einen Reset nutzen darfst, entscheidet ebenfalls der Server. Im Code sind Ablehnungsgründe hinterlegt, darunter `tier`, `tenure` (Kontoalter), `other_experiment` und `not_limited`, also „noch nicht am Limit". Angezeigt wird davon nichts. Die Meldung lautet in jedem dieser Fälle „A session-limit reset isn't available right now." Genau darüber häufen sich die Berichte, etwa in [#95810](https://github.com/anthropics/claude-code/issues/95810) und [#97348](https://github.com/anthropics/claude-code/issues/97348).
+Ob du einen Reset nutzen darfst, entscheidet ebenfalls der Server. Im Code sind Ablehnungsgründe hinterlegt, darunter `tier`, `tenure` (Kontoalter), `other_experiment` und `not_limited`, also „noch nicht am Limit". Angezeigt wird davon nichts. Die Meldung lautet in jedem dieser Fälle „A session-limit reset isn't available right now." Genau darüber häufen sich die Berichte: mindestens vier offene Issues seit Anfang September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), keines mit einer Antwort von Anthropic. Nutzer vermuten einen A/B-Test: „I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
-Selbst ein funktionierender Reset verschafft dir nur einmal Luft. Wer jede Woche ans Limit stößt, steht in der nächsten Woche wieder dort.
+Offiziell gibt es dagegen etwas anderes: Am 22. September hat Anthropic allen Pro-, Max- und Team-Kunden einen einmaligen Reset geschenkt, einlösbar bis zum 22. Oktober unter *Settings → Usage* ([X](https://x.com/ClaudeDevs/status/2102438803013333469)). Laut [Hilfe-Center](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset) setzt er je nach Angebot das 5-Stunden- oder das Wochenlimit zurück. Einlösen lässt er sich nur im Browser oder in Claude Desktop, denn der Knopf „isn’t currently available on Claude Mobile or in Claude Code in your terminal or IDE". Hast du einen, nimm ihn mit.
+
+Selbst ein funktionierender Reset verschafft dir aber nur einmal Luft. Wer jede Woche ans Limit stößt, steht in der nächsten Woche wieder dort.
 
 ### Ein weiteres Max-Abo
 
