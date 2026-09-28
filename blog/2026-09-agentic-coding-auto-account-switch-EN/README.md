@@ -37,7 +37,7 @@ The cheapest lever comes before all others: not every task needs the strongest m
 
 ### No Usage Credits
 
-The obvious route is the command `/usage-credits`, formerly `/extra-usage`. Alternatively, you can enable usage credits on claude.ai under *Settings → Usage*, optionally with automatic top-ups (*Auto-reload*). It lets you keep working past the limit for a fee. According to the [Help Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans), usage credits are billed "at standard API rates", on top of your subscription. Prepaid [bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) "save up to 30%", but they remain API prices with a discount.
+The obvious route is the command `/usage-credits`, formerly `/extra-usage`. Alternatively, you can enable usage credits on claude.ai under *Settings → Usage*, optionally with automatic top-ups (*Auto-reload*). It lets you keep working past the limit for a fee. According to the [Help Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans), usage credits are billed "at standard API rates", on top of your subscription. Prepaid [bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) "save up to 30%", but they remain API prices with only a small discount.
 
 The subscription plays in a different league. When Anthropic introduced the weekly limits, it wrote itself: "one user consumed tens of thousands in model usage on a $200 plan" ([X, July 28, 2025](https://x.com/AnthropicAI/status/1949898511287226425)). If you regularly hit the weekly limit, in my view there is no constellation in which usage credits come out cheaper than another subscription.
 

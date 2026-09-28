@@ -38,7 +38,7 @@ Der günstigste Hebel kommt vor allen anderen: Nicht jede Aufgabe braucht das st
 
 ### Keine Usage-Credits
 
-Der naheliegende Weg ist das Kommando `/usage-credits`, früher `/extra-usage`. Alternativ schaltest du Usage-Credits auf claude.ai unter *Settings → Usage* ein, auf Wunsch mit automatischem Nachkauf (*Auto-reload*). Damit arbeitest du nach dem Limit gegen Bezahlung weiter. Laut [Hilfe-Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) werden Usage-Credits „at standard API rates" abgerechnet, zusätzlich zum Abo. Vorab gekaufte [Bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) sparen „up to 30%", bleiben aber API-Preise mit Rabatt.
+Der naheliegende Weg ist das Kommando `/usage-credits`, früher `/extra-usage`. Alternativ schaltest du Usage-Credits auf claude.ai unter *Settings → Usage* ein, auf Wunsch mit automatischem Nachkauf (*Auto-reload*). Damit arbeitest du nach dem Limit gegen Bezahlung weiter. Laut [Hilfe-Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) werden Usage-Credits „at standard API rates" abgerechnet, zusätzlich zum Abo. Vorab gekaufte [Bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) sparen „up to 30%", bleiben aber API-Preise mit wenig Rabatt.
 
 Das Abo spielt in einer anderen Liga. Anthropic schrieb bei der Einführung der Wochenlimits selbst: „one user consumed tens of thousands in model usage on a $200 plan" ([X, 28.07.2025](https://x.com/AnthropicAI/status/1949898511287226425)). Wer regelmäßig ans Wochenlimit stößt, fährt aus meiner Sicht mit Usage-Credits in keiner Konstellation günstiger als mit einem weiteren Abo.
 
