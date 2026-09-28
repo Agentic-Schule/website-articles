@@ -124,6 +124,16 @@ Die Konsequenz ist heute eine harte Regel: In allem, was in den Kontext eines Mo
 
 Und falls du denkst, so etwas passiere nur kleinen Teams: [OpenAI hat ein Post-mortem dazu veröffentlicht](https://openai.com/index/where-the-goblins-came-from/), warum ChatGPT monatelang ungefragt von Goblins anfing. Die „Nerdy"-Persönlichkeit hatte im Training Fabelwesen-Metaphern belohnt, bis in den Antworten immer öfter Goblins und Gremlins auftauchten. Ein einzelner „little goblin“ in einer Antwort sei harmlos, „even charming“, schreibt OpenAI selbst. Nach dem Start von GPT-5.1 kam „goblin“ in ChatGPT aber 175 % häufiger vor. Die Notbremse für Codex war ausgerechnet ein Don't in den [Basis-Anweisungen](https://github.com/openai/codex/blob/main/codex-rs/models-manager/models.json): „Never talk about goblins, gremlins, raccoons, trolls, ogres, pigeons, or other animals or creatures unless it is absolutely and unambiguously relevant to the user's query." Auch den Profis geschieht das. Falsches Priming, und schon sind überall rosa Elefanten.
 
+> **💡 Bonus:** Wer die Kobolde vermisst, kann sie zurückholen. OpenAI liefert im [Post-mortem](https://openai.com/index/where-the-goblins-came-from/) selbst den Befehl dazu. Er entfernt die Zeile mit dem Verbot aus den Basis-Anweisungen von GPT-5.5 und startet Codex damit:
+
+```bash
+instructions=$(mktemp /tmp/gpt-5.5-instructions.XXXXXX) && \
+jq -r '.models[] | select(.slug=="gpt-5.5") | .base_instructions' \
+~/.codex/models_cache.json | \
+grep -vi 'goblins' > "$instructions" && \
+codex -m gpt-5.5 -c "model_instructions_file=\"$instructions\""
+```
+
 Und damit zurück zur Software-Entwicklung, denn die Lehre gilt dort genauso: Arbeite um Himmels willen nicht mit Negativbeispielen. Das gilt in den Prompts, und es gilt im Code. Womit wir beim Thema Clean Code wären: Soll der Agent guten Code produzieren, muss das Repository sauberen Code enthalten. Einem Menschen kannst du vielleicht ein `// FIXME: bad code, remove this later` hinschreiben, und er blättert kopfschüttelnd weiter. Bei einem LLM hast du ein Riesenproblem: Es hat den Mist gelesen. Mieser Code ist ein riesiger rosa Elefant. Oder um mein Zitat aus dem [Prompt-und-Context-Artikel](https://agentic.schule/blog/2026-09-prompt-context-engineering) zu wiederholen:
 
 > **Clean Code is not dead. It's context engineering now.**
