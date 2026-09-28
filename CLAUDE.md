@@ -61,6 +61,16 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 
 Viele Artikel liegen in zwei Ordnern (`-DE`/`-EN`). Beide Fassungen bleiben strukturgleich (gleiche Überschriften, gleiche Reihenfolge). Zitate aus englischen Quellen bleiben in beiden Fassungen zeichengenau im Original.
 
+## Lektorat (vor jedem Merge)
+
+Jeder Artikel läuft vor dem Merge durch den Workflow `artikel-lektorat` (`.claude/workflows/artikel-lektorat.js`). Er prüft gegen diese Schreibrichtlinie in fünf Dimensionen (Floskeln und Ton, Fakten an Primärquellen, Begriffe, Leser-Perspektive, eigenständige Verständlichkeit), sichert jeden Befund adversarial ab und fasst die Befunde je Artikel zusammen. Aufruf mit absoluten Pfaden, damit er auch Artikel in einem Worktree findet:
+
+```
+Workflow({ name: 'artikel-lektorat', args: ['/absoluter/pfad/blog/<ordner>-DE/README.md'] })
+```
+
+In der Regel wird die DE-Fassung geprüft, die EN-Fassung zieht die Befunde strukturgleich nach. Faktenbefunde werden vor dem Einarbeiten selbst an der Primärquelle nachgeprüft.
+
 ## Banner (Artikel-Header)
 
 Jeder Artikel bekommt ein Header-Bild im agentic.schule-Look: tiefes Lila-Schwarz mit einem Verlauf von Lila nach Magenta, Logo oben links, rechts eine schlichte artikel-eigene Illustration. Die verbindlichen Markenfarben, das Logo, eine Kopiervorlage und die Render-Pipeline stehen in **[`docs/banner.md`](docs/banner.md)**. Ein neues Banner immer nach dieser Vorgabe bauen.
