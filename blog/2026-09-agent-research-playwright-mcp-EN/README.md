@@ -128,7 +128,7 @@ There is a second point that costs nothing and decides everything: **stay fair.*
 
 ## Headless on a machine without a screen
 
-My agent machine is a [Mac mini without a monitor](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) that nobody logs into graphically. On exactly that machine the real Chrome crashed reproducibly at startup whenever no graphical login was active, with `CVDisplayLink failed` and a SIGTRAP. The reason is unspectacular: at startup Chrome builds a graphics and display context, and without an active graphical session there is none. The fix is the following Chrome argument:
+My agent machine is a [Mac mini without a monitor](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini) that nobody logs into graphically. On exactly that machine the real Chrome crashed reproducibly at startup whenever no graphical login was active, with `CVDisplayLink failed` and a SIGTRAP. The reason is unspectacular: at startup Chrome builds a graphics and display context, and without an active graphical session there is none. The fix is the following Chrome argument:
 
 ```json
 "args": ["--disable-gpu"]
@@ -278,9 +278,9 @@ What holds here too:
 
 In the end it comes down to a small repair with a big effect: the agent no longer lands in the crude filter that never meant it. So give your agent its own Playwright MCP; the building blocks are all above.
 
-By the way, this research browser runs on my end permanently on a machine that never shuts off. How that ground station is built is described in the companion article ["Agentic coding around the clock: the Mac mini as a ground station"](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini).
+By the way, this research browser runs on my end permanently on a machine that never shuts off. How that ground station is built is described in the companion article ["Agentic coding around the clock: the Mac mini as a ground station"](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini).
 
-<a href="https://agentic.schule/blog/2026-09-agentic-coding-mac-mini"><img src="../2026-09-agentic-coding-mac-mini-EN/header.jpg" alt="Agentic coding around the clock: the Mac mini as a ground station" style="display:block;margin:1.5em auto;width:42%;"></a>
+<a href="https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini"><img src="../2026-09-agentic-coding-mac-mini-EN/header.jpg" alt="Agentic coding around the clock: the Mac mini as a ground station" style="display:block;margin:1.5em auto;width:42%;"></a>
 
 **Questions, feedback, your own experiences with locked-out agents?** Bring them on, I am glad to hear from you.
 

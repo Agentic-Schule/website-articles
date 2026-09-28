@@ -104,7 +104,7 @@ For long runs there is a second route that works without asking: Claude can ask 
 > Let me know when the migration session is finished
 > ```
 
-That is a subscription, not a standing order and not polling. In the changelog the parameter behind it is called `notify_when_idle`, described as "opt-in, one-shot, no polling". Instead of checking every few minutes, you get exactly one notice. Anyone regularly running long jobs on the side, for example on a machine of its own as in my [ground station article](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini), saves themselves the constant checking.
+That is a subscription, not a standing order and not polling. In the changelog the parameter behind it is called `notify_when_idle`, described as "opt-in, one-shot, no polling". Instead of checking every few minutes, you get exactly one notice. Anyone regularly running long jobs on the side, for example on a machine of its own as in my [ground station article](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini), saves themselves the constant checking.
 
 Two restrictions come with it. There is only this one event, namely idle or exit, and no freely chosen triggers. And it only works between sessions on the same machine.
 
@@ -139,7 +139,7 @@ The docs draw the boundaries themselves, and this list is worth reading before y
 - Want to **continue a conversation elsewhere**? Use `--resume`.
 - Want a **coordinated team** that Claude sets up and supervises itself? Use agent teams. They are still experimental and off by default, so you have to enable them through the environment variable `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`.
 - Want to **watch many sessions in one place**? Use the agent view.
-- Want to **steer a session yourself from your phone**? Use Remote Control, see the ten commands in my [commands article](https://agentic.schule/blog/2026-10-claude-code-commands).
+- Want to **steer a session yourself from your phone**? Use Remote Control, see the ten commands in my [commands article](https://agentic.schule/en/blog/2026-10-claude-code-commands).
 - Want to **push external events in**, such as CI results? Use channels.
 
 Cross-session messaging is for the case in between. You start and steer your sessions yourself. One of them learns something mid-task that another one needs right now.
@@ -150,7 +150,7 @@ Cross-session messaging is for the case in between. You start and steer your ses
 
 Cross-session messaging is a practical feature with one clear job, and that is exactly why it is good. It hands one sentence from one terminal to the next, at the right moment, without you switching windows.
 
-Anyone already working with several sessions, for example with [git worktrees](https://agentic.schule/blog/2026-09-agentic-coding-git-worktrees) per task, gets the missing piece with it: the branches know about each other. And the first step there is a single command, namely `/rename` in every session, so your windows have meaningful names.
+Anyone already working with several sessions, for example with [git worktrees](https://agentic.schule/en/blog/2026-09-agentic-coding-git-worktrees) per task, gets the missing piece with it: the branches know about each other. And the first step there is a single command, namely `/rename` in every session, so your windows have meaningful names.
 
 **What was the first message your sessions sent each other?** I would love to collect the best ones.
 

@@ -131,7 +131,7 @@ That a wide fan is not always the answer is something Anthropic says itself, in 
 
 So the next time you hear an AI influencer say "graph engineering", you know: I already have all of that, and I do not need to book a two-hour course for it. No, it does not revolutionize everything that came before. And if you switch on the `/effort ultracode` mode, Claude even starts a workflow on its own for complex tasks, whenever one is worth it. Very reassuring.
 
-That closes the series. Three tools for three shapes of work: the **prompt** determines how you ask ([Prompt Engineering and Context Engineering](https://agentic.schule/blog/2026-09-prompt-context-engineering)). The **loop** drives a line into the depth, on and on, until the goal stands ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)). The **graph** fans independent work out into the breadth. One is not the successor of the other; they solve different problems.
+That closes the series. Three tools for three shapes of work: the **prompt** determines how you ask ([Prompt Engineering and Context Engineering](https://agentic.schule/en/blog/2026-09-prompt-context-engineering)). The **loop** drives a line into the depth, on and on, until the goal stands ([Loop Engineering](https://agentic.schule/en/blog/2026-09-loop-engineering)). The **graph** fans independent work out into the breadth. One is not the successor of the other; they solve different problems.
 
 My advice is the undramatic one, as always: start small. A `/deep-research` on a real question, or an audit across a single directory. Watch the usage in `/workflows`, read the script Claude wrote, and judge for yourself whether your work right now is a line or a graph.
 
