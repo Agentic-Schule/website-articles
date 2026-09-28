@@ -1,6 +1,8 @@
 # Social Media: Artikel promoten
 
-Jeder Artikel der Serie wird auf LinkedIn, X, TikTok und Instagram beworben, optional zusätzlich auf YouTube Shorts. Diese Arbeit läuft in einer eigenen Sitzung. Dort werden die Artikel nur gelesen, nie geändert. Fällt beim Lesen ein Fehler im Artikel auf, wird er notiert und in einer Artikel-Sitzung behoben.
+Jeder Artikel der Serie wird auf sechs Kanälen beworben: LinkedIn, X, Bluesky, TikTok, Instagram und YouTube Shorts. Diese Arbeit läuft in einer eigenen Sitzung. Dort werden die Artikel nur gelesen, nie geändert. Fällt beim Lesen ein Fehler im Artikel auf, wird er notiert und in einer Artikel-Sitzung behoben.
+
+**Rollen:** Die Artikel-Sitzung schreibt die Artikel mit Johannes, die Social-Media-Sitzung macht Posts, Videos und Reporting. Bei grundlegenden Änderungen (Erscheinungsdatum, Titel oder Slug, Artikel fällt weg oder kommt dazu, starker inhaltlicher Umbau) stimmen sich beide Sitzungen per Nachricht ab.
 
 Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt durch den Ablauf unten. Die Belege für jede Regel stehen am Ende dieses Dokuments.
 
@@ -38,8 +40,8 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 ## Sprache: Deutsch für LinkedIn, Englisch für alles andere
 
 - **LinkedIn ist deutsch** und verlinkt die `-DE`-Fassung. Dort sitzen das deutsche Netzwerk und die B2B-Kunden, und die Sprache des Posts ist ein offizielles Ranking-Signal.
-- **X, TikTok, Instagram und YouTube Shorts sind englisch** und verlinken die `-EN`-Fassung. Hier geht es um Reichweite über den deutschen Sprachraum hinaus.
-- **Ein Video für alle Kurzvideo-Plattformen.** Es wird einmal auf Englisch gedreht und auf TikTok, Instagram und optional YouTube Shorts hochgeladen.
+- **X, Bluesky, TikTok, Instagram und YouTube Shorts sind englisch** und verlinken die `-EN`-Fassung. Hier geht es um Reichweite über den deutschen Sprachraum hinaus.
+- **Ein Video für alle Kurzvideo-Plattformen.** Es wird einmal auf Englisch gedreht und auf TikTok, Instagram und YouTube Shorts hochgeladen.
 - **Einfache Wörter, kurze Sätze im Video.** Johannes spricht die Skripte selbst, als Nicht-Muttersprachler. Keine Redewendungen, keine Wörter, die man nicht spontan so sagen würde.
 - **„AI" ist das Buzzword.** Wo es passt, steht „AI" im Hook oder in der Caption.
 
@@ -49,9 +51,10 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 | --- | --- | --- | --- | --- |
 | LinkedIn | DE | zwei Sätze + Screenshot | reine URL im Post | Knobelfrage, kein Keyword |
 | X | EN | zwei Sätze + derselbe Screenshot, höchstens 280 Zeichen | im Post | Knobelfrage, kein Keyword |
+| Bluesky | EN | Text wie auf X + derselbe Screenshot, höchstens 300 Zeichen inklusive voller URL | im Post | wie auf X |
 | TikTok | EN | vertikales Video | `agentic.schule` im Video und in der Caption | „Find the full article on my website: agentic.schule" |
 | Instagram Reels | EN | dasselbe Video | `agentic.schule` im Video und in der Caption | derselbe Satz |
-| YouTube Shorts (optional) | EN | dasselbe Video | in der Beschreibung, nicht klickbar | derselbe Satz |
+| YouTube Shorts | EN | dasselbe Video | in der Beschreibung, nicht klickbar | derselbe Satz |
 | Facebook | – | kein eigener Aufwand | – | – |
 
 **Facebook:** Das automatische Crossposting von Instagram nach Facebook bleibt aus. Facebook ist kein Zielkanal.
@@ -86,6 +89,12 @@ Das Bild trägt die Knobelaufgabe. Johannes erstellt es selbst im Editor; die Si
 - **Der Link steht direkt im Post,** eingeleitet mit dem Überleitungssatz. X stuft Links nach Aussage der Produktleitung nicht herab, und der veröffentlichte Ranking-Code enthält keine Link-Strafe. Ein Link in einer Antwort bringt nichts: Antworten zeigt X Nicht-Followern im For-You-Feed nicht, und der Schub für kleine Accounts gilt nur für eigenständige Posts.
 - **Text und Bild müssen ohne Link tragen.** Link-Posts sammeln weniger Likes und Antworten, weil die Leute auf die Seite wechseln.
 - **Kein Video.** Zwei Sätze plus derselbe Screenshot wie auf LinkedIn.
+
+## Bluesky (EN)
+
+- **Derselbe Text wie auf X,** dazu derselbe Screenshot.
+- **Höchstens 300 Zeichen, und der Link zählt mit voller Länge** (anders als auf X, wo jeder Link 23 Zeichen zählt). Die englischen URLs sind rund 60 Zeichen lang; passt der X-Text damit nicht, wird er gekürzt, nicht der Link.
+- Nur geprüfte Handles markieren.
 
 ## Das Video (TikTok, Instagram, YouTube Shorts)
 
@@ -197,7 +206,7 @@ Find the full article on my website: agentic.schule
 <Hook in einer Zeile>. Day N/30. Full article on agentic.schule #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
 
-**YouTube Shorts (EN, optional)**
+**YouTube Shorts (EN)**
 
 ```
 Title: <Hook in wenigen Wörtern> (Day N/30)
@@ -205,9 +214,13 @@ Title: <Hook in wenigen Wörtern> (Day N/30)
 Description:
 <Hook-Satz.>
 Read the full article here: https://agentic.schule/en/blog/<slug>
+Subscribe: a new one drops every weekday.
 
 #Shorts #AI #AIAgents <2 bis 3 Themen-Hashtags>
 ```
+
+- **YouTube-Titel dürfen reißerischer sein** als die übrigen Posts (etwa „This Malicious AI Skill Is Still Infecting Computers 😳"); die Wahl liegt bei Johannes. „(Day N/30)" im Titel ist erwünscht, aber kein Muss. Die Sitzung schlägt einen Titel vor, meldet Johannes' eigene Titel aber nicht als Lücke oder Fehler.
+- „Subscribe: a new one drops every weekday." passt zur Werktags-Serie; „tomorrow" stimmt freitags nicht.
 
 Hashtags gehören nur auf Instagram, TikTok und YouTube, dort helfen Stichworte bei der Suche.
 
@@ -263,7 +276,7 @@ Find the full article on my website: agentic.schule
 Can you spot the attack in this AI skill? Day 1/30. Full article on agentic.schule #AI #AIAgents #ClaudeCode #AISecurity
 ```
 
-**YouTube Shorts (optional)**
+**YouTube Shorts**
 
 ```
 Title: Can you spot the attack in this AI skill? (Day 1/30)
@@ -271,9 +284,23 @@ Title: Can you spot the attack in this AI skill? (Day 1/30)
 Description:
 AI skills can run malicious code without one bad line.
 Read the full article here: https://agentic.schule/en/blog/2026-09-malicious-ai-skills
+Subscribe: a new one drops every weekday.
 
 #Shorts #AI #AIAgents #ClaudeCode #AISecurity
 ```
+
+## Die Kanäle
+
+| Kanal | Profil |
+| --- | --- |
+| YouTube | https://www.youtube.com/@JohannesHoppe |
+| TikTok | https://www.tiktok.com/@johannes_hoppe |
+| Instagram | https://www.instagram.com/_johannes_hoppe_/ |
+| LinkedIn | https://www.linkedin.com/in/johanneshoppe/ |
+| X | https://x.com/JohannesHoppe |
+| Bluesky | https://bsky.app/profile/johanneshoppe.de |
+
+Nach jeder Veröffentlichung prüft die Sitzung ungefragt, ob der Tag auf allen sechs Kanälen erschienen ist, und meldet nur die Lücken. Bluesky über die öffentliche API, YouTube über den RSS-Feed, X und Instagram über den Playwright-MCP; LinkedIn (Login-Wand) und TikTok (Captcha) sind nicht prüfbar. Dabei auch die Texte gegen die Faktenregel lesen; YouTube-Titel sind davon ausgenommen (siehe YouTube Shorts).
 
 ## Faktenregel
 
