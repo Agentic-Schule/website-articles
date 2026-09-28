@@ -85,6 +85,8 @@ Dazu kommt: Ein Kontowechsel trennt die **Remote-Control-Verbindung**, mit der i
 
 Das Ziel ist also: **rechtzeitig vor dem Limit automatisch auf ein anderes Abo wechseln, ohne Abmelden, möglichst ohne abgebrochene Agenten und ohne die Fernsteuerung zu verlieren.** Dafür braucht es zwei Werkzeuge: eines, das die Anmeldung im laufenden Betrieb tauscht, und eines, das Remote Control dabei auf einem Konto hält.
 
+![Wochenlimit voll? Zwei Tools helfen: claude-swap wechselt das Konto im laufenden Betrieb, cswap-pin hält Remote Control verbunden.](zwei-tools.jpg)
+
 ## Tool 1 (`claude-swap`): Mehrere Abos im Wechsel einrichten
 
 Das erste Werkzeug ist das Open-Source-Tool [`claude-swap`](https://github.com/realiti4/claude-swap) (Befehl: `cswap`, MIT-Lizenz). Es nutzt ein Detail von Claude Code: **Claude Code liest seine Zugangsdaten neu ein, wenn sie sich ändern.** Liegen sie in einer Datei, läuft die *nächste* Nachricht bereits über das neue Konto. So beschreibt es die [Dokumentation von `claude-swap`](https://github.com/realiti4/claude-swap#tips), und so verhält es sich auf meinem mini. Dort liegen die Credentials als Datei unter `~/.claude/.credentials.json`. Sonst liegen sie unter macOS, sofern eingerichtet, in der *Keychain*. Claude Code puffert sie dort laut derselben Quelle etwa 30 Sekunden lang, danach greift auch dort der Wechsel.

@@ -84,6 +84,8 @@ On top of that, an account switch cuts the **Remote Control connection** that le
 
 So the goal is: **switch to another subscription automatically before the limit, without signing out, ideally without cancelled agents and without losing remote control.** That takes two tools: one that swaps the sign-in while running, and one that keeps Remote Control on one account while doing so.
 
+![Weekly limit maxed out? Two tools fix it: claude-swap switches accounts on the fly, cswap-pin keeps Remote Control alive.](two-tools.jpg)
+
 ## Tool 1 (`claude-swap`): Setting Up Multiple Subscriptions to Switch
 
 The first tool is the open source tool [`claude-swap`](https://github.com/realiti4/claude-swap) (command: `cswap`, MIT license). It relies on a detail of Claude Code: **Claude Code re-reads its credentials when they change.** If they live in a file, the *next* message already goes through the new account. That is how the [`claude-swap` documentation](https://github.com/realiti4/claude-swap#tips) describes it, and that is how it behaves on my mini. There the credentials live in a file at `~/.claude/.credentials.json`. Otherwise, on macOS, they live in the Keychain, if it is set up. According to the same source, Claude Code caches them there for about 30 seconds, after which the switch takes effect as well.
