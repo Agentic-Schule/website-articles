@@ -27,7 +27,7 @@ header: header.jpg
 
 ## Weekly Limit Reached: What Helps and What Doesn't
 
-The weekly limit is the productivity killer, full stop.
+The weekly limit is **the** worst productivity killer.
 
 ### Check First: `/usage`
 

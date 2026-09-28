@@ -28,7 +28,7 @@ header: header.jpg
 
 ## Wochenlimit erreicht: Was hilft und was nicht
 
-Das Wochenlimit ist der Produktivitätskiller schlechthin.
+Das Wochenlimit ist **der** schlimmste Produktivitätskiller.
 
 ### Erst nachsehen: `/usage`
 
