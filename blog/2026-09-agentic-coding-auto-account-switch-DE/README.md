@@ -85,7 +85,7 @@ Dazu kommt: Ein Kontowechsel trennt die **Remote-Control-Verbindung**, mit der i
 
 Das Ziel ist also: **rechtzeitig vor dem Limit automatisch auf ein anderes Abo wechseln, ohne Abmelden, möglichst ohne abgebrochene Agenten und ohne die Fernsteuerung zu verlieren.** Dafür braucht es zwei Werkzeuge: eines, das die Anmeldung im laufenden Betrieb tauscht, und eines, das Remote Control dabei auf einem Konto hält.
 
-## Mehrere Abos im Wechsel einrichten
+## Tool 1 (`claude-swap`): Mehrere Abos im Wechsel einrichten
 
 Das erste Werkzeug ist das Open-Source-Tool [`claude-swap`](https://github.com/realiti4/claude-swap) (Befehl: `cswap`, MIT-Lizenz). Es nutzt ein Detail von Claude Code: **Claude Code liest seine Zugangsdaten neu ein, wenn sie sich ändern.** Liegen sie in einer Datei, läuft die *nächste* Nachricht bereits über das neue Konto. So beschreibt es die [Dokumentation von `claude-swap`](https://github.com/realiti4/claude-swap#tips), und so verhält es sich auf meinem mini. Dort liegen die Credentials als Datei unter `~/.claude/.credentials.json`. Sonst liegen sie unter macOS im Schlüsselbund. Claude Code puffert sie dort laut derselben Quelle etwa 30 Sekunden lang, danach greift auch dort der Wechsel.
 
@@ -132,7 +132,7 @@ pipx install ./claude-swap
 
 `cswap` bringt mit `cswap upgrade` einen eigenen Update-Befehl mit, der die neueste Version von PyPI holt. Den lässt du besser links liegen. So läuft nur Code, den du gelesen hast.
 
-## Remote Control: Der Pin hält die Session
+## Tool 2 (`cswap-pin`): Remote Control: Der Pin hält die Session
 
 Bleibt das zweite Problem: Der Kontowechsel trennt die Fernsteuerung. Der Grund ist strukturell. Eine Remote-Control-Session gehört dem Konto, mit dessen Token sie erstellt wurde. Tauschst du das Konto, verlieren Handy und Web die Session, und auf dem alten Konto stapeln sich verwaiste Sitzungen (so beschrieben im [README von cswap-pin](https://github.com/codeslake/cswap-pin#the-problem)). Dasselbe gilt für Artefakte: Nach einem Wechsel schlägt das erneute Veröffentlichen fehl.
 

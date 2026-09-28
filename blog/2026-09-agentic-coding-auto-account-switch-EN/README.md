@@ -84,7 +84,7 @@ On top of that, an account switch cuts the **Remote Control connection** that le
 
 So the goal is: **switch to another subscription automatically before the limit, without signing out, ideally without cancelled agents and without losing remote control.** That takes two tools: one that swaps the sign-in while running, and one that keeps Remote Control on one account while doing so.
 
-## Setting Up Multiple Subscriptions to Switch
+## Tool 1 (`claude-swap`): Setting Up Multiple Subscriptions to Switch
 
 The first tool is the open source tool [`claude-swap`](https://github.com/realiti4/claude-swap) (command: `cswap`, MIT license). It relies on a detail of Claude Code: **Claude Code re-reads its credentials when they change.** If they live in a file, the *next* message already goes through the new account. That is how the [`claude-swap` documentation](https://github.com/realiti4/claude-swap#tips) describes it, and that is how it behaves on my mini. There the credentials live in a file at `~/.claude/.credentials.json`. Otherwise, on macOS, they live in the Keychain. According to the same source, Claude Code caches them there for about 30 seconds, after which the switch takes effect as well.
 
@@ -131,7 +131,7 @@ pipx install ./claude-swap
 
 `cswap` comes with its own update command, `cswap upgrade`, which fetches the latest version from PyPI. Better leave it alone. That way, only code you have read gets to run.
 
-## Remote Control: The Pin Holds the Session
+## Tool 2 (`cswap-pin`): Remote Control: The Pin Holds the Session
 
 That leaves the second problem: the account switch cuts remote control. The reason is structural. A Remote Control session belongs to the account whose token created it. Swap the account, and phone and web lose the session, while orphaned sessions pile up on the old account (as described in the [cswap-pin README](https://github.com/codeslake/cswap-pin#the-problem)). The same goes for artifacts: after a switch, republishing fails.
 
