@@ -181,7 +181,7 @@ In daily use the result is unspectacular, and that is how it should be. At some 
 
 My agents were in the middle of a `/deep-research` when they raised the **alarm**. They considered the fetched content tampered with and cited the proxy environment variables and the foreign CA as evidence of an attack.
 
-That is not a bug but commendable behavior. My subagents were suspicious because a strange proxy showed up. Wild that software can react like this these days. The agents had no way of knowing where the proxy came from. From their point of view a man-in-the-middle with its own CA was sitting there, and that *could* have been malware. That is how a vigilant reviewer should react.
+In my opinion, that is not a bug but commendable behavior. My subagents were suspicious because a strange proxy showed up. Wild that software can react like this these days. The agents had no way of knowing where the proxy came from. From their point of view a man-in-the-middle with its own CA was sitting there, and that *could* have been malware. That is how a vigilant reviewer should react.
 
 Were they right? That can be checked. A request to `example.com` through the proxy comes back with the *real* public certificate. You can check this with `curl -v --proxy http://127.0.0.1:$(cswap pin --get_port) https://example.com` and a look at the certificate's issuer. Had the proxy been reading along, it would have been its own. The source code confirms it as well: the proxy decrypts **only** `api.anthropic.com`. It passes every other host through as a blind tunnel.
 

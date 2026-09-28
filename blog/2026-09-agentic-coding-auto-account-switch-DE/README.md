@@ -182,7 +182,7 @@ Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann errei
 
 Meine Agenten machten gerade einen `/deep-research`, als sie **Alarm** schlugen. Sie hielten die abgerufenen Inhalte für manipuliert und führten die Proxy-Umgebungsvariablen und die fremde CA als Beleg für einen Angriff an.
 
-Das ist kein Bug, sondern ein lobenswertes Verhalten. Meine Subagenten waren misstrauisch, weil da ein komischer Proxy auftauchte. Wild, dass Software heutzutage so reagieren kann. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
+Das ist meiner Meinung nach kein Bug, sondern ein lobenswertes Verhalten. Meine Subagenten waren misstrauisch, weil da ein komischer Proxy auftauchte. Wild, dass Software heutzutage so reagieren kann. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
 
 Hatten sie recht? Das lässt sich prüfen. Ein Abruf von `example.com` durch den Proxy kommt mit dem *echten* öffentlichen Zertifikat zurück. Prüfen lässt sich das mit `curl -v --proxy http://127.0.0.1:$(cswap pin --get_port) https://example.com` und einem Blick auf den Aussteller des Zertifikats. Hätte der Proxy hier mitgelesen, wäre es seines gewesen. Auch der Quelltext bestätigt das: Der Proxy entschlüsselt **ausschließlich** `api.anthropic.com`. Jeden anderen Host reicht er als blinden Tunnel durch.
 
