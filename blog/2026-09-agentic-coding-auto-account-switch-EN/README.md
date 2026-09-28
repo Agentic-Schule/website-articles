@@ -68,7 +68,7 @@ One of the big advantages of Claude Code: your chats live on your disk. Accordin
 
 So account and chats are separate. You can sign out, sign back in and keep working with *your* chats, even with a different account. That is the trick everything else builds on.
 
-> **💡 Tip:** Back up your chats, they are your capital. By default Claude Code deletes them after 30 days. And a hard shutdown can corrupt a chat file; I know that from my own experience and from issues like [#53821](https://github.com/anthropics/claude-code/issues/53821) and [#52387](https://github.com/anthropics/claude-code/issues/52387). Since version 2.1.121, `--resume` skips such a corrupted line ([changelog](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)). How I back up my chat histories and raise `cleanupPeriodDays` is described in [part 1 of this series](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#everything-duplicated-always-in-sync).
+> **💡 Tip:** Back up your chats, they are your capital. By default Claude Code deletes them after 30 days. And a hard shutdown can destroy a chat. I know that from my own experience and from issues like [#53821](https://github.com/anthropics/claude-code/issues/53821) and [#52387](https://github.com/anthropics/claude-code/issues/52387). How I back up my chat histories and raise `cleanupPeriodDays` is described in [part 1 of this series](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#everything-duplicated-always-in-sync).
 
 ## The Problem: Switching Between Accounts
 
