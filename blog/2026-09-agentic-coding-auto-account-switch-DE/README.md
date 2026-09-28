@@ -67,7 +67,7 @@ Doch wie wechselst du zwischen den Abos, ohne dass die Arbeit stillsteht? Die An
 
 ## Der Trick: Deine Chats liegen auf deiner Festplatte
 
-Einer der großen Vorteile von Claude Code: Deine Chats liegen auf deiner Festplatte. Claude Code speichert sie im Klartext unter `~/.claude/projects/`. Ein Blick hinein lohnt sich: Jede Session ist eine JSONL-Datei mit jedem Prompt, jeder Antwort und jedem Tool-Aufruf samt Ergebnis. Codex macht es genauso und legt seine Sitzungen unter `~/.codex` ab. Auch Googles Agenten-IDE Antigravity hat ein lokales Datenverzeichnis unter `~/.gemini/antigravity/`. Anders bei Claude Code im Web: Dort läuft die Session „on cloud infrastructure instead of on your machine" ([Dokumentation](https://code.claude.com/docs/en/claude-code-on-the-web)).
+Einer der großen Vorteile von Claude Code: Deine Chats liegen auf deiner Festplatte. Claude Code speichert sie im Klartext unter `~/.claude/projects/`. Ein Blick hinein lohnt sich: Jede Session ist eine JSONL-Datei mit jedem Prompt, jeder Antwort und jedem Tool-Aufruf samt Ergebnis. Codex macht es genauso und legt seine Sitzungen unter `~/.codex` ab. Auch Googles Agenten-IDE Antigravity hat ein lokales Datenverzeichnis unter `~/.gemini/antigravity/`. Anders bei Claude Code im Web: Dort läuft die Session „on cloud infrastructure instead of on your machine" ([Dokumentation](https://code.claude.com/docs/en/claude-code-on-the-web)). Weil ich meine Chats gefälligst jederzeit auf meiner Platte haben will, ist jedes reine Cloud-Angebot für mich ein Showstopper.
 
 Konto und Chats sind also voneinander getrennt. Du kannst dich abmelden, wieder anmelden und mit *deinen* Chats weitermachen, auch mit einem anderen Konto. Das ist der Trick, auf dem alles Weitere beruht.
 

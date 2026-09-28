@@ -66,7 +66,7 @@ But how do you switch between the subscriptions without the work standing still?
 
 ## The Trick: Your Chats Live on Your Disk
 
-One of the big advantages of Claude Code: your chats live on your disk. Claude Code stores them in plain text under `~/.claude/projects/`. A look inside is worth it: every session is a JSONL file with every prompt, every answer and every tool call including its result. Codex does the same and keeps its sessions under `~/.codex`. Google's agent IDE Antigravity also has a local data directory under `~/.gemini/antigravity/`. Claude Code on the web is different: there the session runs "on cloud infrastructure instead of on your machine" ([documentation](https://code.claude.com/docs/en/claude-code-on-the-web)).
+One of the big advantages of Claude Code: your chats live on your disk. Claude Code stores them in plain text under `~/.claude/projects/`. A look inside is worth it: every session is a JSONL file with every prompt, every answer and every tool call including its result. Codex does the same and keeps its sessions under `~/.codex`. Google's agent IDE Antigravity also has a local data directory under `~/.gemini/antigravity/`. Claude Code on the web is different: there the session runs "on cloud infrastructure instead of on your machine" ([documentation](https://code.claude.com/docs/en/claude-code-on-the-web)). Because I insist on having my chats on my own disk at all times, any cloud-only offering is a showstopper for me.
 
 So account and chats are separate. You can sign out, sign back in and keep working with *your* chats, even with a different account. That is the trick everything else builds on.
 
