@@ -57,7 +57,7 @@ Selbst ein funktionierender Reset verschafft dir nur einmal Luft. Wer jede Woche
 
 ### Ein weiteres Max-Abo
 
-Bleibt der Weg, der wirklich trägt: ein **zweites Max-Abo**, bei Bedarf auch ein drittes oder viertes. Jedes bringt sein volles Kontingent zum Abo-Preis mit. Laut [Hilfe-Center](https://support.claude.com/en/articles/11049741-what-is-the-max-plan) kostet Max 5x 100 Dollar und Max 20x 200 Dollar im Monat.
+Bleibt der Weg, der wirklich trägt: ein **zweites Max-Abo**, bei Bedarf auch ein drittes oder viertes. Jedes bringt sein volles Kontingent zum Abo-Preis mit.
 
 ## Das Problem: der Wechsel zwischen den Konten
 

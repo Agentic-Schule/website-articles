@@ -56,7 +56,7 @@ Even a working reset only buys you breathing room once. If you hit the limit eve
 
 ### Another Max Subscription
 
-That leaves the path that actually holds up: a **second Max subscription**, or a third or fourth if needed. Each one brings its full allowance at the subscription price. According to the [Help Center](https://support.claude.com/en/articles/11049741-what-is-the-max-plan), Max 5x costs $100 and Max 20x $200 per month.
+That leaves the path that actually holds up: a **second Max subscription**, or a third or fourth if needed. Each one brings its full allowance at the subscription price.
 
 ## The Problem: Switching Between Accounts
 
