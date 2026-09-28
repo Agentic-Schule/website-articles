@@ -31,19 +31,19 @@ Checks the current state of your branch for real defects, and optionally a PR, a
 
 ## 2. `/security-review`: the security lens
 
-Runs a pure security review of the pending changes on the branch, no arguments needed. What makes it special is the discipline behind it: several review perspectives hunt for vulnerabilities, then a separate round filters out the false alarms. Only what is exploitable with high confidence gets reported. Together with `/code-review`, these two are among the most important guardrails once the AI writes the code, see my [vibe coding article](https://agentic.schule/blog/2026-09-vibe-coding).
+Runs a pure security review of the pending changes on the branch, no arguments needed. What makes it special is the discipline behind it: several review perspectives hunt for vulnerabilities, then a separate round filters out the false alarms. Only what is exploitable with high confidence gets reported. Together with `/code-review`, these two are among the most important guardrails once the AI writes the code, see my [vibe coding article](https://agentic.schule/en/blog/2026-09-vibe-coding).
 
 > **💡 Tip:** Run it once before every merge heading for production. An empty report is a good outcome here, not a disappointing one.
 
 ## 3. `/deep-research`: the research machine
 
-The only bundled workflow, and a showcase of what Claude Code can do in terms of orchestration: it fans web searches out across several angles, fetches the sources, checks the claims against each other, and delivers a cited report instead of a list of hits. How such a workflow is built is covered in the [graph article](https://agentic.schule/blog/2026-09-graph-engineering).
+The only bundled workflow, and a showcase of what Claude Code can do in terms of orchestration: it fans web searches out across several angles, fetches the sources, checks the claims against each other, and delivers a cited report instead of a list of hits. How such a workflow is built is covered in the [graph article](https://agentic.schule/en/blog/2026-09-graph-engineering).
 
 > **💡 Tip:** Phrase the question as concretely as possible, including context and time frame. The workflow then splits it into search angles by itself. While it runs, you simply keep working. The report is only as good as its sources, though: key claims should still be verified yourself before you adopt them.
 
 ## 4. `/loop`: the loop
 
-Repeats a prompt at a fixed interval (`/loop 5m check the deploy`) or lets Claude set its own pace if you leave the interval out. That lets the agent tackle hard tasks across many attempts, all night against CI if need be. What is behind it, I took apart in a separate article: [Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering).
+Repeats a prompt at a fixed interval (`/loop 5m check the deploy`) or lets Claude set its own pace if you leave the interval out. That lets the agent tackle hard tasks across many attempts, all night against CI if need be. What is behind it, I took apart in a separate article: [Loop Engineering](https://agentic.schule/en/blog/2026-09-loop-engineering).
 
 > **💡 Tip:** The stop condition is the actual work. "Until CI is green again" works, "until it is good" goes in circles.
 
@@ -65,7 +65,7 @@ Picks the model for the session, sure. Less known: the same dialog also holds th
 
 Even less known: your current model is inherited by the subagents of your dynamic workflows, unless the workflow script says otherwise. So if you would rather not burn your entire Fable 5 limit in a single session (Fable 5 is the most capable generally available Claude model and has its own weekly allowance), set a model like Opus or even Sonnet here as soon as the task is simple enough. In the script itself, both can be forced per agent, model and effort. For a whole swarm of agents that mechanically operate a website, that is exactly what belongs in the script: small model, low effort, expensive thinking only where it counts.
 
-> **💡 Tip:** Which model runs at which effort noticeably influences how far commands like `/code-review` parallelize. Details on that in the [graph engineering article](https://agentic.schule/blog/2026-09-graph-engineering).
+> **💡 Tip:** Which model runs at which effort noticeably influences how far commands like `/code-review` parallelize. Details on that in the [graph engineering article](https://agentic.schule/en/blog/2026-09-graph-engineering).
 
 ## 8. `/effort`: the thinking depth of the session
 
@@ -81,7 +81,7 @@ Opens the overview of your connected MCP servers, the external tools Claude uses
 
 ## 10. `/remote-control`: the session in your pocket
 
-Connects the running session to claude.ai/code or the Claude app: scan the QR code with your phone, and you continue that same session on your phone or in the browser while it runs on your machine. Perfect for following a long run from the sofa, or answering a question on the go instead of leaving it until the end of the day. My ground station, the Mac mini, is exactly what I drive this way ([more on that here](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)).
+Connects the running session to claude.ai/code or the Claude app: scan the QR code with your phone, and you continue that same session on your phone or in the browser while it runs on your machine. Perfect for following a long run from the sofa, or answering a question on the go instead of leaving it until the end of the day. My ground station, the Mac mini, is exactly what I drive this way ([more on that here](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)).
 
 > **💡 Tip:** `/rc` is enough to type, that is the official alias.
 
