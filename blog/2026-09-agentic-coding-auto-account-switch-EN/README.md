@@ -226,7 +226,7 @@ But for all the joy about the seamless switch: there are a few things you should
 
 Multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout` and `/login`. And I haven't had a single cancelled agent in weeks.
 
-For me the gain clearly outweighs the cost. With two 20x subscriptions I hardly ever hit a weekly limit, and I never have to look at usage credits.
+Yes, it is damn expensive. But for me the gain clearly outweighs the cost. With two 20x subscriptions I hardly ever hit a weekly limit, and I never have to look at usage credits.
 
 If you hit the limit yourself: check with `/usage` how far along you are, and with `cswap list` how much headroom all accounts have together. Before every large workflow, decide which model and which effort your agents start with. And read the code before you give it your keys.
 

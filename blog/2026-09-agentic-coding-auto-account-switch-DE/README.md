@@ -227,7 +227,7 @@ Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du k
 
 Mehrere Max-Abos, ein Kontowechsel im laufenden Betrieb, automatisch bevor ein Limit greift, und Remote Control überlebt den Wechsel. Kein `/logout` und `/login` mehr. Und ich hatte über Wochen keine abgebrochenen Agenten mehr.
 
-Für mich überwiegt der Gewinn klar. Mit zwei 20x-Abos stoße ich kaum noch an ein Wochenlimit, und auf Usage-Credits muss ich nie schauen.
+Ja, es ist schon verdammt teuer. Aber für mich überwiegt der Gewinn klar. Mit zwei 20x-Abos stoße ich kaum noch an ein Wochenlimit, und auf Usage-Credits muss ich nie schauen.
 
 Wenn du selbst ans Limit stößt: Sieh mit `/usage` nach, wie weit du bist, und mit `cswap list`, wie viel Spielraum alle Konten zusammen haben. Leg vor jedem großen Workflow fest, mit welchem Modell und welchem Effort deine Agenten loslegen. Und lies den Code, bevor du ihm deine Schlüssel gibst.
 
