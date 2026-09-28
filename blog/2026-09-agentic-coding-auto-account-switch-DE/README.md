@@ -32,7 +32,7 @@ Das Wochenlimit ist **der** schlimmste Produktivitätskiller.
 
 ### Erst nachsehen: `/usage`
 
-Wie weit du bist, zeigt `/usage`. Wie du der [Befehlsübersicht](https://code.claude.com/docs/en/commands) entnehmen kannst, zeigt der Befehl „session cost, plan usage limits, and activity stats" und schlüsselt auf, was gegen die Limits deines Plans zählt. Er läuft sogar, während Claude gerade antwortet. Diesen Wert solltest du kennen, bevor du dich für einen der folgenden Wege entscheidest.
+Wie weit du bist, zeigt `/usage`. Wie du der [Befehlsübersicht](https://code.claude.com/docs/en/commands) entnehmen kannst, zeigt der Befehl „session cost, plan usage limits, and activity stats" und schlüsselt auf, was gegen die Limits deines Plans zählt. Diesen Wert solltest du kennen, bevor du dich für einen der folgenden Wege entscheidest.
 
 ### Modell und Effort bewusst wählen
 
