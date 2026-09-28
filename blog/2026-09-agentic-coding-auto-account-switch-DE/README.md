@@ -85,7 +85,7 @@ Das Ziel ist also: **rechtzeitig vor dem Limit automatisch auf ein anderes Abo w
 
 Das erste Werkzeug ist das Open-Source-Tool [`claude-swap`](https://github.com/realiti4/claude-swap) (Befehl: `cswap`, MIT-Lizenz). Es nutzt ein Detail von Claude Code: **Claude Code liest seine Zugangsdaten neu ein, wenn sie sich ändern.** Liegen sie in einer Datei, läuft die *nächste* Nachricht bereits über das neue Konto. So beschreibt es die [Dokumentation von `claude-swap`](https://github.com/realiti4/claude-swap#tips), und so verhält es sich auf meinem mini. Dort liegen die Credentials als Datei unter `~/.claude/.credentials.json`. Sonst liegen sie unter macOS im Schlüsselbund. Claude Code puffert sie dort laut derselben Quelle etwa 30 Sekunden lang, danach greift auch dort der Wechsel.
 
-`cswap` sichert pro Konto die Credentials und tauscht sie auf Zuruf aus, ohne Neustart und ohne `/login`. Es ist nicht auf zwei Konten beschränkt. Ich arbeite mit zwei, das Prinzip bleibt bei drei oder vier gleich. Wie ich es installiere, zeigt der nächste Abschnitt. Du meldest dich **einmal** pro Abo an, danach genügt:
+`cswap` sichert pro Konto die Credentials und tauscht sie auf Zuruf aus, ohne Neustart und ohne `/login`. Es ist nicht auf zwei Konten beschränkt. Ich arbeite mit zwei, das Prinzip bleibt bei drei oder vier gleich. Wie du es sicher installierst, zeigt der nächste Abschnitt. Du meldest dich **einmal** pro Abo an, danach genügt:
 
 ```bash
 cswap switch 2      # ab der nächsten Nachricht läuft alles über Abo 2
@@ -94,7 +94,7 @@ cswap switch        # reihum zum nächsten Konto
 cswap list          # Auslastung (5h/7d) aller Konten
 ```
 
-Ein Detail meines Setups ist wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap switch` bewegt darum alle Sessions auf das andere Abo. Das ist gewollt, wenn Konto A ans Wochenlimit stößt.
+Wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap switch` bewegt darum alle Sessions auf das andere Abo. Das ist gewollt, wenn Konto A ans Wochenlimit stößt.
 
 Die Konten registrierst du so:
 
@@ -112,11 +112,11 @@ Der Browser-Login pro Konto ist der einzige Schritt, den kein Tool abnehmen kann
 
 ## Vertrauen ist gut, Forken ist besser
 
-`cswap` fasst meine **OAuth-Tokens** an, also die Schlüssel zu meinen Konten. Bevor so ein Tool auf einem Rechner läuft, der nie ausgeht, will ich wissen, was es tut. Also lese ich zuerst den Quelltext, bevor ich `pipx install` tippe.
+`cswap` fasst deine **OAuth-Tokens** an, also die Schlüssel zu deinen Konten. Bevor so ein Tool auf einem Rechner läuft, der nie ausgeht, solltest du wissen, was es tut. Lies deshalb zuerst den Quelltext, bevor du `pipx install` tippst.
 
 Die wichtigste Frage: Wohin geht der Netzwerkverkehr? Im Quelltext stehen nur Anthropics eigene Endpunkte (`api.anthropic.com`, `platform.claude.com`) und ein Versions-Check bei PyPI. Keine fremde Domain, keine Telemetrie. Das Paket wird über PyPIs *Trusted Publishing* aus einem GitHub-Workflow veröffentlicht, und das Repo bringt eine umfangreiche Testsuite mit. So weit, so vertrauenswürdig.
 
-Trotzdem beziehe ich ein Tool, das meine Schlüssel hält, nicht per Auto-Update aus einer fremden Pipeline. Das größere Risiko sind künftige Releases: Ein bösartiges Update kommt als beiläufiges Upgrade herein. Das ist ein klassischer *Supply-Chain-Angriff*, also ein Angriff über die Lieferkette. Wie so etwas aussieht, zeigt der Artikel über [böswillige AI-Skills](https://agentic.schule/blog/2026-09-malicious-ai-skills). Deshalb gehe ich den sauberen Weg:
+Trotzdem solltest du ein Tool, das deine Schlüssel hält, nicht per Auto-Update aus einer fremden Pipeline beziehen. Das größere Risiko sind künftige Releases: Ein bösartiges Update kommt als beiläufiges Upgrade herein. Das ist ein klassischer *Supply-Chain-Angriff*, also ein Angriff über die Lieferkette. Wie so etwas aussieht, zeigt der Artikel über [böswillige AI-Skills](https://agentic.schule/blog/2026-09-malicious-ai-skills). Geh deshalb den sauberen Weg:
 
 ```bash
 # in den eigenen Account forken und den geprüften Stand lokal auschecken
@@ -126,7 +126,7 @@ pipx install ./claude-swap
 # Updates nur bewusst: upstream holen, Diff lesen, neu installieren
 ```
 
-`cswap` bringt mit `cswap upgrade` einen eigenen Update-Befehl mit, der die neueste Version von PyPI holt. Den nutze ich nicht. So läuft nur Code, den ich gelesen habe.
+`cswap` bringt mit `cswap upgrade` einen eigenen Update-Befehl mit, der die neueste Version von PyPI holt. Den lässt du besser links liegen. So läuft nur Code, den du gelesen hast.
 
 ## Remote Control: Der Pin hält die Session
 
@@ -138,7 +138,7 @@ Die Lösung heißt [`cswap-pin`](https://github.com/codeslake/cswap-pin) und sta
 cswap pin 1          # Remote Control und Artefakte bleiben auf Konto 1
 ```
 
-Die Anbindung an `cswap` liegt zum Zeitpunkt dieses Artikels als [offener Pull Request](https://github.com/realiti4/claude-swap/pull/210) im Upstream-Projekt. Bis zum Merge gibt es `cswap pin` also nur, wenn du den PR in deinen Fork von `claude-swap` übernimmst. Den Proxy selbst installiere ich ebenfalls aus einem eigenen Fork und hänge ihn in dieselbe Umgebung:
+Die Anbindung an `cswap` liegt zum Zeitpunkt dieses Artikels als [offener Pull Request](https://github.com/realiti4/claude-swap/pull/210) im Upstream-Projekt. Bis zum Merge gibt es `cswap pin` also nur, wenn du den PR in deinen Fork von `claude-swap` übernimmst. Den Proxy selbst installierst du am besten ebenfalls aus einem eigenen Fork und hängst ihn in dieselbe Umgebung:
 
 ```bash
 cd claude-swap
@@ -149,7 +149,7 @@ gh repo fork codeslake/cswap-pin --clone
 pipx inject claude-swap ./cswap-pin
 ```
 
-Technisch ist der Proxy ein *Man-in-the-Middle* (MITM). Er entschlüsselt die HTTPS-Verbindung zu Anthropic lokal. Dafür nutzt er eine eigene Zertifizierungsstelle (engl. *Certificate Authority*, CA). Sie ist nicht systemweit installiert. `cswap pin` trägt Proxy-Adresse und CA in den `env`-Block von `~/.claude.json` ein, und Claude Code übernimmt sie in den eigenen Prozess. Das ist dasselbe Verfahren, das Firmen-Proxys nutzen, und Claude Code unterstützt es [offiziell](https://code.claude.com/docs/en/network-config) über `HTTPS_PROXY` und `NODE_EXTRA_CA_CERTS`. Der Proxy sieht damit den Anthropic-Verkehr im Klartext. Auch ihn habe ich geforkt und gelesen, bevor er auf die Kiste durfte. Es sind also zwei Forks in meinem Account. Bei einem Werkzeug, das den Datenverkehr sieht, ist das Pflicht.
+Technisch ist der Proxy ein *Man-in-the-Middle* (MITM). Er entschlüsselt die HTTPS-Verbindung zu Anthropic lokal. Dafür nutzt er eine eigene Zertifizierungsstelle (engl. *Certificate Authority*, CA). Sie ist nicht systemweit installiert. `cswap pin` trägt Proxy-Adresse und CA in den `env`-Block von `~/.claude.json` ein, und Claude Code übernimmt sie in den eigenen Prozess. Das ist dasselbe Verfahren, das Firmen-Proxys nutzen, und Claude Code unterstützt es [offiziell](https://code.claude.com/docs/en/network-config) über `HTTPS_PROXY` und `NODE_EXTRA_CA_CERTS`. Der Proxy sieht damit den Anthropic-Verkehr im Klartext. Auch ihn solltest du forken und lesen, bevor er auf die Kiste darf. Bei einem Werkzeug, das den Datenverkehr sieht, ist das Pflicht. Am Ende liegen also zwei Forks in deinem Account.
 
 ## Automatisch wechseln: `cswap auto` als Dienst
 
@@ -177,21 +177,21 @@ Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann errei
 
 ## Fehlalarm: Die Agenten wittern einen Angriff
 
-Auf dem mini lief ein mehrstufiger Lektorats-Workflow: Recherche-Agenten prüfen die Fakten eines Artikels im Web. Dabei schlugen diese Agenten **Alarm**. Sie hielten die abgerufenen Inhalte für manipuliert und führten die Proxy-Umgebungsvariablen und die fremde CA als Beleg für einen Angriff an.
+Auf dem mini lief ein mehrstufiger Lektorats-Workflow: Recherche-Agenten prüften die Fakten eines Artikels im Web. Dabei schlugen diese Agenten **Alarm**. Sie hielten die abgerufenen Inhalte für manipuliert und führten die Proxy-Umgebungsvariablen und die fremde CA als Beleg für einen Angriff an.
 
-Das ist ein Feature. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
+Das war ein Feature. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
 
 Hatten sie recht? Das lässt sich prüfen. Ein Abruf von `example.com` durch den Proxy kommt mit dem *echten* öffentlichen Zertifikat zurück. Hätte der Proxy hier mitgelesen, wäre es seines gewesen. Auch der Quelltext bestätigt das: Der Proxy entschlüsselt **ausschließlich** `api.anthropic.com`. Jeden anderen Host reicht er als blinden Tunnel durch.
 
-Der Verkehr war also echt. Der Alarm zeigt trotzdem eine Falle: Setzt du die Proxy-Variablen und die CA für Claude Code, erbt sie jede Shell, die ein Agent startet. Jeder Befehl sieht dann den Proxy, und jeder Download läuft durch ihn. Der Pin braucht aber nur den Claude-Prozess selbst. Darum entfernt eine einzige Zeile in `~/.zshenv` die Variablen aus jeder Agenten-Shell:
+Der Verkehr war also echt. Der Alarm zeigte trotzdem eine Falle auf: Setzt du die Proxy-Variablen und die CA für Claude Code, erbt sie jede Shell, die ein Agent startet. Jeder Befehl sieht dann den Proxy, und jeder Download läuft durch ihn. Der Pin braucht aber nur den Claude-Prozess selbst. Entferne die Variablen deshalb mit einer einzigen Zeile in `~/.zshenv` aus jeder Agenten-Shell:
 
 ```bash
 unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS
 ```
 
-Die Shell-Befehle der Agenten laufen bei mir über zsh, und zsh liest `~/.zshenv` bei jedem Aufruf. Der Claude-Prozess behält den Pin, die Agenten sehen ihn in ihren Shells nicht mehr.
+Das wirkt, wenn die Shell-Befehle deiner Agenten über zsh laufen, denn zsh liest `~/.zshenv` bei jedem Aufruf. Der Claude-Prozess behält den Pin, die Agenten sehen ihn in ihren Shells nicht mehr.
 
-Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#ein-prinzip-erzähl-den-agenten-nie-vom-rosa-elefanten) zurück: **Erzähl den Agenten nie vom rosa Elefanten.** Weiß eine Session von einem exotischen Setup, erklärt sie sich jedes Problem zuerst damit. Darum erkläre ich den Agenten nicht, dass der Proxy harmlos ist. Stattdessen sehen die Agenten in ihren Shells den Proxy gar nicht mehr. Von dem Elefanten weiß weiterhin nur ich.
+Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#ein-prinzip-erzähl-den-agenten-nie-vom-rosa-elefanten) zurück: **Erzähl den Agenten nie vom rosa Elefanten.** Weiß eine Session von einem exotischen Setup, erklärt sie sich jedes Problem zuerst damit. Erklär den Agenten deshalb nicht, dass der Proxy harmlos ist. Sorg lieber dafür, dass sie ihn in ihren Shells gar nicht erst sehen. Von dem Elefanten weißt dann nur du.
 
 ## Ein Prinzip: Vertraue keinem Werkzeug blind deine Schlüssel an
 
@@ -218,7 +218,7 @@ Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du k
 - **Mehr Konten heißt nicht unendlich.** Sind alle Konten an der Schwelle, findet `cswap auto` kein Ziel mehr und meldet das mit Exit-Code 3 („no viable target / all exhausted“). Und jedes weitere Abo kostet seinen vollen Preis.
 - **Der Pin hängt an einem offenen Pull Request.** Bis PR #210 gemergt ist, läuft `cswap pin` nur aus dem eigenen Fork.
 - **Eigene Forks kosten Pflege.** Bei jedem Upstream-Update heißt es: Diff lesen, neu installieren. Das ist der Preis dafür, keinem fremden Auto-Update zu vertrauen.
-- **Der Proxy sieht den Anthropic-Verkehr im Klartext.** Das gilt für jeden Proxy mit TLS-Inspektion, auch für die in Firmennetzen. Tragbar ist das, weil ich den Code gelesen habe und die Reichweite auf das Nötigste beschränkt ist.
+- **Der Proxy sieht den Anthropic-Verkehr im Klartext.** Das gilt für jeden Proxy mit TLS-Inspektion, auch für die in Firmennetzen. Tragbar ist das nur, wenn du den Code gelesen hast und die Reichweite auf das Nötigste beschränkt ist.
 
 ## Fazit
 

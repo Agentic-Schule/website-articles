@@ -84,7 +84,7 @@ So the goal is: **switch to another subscription automatically before the limit,
 
 The first tool is the open source tool [`claude-swap`](https://github.com/realiti4/claude-swap) (command: `cswap`, MIT license). It relies on a detail of Claude Code: **Claude Code re-reads its credentials when they change.** If they live in a file, the *next* message already goes through the new account. That is how the [`claude-swap` documentation](https://github.com/realiti4/claude-swap#tips) describes it, and that is how it behaves on my mini. There the credentials live in a file at `~/.claude/.credentials.json`. Otherwise, on macOS, they live in the Keychain. According to the same source, Claude Code caches them there for about 30 seconds, after which the switch takes effect as well.
 
-`cswap` stores the credentials for each account and swaps them on demand, without a restart and without `/login`. It is not limited to two accounts. I work with two; the principle stays the same with three or four. How I install it is shown in the next section. You sign in **once** per subscription, after that this is enough:
+`cswap` stores the credentials for each account and swaps them on demand, without a restart and without `/login`. It is not limited to two accounts. I work with two; the principle stays the same with three or four. How to install it safely is shown in the next section. You sign in **once** per subscription, after that this is enough:
 
 ```bash
 cswap switch 2      # from the next message on, everything runs on subscription 2
@@ -93,7 +93,7 @@ cswap switch        # rotate to the next account
 cswap list          # usage (5h/7d) of all accounts
 ```
 
-One detail of my setup matters: all sessions share **one** global credential file. A `cswap switch` therefore moves all sessions to the other subscription. That is intended when account A hits its weekly limit.
+Important: all sessions share **one** global credential file. A `cswap switch` therefore moves all sessions to the other subscription. That is intended when account A hits its weekly limit.
 
 This is how you register the accounts:
 
@@ -111,11 +111,11 @@ The browser login per account is the only step no tool can take off your hands. 
 
 ## Trust Is Good, Forking Is Better
 
-`cswap` handles my **OAuth tokens**, the keys to my accounts. Before a tool like that runs on a machine that never shuts down, I want to know what it does. So I read the source code first, before typing `pipx install`.
+`cswap` handles your **OAuth tokens**, the keys to your accounts. Before a tool like that runs on a machine that never shuts down, you should know what it does. So read the source code first, before you type `pipx install`.
 
 The most important question: where does network traffic go? The source code only contains Anthropic's own endpoints (`api.anthropic.com`, `platform.claude.com`) and a version check against PyPI. No third-party domain, no telemetry. The package is published through PyPI's *Trusted Publishing* from a GitHub workflow, and the repo comes with an extensive test suite. So far, so trustworthy.
 
-Still, I don't pull a tool that holds my keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update slips in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/en/blog/2026-09-malicious-ai-skills). That's why I take the clean route:
+Still, you should not pull a tool that holds your keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update slips in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/en/blog/2026-09-malicious-ai-skills). So take the clean route:
 
 ```bash
 # fork into your own account and check out the reviewed state locally
@@ -125,7 +125,7 @@ pipx install ./claude-swap
 # updates only on purpose: fetch upstream, read the diff, reinstall
 ```
 
-`cswap` comes with its own update command, `cswap upgrade`, which fetches the latest version from PyPI. I don't use it. That way, only code I have read gets to run.
+`cswap` comes with its own update command, `cswap upgrade`, which fetches the latest version from PyPI. Better leave it alone. That way, only code you have read gets to run.
 
 ## Remote Control: The Pin Holds the Session
 
@@ -137,7 +137,7 @@ The solution is called [`cswap-pin`](https://github.com/codeslake/cswap-pin) and
 cswap pin 1          # Remote Control and artifacts stay on account 1
 ```
 
-At the time of this article, the integration into `cswap` is an [open pull request](https://github.com/realiti4/claude-swap/pull/210) in the upstream project. Until it is merged, `cswap pin` only exists if you merge the PR into your fork of `claude-swap`. I install the proxy itself from a fork of my own as well and inject it into the same environment:
+At the time of this article, the integration into `cswap` is an [open pull request](https://github.com/realiti4/claude-swap/pull/210) in the upstream project. Until it is merged, `cswap pin` only exists if you merge the PR into your fork of `claude-swap`. Ideally, install the proxy itself from a fork of your own as well and inject it into the same environment:
 
 ```bash
 cd claude-swap
@@ -148,7 +148,7 @@ gh repo fork codeslake/cswap-pin --clone
 pipx inject claude-swap ./cswap-pin
 ```
 
-Technically, the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. `cswap pin` writes the proxy address and the CA into the `env` block of `~/.claude.json`, and Claude Code applies them to its own process. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. I forked and read this one too before it was allowed on the box. So there are two forks in my account. For a tool that sees your traffic, that is mandatory.
+Technically, the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. `cswap pin` writes the proxy address and the CA into the `env` block of `~/.claude.json`, and Claude Code applies them to its own process. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. Fork and read this one too before it is allowed on the box. For a tool that sees your traffic, that is mandatory. In the end, there are two forks in your account.
 
 ## Switching Automatically: `cswap auto` as a Service
 
@@ -176,21 +176,21 @@ In daily use the result is unspectacular, and that is how it should be. At some 
 
 ## False Alarm: The Agents Suspect an Attack
 
-The mini was running a multi-stage editing workflow: research agents check the facts of an article on the web. During that, these agents raised the **alarm**. They considered the fetched content tampered with and cited the proxy environment variables and the foreign CA as evidence of an attack.
+The mini was running a multi-stage editing workflow: research agents checked the facts of an article on the web. During that, these agents raised the **alarm**. They considered the fetched content tampered with and cited the proxy environment variables and the foreign CA as evidence of an attack.
 
-That is a feature. The agents had no way of knowing where the proxy came from. From their point of view a man-in-the-middle with its own CA was sitting there, and that *could* have been malware. That is how a vigilant reviewer should react.
+That was a feature. The agents had no way of knowing where the proxy came from. From their point of view a man-in-the-middle with its own CA was sitting there, and that *could* have been malware. That is how a vigilant reviewer should react.
 
 Were they right? That can be checked. A request to `example.com` through the proxy comes back with the *real* public certificate. Had the proxy been reading along, it would have been its own. The source code confirms it as well: the proxy decrypts **only** `api.anthropic.com`. It passes every other host through as a blind tunnel.
 
-So the traffic was genuine. Still, the alarm points to a trap: if you set the proxy variables and the CA for Claude Code, every shell an agent starts inherits them. Every command then sees the proxy, and every download goes through it. But the pin only needs the Claude process itself. That's why a single line in `~/.zshenv` removes the variables from every agent shell:
+So the traffic was genuine. Still, the alarm revealed a trap: if you set the proxy variables and the CA for Claude Code, every shell an agent starts inherits them. Every command then sees the proxy, and every download goes through it. But the pin only needs the Claude process itself. So remove the variables from every agent shell with a single line in `~/.zshenv`:
 
 ```bash
 unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS
 ```
 
-On my machine the agents' shell commands run through zsh, and zsh reads `~/.zshenv` on every invocation. The Claude process keeps the pin; the agents no longer see it in their shells.
+This works when your agents' shell commands run through zsh, because zsh reads `~/.zshenv` on every invocation. The Claude process keeps the pin; the agents no longer see it in their shells.
 
-And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#a-principle-never-tell-the-agents-about-the-pink-elephant) returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. That's why I don't explain to the agents that the proxy is harmless. Instead, the agents don't see the proxy in their shells at all anymore. Only I still know about the elephant.
+And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#a-principle-never-tell-the-agents-about-the-pink-elephant) returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. So don't explain to the agents that the proxy is harmless. Rather make sure they don't see it in their shells in the first place. Then only you know about the elephant.
 
 ## A Principle: Never Blindly Hand a Tool Your Keys
 
@@ -217,7 +217,7 @@ But for all the joy about the seamless switch: there are a few things you should
 - **More accounts don't mean infinite.** Once all accounts are at the threshold, `cswap auto` finds no target and reports it with exit code 3 ("no viable target / all exhausted"). And every additional subscription costs its full price.
 - **The pin depends on an open pull request.** Until PR #210 is merged, `cswap pin` only runs from your own fork.
 - **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. That is the price of not trusting someone else's auto-update.
-- **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. It is acceptable because I have read the code and its reach is limited to the bare minimum.
+- **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. It is only acceptable if you have read the code and its reach is limited to the bare minimum.
 
 ## Conclusion
 
