@@ -67,13 +67,13 @@ Two machines, one common denominator:
 
 The crucial trick: **Both machines use the same username and therefore the same home directory `/Users/<name>`.** All paths, all repos, all keys and, as we'll see shortly, all agent sessions live under identical paths on both machines. That makes the transition seamless: what applies on the mini applies one-to-one on the MacBook Pro.
 
-Strictly speaking, a third role joins in: **devices that only work as a terminal**, no dev environment of their own, no copy of the data, just a window into the ground station. That's the phone (via Termux) on the one hand, and on the other a small MacBook that I only bring along to mosh in – I simply call it **"Mac Terminal"**. So the only full mirror is the big MacBook Pro: it can do both, work standalone *or* just serve as a window. Everything else is a pure terminal.
+Strictly speaking, a third role joins in: **devices that only work as a terminal**, no dev environment of their own, no copy of the data, just a window into the ground station. That's the phone (via Termux) on the one hand, and on the other a small MacBook that I only bring along to mosh in; I simply call it **"Mac Terminal"**. So the only full mirror is the big MacBook Pro: it can do both, work standalone *or* just serve as a window. Everything else is a pure terminal.
 
-The mini sits without a monitor and without a keyboard among the rest of my home tech, next to the NAS, the router, the fat switch, and all the cabling you tend to have hanging on your network. It's reachable only over the network. That sounds like a limitation, but it's half the trick: what runs headless also runs when nobody is logged in.
+The mini sits without a monitor and without a keyboard among the rest of my home tech, next to the NAS, the router, the fat switch, and all the cabling you tend to have hanging on your network. It's reachable only over the network. That sounds like a limitation, but it's half the trick: what runs *headless* (without a screen and without visible windows) also runs when nobody is logged in.
 
 Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon delivers a lot of performance for the money, the box is **tiny** and fits in any corner, runs **absolutely silently** (I never hear the fan in everyday use), and sips so little **power** that running it 24/7 barely shows up on the bill. At idle it draws just a handful of watts. Exactly what you want from a machine that never turns off.
 
-## Sessions That Survive Connection Drops
+## Surviving Connection Drops
 
 Moving to a remote machine does, however, introduce a problem that never existed locally: the connection to it can drop. A Wi-Fi switch (office → train → home) is enough, and a normal SSH terminal is dead. The answer to that is **[tmux](https://github.com/tmux/tmux)**, a terminal multiplexer. Instead of starting my programs directly in the SSH session, they run *inside* tmux on the mini. If the connection drops, tmux, and everything in it, simply keeps running. On the next dock-in I reattach as if nothing had happened. **tmux is the central building block** of this setup, only through it do the agent runs survive everything that can go wrong between me and the mini.
 
@@ -84,7 +84,7 @@ Two things make it comfortable:
 
 Important to understand: tmux saves the **connection**, not the power. A reboot still ends the running processes, but the layout and the windows come back, and the agent session can be resumed (more on that shortly).
 
-> **🛠️ Build it yourself — auto-attach in `~/.zshrc`**
+> **🛠️ Build it yourself: auto-attach in `~/.zshrc`**
 > ```bash
 > # On interactive login, automatically attach to the tmux session 'main'
 > if [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]]; then
@@ -93,19 +93,21 @@ Important to understand: tmux saves the **connection**, not the power. A reboot 
 > ```
 > The most important reflex afterwards: detach with **`Ctrl-b d`** (it keeps running!), **never leave with `exit`**, that kills the window.
 
-## Docking In From Anywhere – All the Way to the Phone
+## Docking In From Anywhere: All the Way to the Phone
 
 For access I rely entirely on **[mosh](https://mosh.org)** (Mobile Shell), at home as on the road, always the same command. That way I never have to think about or switch between `ssh` and `mosh`.
 
 And mosh is genuinely great. It's the better SSH for everything that isn't on a fixed cable: if the network changes or briefly drops, the connection lives on **roaming-proof**, no frozen terminal, no "broken pipe". Typed characters appear instantly via local echo, even with lousy latency on the train. Network gone, network back, mosh just keeps going without reconnecting. Underneath it's a completely normal SSH login with key auth, no password.
 
+mosh does have one catch: it needs open UDP ports (between 60000 and 61000) and only transfers the visible screen, so the scrollback stays patchy. In my setup, tmux keeps the history anyway.
+
 And how does the phone even reach the box back home from the road? I started with the Fritzbox's **[WireGuard](https://www.wireguard.com)** VPN; these days everything runs over **[Tailscale](https://tailscale.com)** (a mesh VPN based on WireGuard). The reason: Tailscale also copes wonderfully with **IPv6** and constantly changing connections, you reach the ground station reliably, no matter which network you're on. You really always get home.
 
 And the pièce de résistance: **From the phone.** On Android the terminal app *[Termux](https://termux.dev)* runs, inside it mosh, inside that tmux, inside that the agent. That way I can reach the raw session from anywhere if need be.
 
-I rarely use that direct terminal route, though. Most of the time I work more comfortably on the phone via the **Remote Control feature of the Claude app**. Getting in involves a little ritual: open a new tmux window (`Ctrl-b c`), start `claude`, release remote control with `/rc`, and name the session with `/rename` – *only then* do I switch to the app and keep typing there. Fiddly the first time, but you get used to it.
+I rarely use that direct terminal route, though. Most of the time I work more comfortably on the phone via the **Remote Control feature of the Claude app**. Getting in involves a little ritual: open a new tmux window (`Ctrl-b c`), start `claude`, release remote control with `/rc`, and name the session with `/rename`. *Only then* do I switch to the app and keep typing there. Fiddly the first time, but you get used to it.
 
-> **🛠️ Build it yourself — one short name, always mosh**
+> **🛠️ Build it yourself: one short name, always mosh**
 > Set up an alias in `~/.ssh/config` (mosh uses it just like ssh):
 > ```ssh-config
 > Host mini
@@ -120,21 +122,21 @@ I rarely use that direct terminal route, though. Most of the time I work more co
 
 > **📱 Phone trick (Termux):** Termux has no Ctrl key. It lives on **Volume-Down**, so `Vol-Down + C` for `Ctrl-C`, `Vol-Down + R` for `Ctrl-R`. The extra key row (ESC/CTRL/TAB/arrows) appears with a swipe up. Thank me later! 😄
 
-## Everything Duplicated, Always in Sync
+## Everything Duplicated: Always in Sync
 
 Up to here I could *access* the mini from anywhere. But the real kicker is that my big MacBook Pro is not a mere terminal, but a **true mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror feels like a permanent, second-by-second backup. Damn, that's good, with one important caveat I'll get to below.
 
 This is handled by **[Syncthing](https://syncthing.net)**, a peer-to-peer sync with no cloud in between. It mirrors bidirectionally:
 
-- `~/Work` – all projects and repos
-- `~/.claude` – **and here it gets interesting: the agent sessions themselves.** Claude Code stores its conversation logs under `~/.claude/projects/`. If those are synced along, I can continue a session I started on the mini over on the MacBook – context, history, everything there.
-- `~/Shots` – screenshots (handy, more on that in a moment)
+- `~/Work`: all projects and repos
+- `~/.claude`: **and here it gets interesting: the agent sessions themselves.** Claude Code stores its conversation logs under `~/.claude/projects/`. If those are synced along, I can continue a session I started on the mini over on the MacBook: context, history, everything there.
+- `~/Shots`: screenshots (handy, more on that in a moment)
 
 > **⚠️ Definitely adjust `cleanupPeriodDays`.** By default Claude Code clears the conversation logs under `~/.claude/projects/` after 30 days. If you want to sync them, as here, and keep them as a reference, set `cleanupPeriodDays` in `~/.claude/settings.json` much higher, in my case to 365. Otherwise a tidied-up machine deletes the history, and the sync dutifully carries that deletion over to the other one.
 
 What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `build`, `target`, and caches are in `.stignore` and get rebuilt per machine (`npm ci`, `cargo build`). Copying compiled binaries across machines breaks at library linking sooner or later anyway, better to rebuild cleanly.
 
-> **🛠️ Build it yourself — exclude artifacts from the sync (`.stignore`)**
+> **🛠️ Build it yourself: exclude artifacts from the sync (`.stignore`)**
 > ```gitignore
 > node_modules
 > dist
@@ -152,19 +154,19 @@ What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `bui
 
 > **⚠️ And the promised caveat: a mirror is not a backup.** A bidirectional sync also replicates deletions and broken files faithfully. The newer version wins, an empty one if need be. So what once really saved me was not the mirror but Syncthing's **file versioning** (`.stversions`): before every overwrite it stores the old state with a timestamp. And because that history is **local per device** and is not synced along, in a pinch one machine still had what the other had already lost. That still does not replace a real off-device backup, but it has brought back a chat history I had already given up on.
 
-## Headless Services That Just Run
+## Running Services Headless
 
-An agent is only as good as the environment it's allowed to work in. On the mini it should find a **complete dev stack**, database, [Docker](https://www.docker.com), browser, and that without anyone logging in at a screen. Because the mini has no logged-in desktop at all.
+An agent is only as good as the environment it's allowed to work in. On the mini it should find a **complete dev stack**: database, [Docker](https://www.docker.com), browser. And that without anyone logging in at a screen. Because the mini has no logged-in desktop at all.
 
 Three building blocks:
 
-**FileVault with remote unlock.** The disk is encrypted (as it should be). After a restart the mini hangs in the pre-boot lock, before there's even a network. The trick: a second admin user with "SecureToken" is allowed to unlock the disk via SSH, after that the mini boots through and all services start. For planned restarts there's even `sudo fdesetup authrestart`: it unlocks automatically on reboot without locking yourself out. And `pmset autorestart 1` makes sure the mini comes back up on its own after a power outage. For the very worst case, a **[JetKVM](https://jetkvm.com)** is also attached to the box, a small KVM-over-IP device that gives me picture and keyboard remotely, all the way down to the firmware/boot screen. Even if no operating system is running anymore or a reboot hangs at the pre-boot lock, I can still get in. Bottom line, the machine has several staggered rescue lines so I *always* get back to it, and yet everything stays encrypted, every single one of my devices.
+**FileVault with remote unlock.** The disk is encrypted (as it should be). After a restart the mini hangs in the pre-boot lock, before there's even a network. The trick: a second admin user with "SecureToken" is allowed to unlock the disk via SSH, after that the mini boots through and all services start. For planned restarts there's even `sudo fdesetup authrestart`: it unlocks automatically on reboot without locking yourself out. And `pmset autorestart 1` makes sure the mini comes back up on its own after a power outage. For the very worst case, a **[JetKVM](https://jetkvm.com)** is also attached to the box, a small KVM-over-IP device (keyboard, video, and mouse over the network) that gives me picture and keyboard remotely, all the way down to the firmware/boot screen. Even if no operating system is running anymore or a reboot hangs at the pre-boot lock, I can still get in. So the machine has several staggered rescue lines so I *always* get back to it, and yet everything stays encrypted, every single one of my devices.
 
 **Docker without Docker Desktop.** Docker Desktop needs a GUI login, on a headless machine a deal-breaker. Instead, **[colima](https://github.com/abiosoft/colima)** runs as a system service (LaunchDaemon) that starts at boot. Under the hood the same technology as Docker Desktop (Apple's Virtualization.framework), with Rosetta for **Intel images**, that is, for the old SQL Server that sadly was never ported to ARM. Thanks, Microsoft. So the agent gets a `docker` and `docker compose` that's simply there.
 
-**A real browser for the agent.** Via a self-built headless [Playwright MCP](https://github.com/microsoft/playwright-mcp) server, the agent can drive a real Chrome instance, open pages, click, fill in forms, take screenshots. "Headless" here means: no visible window, no GPU/display context needed (`--disable-gpu`), so it runs stably on the monitorless box.
+**A real browser for the agent.** Via a self-built headless [Playwright MCP](https://github.com/microsoft/playwright-mcp) server, the agent can drive a real Chrome instance: open pages, click, fill in forms, take screenshots. "Headless" here means: no visible window, no GPU/display context needed (`--disable-gpu`), so it runs stably on the monitorless box.
 
-> **🛠️ Build it yourself — colima as an autostart service**
+> **🛠️ Build it yourself: colima as an autostart service**
 > Create the VM once (keeping it lean is enough for most cases):
 > ```bash
 > colima start --vm-type vz --vz-rosetta --cpu 6 --memory 4 --disk 60
@@ -179,9 +181,9 @@ Setting up this Playwright MCP so that it stays unobtrusive, survives updates, a
 
 The agent has rebuilt the frontend, now I want to *see* it, in a real browser, from my laptop or phone. But the dev server runs on the mini and dutifully listens only on `localhost` there.
 
-My solution is an **[nginx](https://nginx.org) reverse proxy** on the mini that elegantly solves exactly one problem: it makes every local dev server visible on the network – **without configuring anything per project.** nginx binds the mini's LAN IP and rewrites the `Host` header to `localhost`. That way the host checks of modern dev servers ([Angular](https://angular.dev), [Vite](https://vite.dev)) don't kick in, and I neither have to set `--host 0.0.0.0` nor fiddle with `allowedHosts`. In the browser I simply type `http://mac-mini.fritz.box:4200`, done.
+My solution is an **[nginx](https://nginx.org) reverse proxy** on the mini that elegantly solves exactly one problem: it makes every local dev server visible on the network, **without configuring anything per project.** nginx binds the mini's LAN IP and rewrites the `Host` header to `localhost`. That way the host checks of modern dev servers ([Angular](https://angular.dev), [Vite](https://vite.dev)) don't kick in, and I neither have to set `--host 0.0.0.0` nor fiddle with `allowedHosts`. In the browser I simply type `http://mac-mini.fritz.box:4200`, done.
 
-> **🛠️ Build it yourself — nginx dev proxy (core)**
+> **🛠️ Build it yourself: nginx dev proxy (core)**
 > ```nginx
 > server {
 >   listen 192.168.178.50:4200;     # mini's LAN IP : dev port
@@ -198,11 +200,11 @@ My solution is an **[nginx](https://nginx.org) reverse proxy** on the mini that 
 >   location @ipv6 { proxy_pass http://[::1]:$server_port$request_uri; proxy_set_header Host localhost:$server_port; }
 > }
 > ```
-> Two gotchas from practice: the `Host` header must say **`localhost`** (Vite rejects the bare IP with HTTP 400), and newer dev servers sometimes bind `localhost` only on IPv6 (`::1`), hence the `@ipv6` fallback.
+> Two gotchas from practice: the `Host` header must say **`localhost`** (Vite blocks unknown hostnames with HTTP 403, "Blocked request"), and newer dev servers sometimes bind `localhost` only on IPv6 (`::1`), hence the `@ipv6` fallback.
 
 Some apps, however, call their backend **hardcoded at `http://localhost:PORT`**, from the browser, "localhost" then points at *my device*, not the mini, and the API calls run into nothing. For this special case there's no proxy magic, but a clean trick: an SSH tunnel that mirrors the ports in question to the mini. Then the app's `localhost` assumption holds again.
 
-> **🛠️ Build it yourself — app with a hardcoded `localhost` backend**
+> **🛠️ Build it yourself: app with a hardcoded `localhost` backend**
 > ```bash
 > # Tunnel frontend (4200) AND backend (5001) to the mini, then open via localhost
 > ssh -N -L 4200:localhost:4200 -L 5001:localhost:5001 mini
@@ -210,7 +212,7 @@ Some apps, however, call their backend **hardcoded at `http://localhost:PORT`**,
 > ```
 > From the browser's point of view everything is then `localhost`, exactly as the app expects.
 
-## A Day With the Ground Station
+## In Practice: A Day With the Ground Station
 
 What does it feel like day to day? Roughly like this:
 
@@ -218,7 +220,7 @@ What does it feel like day to day? Roughly like this:
 
 **Morning at the desk.** I dock in from the MacBook via `mosh mini`, land in tmux, and start an agent on a bigger task in some project, say, filling in test coverage. Off it goes. By the way, I still like working at the big monitor most: the diffs that Claude Code constantly shows give a good overview of what's happening, you feel like you're staying in control.
 
-**Midday on the move.** I fold the MacBook shut and head off. The agent? Keeps running, it sits on the mini, not in the laptop. On the train I pull out the phone, open the **Claude app**, and keep working on the small screen: the agent has three of five modules done and is waiting for a decision – I answer the question with my thumb, it carries on. The sense of control is lower here, for the diff view you have to tap specifically, but you have to pick your poison.
+**Midday on the move.** I fold the MacBook shut and head off. The agent? Keeps running, it sits on the mini, not in the laptop. On the train I pull out the phone, open the **Claude app**, and keep working on the small screen: the agent has three of five modules done and is waiting for a decision, I answer the question with my thumb, it carries on. The sense of control is lower here, for the diff view you have to tap specifically, but you have to pick your poison.
 
 **Afternoon at the café.** The MacBook is open again; thanks to sync, all files and the session history are up to date. I open the rebuilt frontend in the browser via the dev proxy and take a look, on a real screen, not in the terminal. And I'm sipping an iced matcha latte … Just kidding: I'm not in a café like some AI influencer. I've long been back in the basement, it's nice and cool there, and I have three monitors.
 
@@ -226,7 +228,7 @@ What does it feel like day to day? Roughly like this:
 
 Not once did the agent have to "start over" because the battery ran out. No folded-shut lid paused it. That's the real win: **the work is decoupled from the device in my hand.**
 
-That was a deliberately simplified example. The real work only begins with **many parallel sessions** and just as many parallel **git worktrees**. Because a frontier model with all its sub-agents can be damn slow (commands like `/simplify` or `/code-review` with a good dose of `/effort` can run absurdly long), you parallelize almost inevitably. The constant context switching and the mental load involved shouldn't be underestimated, but that has nothing to do with the setup; you'd have the same on a single machine.
+That was a deliberately simplified example. The real work only begins with **many parallel sessions** and just as many parallel **git worktrees** (several working copies of the same repo side by side, more in the [worktree article](https://agentic.schule/en/blog/2026-09-agentic-coding-git-worktrees)). Because a *frontier model* (a model at the current cutting edge) with all its sub-agents can be damn slow (commands like `/simplify` or `/code-review` with a good dose of `/effort` can run absurdly long), you parallelize almost inevitably. The constant context switching and the mental load involved shouldn't be underestimated, but that has nothing to do with the setup; you'd have the same on a single machine.
 
 ## When You Do Have to Work Locally
 
@@ -244,13 +246,13 @@ A trick that crystallized over time: I keep **exactly one** session that knows t
 
 All the **normal** working sessions know nothing about it. They don't notice that they were just running on machine A and are now on machine B, thanks to identical home and identical paths, everything looks exactly the same to them. And that's fully intentional.
 
-Because: **never tell the agents about the pink elephant.** As soon as a session knows it's sitting on an exotic setup, it explains every little E2E problem with exactly that first – "must be the sync", "must be the proxy", "must be the remote machine". If it knows nothing about it, it looks for the cause where it usually sits: in the code. Only Ground Control gets to see the elephant.
+Because: **never tell the agents about the pink elephant.** As soon as a session knows it's sitting on an exotic setup, it explains every little problem in the end-to-end tests with exactly that first: "must be the sync", "must be the proxy", "must be the remote machine". If it knows nothing about it, it looks for the cause where it usually sits: in the code. Only Ground Control gets to see the elephant.
 
 ## Conclusion: Is It Worth It?
 
 A Mac mini on a shelf, a bit of Unix craftsmanship, and suddenly you have a personal, always-running base for agentic work that you operate from anywhere. The building blocks are all standard and open source: tmux, mosh, Syncthing, colima, nginx. None of it is exotic; the special thing is the combination.
 
-A side effect I had underestimated: a **dedicated machine with no GUI and no other processes** has noticeably more usable power. On my normal work machine, with the same amount of RAM, memory was constantly scraping the limit, endless swapping. Super annoying when you have to think about which process to kill now; you definitely don't want to interrupt the agent. On the mini that problem is simply gone.
+A side effect I had underestimated: a **dedicated machine with no GUI and no other processes** has noticeably more usable power. On my normal work machine, with the same amount of RAM, memory was constantly scraping the limit. Endless swapping. Super annoying when you have to think about which process to kill now; you definitely don't want to interrupt the agent. On the mini that problem is simply gone.
 
 And security went up almost as a side effect: on the ground station, only what's needed for work runs, I'm not logged in anywhere else there, not even my usual password manager is installed. That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained.
 
