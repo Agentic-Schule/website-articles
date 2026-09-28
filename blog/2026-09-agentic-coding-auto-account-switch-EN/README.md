@@ -66,7 +66,7 @@ But how do you switch between the subscriptions without the work standing still?
 
 ## The Trick: Your Chats Live on Your Disk
 
-One of the big advantages of Claude Code: your chats live on your disk. According to the [documentation](https://code.claude.com/docs/en/data-usage), Claude Code stores them "locally in plaintext under `~/.claude/projects/`" so that you can resume sessions. Codex does the same and, according to its [documentation](https://learn.chatgpt.com/docs/config-file/config-advanced), keeps its sessions under `~/.codex`. Google's agent IDE Antigravity also has a local data directory under `~/.gemini/antigravity/` ([documentation](https://antigravity.google/docs/agent-settings)). Claude Code on the web is different: there the session runs "on cloud infrastructure instead of on your machine" ([documentation](https://code.claude.com/docs/en/claude-code-on-the-web)).
+One of the big advantages of Claude Code: your chats live on your disk. Claude Code stores them in plain text under `~/.claude/projects/`. Just take a look at the folder yourself. Codex does the same and, according to its [documentation](https://learn.chatgpt.com/docs/config-file/config-advanced), keeps its sessions under `~/.codex`. Google's agent IDE Antigravity also has a local data directory under `~/.gemini/antigravity/` ([documentation](https://antigravity.google/docs/agent-settings)). Claude Code on the web is different: there the session runs "on cloud infrastructure instead of on your machine" ([documentation](https://code.claude.com/docs/en/claude-code-on-the-web)).
 
 So account and chats are separate. You can sign out, sign back in and keep working with *your* chats, even with a different account. That is the trick everything else builds on.
 
