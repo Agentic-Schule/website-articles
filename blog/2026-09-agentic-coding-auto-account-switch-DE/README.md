@@ -20,7 +20,7 @@ language: de
 header: header.jpg
 ---
 
-**Dein Wochenlimit in Claude Code ist bald erreicht? Keine Sorge, dafür gibt es eine Lösung. Usage-Credits und `/limit-reset` sind es nicht. Dieser Artikel zeigt, wie du deine Umgebung mit zwei Open-Source-Werkzeugen so einrichtest, dass Claude Code zwischen mehreren Max-Abos wechselt: automatisch, kurz vor dem Limit, ohne `/logout` und ohne dass Remote Control, die Fernsteuerung vom Handy, abreißt.**
+**Dein Wochenlimit in Claude Code ist bald erreicht? Keine Sorge, dafür gibt es eine Lösung. Usage-Credits und `/limit-reset` sind es nicht. Dieser Artikel zeigt, wie du deine Umgebung mit zwei Open-Source-Werkzeugen so einrichtest, dass Claude Code zwischen mehreren Max-Abos wechselt: automatisch, kurz vor dem Limit, ohne manuelles `/login` und ohne dass Remote Control, die Fernsteuerung vom Handy, abreißt.**
 
 ## Inhalt
 
