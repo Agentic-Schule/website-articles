@@ -98,7 +98,7 @@ cswap switch        # reihum zum nächsten Konto
 cswap list          # Auslastung (5h/7d) aller Konten
 ```
 
-Wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap switch` bewegt darum alle Sessions auf das andere Abo. Das ist gewollt, wenn Konto A ans Wochenlimit stößt.
+Wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap switch` bewegt darum alle Sessions auf das andere Abo. Das ist gewollt, wenn das eine Konto ans Wochenlimit stößt.
 
 Die Konten registrierst du so:
 

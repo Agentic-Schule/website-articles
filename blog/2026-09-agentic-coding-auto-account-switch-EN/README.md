@@ -97,7 +97,7 @@ cswap switch        # rotate to the next account
 cswap list          # usage (5h/7d) of all accounts
 ```
 
-Important: all sessions share **one** global credential file. A `cswap switch` therefore moves all sessions to the other subscription. That is intended when account A hits its weekly limit.
+Important: all sessions share **one** global credential file. A `cswap switch` therefore moves all sessions to the other subscription. That is intended when one account hits its weekly limit.
 
 This is how you register the accounts:
 
