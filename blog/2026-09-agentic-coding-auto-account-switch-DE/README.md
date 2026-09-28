@@ -192,7 +192,7 @@ Der Verkehr ist also prinzipiell in Ordnung. Aber auch völlig unnötig: Warum s
 unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS
 ```
 
-Das wirkt, wenn die Shell-Befehle deiner Agenten über zsh laufen, denn zsh liest `~/.zshenv` bei jedem Aufruf. Der Claude-Prozess behält den Pin, die Agenten sehen ihn in ihren Shells nicht mehr. Die Zeile wirkt allerdings auch in deinen eigenen Terminals. Brauchst du einen Firmen-Proxy, hast du ohnehin ein großes Kuddelmuddel. Proxy hinter Proxy dürfte noch etwas kniffliger werden, aber das ist nicht mein Problem! ;-)
+Das wirkt, wenn die Shell-Befehle deiner Agenten über zsh laufen, denn zsh liest `~/.zshenv` bei jedem Aufruf. Der Claude-Prozess behält den Pin, die Agenten sehen ihn in ihren Shells nicht mehr. Die Zeile wirkt allerdings auch in deinen eigenen Terminals. Brauchst du einen Firmen-Proxy, trägst du in `~/.zshenv` statt `unset` dessen Werte ein, etwa `export HTTPS_PROXY=http://proxy.example.com:8080`. So nutzen die Agenten-Shells den Firmen-Proxy statt des Pin-Proxys.
 
 Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#ein-prinzip-erzähl-den-agenten-nie-vom-rosa-elefanten) zurück: **Erzähl den Agenten nie vom rosa Elefanten.** Weiß eine Session von einem exotischen Setup, erklärt sie sich jedes Problem zuerst damit. Erklär den Agenten deshalb nicht, dass der Proxy harmlos ist. Sorg lieber dafür, dass sie ihn in ihren Shells gar nicht erst sehen. Von dem Elefanten weißt dann nur du.
 
