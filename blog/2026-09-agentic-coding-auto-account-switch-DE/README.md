@@ -115,11 +115,11 @@ Der Browser-Login pro Konto ist der einzige Schritt, den du manuell durchführen
 
 ## Vertrauen ist gut, Forken ist besser
 
-`cswap` fasst deine **OAuth-Tokens** an, also die Schlüssel zu deinen Konten. Bevor so ein Tool auf einem Rechner läuft, der nie ausgeht, solltest du wissen, was es tut. Lies deshalb zuerst den Quelltext, bevor du `pipx install` tippst.
+`cswap` fasst deine **OAuth-Tokens** an, also die Schlüssel zu deinen Konten. Der Autor des Tools ist bestimmt ein sehr vertrauenswürdiger Mensch. Trotzdem vertraue ich hier niemandem. Ein `pipx install claude-swap` direkt von PyPI kommt mir nicht ins Haus. Ich prüfe den Code, forke ihn und baue alles selbst.
 
 Die wichtigste Frage: Wohin geht der Netzwerkverkehr? Im Quelltext stehen nur Anthropics eigene Endpunkte (`api.anthropic.com`, `platform.claude.com`) und ein Versions-Check bei PyPI. Keine fremde Domain, keine Telemetrie. Das Paket wird über PyPIs *Trusted Publishing* aus einem GitHub-Workflow veröffentlicht, und das Repo bringt eine umfangreiche Testsuite mit. So weit, so vertrauenswürdig.
 
-Trotzdem solltest du ein Tool, das deine Schlüssel hält, nicht per Auto-Update aus einer fremden Pipeline beziehen. Das größere Risiko sind künftige Releases: Ein bösartiges Update kommt als beiläufiges Upgrade herein. Das ist ein klassischer *Supply-Chain-Angriff*, also ein Angriff über die Lieferkette. Wie so etwas aussieht, zeigt der Artikel über [böswillige AI-Skills](https://agentic.schule/blog/2026-09-malicious-ai-skills). Geh deshalb den sauberen Weg:
+Ein Tool, das deine Schlüssel hält, solltest du nicht per Auto-Update aus einer fremden Pipeline beziehen. Das größere Risiko sind künftige Releases: Ein bösartiges Update kommt als beiläufiges Upgrade herein. Das ist ein klassischer *Supply-Chain-Angriff*, also ein Angriff über die Lieferkette. Wie so etwas aussieht, zeigt der Artikel über [böswillige AI-Skills](https://agentic.schule/blog/2026-09-malicious-ai-skills). Geh deshalb den sauberen Weg:
 
 ```bash
 # in den eigenen Account forken und den geprüften Stand lokal auschecken

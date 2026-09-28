@@ -114,11 +114,11 @@ The browser login per account is the only step you have to do manually.
 
 ## Trust Is Good, Forking Is Better
 
-`cswap` handles your **OAuth tokens**, the keys to your accounts. Before a tool like that runs on a machine that never shuts down, you should know what it does. So read the source code first, before you type `pipx install`.
+`cswap` handles your **OAuth tokens**, the keys to your accounts. The author of the tool is surely a very trustworthy person. Still, I trust nobody here. A `pipx install claude-swap` straight from PyPI does not get into my house. I check the code, fork it and build everything myself.
 
 The most important question: where does network traffic go? The source code only contains Anthropic's own endpoints (`api.anthropic.com`, `platform.claude.com`) and a version check against PyPI. No third-party domain, no telemetry. The package is published through PyPI's *Trusted Publishing* from a GitHub workflow, and the repo comes with an extensive test suite. So far, so trustworthy.
 
-Still, you should not pull a tool that holds your keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update slips in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/en/blog/2026-09-malicious-ai-skills). So take the clean route:
+You should not pull a tool that holds your keys via auto-update from someone else's pipeline. The bigger risk is future releases: a malicious update slips in as a casual upgrade. That is a classic *supply chain attack*. What that looks like is shown in the article about [malicious AI skills](https://agentic.schule/en/blog/2026-09-malicious-ai-skills). So take the clean route:
 
 ```bash
 # fork into your own account and check out the reviewed state locally
