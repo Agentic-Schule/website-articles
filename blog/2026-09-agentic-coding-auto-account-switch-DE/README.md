@@ -44,14 +44,14 @@ Das Abo spielt in einer anderen Liga. Anthropic schrieb bei der Einführung der 
 
 ### Kein `/limit-reset`
 
-Seit September taucht in Claude Code der Befehl `/limit-reset` auf. Dokumentiert ist er kaum: Er steht in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) und in keinem Changelog, im Befehlsmenü ist er versteckt. Limit-Resets selbst bewirbt Anthropic dagegen offensiv auf Social Media ([X](https://x.com/claudeai/status/2102435538120691886)). Meine Vermutung: auch deshalb, weil OpenAI dasselbe anbietet. In Codex lassen sich verdiente Resets seit Juni direkt über `/usage` einlösen ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). Einmal „Gehe über Los“ klingt ja auch ziemlich verlockend.
+Seit Ende August taucht in Claude Code der Befehl `/limit-reset` auf. Dokumentiert ist er kaum: Er steht in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) und in keinem Changelog, im Befehlsmenü ist er versteckt. Limit-Resets selbst bewirbt Anthropic dagegen offensiv auf Social Media ([X](https://x.com/claudeai/status/2102435538120691886)). Meine Vermutung: auch deshalb, weil OpenAI dasselbe anbietet. In Codex lassen sich verdiente Resets seit Juni direkt über `/usage` einlösen ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). Einmal „Gehe über Los“ klingt ja auch ziemlich verlockend.
 
 Ein Blick in Claude Code 2.1.283 zeigt, dass sich hinter `/limit-reset` zwei Varianten verbergen, die jeweils ein Feature-Schalter auf dem Server freigibt:
 
 - **Ein wöchentlicher Reset des 5-Stunden-Limits.** Der Hinweis im Programm lautet „reset your session limit now · uses weekly limit · 1/week", die Erfolgsmeldung endet mit „your weekly limit still applies". Das Wochenlimit bleibt also unberührt.
 - **Ein Kontingent an Resets mit Ablaufdatum.** Es füllt die Limits wieder auf („{resets} left · use by {date}"). Wer es bekommt, entscheidet Anthropic.
 
-Ob du einen Reset nutzen darfst, entscheidet ebenfalls der Server. Im Code sind Ablehnungsgründe hinterlegt, darunter `tier`, `tenure` (Kontoalter), `other_experiment` und `not_at_wall`, also „noch nicht am Limit". Angezeigt wird davon nichts. Die Meldung lautet in jedem dieser Fälle „A session-limit reset isn't available right now." Bei mir hat das erste Max-Abo den Befehl akzeptiert, das zweite nicht, ohne jede Begründung. Nicht sehr transparent. Vermutlich lag es am Kontoalter, also an `tenure`. Genau darüber häufen sich die Berichte: mindestens vier offene Issues seit Anfang September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), keines mit einer Antwort von Anthropic. Nutzer vermuten einen A/B-Test: „I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
+Ob du einen Reset nutzen darfst, entscheidet ebenfalls der Server. Im Code sind Ablehnungsgründe hinterlegt, darunter `tier`, `tenure` (Kontoalter), `other_experiment` und `not_at_wall`, also „noch nicht am Limit". Angezeigt wird davon nichts. Die Meldung lautet in jedem dieser Fälle „A session-limit reset isn't available right now." Bei mir hat das erste Max-Abo den Befehl akzeptiert, das zweite nicht, ohne jede Begründung. Nicht sehr transparent. Vermutlich lag es am Kontoalter, also an `tenure`. Über abgelehnte Resets ohne Begründung häufen sich die Berichte: mindestens vier offene Issues seit Anfang September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), keines mit einer Antwort von Anthropic. Nutzer vermuten einen A/B-Test: „I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
 Selbst ein funktionierender Reset verschafft dir nur einmal Luft. Wer jede Woche ans Limit stößt, steht in der nächsten Woche wieder dort.
 
@@ -61,9 +61,11 @@ Bleibt der Weg, der wirklich trägt: ein **zweites Max-Abo**, bei Bedarf auch ei
 
 Wie schnell ein Anbieter die Tür schließen kann, zeigt gerade OpenAI: Seit dem 10. September nimmt es keine neuen Kunden für ChatGPT Pro $200 (Pro 20X) mehr an, Bestandskunden behalten ihr Abo ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). Wenn du mit einem weiteren Max-Abo liebäugelst, hol es dir deshalb lieber früher als später. Sonst ärgerst du dich womöglich, dass du kein Bestandskunde bist.
 
+Doch wie wechselst du zwischen den Abos, ohne dass die Arbeit stillsteht? Die Antwort liegt auf deiner Festplatte.
+
 ## Der Trick: Deine Chats liegen auf deiner Festplatte
 
-Einer der großen Vorteile von Claude Code: Deine Chats liegen auf deiner Festplatte. Laut [Dokumentation](https://code.claude.com/docs/en/data-usage) speichert Claude Code sie „locally in plaintext under `~/.claude/projects/`", damit du Sessions fortsetzen kannst. Codex macht es genauso und legt seine Sitzungen laut [Dokumentation](https://learn.chatgpt.com/docs/config-file/config-advanced) unter `~/.codex` ab. Auch Antigravity hat ein lokales Datenverzeichnis unter `~/.gemini/antigravity/` ([Dokumentation](https://antigravity.google/docs/agent-settings)). Anders bei Claude Code im Web: Dort läuft die Session „on cloud infrastructure instead of on your machine" ([Dokumentation](https://code.claude.com/docs/en/claude-code-on-the-web)).
+Einer der großen Vorteile von Claude Code: Deine Chats liegen auf deiner Festplatte. Laut [Dokumentation](https://code.claude.com/docs/en/data-usage) speichert Claude Code sie „locally in plaintext under `~/.claude/projects/`", damit du Sessions fortsetzen kannst. Codex macht es genauso und legt seine Sitzungen laut [Dokumentation](https://learn.chatgpt.com/docs/config-file/config-advanced) unter `~/.codex` ab. Auch Googles Agenten-IDE Antigravity hat ein lokales Datenverzeichnis unter `~/.gemini/antigravity/` ([Dokumentation](https://antigravity.google/docs/agent-settings)). Anders bei Claude Code im Web: Dort läuft die Session „on cloud infrastructure instead of on your machine" ([Dokumentation](https://code.claude.com/docs/en/claude-code-on-the-web)).
 
 Konto und Chats sind also voneinander getrennt. Du kannst dich abmelden, wieder anmelden und mit *deinen* Chats weitermachen, auch mit einem anderen Konto. Das ist der Trick, auf dem alles Weitere beruht.
 
@@ -155,7 +157,7 @@ Technisch ist der Proxy ein *Man-in-the-Middle* (MITM). Er entschlüsselt die HT
 
 Umschalten von Hand ist nett. Der Gewinn liegt in der Automatik: `cswap auto` prüft die Auslastung und schaltet **von selbst** auf das Abo mit dem meisten Spielraum, sobald das aktive Konto eine Schwelle erreicht. Standardmäßig liegt sie bei 90 Prozent des 5-Stunden- oder Wochenfensters.
 
-Mit `--once` macht der Befehl genau einen Durchlauf und beendet sich. Die Mindestpause zwischen zwei Wechseln (*Cooldown*) und den Zustand speichert das Tool auf der Platte, darum reicht ein einzelner Durchlauf pro Minute. Das passt zu `launchd`, dem Dienst-Manager von macOS, und kein Terminal muss offen bleiben. Bei mir läuft das als LaunchDaemon im Minutentakt, also als Systemdienst, der ohne Anmeldung startet. Wichtig ist der Schlüssel `UserName`: Ohne ihn läuft ein LaunchDaemon als root und tauscht die Credentials im falschen Home-Verzeichnis. Die Datei gehört nach `/Library/LaunchDaemons/` und wird mit `sudo launchctl bootstrap system /Library/LaunchDaemons/cswap-auto.plist` geladen. Im Beispiel steht `DEIN-NAME` für deinen Benutzernamen.
+Mit `--once` macht der Befehl genau einen Durchlauf und beendet sich. Die Mindestpause zwischen zwei Wechseln (*Cooldown*) und den Zustand speichert das Tool auf der Platte, darum reicht ein einzelner Durchlauf pro Minute. Das passt zu `launchd`, dem Dienst-Manager von macOS, und kein Terminal muss offen bleiben. Bei mir läuft das als LaunchDaemon im Minutentakt, also als Systemdienst, der ohne Anmeldung startet. Wichtig ist der Schlüssel `UserName`: Ohne ihn läuft ein LaunchDaemon als root und tauscht die Credentials im falschen Home-Verzeichnis. Die Datei gehört nach `/Library/LaunchDaemons/` und wird mit `sudo launchctl bootstrap system /Library/LaunchDaemons/cswap-auto.plist` geladen. Im Beispiel steht `DEIN-NAME` für deinen Benutzernamen. Es zeigt nur die entscheidenden Schlüssel innerhalb von `<dict>`.
 
 ```xml
 <key>Label</key>
@@ -181,7 +183,7 @@ Meine Agenten machten gerade einen `/deep-research`, als sie **Alarm** schlugen.
 
 Das ist kein Bug, sondern ein lobenswertes Verhalten. Meine Subagenten waren misstrauisch, weil da ein komischer Proxy auftauchte. Wild, dass Software heutzutage so reagieren kann. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
 
-Hatten sie recht? Das lässt sich prüfen. Ein Abruf von `example.com` durch den Proxy kommt mit dem *echten* öffentlichen Zertifikat zurück. Hätte der Proxy hier mitgelesen, wäre es seines gewesen. Auch der Quelltext bestätigt das: Der Proxy entschlüsselt **ausschließlich** `api.anthropic.com`. Jeden anderen Host reicht er als blinden Tunnel durch.
+Hatten sie recht? Das lässt sich prüfen. Ein Abruf von `example.com` durch den Proxy kommt mit dem *echten* öffentlichen Zertifikat zurück. Prüfen lässt sich das mit `curl -v --proxy http://127.0.0.1:$(cswap pin --get_port) https://example.com` und einem Blick auf den Aussteller des Zertifikats. Hätte der Proxy hier mitgelesen, wäre es seines gewesen. Auch der Quelltext bestätigt das: Der Proxy entschlüsselt **ausschließlich** `api.anthropic.com`. Jeden anderen Host reicht er als blinden Tunnel durch.
 
 Der Verkehr war also echt. Der Alarm zeigte trotzdem eine Falle auf: Setzt du die Proxy-Variablen und die CA für Claude Code, erbt sie jede Shell, die ein Agent startet. Jeder Befehl sieht dann den Proxy, und jeder Download läuft durch ihn. Der Pin braucht aber nur den Claude-Prozess selbst. Entferne die Variablen deshalb mit einer einzigen Zeile in `~/.zshenv` aus jeder Agenten-Shell:
 
@@ -189,7 +191,7 @@ Der Verkehr war also echt. Der Alarm zeigte trotzdem eine Falle auf: Setzt du di
 unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXTRA_CA_CERTS
 ```
 
-Das wirkt, wenn die Shell-Befehle deiner Agenten über zsh laufen, denn zsh liest `~/.zshenv` bei jedem Aufruf. Der Claude-Prozess behält den Pin, die Agenten sehen ihn in ihren Shells nicht mehr.
+Das wirkt, wenn die Shell-Befehle deiner Agenten über zsh laufen, denn zsh liest `~/.zshenv` bei jedem Aufruf. Der Claude-Prozess behält den Pin, die Agenten sehen ihn in ihren Shells nicht mehr. Die Zeile wirkt allerdings auch in deinen eigenen Terminals. Brauchst du dort einen Firmen-Proxy, setz ihn gezielt nur dort.
 
 Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#ein-prinzip-erzähl-den-agenten-nie-vom-rosa-elefanten) zurück: **Erzähl den Agenten nie vom rosa Elefanten.** Weiß eine Session von einem exotischen Setup, erklärt sie sich jedes Problem zuerst damit. Erklär den Agenten deshalb nicht, dass der Proxy harmlos ist. Sorg lieber dafür, dass sie ihn in ihren Shells gar nicht erst sehen. Von dem Elefanten weißt dann nur du.
 
@@ -197,7 +199,7 @@ Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agen
 
 **Ein Werkzeug, das deine Zugangsschlüssel oder deinen Datenverkehr anfasst, bekommt keinen Vertrauensvorschuss. Forke es, lies den Code, installiere aus deiner Kopie und aktualisiere nur bewusst.**
 
-So gehe ich bei jedem Werkzeug vor, das an meine Schlüssel kommt. Meine Agenten haben mit ihrem Alarm übrigens dieselbe Frage gestellt. Misstrauen ist in einem agentischen Setup Hygiene.
+So gehe ich bei jedem Werkzeug vor, das an meine Schlüssel kommt. Meine Agenten haben mit ihrem Alarm übrigens genau diese Frage gestellt: Was macht dieser fremde Proxy in meinem Datenverkehr? Misstrauen ist in einem agentischen Setup Hygiene.
 
 Bleibt die Frage, ob Anthropic so ein Setup überhaupt erlaubt.
 
@@ -206,7 +208,7 @@ Bleibt die Frage, ob Anthropic so ein Setup überhaupt erlaubt.
 Das Setup geht bis an die Grenzen von Anthropics Vorgaben, bleibt aber nach meiner Lesart innerhalb. Es setzt nur an Stellen an, die Claude Code offen unterstützt:
 
 - **Claude Code bleibt unverändert.** Kein Patch, kein Eingriff ins Programm. Selbst für Anbieter, die Claude Code in eigene Produkte einbauen, zieht Anthropic hier die Linie: „The Claude Code binary must not be modified." ([Claude-Code-Doku, „Legal and compliance“](https://code.claude.com/docs/en/legal-and-compliance#can-customers-offer-claude-code-in-their-products))
-- **Jede Anmeldung läuft über Anthropics eigenen Login.** Das verlangt die Claude-Code-Doku auf der Seite [„Legal and compliance“](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use): „sign-in to a Claude account must complete through Anthropic's own flow". `cswap` sichert danach nur die Tokens, die Claude Code ohnehin selbst auf der Platte ablegt. Es automatisiert, was du auch von Hand tun könntest: `/logout`, `/login`, weiterarbeiten.
+- **Jede Anmeldung läuft über Anthropics eigenen Login.** Das verlangt die Claude-Code-Doku auf der Seite [„Legal and compliance“](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use): „sign-in to a Claude account must complete through Anthropic's own flow". `cswap` sichert danach nur die Tokens, die Claude Code ohnehin selbst auf der Platte ablegt. Es automatisiert, was du auch von Hand tun könntest: neu anmelden und weiterarbeiten.
 - **Der Proxy nutzt einen offiziellen Weg.** Proxys mit TLS-Inspektion unterstützt Claude Code laut [Dokumentation](https://code.claude.com/docs/en/network-config) ausdrücklich, über `HTTPS_PROXY` und eine eigene CA. Der Proxy sitzt außerhalb von Claude Code und ändert nur den Datenverkehr.
 - **Es sind ausschließlich meine eigenen Abos.** Niemand sonst bekommt Zugang. Das Teilen von Konten verbieten die [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) klar: „You may not share your Account login information […] or make your Account available to anyone else."
 
@@ -214,8 +216,8 @@ Das Setup geht bis an die Grenzen von Anthropics Vorgaben, bleibt aber nach mein
 
 Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du kennen.
 
-- **Eine ausdrückliche Freigabe gibt es nicht.** Die Regel für Drittentwickler ist weit gefasst: „developers may not collect, store, or intermediate Claude.ai credentials or session tokens". Wörtlich genommen träfe sie jedes Tool, das einen Token speichert. Gemeint sind nach meiner Lesart Produkte, die fremde Nutzer über ihre Abos leiten. Anthropic behält sich vor, Maßnahmen „without prior notice" durchzusetzen.
-- **Mehr Konten heißt nicht unendlich.** Sind alle Konten an der Schwelle, findet `cswap auto` kein Ziel mehr und meldet das mit Exit-Code 3 („no viable target / all exhausted“). Und jedes weitere Abo kostet seinen vollen Preis.
+- **Eine ausdrückliche Freigabe gibt es nicht.** Die Regel für Drittentwickler ist weit gefasst: „developers may not collect, store, or intermediate Claude.ai credentials or session tokens" ([Claude-Code-Doku, „Legal and compliance“](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use)). Wörtlich genommen träfe sie jedes Tool, das einen Token speichert. Gemeint sind nach meiner Lesart Produkte, die fremde Nutzer über ihre Abos leiten. Anthropic behält sich vor, Maßnahmen „without prior notice" durchzusetzen.
+- **Mehr Konten heißt nicht unendlich.** Sind alle Konten an der Schwelle, findet `cswap auto` kein Ziel mehr und meldet das laut `cswap auto --help` mit Exit-Code 3 („no viable target / all exhausted“). Und jedes weitere Abo kostet seinen vollen Preis.
 - **Der Pin hängt an einem offenen Pull Request.** Bis PR #210 gemergt ist, läuft `cswap pin` nur aus dem eigenen Fork.
 - **Eigene Forks kosten Pflege.** Bei jedem Upstream-Update heißt es: Diff lesen, neu installieren. Das ist der Preis dafür, keinem fremden Auto-Update zu vertrauen.
 - **Der Proxy sieht den Anthropic-Verkehr im Klartext.** Das gilt für jeden Proxy mit TLS-Inspektion, auch für die in Firmennetzen. Tragbar ist das nur, wenn du den Code gelesen hast und die Reichweite auf das Nötigste beschränkt ist.
