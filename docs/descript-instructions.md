@@ -11,3 +11,8 @@ CAPTIONS
 - Burned-in captions from the transcript, centered on the divider, for the whole video.
 - Style: large bold white text with a dark outline or dark background box, max two lines, a few words at a time.
 - Highlight the currently spoken word in pink, hex #E90464 (the agentic.schule magenta). All other words stay white.
+
+AUDIO
+- Studio Sound at 70% intensity.
+- EQ: cut boominess at 50 Hz and 200 Hz, boost warmth at 800 Hz, presence at 3.5 kHz and air at 10 kHz.
+- No reverb. The voice stays dry and close.
