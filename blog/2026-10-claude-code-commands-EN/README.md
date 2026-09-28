@@ -39,7 +39,7 @@ Runs a pure security review of the pending changes on the branch, no arguments n
 
 The only bundled workflow, and a showcase of what Claude Code can do in terms of orchestration: it fans web searches out across several angles, fetches the sources, checks the claims against each other, and delivers a cited report instead of a list of hits. How such a workflow is built is covered in the [graph article](https://agentic.schule/blog/2026-09-graph-engineering).
 
-> **💡 Tip:** Phrase the question as concretely as possible, including context and time frame. The workflow then splits it into search angles by itself. While it runs, you simply keep working. The report is only as good as its sources, though: verify the key claims yourself before you adopt them.
+> **💡 Tip:** Phrase the question as concretely as possible, including context and time frame. The workflow then splits it into search angles by itself. While it runs, you simply keep working. The report is only as good as its sources, though: key claims should still be verified yourself before you adopt them.
 
 ## 4. `/loop`: the loop
 
@@ -91,7 +91,7 @@ There is also the CLI command of the same name, `claude remote-control`, and it 
 
 Ten commands, one pattern: Claude Code has long been able to do more than most people call up. The reviews check, the loops and goals keep going, the workflows fan out, `/model` and `/effort` determine how much brainpower goes into all of it, and via remote control you watch from your phone. Next time you start up, just hit the slash and read the list from top to bottom. These ten are my picks, yours will certainly look different in the end. And if you would rather go through them together instead of alone: that is exactly what we do in the course at [agentic.schule](https://agentic.schule/build-with-ai/online), on your own project.
 
-> **💡 Bonus:** `/usage` shows cost, plan usage, and what is currently counting against your limits. It also answers to `/cost` and `/stats`. Anyone working a lot with agents should check it regularly.
+> **💡 Bonus:** `/usage` shows cost, plan usage, and what is currently counting against your limits. It also answers to `/cost` and `/stats`. Anyone working a lot with agents should keep an eye on these numbers regularly.
 
 **Which one is missing from the list?** Bring it on, I am glad to hear from you.
 

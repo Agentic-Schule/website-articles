@@ -39,7 +39,7 @@ Macht einen reinen Sicherheits-Review der anstehenden Änderungen auf dem Branch
 
 Der einzige mitgelieferte Workflow, und ein Schaustück dafür, was Claude Code an Orchestrierung kann: Er fächert Websuchen über mehrere Suchwinkel auf, holt die Quellen, prüft die Behauptungen gegeneinander und liefert am Ende einen zitierten Bericht statt einer Trefferliste. Wie so ein Workflow aufgebaut ist, steht im [Graph-Artikel](https://agentic.schule/blog/2026-09-graph-engineering).
 
-> **💡 Tipp:** Formuliere die Frage so konkret wie möglich, samt Kontext und Zeitraum. Der Workflow zerlegt sie dann selbst in Suchwinkel. Während er läuft, arbeitest du einfach weiter. Der Bericht ist allerdings nur so gut wie seine Quellen: Zentrale Behauptungen prüfst du vor der Übernahme selbst nach.
+> **💡 Tipp:** Formuliere die Frage so konkret wie möglich, samt Kontext und Zeitraum. Der Workflow zerlegt sie dann selbst in Suchwinkel. Während er läuft, arbeitest du einfach weiter. Der Bericht ist allerdings nur so gut wie seine Quellen: Zentrale Behauptungen sollte man vor der Übernahme immer noch selbst nachprüfen.
 
 ## 4. `/loop`: die Schleife
 
@@ -91,7 +91,7 @@ Daneben gibt es den gleichnamigen CLI-Befehl `claude remote-control`, und der ma
 
 Zehn Befehle, ein Muster: Claude Code kann längst mehr, als die meisten davon abrufen. Die Reviews prüfen, die Schleifen und Ziele halten durch, die Workflows fächern auf, `/model` und `/effort` bestimmen, mit wie viel Hirnschmalz das alles passiert, und per Remote Control schaust du vom Handy aus zu. Drück beim nächsten Start einfach den Schrägstrich und lies die Liste einmal von oben nach unten. Diese zehn sind meine Auswahl, deine sieht am Ende bestimmt anders aus. Und wenn du sie lieber gemeinsam durchgehst, statt allein: Genau das machen wir im Kurs der [agentic.schule](https://agentic.schule/build-with-ai/online), am eigenen Projekt.
 
-> **💡 Bonus:** `/usage` zeigt Kosten, Plan-Verbrauch und was gerade auf deine Limits einzahlt. Es hört auch auf `/cost` und `/stats`. Wer viel mit Agenten arbeitet, schaut da regelmäßig drauf.
+> **💡 Bonus:** `/usage` zeigt Kosten, Plan-Verbrauch und was gerade auf deine Limits einzahlt. Es hört auch auf `/cost` und `/stats`. Wer viel mit Agenten arbeitet, sollte die Werte regelmäßig im Auge behalten.
 
 **Welcher fehlt dir in der Liste?** Immer her damit, ich freue mich über jede Nachricht.
 
