@@ -129,7 +129,7 @@ pipx install ./claude-swap
 # Updates nur bewusst: upstream holen, Diff lesen, neu installieren
 ```
 
-`cswap` bringt mit `cswap upgrade` einen eigenen Update-Befehl mit, der die neueste Version von PyPI holt. Den lässt du besser links liegen. So läuft nur Code, den du gelesen hast.
+`cswap` bringt mit `cswap upgrade` einen eigenen Update-Befehl mit, der die neueste Version von PyPI holt. Den würde ich persönlich nicht nutzen. So läuft bei mir nur Code, den ich gelesen habe.
 
 ## Tool 2 (`cswap-pin`): Remote Control: Der Pin hält die Session
 
