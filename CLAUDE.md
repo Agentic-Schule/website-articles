@@ -20,6 +20,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 
 - **Fette These direkt nach dem Frontmatter**, ein Absatz, der den Kern vorwegnimmt. Danach `## Inhalt` (bzw. `## Contents`) mit `[[toc]]`.
 - **Beginne mit dem „Warum".** Erst die Motivation oder das Problem, dann der Weg dahin, dann das Fazit. Die konkrete Form richtet sich nach dem Artikeltyp: ein Tutorial läuft Schritt für Schritt, ein Meinungsstück von Problem zu Lösung, ein Überblick Thema für Thema. Kein festes Schema erzwingen.
+- **Lösungsartikel: Das Problem benennen, nicht ausmalen.** Wer einen Artikel zu einem bekannten, konkreten Problem aufruft („Wochenlimit erreicht“), kennt das Problem bereits. Einstieg und Überschriften nennen es sachlich in einem Satz und liefern sofort die Lösung, mit harten Fakten: Befehle, Zahlen aus Primärquellen, konkrete Schritte. Keine Metaphern und kein Erzählbogen um das Problem herum („Ein Tank reicht nicht mehr“).
 - Optionale Mittel für Meinungs- und Deep-Dive-Artikel: gescheiterte Versuche durchspielen, bevor die Lösung kommt, oder Varianten als nummerierte „Idee 1 … Idee 5" gegenüberstellen. Kein Muss.
 - **Brückensätze am Sektionsende**, die die nächste Sektion ankündigen. „Doch bei aller Begeisterung: Claude Code ist nicht perfekt."
 - **Überschriften als Frage, Imperativ/Infinitiv oder „Thema: Untertitel".** „Warum ein Terminal?", „Den MCP-Server einrichten", „Herausforderung: veraltetes Wissen". Kapitel schließen mit „Fazit" oder „Was haben wir gelernt?".
@@ -40,7 +41,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - **Englische Fachbegriffe bleiben englisch**, bei Erstnennung kursiv und kurz deutsch erklärt: „den JIT-Modus (Just-in-Time)", „(engl. *Context Summarization*)". Akronyme bei Erstnennung ausschreiben.
 - API-Namen und Befehle in Inline-Code (`rxResource()`, `/loop`). Bindestrich-Kopplung hält englische Begriffe deutsch-grammatisch: „MCP-Server", „AI-Agenten".
 - **Code als Vorher/Nachher** mit sprechenden Kommentaren und `❌`/`✅` für falsch/richtig. Eine durchgehende Beispiel-Domäne (im Buch: BookMonkey).
-- Alltagsmetaphern, um Technik greifbar zu machen: „Stell es dir so vor: …".
+- Alltagsmetaphern, um Technik greifbar zu machen: „Stell es dir so vor: …" Metaphern erklären Technik, sie ersetzen keine Fakten und schmücken kein bekanntes Problem aus.
 
 ## Gedankenstrich, Antithese, Floskeln
 
