@@ -80,17 +80,11 @@ On top of that, an account switch cuts the **Remote Control connection** that le
 
 So the goal is: **switch to another subscription automatically before the limit, without signing out, ideally without cancelled agents and without losing remote control.** That takes two tools: one that swaps the sign-in while running, and one that keeps Remote Control on one account while doing so.
 
-## No Router Needed: Claude Code Re-Reads the Credentials
-
-If you want to run Claude Code with other models, you usually reach for a router like [claude-code-router](https://github.com/musistudio/claude-code-router). It hooks in via `ANTHROPIC_BASE_URL`, the API address Claude Code talks to, and forwards every request. That is not what this is about. I still want the real Anthropic models, just sometimes through account A and sometimes through account B.
-
-That doesn't take a router. The key is a detail: **Claude Code re-reads its credentials when they change.** If they live in a file, Claude Code re-reads them after every change, and the *next* message already goes through the new account. That is how the [`claude-swap` documentation](https://github.com/realiti4/claude-swap#tips) describes it, and that is how it behaves on my mini. There the credentials live in a file at `~/.claude/.credentials.json`. Otherwise, on macOS, they live in the Keychain. According to the same source, Claude Code caches them there for about 30 seconds, after which the switch takes effect as well.
-
-In practice this means: whoever swaps this file switches the account. No restart and no `/login`.
-
 ## Setting Up Multiple Subscriptions to Switch
 
-The open source tool [`claude-swap`](https://github.com/realiti4/claude-swap) takes care of that (command: `cswap`, MIT license). It stores the credentials for each account and swaps them on demand. It is not limited to two accounts. I work with two; the principle stays the same with three or four. How I install it is shown in the next section. You sign in **once** per subscription, after that this is enough:
+The first tool is the open source tool [`claude-swap`](https://github.com/realiti4/claude-swap) (command: `cswap`, MIT license). It relies on a detail of Claude Code: **Claude Code re-reads its credentials when they change.** If they live in a file, the *next* message already goes through the new account. That is how the [`claude-swap` documentation](https://github.com/realiti4/claude-swap#tips) describes it, and that is how it behaves on my mini. There the credentials live in a file at `~/.claude/.credentials.json`. Otherwise, on macOS, they live in the Keychain. According to the same source, Claude Code caches them there for about 30 seconds, after which the switch takes effect as well.
+
+`cswap` stores the credentials for each account and swaps them on demand, without a restart and without `/login`. It is not limited to two accounts. I work with two; the principle stays the same with three or four. How I install it is shown in the next section. You sign in **once** per subscription, after that this is enough:
 
 ```bash
 cswap switch 2      # from the next message on, everything runs on subscription 2
