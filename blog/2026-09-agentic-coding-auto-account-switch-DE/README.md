@@ -75,7 +75,7 @@ Konto und Chats sind also voneinander getrennt. Du kannst dich abmelden, wieder 
 
 ## Das Problem: der Wechsel zwischen den Konten
 
-Da die Chats ohnehin lokal liegen, musst du dich für einen Wechsel also nur frisch anmelden. Und genau so ist es auch richtig. Von Hand ist das aber mühsam: `/logout`, dann `/login`, dann der OAuth-Flow im Browser. Bis dahin steht die Arbeit still.
+Da die Chats ohnehin lokal liegen, musst du dich für einen Wechsel also nur frisch anmelden. Und genau so ist es auch richtig. Von Hand ist das aber mühsam: `/logout`, dann `/login`, dann der OAuth-Flow im Browser. Bis dahin steht die Arbeit still. Etwas umständlich, aber damit kann man zur Not leben.
 
 Schlimmer ist der Moment, in dem das Limit mitten in der Arbeit zuschlägt. Bei mir laufen die Agenten rund um die Uhr auf einem Mac mini, der nie ausgeht. Wie er aufgebaut ist, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini). Erreicht ein Konto sein Limit, brechen laufende Subagenten mit „Agent terminated early due to an API error: You've hit your session limit" ab. Laut zahlreichen Issue-Berichten und nach schmerzhafter eigener Erfahrung kommt von ihrer Arbeit oft nur ein Bruchstück zurück, und sie muss neu angestoßen werden ([#94770](https://github.com/anthropics/claude-code/issues/94770), [#74162](https://github.com/anthropics/claude-code/issues/74162), [#78231](https://github.com/anthropics/claude-code/issues/78231)). In [#94222](https://github.com/anthropics/claude-code/issues/94222) hat ein Nutzer sechs seiner Sessions ausgewertet: „449 subagents were cut off, only 8 were resumed by id […] The other 438 were re-dispatched from scratch."
 
