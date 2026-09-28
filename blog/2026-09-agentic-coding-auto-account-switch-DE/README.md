@@ -197,7 +197,7 @@ Das Setup hat dieses Prinzip zweimal bestätigt. Einmal bewusst, durch das Forke
 
 Bleibt die Frage, ob Anthropic so ein Setup überhaupt erlaubt.
 
-## Innerhalb der Regeln
+## Ist das erlaubt?
 
 Das Setup geht bis an die Grenzen von Anthropics Vorgaben, bleibt aber nach meiner Lesart innerhalb. Es setzt nur an Stellen an, die Claude Code offen unterstützt:
 
@@ -206,7 +206,7 @@ Das Setup geht bis an die Grenzen von Anthropics Vorgaben, bleibt aber nach mein
 - **Der Proxy nutzt einen offiziellen Weg.** Proxys mit TLS-Inspektion unterstützt Claude Code laut [Dokumentation](https://code.claude.com/docs/en/network-config) ausdrücklich, über `HTTPS_PROXY` und eine eigene CA. Der Proxy sitzt außerhalb von Claude Code und ändert nur den Datenverkehr.
 - **Es sind ausschließlich meine eigenen Abos.** Niemand sonst bekommt Zugang. Das Teilen von Konten verbieten die [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) klar: „You may not share your Account login information […] or make your Account available to anyone else."
 
-## Das Kleingedruckte
+## Das Kleingedruckte: Grenzen und Trade-offs
 
 Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du kennen.
 

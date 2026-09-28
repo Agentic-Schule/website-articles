@@ -196,7 +196,7 @@ The setup confirmed this principle twice. Once deliberately, by forking and read
 
 That leaves the question of whether Anthropic allows a setup like this at all.
 
-## Within the Rules
+## Is This Allowed?
 
 The setup goes right up to the limits of Anthropic's rules, but in my reading stays within them. It only hooks in where Claude Code openly supports it:
 
@@ -205,7 +205,7 @@ The setup goes right up to the limits of Anthropic's rules, but in my reading st
 - **The proxy uses an official path.** According to the [documentation](https://code.claude.com/docs/en/network-config), Claude Code explicitly supports TLS-inspection proxies, via `HTTPS_PROXY` and a custom CA. The proxy sits outside Claude Code and only changes the traffic.
 - **These are exclusively my own subscriptions.** Nobody else gets access. The [Consumer Terms](https://www.anthropic.com/legal/consumer-terms) clearly forbid sharing accounts: "You may not share your Account login information […] or make your Account available to anyone else."
 
-## The Fine Print
+## The Fine Print: Limits and Trade-offs
 
 But for all the joy about the seamless switch: there are a few things you should know.
 
