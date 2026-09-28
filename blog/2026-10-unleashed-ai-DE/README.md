@@ -170,7 +170,7 @@ Der Server fasst deine Festplatte dabei nie an. Schickst du ihm „scanne das Ve
 
 So arbeitet unser eigenes Produkt Learnly, das bei echten Kunden im Einsatz ist. Der Modellzugang ist provider-agnostisch über das [Vercel AI SDK](https://ai-sdk.dev) gebaut, jedes Modell ist frei einstellbar. Für den Jugendschutz-Wächter, der die Schüler-Chats prüft, läuft ein lokales `gemma3` über Ollama auf dem eigenen Server, diese Klassifizierung verlässt uns also nie. Und was an das eigentliche Chat-Modell geht, wird vorher anonymisiert: Klarnamen, allen voran die der Schüler, ersetzen wir durch Platzhalter, bevor irgendein Modell den Text sieht.
 
-## Klassifizierer und System-Prompt sind gefallen
+## Klassifizierer und System-Prompt: lokal schon gefallen
 
 Läuft das Modell auf deiner Maschine, ist die erste Schranke schon Geschichte: Kein Klassifizierer des Anbieters liest mehr mit, und keine deiner Anfragen wird abgewiesen.
 
@@ -184,13 +184,13 @@ Diese Schranke steckt im Modell selbst, das Training hat sie dort verankert. Ein
 
 Entfernen lässt sie sich nur direkt an den Gewichten. Technisch ist das also ein Eingriff ins Gehirn des Modells. Dafür existieren zahlreiche sogenannte **abliterierte** Varianten. Der Begriff kommt von *ablation*, dem gezielten Entfernen. Die Technik ist gut untersucht: Das Paper [„Refusal in Language Models Is Mediated by a Single Direction"](https://arxiv.org/abs/2406.11717) zeigt, dass sich die Verweigerung in großen Modellen auf eine einzige Richtung im Aktivierungsraum zurückführen lässt. Rechnet man diese Richtung aus den Gewichten heraus, ist die Sperre weg. Das Paper spricht dabei von „minimal effect on other capabilities".
 
-Die Abliteration schneidet dabei einen Teil des Alignments heraus, und danach kann das Modell einen völlig anderen Ton anschlagen. Es wird pampig wie ein Reddit-Kommentar, oder es kippt in den Tonfall eines Image-Boards, bis hin zu offenem Rassismus. Das ist kein Defekt: Dieser Stoff steckt längst in den Trainingsdaten, das Alignment hat ihn nur zugedeckt.
+Die Abliteration schneidet dabei einen Teil des Alignments heraus, und danach kann das Modell einen völlig anderen Ton anschlagen. Es kann pampig werden wie ein Reddit-Kommentar oder in den Tonfall eines Image-Boards kippen, bis hin zu offenem Rassismus. Das ist kein Defekt: Dieser Stoff steckt längst in den Trainingsdaten, das Alignment hat ihn nur zugedeckt.
 
 Und hier ist die Stelle, an der ich Vorsicht empfehle. Das Paper misst diese minimale Auswirkung nicht an Code- oder Security-Aufgaben. Für die Frage, ob ein abliteriertes Modell deinen Code genauso gut analysiert wie das Original, gibt es keine belastbare Messung. Wer eine solche Variante einsetzt, erhält ein Modell, das so nicht durch die üblichen Qualitätstests gekommen wäre.
 
 Wenn du eine solche Variante trotzdem ausprobieren willst, erkennst du sie auf Hugging Face am Namen. Die Schlüsselwörter sind `abliterated` und `uncensored`, manchmal auch der Name des Werkzeugs, mit dem der Eingriff gemacht wurde, etwa `Heretic`. Eine Suche nach `Qwen3.8 abliterated` liefert Dutzende Treffer. Der mit Abstand fleißigste ist `huihui-ai`, ein Hugging-Face-Account mit weit über hundert abliterierten Modellen. Wer dahintersteckt, bleibt im Dunkeln: Das Profil nennt nur ein X-Konto und die Absicht, „model ablations" zu erforschen, sonst nichts. Die übrigen Repos stammen überwiegend von Einzelpersonen und kleinen Accounts. Und das ist der wunde Punkt: Wer die Gewichte verändert hat und wie sauber, lässt sich von außen kaum prüfen. Du lädst das Gehirn eines Modells, an dem ein Fremder operiert hat.
 
-Der wichtigste Punkt aber steckt in einem Detail des vorigen Artikels, das leicht übersehen wird. Als Hugging Face einen eigenen Sicherheitsvorfall aufarbeitete, verweigerten die gehosteten Modelle die Forensik. **Das Team brauchte trotzdem kein abliteriertes Modell.** Es hat ein ganz normales offenes Modell genommen und auf eigener Hardware betrieben. Das hat gereicht, weil der Klassifizierer des Anbieters bei einem selbst betriebenen Modell schlicht nicht existiert.
+Entscheidend ist aber ein Detail aus dem vorigen Artikel. Als Hugging Face einen eigenen Sicherheitsvorfall aufarbeitete, verweigerten die gehosteten Modelle die Forensik. **Das Team brauchte trotzdem kein abliteriertes Modell.** Es hat ein ganz normales offenes Modell genommen und auf eigener Hardware betrieben. Das hat gereicht, weil der Klassifizierer des Anbieters bei einem selbst betriebenen Modell schlicht nicht existiert.
 
 Die Reihenfolge lautet also: erst selbst hosten, dann messen, ob es reicht. Abliteration ist die Stufe danach und braucht eine echt gute Begründung. Das Modell kann theoretisch sogar gegen dich arbeiten. Also gib ihm nicht zu viele Rechte.
 
