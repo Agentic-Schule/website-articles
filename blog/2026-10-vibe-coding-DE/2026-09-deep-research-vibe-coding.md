@@ -1,6 +1,6 @@
 # Recherche: Vibe Coding
 
-Quellenarchiv für den Artikel `blog/2026-09-vibe-coding-DE/`. Ergebnis des /deep-research-Laufs vom 4. September 2026 (5 Suchwinkel, 21 Quellen geholt, 102 Claims extrahiert, 25 verifiziert: 24 bestätigt mit 3-0- bzw. 2-1-Votes an den Live-Quellen, 1 widerlegt). Wortlaute tragen jeweils ihr Verifikationsdatum.
+Quellenarchiv für den Artikel `blog/2026-10-vibe-coding-DE/`. Ergebnis des /deep-research-Laufs vom 4. September 2026 (5 Suchwinkel, 21 Quellen geholt, 102 Claims extrahiert, 25 verifiziert: 24 bestätigt mit 3-0- bzw. 2-1-Votes an den Live-Quellen, 1 widerlegt). Wortlaute tragen jeweils ihr Verifikationsdatum.
 
 ## Verifizierte Bausteine
 
