@@ -193,7 +193,7 @@ unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXT
 
 This works when your agents' shell commands run through zsh, because zsh reads `~/.zshenv` on every invocation. The Claude process keeps the pin; the agents no longer see it in their shells. The line also applies in your own terminals, though. If you need a corporate proxy, put its values into `~/.zshenv` instead of `unset`, for example `export HTTPS_PROXY=http://proxy.example.com:8080`. That way the agent shells use the corporate proxy instead of the pin proxy.
 
-And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#a-principle-never-tell-the-agents-about-the-pink-elephant) returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. So don't explain to the agents that the proxy is harmless. Rather make sure they don't see it in their shells in the first place. Then only you know about the elephant.
+And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#a-principle-never-tell-the-agents-about-the-pink-elephant) returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. So don't explain to the agents that the proxy is harmless. Rather make sure they don't see it in their shells in the first place. Then only you know about the pink elephant.
 
 ## A Principle: Never Blindly Hand a Tool Your Keys
 
