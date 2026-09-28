@@ -58,6 +58,8 @@ Even a working reset only buys you breathing room once. If you hit the limit eve
 
 That leaves the path that actually holds up: a **second Max subscription**, or a third or fourth if needed. Each one brings its full allowance at the subscription price.
 
+How quickly a provider can close the door is being shown by OpenAI right now: since September 10, it no longer accepts new customers for ChatGPT Pro $200 (Pro 20X), while existing subscribers keep their plan ([OpenAI Help Center](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). If you are toying with the idea of another Max subscription, get it sooner rather than later. Otherwise you might end up annoyed that you are not an existing customer.
+
 ## The Problem: Switching Between Accounts
 
 Claude Code only ever knows *one* signed-in account. Switching means `/logout`, then `/login`, then the OAuth flow in the browser. Until then, the work stands still.
