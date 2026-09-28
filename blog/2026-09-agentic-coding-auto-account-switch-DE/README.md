@@ -46,7 +46,7 @@ Das Abo spielt in einer anderen Liga. Anthropic schrieb bei der Einführung der 
 
 ### Kein `/limit-reset`
 
-In Claude Code gibt es den Befehl `/limit-reset`. Dokumentiert ist er kaum: Er steht in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) und in keinem Changelog, im Befehlsmenü ist er versteckt. Limit-Resets selbst bewirbt Anthropic dagegen offensiv auf Social Media ([X](https://x.com/claudeai/status/2102435538120691886)). Meine Vermutung: auch deshalb, weil OpenAI dasselbe anbietet. In Codex lassen sich verdiente Resets seit Juni direkt über `/usage` einlösen ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). Einmal „Gehe über Los“ klingt ja auch ziemlich verlockend.
+In Claude Code gibt es den Befehl `/limit-reset`. Dokumentiert ist er kaum: Er steht in keiner [Befehlsübersicht](https://code.claude.com/docs/en/commands) und in keinem Changelog, im Befehlsmenü ist er versteckt. Limit-Resets selbst bewirbt Anthropic dagegen offensiv auf Social Media. Meine Vermutung: auch deshalb, weil OpenAI dasselbe anbietet. In Codex lassen sich verdiente Resets seit Juni direkt über `/usage` einlösen ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). Einmal „Gehe über Los“ klingt ja auch ziemlich verlockend.
 
 Ein Blick in den Code von Claude Code zeigt, dass sich hinter `/limit-reset` zwei Varianten verbergen, die jeweils ein Feature-Schalter auf dem Server freigibt:
 

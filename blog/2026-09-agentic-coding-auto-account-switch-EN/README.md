@@ -45,7 +45,7 @@ The subscription plays in a different league. When Anthropic introduced the week
 
 ### No `/limit-reset`
 
-Claude Code has a command called `/limit-reset`. It is barely documented: it is in no [command reference](https://code.claude.com/docs/en/commands) and no changelog, and it is hidden in the command menu. Anthropic, on the other hand, actively promotes limit resets themselves on social media ([X](https://x.com/claudeai/status/2102435538120691886)). My guess: partly because OpenAI offers the same thing. In Codex, earned resets can be redeemed directly via `/usage` since June ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). And a free "Pass Go" does sound pretty tempting.
+Claude Code has a command called `/limit-reset`. It is barely documented: it is in no [command reference](https://code.claude.com/docs/en/commands) and no changelog, and it is hidden in the command menu. Anthropic, on the other hand, actively promotes limit resets themselves on social media. My guess: partly because OpenAI offers the same thing. In Codex, earned resets can be redeemed directly via `/usage` since June ([openai/codex#28154](https://github.com/openai/codex/pull/28154)). And a free "Pass Go" does sound pretty tempting.
 
 A look into the code of Claude Code shows two variants behind `/limit-reset`, each unlocked by a feature flag on the server:
 
