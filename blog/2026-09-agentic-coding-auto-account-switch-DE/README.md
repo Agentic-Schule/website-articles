@@ -115,7 +115,7 @@ Der Browser-Login pro Konto ist der einzige Schritt, den du manuell durchführen
 
 ## Vertrauen ist gut, Forken ist besser
 
-`cswap` fasst deine **OAuth-Tokens** an, also die Schlüssel zu deinen Konten. Der Autor des Tools ist bestimmt ein sehr vertrauenswürdiger Mensch. Trotzdem vertraue ich hier niemandem. Ein `pipx install claude-swap` direkt von PyPI kommt mir nicht ins Haus. Ich prüfe den Code, forke ihn und baue alles selbst.
+`cswap` fasst deine **OAuth-Tokens** an, also die Schlüssel zu deinen Konten. Der Autor des Tools ist bestimmt ein sehr vertrauenswürdiger Mensch. Trotzdem vertraue ich hier niemandem. Ein `pipx install claude-swap` direkt von PyPI kommt mir nicht ins Haus. Ich prüfe lieber den Code, forke ihn und baue alles selbst. So viel Zeit muss sein.
 
 Die wichtigste Frage: Wohin geht der Netzwerkverkehr? Im Quelltext stehen nur Anthropics eigene Endpunkte (`api.anthropic.com`, `platform.claude.com`) und ein Versions-Check bei PyPI. Keine fremde Domain, keine Telemetrie. Das Paket wird über PyPIs *Trusted Publishing* aus einem GitHub-Workflow veröffentlicht, und das Repo bringt eine umfangreiche Testsuite mit. So weit, so vertrauenswürdig.
 

@@ -114,7 +114,7 @@ The browser login per account is the only step you have to do manually.
 
 ## Trust Is Good, Forking Is Better
 
-`cswap` handles your **OAuth tokens**, the keys to your accounts. The author of the tool is surely a very trustworthy person. Still, I trust nobody here. A `pipx install claude-swap` straight from PyPI does not get into my house. I check the code, fork it and build everything myself.
+`cswap` handles your **OAuth tokens**, the keys to your accounts. The author of the tool is surely a very trustworthy person. Still, I trust nobody here. A `pipx install claude-swap` straight from PyPI does not get into my house. I'd rather check the code, fork it and build everything myself. That much time has to be found.
 
 The most important question: where does network traffic go? The source code only contains Anthropic's own endpoints (`api.anthropic.com`, `platform.claude.com`) and a version check against PyPI. No third-party domain, no telemetry. The package is published through PyPI's *Trusted Publishing* from a GitHub workflow, and the repo comes with an extensive test suite. So far, so trustworthy.
 
