@@ -89,32 +89,25 @@ Das Ziel ist also: **rechtzeitig vor dem Limit automatisch auf ein anderes Abo w
 
 Das erste Werkzeug ist das Open-Source-Tool [`claude-swap`](https://github.com/realiti4/claude-swap) (Befehl: `cswap`, MIT-Lizenz). Es nutzt ein Detail von Claude Code: **Claude Code liest seine Zugangsdaten neu ein, wenn sie sich ändern.** Liegen sie in einer Datei, läuft die *nächste* Nachricht bereits über das neue Konto. So beschreibt es die [Dokumentation von `claude-swap`](https://github.com/realiti4/claude-swap#tips), und so verhält es sich auf meinem mini. Dort liegen die Credentials als Datei unter `~/.claude/.credentials.json`. Sonst liegen sie unter macOS, sofern eingerichtet, in der *Keychain*. Claude Code puffert sie dort laut derselben Quelle etwa 30 Sekunden lang, danach greift auch dort der Wechsel.
 
-`cswap` sichert pro Konto die Credentials und tauscht sie auf Zuruf aus, ohne Neustart und ohne `/login`. Es ist nicht auf zwei Konten beschränkt. Ich arbeite mit zwei, das Prinzip bleibt bei drei oder vier gleich. Wie du es sicher installierst, zeigt der nächste Abschnitt. Du meldest dich **einmal** pro Abo an, danach genügt:
+`cswap` sichert pro Konto die Credentials und tauscht sie auf Zuruf aus, ohne Neustart und ohne `/login`. Es ist nicht auf zwei Konten beschränkt. Ich arbeite mit zwei, das Prinzip bleibt bei drei oder vier gleich. Wie du es sicher installierst, zeigt der nächste Abschnitt. Du meldest dich **einmal** pro Abo an. Der komplette Ablauf:
 
 ```bash
-cswap switch 2      # ab der nächsten Nachricht läuft alles über Abo 2
-cswap switch 1      # zurück
-cswap switch        # reihum zum nächsten Konto
-cswap list          # Auslastung (5h/7d) aller Konten
-```
-
-Wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap switch` bewegt darum alle Sessions auf das andere Abo. Das ist gewollt, wenn das eine Konto ans Wochenlimit stößt.
-
-Die Konten registrierst du so:
-
-```bash
+# Einmalig: Konten registrieren
 # 1. Claude Code ist mit dem ersten Konto angemeldet
 cswap add            # Konto 1 als Slot 1 aufnehmen
-
 # 2. In Claude Code: /login mit dem zweiten Konto (vorher kein /logout!)
 cswap add            # Konto 2 als Slot 2 aufnehmen
-
 # 3. In Claude Code: /login mit dem dritten Konto
 cswap add            # Konto 3 als Slot 3 aufnehmen
 
-cswap list           # alle Konten mit ihrer Auslastung
+# Danach im Alltag
+cswap list           # Auslastung (5h/7d) aller Konten
+cswap switch 2       # ab der nächsten Nachricht läuft alles über Konto 2
+cswap switch         # reihum zum nächsten Konto
 cswap switch 1       # zurück auf Konto 1
 ```
+
+Wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap switch` bewegt darum alle Sessions auf das andere Abo. Das ist gewollt, wenn das eine Konto ans Wochenlimit stößt.
 
 > **⚠️ Achtung:** Vor dem zweiten `/login` kein `/logout` ausführen. Laut der [Anleitung von `claude-swap`](https://github.com/realiti4/claude-swap#add-more-accounts) kann Claude Code dabei den Refresh-Token des Kontos widerrufen, das du gerade verlässt. Mit diesem Token erneuert Claude Code abgelaufene Zugangsdaten, ohne ihn wäre der gesicherte Slot wertlos.
 
