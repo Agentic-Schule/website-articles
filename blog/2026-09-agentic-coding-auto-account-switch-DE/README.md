@@ -111,7 +111,7 @@ Wichtig: Alle Sessions teilen sich **eine** globale Credential-Datei. Ein `cswap
 
 > **⚠️ Achtung:** Vor dem zweiten `/login` kein `/logout` ausführen. Laut der [Anleitung von `claude-swap`](https://github.com/realiti4/claude-swap#add-more-accounts) kann Claude Code dabei den Refresh-Token des Kontos widerrufen, das du gerade verlässt. Mit diesem Token erneuert Claude Code abgelaufene Zugangsdaten, ohne ihn wäre der gesicherte Slot wertlos.
 
-Der Browser-Login pro Konto ist der einzige Schritt, den du manuell durchführen musst. Danach ist er erledigt.
+Der Browser-Login pro Konto ist der einzige Schritt, den du manuell durchführen musst.
 
 ## Vertrauen ist gut, Forken ist besser
 

@@ -110,7 +110,7 @@ Important: all sessions share **one** global credential file. A `cswap switch` t
 
 > **⚠️ Warning:** Do not run `/logout` before the second `/login`. According to the [`claude-swap` instructions](https://github.com/realiti4/claude-swap#add-more-accounts), Claude Code may revoke the refresh token of the account you are leaving. Claude Code uses this token to renew expired credentials; without it, the saved slot would be worthless.
 
-The browser login per account is the only step you have to do manually. After that it's done.
+The browser login per account is the only step you have to do manually.
 
 ## Trust Is Good, Forking Is Better
 
