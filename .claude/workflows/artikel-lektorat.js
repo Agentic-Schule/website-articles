@@ -12,20 +12,19 @@ export const meta = {
 // Alle Agenten auf Opus (per Aufgabenstellung).
 const M = 'opus';
 
-// Standard-Ziel: die drei Artikel der Reihe. Über args überschreibbar:
-// ein Pfad als String oder mehrere Pfade als Array. Am robustesten sind
-// absolute Pfade, dann findet der Workflow die Dateien unabhängig vom
-// Arbeitsverzeichnis (wichtig, wenn die Artikel in einem Worktree-Branch liegen).
-const DEFAULT_ARTICLES = [
-  'blog/2026-09-the-asymmetry-problem-DE/README.md',
-  'blog/2026-09-ungezuegelte-ai-DE/README.md',
-  'blog/2026-09-strix-pentest-agent-DE/README.md',
-];
+// Ziel über args: ein Pfad als String oder mehrere Pfade als Array. Am
+// robustesten sind absolute Pfade, dann findet der Workflow die Dateien
+// unabhängig vom Arbeitsverzeichnis (wichtig, wenn die Artikel in einem
+// Worktree-Branch liegen).
 const files = Array.isArray(args)
   ? args
   : typeof args === 'string' && args.trim()
     ? [args.trim()]
-    : DEFAULT_ARTICLES;
+    : [];
+if (files.length === 0) {
+  log('Kein Artikel angegeben. args: absoluter Pfad zur README.md oder Liste solcher Pfade.');
+  return { fehler: 'keine Artikel angegeben' };
+}
 
 const short = (p) => p.split('/').filter(Boolean).slice(-2).join('/');
 // Repo-Wurzel aus dem Artikelpfad ableiten (…/<repo>/blog/<artikel>/README.md),

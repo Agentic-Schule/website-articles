@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-09-26
+published: 2026-09-29
 keywords:
   - Prompt Engineering
   - Context Engineering
@@ -21,7 +21,7 @@ Garbage in, garbage out: hardly any phrase from computer science fits language m
 
 **There are two hype terms in circulation for exactly that: prompt engineering and context engineering. Yet behind both lies real craft. Prompt engineering: phrase the instruction clearly, back it with examples, and measure the result. Context engineering: curate everything the model gets to see, because the context window is a finite resource.**
 
-This is the opening part of the series about the engineering terms of the agent world. It continues with the loop ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)) and the graph ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Each part stands on its own.
+This is the opening part of the series about the engineering terms of the agent world. It continues with the loop ([Loop Engineering](https://agentic.schule/en/blog/2026-09-loop-engineering)) and the graph ([Graph Engineering](https://agentic.schule/en/blog/2026-09-graph-engineering)). Each part stands on its own.
 
 ## Contents
 
@@ -46,7 +46,7 @@ Before we get to the techniques, a clarification, because the word prompt means 
 
 ![The prompt stack: the system prompt at the very bottom, the custom prompt on top of it, then skills and slash commands, your prompt at the very top.](prompt-layers.svg "One prompt sits on top of the other, with the system prompt at the very bottom.")
 
-On top of all that, the history grows with every turn: Claude's answers and reasoning, the tool calls with their results. All layers land in the same context window, which is why the techniques in this article apply to every one of them: whether you maintain a `CLAUDE.md`, write a skill, or type a task, you are always writing a prompt. Only the bottom layer is usually out of your reach: with hosted models, the system prompt is always there. If you run a local model instead, say with Ollama, you hold that layer in your own hands as well. In everyday work with Claude Code, your levers are the layers above. You can even inspect the stack: the `/context` command breaks the context window down along these layers. I covered the foundations in my articles on [Agentic Coding](https://agentic.schule/blog/2026-02-agentic-coding) and [Claude Code](https://agentic.schule/blog/2026-02-claude-code).
+On top of all that, the history grows with every turn: Claude's answers and reasoning, the tool calls with their results. All layers land in the same context window, which is why the techniques in this article apply to every one of them: whether you maintain a `CLAUDE.md`, write a skill, or type a task, you are always writing a prompt. Only the bottom layer is usually out of your reach: with hosted models, the system prompt is always there. If you run a local model instead, say with Ollama, you hold that layer in your own hands as well. In everyday work with Claude Code, your levers are the layers above. You can even inspect the stack: the `/context` command breaks the context window down along these layers. I covered the foundations in my articles on [Agentic Coding](https://agentic.schule/en/blog/2026-02-agentic-coding) and [Claude Code](https://agentic.schule/en/blog/2026-02-claude-code).
 
 ## Prompt engineering: write, measure, refine
 
@@ -70,9 +70,9 @@ And the prompt engineering docs draw their own line: "Not every success criteria
 
 The Angular team has built a ready-made eval tool for generated web code: the [Web Codegen Scorer](https://github.com/angular/web-codegen-scorer). Its declared purpose, according to the README, is "evidence-based decisions relating to AI-generated code". You configure an environment with your instructions (optionally including MCP servers) and let different models and frameworks compete against each other. Built-in checks cover build success, runtime errors, accessibility, security, and coding best practices; a separate autorater model handles the LLM rating, and on build errors the tool even attempts automatic repairs. The results land in a report viewer that makes runs comparable. As runners it supports `claude-code`, `gemini-cli`, and `codex` in addition to direct API calls, and `web-codegen-scorer eval --env=angular-example` starts your first run against the bundled Angular example.
 
-Is it worth using? If you are only building one prompt for a single repo, it is certainly oversized. It gets interesting when you want to unify and harmonize the prompts across several projects in a company. Because then there will be different opinions about what is "good" and what works better, guaranteed. In that situation, exactly one thing counts: hard facts. Take the various prompts, let them compete against each other, and prove what actually delivers the better results.
+Is it worth using? If you are only building one prompt for a single repo, it is usually oversized. It gets interesting when you want to unify and harmonize the prompts across several projects in a company. Because then there will usually be different opinions about what is "good" and what works better. In that situation, exactly one thing counts: hard facts. Take the various prompts, let them compete against each other, and prove what actually delivers the better results.
 
-My guess, by the way: the Angular team has most certainly run its [official skills](https://github.com/angular/skills) (more on those in my [skills article](https://agentic.schule/blog/2026-09-boeswillige-skills)) through exactly this tool several times to get an optimal result.
+My guess, by the way: the Angular team has run its [official skills](https://github.com/angular/skills) (more on those in my [skills article](https://agentic.schule/en/blog/2026-09-malicious-ai-skills)) through exactly this tool several times to get an optimal result.
 
 <p style="display:flex;gap:2%;justify-content:center;margin:1.5em 0;">
   <img src="wcs-report-angular.png" alt="Web Codegen Scorer report for Angular: overall score 97, with bars for build, runtime, security, and accessibility" style="width:49%;height:auto;align-self:flex-start;">
@@ -130,21 +130,21 @@ Anthropic's context engineering post also names the price: runtime exploration i
 
 For agents that work over hours, even the best curation eventually stops being enough; the window fills up anyway. For this case, the Anthropic post names exactly three techniques: "compaction, structured note-taking, and multi-agent architectures".
 
-**Compaction:** when the window fills up, the history is summarized and a fresh window starts with the summary. Claude Code does exactly that; according to the post, it preserves architectural decisions, open bugs, and implementation details while discarding redundant tool outputs, plus the five most recently used files. I can confirm that the dreaded auto-compact has lost its horror over the past months. Compaction works extremely well, and for convenience I sometimes ride a single session for weeks. But then, every now and then, it did not work out at all, and Claude knows nothing. So when I see the context running low, I like to use the option of telling the `/compact` command exactly what must not get lost.
+**Compaction:** when the window fills up, the history is summarized and a fresh window starts with the summary. Claude Code does exactly that; according to the post, it preserves architectural decisions, open bugs, and implementation details while discarding redundant tool outputs. The agent then continues with this summary plus the five most recently used files. I can confirm that the dreaded auto-compact has lost its horror over the past months. Compaction works extremely well, and for convenience I sometimes ride a single session for weeks. But then, every now and then, it did not work out at all, and Claude knows nothing. So when I see the context running low, I like to use the option of telling the `/compact` command exactly what must not get lost.
 
 **Structured note-taking:** the agent writes notes outside the context window and reads them back in later; a to-do list, a `NOTES.md`. Anthropic's showcase: Claude plays Pokémon and keeps maps, goals, and combat strategies in its own notes across thousands of game steps, surviving every context reset. Every developer will have seen this: Claude loves creating such notes. Invariably in `ALLCAPS.md`. You should clean them up regularly though, because such a plan goes stale quickly and can then contain misinformation.
 
-**Multi-agent architectures:** instead of one agent holding everything in its own window, sub-agents handle focused subtasks with a fresh window and return only a distilled summary. More on that in the [graph article](https://agentic.schule/blog/2026-09-graph-engineering).
+**Multi-agent architectures:** instead of one agent holding everything in its own window, sub-agents handle focused subtasks with a fresh window and return only a distilled summary. More on that in the [graph article](https://agentic.schule/en/blog/2026-09-graph-engineering).
 
 ## You are doing this already
 
-If all of this sounds familiar: Claude Code applies these techniques in everyday work, and you use them along the way. The `CLAUDE.md` is curated permanent context, exactly the "smallest possible set of high-signal tokens" for your project. Compaction kicks in automatically when the window fills up, and with `/compact` you trigger it yourself. The agent's to-do lists are note-taking. And subagents together with workflows are the multi-agent architecture.
+If all of this sounds familiar: Claude Code applies these techniques in everyday work, and you use them along the way. The `CLAUDE.md` is curated permanent context, exactly the "smallest possible set of high-signal tokens" for your project. Compaction kicks in automatically when the window fills up, and with `/compact` you trigger it yourself. The agent's to-do lists are note-taking. And subagents together with *workflows* (scripts that orchestrate many subagents at once, see the [graph article](https://agentic.schule/en/blog/2026-09-graph-engineering)) are the multi-agent architecture.
 
 > **💡 Remember:** when the next prompt struggles, don't add more words first. Check what the model is currently seeing. Usually the window is the problem, and then curating helps more than phrasing.
 
 ## The perfect CLAUDE.md
 
-Okay, the heading promised a lot and will not deliver: the one perfect `CLAUDE.md` will not exist, every project is too unique for that. And that I am no fan of giant skill collections is something you, as an attentive reader of [my articles](https://agentic.schule/blog/2026-09-boeswillige-skills), already know. All of that is context rot, not signal.
+Okay, the heading promised a lot and will not deliver: the one perfect `CLAUDE.md` will not exist, every project is too unique for that. And that I am no fan of giant skill collections is something you, as an attentive reader of [my articles](https://agentic.schule/en/blog/2026-09-malicious-ai-skills), already know. All of that is context rot, not signal.
 
 But: if you attend my [course](https://agentic.schule/build-with-ai/online), I will gladly show you custom prompts from my client projects, and together we will discuss what works well and what doesn't. I am looking forward to your visit!
 
@@ -152,7 +152,7 @@ But: if you attend my [course](https://agentic.schule/build-with-ai/online), I w
 
 Two buzzwords, one craft. Prompt engineering means: clear instructions, examples, measured by evals. Context engineering means: the window is finite, so curate what goes in, tight and informative. Both are freely available in the primary sources, and neither needs a paid course. (Except at [agentic.schule](https://agentic.schule)! 😉)
 
-This article is the first part of the series: **prompt and context** determine what the model sees. It continues with the **loop**, which drives a line into the depth until the goal stands ([Loop Engineering](https://agentic.schule/blog/2026-09-loop-engineering)), and the **graph**, which fans independent work out into the breadth ([Graph Engineering](https://agentic.schule/blog/2026-09-graph-engineering)). Three tools, three shapes of work, and all three start with the same question: what does the model need to know to make the next step a good one?
+This article is the first part of the series: **prompt and context** determine what the model sees. It continues with the **loop**, which drives a line into the depth until the goal stands ([Loop Engineering](https://agentic.schule/en/blog/2026-09-loop-engineering)), and the **graph**, which fans independent work out into the breadth ([Graph Engineering](https://agentic.schule/en/blog/2026-09-graph-engineering)). Three tools, three shapes of work, and all three start with the same question: what does the model need to know to make the next step a good one?
 
 **Questions, feedback, prompt recipes of your own?** Bring them on, I am glad to hear from you.
 

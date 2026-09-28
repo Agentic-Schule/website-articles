@@ -20,6 +20,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 
 - **Fette These direkt nach dem Frontmatter**, ein Absatz, der den Kern vorwegnimmt. Danach `## Inhalt` (bzw. `## Contents`) mit `[[toc]]`.
 - **Beginne mit dem „Warum".** Erst die Motivation oder das Problem, dann der Weg dahin, dann das Fazit. Die konkrete Form richtet sich nach dem Artikeltyp: ein Tutorial läuft Schritt für Schritt, ein Meinungsstück von Problem zu Lösung, ein Überblick Thema für Thema. Kein festes Schema erzwingen.
+- **Lösungsartikel: Das Problem benennen, nicht ausmalen.** Wer einen Artikel zu einem bekannten, konkreten Problem aufruft („Wochenlimit erreicht“), kennt das Problem bereits. Einstieg und Überschriften nennen es sachlich in einem Satz und liefern sofort die Lösung, mit harten Fakten: Befehle, Zahlen aus Primärquellen, konkrete Schritte. Keine Metaphern und kein Erzählbogen um das Problem herum („Ein Tank reicht nicht mehr“).
 - Optionale Mittel für Meinungs- und Deep-Dive-Artikel: gescheiterte Versuche durchspielen, bevor die Lösung kommt, oder Varianten als nummerierte „Idee 1 … Idee 5" gegenüberstellen. Kein Muss.
 - **Brückensätze am Sektionsende**, die die nächste Sektion ankündigen. „Doch bei aller Begeisterung: Claude Code ist nicht perfekt."
 - **Überschriften als Frage, Imperativ/Infinitiv oder „Thema: Untertitel".** „Warum ein Terminal?", „Den MCP-Server einrichten", „Herausforderung: veraltetes Wissen". Kapitel schließen mit „Fazit" oder „Was haben wir gelernt?".
@@ -40,7 +41,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - **Englische Fachbegriffe bleiben englisch**, bei Erstnennung kursiv und kurz deutsch erklärt: „den JIT-Modus (Just-in-Time)", „(engl. *Context Summarization*)". Akronyme bei Erstnennung ausschreiben.
 - API-Namen und Befehle in Inline-Code (`rxResource()`, `/loop`). Bindestrich-Kopplung hält englische Begriffe deutsch-grammatisch: „MCP-Server", „AI-Agenten".
 - **Code als Vorher/Nachher** mit sprechenden Kommentaren und `❌`/`✅` für falsch/richtig. Eine durchgehende Beispiel-Domäne (im Buch: BookMonkey).
-- **Analogien und Alltagsmetaphern nur sparsam und nie ungefragt.** Wir beschreiben die Dinge exakt, so wie sie sind, statt sie mit ungenauen Vergleichen zu vereinfachen (etwa „X ist das GitHub für Y" oder „das Docker für Z"). Solche bereichsfremden Vergleiche sind technisch oft ungenau und stiften mehr Verwirrung als Klärung. Bietet sich im Einzelfall wirklich eine Analogie an, dann nur nach Rücksprache mit Johannes.
+- **Analogien und Alltagsmetaphern nur sparsam und nie ungefragt.** Wir beschreiben die Dinge exakt, so wie sie sind, statt sie mit ungenauen Vergleichen zu vereinfachen (etwa „X ist das GitHub für Y" oder „das Docker für Z"). Solche bereichsfremden Vergleiche sind technisch oft ungenau und stiften mehr Verwirrung als Klärung. Bietet sich im Einzelfall wirklich eine Analogie an, dann nur nach Rücksprache mit Johannes. Metaphern ersetzen keine Fakten und schmücken kein bekanntes Problem aus.
 
 ## Gedankenstrich, Antithese, Floskeln
 
@@ -67,6 +68,20 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 
 Viele Artikel liegen in zwei Ordnern (`-DE`/`-EN`). Beide Fassungen bleiben strukturgleich (gleiche Überschriften, gleiche Reihenfolge). Zitate aus englischen Quellen bleiben in beiden Fassungen zeichengenau im Original.
 
+## Lektorat (vor jedem Merge)
+
+Jeder Artikel läuft vor dem Merge durch den Workflow `artikel-lektorat` (`.claude/workflows/artikel-lektorat.js`). Er prüft gegen diese Schreibrichtlinie in fünf Dimensionen (Floskeln und Ton, Fakten an Primärquellen, Begriffe, Leser-Perspektive, eigenständige Verständlichkeit), sichert jeden Befund adversarial ab und fasst die Befunde je Artikel zusammen. Aufruf mit absoluten Pfaden, damit er auch Artikel in einem Worktree findet:
+
+```
+Workflow({ name: 'artikel-lektorat', args: ['/absoluter/pfad/blog/<ordner>-DE/README.md'] })
+```
+
+In der Regel wird die DE-Fassung geprüft, die EN-Fassung zieht die Befunde strukturgleich nach. Faktenbefunde werden vor dem Einarbeiten selbst an der Primärquelle nachgeprüft.
+
 ## Banner (Artikel-Header)
 
 Jeder Artikel bekommt ein Header-Bild im agentic.schule-Look: tiefes Lila-Schwarz mit einem Verlauf von Lila nach Magenta, Logo oben links, rechts eine schlichte artikel-eigene Illustration. Die verbindlichen Markenfarben, das Logo, eine Kopiervorlage und die Render-Pipeline stehen in **[`docs/banner.md`](docs/banner.md)**. Ein neues Banner immer nach dieser Vorgabe bauen.
+
+## Social Media (Posts und Videos)
+
+Die Promotion der Artikel (LinkedIn auf Deutsch; X, Bluesky, Video-Skript, TikTok, Instagram und YouTube Shorts auf Englisch) läuft in einer eigenen Sitzung nach **[`docs/social-media.md`](docs/social-media.md)**, am einfachsten über den Skill `/social-post`. In dieser Sitzung werden Artikel nur gelesen, nie geändert, und es wird nichts veröffentlicht.

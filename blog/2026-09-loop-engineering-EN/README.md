@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-09-27
+published: 2026-09-30
 lastModified: 2026-09-03
 keywords:
   - Loop Engineering
@@ -33,7 +33,7 @@ Up front, to set the scope: I focus mainly on Claude Code here. Other agents hav
 
 ## What loop engineering means
 
-The tightest definition comes from Addy Osmani of Google's Chrome team, who [spelled the term out in an article](https://addyosmani.com/blog/loop-engineering/):
+The tightest definition comes from Addy Osmani, who works on Claude Code at Anthropic today and spent over a decade at Google before that, including on the Chrome team. He [spelled the term out in an article](https://addyosmani.com/blog/loop-engineering/):
 
 > Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.
 
@@ -63,7 +63,7 @@ In Claude Code there are three ways to keep a session running; `/loop` is only o
 | `/loop` | when a time interval elapses | you stop it, or Claude considers the work done |
 | Stop hook | when the previous turn finishes | your own script or prompt decides |
 
-The difference between the first two is the most important thing in this whole topic. `/loop` **waits**. `/goal` starts the next turn immediately.
+In my view, the difference between the first two is the decisive one. `/loop` **waits**. `/goal` starts the next turn immediately.
 
 There is a second difference that is easy to miss. `/goal` checks the completion condition with a model of its own. The documentation puts it like this:
 
@@ -77,7 +77,7 @@ And one more distinction that causes confusion in practice. The documentation se
 
 > auto mode removes per-tool prompts, and `/goal` removes per-turn prompts
 
-The agent no longer asking whether it should continue comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up. For the loop to really run without you, without hitting Enter all the time, switch to **auto mode**: press `Shift+Tab` to cycle the [permission modes](https://code.claude.com/docs/en/permission-modes) until it shows "auto". A classifier then approves the calls.
+The agent no longer asking whether it should continue comes from the loop. It not asking about every single tool call comes from the permission mode. Anyone who only sets a loop and then wonders why dialogs keep popping up has mixed the two up. For the loop to really run without you, without hitting Enter all the time, switch to **auto mode**: press `Shift+Tab` to cycle the [permission modes](https://code.claude.com/docs/en/permission-modes) until it shows "auto". A second model in the background, the classifier, then reviews each tool call in your place and approves or blocks it.
 
 That leaves the third way. A stop hook is a script or a prompt in your `settings.json` that fires at the end of every turn, in every session, and can block stopping. `/goal` is essentially such a hook, just boiled down to a single session and condition. How to build one of your own is further down.
 
@@ -214,7 +214,7 @@ That is the entire mechanism, in three parts. The condition becomes the work ins
 
 Around it sit a few values that confirm or extend the docs. The constant for the maximum length of the condition is 4000 characters. The status entry is called `goal_status` and comes in several shapes: on setting only with `met` and `condition`, on completion additionally with `reason`, `iterations`, `durationMs` and `tokens`, plus a `failed` field. And the docs name two requirements explicitly: `/goal` only runs in trusted workspaces, and it refuses to work when hooks are restricted via `disableAllHooks` or `allowManagedHooksOnly`. In both cases the command tells you why.
 
-Two limits come with it. A goal can end without being reached: if the checking model considers the condition impossible, the entry is marked as failed and the loop ends. And there is a hard ceiling. According to the changelog, the turn ends with a warning after the stop hook has blocked eight times in a row, adjustable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
+Two limits come with it. A goal can end without being reached: if the checking model considers the condition impossible, the entry is marked as failed and the loop ends. And there is a hard ceiling. According to the [changelog](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) (version 2.1.143), the turn ends with a warning after the stop hook has blocked eight times in a row, adjustable via `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`.
 
 **What applies to both.** Self-pacing depends on a switch delivered from the server, named `tengu_kairos_loop_dynamic`. The program holds a fallback value for it, but that only applies when the configuration cannot be reached at all. Normally the server decides. The switch controls more than you would think: with it off, `ScheduleWakeup` simply does nothing, and even the help text changes. Only with the switch set does the description of `/loop` carry the sentence "Omit the interval to let the model self-pace." Without the switch, a default of ten minutes is named there.
 

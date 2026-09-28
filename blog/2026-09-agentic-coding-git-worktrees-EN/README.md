@@ -43,7 +43,7 @@ With a classic single checkout, we now have three bad options:
 
 Even without an emergency, the classic context switch is a pain: stash, checkout, `npm install` because the other branch has different dependencies, the IDE re-indexes. Working like this is anything but comfortable.
 
-On top of that comes a luxury problem: frontier models with plenty of reasoning are thorough, but leisurely. Commands like `/code-review` sometimes run absurdly long for me. The natural reaction: parallelize. While session one runs the review, session two should start on the next feature. Except: with two agents in the same working directory, the hoped-for parallelism turns into a race for the same files. On top of that, some features are mutually exclusive and others may only land in a specific order. Two half-finished features in the same directory produce a mixed state that will never exist in the finished product. And that, of all things, is what builds and tests then run against.
+On top of that comes a luxury problem: *frontier models* (the most capable AI models of the day) with plenty of *reasoning* (multi-step thinking before answering) are thorough, but leisurely. Commands like `/code-review` sometimes run absurdly long for me. The natural reaction: parallelize. While session one runs the review, session two should start on the next feature. Except: with two agents in the same working directory, the hoped-for parallelism turns into a race for the same files. On top of that, some features are mutually exclusive and others may only land in a specific order. Two half-finished features in the same directory produce a mixed state that will never exist in the finished product. And that, of all things, is what builds and tests then run against.
 
 The naive way out would be to simply clone the repo several times. That works, but it's wasteful (every copy drags its own `.git` along, and you fetch multiple times, too) and above all unnecessary: git has had a built-in for exactly this case for years.
 
@@ -76,13 +76,13 @@ Two more things worth knowing:
 
 Worktrees existed long before the AI agents. Classically, you use them for the hotfix next to the running feature, or to check out a pull request without touching your own state. With agents, a new permanent situation joins the list: the personal computer suddenly hosts a whole agentic team, and every team member needs its own checkout.
 
-## What the Tools Make of It
+## What Do the Tools Make of It?
 
 Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition (and many others) noticed this long ago. **Locally, isolation means git worktree; in the cloud, it means a dedicated VM or container.**
 
 | Tool | Parallel work | Isolation |
 |---|---|---|
-| [Claude Code](https://code.claude.com/docs/en/worktrees) | parallel sessions via `--worktree`, isolated subagents | git worktrees under `.claude/worktrees/`, desktop app: automatic per session |
+| [Claude Code](https://code.claude.com/docs/en/worktrees) | parallel sessions via `--worktree`, isolated subagents | git worktrees under `.claude/worktrees/`, desktop app: worktree option per session |
 | [Cursor](https://cursor.com/changelog/2-0) | up to eight agents on a single prompt | git worktrees or remote machines, isolated copy per agent |
 | [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | cloud agent: changes on a branch, then a PR | ephemeral GitHub Actions environment per session |
 | [VS Code](https://code.visualstudio.com/docs/agents/agent-types/copilot-cli) | background agents (Copilot CLI, Claude) | selectable worktree isolation per session |
@@ -95,17 +95,17 @@ Anthropic, Microsoft, Google, OpenAI, Cursor, and Cognition (and many others) no
 
 (As of July 2026. The feature landscape in this field seems to change weekly; each link leads to the official docs.)
 
-The local tools bet on worktrees, the cloud services on throwaway VMs, where a dedicated VM is the most obvious route anyway. Still, don't rely on the isolation blindly: Claude Code, for example, doesn't always use worktrees on its own; sometimes the agent comes up with the idea by itself, sometimes it doesn't. Like so much in vibe coding, you can deliberately raise the probability: **simply say that worktrees should be used.** The following sections show what this looks like in practice, starting with my tool of choice.
+The local tools bet on worktrees, the cloud services on throwaway VMs, where a dedicated VM is the most obvious route anyway. Still, don't rely on the isolation blindly: Claude Code, for example, doesn't always use worktrees on its own; sometimes the agent comes up with the idea by itself, sometimes it doesn't. Like so much in *vibe coding* (building software by simply telling the agent what you want), you can deliberately raise the probability: **simply say that worktrees should be used.** The following sections show what this looks like in practice, starting with my tool of choice.
 
 ### The Claude Code Way
 
 [Claude Code](https://claude.com/claude-code) now has worktrees firmly built in and has given them a [dedicated docs page](https://code.claude.com/docs/en/worktrees). The most important entry point is a CLI flag:
 
 ```bash
-claude --worktree feature-auth     # short: claude -w feature-auth
+claude --worktree shop-4711-checkout     # short: claude -w shop-4711-checkout
 ```
 
-This creates a worktree `.claude/worktrees/feature-auth/` below the repo, on a new branch `worktree-feature-auth`, and starts Claude right inside it. Do the same in a second terminal with a different name, and you have [two cleanly isolated sessions](https://code.claude.com/docs/en/common-workflows#run-parallel-sessions-with-worktrees). If you omit the name, Claude rolls one itself, something like `bright-running-fox`. On exit, Claude cleans up: an unchanged worktree of an unnamed session is removed automatically; otherwise it asks whether directory and branch should stay.
+This creates a worktree `.claude/worktrees/shop-4711-checkout/` below the repo, on a new branch `worktree-shop-4711-checkout`, and starts Claude right inside it. Do the same in a second terminal with a different name, and you have [two cleanly isolated sessions](https://code.claude.com/docs/en/common-workflows#run-parallel-sessions-with-worktrees). If you omit the name, Claude rolls one itself, something like `bright-running-fox`. On exit, Claude cleans up: an unchanged worktree of an unnamed session is removed automatically; otherwise it asks whether directory and branch should stay.
 
 It works just as well mid-session: ask Claude to "please work in a worktree for this", and it creates one itself and switches into it (behind the scenes, a tool called `EnterWorktree` takes care of that).
 
@@ -127,7 +127,7 @@ It gets really elegant with [subagents](https://code.claude.com/docs/en/sub-agen
 
 A detail from practice: because a fresh worktree starts without the gitignored files, `.env` for example, there is `.worktreeinclude`, a file in the project root in `.gitignore` syntax. Whatever is listed there and is itself gitignored gets copied automatically into every new worktree when Claude Code creates it (tracked files are deliberately never duplicated).
 
-In the desktop app, the principle is already the default, by the way: there, every new parallel session automatically gets its own worktree. And in case you go looking for it first, like I did: there is no `/worktree` slash command, the flag at startup and the mid-session request cover everything.
+In the desktop app, the principle is a switch, by the way: when you start a new session, you select the **worktree** option next to the branch name, and the session gets its own worktree. And in case you go looking for it first, like I did: there is no `/worktree` slash command, the flag at startup and the mid-session request cover everything.
 
 ### The Antigravity Way
 
@@ -252,13 +252,13 @@ A few remarks:
 
 The worktrees are in place, two agents are working on two branches. What remains are the collisions that don't happen in the file system, because even with separate directories, all agents still share one computer: its ports, its databases, its licenses.
 
-### Dependencies Are Due per Worktree
+### Dependencies: Due per Worktree
 
 `node_modules` in the frontend, `bin/` and `obj/` in the backend: all gitignored, so all new everywhere. That costs a few minutes and a good chunk of disk space. The reward: every worktree has exactly the dependencies of its branch and nothing leaks between features.
 
 ### Commercial Licenses That Patch node_modules
 
-The pitfall that really caught us: [Kendo UI](https://www.telerik.com/kendo-angular-ui) stores its license activation as patched files under `node_modules/@progress/kendo-licensing/`. The activation lives in the installation artifact instead of the repo, and a fresh worktree starts from zero. To be fair: if Telerik finds the key on its own (as `telerik-license.txt` or an environment variable), a postinstall script takes care of it right during `npm install`. In our setup, a custom npm script wraps the key, so the drill is: activate again after every `npm install` in every worktree, or the components render with a watermark and a license warning. The lesson generalizes well: whatever a fresh `npm install` overwrites or forgets, the init command has to restore per worktree.
+This one is a real trap: [Kendo UI](https://www.telerik.com/kendo-angular-ui) stores its license activation as patched files under `node_modules/@progress/kendo-licensing/`. The activation lives in the installation artifact instead of the repo, and a fresh worktree starts from zero. To be fair: if Telerik finds the key on its own (as `telerik-license.txt` or an environment variable), a postinstall script takes care of it right during `npm install`. In our setup, a custom npm script wraps the key, so the drill is: activate again after every `npm install` in every worktree, or the components render with a watermark and a license warning. The lesson generalizes well: whatever a fresh `npm install` overwrites or forgets, the init command has to restore per worktree.
 
 ### Dedicated Ports for Every Branch
 
@@ -272,7 +272,7 @@ At the latest when two branches are supposed to be *up and running* at the same 
 
 Technically, this is wired up quickly: `ng serve --port 4201` for the frontend, the URL via environment variable (`ASPNETCORE_URLS`) for the backend, the port mapping in the compose file for the database container. The only thing that matters is consistency: the frontend of a branch must also point to the API of the **same** branch (proxy configuration or environment file), or you'll happily test against the wrong backend and wonder about ghost data.
 
-### Parallel E2E Runs
+### Parallel End-to-End Tests
 
 The supreme discipline. Two test runs on a shared database sabotage each other: one clears away the test data the other is waiting for. If you want to test in parallel, you need separate database instances per branch, or at least cleanly separated data buckets within one instance. With the port scheme above, the separate instance is usually the easier path: spin up a second container, enter the port, done.
 
@@ -282,7 +282,7 @@ The supreme discipline. Two test runs on a shared database sabotage each other: 
 
 Where the built-in features end, namely at the repo boundary, a self-built init command begins: one command, two repos, one branch name, two worktrees, dependencies and license included. The whole thing is one simple Markdown file. But it turns the most tedious part of everyday multi-repo work into a single question: "What's the feature called?"
 
-I want to stay honest this time, too:
+A few open points belong here this time, too:
 
 - **Parallelism is not an end in itself.** Three agents produce three times as many diffs, and somebody (me) has to read them all. On top of that, not all features get along: some are mutually exclusive, others have to land in a fixed order. Worktrees keep the states cleanly apart, but what gets merged when remains headwork. The bottleneck is the review.
 - **The mental load stays.** Hopping from branch to branch is hard work in your head. That's why I rarely allow myself more than two or three branches at a time. The technology could easily handle more. My head hits its limit at review time well before that.
