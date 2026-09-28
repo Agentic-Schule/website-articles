@@ -19,23 +19,48 @@ language: en
 header: header.jpg
 ---
 
-**A ground station that never shuts down burns fuel around the clock. Sooner or later the tank runs dry. This article shows how Claude Code switches between multiple Max subscriptions while it keeps running, automatically and without `/logout`. Remote Control survives the switch. And it shows why I give no advance trust to tools that handle my access keys.**
+**Your weekly limit in Claude Code is almost reached? Don't worry, there is a solution. Usage credits and `/limit-reset` are not it. This article shows how Claude Code switches between multiple Max subscriptions instead: automatically, shortly before the limit, without `/logout` and without Remote Control dropping.**
 
 ## Contents
 
 [[toc]]
 
-## The Problem: One Tank Is No Longer Enough
+## Weekly Limit Reached: What Helps and What Doesn't
 
-In the [first part](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini) I turned a Mac mini into a "ground station", after Bowie's *Space Oddity* also called *Ground Control*: a machine that is always on and on which my agents keep working. I am Major Tom and dock in from the MacBook, the browser or my phone. At the very end there was a casual sentence: because the agent is reachable at any time, I've been "ruthlessly maxing out" the generous limits of the Claude Max subscription.
+### Check First: `/usage`
 
-This part picks up here. A setup that is always on has a predictable side effect: it uses more. The agents keep working at night, I throw in tasks while on the road, several sessions run in parallel. The 5-hour window and above all the weekly limit of the Max subscription are generous. They are not infinite.
+`/usage` shows how far along you are. According to the [command reference](https://code.claude.com/docs/en/commands), it shows "session cost, plan usage limits, and activity stats" and breaks down what counts against your plan limits. It even runs while Claude is responding. Know this number before you pick one of the following paths.
 
-The obvious solution is a **second Max subscription**, or a third or fourth if needed. Several tanks instead of one. But Claude Code only ever knows *one* signed-in account. Switching means `/logout`, then `/login`, then the OAuth flow in the browser. Every single time. The running work stands still, and the browser wants attention.
+### No Usage Credits
 
-On top of that comes a second, more annoying effect: an account switch cuts the **Remote Control connection**. That is the feature from part 1 that lets me watch from my phone. One switch, and the session on the phone is gone. The same goes for artifacts, the pages Claude Code publishes on claude.ai. They belong to an account as well.
+The obvious button is `/usage-credits`, formerly `/extra-usage`. It lets you keep working past the limit for a fee. According to the [Help Center](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans), usage credits are billed "at standard API rates", on top of your subscription. Prepaid [bundles](https://support.claude.com/en/articles/14246112-buy-usage-bundles) "save up to 30%", but they remain API prices with a discount.
 
-So the goal sounds simple: **switch between multiple subscriptions while running, without signing out and without losing remote control.**
+The subscription plays in a different league. When Anthropic introduced the weekly limits, it wrote itself: "one user consumed tens of thousands in model usage on a $200 plan" ([X, July 28, 2025](https://x.com/AnthropicAI/status/1949898511287226425)). If you regularly hit the weekly limit, in my view there is no constellation in which usage credits come out cheaper than another subscription.
+
+### No `/limit-reset`
+
+For a few weeks now, a command has been showing up that is not in any [command reference](https://code.claude.com/docs/en/commands): `/limit-reset`. It is hidden in the command menu. A look into Claude Code 2.1.283 shows two programs behind it, each unlocked by a feature flag on the server:
+
+- **A weekly reset of the 5-hour limit.** The notice in the program reads "reset your session limit now · uses weekly limit · 1/week", and the success message ends with "your weekly limit still applies". So the weekly limit stays untouched.
+- **An allowance of resets with an expiry date.** It refills the limits ("{resets} left · use by {date}"). Anthropic decides who gets it.
+
+Whether you may use a reset is also decided by the server. The code contains rejection reasons, among them `tier`, `tenure` (account age), `other_experiment` and `not_limited`, meaning "not at the limit yet". None of this is shown. In each of these cases the message reads "A session-limit reset isn't available right now." That is exactly what the reports are piling up about, for example in [#95810](https://github.com/anthropics/claude-code/issues/95810) and [#97348](https://github.com/anthropics/claude-code/issues/97348).
+
+Even a working reset only buys you breathing room once. If you hit the limit every week, you will be there again next week.
+
+### Another Max Subscription
+
+That leaves the path that actually holds up: a **second Max subscription**, or a third or fourth if needed. Each one brings its full allowance at the subscription price. According to the [Help Center](https://support.claude.com/en/articles/11049741-what-is-the-max-plan), Max 5x costs $100 and Max 20x $200 per month.
+
+## The Problem: Switching Between Accounts
+
+Claude Code only ever knows *one* signed-in account. Switching means `/logout`, then `/login`, then the OAuth flow in the browser. Until then, the work stands still.
+
+Worse is the moment the limit hits in the middle of the work. On my setup the agents run around the clock on a [Mac mini that never shuts down](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini). When an account reaches its limit, running sub-agents stop with "Agent terminated early due to an API error: You've hit your session limit". According to numerous issue reports and painful experience of my own, often only a fragment of their work comes back, and it has to be started again ([#94770](https://github.com/anthropics/claude-code/issues/94770), [#74162](https://github.com/anthropics/claude-code/issues/74162), [#78231](https://github.com/anthropics/claude-code/issues/78231)). In [#94222](https://github.com/anthropics/claude-code/issues/94222) a user analyzed six of their sessions: "449 subagents were cut off, only 8 were resumed by id […] The other 438 were re-dispatched from scratch."
+
+On top of that, an account switch cuts the **Remote Control connection** that lets me watch from my phone. The same goes for artifacts, the pages Claude Code publishes on claude.ai. They belong to an account as well.
+
+So the goal is: **switch to another subscription automatically before the limit, without signing out, without cancelled agents and without losing remote control.** That takes two tools: one that swaps the sign-in while running, and one that keeps Remote Control on one account while doing so.
 
 ## No Router Needed: Claude Code Re-Reads the Credentials
 
@@ -56,7 +81,7 @@ cswap switch        # rotate to the next account
 cswap list          # usage (5h/7d) of all accounts
 ```
 
-One detail of my setup matters: all sessions share **one** global credential file. A `cswap switch` therefore moves *the whole fleet* to the other subscription. That is intended when account A hits its weekly limit.
+One detail of my setup matters: all sessions share **one** global credential file. A `cswap switch` therefore moves all sessions to the other subscription. That is intended when account A hits its weekly limit.
 
 This is how you register the accounts:
 
@@ -109,7 +134,7 @@ pipx inject claude-swap ./cswap-pin
 
 What this means technically belongs on the table: the proxy is a *man-in-the-middle* (MITM). It decrypts the HTTPS connection to Anthropic locally. For that it uses its own *Certificate Authority* (CA). It is not installed system-wide. Claude Code is told about it via `NODE_EXTRA_CA_CERTS`. That is the same technique corporate proxies use, and Claude Code supports it [officially](https://code.claude.com/docs/en/network-config) via `HTTPS_PROXY` and `NODE_EXTRA_CA_CERTS`. That means the proxy sees the Anthropic traffic in plain text. I forked and read this one too before it was allowed on the box. So there are two forks in my account. For a tool that sees your traffic, that is mandatory.
 
-## The Autopilot: Ground Control Refuels on Its Own
+## Switching Automatically: `cswap auto` as a Service
 
 Switching by hand is nice. The gain lies in the automation: `cswap auto` checks the usage and switches **on its own** to the subscription with the most headroom as soon as the active account reaches a threshold. By default it sits at 90 percent of the 5-hour or weekly window.
 
@@ -135,7 +160,7 @@ In daily use the result is unspectacular, and that is how it should be. At some 
 
 The best twist came from the agents themselves.
 
-The ground station was running a multi-stage editing workflow: research agents check the facts of an article on the web. During that, these agents raised the **alarm**. They considered the fetched content tampered with and cited the proxy environment variables and the foreign CA as evidence of an attack.
+The mini was running a multi-stage editing workflow: research agents check the facts of an article on the web. During that, these agents raised the **alarm**. They considered the fetched content tampered with and cited the proxy environment variables and the foreign CA as evidence of an attack.
 
 That is a feature. The agents had no way of knowing where the proxy came from. From their point of view a man-in-the-middle with its own CA was sitting there, and that *could* have been malware. That is how a vigilant reviewer should react.
 
@@ -149,7 +174,7 @@ unset HTTPS_PROXY https_proxy HTTP_PROXY http_proxy ALL_PROXY all_proxy NODE_EXT
 
 On my machine the agents' shell commands run through zsh, and zsh reads `~/.zshenv` on every invocation. The Claude process keeps the pin; the agents no longer see it in their shells.
 
-And here a principle from part 1 returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. That's why I don't explain to the agents that the proxy is harmless. Instead, the agents don't see the proxy in their shells at all anymore. Only Ground Control still sees the elephant.
+And here a principle from part 1 returns: **never tell the agents about the pink elephant.** Once a session knows about an exotic setup, it explains every problem with that first. That's why I don't explain to the agents that the proxy is harmless. Instead, the agents don't see the proxy in their shells at all anymore. Only I still know about the elephant.
 
 ## A Principle: Never Blindly Hand a Tool Your Keys
 
@@ -174,21 +199,21 @@ But for all the joy about the seamless switch: there are a few things you should
 - **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. That is the price of not trusting someone else's auto-update.
 - **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. It is acceptable because I have read the code and its reach is limited to the bare minimum.
 
-## Conclusion: Flying On Without a Refueling Stop
+## Conclusion
 
-The goal is reached: multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout`-`/login` dance, no break in the flow. Ground Control refuels, Major Tom flies on.
+Multiple Max subscriptions, an account switch while running, automatically before a limit kicks in, and Remote Control survives the switch. No more `/logout` and `/login`, no more cancelled agents.
 
-For me the gain clearly outweighs the cost. The ground station keeps running, no matter which tank is burning right now. The agents' alarm confirms the principle: healthy distrust belongs where tools hold your keys.
+For me the gain clearly outweighs the cost. With two 20x subscriptions I hardly ever hit a weekly limit, and I never have to look at usage credits. The agents' alarm confirms the principle: healthy distrust belongs where tools hold your keys.
 
-If you hit a limit yourself: start with `cswap list` and see how fast your tanks really run dry. And read the code before you give it your keys.
+If you hit the limit yourself: check with `/usage` how far along you are, and with `cswap list` how much headroom all accounts have together. And read the code before you give it your keys.
 
-By the way, while writing I once again had a Bowie song in my head. This time it's the sequel to *Space Oddity*, in which Major Tom returns. Here you go, your earworm:
+By the way, while writing I once again had a Bowie song in my head, just like in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini). This time it's the sequel to *Space Oddity*, in which Major Tom returns. Here you go, your earworm:
 
 <iframe src="https://www.youtube.com/embed/HyMm4rJemtI" title="David Bowie – Ashes to Ashes (Official Video)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
 
 <small>If the player doesn't load: [watch directly on YouTube](https://youtu.be/HyMm4rJemtI).</small>
 
-**Questions, feedback, your own tinkering?** Bring it on. And in case you missed part 1: [that's where the ground station was built.](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)
+**Questions, feedback, your own tinkering?** Bring it on. And how the Mac mini this all runs on is set up is described in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini).
 
 <small>**Thanks** to realiti4 for `claude-swap` and to Junyong Lee for `cswap-pin`. Both projects are open, tested and easy to read. That is what makes it possible not to have to trust them blindly.</small>
 
