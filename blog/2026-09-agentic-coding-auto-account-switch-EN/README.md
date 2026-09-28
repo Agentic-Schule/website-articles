@@ -175,7 +175,7 @@ With `--once` the command runs exactly one pass and exits. The tool stores the m
 <integer>60</integer>
 ```
 
-In daily use the result is unspectacular, and that is how it should be. At some point account 1 reaches the threshold, the service switches to the practically untouched account 2, and I keep working. I don't notice a thing.
+In daily use the result is unspectacular, and that is how it should be. At some point account 1 reaches the threshold, the service switches to the practically untouched account 2, and I keep working. I don't notice a thing. Awesome!
 
 ## False Alarm: The Agents Suspect an Attack
 

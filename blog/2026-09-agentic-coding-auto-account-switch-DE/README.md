@@ -176,7 +176,7 @@ Mit `--once` macht der Befehl genau einen Durchlauf und beendet sich. Die Mindes
 <integer>60</integer>
 ```
 
-Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann erreicht Konto 1 die Schwelle, der Dienst schaltet auf das praktisch unberührte Konto 2, und ich arbeite weiter. Ich merke davon nichts.
+Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann erreicht Konto 1 die Schwelle, der Dienst schaltet auf das praktisch unberührte Konto 2, und ich arbeite weiter. Ich merke davon nichts. Geil!
 
 ## Fehlalarm: Die Agenten wittern einen Angriff
 
