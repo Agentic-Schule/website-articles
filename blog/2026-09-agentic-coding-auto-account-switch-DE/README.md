@@ -200,7 +200,7 @@ Und hier kehrt ein Prinzip aus [Teil 1](https://agentic.schule/blog/2026-09-agen
 
 **Ein Werkzeug, das deine Zugangsschlüssel oder deinen Datenverkehr anfasst, steht bei mir ganz oben auf der Liste von Software, der ich grundsätzlich nicht über den Weg traue. Sorry, but not sorry. Forke es, lies den Code, installiere aus deiner Kopie und aktualisiere nur bewusst.**
 
-So gehe ich bei jedem Werkzeug vor, das an sensible Daten will. Misstrauen ist in einem agentischen Setup Hygiene.
+So gehe ich bei jedem Werkzeug vor, das an sensible Daten will. Misstrauen ist in einem agentischen Setup Hygiene. Ich muss allerdings zugeben: Den MITM-Proxy hatte ich für mich selbst notgedrungen schon akzeptiert. Hätten sich die Agenten nicht geweigert, liefe er wohl heute noch für jeden Request.
 
 Bleibt die Frage, ob Anthropic so ein Setup überhaupt erlaubt.
 

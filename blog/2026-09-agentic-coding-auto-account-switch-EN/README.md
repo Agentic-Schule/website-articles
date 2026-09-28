@@ -199,7 +199,7 @@ And here a principle from [part 1](https://agentic.schule/en/blog/2026-09-agenti
 
 **A tool that touches your access keys or your traffic is at the very top of my list of software I fundamentally don't trust. Sorry, but not sorry. Fork it, read the code, install from your copy and only update on purpose.**
 
-That is how I handle every tool that wants access to sensitive data. In an agentic setup, distrust is hygiene.
+That is how I handle every tool that wants access to sensitive data. In an agentic setup, distrust is hygiene. I have to admit, though: I had already accepted the MITM proxy for myself out of necessity. Had the agents not refused, it would probably still be running for every request today.
 
 That leaves the question of whether Anthropic allows a setup like this at all.
 
