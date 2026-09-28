@@ -179,7 +179,7 @@ Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann errei
 
 Auf dem mini lief ein mehrstufiger Lektorats-Workflow: Recherche-Agenten prüften die Fakten eines Artikels im Web. Dabei schlugen diese Agenten **Alarm**. Sie hielten die abgerufenen Inhalte für manipuliert und führten die Proxy-Umgebungsvariablen und die fremde CA als Beleg für einen Angriff an.
 
-Das war ein Feature. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
+Das ist kein Bug, sondern ein lobenswertes Verhalten. Meine Subagenten waren misstrauisch, weil da ein komischer Proxy auftauchte. Wild, dass Software heutzutage so reagieren kann. Die Agenten konnten nicht wissen, woher der Proxy stammt. Aus ihrer Sicht saß da ein Man-in-the-Middle mit eigener CA, und das *hätte* Malware sein können. So soll ein wachsamer Prüfer reagieren.
 
 Hatten sie recht? Das lässt sich prüfen. Ein Abruf von `example.com` durch den Proxy kommt mit dem *echten* öffentlichen Zertifikat zurück. Hätte der Proxy hier mitgelesen, wäre es seines gewesen. Auch der Quelltext bestätigt das: Der Proxy entschlüsselt **ausschließlich** `api.anthropic.com`. Jeden anderen Host reicht er als blinden Tunnel durch.
 
