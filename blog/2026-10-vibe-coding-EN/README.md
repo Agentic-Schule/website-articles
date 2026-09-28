@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-10-02
+published: 2026-10-06
 keywords:
   - Vibe Coding
   - Agentic Coding
@@ -81,15 +81,15 @@ So what does this mean concretely? The following guardrails make the difference 
 
 **1. Read the diffs.** The minimum rule, and the exact inversion of Karpathy's "I don't read the diffs anymore". Plus Willison's commit test: what you cannot explain, you do not commit.
 
-**2. Give the agent a check.** The [official Claude Code docs](https://code.claude.com/docs/en/best-practices) put it perfectly: "Give Claude a check it can run: tests, a build, a screenshot to compare. It’s the difference between a session you watch and one you walk away from." Without a verifiable signal, you are the test bench yourself, verbatim: "you become the verification loop: every mistake waits for you to notice it." Tests, build exit codes, linters, and screenshot comparisons close the loop, very much in the spirit of my [loop article](https://agentic.schule/en/blog/2026-09-loop-engineering).
+**2. Give the agent a check.** The [official Claude Code docs](https://code.claude.com/docs/en/best-practices) put it perfectly: "Give Claude a check it can run: tests, a build, a screenshot to compare. It’s the difference between a session you watch and one you walk away from." Without a verifiable signal, you are the test bench yourself, verbatim: "you become the verification loop: every mistake waits for you to notice it." Tests, build exit codes, linters, and screenshot comparisons close the loop, very much in the spirit of my [loop article](https://agentic.schule/en/blog/2026-10-loop-engineering).
 
-**3. Tests first.** Willison observes [in his vibe engineering post](https://simonwillison.net/2025/Oct/7/vibe-engineering/) that "LLMs actively reward existing top tier software engineering practices", automated tests above all: with a stable test suite the agents fly, and without one the agent happily claims something works without ever having checked. How to measure the quality of your instructions themselves instead of judging by gut feeling is covered in the [prompt and context article](https://agentic.schule/en/blog/2026-09-prompt-context-engineering): *evals* (systematic evaluations).
+**3. Tests first.** Willison observes [in his vibe engineering post](https://simonwillison.net/2025/Oct/7/vibe-engineering/) that "LLMs actively reward existing top tier software engineering practices", automated tests above all: with a stable test suite the agents fly, and without one the agent happily claims something works without ever having checked. How to measure the quality of your instructions themselves instead of judging by gut feeling is covered in the [prompt and context article](https://agentic.schule/en/blog/2026-10-prompt-context-engineering): *evals* (systematic evaluations).
 
 **4. Put a lid on the iterations.** A [peer-reviewed study](https://arxiv.org/abs/2506.11022) (IEEE ISTAS 2025) measured that code gets less secure when an LLM "improves" it in a loop without humans; its recommendation reads verbatim "Restrict consecutive LLM-only iterations to 3 maximum", then human review. A single-study guideline, but it matches everyday experience: when the agent optimizes on its own for too long, it rarely gets better. Look at it yourself in between.
 
 **5. Limit the blast radius.** Anthropic relies on [sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) in Claude Code, with filesystem and network isolation, explicitly also as protection against *prompt injection* (instructions smuggled in through processed content). According to Anthropic, the defined boundaries reduce permission prompts by 84 percent in their internal usage; the agent works more freely and stays fenced in at the same time. The most consistent expansion stage: my agent has a computer of its own, as described in the [ground station article](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini).
 
-**6. Have a second instance review.** Commands like `/code-review` and `/security-review` are an additional safety net. The view is only truly fresh, though, when sub-agents with their own context window are spawned for it; when that happens and why it makes the difference is covered in the [graph article](https://agentic.schule/en/blog/2026-09-graph-engineering). But always keep in mind: reviews do not replace your own reading, they complement it.
+**6. Have a second instance review.** Commands like `/code-review` and `/security-review` are an additional safety net. The view is only truly fresh, though, when sub-agents with their own context window are spawned for it; when that happens and why it makes the difference is covered in the [graph article](https://agentic.schule/en/blog/2026-10-graph-engineering). But always keep in mind: reviews do not replace your own reading, they complement it.
 
 > **💡 Remember:** Who types the code is secondary. It only becomes good software when someone reads, tests, and takes responsibility. AI cannot take responsibility.
 
@@ -101,7 +101,7 @@ Time for an example from our own practice. Our learning platform [learnly.school
 
 Behind the good vibes sits a whole workbench:
 
-- **Layered custom prompts:** three `CLAUDE.md` files (project, backend, frontend) plus a central reference document, marked as required reading for every session. How these layers play together is covered in the [prompt and context article](https://agentic.schule/en/blog/2026-09-prompt-context-engineering).
+- **Layered custom prompts:** three `CLAUDE.md` files (project, backend, frontend) plus a central reference document, marked as required reading for every session. How these layers play together is covered in the [prompt and context article](https://agentic.schule/en/blog/2026-10-prompt-context-engineering).
 - **Strict typing:** TypeScript everywhere, `any` is forbidden as a hard rule. The compiler is the cheapest reviewer there is.
 - **Separated layers with a contract:** backend (NestJS, Drizzle ORM) and frontend (Angular) are cleanly separated, the API is documented via Swagger/OpenAPI, and the frontend client is generated from it. The documented workflow works its way from the bottom up: "Complete each layer fully before moving up." Database views hide complexity from the agent.
 - **Vibe-compatible patterns:** deliberately simple, effective building blocks like `rxResource` instead of clever custom constructs. What the agent has seen often, it builds reliably. (I personally enforce [`rxResourceFixed`](https://angular.schule/blog/2025-10-rx-resource-is-broken#the-solution-rxresourcefixed-it-actually-works), my improved version of the original.)
@@ -134,7 +134,7 @@ grep -vi 'goblins' > "$instructions" && \
 codex -m gpt-5.5 -c "model_instructions_file=\"$instructions\""
 ```
 
-And with that, back to software development, because the lesson applies there just as much: for heaven's sake, do not work with negative examples. That goes for prompts, and it goes for code. Which brings us to the topic of Clean Code: if the agent is supposed to produce good code, the repository has to contain clean code. For a human, you can maybe drop a `// FIXME: bad code, remove this later` and they leaf past it, shaking their head. With an LLM you have a huge problem: it has read the mess. Lousy code is a giant pink elephant. Or to repeat my quote from the [prompt and context article](https://agentic.schule/en/blog/2026-09-prompt-context-engineering):
+And with that, back to software development, because the lesson applies there just as much: for heaven's sake, do not work with negative examples. That goes for prompts, and it goes for code. Which brings us to the topic of Clean Code: if the agent is supposed to produce good code, the repository has to contain clean code. For a human, you can maybe drop a `// FIXME: bad code, remove this later` and they leaf past it, shaking their head. With an LLM you have a huge problem: it has read the mess. Lousy code is a giant pink elephant. Or to repeat my quote from the [prompt and context article](https://agentic.schule/en/blog/2026-10-prompt-context-engineering):
 
 > **Clean Code is not dead. It's context engineering now.**
 >

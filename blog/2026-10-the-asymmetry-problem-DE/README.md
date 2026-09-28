@@ -93,7 +93,7 @@ Was der Verteidiger bräuchte, ist eine starke KI, die es mit den Angreifern auf
 
 ## Die Privatparty: Du bist nicht eingeladen
 
-Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweisen muss man es trotzdem. Über den Befehl [`/security-review`](https://agentic.schule/blog/2026-09-graph-engineering) habe ich schon mehrfach geschrieben. Die Ergebnisse sind ansehnlich, für die Oberliga reichen sie aber nicht. An vier Türen bleibst du draußen.
+Bleibt also das gehostete Modell, das du tatsächlich benutzen darfst. Ein Sprachmodell behauptet viel, und vieles davon klingt erstmal richtig. Beweisen muss man es trotzdem. Über den Befehl [`/security-review`](https://agentic.schule/blog/2026-10-graph-engineering) habe ich schon mehrfach geschrieben. Die Ergebnisse sind ansehnlich, für die Oberliga reichen sie aber nicht. An vier Türen bleibst du draußen.
 
 **Erstens, die Verteidigung.** Sobald echte Angriffsdaten ins Spiel kommen, verweigert das gehostete Modell. Den Beweis hast du oben gesehen: Hugging Face musste auf ein lokales Modell ausweichen, weil die gehosteten die Forensik blockierten. Der Grund, in Hugging Faces Worten: der Guardrail „cannot distinguish an incident responder from an attacker".
 
