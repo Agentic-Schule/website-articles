@@ -55,7 +55,7 @@ Ein Blick in den Code von Claude Code zeigt, dass sich hinter `/limit-reset` zwe
 
 Ob du einen Reset nutzen darfst, entscheidet ebenfalls der Server. Im Code sind Ablehnungsgründe hinterlegt, darunter `tier`, `tenure` (Kontoalter), `other_experiment` und `not_at_wall`, also „noch nicht am Limit". Angezeigt wird davon nichts. Die Meldung lautet in jedem dieser Fälle „A session-limit reset isn't available right now." Bei mir hat das erste Max-Abo den Befehl akzeptiert, das zweite nicht, ohne jede Begründung. Nicht sehr transparent. Vermutlich lag es am Kontoalter, also an `tenure`. Über abgelehnte Resets ohne Begründung häufen sich die Berichte: mindestens vier offene Issues seit Anfang September ([#93148](https://github.com/anthropics/claude-code/issues/93148), [#95810](https://github.com/anthropics/claude-code/issues/95810), [#97348](https://github.com/anthropics/claude-code/issues/97348), [#97581](https://github.com/anthropics/claude-code/issues/97581)), keines mit einer Antwort von Anthropic. Nutzer vermuten einen A/B-Test: „I think it's something they're A/B testing" ([#93148](https://github.com/anthropics/claude-code/issues/93148)).
 
-Selbst ein funktionierender Reset verschafft dir nur einmal Luft. Wer jede Woche ans Limit stößt, steht in der nächsten Woche wieder dort.
+Selbst ein funktionierender Reset verschafft dir nur einmal Luft. Wer jede Woche ans Limit stößt, steht in der nächsten Woche wieder dort. Frust ist hier vorprogrammiert.
 
 ### Die ultimative Lösung: ein weiteres Max-Abo
 
