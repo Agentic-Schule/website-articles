@@ -27,6 +27,8 @@ header: header.jpg
 
 ## Weekly Limit Reached: What Helps and What Doesn't
 
+The weekly limit is the productivity killer, full stop.
+
 ### Check First: `/usage`
 
 `/usage` shows how far along you are. As you can see in the [command reference](https://code.claude.com/docs/en/commands), it shows "session cost, plan usage limits, and activity stats" and breaks down what counts against your plan limits. It even runs while Claude is responding. Know this number before you pick one of the following paths.
