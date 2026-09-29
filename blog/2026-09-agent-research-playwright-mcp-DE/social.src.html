@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Social-Bild für LinkedIn und X (Tag 5). Rendern: node tools/render-social.mjs blog/2026-09-agent-research-playwright-mcp-DE, siehe docs/social-media.md -->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(60% 55% at 74% 42%, rgba(98,38,176,0.34), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(233,4,100,0.16), transparent 60%),
+      linear-gradient(155deg,#241a33 0%,#1b1525 58%,#0d0913 100%);
+    color:#fff; position:relative;
+  }
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .brand { position:absolute; top:48px; left:78px; height:52px; width:auto; }
+  h1 { position:absolute; left:78px; right:78px; top:140px; font-size:62px; font-weight:800; letter-spacing:-1.5px; line-height:1.05; }
+  .accent { background:linear-gradient(92deg,#a06bff 0%,#e90464 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .mono { font-family:"SF Mono",Menlo,monospace; font-variant-ligatures:none; }
+  .tbl { position:absolute; left:78px; right:78px; top:250px; }
+  .hdr,.row { display:grid; grid-template-columns:230px 1fr 1.25fr; align-items:center; gap:20px; }
+  .hdr { font-size:24px; color:#8f84a6; font-weight:700; padding:0 32px 12px; }
+  .row { background:#211830; border:1.5px solid rgba(255,255,255,0.10); border-radius:18px; padding:24px 32px; margin-bottom:16px; box-shadow:0 18px 40px rgba(0,0,0,0.35); }
+  .k { font-size:28px; color:#c4b8d6; }
+  .a { font-size:28px; color:#e90464; text-decoration:line-through; text-decoration-thickness:2px; }
+  .b { font-size:28px; color:#c3a3ff; font-weight:700; white-space:nowrap; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <img class="brand" src="logo-agentic-schule.png" alt="agentic.schule">
+  <h1>Sieh nicht mehr aus <span class="accent">wie ein Bot.</span></h1>
+  <div class="tbl">
+    <div class="hdr"><div></div><div>Standard</div><div>Deiner</div></div>
+    <div class="row"><div class="k mono">userAgent</div><div class="a mono">HeadlessChrome</div><div class="b mono">Chrome</div></div>
+    <div class="row"><div class="k mono">webdriver</div><div class="a mono">true</div><div class="b mono">undefined</div></div>
+    <div class="row"><div class="k mono">languages</div><div class="a mono">en-US, en</div><div class="b mono">de-DE, de, en-US, en</div></div>
+  </div>
+</body>
+</html>
