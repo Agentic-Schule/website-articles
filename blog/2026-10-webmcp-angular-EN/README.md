@@ -17,7 +17,7 @@ language: en
 header: header.jpg
 ---
 
-**Angular ships experimental support for WebMCP (Web Model Context Protocol) from version 22 on, and it fits into the existing architecture: tools are providers, their lifetime hangs on the injector, and a Signal Form becomes a finished tool with a single option. In this second part we register such tools, control their lifetime through the injector, and let Angular derive the JSON schema automatically from a form. Everything is marked `experimental` and can change.**
+**Angular ships experimental support for WebMCP (Web Model Context Protocol) from version 22 on, and it fits into the existing architecture: tools are providers, their lifetime hangs on the injector, and a _Signal Form_ (Angular's signal-based form model) becomes a finished tool with a single option. In this second part we register such tools, control their lifetime through the injector, and let Angular derive the JSON schema automatically from a form. Everything is marked `experimental` and can change.**
 
 This is part 2 of two. [Part 1](https://agentic.schule/en/blog/2026-10-webmcp) explains in general what WebMCP is, how it relates to the MCP from Claude Code, and who supports it. This part is the Angular practice. It stands on its own, though I assume the concept from part 1 briefly.
 
@@ -27,7 +27,7 @@ This is part 2 of two. [Part 1](https://agentic.schule/en/blog/2026-10-webmcp) e
 
 ## WebMCP in Angular
 
-A reminder from part 1: a WebMCP tool has a name, a description, and a JSON schema for its parameters. An agent reads this contract and calls the tool with structured arguments. Under the hood, Angular uses the imperative browser API `document.modelContext.registerTool()`. The nice thing is: you notice none of that in everyday work. You work with providers and injection context, the way you know it.
+A reminder from part 1: a WebMCP tool has a name, a description, and a JSON schema for its parameters. An agent reads this contract and calls the tool with structured arguments. The agent is brought along by the visitor; you only supply the tools and run no model of your own. Under the hood, Angular uses the imperative browser API `document.modelContext.registerTool()`. The nice thing is: you notice none of that in everyday work. You work with providers and injection context, the way you know it.
 
 Angular offers two ways to register a tool:
 
@@ -51,42 +51,41 @@ A tool consists of four properties:
 
 The `execute` callback returns an object of the form `{ content: [{ type: 'text', text: '…' }] }`. That is the return value the agent gets to see: a list of content blocks, here a single text. The callback may be `async` and return a `Promise`. For a real tool that is the normal case, because it usually talks to a server.
 
-Exactly this last point is the clever bit. We encapsulate the domain logic in a service as usual:
+This is where the clever bit sits. We encapsulate the domain logic in a service as usual. On agentic.schule, for example, a service knows the fixed price of a workshop:
 
 ```ts
-// book-store.ts
+// workshop-prices.ts
 import { Service } from '@angular/core';
 
 @Service()
-export class BookStore {
-  search(query: string): string { /* ... */ }
+export class WorkshopPrices {
+  priceFor(online: boolean): number { /* ... */ }
 }
 ```
 
-And we define the tool in the app config. In the `execute` callback we grab the `BookStore` via `inject()`:
+And we define the tool in the app config. In the `execute` callback we grab the service via `inject()`:
 
 ```ts
 // app.config.ts
 import { ApplicationConfig, provideExperimentalWebMcpTools, inject } from '@angular/core';
-import { BookStore } from './book-store';
+import { WorkshopPrices } from './workshop-prices';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideExperimentalWebMcpTools([{
-      name: 'searchBooks',
-      description: 'Searches the book catalog',
+      name: 'getWorkshopPrice',
+      description: 'Returns the fixed price for an agentic.schule workshop.',
       inputSchema: {
         type: 'object',
         properties: {
-          query: { type: 'string', description: 'Search keywords' },
-          maxResults: { type: 'number', description: 'Max results to return' },
+          online: { type: 'boolean', description: 'true for the online format, false for on-site' },
         },
-        required: ['query'],
+        required: ['online'],
         additionalProperties: false,
       },
-      execute: ({ query, maxResults }) => {
-        const store = inject(BookStore);
-        return { content: [{ type: 'text', text: store.search(query) }] };
+      execute: ({ online }) => {
+        const prices = inject(WorkshopPrices);
+        return { content: [{ type: 'text', text: `${prices.priceFor(online)} €` }] };
       },
     }]),
   ],
@@ -115,15 +114,15 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'dashboard',
-    loadComponent: () => import('./dashboard-page').then(m => m.DashboardPage),
+    path: 'konfigurator',
+    loadComponent: () => import('./workshop-configurator').then(m => m.WorkshopConfigurator),
     providers: [
       provideExperimentalWebMcpTools([{
-        name: 'exportDashboardReports',
-        description: 'Exports the current dashboard analytics.',
+        name: 'listWorkshopTopics',
+        description: 'Lists the workshop topics available in the configurator.',
         inputSchema: { type: 'object', properties: {} },
         execute: () => ({
-          content: [{ type: 'text', text: 'Dashboard export successfully triggered.' }],
+          content: [{ type: 'text', text: 'Agentic Frontend, MCP as a product, Sovereign AI, RAG, n8n' }],
         }),
       }]),
     ],
@@ -151,13 +150,13 @@ The provider works the same way in a component's `providers`:
 import { Component, provideExperimentalWebMcpTools } from '@angular/core';
 
 @Component({
-  selector: 'app-book-form',
+  selector: 'app-price-badge',
   providers: [
     provideExperimentalWebMcpTools([/* ... */]),
   ],
-  templateUrl: './book-form.html',
+  templateUrl: './price-badge.html',
 })
-export class BookForm {}
+export class PriceBadge {}
 ```
 
 The tool is then registered exactly as long as the component exists. As soon as it is destroyed, Angular unregisters it automatically.
@@ -170,16 +169,16 @@ For dynamic cases you register a tool with `declareExperimentalWebMcpTool()` dir
 import { Service, declareExperimentalWebMcpTool, signal } from '@angular/core';
 
 @Service()
-export class Counter {
-  readonly count = signal(0);
+export class Configurator {
+  readonly selectedFormat = signal<'online' | 'onsite'>('online');
 
   constructor() {
     declareExperimentalWebMcpTool({
-      name: 'getCounter',
-      description: 'Reads the global counter.',
+      name: 'getSelectedFormat',
+      description: 'Reads the currently selected workshop format.',
       inputSchema: { type: 'object', properties: {} },
       execute: () => ({
-        content: [{ type: 'text', text: `The count is: ${this.count()}.` }],
+        content: [{ type: 'text', text: `Selected format: ${this.selectedFormat()}.` }],
       }),
     });
   }
@@ -208,51 +207,49 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-Then the `experimentalWebMcpTool` option with a name and description on the `form()` call is enough:
+Then the `experimentalWebMcpTool` option with a name and description on the `form()` call is enough. This exact tool is already in the code of agentic.schule: the intro-call form is registered as the WebMCP tool `introCall` and becomes active in a WebMCP-capable browser. Here it is (slightly shortened):
 
 ```ts
 import { Component, inject, signal } from '@angular/core';
-import { form, required, minLength, maxLength } from '@angular/forms/signals';
-import { Router } from '@angular/router';
-import { BookStore } from './book-store';
+import { form, required, email } from '@angular/forms/signals';
+import { MailService } from './mail.service';
 
 @Component({
-  selector: 'app-book-create-page',
-  templateUrl: './book-create-page.html',
+  selector: 'app-intro-call-form',
+  templateUrl: './intro-call-form.html',
 })
-export class BookCreatePage {
-  #bookStore = inject(BookStore);
-  #router = inject(Router);
+export class IntroCallForm {
+  #mail = inject(MailService);
 
-  readonly #bookFormData = signal({
-    isbn: '',
-    title: '',
-    subtitle: '',
-    authors: [''],
-    description: '',
-    imageUrl: '',
+  readonly #formData = signal({
+    name: '',
+    mail: '',
+    phone: '',
+    note: '',
   });
 
-  protected readonly bookForm = form(
-    this.#bookFormData,
+  protected readonly introForm = form(
+    this.#formData,
     (path) => {
-      required(path.title, { message: 'Title is required.' });
-      required(path.isbn, { message: 'ISBN is required.' });
-      minLength(path.isbn, 13, { message: 'ISBN must have 13 digits.' });
-      maxLength(path.isbn, 13, { message: 'ISBN must have 13 digits.' });
-      required(path.description, { message: 'Description is required.' });
+      required(path.name, { message: 'Please enter your name.' });
+      // One way to reach you is enough: email or phone.
+      required(path.mail, {
+        when: ctx => !ctx.valueOf(path.phone).trim(),
+        message: 'Please provide an email address or a phone number.',
+      });
+      email(path.mail, { message: 'Please check your email address.' });
     },
     {
       experimentalWebMcpTool: {
-        name: 'createBook',
-        description: 'Create a new book',
+        name: 'introCall',
+        description:
+          'Books an intro call with the agentic.schule team for an AI team training or consulting. ' +
+          'Provide the visitor\'s name and at least one way to reach them: an email address (mail) or a phone number (phone).',
       },
       submission: {
-        action: async (bookForm) => {
-          const value = bookForm().value();
-          const newBook = { ...value, createdAt: new Date().toISOString() };
-          const created = await this.#bookStore.create(newBook);
-          await this.#router.navigate(['/books', 'details', created.isbn]);
+        action: async (introForm) => {
+          const values = introForm().value();
+          await this.#mail.sendContactEmail(values);
         },
       },
     },
@@ -262,19 +259,19 @@ export class BookCreatePage {
 
 From this single option a complete tool emerges:
 
-- The fields `isbn`, `title`, `subtitle`, `authors`, `description`, and `imageUrl` are derived together with their types from the initial value of the signal.
-- `title`, `isbn`, and `description` are marked `required`, because they have a `required()` validator.
+- The fields `name`, `mail`, `phone`, and `note` are derived together with their types from the initial value of the signal.
+- `name` is marked `required`. `mail` is conditionally required, namely only when no phone number is given. Angular takes such conditional validators into the schema too.
 - When the agent calls the tool, Angular validates the input and returns errors. The agent sees its error, corrects itself, and tries again.
-- On successful validation the `submission.action` runs automatically.
+- On successful validation the `submission.action` runs automatically, here the mail dispatch.
 
-This last point is strong: the agent gets the same validation errors as a human and can correct itself. You write not a single extra line for it.
+The agent gets the same validation errors as a human and can correct itself. You write not a single extra line for it.
 
 ### What to watch out for in the form model
 
 So that Angular can derive the schema cleanly, the same requirements apply as for Signal Forms anyway:
 
 - Fields must **not** start with `null` or `undefined`. Angular cannot derive a type from either. Use concrete initial values like `''`, `0`, or `false`.
-- Arrays need **at least one entry**, otherwise the element type cannot be recognized. That is why it says `authors: ['']` above and not `authors: []`.
+- Arrays need **at least one entry**, otherwise the element type cannot be recognized. A field `topics: ['AI']` can be derived, `topics: []` cannot.
 
 Specific to WebMCP, one restriction is added: async validators do not run on the tool call. Uniqueness checks against the server therefore belong in the `submission.action`, not in an async validator.
 
@@ -290,7 +287,7 @@ Angular makes getting started with WebMCP easy. Tools are providers, their lifet
 
 Two things I keep in mind. First the `experimental` in the name: these APIs are deliberately marked as moving, and for production systems the time has not come yet. Second the traps that WebMCP brings, not Angular: the unique tool names and the missing automatic validation of the agent's input. Both are easy to handle once you know about them.
 
-My advice: build yourself a small tool on a real form of your app. Set the flag, open the Inspector extension, and let an agent fill in the form. The moment it corrects itself after a validation error is the one where the concept clicks.
+My advice: build yourself a small tool on a real form of your app. Set the flag, open the Inspector extension, and let an agent fill in the form. At the latest when it corrects itself after a validation error, the concept becomes tangible.
 
 All the details are in the official [Angular WebMCP Guide](https://angular.dev/ai/webmcp). And the big picture, WebMCP versus MCP and the state of the browsers, is in [part 1](https://agentic.schule/en/blog/2026-10-webmcp).
 
