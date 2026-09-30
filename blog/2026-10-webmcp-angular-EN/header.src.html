@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(58% 55% at 76% 44%, rgba(233,4,100,0.28), transparent 60%),
+      radial-gradient(50% 60% at 18% 92%, rgba(233,4,100,0.16), transparent 60%),
+      linear-gradient(155deg,#241a33 0%,#1b1525 58%,#0d0913 100%);
+    color:#fff; position:relative;
+  }
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:560px; }
+  .brand { position:absolute; top:60px; left:78px; height:56px; width:auto; z-index:2; }
+  h1 { font-size:64px; line-height:1.04; font-weight:800; letter-spacing:-1.5px; margin:22px 0 0; }
+  h1 .accent { background:linear-gradient(92deg,#a06bff 0%,#e90464 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { margin-top:24px; font-size:24px; font-weight:500; color:#c4b8d6; letter-spacing:-.2px; line-height:1.35; }
+  .by { margin-top:36px; font-size:19px; color:#8f84a6; }
+  .by b { color:#cfc3e6; font-weight:600; }
+  .art { position:absolute; right:24px; top:0; height:675px; width:540px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <img class="brand" src="logo-agentic-schule.png" alt="agentic.schule">
+  <div class="wrap">
+    <div class="left">
+      <h1>WebMCP<br><span class="accent">in Angular</span></h1>
+      <div class="sub">Tools from providers<br>and Signal Forms</div>
+      <div class="by">by <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <div class="art">
+    <svg width="540" height="675" viewBox="0 0 540 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="74%" cy="30%" r="42%">
+          <stop offset="0%" stop-color="#9a6cff" stop-opacity="0.45"/>
+          <stop offset="55%" stop-color="#e90464" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#e90464" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <circle cx="400" cy="215" r="180" fill="url(#glow)"/>
+
+      <!-- Formular-Karte: das Signal Form (neutral, lila) -->
+      <rect x="46" y="322" width="290" height="228" rx="16" fill="#211830" stroke="#8f84a6" stroke-width="2.5"/>
+
+      <!-- Feld 1: Label + Eingabe, Pflichtfeld (magenta Marke) -->
+      <rect x="72" y="352" width="70" height="10" rx="5" fill="#9a6cff"/>
+      <circle cx="152" cy="357" r="4" fill="#e90464"/>
+      <rect x="72" y="370" width="238" height="26" rx="7" fill="none" stroke="#8f84a6" stroke-width="2"/>
+
+      <!-- Feld 2 -->
+      <rect x="72" y="410" width="54" height="10" rx="5" fill="#9a6cff"/>
+      <circle cx="136" cy="415" r="4" fill="#e90464"/>
+      <rect x="72" y="428" width="238" height="26" rx="7" fill="none" stroke="#8f84a6" stroke-width="2"/>
+
+      <!-- Feld 3 -->
+      <rect x="72" y="468" width="88" height="10" rx="5" fill="#9a6cff"/>
+      <rect x="72" y="486" width="238" height="26" rx="7" fill="none" stroke="#8f84a6" stroke-width="2"/>
+
+      <!-- magenta Verbindung: das Formular wird zum Tool -->
+      <path d="M310 383 C 356 380, 352 300, 386 258" stroke="#e90464" stroke-width="3" fill="none"/>
+      <path d="M310 441 C 360 430, 350 320, 384 262" stroke="#8f84a6" stroke-width="2" opacity="0.5" fill="none"/>
+
+      <!-- Agenten-Knoten (der Punkt, magenta) -->
+      <circle cx="400" cy="215" r="58" fill="#211830" stroke="#e90464" stroke-width="3.5"/>
+      <circle cx="400" cy="192" r="9" fill="#e90464"/>
+      <circle cx="380" cy="234" r="9" fill="#e90464"/>
+      <circle cx="422" cy="234" r="9" fill="#e90464"/>
+      <line x1="400" y1="192" x2="380" y2="234" stroke="#e90464" stroke-width="2.5"/>
+      <line x1="400" y1="192" x2="422" y2="234" stroke="#e90464" stroke-width="2.5"/>
+      <line x1="380" y1="234" x2="422" y2="234" stroke="#e90464" stroke-width="2.5"/>
+    </svg>
+  </div>
+</body>
+</html>
