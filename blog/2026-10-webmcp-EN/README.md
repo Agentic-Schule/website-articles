@@ -64,6 +64,7 @@ Here is the shift in perspective at which WebMCP clicks. A classic chatbot belon
 | --- | --- | --- |
 | Runs the model | the website operator | the visitor (their assistant) |
 | Pays the tokens | the operator | the visitor |
+| Data protection | the operator decides which AI processes the input | the visitor decides which AI processes their input |
 | Backend needed | yes: server plus model | no: only tool declarations in the frontend |
 | Assistant's context | only what the operator gives it | the visitor's full context |
 | Other tools | none | the visitor's, freely combined |

@@ -64,6 +64,7 @@ Hier steckt der Perspektivwechsel, an dem WebMCP klick macht. Ein klassischer Ch
 | --- | --- | --- |
 | Modell betreibt | der Website-Betreiber | der Besucher (sein Assistent) |
 | Tokens zahlt | der Betreiber | der Besucher |
+| Datenschutz | der Betreiber entscheidet, welche KI die Eingaben verarbeitet | der Besucher entscheidet, welche KI seine Eingaben verarbeitet |
 | Backend nötig | ja: Server plus Modell | nein: nur Tool-Deklaration im Frontend |
 | Kontext des Assistenten | nur, was der Betreiber ihm gibt | der ganze Kontext des Besuchers |
 | Andere Tools | keine | die des Besuchers, frei kombinierbar |
