@@ -38,7 +38,7 @@ Um das Abmelden kümmert sich Angular selbst: Wird der zugehörige Injector zers
 
 > **⚠️ Achtung:** WebMCP in Angular ist ausdrücklich als experimentell markiert. Die APIs können sich auch außerhalb von Major-Releases ändern. Für Prototypen und internes Werkzeug ist das in Ordnung, für Produktivsysteme noch nicht.
 
-## Ein Tool als Provider
+## Ein Tool als Provider registrieren
 
 Mit `provideExperimentalWebMcpTools()` definierst du Tools als Provider. Die Funktion nimmt ein Array von Tool-Definitionen und liefert einen Provider zurück, den du an einen beliebigen Injector hängst. Damit entspricht die Lebensdauer eines Tools der Lebensdauer seines Injectors.
 
@@ -130,7 +130,7 @@ export const routes: Routes = [
 ];
 ```
 
-Hier lauert eine Falle: Die Injectoren einer Route werden standardmäßig nicht zerstört, wenn du wegnavigierst. Das Tool bliebe also auch auf anderen Seiten für den Agenten sichtbar. Damit es beim Verlassen der Route sauber abgemeldet wird, konfigurierst du den Router mit `withAutoCleanupInjectors()`:
+Hier lauert eine Falle: Die Injectoren einer Route werden standardmäßig nicht zerstört, wenn du wegnavigierst. Das Tool bliebe also auch auf anderen Seiten für den Agenten sichtbar. Damit es beim Verlassen der Route wieder abgemeldet wird, konfigurierst du den Router mit `withAutoCleanupInjectors()`:
 
 ```ts
 import { provideRouter, withAutoCleanupInjectors } from '@angular/router';
@@ -141,6 +141,8 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 ```
+
+Diese Option sitzt auf `provideRouter` und wirkt damit app-weit: Sie räumt die Injectoren aller Routen auf, nicht nur die der gezeigten.
 
 ### Pro Komponente
 
@@ -161,7 +163,7 @@ export class PriceBadge {}
 
 Das Tool ist dann genau so lange registriert, wie die Komponente existiert. Sobald sie zerstört wird, meldet Angular es automatisch ab.
 
-## Tools direkt in Services
+## Tools direkt in Services deklarieren
 
 Für dynamische Fälle registrierst du ein Tool mit `declareExperimentalWebMcpTool()` direkt in einem Injection Context, etwa im Konstruktor eines Service:
 
@@ -244,7 +246,8 @@ export class IntroCallForm {
         name: 'introCall',
         description:
           'Books an intro call with the agentic.schule team for an AI team training or consulting. ' +
-          'Provide the visitor\'s name and at least one way to reach them: an email address (mail) or a phone number (phone).',
+          'Provide the visitor\'s name and at least one way to reach them: an email address (mail) or a phone number (phone). ' +
+          'Use note for an optional free-text message.',
       },
       submission: {
         action: async (introForm) => {
@@ -264,11 +267,13 @@ Aus dieser einen Option entsteht ein vollständiges Tool:
 - Ruft der Agent das Tool auf, validiert Angular die Eingaben und gibt Fehler zurück. Der Agent sieht seinen Fehler, korrigiert sich und versucht es erneut.
 - Ist die Validierung erfolgreich, läuft automatisch die `submission.action`, hier der Mailversand.
 
-Der Agent bekommt dieselben Validierungsfehler wie ein Mensch und kann sich selbst korrigieren. Du schreibst dafür keine Zeile extra.
+Der Agent bekommt dieselben Validierungsfehler wie ein Mensch und kann sich selbst korrigieren. Du schreibst dafür keine Zeile extra. Anders als bei den Provider-Tools weiter oben, wo du die Eingaben selbst prüfst, kommt die Validierung hier aus den Form-Validatoren.
+
+> **⚠️ Achtung:** Dieses Tool sendet bei erfolgreicher Validierung automatisch eine Mail, ohne dass ein Mensch auf „Absenden" klickt. Jeder Assistent, den ein Besucher mitbringt, kann es aufrufen. Für mutierende Aktionen wie Mailversand, Kauf oder Löschen brauchst du deshalb einen serverseitigen Missbrauchsschutz. Klassische Bot-Abwehr wie Turnstile greift hier nicht, weil WebMCP Bots ausdrücklich einlädt.
 
 ### Was du beim Form-Model beachten musst
 
-Damit Angular das Schema sauber ableiten kann, gelten dieselben Anforderungen wie bei Signal Forms ohnehin:
+Damit Angular das Schema korrekt ableiten kann, gelten dieselben Anforderungen wie bei Signal Forms ohnehin:
 
 - Felder dürfen **nicht** mit `null` oder `undefined` starten. Aus beidem kann Angular keinen Typ ableiten. Nimm konkrete Startwerte wie `''`, `0` oder `false`.
 - Arrays brauchen **mindestens einen Eintrag**, sonst ist der Elementtyp nicht erkennbar. Ein Feld `topics: ['AI']` lässt sich ableiten, `topics: []` nicht.
