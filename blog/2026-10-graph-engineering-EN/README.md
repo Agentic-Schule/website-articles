@@ -45,7 +45,7 @@ An example of a real edge: "Read the database schema and generate the types from
 
 And one without an edge: "Check every route file for missing auth checks." No file reads another file's result. Nothing but independent tasks that a linear script chains together for no reason. A graph lets them run side by side.
 
-![From the line to the graph: nodes do the work, edges are the dependencies between them.](nodes-edges.svg)
+![Two diagrams side by side: on the left the line, a chain of steps 1, 2, 3 where each step waits for the previous one; on the right the graph, where independent nodes run at the same time and edges bring them back together.](nodes-edges.svg "From the line to the graph: nodes do the work, edges are the dependencies between them.")
 
 This principle is not new. Build systems like `make` have been turning exactly these dependencies into a graph for decades, running everything independent in parallel. And for agents, Anthropic wrote it down matter-of-factly a while ago, in ["Building Effective Agents"](https://www.anthropic.com/engineering/building-effective-agents): there the pattern is called *parallelization* (independent subtasks at the same time) and *orchestrator-workers* (a central instance breaks the task down, hands it to workers and merges the results). So no new word is needed for it, and yet exactly one has emerged. (My guess: because it sounds cool.)
 
