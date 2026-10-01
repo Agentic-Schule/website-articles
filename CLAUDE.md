@@ -93,4 +93,4 @@ Jeder Artikel bekommt ein Header-Bild im agentic.schule-Look: tiefes Lila-Schwar
 
 ## Social Media (Posts und Videos)
 
-Die Promotion der Artikel (LinkedIn auf Deutsch; X, Bluesky, Video-Skript, TikTok, Instagram und YouTube Shorts auf Englisch) läuft in einer eigenen Sitzung nach **[`docs/social-media.md`](docs/social-media.md)**, am einfachsten über den Skill `/social-post`. In dieser Sitzung werden Artikel nur gelesen, nie geändert, und es wird nichts veröffentlicht.
+Die Promotion der Artikel (LinkedIn, X, Bluesky, Video-Skript, TikTok, Instagram und YouTube Shorts, alles auf Deutsch) läuft in einer eigenen Sitzung nach **[`docs/social-media.md`](docs/social-media.md)**, am einfachsten über den Skill `/social-post`. In dieser Sitzung werden Artikel nur gelesen, nie geändert, und es wird nichts veröffentlicht.

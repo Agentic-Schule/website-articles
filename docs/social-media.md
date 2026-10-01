@@ -8,20 +8,11 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 ## Die Serie
 
-- **30 Artikel über AI für Entwickler, einer pro Werktag.** Samstag und Sonntag bleiben frei: Wochenenden sind heilig, und zu Geschäftszeiten ist die Interaktion auf LinkedIn und X höher.
-- **Artikel mit Datum in der Zukunft sind gewollt.** Die Website zeigt sie sofort an, damit Suchmaschinen sie schon vor ihrem Tag indexieren können. Das `published:`-Datum steuert nur Anzeige, Sortierung und den Tag der Promotion. Kein Hinweis darauf nötig.
-- **Der Tag ergibt sich aus dem Erscheinungsdatum:** Tag N ist der N-te Werktag (Montag bis Freitag) ab dem 2026-09-23, abzulesen an `published:` im Frontmatter. Tag 1 ist Mittwoch, der 2026-09-23, Tag 4 Montag, der 2026-09-28, Tag 30 Dienstag, der 2026-11-03.
-
-| Woche | Mo | Di | Mi | Do | Fr |
-| --- | --- | --- | --- | --- | --- |
-| 21.–25.09. | | | 1 | 2 | 3 |
-| 28.09.–02.10. | 4 | 5 | 6 | 7 | 8 |
-| 05.–09.10. | 9 | 10 | 11 | 12 | 13 |
-| 12.–16.10. | 14 | 15 | 16 | 17 | 18 |
-| 19.–23.10. | 19 | 20 | 21 | 22 | 23 |
-| 26.–30.10. | 24 | 25 | 26 | 27 | 28 |
-| 02.–03.11. | 29 | 30 | | | |
-- Welcher Artikel an welchem Tag erscheint, steht damit allein im Frontmatter. Eine separate Liste gibt es nicht.
+- **30 Artikel über AI für Entwickler, auf Deutsch.** Jeder Tag ist ein kleiner Tipp mit einem ausführlichen, fachlich fundierten Artikel dahinter. Alles, was gezeigt wird, hat Johannes selbst ausprobiert.
+- **Qualität vor Takt.** Ein neuer Tag erscheint etwa jeden Tag oder jeden zweiten Tag. Dauert ein Artikel länger, kommt der nächste Tag eben später. Lücken im Kalender sind ausdrücklich erlaubt.
+- **„Tag N" zählt die veröffentlichten Folgen**, nicht die Kalendertage. Die Nummer springt bei einer Lücke nicht. Welcher Artikel welcher Tag ist, entscheidet Johannes beim Posten.
+- **Artikel mit Datum in der Zukunft sind gewollt.** Die Website zeigt sie sofort an, damit Suchmaschinen sie schon vor ihrem Tag indexieren können. Das `published:`-Datum steuert nur Anzeige und Sortierung. Kein Hinweis darauf nötig.
+- **Die Artikel erscheinen weiterhin zweisprachig** (`-DE` und `-EN`). Die Posts verlinken immer die deutsche Fassung.
 
 ## Grundregeln
 
@@ -33,17 +24,16 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 - **Echtes Material statt Platzhalter.** Wörtliche Zitate, echte Zeilennummern, echte Namen. Ein Platzhalter wie „innocent-looking-domain.com" verrät die Lösung schon im Namen. Im Text werden gefährliche Adressen wie im Artikel entschärft (`stitch-design[.]ai`), damit kein klickbarer Link entsteht. Im Bild bleibt die echte Adresse stehen, dort lässt sie sich nicht anklicken.
 - **Der Post muss trotzdem für sich stehen.** Reine Neugier ohne Substanz wirkt wie Clickbait. Das gezeigte Material ist der Grund, weiterzulesen.
 - **Höchstens ein Emoji, am Ende der Knobelfrage und passend zum Thema** (Tag 1: ☠️). Keine Hand-Emojis, keine Deko-Emojis, keine Emojis als Text im Video.
-- **Vor dem Link steht ein ausgeschriebener Satz,** der zum Artikel überleitet: „Hast du den Angriff nicht gefunden? Dann lies besser diesen Artikel:" bzw. „Not sure what the attack is? Then you should read this article:".
+- **Vor dem Link steht ein ausgeschriebener Satz,** der zum Artikel überleitet: „Hast du den Angriff nicht gefunden? Dann lies besser diesen Artikel:"„Not sure what the attack is? Then you should read this article:".
 - **Fremde Autoren immer nennen und mit verifizierten Handles markieren.** Stellt ein Artikel Werkzeuge oder Arbeiten anderer vor, werden deren Autoren genannt und auf jeder Plattform markiert, auf der sie ein nachweislich eigenes Konto haben. Nachweis heißt: Das Konto verlinkt auf ihr GitHub oder ihre Website, die Website oder das GitHub-Profil verlinkt das Konto, oder das Konto postet selbst über die eigenen Projekte. Namensgleichheit reicht nicht. Die Suche beginnt beim GitHub-Profil (Profilfelder, Social Accounts, Profil-README), dann persönliche Website, Paket-Registry (npm, PyPI) und eine Websuche; X-Profile lassen sich über den Playwright-MCP prüfen. Ohne verifiziertes Konto auf einer Plattform steht dort nur der Name. Beispiel Tag 4: Junyong Lee (cswap-pin) ist auf X `@codeslake` und auf LinkedIn `linkedin.com/in/codeslake`; Onur Cetinkol (claude-swap) hat nur GitHub, also nur der Name.
-- **Zugespitzt, aber wahr.** Jede Aussage muss der Artikel decken. Ein Beispiel für die Grenze: Die Sicherheitsfirma im Day-1-Artikel hat nach eigener Aussage zehntausende Agenten dazu gebracht, ihr Skript auszuführen, das darf gesagt werden. „Still infecting computers right now" geht dagegen weiter als der Artikel, denn die Nutzlast wurde bewusst harmlos gehalten; „still live" oder „still out there" ist gedeckt.
+- **Zugespitzt, aber wahr.** Jede Aussage muss der Artikel decken. Ein Beispiel für die Grenze: Die Sicherheitsfirma im Artikel zu bösartigen AI-Skills hat nach eigener Aussage zehntausende Agenten dazu gebracht, ihr Skript auszuführen, das darf gesagt werden. „Infiziert gerade Rechner" geht dagegen weiter als der Artikel, denn die Nutzlast wurde bewusst harmlos gehalten; „ist bis heute im Umlauf" ist gedeckt.
 - **Souverän statt marktschreierisch,** wie in den Artikeln selbst (siehe `CLAUDE.md`). Deutsche Posts folgen dem Stil aus `CLAUDE.md`: duzen, kurze Sätze, keine Gedankenstriche, keine „nicht X, sondern Y"-Antithese.
 
-## Sprache: Deutsch für LinkedIn, Englisch für alles andere
+## Sprache: Deutsch auf allen Kanälen
 
-- **LinkedIn ist deutsch** und verlinkt die `-DE`-Fassung. Dort sitzen das deutsche Netzwerk und die B2B-Kunden, und die Sprache des Posts ist ein offizielles Ranking-Signal.
-- **X, Bluesky, TikTok, Instagram und YouTube Shorts sind englisch** und verlinken die `-EN`-Fassung. Hier geht es um Reichweite über den deutschen Sprachraum hinaus.
-- **Ein Video für alle Kurzvideo-Plattformen.** Es wird einmal auf Englisch gedreht und auf TikTok, Instagram und YouTube Shorts hochgeladen.
-- **Einfache Wörter, kurze Sätze im Video.** Johannes spricht die Skripte selbst, als Nicht-Muttersprachler. Keine Redewendungen, keine Wörter, die man nicht spontan so sagen würde.
+- **Jeder Post und jedes Video ist deutsch** und verlinkt die `-DE`-Fassung des Artikels. Die Kunden sitzen in Deutschland und Österreich, und die englischen Posts haben dort kaum Reichweite gebracht.
+- **Ein Video für alle Kurzvideo-Plattformen.** Es wird einmal gedreht und auf TikTok, Instagram und YouTube Shorts hochgeladen.
+- **Kurze Sätze im Video,** so wie Johannes spontan spricht. Keine Schriftsprache, die man vor der Kamera nicht sagen würde.
 - **„AI" ist das Buzzword.** Wo es passt, steht „AI" im Hook oder in der Caption.
 
 ## Die Plattformen im Überblick
@@ -51,11 +41,11 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 | Plattform | Sprache | Format | Link | Aufruf |
 | --- | --- | --- | --- | --- |
 | LinkedIn | DE | zwei Sätze + Screenshot | reine URL im Post | Knobelfrage, kein Keyword |
-| X | EN | zwei Sätze + derselbe Screenshot, höchstens 280 Zeichen | im Post | Knobelfrage, kein Keyword |
-| Bluesky | EN | Text wie auf X + derselbe Screenshot, höchstens 300 Zeichen inklusive voller URL | im Post | wie auf X |
-| TikTok | EN | vertikales Video | `agentic.schule` im Video und in der Caption | „Find the full article on my website: agentic.schule" |
-| Instagram Reels | EN | dasselbe Video | `agentic.schule` im Video und in der Caption | derselbe Satz |
-| YouTube Shorts | EN | dasselbe Video | in der Beschreibung, nicht klickbar | derselbe Satz |
+| X | DE | zwei Sätze + derselbe Screenshot, höchstens 280 Zeichen | im Post | Knobelfrage, kein Keyword |
+| Bluesky | DE | Text wie auf X + derselbe Screenshot, höchstens 300 Zeichen inklusive voller URL | im Post | wie auf X |
+| TikTok | DE | vertikales Video | `agentic.schule` im Video und in der Caption | „Den ganzen Artikel findest du auf meiner Website: agentic.schule" |
+| Instagram Reels | DE | dasselbe Video | `agentic.schule` im Video und in der Caption | derselbe Satz |
+| YouTube Shorts | DE | dasselbe Video | in der Beschreibung, nicht klickbar | derselbe Satz |
 | Facebook | – | kein eigener Aufwand | – | – |
 
 **Facebook:** Das automatische Crossposting von Instagram nach Facebook bleibt aus. Facebook ist kein Zielkanal.
@@ -84,17 +74,17 @@ Das Bild trägt die Knobelaufgabe. Johannes erstellt es selbst im Editor; die Si
 - **In der ersten Stunde auf Kommentare antworten.**
 - Tägliches Posten ist in Ordnung. LinkedIn empfiehlt mindestens zwei bis drei Posts pro Woche.
 
-## X (EN)
+## X
 
 - **Der Post passt in 280 Zeichen** (die Grenze ohne Premium). Links zählen dabei immer 23 Zeichen. Zitate lassen sich mit „…" kürzen, solange der Rest wörtlich bleibt.
 - **Der Link steht direkt im Post,** eingeleitet mit dem Überleitungssatz. X stuft Links nach Aussage der Produktleitung nicht herab, und der veröffentlichte Ranking-Code enthält keine Link-Strafe. Ein Link in einer Antwort bringt nichts: Antworten zeigt X Nicht-Followern im For-You-Feed nicht, und der Schub für kleine Accounts gilt nur für eigenständige Posts.
 - **Text und Bild müssen ohne Link tragen.** Link-Posts sammeln weniger Likes und Antworten, weil die Leute auf die Seite wechseln.
 - **Kein Video.** Zwei Sätze plus derselbe Screenshot wie auf LinkedIn.
 
-## Bluesky (EN)
+## Bluesky
 
 - **Derselbe Text wie auf X,** dazu derselbe Screenshot.
-- **Höchstens 300 Zeichen, und der Link zählt mit voller Länge** (anders als auf X, wo jeder Link 23 Zeichen zählt). Die englischen URLs sind rund 60 Zeichen lang; passt der X-Text damit nicht, wird er gekürzt, nicht der Link.
+- **Höchstens 300 Zeichen, und der Link zählt mit voller Länge** (anders als auf X, wo jeder Link 23 Zeichen zählt). Die URLs sind rund 55 bis 65 Zeichen lang; passt der X-Text damit nicht, wird er gekürzt, nicht der Link.
 - Nur geprüfte Handles markieren.
 
 ## Das Video (TikTok, Instagram, YouTube Shorts)
@@ -120,7 +110,7 @@ Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer 
 ### Format
 
 - **Vertikal 9:16, bildfüllend, 1080×1920.** Keine Ränder, keine Balken, kein Rahmen. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.
-- **Kein Logo, kein Wasserzeichen, kein „Day N/30" im Bild.** Instagram zeigt Reels mit Logos oder Wasserzeichen seltener. Das Branding kommt über das Profil.
+- **Kein Logo, kein Wasserzeichen, kein „Tag N" im Bild.** Instagram zeigt Reels mit Logos oder Wasserzeichen seltener. Das Branding kommt über das Profil.
 - **Wenig Text im Bild:** der Hook und die Untertitel. Instagram zeigt Reels seltener, deren Bild überwiegend mit Text bedeckt ist.
 - **Ränder frei halten.** Oben, unten und rechts liegt die Oberfläche der Plattformen (Fortschrittsbalken, Caption, Nutzername, Buttons).
 - **Sauber exportieren und auf jede Plattform einzeln hochladen.** Kein heruntergeladenes TikTok-Video mit Wasserzeichen auf Instagram. Und auf Instagram nichts erneut hochladen, was dort schon einmal lief; eine neu aufgenommene Fassung ist ein neues Video.
@@ -128,22 +118,22 @@ Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer 
 ### Untertitel
 
 - **Einmal im Schnitt einbrennen,** an der Trennlinie zwischen den beiden Hälften. Dort verdecken sie weder das Material noch das Gesicht, und sie liegen außerhalb der Plattform-Oberfläche.
-- Alle drei Plattformen erzeugen zwar automatische Untertitel per Spracherkennung (Instagram, TikTok, YouTube Shorts; Englisch wird überall unterstützt). Deren Anzeige, Stil und Position bestimmt aber die jeweilige Plattform bzw. der Zuschauer. Eingebrannte Untertitel sehen überall gleich aus und stehen dort, wo sie hingehören.
+- Alle drei Plattformen erzeugen zwar automatische Untertitel per Spracherkennung (Instagram, TikTok, YouTube Shorts; Deutsch wird überall unterstützt). Deren Anzeige, Stil und Position bestimmt aber die jeweilige Plattform bzw. der Zuschauer. Eingebrannte Untertitel sehen überall gleich aus und stehen dort, wo sie hingehören.
 - **Doppelte Untertitel vermeiden:** vor dem Posten in der Vorschau prüfen. Auf TikTok lassen sich die automatischen Untertitel bearbeiten oder entfernen.
 
 ### Skript-Aufbau (Knobelaufgabe)
 
-1. **Hook als Frage an den Zuschauer:** „I have a little puzzle for you. Can you spot the attack in this AI skill?", gesprochen und als Text im Bild. Das Material ist dabei oben schon zu sehen.
+1. **Hook als Frage an den Zuschauer:** „Ich habe eine kleine Knobelaufgabe für dich. Findest du den Angriff in diesem AI-Skill?", gesprochen und als Text im Bild. Das Material ist dabei oben schon zu sehen.
 2. **Material durchgehen:** Stelle 1, schneller Scroll, Stelle 2. Der Scroll zeigt, wie weit die beiden Teile auseinanderliegen.
 3. **Die erste Ebene auflösen.** Wer bis zum Ende schaut, bekommt eine Antwort. Das macht das Video sehenswert und teilbar.
-4. **Cliffhanger:** Die zweite Ebene bleibt im Artikel („And if you click it, everything looks fine. How?").
-5. **Aufruf:** „Find the full article on my website: agentic.schule", dazu `agentic.schule` als Text im Bild in den letzten Sekunden.
+4. **Cliffhanger:** Die zweite Ebene bleibt im Artikel („Und wenn du draufklickst, sieht alles harmlos aus. Wie geht das?").
+5. **Aufruf:** „Den ganzen Artikel findest du auf meiner Website: agentic.schule", dazu `agentic.schule` als Text im Bild in den letzten Sekunden.
 
-Keine Vorstellung („Hi, I'm Johannes …"), kein „Day N" im gesprochenen Text. Wer Johannes ist, steht im Profil.
+Keine Vorstellung („Hallo, ich bin Johannes …"), kein „Tag N" im gesprochenen Text. Wer Johannes ist, steht im Profil.
 
 ## Der Aufruf auf den Kurzvideo-Plattformen
 
-- **Überall derselbe Satz:** „Find the full article on my website: agentic.schule". Gesprochen am Ende des Videos, dazu `agentic.schule` als Text im Bild, und derselbe Satz in der Caption.
+- **Überall derselbe Satz:** „Den ganzen Artikel findest du auf meiner Website: agentic.schule". Gesprochen am Ende des Videos, dazu `agentic.schule` als Text im Bild, und derselbe Satz in der Caption.
 - **Kein Kommentar-Keyword, keine DM-Automatisierung.** Die Website funktioniert auf jeder Plattform gleich, DMs nicht: Auf TikTok lässt sich ManyChat aus der EU nicht verbinden, DMs von Instagram an Nicht-Follower landen im Anfrage-Ordner, Shorts haben gar keinen DM-Weg, und Meta stuft „Kommentiere ein bestimmtes Wort" auf Facebook als *Comment Baiting* ein. Kommentare gehören laut Instagram ohnehin nicht zu den drei wichtigsten Ranking-Signalen.
 - **Voraussetzung:** Der neue Artikel steht auf agentic.schule ganz oben und ist ohne Suchen zu finden.
 - **Fragt jemand in den Kommentaren nach dem Link,** öffentlich mit der Adresse antworten.
@@ -151,13 +141,12 @@ Keine Vorstellung („Hi, I'm Johannes …"), kein „Day N" im gesprochenen Tex
 
 ## Links
 
-- Deutsch (LinkedIn): `https://agentic.schule/blog/<slug>`
-- Englisch (alles andere): `https://agentic.schule/en/blog/<slug>`
+- Alle Kanäle verlinken die deutsche Fassung: `https://agentic.schule/blog/<slug>`
 - `<slug>` ist der Ordnername ohne `-EN`/`-DE`, z. B. `2026-09-malicious-ai-skills`. Alle Slugs sind englisch; alte deutsche Slugs leiten über `redirects.json` weiter, werden in Posts aber nicht verwendet.
 
 ## Vorlagen
 
-**LinkedIn (DE)**, dazu der Screenshot
+**Knobelaufgabe, LinkedIn**, dazu der Screenshot
 
 ```
 Ich habe eine kleine Knobelaufgabe für dich! <Frage an den Leser, z. B. „Siehst du in folgendem … einen …?"> <höchstens ein passendes Emoji>
@@ -166,15 +155,15 @@ Ich habe eine kleine Knobelaufgabe für dich! <Frage an den Leser, z. B. „Sieh
 https://agentic.schule/blog/<slug>
 ```
 
-**X (EN)**, dazu derselbe Screenshot
+**Knobelaufgabe, X und Bluesky**, dazu derselbe Screenshot
 
 ```
-I have a little puzzle for you! <Question, e.g. "Do you see a … in the following …?"> <höchstens ein passendes Emoji>
+Ich habe eine kleine Knobelaufgabe für dich! <Frage an den Leser> <höchstens ein passendes Emoji>
 
-<Not sure …?> Then you should read this article: https://agentic.schule/en/blog/<slug>
+<Nicht gefunden?> Dann lies besser diesen Artikel: https://agentic.schule/blog/<slug>
 ```
 
-**Offene Frage, LinkedIn (DE)**, dazu Header-Bild oder Foto
+**Offene Frage, LinkedIn, X und Bluesky**, dazu Header-Bild oder Foto
 
 ```
 <Frage an den Leser, z. B. „Wo laufen eigentlich deine AI-Agenten, wenn du den Laptop zuklappst?">
@@ -183,53 +172,45 @@ I have a little puzzle for you! <Question, e.g. "Do you see a … in the followi
 https://agentic.schule/blog/<slug>
 ```
 
-**Offene Frage, X (EN)**
+**Instagram Reels**
 
 ```
-<Question to the reader, e.g. "Where do your AI agents run when you close your laptop?">
+<Hook in einer Zeile>. Tag N
 
-<One or two sentences about your own solution.> Here's the whole setup: https://agentic.schule/en/blog/<slug>
+Den ganzen Artikel findest du auf meiner Website: agentic.schule
+
+#AI #KI <2 bis 3 Themen-Hashtags>
 ```
 
-**Instagram Reels (EN)**
+**TikTok**
 
 ```
-<Hook in einer Zeile>. Day N/30
-
-Find the full article on my website: agentic.schule
-
-#AI #AIAgents <2 bis 3 Themen-Hashtags>
+<Hook in einer Zeile>. Tag N. Den ganzen Artikel findest du auf agentic.schule #AI #KI <2 bis 3 Themen-Hashtags>
 ```
 
-**TikTok (EN)**
+**YouTube Shorts**
 
 ```
-<Hook in einer Zeile>. Day N/30. Full article on agentic.schule #AI #AIAgents <2 bis 3 Themen-Hashtags>
-```
+Titel: <Hook in wenigen Wörtern> (Tag N)
 
-**YouTube Shorts (EN)**
-
-```
-Title: <Hook in wenigen Wörtern> (Day N/30)
-
-Description:
+Beschreibung:
 <Hook-Satz.>
-Read the full article here: https://agentic.schule/en/blog/<slug>
-Subscribe: a new one drops every weekday.
+Den ganzen Artikel liest du hier: https://agentic.schule/blog/<slug>
+Abonnieren: Hier gibt es regelmäßig fundierte Tipps zu AI.
 
-#Shorts #AI #AIAgents <2 bis 3 Themen-Hashtags>
+#Shorts #AI #KI <2 bis 3 Themen-Hashtags>
 ```
 
-- **YouTube-Titel dürfen reißerischer sein** als die übrigen Posts (etwa „This Malicious AI Skill Is Still Infecting Computers 😳"); die Wahl liegt bei Johannes. „(Day N/30)" im Titel ist erwünscht, aber kein Muss. Die Sitzung schlägt einen Titel vor, meldet Johannes' eigene Titel aber nicht als Lücke oder Fehler.
-- „Subscribe: a new one drops every weekday." passt zur Werktags-Serie; „tomorrow" stimmt freitags nicht.
+- **YouTube-Titel dürfen reißerischer sein** als die übrigen Posts (etwa „Dieser bösartige AI-Skill ist immer noch im Umlauf 😳"); die Wahl liegt bei Johannes. „(Tag N)" im Titel ist erwünscht, aber kein Muss. Die Sitzung schlägt einen Titel vor, meldet Johannes' eigene Titel aber nicht als Lücke oder Fehler.
+- „Abonnieren" verspricht keinen festen Takt, denn zwischen den Tagen sind Lücken erlaubt.
 
 Hashtags gehören nur auf Instagram, TikTok und YouTube, dort helfen Stichworte bei der Suche.
 
-## Beispiel: Tag 1 (malicious-ai-skills)
+## Beispiel: Knobelaufgabe zu bösartigen AI-Skills
 
 Der Kern des Artikels in zwei Zeilen der echten Datei: Zeile 31 schickt den Agenten zur Dokumentation, Zeile 248 von 258 nennt deren Adresse, und die gehört den Angreifern.
 
-**LinkedIn (DE)**, dazu der Screenshot
+**LinkedIn, X und Bluesky**, dazu der Screenshot
 
 ```
 Ich habe eine kleine Knobelaufgabe für dich! Siehst du in folgendem AI-Skill einen gefährlichen Angriff? ☠️
@@ -238,56 +219,48 @@ Hast du den Angriff nicht gefunden? Dann lies besser diesen Artikel:
 https://agentic.schule/blog/2026-09-malicious-ai-skills
 ```
 
-**X (EN)**, dazu derselbe Screenshot
-
-```
-I have a little puzzle for you! Do you see a dangerous attack in the following AI skill? ☠️
-
-Not sure what the attack is? Then you should read this article: https://agentic.schule/en/blog/2026-09-malicious-ai-skills
-```
-
 **Der Screenshot** ([`docs/social-media-beispiel-tag-1.png`](social-media-beispiel-tag-1.png)): `SKILL.md` in VS Code. Oben der Abschnitt „Getting Stitch Ready" mit den Schritten 1 und 2 (Zeilen 27 bis 32 der echten Datei), dann `[...]`, unten der Abschnitt „Stitch Documentation" mit dem Link auf die echte Domain (Zeilen 246 bis 248).
 
-**Video (EN, etwa 25 Sekunden, Split-Screen)**
+**Video (etwa 25 Sekunden, Split-Screen)**
 
 Unten durchgehend Johannes. Oben die [Datei auf GitHub](https://github.com/wshobson/agents/blob/main/plugins/brand-landingpage/skills/brand-landingpage/SKILL.md) im schmalen Fenster; nur dort stimmen die Zeilennummern. In der entschärften Archivkopie des Artikels stehen dieselben Stellen wegen des Warnhinweises in Zeile 78 und 295.
 
 | Sekunde | oben (Bildschirm) | Mitte (Text) | Ton |
 | --- | --- | --- | --- |
-| 0–3 | Zeile 31 mit Umgebung | „Can you spot the attack?" | „I have a little puzzle for you. Can you spot the attack in this AI skill?" |
-| 3–8 | Zeile 31, markiert | Untertitel | „Line 31: Consult the SDK documentation. Sounds fine." |
+| 0–3 | Zeile 31 mit Umgebung | „Findest du den Angriff?" | „Ich habe eine kleine Knobelaufgabe für dich. Findest du den Angriff in diesem AI-Skill?" |
+| 3–8 | Zeile 31, markiert | Untertitel | „Zeile 31: Lies die Doku zum SDK. Klingt harmlos." |
 | 8–10 | schneller Scroll nach unten | – | nichts |
-| 10–15 | Zeile 248, Link markiert | Untertitel | „Line 248: the link to that documentation." |
-| 15–20 | Zeile 248, Domain hervorgehoben | Untertitel | „But this is not Google's website. It belongs to the attackers. And if you click it, everything looks fine." |
-| 20–25 | Zeile 248 bleibt stehen | `agentic.schule` | „How? Find the full article on my website: agentic.schule." |
+| 10–15 | Zeile 248, Link markiert | Untertitel | „Zeile 248: der Link zu genau dieser Doku." |
+| 15–20 | Zeile 248, Domain hervorgehoben | Untertitel | „Aber das ist nicht die Website von Google. Sie gehört den Angreifern. Und wenn du draufklickst, sieht alles harmlos aus." |
+| 20–25 | Zeile 248 bleibt stehen | `agentic.schule` | „Wie das geht? Den ganzen Artikel findest du auf meiner Website: agentic.schule." |
 
 **Instagram**
 
 ```
-Can you spot the attack in this AI skill? Day 1/30
+Findest du den Angriff in diesem AI-Skill? Tag 1
 
-Find the full article on my website: agentic.schule
+Den ganzen Artikel findest du auf meiner Website: agentic.schule
 
-#AI #AIAgents #ClaudeCode #AISecurity
+#AI #KI #ClaudeCode #AISecurity
 ```
 
 **TikTok**
 
 ```
-Can you spot the attack in this AI skill? Day 1/30. Full article on agentic.schule #AI #AIAgents #ClaudeCode #AISecurity
+Findest du den Angriff in diesem AI-Skill? Tag 1. Den ganzen Artikel findest du auf agentic.schule #AI #KI #ClaudeCode #AISecurity
 ```
 
 **YouTube Shorts**
 
 ```
-Title: Can you spot the attack in this AI skill? (Day 1/30)
+Titel: Findest du den Angriff in diesem AI-Skill? (Tag 1)
 
-Description:
-AI skills can run malicious code without one bad line.
-Read the full article here: https://agentic.schule/en/blog/2026-09-malicious-ai-skills
-Subscribe: a new one drops every weekday.
+Beschreibung:
+AI-Skills können Schadcode ausführen, ohne eine einzige verdächtige Zeile.
+Den ganzen Artikel liest du hier: https://agentic.schule/blog/2026-09-malicious-ai-skills
+Abonnieren: Hier gibt es regelmäßig fundierte Tipps zu AI.
 
-#Shorts #AI #AIAgents #ClaudeCode #AISecurity
+#Shorts #AI #KI #ClaudeCode #AISecurity
 ```
 
 ## Die Kanäle
@@ -305,7 +278,7 @@ Nach jeder Veröffentlichung prüft die Sitzung ungefragt, ob der Tag auf allen 
 
 ## Faktenregel
 
-Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden Sprachfassung. Die Artikel sind an Primärquellen geprüft; neue Zahlen, Namen oder Behauptungen kommen in Posts nicht hinzu. Ausnahme ist das gezeigte Material selbst: wörtliche Zitate und Zeilennummern aus der Quelle, die der Artikel verlinkt, werden an dieser Quelle geprüft. Aussagen wie „bis heute" oder „still live" werden vor dem Posten gegen den aktuellen Stand geprüft. Vor der Freigabe wird jede Aussage abgeglichen.
+Posts und Skripte enthalten nur, was in der deutschen Fassung des Artikels steht. Die Artikel sind an Primärquellen geprüft; neue Zahlen, Namen oder Behauptungen kommen in Posts nicht hinzu. Ausnahme ist das gezeigte Material selbst: wörtliche Zitate und Zeilennummern aus der Quelle, die der Artikel verlinkt, werden an dieser Quelle geprüft. Aussagen wie „bis heute" werden vor dem Posten gegen den aktuellen Stand geprüft. Vor der Freigabe wird jede Aussage abgeglichen.
 
 ## Erfolg messen
 
@@ -322,8 +295,8 @@ Posts und Skripte enthalten nur, was im Artikel steht, in der jeweils passenden 
 
 ## Ablauf einer Sitzung
 
-1. Tag bestimmen und den passenden Artikel finden (Frontmatter `published:`).
-2. Die englische Fassung (`-EN/README.md`) komplett lesen, die deutsche (`-DE/README.md`) für den LinkedIn-Post.
+1. Den Artikel und die Tagesnummer mit Johannes klären.
+2. Die deutsche Fassung (`-DE/README.md`) komplett lesen.
 3. Den Kern des Artikels finden: das eine Stück Material, an dem sich der Trick zeigen lässt.
 4. Bildvorlage, Plattform-Texte und Video-Skript samt Drehplan entwerfen.
 5. Jede Aussage gegen den Artikel prüfen, Zitate und Zeilennummern gegen die Quelle, zeitabhängige Aussagen gegen den aktuellen Stand.
