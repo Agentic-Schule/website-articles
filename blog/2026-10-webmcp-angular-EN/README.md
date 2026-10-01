@@ -27,7 +27,7 @@ This is part 2 of two. [Part 1](https://agentic.schule/en/blog/2026-10-webmcp) e
 
 [[toc]]
 
-## WebMCP in Angular
+## WebMCP with Angular
 
 A reminder from part 1: a WebMCP tool has a name, a description, and a JSON schema for its parameters. An agent reads this contract and calls the tool with structured arguments. The agent is brought along by the visitor; you only supply the tools and run no model of your own. Under the hood, Angular uses the imperative browser API `document.modelContext.registerTool()`. The nice thing is: you notice none of that in everyday work. You work with providers and injection context, the way you know it.
 
@@ -38,7 +38,7 @@ Angular offers two ways to register a tool:
 
 Angular takes care of unregistering itself: when the associated injector is destroyed, the tool disappears too. One rule always applies: tool names must be unique. A duplicate registration causes a runtime error.
 
-> **⚠️ Caution:** WebMCP in Angular is explicitly marked as experimental. The APIs can change even outside of major releases. For prototypes and internal tooling that is fine, for production systems it is not yet.
+> **⚠️ Caution:** WebMCP with Angular is explicitly marked as experimental. The APIs can change even outside of major releases. For prototypes and internal tooling that is fine, for production systems it is not yet.
 
 ## Define a tool as a provider
 
