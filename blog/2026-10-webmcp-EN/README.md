@@ -1,5 +1,5 @@
 ---
-title: 'WebMCP: The Website Hands the Agent Its Tools'
+title: 'WebMCP: Your Existing Web App Becomes AI-Ready'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
@@ -18,9 +18,9 @@ language: en
 header: header.jpg
 ---
 
-There is a new technology that lets you make existing web applications _AI-ready_ with little effort, meaning ready to be operated by an AI agent. It's called WebMCP, and in this article we try it out together. Don't worry: you need no new backend and no model of your own for it.
+"Just add some AI to it." The classic answer is your own chatbot, with your own backend and your own model. And you pay for every _token_ your visitors burn (the unit AI models bill in), even when they use your chatbot for small talk. But it also works the other way around!
 
-**The trick is a reversal. A classic AI chatbot belongs to the operator: their own backend, their own model, and the operator pays for every _token_ (the unit AI models bill in). WebMCP turns that around. The visitor brings their own assistant, for example ChatGPT, and you only register your existing client logic as tools. That makes practically any app AI-ready. This is the low-hanging fruit for AI in existing applications, and that is exactly what excites me about it.**
+**With WebMCP, the visitor brings their own AI assistant. Your web app offers it your functions as _tools_, and the agent calls them directly instead of feeling its way through the HTML. You need no backend and no model of your own for it. And the user decides which AI processes their input. That is how you make an existing web app _AI-ready_ with little effort, meaning ready to be operated by an AI agent.**
 
 In this first part we clarify what WebMCP is, how it relates to the MCP from Claude Code, what already works today, and where the catches are. This is part 1 of two, meant for any web developer. [Part 2](https://agentic.schule/en/blog/2026-10-webmcp-angular) then shows the concrete implementation in Angular. Each part stands on its own.
 

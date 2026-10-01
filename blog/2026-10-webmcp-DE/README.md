@@ -1,5 +1,5 @@
 ---
-title: 'WebMCP: Deine Website reicht dem Agenten die Werkzeuge'
+title: 'WebMCP: Deine bestehende Web-App wird AI-ready'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -18,9 +18,9 @@ language: de
 header: header.jpg
 ---
 
-Es gibt eine neue Technologie, mit der du bestehende Web-Anwendungen mit wenig Aufwand _AI-ready_ machst, also fit dafür, dass ein KI-Agent sie bedient. Sie heißt WebMCP, und wir probieren sie in diesem Artikel gemeinsam aus. Keine Sorge: Du brauchst dafür kein neues Backend und kein eigenes KI-Modell.
+„Mach da mal was mit KI rein." Der klassische Weg ist ein eigener Chatbot mit eigenem Backend und eigenem Modell. Und du zahlst jeden _Token_ deiner Besucher (die Abrechnungseinheit, in der KI-Modelle rechnen), auch wenn sie den Chatbot für Smalltalk nutzen. Doch es geht auch vollkommen andersherum!
 
-**Der Trick ist eine Umkehr. Ein klassischer KI-Chatbot gehört dem Betreiber: eigenes Backend, eigenes Modell, und der Betreiber zahlt für jeden _Token_ (die Abrechnungseinheit, in der KI-Modelle rechnen). WebMCP dreht das um. Der Besucher bringt seinen eigenen Assistenten mit, zum Beispiel ChatGPT, und du registrierst nur deine vorhandene Client-Logik als Tools. So wird praktisch jede App AI-ready. Das ist die _Low Hanging Fruit_ für AI in bestehenden Anwendungen, und genau das begeistert mich daran.**
+**Mit WebMCP bringt der Besucher seinen eigenen AI-Assistenten mit. Deine Web-App bietet ihm ihre Funktionen als _Tools_ an, und der Agent ruft sie direkt auf, statt sich durch das HTML zu tasten. Du brauchst dafür kein Backend und kein eigenes Modell. Und welche KI die Eingaben verarbeitet, entscheidet der Anwender selbst. So machst du eine bestehende Web-App mit wenig Aufwand _AI-ready_, also fit dafür, dass ein KI-Agent sie bedient.**
 
 In diesem ersten Teil klären wir, was WebMCP ist, wie es sich zum MCP aus Claude Code verhält, was heute schon real funktioniert und wo die Haken liegen. Das hier ist Teil 1 von zwei, gedacht für jeden Web-Entwickler. [Teil 2](https://agentic.schule/blog/2026-10-webmcp-angular) zeigt dann die konkrete Umsetzung in Angular. Jeder Teil ist für sich lesbar.
 
