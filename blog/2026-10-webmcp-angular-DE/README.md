@@ -1,5 +1,5 @@
 ---
-title: 'WebMCP in Angular: Tools aus Providern und Signal Forms'
+title: 'WebMCP: Deine bestehende Angular-App wird AI-ready'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -17,7 +17,9 @@ language: de
 header: header.jpg
 ---
 
-**Angular bringt ab Version 22 experimentelle Unterstützung für WebMCP (Web Model Context Protocol) mit, und sie fügt sich in die bestehende Architektur ein: Tools sind Provider, ihre Lebensdauer hängt am Injector, und aus einem _Signal Form_ (Angulars signalbasiertem Formularmodell) wird mit einer einzigen Option ein fertiges Tool. In diesem zweiten Teil registrieren wir solche Tools, steuern über den Injector ihre Lebensdauer und lassen Angular das JSON-Schema automatisch aus einem Formular ableiten. Alles ist als `experimental` markiert und kann sich ändern.**
+„Mach da mal was mit KI rein." Der klassische Weg ist ein eigener Chatbot mit eigenem Backend und eigenem Modell. Und du zahlst jeden _Token_ deiner Besucher (die Abrechnungseinheit der KI-Modelle), auch wenn sie den Chatbot für Smalltalk nutzen. Doch es geht auch vollkommen andersherum!
+
+**Mit WebMCP (Web Model Context Protocol) bringt der Besucher seinen eigenen AI-Assistenten mit, und deine Angular-App liefert nur die Tools. Das Beste: Angular 22 bringt schon experimentelle WebMCP-Unterstützung mit, bis hinunter zu den _Signal Forms_ (Angulars signalbasiertem Formularmodell). In diesem zweiten Teil registrieren wir solche Tools, steuern über den Injector ihre Lebensdauer und lassen Angular das JSON-Schema automatisch aus einem Formular ableiten. Alles ist als `experimental` markiert und kann sich ändern.**
 
 Das hier ist Teil 2 von zwei. [Teil 1](https://agentic.schule/blog/2026-10-webmcp) klärt allgemein, was WebMCP ist, wie es sich zum MCP aus Claude Code verhält und wer es unterstützt. Dieser Teil ist die Angular-Praxis. Er ist für sich lesbar, das Konzept aus Teil 1 setze ich aber knapp voraus.
 

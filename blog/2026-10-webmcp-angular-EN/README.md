@@ -1,5 +1,5 @@
 ---
-title: 'WebMCP in Angular: Tools from Providers and Signal Forms'
+title: 'WebMCP: Your Existing Angular App Becomes AI-Ready'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
@@ -17,7 +17,9 @@ language: en
 header: header.jpg
 ---
 
-**Angular ships experimental support for WebMCP (Web Model Context Protocol) from version 22 on, and it fits into the existing architecture: tools are providers, their lifetime hangs on the injector, and a _Signal Form_ (Angular's signal-based form model) becomes a finished tool with a single option. In this second part we register such tools, control their lifetime through the injector, and let Angular derive the JSON schema automatically from a form. Everything is marked `experimental` and can change.**
+"Just add some AI to it." The classic answer is your own chatbot, with your own backend and your own model. And you pay for every _token_ your visitors burn (the unit AI models bill in), even when they use your chatbot for small talk. But it also works the other way around!
+
+**With WebMCP (Web Model Context Protocol), the visitor brings their own AI assistant, and your Angular app only supplies the tools. The best part: Angular 22 already ships experimental WebMCP support, right down to _Signal Forms_ (Angular's signal-based form model). In this second part we register such tools, control their lifetime through the injector, and let Angular derive the JSON schema automatically from a form. Everything is marked `experimental` and can change.**
 
 This is part 2 of two. [Part 1](https://agentic.schule/en/blog/2026-10-webmcp) explains in general what WebMCP is, how it relates to the MCP from Claude Code, and who supports it. This part is the Angular practice. It stands on its own, though I assume the concept from part 1 briefly.
 
