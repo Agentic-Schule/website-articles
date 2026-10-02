@@ -107,6 +107,10 @@ Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer 
 - **Die Bildschirmaufnahme läuft die ganzen 25 Sekunden.** Das Browserfenster vorher schmal und hoch ziehen (etwa über die Handy-Ansicht der Entwicklertools), damit lange Zeilen umbrechen und die Schrift groß bleibt. Zeilennummern im Bild müssen zum Skript passen.
 - **Etwa 25 Sekunden.**
 
+### Schnitt in Descript
+
+Jedes Video läuft in Descript in zwei Schritten: erst der Schnitt (nur wörtlich genannte Stellen löschen), dann Hochformat, Bilder, Untertitel und Audio. Die Sitzung schreibt für beide Schritte die Anweisungen an Underlord. Vorlagen und Untertitel-Stil (Manrope, 70 pt, einzeilig) stehen in [`docs/descript-instructions.md`](descript-instructions.md).
+
 ### Format
 
 - **Vertikal 9:16, bildfüllend, 1080×1920.** Keine Ränder, keine Balken, kein Rahmen. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.
