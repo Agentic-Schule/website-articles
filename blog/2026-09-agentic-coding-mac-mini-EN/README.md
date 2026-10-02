@@ -1,30 +1,33 @@
 ---
-title: 'Agentic Coding Around the Clock: The Mac mini as a Ground Station'
+title: 'Your AI Agents Do NOT Belong in the Cloud: the Mac mini as a Ground Station'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
 published: 2026-09-24
+lastModified: 2026-10-02
 keywords:
   - Agentic Coding
   - AI Agent
   - Claude Code
   - Mac mini
+  - Cloud
+  - ChatGPT dots
+  - Data sovereignty
   - Always-on
   - tmux
   - mosh
   - Syncthing
   - colima
-  - nginx
   - Remote Development
   - Homelab
 language: en
 header: header.jpg
 ---
 
-Agentic Coding works differently from a chat window: you set the direction, and the agent reads code, writes files, runs tests, and plans the next steps on its own. Such runs take time: minutes, sometimes hours. And that's exactly where things clash with a laptop that you fold shut, carry into a café, or send to sleep on the train.
+ChatGPT now has dots, Claude has cloud sessions: AI agents that run in the cloud while you don't have to worry about a thing. Convenient, no question. And yet I don't like these offerings.
 
-**That's why I turned a Mac mini into a "ground station": an always-running machine on which my agents keep working, while I watch and step in from the MacBook, the browser, or even my phone.**
+**The conversations with your agent are your capital, and they belong on your own disk, not in someone else's cloud. My answer is a Mac mini as an always-running "ground station": a machine that belongs to you, a dedicated sandbox, reachable from anywhere. Your agents keep working while you watch and step in from the MacBook, the browser, or even your phone.**
 
 The box was initially sitting on the shelf for a completely different reason: a current Mac mini M4 with 32 GB that I had actually bought to join the **Clawdbot** hype (today *[OpenClaw](https://openclaw.ai)*), controlling your own agent from your phone via **[Signal](https://signal.org)**, that had something to it. It was cool exactly as long as that remote control was the main appeal. Since [Claude Code](https://claude.com/claude-code) can do the same out of the box with **`/remote-control`**, the Clawdbot has lost much of its charm for me, and the mini was getting a bit bored anyway (maybe more on that another time). So it got a new, permanent job.
 
@@ -38,9 +41,9 @@ This article shows the idea, the building blocks, and, in how-to boxes, how to b
 
 ## The Problem: Agents Want to Run, I Want to Leave
 
-A typical flow in agentic coding: I describe a refactoring, the agent gets going, works through a task list, runs tests, corrects itself. That's great, as long as the machine stays on and the session lives.
+_Agentic coding_ works differently from a chat window: you set the direction, and the agent reads code, writes files, runs tests, and plans the next steps on its own. Such runs take time: minutes, sometimes hours. And that's exactly where things clash with a laptop that you fold shut, carry into a café, or send to sleep on the train.
 
-On the laptop, though, this is what happens:
+On the laptop, this is what happens:
 
 - I fold it shut → the process goes to sleep, the agent freezes mid-run.
 - In the evening I just want to *quickly* check from the couch how far it's gotten, and would have to boot the laptop back up.
@@ -51,11 +54,43 @@ On top of that, there's a pattern I notice in myself: my best ideas rarely come 
 
 The solution is conceptually simple: **The agent doesn't run on the device near me, but on a dedicated machine that never goes off and is always on.** The device in my hand is just a window onto it.
 
-Claude Code (and other tools) have basically already solved this: remote control from the phone. But that's not enough for me.
+## Why Not Just the Cloud?
 
-Which device that window is becomes a side note: the big 16-inch MacBook Pro at the desk, the small MacBook for the man-purse (lugging a giant machine around at conferences is uncool), or the phone. I want to stay flexible, and the ground station always stays the same.
+At this point the obvious objection is: there are ready-made cloud offerings for exactly this. Your agent runs on someone else's infrastructure, always on, and you administer nothing. In principle a great thing. Only: these offerings don't appeal to me, and that has solid reasons. The figures and quotes below are as of October 2026.
+
+**ChatGPT dots** (OpenAI writes them lowercase). Each dot is, per OpenAI, "frontier intelligence", "Powered by GPT‑6 Astra", and has "their own cloud computer". They're rolling out "today in ChatGPT to Pro and Business Premium users in eligible markets"; Enterprise users get a beta once their workspace admin enables it. So a dot requires a paid plan: "Your first dot is included in your Pro or Business Premium plan at no extra cost." The first one is included, and "in the future, you'll be able to add more dots, and scale the output of each dot", so more agents and more output cost on top. The decisive part for me: the agent and its data sit on OpenAI's machines, not mine.
+
+**Claude Code cloud sessions.** These run in a VM managed by Anthropic with, per the docs, "approximate resource ceilings": "4 vCPUs" and "16 GB of RAM". That's puny. And the docs themselves say what to do then: "The VM may stop tasks that need significantly more memory … For workloads beyond these limits, use Remote Control to run Claude Code on your own hardware." So if you seriously need resources, the docs send you to your own hardware anyway. To be fair: "There is no separate compute charge for the cloud VM", and the cloud sessions share the usage limit with the rest of your Claude usage. Cloning code requires GitHub. And yes, you can pull a cloud session into your own terminal via teleport (Anthropic's feature for moving a running cloud session to a local terminal), but it started off in the cloud first.
+
+Commercially you get the same as a rented dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)), billed continuously per compute-hour or seat.
+
+Soberly speaking, there's also a solid business interest behind this. The monthly subscriptions can hardly be raised further without customers hating every price increase. An additional cloud service, billed per usage or per seat, is from the provider's point of view an elegant new revenue stream. That's my reading, but it explains the push into the cloud rather well.
+
+As different as these offerings are, they share the one catch that bothers me most: your conversations with the agent then live somewhere in someone else's cloud. And those are too valuable to me for that.
+
+## Your Chats Are Your Capital
+
+The question that occupies me most: where do the chats live? The knowledge I've built up with the agent, the decisions, the reasoning, the dead ends, that's my capital. I want to sync it across several machines, I want to be able to back it up, and I want to still look up in a year what I discussed back then. None of that works well when it lives in someone else's cloud.
+
+Claude Code stores its conversation logs locally under `~/.claude/projects/`, one `.jsonl` file per session. In the same project folder there's also the subfolder `memory/`, where the agent keeps persistent notes. Exactly this trove is what I want to preserve, on my own, encrypted disk.
+
+<figure style="margin: 1.5em auto; max-width: 600px;">
+  <img src="chats-kapital.jpg" alt="Terminal output of ls ~/.claude/projects/ in a project directory: several .jsonl files (one per session) and a memory/ folder. Below it three checkmarks: Synced, Backed up, On your disk." style="width: 100%; display: block; border-radius: 8px;">
+  <figcaption style="text-align: center; color: #8f84a6; font-size: 0.9em; margin-top: 0.6em;">A look inside a project folder: one <code>.jsonl</code> per session, plus <code>memory/</code>. Synced, backed up, on my disk.</figcaption>
+</figure>
+
+> **⚠️ Definitely adjust `cleanupPeriodDays`.** By default Claude Code clears the conversation logs under `~/.claude/projects/` after 30 days. If you want to keep them as a reference, set `cleanupPeriodDays` in `~/.claude/settings.json` much higher, in my case to 365. Otherwise a tidied-up machine deletes the history.
+
+On the ground station these files live on my disk and get mirrored to my MacBook (how exactly, I show in the [Everything Duplicated](#everything-duplicated-always-in-sync) section). That lets me continue a session I started on the mini over on the MacBook: context, history, everything there.
+
+That's why, for me, any pure cloud offering is a showstopper. This stance runs through my whole setup; with the [auto account switch](https://agentic.schule/en/blog/2026-09-agentic-coding-auto-account-switch), too, it was exactly about keeping control over my own data.
 
 ## The Architecture: Ground Station and Mobile Mirror
+
+<figure style="margin: 1.5em auto; max-width: 760px;">
+  <img src="bodenstation-diagramm.jpg" alt="Heading „My ground station: a Mac mini.“ Below it a Mac mini with three dotted lines running to three icons: MacBook, Browser and Phone." style="width: 100%; display: block; border-radius: 8px;">
+  <figcaption style="text-align: center; color: #8f84a6; font-size: 0.9em; margin-top: 0.6em;">The ground station sits on the network, everything else docks in: MacBook, browser, phone.</figcaption>
+</figure>
 
 Two machines, one common denominator:
 
@@ -65,13 +100,19 @@ Two machines, one common denominator:
 | Role | main machine, the agents run here | rocket, docks from anywhere |
 | User | same account, same home | same account, same home |
 
-The crucial trick: **Both machines use the same username and therefore the same home directory `/Users/<name>`.** All paths, all repos, all keys and, as we'll see shortly, all agent sessions live under identical paths on both machines. That makes the transition seamless: what applies on the mini applies one-to-one on the MacBook Pro.
+The crucial trick: **Both machines use the same username and therefore the same home directory `/Users/<name>`.** All paths, all repos, all keys and, as we'll see shortly, all agent sessions live under identical paths on both machines. That makes the transition smooth: what applies on the mini applies one-to-one on the MacBook Pro.
 
-Strictly speaking, a third role joins in: **devices that only work as a terminal**, no dev environment of their own, no copy of the data, just a window into the ground station. That's the phone (via Termux) on the one hand, and on the other a small MacBook that I only bring along to mosh in; I simply call it **"Mac Terminal"**. So the only full mirror is the big MacBook Pro: it can do both, work standalone *or* just serve as a window. Everything else is a pure terminal.
+Strictly speaking, a third role joins in: **devices that only work as a terminal**, no dev environment of their own, no copy of the data, just a window into the ground station. That's the phone (via Termux, an Android terminal app) on the one hand, and on the other a small MacBook that I only bring along as a terminal; I simply call it **"Mac Terminal"**. So the only full mirror is the big MacBook Pro: it can do both, work standalone *or* just serve as a window. Everything else is a pure terminal.
 
 The mini sits without a monitor and without a keyboard among the rest of my home tech, next to the NAS, the router, the fat switch, and all the cabling you tend to have hanging on your network. It's reachable only over the network. That sounds like a limitation, but it's half the trick: what runs *headless* (without a screen and without visible windows) also runs when nobody is logged in.
 
 Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon delivers a lot of performance for the money, the box is **tiny** and fits in any corner, runs **absolutely silently** (I never hear the fan in everyday use), and sips so little **power** that running it 24/7 barely shows up on the bill. At idle it draws just a handful of watts. Exactly what you want from a machine that never turns off.
+
+## A Dedicated Sandbox
+
+Besides the chats, this is the second reason for a machine of my own. The mini isn't my everyday laptop, where I do all sorts of things, but a machine with exactly one job: coding. On the ground station, only what's needed for the work runs. I'm not logged in anywhere else there, not even my usual password manager is installed.
+
+That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained. For agents that increasingly run commands on their own, that's a reassuring thought, and it costs me nothing extra, because the machine only has this one job anyway.
 
 ## Surviving Connection Drops
 
@@ -97,11 +138,11 @@ Important to understand: tmux saves the **connection**, not the power. A reboot 
 
 For access I rely entirely on **[mosh](https://mosh.org)** (Mobile Shell), at home as on the road, always the same command. That way I never have to think about or switch between `ssh` and `mosh`.
 
-And mosh is genuinely great. It's the better SSH for everything that isn't on a fixed cable: if the network changes or briefly drops, the connection lives on **roaming-proof**, no frozen terminal, no "broken pipe". Typed characters appear instantly via local echo, even with lousy latency on the train. Network gone, network back, mosh just keeps going without reconnecting. Underneath it's a completely normal SSH login with key auth, no password.
+And mosh is great. It's the better SSH for everything that isn't on a fixed cable: if the network changes or briefly drops, the connection lives on **roaming-proof**, no frozen terminal, no "broken pipe". Typed characters appear instantly via local echo, even with lousy latency on the train. Network gone, network back, mosh just keeps going without reconnecting. Underneath it's a completely normal SSH login with key auth, no password.
 
 mosh does have one catch: it needs open UDP ports (between 60000 and 61000) and only transfers the visible screen, so the scrollback stays patchy. In my setup, tmux keeps the history anyway.
 
-And how does the phone even reach the box back home from the road? I started with the Fritzbox's **[WireGuard](https://www.wireguard.com)** VPN; these days everything runs over **[Tailscale](https://tailscale.com)** (a mesh VPN based on WireGuard). The reason: Tailscale also copes wonderfully with **IPv6** and constantly changing connections, you reach the ground station reliably, no matter which network you're on. You really always get home.
+And how does the phone even reach the box back home from the road? I started with the Fritzbox's **[WireGuard](https://www.wireguard.com)** VPN; these days everything runs over **[Tailscale](https://tailscale.com)** (a mesh VPN based on WireGuard). The reason: Tailscale also copes wonderfully with **IPv6** and constantly changing connections, you reach the ground station reliably, no matter which network you're on. You always get home.
 
 And the pièce de résistance: **From the phone.** On Android the terminal app *[Termux](https://termux.dev)* runs, inside it mosh, inside that tmux, inside that the agent. That way I can reach the raw session from anywhere if need be.
 
@@ -124,15 +165,13 @@ I rarely use that direct terminal route, though. Most of the time I work more co
 
 ## Everything Duplicated: Always in Sync
 
-Up to here I could *access* the mini from anywhere. But the real kicker is that my big MacBook Pro is not a mere terminal, but a **true mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror feels like a permanent, second-by-second backup. Damn, that's good, with one important caveat I'll get to below.
+Up to here I could *access* the mini from anywhere. But the clever part is that my big MacBook Pro is a **full mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror feels like a permanent, second-by-second backup. Damn, that's good, with one important caveat I'll get to below.
 
 This is handled by **[Syncthing](https://syncthing.net)**, a peer-to-peer sync with no cloud in between. It mirrors bidirectionally:
 
 - `~/Work`: all projects and repos
-- `~/.claude`: **and here it gets interesting: the agent sessions themselves.** Claude Code stores its conversation logs under `~/.claude/projects/`. If those are synced along, I can continue a session I started on the mini over on the MacBook: context, history, everything there.
+- `~/.claude`: the agent sessions and the `memory/` directory from the [Your Chats Are Your Capital](#your-chats-are-your-capital) section. Only the sync makes them available on both machines.
 - `~/Shots`: screenshots (handy, more on that in a moment)
-
-> **⚠️ Definitely adjust `cleanupPeriodDays`.** By default Claude Code clears the conversation logs under `~/.claude/projects/` after 30 days. If you want to sync them, as here, and keep them as a reference, set `cleanupPeriodDays` in `~/.claude/settings.json` much higher, in my case to 365. Otherwise a tidied-up machine deletes the history, and the sync dutifully carries that deletion over to the other one.
 
 What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `build`, `target`, and caches are in `.stignore` and get rebuilt per machine (`npm ci`, `cargo build`). Copying compiled binaries across machines breaks at library linking sooner or later anyway, better to rebuild cleanly.
 
@@ -148,11 +187,11 @@ What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `bui
 > ```
 > Rule of thumb: whatever an `npm ci` or `cargo build` restores in seconds doesn't belong in the sync.
 
-**The screenshot trick as a bonus:** because both Macs have the same home, a screenshot lives under the same path on *both* machines. I set the macOS screenshot folder to `~/Shots` (`defaults write com.apple.screencapture location ~/Shots`), take a screenshot on the MacBook, and drag it into an agent session running **remotely** on the mini. The path exists there too thanks to sync, the agent reads the image even though it was created "on the other machine".
+**The screenshot trick as a bonus:** because both Macs have the same home, a screenshot lives under the same path on *both* machines. I set the macOS screenshot folder to `~/Shots` (`defaults write com.apple.screencapture location ~/Shots && killall SystemUIServer`), take a screenshot on the MacBook, and drag it into an agent session running **remotely** on the mini. The path exists there too thanks to sync, the agent reads the image even though it was created "on the other machine".
 
 > **⚠️ The one discipline:** "wait for green" before switching machines. If you switch machines while Syncthing is still transferring, you risk conflict files. Just check that the sync is `idle`, then the transition is clean.
 
-> **⚠️ And the promised caveat: a mirror is not a backup.** A bidirectional sync also replicates deletions and broken files faithfully. The newer version wins, an empty one if need be. So what once really saved me was not the mirror but Syncthing's **file versioning** (`.stversions`): before every overwrite it stores the old state with a timestamp. And because that history is **local per device** and is not synced along, in a pinch one machine still had what the other had already lost. That still does not replace a real off-device backup, but it has brought back a chat history I had already given up on.
+> **⚠️ And the promised caveat: a mirror is not a backup.** A bidirectional sync also replicates deletions and broken files faithfully. The newer version wins, an empty one if need be. The safeguard against that is Syncthing's **file versioning** (`.stversions`): before every overwrite it stores the old state with a timestamp. And because that history is **local per device** and is not synced along, in a pinch one machine still has what the other has already lost. That does not replace a real off-device backup, but it brings back a chat history you'd otherwise give up on.
 
 ## Running Services Headless
 
@@ -160,7 +199,11 @@ An agent is only as good as the environment it's allowed to work in. On the mini
 
 Three building blocks:
 
-**FileVault with remote unlock.** The disk is encrypted (as it should be). After a restart the mini hangs in the pre-boot lock, before there's even a network. The trick: a second admin user with "SecureToken" is allowed to unlock the disk via SSH, after that the mini boots through and all services start. For planned restarts there's even `sudo fdesetup authrestart`: it unlocks automatically on reboot without locking yourself out. And `pmset autorestart 1` makes sure the mini comes back up on its own after a power outage. For the very worst case, a **[JetKVM](https://jetkvm.com)** is also attached to the box, a small KVM-over-IP device (keyboard, video, and mouse over the network) that gives me picture and keyboard remotely, all the way down to the firmware/boot screen. Even if no operating system is running anymore or a reboot hangs at the pre-boot lock, I can still get in. So the machine has several staggered rescue lines so I *always* get back to it, and yet everything stays encrypted, every single one of my devices.
+**FileVault with remote unlock.** The disk is encrypted, as it should be. But after a restart the mini hangs at the pre-boot lock. Only once the FileVault password is entered does it boot through and the services start. At that point there's no network yet, so an SSH login doesn't help. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It gives me picture and keyboard remotely, all the way down to the firmware and boot screen. On every restart I type the FileVault password through it once, otherwise the machine doesn't boot through. That keeps the disk encrypted and still lets me reach every boot step.
+
+For planned restarts there's a way without the password: `sudo fdesetup authrestart` unlocks automatically on the next reboot without locking yourself out. And `pmset autorestart 1` brings the mini back up on its own after a power outage.
+
+> **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. So plug the JetKVM into a front port.
 
 **Docker without Docker Desktop.** Docker Desktop needs a GUI login, on a headless machine a deal-breaker. Instead, **[colima](https://github.com/abiosoft/colima)** runs as a system service (LaunchDaemon) that starts at boot. Under the hood the same technology as Docker Desktop (Apple's Virtualization.framework), with Rosetta for **Intel images**, that is, for the old SQL Server that sadly was never ported to ARM. Thanks, Microsoft. So the agent gets a `docker` and `docker compose` that's simply there.
 
@@ -191,7 +234,7 @@ My solution is an **[nginx](https://nginx.org) reverse proxy** on the mini that 
 >     proxy_pass http://127.0.0.1:$server_port$request_uri;
 >     proxy_set_header Host localhost:$server_port;   # <- crucial: 'localhost', not the IP!
 >     proxy_http_version 1.1;
->     proxy_set_header Upgrade $http_upgrade;         # HMR WebSockets
+>     proxy_set_header Upgrade $http_upgrade;         # Hot Module Replacement (HMR)
 >     proxy_set_header Connection upgrade;
 >     # Fallback for dev servers that only listen on IPv6 (::1) (Node 24 / Angular 22):
 >     proxy_intercept_errors on;
@@ -226,13 +269,13 @@ What does it feel like day to day? Roughly like this:
 
 **Evening on the couch.** A quick glance from the phone to see whether CI has passed. It has. Merge.
 
-Not once did the agent have to "start over" because the battery ran out. No folded-shut lid paused it. That's the real win: **the work is decoupled from the device in my hand.**
+Not once did the agent have to "start over" because the battery ran out. No folded-shut lid paused it. That's the payoff: **the work is decoupled from the device in my hand.**
 
 That was a deliberately simplified example. The real work only begins with **many parallel sessions** and just as many parallel **git worktrees** (several working copies of the same repo side by side, more in the [worktree article](https://agentic.schule/en/blog/2026-09-agentic-coding-git-worktrees)). Because a *frontier model* (a model at the current cutting edge) with all its sub-agents can be damn slow (commands like `/simplify` or `/code-review` with a good dose of `/effort` can run absurdly long), you parallelize almost inevitably. The constant context switching and the mental load involved shouldn't be underestimated, but that has nothing to do with the setup; you'd have the same on a single machine.
 
 ## When You Do Have to Work Locally
 
-Not every session can be run remotely, some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a "magical" USB cable has to connect my laptop **physically to the caravan**. (I call it [the magic cable](https://wohnfunke.app/kabel) because you can't buy a cable like this off the shelf.) Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
+Not every session can be run remotely, some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a "magical" USB cable has to connect my laptop **physically to the caravan**. (I call it [the magic cable](https://wohnfunke.app/kabel) because you can't buy a cable like this off the shelf.) Without that connection I can't reach the serial interface of the light control unit.
 
 And here the procedure is really nice: I end the session on the mini with `/exit`, wait until the `~/.claude` directory has finished syncing, and restart Claude on the laptop with `--resume`, and I'm right back in **the same conversation**. Then I simply say: "You're in the caravan now, connect to the light controller." Claude carries on obediently and from there uses my **local peripherals**.
 
@@ -254,21 +297,19 @@ A Mac mini on a shelf, a bit of Unix craftsmanship, and suddenly you have a pers
 
 A side effect I had underestimated: a **dedicated machine with no GUI and no other processes** has noticeably more usable power. On my normal work machine, with the same amount of RAM, memory was constantly scraping the limit. Endless swapping. Super annoying when you have to think about which process to kill now; you definitely don't want to interrupt the agent. On the mini that problem is simply gone.
 
-And security went up almost as a side effect: on the ground station, only what's needed for work runs, I'm not logged in anywhere else there, not even my usual password manager is installed. That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained.
-
 The limits of this setup:
 
 - **It needs maintenance.** Headless operation, FileVault remote unlock, autostart services, that's a one-time setup effort and occasional debugging.
 - **Security is a must, not a bonus.** Access exclusively via the VPN, key auth, FileVault on. An always-on machine is only as trustworthy as its access.
 - **Reboots cost running processes.** tmux saves the layout, not the state mid-run. For long runs I plan restarts accordingly.
 
-And how does everyone else actually do it? Mostly not like this at all, they just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) locally on the laptop. No basement, no server. For most people that's exactly right.
+And how does everyone else actually do it? Most just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) locally on the laptop. No basement, no server. For most people that's exactly right. Anyone who takes the step into the cloud gives up control over their data and their chats for it, and that's exactly what I don't want.
 
-My setup targets the special case: **always on, from anywhere**. Commercially you buy that as a rented cloud dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)), billed continuously per compute-hour or seat. For me it's just the **Max subscription for Claude** plus hardware I already had. And because the agent is reachable at any time, I've been ruthlessly maxing out its generous limits, which hardly works as well when you're tied to a physical location.
+My setup targets the special case: **always on, from anywhere, and still completely mine.** For me it's just the **Max subscription for Claude** plus hardware I already had. And because the agent is reachable at any time, I've been ruthlessly maxing out its generous limits, which hardly works as well when you're tied to a physical location.
 
-For me the gain clearly outweighs it: agents that keep working while I live, move around, switch devices. The ground station stands, the rocket docks and lifts off. *Ground Control to Major Tom*, and the ground contact never drops.
+For me the gain clearly outweighs it: agents that keep working while I live and move around, the chats on my own disk, a machine that belongs to me. **Your machine, your treasures. You're in control, not the cloud.**
 
-By the way: while writing this article, I had the song stuck in my head the whole time. Here you go, your new earworm:
+By the way: while writing this article, I had the song stuck in my head the whole time. Here you go, your new earworm, *Ground Control to Major Tom*:
 
 <iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="David Bowie – Space Oddity (Official Video)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
 
