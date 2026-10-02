@@ -1,30 +1,33 @@
 ---
-title: 'Agentic Coding Around the Clock: The Mac mini as a Ground Station'
+title: 'Your AI Agents Do NOT Belong in the Cloud: the Mac mini as a Ground Station'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
 published: 2026-09-24
+lastModified: 2026-10-02
 keywords:
   - Agentic Coding
   - AI Agent
   - Claude Code
   - Mac mini
+  - Cloud
+  - ChatGPT dots
+  - Data sovereignty
   - Always-on
   - tmux
   - mosh
   - Syncthing
   - colima
-  - nginx
   - Remote Development
   - Homelab
 language: en
 header: header.jpg
 ---
 
-Agentic Coding works differently from a chat window: you set the direction, and the agent reads code, writes files, runs tests, and plans the next steps on its own. Such runs take time: minutes, sometimes hours. And that's exactly where things clash with a laptop that you fold shut, carry into a café, or send to sleep on the train.
+ChatGPT now has dots, Claude has cloud sessions: AI agents that run in the cloud while you don't have to worry about a thing. Convenient, no question. And yet I don't like these offerings.
 
-**That's why I turned a Mac mini into a "ground station": an always-running machine on which my agents keep working, while I watch and step in from the MacBook, the browser, or even my phone.**
+**The conversations with your agent are your capital, and they belong on your own disk, not in someone else's cloud. My answer is a Mac mini as an always-running "ground station": a machine that belongs to you, a dedicated sandbox, reachable from anywhere. Your agents keep working while you watch and step in from the MacBook, the browser, or even your phone.**
 
 The box was initially sitting on the shelf for a completely different reason: a current Mac mini M4 with 32 GB that I had actually bought to join the **Clawdbot** hype (today *[OpenClaw](https://openclaw.ai)*), controlling your own agent from your phone via **[Signal](https://signal.org)**, that had something to it. It was cool exactly as long as that remote control was the main appeal. Since [Claude Code](https://claude.com/claude-code) can do the same out of the box with **`/remote-control`**, the Clawdbot has lost much of its charm for me, and the mini was getting a bit bored anyway (maybe more on that another time). So it got a new, permanent job.
 
@@ -38,9 +41,9 @@ This article shows the idea, the building blocks, and, in how-to boxes, how to b
 
 ## The Problem: Agents Want to Run, I Want to Leave
 
-A typical flow in agentic coding: I describe a refactoring, the agent gets going, works through a task list, runs tests, corrects itself. That's great, as long as the machine stays on and the session lives.
+Agentic coding works differently from a chat window: you set the direction, and the agent reads code, writes files, runs tests, and plans the next steps on its own. Such runs take time: minutes, sometimes hours. And that's exactly where things clash with a laptop that you fold shut, carry into a café, or send to sleep on the train.
 
-On the laptop, though, this is what happens:
+On the laptop, this is what happens:
 
 - I fold it shut → the process goes to sleep, the agent freezes mid-run.
 - In the evening I just want to *quickly* check from the couch how far it's gotten, and would have to boot the laptop back up.
@@ -51,9 +54,31 @@ On top of that, there's a pattern I notice in myself: my best ideas rarely come 
 
 The solution is conceptually simple: **The agent doesn't run on the device near me, but on a dedicated machine that never goes off and is always on.** The device in my hand is just a window onto it.
 
-Claude Code (and other tools) have basically already solved this: remote control from the phone. But that's not enough for me.
+## Why Not Just the Cloud?
 
-Which device that window is becomes a side note: the big 16-inch MacBook Pro at the desk, the small MacBook for the man-purse (lugging a giant machine around at conferences is uncool), or the phone. I want to stay flexible, and the ground station always stays the same.
+At this point the obvious objection is: there are ready-made cloud offerings for exactly this. Your agent runs on someone else's infrastructure, always on, and you administer nothing. In principle a great thing. Only: these offerings don't appeal to me, and that has solid reasons. The figures and quotes below are as of October 2026.
+
+**ChatGPT dots** (OpenAI writes them lowercase). Each dot is, per OpenAI, "frontier intelligence", "Powered by GPT‑6 Astra", and has "their own cloud computer". OpenAI is rolling them out "across Pro, Business Premium, and Enterprise plans in eligible markets". So the agent and its data sit on OpenAI's machines, not mine. And in my estimation you pay extra for more than the first dot. (Whether Pro is even included in the EEA and Switzerland was inconsistent at launch; reliably that was not on OpenAI's own page, only in media reports.)
+
+**Claude Code cloud sessions.** These run in a VM managed by Anthropic with, per the docs, "approximate resource ceilings": "4 vCPUs" and "16 GB of RAM". That's puny. And the docs themselves say what to do then: "The VM may stop tasks that need significantly more memory … For workloads beyond these limits, use Remote Control to run Claude Code on your own hardware." So if you seriously need resources, the docs send you to your own hardware anyway. To be fair: "There is no separate compute charge for the cloud VM", and the cloud sessions share the usage limit with the rest of your Claude usage. Cloning code requires GitHub. And yes, you can pull a cloud session into your own terminal via teleport, but it started off in the cloud first.
+
+Commercially you get the same as a rented dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)), billed continuously per compute-hour or seat.
+
+Soberly speaking, there's also a solid business interest behind this. The monthly subscriptions can hardly be raised further without customers hating every price increase. An additional cloud service, billed per usage or per seat, is from the provider's point of view an elegant new revenue stream. That's my reading, but it explains the push into the cloud rather well.
+
+As different as these offerings are, they share the one catch that bothers me most: your conversations with the agent then live somewhere in someone else's cloud. And those are too valuable to me for that.
+
+## Your Chats Are Your Capital
+
+The question that occupies me most: where do the chats live? The knowledge I've built up with the agent, the decisions, the reasoning, the dead ends, that's my capital. I want to sync it across several machines, I want to be able to back it up, and I want to still look up in a year what I discussed back then. None of that works well when it lives in someone else's cloud.
+
+Claude Code stores its conversation logs locally under `~/.claude/projects/`, one `.jsonl` file per session. In the same project folder there's also the subfolder `memory/`, where the agent keeps persistent notes. Exactly this trove is what I want to preserve, on my own, encrypted disk.
+
+> **⚠️ Definitely adjust `cleanupPeriodDays`.** By default Claude Code clears the conversation logs under `~/.claude/projects/` after 30 days. If you want to keep them as a reference, set `cleanupPeriodDays` in `~/.claude/settings.json` much higher, in my case to 365. Otherwise a tidied-up machine deletes the history.
+
+On the ground station these files live on my disk and get mirrored to my MacBook (how exactly, I show in the [Everything Duplicated](#everything-duplicated-always-in-sync) section). That lets me continue a session I started on the mini over on the MacBook: context, history, everything there.
+
+That's why, for me, any pure cloud offering is a showstopper. This stance runs through my whole setup; with the [auto account switch](https://agentic.schule/en/blog/2026-09-agentic-coding-auto-account-switch), too, it was exactly about keeping control over my own data.
 
 ## The Architecture: Ground Station and Mobile Mirror
 
@@ -72,6 +97,12 @@ Strictly speaking, a third role joins in: **devices that only work as a terminal
 The mini sits without a monitor and without a keyboard among the rest of my home tech, next to the NAS, the router, the fat switch, and all the cabling you tend to have hanging on your network. It's reachable only over the network. That sounds like a limitation, but it's half the trick: what runs *headless* (without a screen and without visible windows) also runs when nobody is logged in.
 
 Why a Mac mini of all things? For this role it's almost perfect: Apple Silicon delivers a lot of performance for the money, the box is **tiny** and fits in any corner, runs **absolutely silently** (I never hear the fan in everyday use), and sips so little **power** that running it 24/7 barely shows up on the bill. At idle it draws just a handful of watts. Exactly what you want from a machine that never turns off.
+
+## A Dedicated Sandbox
+
+Besides the chats, this is the second reason for a machine of my own. The mini isn't my everyday laptop, where I do all sorts of things, but a machine with exactly one job: coding. On the ground station, only what's needed for the work runs. I'm not logged in anywhere else there, not even my usual password manager is installed.
+
+That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained. For agents that increasingly run commands on their own, that's a reassuring thought, and it costs me nothing extra, because the machine only has this one job anyway.
 
 ## Surviving Connection Drops
 
@@ -129,10 +160,8 @@ Up to here I could *access* the mini from anywhere. But the real kicker is that 
 This is handled by **[Syncthing](https://syncthing.net)**, a peer-to-peer sync with no cloud in between. It mirrors bidirectionally:
 
 - `~/Work`: all projects and repos
-- `~/.claude`: **and here it gets interesting: the agent sessions themselves.** Claude Code stores its conversation logs under `~/.claude/projects/`. If those are synced along, I can continue a session I started on the mini over on the MacBook: context, history, everything there.
+- `~/.claude`: the agent sessions and the `memory/` directory from the [Your Chats Are Your Capital](#your-chats-are-your-capital) section. Synced along, I can continue a session from the mini over on the MacBook: context, history, everything there.
 - `~/Shots`: screenshots (handy, more on that in a moment)
-
-> **⚠️ Definitely adjust `cleanupPeriodDays`.** By default Claude Code clears the conversation logs under `~/.claude/projects/` after 30 days. If you want to sync them, as here, and keep them as a reference, set `cleanupPeriodDays` in `~/.claude/settings.json` much higher, in my case to 365. Otherwise a tidied-up machine deletes the history, and the sync dutifully carries that deletion over to the other one.
 
 What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `build`, `target`, and caches are in `.stignore` and get rebuilt per machine (`npm ci`, `cargo build`). Copying compiled binaries across machines breaks at library linking sooner or later anyway, better to rebuild cleanly.
 
@@ -254,21 +283,19 @@ A Mac mini on a shelf, a bit of Unix craftsmanship, and suddenly you have a pers
 
 A side effect I had underestimated: a **dedicated machine with no GUI and no other processes** has noticeably more usable power. On my normal work machine, with the same amount of RAM, memory was constantly scraping the limit. Endless swapping. Super annoying when you have to think about which process to kill now; you definitely don't want to interrupt the agent. On the mini that problem is simply gone.
 
-And security went up almost as a side effect: on the ground station, only what's needed for work runs, I'm not logged in anywhere else there, not even my usual password manager is installed. That makes the whole Mac mini essentially a **sandbox**: whatever an agent could mess up there stays tightly contained.
-
 The limits of this setup:
 
 - **It needs maintenance.** Headless operation, FileVault remote unlock, autostart services, that's a one-time setup effort and occasional debugging.
 - **Security is a must, not a bonus.** Access exclusively via the VPN, key auth, FileVault on. An always-on machine is only as trustworthy as its access.
 - **Reboots cost running processes.** tmux saves the layout, not the state mid-run. For long runs I plan restarts accordingly.
 
-And how does everyone else actually do it? Mostly not like this at all, they just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) locally on the laptop. No basement, no server. For most people that's exactly right.
+And how does everyone else actually do it? Most just run their agent (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) locally on the laptop. No basement, no server. For most people that's exactly right. Anyone who takes the step into the cloud gives up control over their data and their chats for it, and that's exactly what I don't want.
 
-My setup targets the special case: **always on, from anywhere**. Commercially you buy that as a rented cloud dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)), billed continuously per compute-hour or seat. For me it's just the **Max subscription for Claude** plus hardware I already had. And because the agent is reachable at any time, I've been ruthlessly maxing out its generous limits, which hardly works as well when you're tied to a physical location.
+My setup targets the special case: **always on, from anywhere, and still completely mine.** For me it's just the **Max subscription for Claude** plus hardware I already had. And because the agent is reachable at any time, I've been ruthlessly maxing out its generous limits, which hardly works as well when you're tied to a physical location.
 
-For me the gain clearly outweighs it: agents that keep working while I live, move around, switch devices. The ground station stands, the rocket docks and lifts off. *Ground Control to Major Tom*, and the ground contact never drops.
+For me the gain clearly outweighs it: agents that keep working while I live and move around, the chats on my own disk, a machine that belongs to me. **Your machine, your treasures. You're in control, not the cloud.**
 
-By the way: while writing this article, I had the song stuck in my head the whole time. Here you go, your new earworm:
+By the way: while writing this article, I had the song stuck in my head the whole time. Here you go, your new earworm, *Ground Control to Major Tom*:
 
 <iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="David Bowie – Space Oddity (Official Video)" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
 
