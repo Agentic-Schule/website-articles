@@ -42,7 +42,7 @@ Dieser Artikel zeigt die Idee, die Bausteine und, in How-to-Kästen, wie man sie
 
 ## Das Problem: Agenten wollen laufen, ich will weg
 
-Agentic Coding funktioniert anders als ein Chatfenster: Man gibt die Richtung vor, und der Agent liest Code, schreibt Dateien, führt Tests aus und plant selbstständig die nächsten Schritte. Solche Läufe dauern: Minuten, manchmal Stunden. Und genau da beißt sich das mit einem Laptop, den man zuklappt, ins Café trägt oder im Zug in den Ruhemodus schickt.
+_Agentic Coding_ (agentisches Programmieren) funktioniert anders als ein Chatfenster: Man gibt die Richtung vor, und der Agent liest Code, schreibt Dateien, führt Tests aus und plant selbstständig die nächsten Schritte. Solche Läufe dauern: Minuten, manchmal Stunden. Und genau da beißt sich das mit einem Laptop, den man zuklappt, ins Café trägt oder im Zug in den Ruhemodus schickt.
 
 Auf dem Laptop passiert Folgendes:
 
@@ -63,7 +63,7 @@ An dieser Stelle liegt der Einwand nahe: Genau dafür gibt es doch längst ferti
 
 **Claude-Code-Cloud-Sessions.** Die laufen in einer von Anthropic verwalteten VM mit, laut Doku, „approximate resource ceilings": „4 vCPUs" und „16 GB of RAM". Das ist mickrig. Und die Doku sagt selbst, was dann zu tun ist: „The VM may stop tasks that need significantly more memory … For workloads beyond these limits, use Remote Control to run Claude Code on your own hardware." Wer also ernsthaft Ressourcen braucht, wird von der Doku ohnehin auf eigene Hardware geschickt. Fair bleibt: „There is no separate compute charge for the cloud VM", und die Cloud-Sessions teilen sich das Nutzungslimit mit deiner übrigen Claude-Nutzung. Zum Klonen von Code braucht es GitHub. Und ja, man kann eine Cloud-Session per Teleport ins eigene Terminal holen, losgelaufen ist sie aber zuerst in der Cloud.
 
-Kommerziell gibt es dasselbe als gemietete Dev-Umgebung ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) oder als gehosteten Agenten-Dienst ([Devin](https://devin.ai), [Google Jules](https://jules.google)), abgerechnet laufend pro Compute-Stunde oder Seat.
+Kommerziell gibt es dasselbe als gemietete Dev-Umgebung ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) oder als gehosteten Agenten-Dienst ([Devin](https://devin.ai), [Google Jules](https://jules.google)), abgerechnet laufend pro Compute-Stunde oder _Seat_ (Nutzerplatz).
 
 Nüchtern betrachtet steckt dahinter auch ein handfestes Geschäftsinteresse. Die monatlichen Subscriptions lassen sich kaum weiter anheben, ohne dass die Kunden jede Preiserhöhung hassen. Ein zusätzlicher Cloud-Dienst, abgerechnet pro Nutzung oder pro Seat, ist aus Anbietersicht eine elegante neue Einnahmequelle. Das ist meine Lesart, aber sie erklärt den Drang in die Cloud ziemlich gut.
 
@@ -91,9 +91,9 @@ Zwei Maschinen, ein gemeinsamer Nenner:
 | Rolle | Hauptmaschine, hier laufen die Agenten | Rakete, dockt von überall an |
 | Benutzer | derselbe Account, dasselbe Home | derselbe Account, dasselbe Home |
 
-Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys und, wie wir gleich sehen, alle Agenten-Sessions liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang nahtlos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook Pro.
+Der entscheidende Trick: **Beide Rechner nutzen denselben Benutzernamen und damit dasselbe Home-Verzeichnis `/Users/<name>`.** Alle Pfade, alle Repos, alle Keys und, wie wir gleich sehen, alle Agenten-Sessions liegen auf beiden Maschinen unter identischen Pfaden. Das macht den Übergang mühelos: Was auf dem mini gilt, gilt eins zu eins auf dem MacBook Pro.
 
-Streng genommen kommt eine dritte Rolle dazu: **Geräte, die nur als Terminal arbeiten**, kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das ist einerseits das Handy (per Termux), andererseits ein kleines MacBook, das ich ausschließlich zum Reinmoshen dabeihabe, ich nenne es schlicht **„Mac Terminal"**. Voller Spiegel ist damit nur das große MacBook Pro: Es kann beides, eigenständig arbeiten *oder* bloß als Fenster dienen. Alles andere ist reines Terminal.
+Streng genommen kommt eine dritte Rolle dazu: **Geräte, die nur als Terminal arbeiten**, kein eigenes Dev-Environment, keine Datenkopie, nur ein Fenster in die Bodenstation. Das ist einerseits das Handy (per Termux), andererseits ein kleines MacBook, das ich ausschließlich als Terminal dabeihabe, ich nenne es schlicht **„Mac Terminal"**. Voller Spiegel ist damit nur das große MacBook Pro: Es kann beides, eigenständig arbeiten *oder* bloß als Fenster dienen. Alles andere ist reines Terminal.
 
 Der mini steht ohne Monitor und ohne Tastatur bei meiner übrigen Haustechnik, neben NAS, Fritzbox, dem dicken Switch und dem ganzen Kabelsalat, den man sonst so im Netz hängen hat. Erreichbar ist er nur übers Netzwerk. Das klingt nach Einschränkung, ist aber der halbe Trick: Was *headless* läuft (ohne Bildschirm und ohne sichtbare Fenster), läuft auch, wenn niemand eingeloggt ist.
 
@@ -129,11 +129,11 @@ Wichtig zu verstehen: tmux rettet die **Verbindung**, nicht den Strom. Ein Reboo
 
 Für den Zugriff setze ich durchgehend auf **[mosh](https://mosh.org)** (Mobile Shell), zu Hause wie unterwegs, immer derselbe Befehl. So muss ich nie zwischen `ssh` und `mosh` überlegen oder umschalten.
 
-Und mosh ist wirklich großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter, kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da, mosh macht ohne Neuverbinden einfach weiter. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
+Und mosh ist großartig. Es ist das bessere SSH für alles, was nicht am festen Kabel hängt: Wechselt das Netz oder bricht es kurz weg, lebt die Verbindung **roaming-fest** weiter, kein eingefrorenes Terminal, kein „broken pipe". Getippte Zeichen erscheinen sofort per lokalem Echo, auch bei mieser Latenz im ICE. Netz weg, Netz wieder da, mosh macht ohne Neuverbinden einfach weiter. Unterbau ist ein ganz normaler SSH-Login mit Key-Auth, kein Passwort.
 
 Einen Haken hat mosh: Es braucht freie UDP-Ports (zwischen 60000 und 61000) und überträgt nur den sichtbaren Bildschirm, der Scrollback bleibt lückenhaft. Den Verlauf hält in meinem Setup ohnehin tmux.
 
-Und wie kommt das Handy von unterwegs überhaupt an die Kiste zu Hause? Angefangen habe ich mit dem **[WireGuard](https://www.wireguard.com)**-VPN der Fritzbox, inzwischen läuft alles über **[Tailscale](https://tailscale.com)** (ein Mesh-VPN auf WireGuard-Basis). Der Grund: Tailscale kommt auch mit **IPv6** und ständig wechselnden Anschlüssen bestens klar, du erreichst die Bodenstation zuverlässig, egal aus welchem Netz. Man kommt wirklich immer nach Hause.
+Und wie kommt das Handy von unterwegs überhaupt an die Kiste zu Hause? Angefangen habe ich mit dem **[WireGuard](https://www.wireguard.com)**-VPN der Fritzbox, inzwischen läuft alles über **[Tailscale](https://tailscale.com)** (ein Mesh-VPN auf WireGuard-Basis). Der Grund: Tailscale kommt auch mit **IPv6** und ständig wechselnden Anschlüssen bestens klar, du erreichst die Bodenstation zuverlässig, egal aus welchem Netz. Man kommt immer nach Hause.
 
 Und die Kür: **Vom Handy.** Auf Android läuft die Terminal-App *[Termux](https://termux.dev)*, darin mosh, darin tmux, darin der Agent. Damit komme ich notfalls von überall an die rohe Session heran.
 
@@ -156,12 +156,12 @@ Diesen direkten Terminal-Weg nutze ich aber selten. Meist arbeite ich auf dem Ha
 
 ## Alles doppelt: immer synchron
 
-Bis hierher könnte ich von überall auf den mini *zugreifen*. Der eigentliche Clou ist aber, dass mein großes MacBook Pro kein bloßes Terminal ist, sondern ein **echter Spiegel**: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen, auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen, großer Mac und mini sind ja immer synchron. Ganz nebenbei wirkt dieser Spiegel wie ein permanentes, sekundenscharfes Backup. Geiler Scheiss, mit einem wichtigen Aber, zu dem ich unten komme.
+Bis hierher könnte ich von überall auf den mini *zugreifen*. Der Clou ist aber, dass mein großes MacBook Pro ein **vollwertiger Spiegel** ist: Es hat dieselben Dateien und kann jederzeit die Arbeit des mini übernehmen, auch offline. Warum mir das so wichtig ist? Bei einem kompletten Stromausfall will ich nicht mit heruntergelassenen Hosen dastehen, großer Mac und mini sind ja immer synchron. Ganz nebenbei wirkt dieser Spiegel wie ein permanentes, sekundenscharfes Backup. Geiler Scheiß, mit einem wichtigen Aber, zu dem ich unten komme.
 
 Dafür sorgt **[Syncthing](https://syncthing.net)**, ein Peer-to-Peer-Sync ohne Cloud dazwischen. Es spiegelt bidirektional:
 
 - `~/Work`: alle Projekte und Repos
-- `~/.claude`: die Agenten-Sessions und das `memory/`-Verzeichnis aus dem Abschnitt [Deine Chats sind dein Kapital](#deine-chats-sind-dein-kapital). Werden sie mitgesynct, kann ich eine Session vom mini auf dem MacBook fortsetzen: Kontext, Verlauf, alles da.
+- `~/.claude`: die Agenten-Sessions und das `memory/`-Verzeichnis aus dem Abschnitt [Deine Chats sind dein Kapital](#deine-chats-sind-dein-kapital). Erst der Sync macht sie auf beiden Maschinen verfügbar.
 - `~/Shots`: Screenshots (praktisch, gleich mehr dazu)
 
 Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `target` und Caches stehen in `.stignore` und werden pro Maschine neu gebaut (`npm ci`, `cargo build`). Kompilierte Binaries über Rechner zu kopieren bricht sowieso irgendwann am Library-Linking, lieber sauber neu bauen.
@@ -178,11 +178,11 @@ Gesynct wird **Quellcode, keine Artefakte.** `node_modules`, `dist`, `build`, `t
 > ```
 > Faustregel: Was ein `npm ci` oder `cargo build` in Sekunden wiederherstellt, gehört nicht in den Sync.
 
-**Der Screenshot-Trick als Bonus:** Weil beide Macs dasselbe Home haben, liegt ein Screenshot unter demselben Pfad auf *beiden* Rechnern. Ich stelle den macOS-Screenshot-Ordner auf `~/Shots` (`defaults write com.apple.screencapture location ~/Shots`), mache am MacBook einen Screenshot und ziehe ihn in eine **remote** laufende Agenten-Session auf dem mini. Der Pfad existiert dort dank Sync ebenfalls, der Agent liest das Bild, obwohl es „auf dem anderen Rechner" entstand.
+**Der Screenshot-Trick als Bonus:** Weil beide Macs dasselbe Home haben, liegt ein Screenshot unter demselben Pfad auf *beiden* Rechnern. Ich stelle den macOS-Screenshot-Ordner auf `~/Shots` (`defaults write com.apple.screencapture location ~/Shots && killall SystemUIServer`), mache am MacBook einen Screenshot und ziehe ihn in eine **remote** laufende Agenten-Session auf dem mini. Der Pfad existiert dort dank Sync ebenfalls, der Agent liest das Bild, obwohl es „auf dem anderen Rechner" entstand.
 
 > **⚠️ Die eine Disziplin:** Vor dem Gerätewechsel „auf grün warten". Wechselt man die Maschine, während Syncthing noch überträgt, riskiert man Konfliktdateien. Kurz prüfen, dass der Sync `idle` ist, dann ist der Übergang sauber.
 
-> **⚠️ Und das versprochene Aber: ein Spiegel ist kein Backup.** Ein bidirektionaler Sync repliziert eben auch Löschungen und kaputte Dateien originalgetreu. Die neuere Version gewinnt, notfalls auch eine leere. Was mich einmal wirklich gerettet hat, war deshalb nicht der Spiegel, sondern Syncthings **Datei-Versionierung** (`.stversions`): Vor jedem Überschreiben legt sie den alten Stand mit Zeitstempel ab. Und weil diese Historie **pro Gerät lokal** liegt und nicht mitgesynct wird, hatte im Ernstfall die eine Maschine noch, was die andere schon verloren hatte. Ein echtes Off-Device-Backup ersetzt das trotzdem nicht, aber es hat mir schon eine totgeglaubte Chat-Historie zurückgeholt.
+> **⚠️ Und das versprochene Aber: ein Spiegel ist kein Backup.** Ein bidirektionaler Sync repliziert eben auch Löschungen und kaputte Dateien originalgetreu. Die neuere Version gewinnt, notfalls auch eine leere. Die Absicherung dagegen ist Syncthings **Datei-Versionierung** (`.stversions`): Vor jedem Überschreiben legt sie den alten Stand mit Zeitstempel ab. Und weil diese Historie **pro Gerät lokal** liegt und nicht mitgesynct wird, hat im Ernstfall die eine Maschine noch, was die andere schon verloren hat. Ein echtes Off-Device-Backup ersetzt das nicht, aber es holt eine verloren geglaubte Chat-Historie zurück.
 
 ## Dienste headless betreiben
 
@@ -221,7 +221,7 @@ Meine Lösung ist ein **[nginx](https://nginx.org)-Reverse-Proxy** auf dem mini,
 >     proxy_pass http://127.0.0.1:$server_port$request_uri;
 >     proxy_set_header Host localhost:$server_port;   # <- entscheidend: 'localhost', nicht die IP!
 >     proxy_http_version 1.1;
->     proxy_set_header Upgrade $http_upgrade;         # HMR-WebSockets
+>     proxy_set_header Upgrade $http_upgrade;         # Hot Module Replacement (HMR)
 >     proxy_set_header Connection upgrade;
 >     # Fallback für Dev-Server, die nur auf IPv6 (::1) lauschen (Node 24 / Angular 22):
 >     proxy_intercept_errors on;
@@ -256,13 +256,13 @@ Wie fühlt sich das im Alltag an? Ungefähr so:
 
 **Abends auf dem Sofa.** Kurzer Blick vom Handy, ob die CI durch ist. Ist sie. Merge.
 
-Kein einziges Mal musste der Agent „von vorne anfangen", weil der Akku alle war. Kein zugeklappter Deckel hat ihn pausiert. Das ist der eigentliche Gewinn: **Die Arbeit ist entkoppelt vom Gerät in meiner Hand.**
+Kein einziges Mal musste der Agent „von vorne anfangen", weil der Akku alle war. Kein zugeklappter Deckel hat ihn pausiert. Das ist der Gewinn: **Die Arbeit ist entkoppelt vom Gerät in meiner Hand.**
 
 Das war ein bewusst vereinfachtes Beispiel. Die eigentliche Arbeit beginnt nämlich erst bei **vielen parallelen Sessions** mit ebenso vielen parallelen **git-worktrees** (mehrere Arbeitskopien desselben Repos nebeneinander, mehr dazu im [Worktree-Artikel](https://agentic.schule/blog/2026-09-agentic-coding-git-worktrees)). Weil ein *Frontier-Modell* (ein Modell an der aktuellen Leistungsspitze) mit all seinen Unter-Agenten verdammt langsam sein kann (Kommandos wie `/simplify` oder `/code-review` mit ordentlich `/effort` laufen schon mal absurd lange), parallelisiert man fast zwangsläufig. Der ständige Context-Switch und der Mental Load dabei sind nicht zu unterschätzen, aber das hat mit dem Setup nichts zu tun, das hätte man auf einem einzelnen Rechner genauso.
 
 ## Wenn man doch mal lokal arbeiten muss
 
-Nicht jede Session lässt sich remote fahren, einige funktionieren nur lokal. Bei mir vor allem **[wohnfunke.app](https://wohnfunke.app)**: Die kann nicht im Kabelschrank laufen, denn das „magische" USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. (Ich nenne es [das magische Kabel](https://wohnfunke.app/kabel), weil es dieses Kabel so nicht im Handel gibt.) Ohne diese Verbindung komme ich nicht an den **CI-Bus** und kann das Lichtsteuergerät nicht ansprechen.
+Nicht jede Session lässt sich remote fahren, einige funktionieren nur lokal. Bei mir vor allem **[wohnfunke.app](https://wohnfunke.app)**: Die kann nicht im Kabelschrank laufen, denn das „magische" USB-Kabel muss meinen Laptop **physisch mit dem Wohnwagen** verbinden. (Ich nenne es [das magische Kabel](https://wohnfunke.app/kabel), weil es dieses Kabel so nicht im Handel gibt.) Ohne diese Verbindung komme ich nicht an die serielle Schnittstelle des Lichtsteuergeräts.
 
 Und hier ist das Vorgehen richtig nice: Ich beende die Session auf dem mini mit `/exit`, warte, bis das `~/.claude`-Verzeichnis durchgesynct ist, und starte Claude auf dem Laptop mit `--resume` neu, schon bin ich wieder in **derselben Unterhaltung**. Dann sage ich einfach: „Du bist jetzt im Wohnwagen, verbinde dich mit dem Lichtsteuergerät." Claude macht artig weiter und nutzt ab da meine **lokale Peripherie**.
 
@@ -290,9 +290,9 @@ Die Grenzen des Setups:
 - **Sicherheit ist Pflicht, kein Bonus.** Zugriff ausschließlich übers VPN, Key-Auth, FileVault an. Ein always-on Rechner ist nur so vertrauenswürdig wie sein Zugang.
 - **Reboots kosten laufende Prozesse.** tmux rettet das Layout, nicht den Zustand mitten im Lauf. Für lange Läufe plane ich Neustarts entsprechend.
 
-Und wie machen es eigentlich alle anderen? Die meisten lassen ihren Agenten (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) einfach lokal auf dem Laptop laufen. Kein Keller, kein Server. Für die meisten ist das genau richtig. Wer den Schritt in die Cloud geht, gibt dafür die Kontrolle über seine Daten und seine Chats aus der Hand, und genau das will ich nicht.
+Und wie machen es eigentlich alle anderen? Die meisten lassen ihren Agenten (**Claude Code**, [Cursor](https://cursor.com), [GitHub Copilot](https://github.com/features/copilot), [Antigravity](https://antigravity.google)) lokal auf dem Laptop laufen. Kein Keller, kein Server. Für die meisten ist das genau richtig. Wer den Schritt in die Cloud geht, gibt dafür die Kontrolle über seine Daten und seine Chats aus der Hand, und genau das will ich nicht.
 
-Mein Setup zielt auf den Sonderfall: **immer an, von überall, und trotzdem komplett bei mir.** Bei mir sind es allein die **Max-Subscription von Claude** und Hardware, die ich ohnehin hatte. Und weil der Agent jederzeit erreichbar ist, reize ich deren großzügige Limits inzwischen wirklich gnadenlos aus, das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
+Mein Setup zielt auf den Sonderfall: **immer an, von überall, und trotzdem komplett bei mir.** Bei mir sind es allein die **Max-Subscription von Claude** und Hardware, die ich ohnehin hatte. Und weil der Agent jederzeit erreichbar ist, reize ich deren großzügige Limits inzwischen gnadenlos aus, das gelingt kaum so gut, wenn man an einen physischen Ort gebunden ist.
 
 Für mich überwiegt der Gewinn deutlich: Agenten, die weiterarbeiten, während ich lebe und mich bewege, die Chats auf meiner eigenen Platte, eine Maschine, die mir gehört. **Deine Maschine, deine Schätze. Du hast die Kontrolle und nicht die Cloud.**
 

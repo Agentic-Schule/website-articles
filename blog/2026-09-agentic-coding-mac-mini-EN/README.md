@@ -41,7 +41,7 @@ This article shows the idea, the building blocks, and, in how-to boxes, how to b
 
 ## The Problem: Agents Want to Run, I Want to Leave
 
-Agentic coding works differently from a chat window: you set the direction, and the agent reads code, writes files, runs tests, and plans the next steps on its own. Such runs take time: minutes, sometimes hours. And that's exactly where things clash with a laptop that you fold shut, carry into a café, or send to sleep on the train.
+_Agentic coding_ works differently from a chat window: you set the direction, and the agent reads code, writes files, runs tests, and plans the next steps on its own. Such runs take time: minutes, sometimes hours. And that's exactly where things clash with a laptop that you fold shut, carry into a café, or send to sleep on the train.
 
 On the laptop, this is what happens:
 
@@ -60,7 +60,7 @@ At this point the obvious objection is: there are ready-made cloud offerings for
 
 **ChatGPT dots** (OpenAI writes them lowercase). Each dot is, per OpenAI, "frontier intelligence", "Powered by GPT‑6 Astra", and has "their own cloud computer". They're rolling out "today in ChatGPT to Pro and Business Premium users in eligible markets"; Enterprise users get a beta once their workspace admin enables it. So a dot requires a paid plan: "Your first dot is included in your Pro or Business Premium plan at no extra cost." The first one is included, and "in the future, you'll be able to add more dots, and scale the output of each dot", so more agents and more output cost on top. The decisive part for me: the agent and its data sit on OpenAI's machines, not mine.
 
-**Claude Code cloud sessions.** These run in a VM managed by Anthropic with, per the docs, "approximate resource ceilings": "4 vCPUs" and "16 GB of RAM". That's puny. And the docs themselves say what to do then: "The VM may stop tasks that need significantly more memory … For workloads beyond these limits, use Remote Control to run Claude Code on your own hardware." So if you seriously need resources, the docs send you to your own hardware anyway. To be fair: "There is no separate compute charge for the cloud VM", and the cloud sessions share the usage limit with the rest of your Claude usage. Cloning code requires GitHub. And yes, you can pull a cloud session into your own terminal via teleport, but it started off in the cloud first.
+**Claude Code cloud sessions.** These run in a VM managed by Anthropic with, per the docs, "approximate resource ceilings": "4 vCPUs" and "16 GB of RAM". That's puny. And the docs themselves say what to do then: "The VM may stop tasks that need significantly more memory … For workloads beyond these limits, use Remote Control to run Claude Code on your own hardware." So if you seriously need resources, the docs send you to your own hardware anyway. To be fair: "There is no separate compute charge for the cloud VM", and the cloud sessions share the usage limit with the rest of your Claude usage. Cloning code requires GitHub. And yes, you can pull a cloud session into your own terminal via teleport (Anthropic's feature for moving a running cloud session to a local terminal), but it started off in the cloud first.
 
 Commercially you get the same as a rented dev environment ([GitHub Codespaces](https://github.com/features/codespaces), [Coder](https://coder.com), [Google Cloud Workstations](https://cloud.google.com/workstations)) or a hosted agent service ([Devin](https://devin.ai), [Google Jules](https://jules.google)), billed continuously per compute-hour or seat.
 
@@ -90,9 +90,9 @@ Two machines, one common denominator:
 | Role | main machine, the agents run here | rocket, docks from anywhere |
 | User | same account, same home | same account, same home |
 
-The crucial trick: **Both machines use the same username and therefore the same home directory `/Users/<name>`.** All paths, all repos, all keys and, as we'll see shortly, all agent sessions live under identical paths on both machines. That makes the transition seamless: what applies on the mini applies one-to-one on the MacBook Pro.
+The crucial trick: **Both machines use the same username and therefore the same home directory `/Users/<name>`.** All paths, all repos, all keys and, as we'll see shortly, all agent sessions live under identical paths on both machines. That makes the transition smooth: what applies on the mini applies one-to-one on the MacBook Pro.
 
-Strictly speaking, a third role joins in: **devices that only work as a terminal**, no dev environment of their own, no copy of the data, just a window into the ground station. That's the phone (via Termux) on the one hand, and on the other a small MacBook that I only bring along to mosh in; I simply call it **"Mac Terminal"**. So the only full mirror is the big MacBook Pro: it can do both, work standalone *or* just serve as a window. Everything else is a pure terminal.
+Strictly speaking, a third role joins in: **devices that only work as a terminal**, no dev environment of their own, no copy of the data, just a window into the ground station. That's the phone (via Termux, an Android terminal app) on the one hand, and on the other a small MacBook that I only bring along as a terminal; I simply call it **"Mac Terminal"**. So the only full mirror is the big MacBook Pro: it can do both, work standalone *or* just serve as a window. Everything else is a pure terminal.
 
 The mini sits without a monitor and without a keyboard among the rest of my home tech, next to the NAS, the router, the fat switch, and all the cabling you tend to have hanging on your network. It's reachable only over the network. That sounds like a limitation, but it's half the trick: what runs *headless* (without a screen and without visible windows) also runs when nobody is logged in.
 
@@ -128,11 +128,11 @@ Important to understand: tmux saves the **connection**, not the power. A reboot 
 
 For access I rely entirely on **[mosh](https://mosh.org)** (Mobile Shell), at home as on the road, always the same command. That way I never have to think about or switch between `ssh` and `mosh`.
 
-And mosh is genuinely great. It's the better SSH for everything that isn't on a fixed cable: if the network changes or briefly drops, the connection lives on **roaming-proof**, no frozen terminal, no "broken pipe". Typed characters appear instantly via local echo, even with lousy latency on the train. Network gone, network back, mosh just keeps going without reconnecting. Underneath it's a completely normal SSH login with key auth, no password.
+And mosh is great. It's the better SSH for everything that isn't on a fixed cable: if the network changes or briefly drops, the connection lives on **roaming-proof**, no frozen terminal, no "broken pipe". Typed characters appear instantly via local echo, even with lousy latency on the train. Network gone, network back, mosh just keeps going without reconnecting. Underneath it's a completely normal SSH login with key auth, no password.
 
 mosh does have one catch: it needs open UDP ports (between 60000 and 61000) and only transfers the visible screen, so the scrollback stays patchy. In my setup, tmux keeps the history anyway.
 
-And how does the phone even reach the box back home from the road? I started with the Fritzbox's **[WireGuard](https://www.wireguard.com)** VPN; these days everything runs over **[Tailscale](https://tailscale.com)** (a mesh VPN based on WireGuard). The reason: Tailscale also copes wonderfully with **IPv6** and constantly changing connections, you reach the ground station reliably, no matter which network you're on. You really always get home.
+And how does the phone even reach the box back home from the road? I started with the Fritzbox's **[WireGuard](https://www.wireguard.com)** VPN; these days everything runs over **[Tailscale](https://tailscale.com)** (a mesh VPN based on WireGuard). The reason: Tailscale also copes wonderfully with **IPv6** and constantly changing connections, you reach the ground station reliably, no matter which network you're on. You always get home.
 
 And the pièce de résistance: **From the phone.** On Android the terminal app *[Termux](https://termux.dev)* runs, inside it mosh, inside that tmux, inside that the agent. That way I can reach the raw session from anywhere if need be.
 
@@ -155,12 +155,12 @@ I rarely use that direct terminal route, though. Most of the time I work more co
 
 ## Everything Duplicated: Always in Sync
 
-Up to here I could *access* the mini from anywhere. But the real kicker is that my big MacBook Pro is not a mere terminal, but a **true mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror feels like a permanent, second-by-second backup. Damn, that's good, with one important caveat I'll get to below.
+Up to here I could *access* the mini from anywhere. But the clever part is that my big MacBook Pro is a **full mirror**: it has the same files and can take over the mini's work at any time, offline, too. Why does that matter to me? In a full power outage I don't want to be caught with my pants down, the big Mac and the mini are always in sync. As a nice side effect, this mirror feels like a permanent, second-by-second backup. Damn, that's good, with one important caveat I'll get to below.
 
 This is handled by **[Syncthing](https://syncthing.net)**, a peer-to-peer sync with no cloud in between. It mirrors bidirectionally:
 
 - `~/Work`: all projects and repos
-- `~/.claude`: the agent sessions and the `memory/` directory from the [Your Chats Are Your Capital](#your-chats-are-your-capital) section. Synced along, I can continue a session from the mini over on the MacBook: context, history, everything there.
+- `~/.claude`: the agent sessions and the `memory/` directory from the [Your Chats Are Your Capital](#your-chats-are-your-capital) section. Only the sync makes them available on both machines.
 - `~/Shots`: screenshots (handy, more on that in a moment)
 
 What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `build`, `target`, and caches are in `.stignore` and get rebuilt per machine (`npm ci`, `cargo build`). Copying compiled binaries across machines breaks at library linking sooner or later anyway, better to rebuild cleanly.
@@ -177,11 +177,11 @@ What gets synced is **source code, not artifacts.** `node_modules`, `dist`, `bui
 > ```
 > Rule of thumb: whatever an `npm ci` or `cargo build` restores in seconds doesn't belong in the sync.
 
-**The screenshot trick as a bonus:** because both Macs have the same home, a screenshot lives under the same path on *both* machines. I set the macOS screenshot folder to `~/Shots` (`defaults write com.apple.screencapture location ~/Shots`), take a screenshot on the MacBook, and drag it into an agent session running **remotely** on the mini. The path exists there too thanks to sync, the agent reads the image even though it was created "on the other machine".
+**The screenshot trick as a bonus:** because both Macs have the same home, a screenshot lives under the same path on *both* machines. I set the macOS screenshot folder to `~/Shots` (`defaults write com.apple.screencapture location ~/Shots && killall SystemUIServer`), take a screenshot on the MacBook, and drag it into an agent session running **remotely** on the mini. The path exists there too thanks to sync, the agent reads the image even though it was created "on the other machine".
 
 > **⚠️ The one discipline:** "wait for green" before switching machines. If you switch machines while Syncthing is still transferring, you risk conflict files. Just check that the sync is `idle`, then the transition is clean.
 
-> **⚠️ And the promised caveat: a mirror is not a backup.** A bidirectional sync also replicates deletions and broken files faithfully. The newer version wins, an empty one if need be. So what once really saved me was not the mirror but Syncthing's **file versioning** (`.stversions`): before every overwrite it stores the old state with a timestamp. And because that history is **local per device** and is not synced along, in a pinch one machine still had what the other had already lost. That still does not replace a real off-device backup, but it has brought back a chat history I had already given up on.
+> **⚠️ And the promised caveat: a mirror is not a backup.** A bidirectional sync also replicates deletions and broken files faithfully. The newer version wins, an empty one if need be. The safeguard against that is Syncthing's **file versioning** (`.stversions`): before every overwrite it stores the old state with a timestamp. And because that history is **local per device** and is not synced along, in a pinch one machine still has what the other has already lost. That does not replace a real off-device backup, but it brings back a chat history you'd otherwise give up on.
 
 ## Running Services Headless
 
@@ -220,7 +220,7 @@ My solution is an **[nginx](https://nginx.org) reverse proxy** on the mini that 
 >     proxy_pass http://127.0.0.1:$server_port$request_uri;
 >     proxy_set_header Host localhost:$server_port;   # <- crucial: 'localhost', not the IP!
 >     proxy_http_version 1.1;
->     proxy_set_header Upgrade $http_upgrade;         # HMR WebSockets
+>     proxy_set_header Upgrade $http_upgrade;         # Hot Module Replacement (HMR)
 >     proxy_set_header Connection upgrade;
 >     # Fallback for dev servers that only listen on IPv6 (::1) (Node 24 / Angular 22):
 >     proxy_intercept_errors on;
@@ -255,13 +255,13 @@ What does it feel like day to day? Roughly like this:
 
 **Evening on the couch.** A quick glance from the phone to see whether CI has passed. It has. Merge.
 
-Not once did the agent have to "start over" because the battery ran out. No folded-shut lid paused it. That's the real win: **the work is decoupled from the device in my hand.**
+Not once did the agent have to "start over" because the battery ran out. No folded-shut lid paused it. That's the payoff: **the work is decoupled from the device in my hand.**
 
 That was a deliberately simplified example. The real work only begins with **many parallel sessions** and just as many parallel **git worktrees** (several working copies of the same repo side by side, more in the [worktree article](https://agentic.schule/en/blog/2026-09-agentic-coding-git-worktrees)). Because a *frontier model* (a model at the current cutting edge) with all its sub-agents can be damn slow (commands like `/simplify` or `/code-review` with a good dose of `/effort` can run absurdly long), you parallelize almost inevitably. The constant context switching and the mental load involved shouldn't be underestimated, but that has nothing to do with the setup; you'd have the same on a single machine.
 
 ## When You Do Have to Work Locally
 
-Not every session can be run remotely, some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a "magical" USB cable has to connect my laptop **physically to the caravan**. (I call it [the magic cable](https://wohnfunke.app/kabel) because you can't buy a cable like this off the shelf.) Without that connection I can't reach the **CI-Bus** and can't talk to the light control unit.
+Not every session can be run remotely, some only work locally. For me that's mainly **[wohnfunke.app](https://wohnfunke.app)**: it can't run in the cable cabinet, because a "magical" USB cable has to connect my laptop **physically to the caravan**. (I call it [the magic cable](https://wohnfunke.app/kabel) because you can't buy a cable like this off the shelf.) Without that connection I can't reach the serial interface of the light control unit.
 
 And here the procedure is really nice: I end the session on the mini with `/exit`, wait until the `~/.claude` directory has finished syncing, and restart Claude on the laptop with `--resume`, and I'm right back in **the same conversation**. Then I simply say: "You're in the caravan now, connect to the light controller." Claude carries on obediently and from there uses my **local peripherals**.
 
