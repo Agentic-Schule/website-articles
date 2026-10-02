@@ -75,6 +75,11 @@ Die Frage, die mich am meisten beschäftigt: Wo liegen die Chats? Das Wissen, da
 
 Claude Code legt seine Gesprächsprotokolle lokal unter `~/.claude/projects/` ab, eine `.jsonl`-Datei pro Session. Im selben Projektordner liegt außerdem der Unterordner `memory/`, in dem sich der Agent dauerhaft Notizen macht. Genau dieser Fundus soll mir erhalten bleiben, auf meiner eigenen, verschlüsselten Platte.
 
+<figure style="margin: 1.5em auto; max-width: 600px;">
+  <img src="chats-kapital.jpg" alt="Terminal-Ausgabe von ls ~/.claude/projects/ in einem Projektverzeichnis: mehrere .jsonl-Dateien (eine pro Session) und ein Ordner memory/. Darunter drei Haken: Gesynct, Gesichert, Auf deiner Platte." style="width: 100%; display: block; border-radius: 8px;">
+  <figcaption style="text-align: center; color: #8f84a6; font-size: 0.9em; margin-top: 0.6em;">Ein Blick in einen Projektordner: pro Session eine <code>.jsonl</code>, dazu <code>memory/</code>. Gesynct, gesichert, auf meiner Platte.</figcaption>
+</figure>
+
 > **⚠️ Unbedingt anpassen: `cleanupPeriodDays`.** Claude Code räumt die Gesprächsprotokolle unter `~/.claude/projects/` standardmäßig nach 30 Tagen weg. Wer sie als Nachschlage-Fundus behalten will, setzt in `~/.claude/settings.json` den Wert `cleanupPeriodDays` deutlich höher, bei mir auf 365. Sonst löscht ein aufgeräumter Rechner die Historie.
 
 Auf der Bodenstation liegen diese Dateien auf meiner Platte und werden auf mein MacBook gespiegelt (wie genau, zeige ich im Abschnitt [Alles doppelt](#alles-doppelt-immer-synchron)). Damit kann ich eine Session, die ich auf dem mini begonnen habe, auf dem MacBook fortsetzen: Kontext, Verlauf, alles da.
@@ -82,6 +87,11 @@ Auf der Bodenstation liegen diese Dateien auf meiner Platte und werden auf mein 
 Für mich ist deshalb jedes reine Cloud-Angebot ein Showstopper. Diese Haltung zieht sich durch mein ganzes Setup; auch beim [Auto-Account-Switch](https://agentic.schule/blog/2026-09-agentic-coding-auto-account-switch) ging es mir genau darum, die Kontrolle über die eigenen Daten zu behalten.
 
 ## Die Architektur: Bodenstation und mobiler Spiegel
+
+<figure style="margin: 1.5em auto; max-width: 760px;">
+  <img src="bodenstation-diagramm.jpg" alt="Überschrift „Meine Bodenstation: ein Mac mini.“ Darunter ein Mac mini, von dem drei gepunktete Linien zu drei Symbolen führen: MacBook, Browser und Handy." style="width: 100%; display: block; border-radius: 8px;">
+  <figcaption style="text-align: center; color: #8f84a6; font-size: 0.9em; margin-top: 0.6em;">Die Bodenstation steht im Netzwerk, alles andere dockt an: MacBook, Browser, Handy.</figcaption>
+</figure>
 
 Zwei Maschinen, ein gemeinsamer Nenner:
 
