@@ -1,5 +1,5 @@
 ---
-title: 'WebMCP in Angular: Tools from Providers and Signal Forms'
+title: 'WebMCP: Your Existing Angular App Becomes AI-Ready'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
@@ -17,7 +17,9 @@ language: en
 header: header.jpg
 ---
 
-**Angular ships experimental support for WebMCP (Web Model Context Protocol) from version 22 on, and it fits into the existing architecture: tools are providers, their lifetime hangs on the injector, and a _Signal Form_ (Angular's signal-based form model) becomes a finished tool with a single option. In this second part we register such tools, control their lifetime through the injector, and let Angular derive the JSON schema automatically from a form. Everything is marked `experimental` and can change.**
+"Just add some AI to it." The classic answer is your own chatbot, with your own backend and your own model. And you pay for every _token_ your visitors burn (the unit AI models bill in), even when they use your chatbot for small talk. But it also works the other way around!
+
+**With WebMCP (Web Model Context Protocol), the visitor brings their own AI assistant, and your Angular app only supplies the tools. The best part: Angular 22 already ships experimental WebMCP support, right down to _Signal Forms_ (Angular's signal-based form model). In this second part we register such tools, control their lifetime through the injector, and let Angular derive the JSON schema automatically from a form. Everything is marked `experimental` and can change.**
 
 This is part 2 of two. [Part 1](https://agentic.schule/en/blog/2026-10-webmcp) explains in general what WebMCP is, how it relates to the MCP from Claude Code, and who supports it. This part is the Angular practice. It stands on its own, though I assume the concept from part 1 briefly.
 
@@ -25,7 +27,7 @@ This is part 2 of two. [Part 1](https://agentic.schule/en/blog/2026-10-webmcp) e
 
 [[toc]]
 
-## WebMCP in Angular
+## WebMCP with Angular
 
 A reminder from part 1: a WebMCP tool has a name, a description, and a JSON schema for its parameters. An agent reads this contract and calls the tool with structured arguments. The agent is brought along by the visitor; you only supply the tools and run no model of your own. Under the hood, Angular uses the imperative browser API `document.modelContext.registerTool()`. The nice thing is: you notice none of that in everyday work. You work with providers and injection context, the way you know it.
 
@@ -36,9 +38,9 @@ Angular offers two ways to register a tool:
 
 Angular takes care of unregistering itself: when the associated injector is destroyed, the tool disappears too. One rule always applies: tool names must be unique. A duplicate registration causes a runtime error.
 
-> **⚠️ Caution:** WebMCP in Angular is explicitly marked as experimental. The APIs can change even outside of major releases. For prototypes and internal tooling that is fine, for production systems it is not yet.
+> **⚠️ Caution:** WebMCP with Angular is explicitly marked as experimental. The APIs can change even outside of major releases. For prototypes and internal tooling that is fine, for production systems it is not yet.
 
-## A tool as a provider
+## Define a tool as a provider
 
 With `provideExperimentalWebMcpTools()` you define tools as providers. The function takes an array of tool definitions and returns a provider that you attach to any injector. The lifetime of a tool thus matches the lifetime of its injector.
 
@@ -130,7 +132,7 @@ export const routes: Routes = [
 ];
 ```
 
-There is a trap here: a route's injectors are not destroyed by default when you navigate away. So the tool would stay visible to the agent on other pages too. To have it unregistered cleanly when the route is left, you configure the router with `withAutoCleanupInjectors()`:
+There is a trap here: a route's injectors are not destroyed by default when you navigate away. So the tool would stay visible to the agent on other pages too. To have it unregistered when the route is left, you configure the router with `withAutoCleanupInjectors()`:
 
 ```ts
 import { provideRouter, withAutoCleanupInjectors } from '@angular/router';
@@ -141,6 +143,8 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 ```
+
+This option sits on `provideRouter` and therefore takes effect app-wide: it cleans up the injectors of all routes, not only the one shown.
 
 ### Per component
 
@@ -244,7 +248,8 @@ export class IntroCallForm {
         name: 'introCall',
         description:
           'Books an intro call with the agentic.schule team for an AI team training or consulting. ' +
-          'Provide the visitor\'s name and at least one way to reach them: an email address (mail) or a phone number (phone).',
+          'Provide the visitor\'s name and at least one way to reach them: an email address (mail) or a phone number (phone). ' +
+          'Use note for an optional free-text message.',
       },
       submission: {
         action: async (introForm) => {
@@ -264,11 +269,13 @@ From this single option a complete tool emerges:
 - When the agent calls the tool, Angular validates the input and returns errors. The agent sees its error, corrects itself, and tries again.
 - On successful validation the `submission.action` runs automatically, here the mail dispatch.
 
-The agent gets the same validation errors as a human and can correct itself. You write not a single extra line for it.
+The agent gets the same validation errors as a human and can correct itself. You write not a single extra line for it. Unlike the provider tools above, where you validate the input yourself, the validation here comes from the form validators.
+
+> **⚠️ Caution:** On successful validation this tool sends a mail automatically, without a human clicking "submit". Any assistant a visitor brings along can call it. For mutating actions like sending mail, purchasing, or deleting, you therefore need server-side abuse protection. Classic bot defense like Turnstile does not help here, because WebMCP explicitly invites bots.
 
 ### What to watch out for in the form model
 
-So that Angular can derive the schema cleanly, the same requirements apply as for Signal Forms anyway:
+So that Angular can derive the schema reliably, the same requirements apply as for Signal Forms anyway:
 
 - Fields must **not** start with `null` or `undefined`. Angular cannot derive a type from either. Use concrete initial values like `''`, `0`, or `false`.
 - Arrays need **at least one entry**, otherwise the element type cannot be recognized. A field `topics: ['AI']` can be derived, `topics: []` cannot.

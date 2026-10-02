@@ -1,5 +1,5 @@
 ---
-title: 'WebMCP: Deine Website reicht dem Agenten die Werkzeuge'
+title: 'WebMCP: Deine bestehende Web-App wird AI-ready'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -18,9 +18,9 @@ language: de
 header: header.jpg
 ---
 
-Es gibt eine neue Technologie, mit der du bestehende Web-Anwendungen mit wenig Aufwand AI-ready machst. Sie heißt WebMCP, und wir probieren sie in diesem Artikel gemeinsam aus. Keine Sorge: Du brauchst dafür kein neues Backend und kein eigenes KI-Modell.
+„Mach da mal was mit KI rein." Der klassische Weg ist ein eigener Chatbot mit eigenem Backend und eigenem Modell. Und du zahlst jeden _Token_ deiner Besucher (die Abrechnungseinheit, in der KI-Modelle rechnen), auch wenn sie den Chatbot für Smalltalk nutzen. Doch es geht auch vollkommen andersherum!
 
-**Der Trick ist eine Umkehr. Ein klassischer KI-Chatbot gehört dem Betreiber: eigenes Backend, eigenes Modell, und für jeden Token zahlt der Betreiber. WebMCP dreht das um. Der Besucher bringt seinen eigenen Assistenten mit, zum Beispiel ChatGPT, und du registrierst nur deine vorhandene Client-Logik als Tools. So wird praktisch jede App AI-ready. Das ist die _Low Hanging Fruit_ für AI in bestehenden Anwendungen, und genau das begeistert mich daran.**
+**Mit WebMCP bringt der Besucher seinen eigenen AI-Assistenten mit. Deine Web-App bietet ihm ihre Funktionen als _Tools_ an, und der Agent ruft sie direkt auf, statt sich durch das HTML zu tasten. Du brauchst dafür kein Backend und kein eigenes Modell. Und welche KI die Eingaben verarbeitet, entscheidet der Anwender selbst. So machst du eine bestehende Web-App mit wenig Aufwand _AI-ready_, also fit dafür, dass ein KI-Agent sie bedient.**
 
 In diesem ersten Teil klären wir, was WebMCP ist, wie es sich zum MCP aus Claude Code verhält, was heute schon real funktioniert und wo die Haken liegen. Das hier ist Teil 1 von zwei, gedacht für jeden Web-Entwickler. [Teil 2](https://agentic.schule/blog/2026-10-webmcp-angular) zeigt dann die konkrete Umsetzung in Angular. Jeder Teil ist für sich lesbar.
 
@@ -58,14 +58,14 @@ WebMCP ist die client-seitige Antwort darauf. Die Tools leben im Skript der lauf
 
 ### Wer bringt den Assistenten mit?
 
-Hier steckt der Perspektivwechsel, an dem WebMCP klick macht. Ein klassischer Chatbot gehört dem Betreiber: Er baut das Widget, betreibt im Hintergrund ein Modell und zahlt für jeden Token, den ein Besucher verbraucht. Bei WebMCP läuft es andersherum. Der Besucher bringt seinen eigenen Assistenten mit, zum Beispiel ChatGPT im Desktop-Browser, und dieser Assistent macht die Inferenz auf Kosten des Besuchers. Die Seite steuert nur die Tools bei. Sie braucht kein eigenes Modell, keinen Chat-Server, keine API-Rechnung. Sie stellt Fähigkeiten bereit, nicht Rechenzeit.
+Hier steckt der Perspektivwechsel, an dem WebMCP klick macht. Ein klassischer Chatbot gehört dem Betreiber: Er baut das Widget, betreibt im Hintergrund ein Modell und zahlt für jeden Token, den ein Besucher verbraucht. Bei WebMCP läuft es andersherum. Der Besucher bringt seinen eigenen Assistenten mit, zum Beispiel ChatGPT im eingebauten Browser der Desktop-App, und dieser Assistent macht die Inferenz auf Kosten des Besuchers. Die Seite steuert nur die Tools bei. Sie braucht kein eigenes Modell, keinen Chat-Server, keine API-Rechnung. Sie stellt nur die Fähigkeiten bereit; die Rechenzeit trägt der Besucher.
 
 |  | Klassischer Chatbot | WebMCP |
 | --- | --- | --- |
 | Modell betreibt | der Website-Betreiber | der Besucher (sein Assistent) |
 | Tokens zahlt | der Betreiber | der Besucher |
 | Datenschutz | der Betreiber entscheidet, welche KI die Eingaben verarbeitet | der Besucher entscheidet, welche KI seine Eingaben verarbeitet |
-| Backend nötig | ja: Server plus Modell | nein: nur Tool-Deklaration im Frontend |
+| Backend nötig | ja: Server plus Modell | kein KI-Backend; die Tool-Aktion läuft gegen deinen vorhandenen App-Code |
 | Kontext des Assistenten | nur, was der Betreiber ihm gibt | der ganze Kontext des Besuchers |
 | Andere Tools | keine | die des Besuchers, frei kombinierbar |
 
@@ -76,11 +76,6 @@ Für den Betreiber löst das nebenbei ein leidiges Problem. Ein klassischer Chat
 Und der Technik-Stack schrumpft. Kein Chat-Backend, kein gehostetes Modell, keine Missbrauchs-Abwehr drumherum. Es bleiben die Tool-Deklarationen im Frontend, mehr braucht es nicht.
 
 So verschiebt WebMCP, wer die KI bezahlt und wer sie steuert: weg vom Betreiber, hin zum Besucher und seinem Agenten. Der Betreiber gewinnt dabei einen Assistenten, der oft mehr kann als alles, was er selbst je in ein Chat-Widget gebaut hätte.
-
-Kurz zur Einordnung:
-
-- **MCP-Server:** serverseitig, für Aktionen hinter der Anwendung. Du betreibst einen Server und replizierst Auth und State.
-- **WebMCP:** client-seitig, für Aktionen in der laufenden Seite. Dein vorhandener Frontend-Code wird zum Tool, die UI bleibt synchron.
 
 ## Tools registrieren: zwei Wege
 
@@ -114,7 +109,7 @@ WebMCP braucht zwei Seiten: eine Web-App, die Tools deklariert, und einen Assist
 
 **Assistenten, die Tools aufrufen können:**
 
-- **ChatGPT Desktop:** der konkreteste Weg für echte Besucher. Im eingebauten Browser der Desktop-App entdecken und nutzen die beiden Assistenten ChatGPT Work (die Arbeitsplatz-Variante) und Codex (OpenAIs Coding-Agent) die Tools der offenen Seite. OpenAI nennt das „Site tools". Dafür braucht es ein Sol-Modell (GPT-5.6 Sol oder GPT-6 Sol); GPT-5.6 Luna hat WebMCP derzeit deaktiviert. Die Verfügbarkeit hängt zusätzlich am Rollout und in Firmen-Workspaces an einer Freigabe, und jeder Tool-Aufruf durchläuft vorher einen Sicherheits-Check.
+- **ChatGPT Desktop:** der konkreteste Weg für echte Besucher. Im eingebauten Browser der Desktop-App entdecken und nutzen die beiden Assistenten ChatGPT Work (die Arbeitsplatz-Variante) und Codex (OpenAIs Coding-Agent) die Tools der offenen Seite. OpenAI nennt das „Site tools". Dafür braucht es ein von OpenAI unterstütztes Modell (aktuell aus der Sol-Reihe; die Luna-Variante hat WebMCP derzeit deaktiviert); welche Modelle das sind, steht in [OpenAIs Site-tools-Doku](https://learn.chatgpt.com/docs/webmcp). Die Verfügbarkeit hängt zusätzlich am Rollout und in Firmen-Workspaces an einer Freigabe, und jeder Tool-Aufruf durchläuft vorher einen Sicherheits-Check.
 - **Brave:** experimentelle Unterstützung im hauseigenen KI-Chat _Leo_. Der Beleg ist ein offenes Issue, kein fertiges Feature.
 - **Meta Ray-Ban Display:** angekündigt („coming soon"), standardmäßig aus, pro Gerät zu aktivieren.
 
@@ -159,13 +154,15 @@ Komfortabler geht es mit der [Model Context Tool Inspector Extension](https://ch
 
 ## Wo hakt es noch?
 
-Zu jedem gelobten Werkzeug gehören die Haken. Bei WebMCP sind es drei.
+Zu jedem gelobten Werkzeug gehören die Haken. Bei WebMCP sind es vier.
 
-**Erstens: Es ist experimentell, und zwar wörtlich.** Die APIs können sich auch außerhalb großer Versionssprünge ändern. Der Status der Spezifikation ist ein _Draft Community Group Report_, also der frühe Entwurf einer Arbeitsgruppe, nicht der offizielle W3C-Standards-Track. Wer heute baut, baut auf beweglichem Grund.
+**Erstens: Es ist experimentell, und zwar wörtlich.** Die APIs können sich auch außerhalb großer Versionssprünge ändern. Der Status der Spezifikation ist ein _Draft Community Group Report_, also der frühe Entwurf einer Arbeitsgruppe, nicht der offizielle W3C-Standards-Track. Wer heute baut, muss mit Änderungen rechnen.
 
-**Zweitens: Es ist noch kein plattformübergreifendes Feature.** Die produktive Nutzung hängt an den Chromium-Browsern. Solange Firefox und Safari nur eine Position abstimmen, erreichst du damit nicht jeden Nutzer.
+**Zweitens: Es ist noch kein plattformübergreifendes Feature.** Die produktive Nutzung hängt an den Chromium-Browsern. Solange Firefox und Safari nur eine Position abstimmen, erreichst du damit nicht jeden Nutzer. Und die realen Wege sind heute allesamt Desktop: ChatGPT Desktop, das Chrome-Flag, die Origin Trials und die Inspector-Extension. Einen mobilen Zugang gibt es noch nicht.
 
-**Drittens: Löst WebMCP wirklich das Prompt-Injection-Problem?** Teilweise. Der Agent muss nicht mehr den freien Text der Seite durchwühlen, um sie zu bedienen, und dieser Text war ein klassisches Einfallstor. Verschwunden ist das Risiko aber nicht, es verlagert sich nur. Denn die Tool-Beschreibungen und die Rückgaben eines Tools sind ebenfalls Text, und diesen Text kontrolliert die Seite. Auf einer vertrauenswürdigen Seite ist das kein Problem. Eine bösartige Seite kann dem Agenten aber Tools mit irreführenden Beschreibungen unterschieben. Den Schutz trägt deshalb der Nutzer, der die Kontrolle über die Tool-Aufrufe behält; die Technik allein reicht nicht. Die Arbeitsgruppe führt diese Fragen in einem eigenen [Security & Privacy Questionnaire](https://github.com/webmachinelearning/webmcp/blob/main/security-privacy-questionnaire.md).
+**Drittens: Löst WebMCP wirklich das Prompt-Injection-Problem?** Teilweise. Der Agent muss nicht mehr den freien Text der Seite durchwühlen, um sie zu bedienen, und dieser Text war ein klassisches Einfallstor. Verschwunden ist das Risiko aber nicht, es verlagert sich nur. Denn die Tool-Beschreibungen und die Rückgaben eines Tools sind ebenfalls Text, und diesen Text kontrolliert die Seite. Auf einer vertrauenswürdigen Seite ist das kein Problem. Eine bösartige Seite kann dem Agenten aber Tools mit irreführenden Beschreibungen unterschieben. Dieselbe Verkettung, die den Reiz ausmacht, ist dabei die Kehrseite: Über den mitgebrachten Assistenten kann eine bösartige Seite an dessen Kalender oder Postfach gelangen. Den Schutz trägt deshalb der Nutzer, der die Kontrolle über die Tool-Aufrufe behält; die Technik allein reicht nicht. Die Arbeitsgruppe führt diese Fragen in einem eigenen [Security & Privacy Questionnaire](https://github.com/webmachinelearning/webmcp/blob/main/security-privacy-questionnaire.md).
+
+**Viertens: Du gibst Kontrolle ab.** Der Datenschutz-Vorteil aus der Tabelle hat für dich als Betreiber eine Kehrseite: Du bestimmst nicht mehr, welches Modell die Eingaben deiner Nutzer verarbeitet. Und jedes registrierte Tool steht jedem Assistenten offen, den ein Besucher mitbringt, auch mutierende wie ein Mailversand. Klassische Formulare schützt du mit Turnstile und Co. gegen Bots. WebMCP lädt Bots aber ausdrücklich zum Tool-Aufruf ein, und einen Spam-Schutz, der gute Bots durchlässt und böse aufhält, gibt es meiner Kenntnis nach noch nicht.
 
 ## Fazit
 
