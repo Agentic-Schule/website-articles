@@ -74,6 +74,11 @@ The question that occupies me most: where do the chats live? The knowledge I've 
 
 Claude Code stores its conversation logs locally under `~/.claude/projects/`, one `.jsonl` file per session. In the same project folder there's also the subfolder `memory/`, where the agent keeps persistent notes. Exactly this trove is what I want to preserve, on my own, encrypted disk.
 
+<figure style="margin: 1.5em auto; max-width: 600px;">
+  <img src="chats-kapital.jpg" alt="Terminal output of ls ~/.claude/projects/ in a project directory: several .jsonl files (one per session) and a memory/ folder. Below it three checkmarks: Synced, Backed up, On your disk." style="width: 100%; display: block; border-radius: 8px;">
+  <figcaption style="text-align: center; color: #8f84a6; font-size: 0.9em; margin-top: 0.6em;">A look inside a project folder: one <code>.jsonl</code> per session, plus <code>memory/</code>. Synced, backed up, on my disk.</figcaption>
+</figure>
+
 > **⚠️ Definitely adjust `cleanupPeriodDays`.** By default Claude Code clears the conversation logs under `~/.claude/projects/` after 30 days. If you want to keep them as a reference, set `cleanupPeriodDays` in `~/.claude/settings.json` much higher, in my case to 365. Otherwise a tidied-up machine deletes the history.
 
 On the ground station these files live on my disk and get mirrored to my MacBook (how exactly, I show in the [Everything Duplicated](#everything-duplicated-always-in-sync) section). That lets me continue a session I started on the mini over on the MacBook: context, history, everything there.
@@ -81,6 +86,11 @@ On the ground station these files live on my disk and get mirrored to my MacBook
 That's why, for me, any pure cloud offering is a showstopper. This stance runs through my whole setup; with the [auto account switch](https://agentic.schule/en/blog/2026-09-agentic-coding-auto-account-switch), too, it was exactly about keeping control over my own data.
 
 ## The Architecture: Ground Station and Mobile Mirror
+
+<figure style="margin: 1.5em auto; max-width: 760px;">
+  <img src="bodenstation-diagramm.jpg" alt="Heading „My ground station: a Mac mini.“ Below it a Mac mini with three dotted lines running to three icons: MacBook, Browser and Phone." style="width: 100%; display: block; border-radius: 8px;">
+  <figcaption style="text-align: center; color: #8f84a6; font-size: 0.9em; margin-top: 0.6em;">The ground station sits on the network, everything else docks in: MacBook, browser, phone.</figcaption>
+</figure>
 
 Two machines, one common denominator:
 
