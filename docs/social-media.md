@@ -111,6 +111,18 @@ Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer 
 
 Jedes Video läuft in Descript in zwei Schritten: erst der Schnitt (nur wörtlich genannte Stellen löschen), dann Hochformat, Bilder, Untertitel und Audio. Die Sitzung schreibt für beide Schritte die Anweisungen an Underlord. Vorlagen und Untertitel-Stil (Manrope, 70 pt, einzeilig) stehen in [`docs/descript-instructions.md`](descript-instructions.md).
 
+### Bilder für die obere Hälfte
+
+Für jede Szene baut die Sitzung ein eigenes Bild im agentic.schule-Look statt einer Bildschirmaufnahme: dunkler Lila-Hintergrund, Überschrift weiß mit Verlauf von `#a06bff` nach `#e90464`, Code in SF Mono, kein Logo.
+
+- **Format:** 1080×960, gerendert in doppelter Auflösung mit `node tools/render-video-image.mjs <quelle.html> <ziel.jpg>`.
+- **Oben 200 px frei.** In der Feed- und Profilansicht von Instagram liegen Name und „Original-Audio" über den obersten rund 170 px des Videos, im Vollbild die Leiste „Reels". In diesem Streifen darf kein Text stehen; Farben und Verläufe sind erlaubt. Die Vorlagen erreichen das mit einem Wrapper `.stage { transform: translateY(200px) scale(.8); transform-origin: 50% 0 }` um den gesamten Inhalt.
+- **Unten Luft lassen.** Der Inhalt endet spätestens bei etwa 900 px, darunter beginnen an der Trennlinie die Untertitel.
+- **Der Hook als eigenes Bild:** nur Text, groß und plakativ, etwa „Deine AI-Agenten gehören NICHT in die Cloud." Er läuft, solange der Hook gesprochen wird.
+- **Kein Emoji, keine Firmenlogos.** Icons als schlichte Linien-SVG.
+- **Material echt halten:** Befehle, Pfade und Dateinamen so, wie sie wirklich aussehen (etwa `ls ~/.claude/projects/-projektverzeichnis/` mit `.jsonl`-Dateien und `memory/`). Persönliche Pfade durch einen sprechenden Platzhalter ersetzen, Kundenprojekte nie zeigen.
+- **Ablage:** Quellen unter `docs/video-bilder/tag<N>/` mit gemeinsamem `docs/video-bilder/base.css`, fertige Bilder als `~/Shots/tag<N>-video-<nr>-<name>.jpg`. Jedes Bild vor der Abgabe ansehen: kein ungewollter Zeilenumbruch, nichts überlappt.
+
 ### Format
 
 - **Vertikal 9:16, bildfüllend, 1080×1920.** Keine Ränder, keine Balken, kein Rahmen. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.

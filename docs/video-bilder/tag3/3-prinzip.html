@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../base.css"><style>
+html,body{width:1080px;height:960px}
+h1{position:absolute;left:70px;right:70px;top:120px;font-size:76px}
+.mono{font-family:"SF Mono",Menlo,monospace;font-variant-ligatures:none}
+.card{background:#211830;border:1.5px solid rgba(255,255,255,.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.term{position:absolute;left:60px;right:60px;overflow:hidden}
+.bar{height:56px;background:#2a1f3b;display:flex;align-items:center;gap:12px;padding:0 24px}.bar i{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.18);display:block}
+.code{padding:26px 34px;font-size:30px;line-height:1.6;color:#c4b8d6;white-space:nowrap}.p{color:#e90464}.f{color:#c3a3ff;font-weight:700}.g{color:#8f84a6}
+.stage{position:absolute;inset:0;transform:translateY(200px) scale(.8);transform-origin:50% 0}</style></head><body><div class="grid"></div><div class="stage"><style>.box{position:absolute;padding:24px 30px;text-align:center}.box .t{font-size:34px;font-weight:800}.box .s{font-size:26px;color:#c3a3ff;margin-top:8px}
+.ag{display:inline-block;margin-top:14px;font-size:22px;font-weight:700;background:linear-gradient(135deg,#a06bff,#e90464);border-radius:999px;padding:6px 16px}
+svg{position:absolute;left:0;top:0}</style>
+<h1>Jeder Agent<br><span class="accent">sein eigener Ordner.</span></h1>
+<svg width="1080" height="960"><defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="560" x2="0" y2="690"><stop offset="0" stop-color="#c3a3ff"/><stop offset="1" stop-color="#e90464"/></linearGradient></defs>
+<g stroke="url(#g)" stroke-width="5" fill="none" stroke-linecap="round"><path d="M540 560 C540 630 290 610 290 690"/><path d="M540 560 C540 630 790 610 790 690"/></g></svg>
+<div class="card box mono" style="left:340px;top:430px;width:400px"><div class="t">app/.git</div><div class="s">ein gemeinsames Repo</div></div>
+<div class="card box" style="left:80px;top:690px;width:420px"><div class="t mono">app-checkout/</div><div class="s mono">feature/checkout</div><div class="ag">Agent 1</div></div>
+<div class="card box" style="left:580px;top:690px;width:420px"><div class="t mono">app-hotfix/</div><div class="s mono">hotfix/prices</div><div class="ag">Agent 2</div></div>
+</div></body></html>
