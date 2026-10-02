@@ -22,6 +22,8 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
    - LinkedIn-, X- und Bluesky-Post nach der passenden Vorlage im Playbook (Knobelaufgabe oder offene Frage), kurz, mit Link, höchstens ein passendes Emoji. X höchstens 280 Zeichen (Link zählt 23; nachzählen).
    - Bei der Knobelaufgabe eine Bildvorlage für LinkedIn und X: welche Datei, welche Zeilen wörtlich, was durch `[...]` ersetzt wird; der entscheidende Teil unten. Johannes macht den Screenshot im Editor. Bei der offenen Frage reicht das Header-Bild oder ein Foto.
    - Video-Skript (etwa 25 Sekunden, Schluss: „Den ganzen Artikel findest du auf meiner Website: agentic.schule") und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
+   - Bilder für die obere Videohälfte nach `docs/social-media.md` („Bilder für die obere Hälfte"): oben 200 px frei, Quellen unter `docs/video-bilder/tag<N>/`, Rendern mit `tools/render-video-image.mjs`.
+   - Nach dem Dreh: zuerst die Schnitt-Anweisung für Underlord, nach Johannes' OK die Layout-Anweisung (Vorlagen in `docs/descript-instructions.md`).
    - Bluesky: Text wie auf X, höchstens 300 Zeichen inklusive voller URL (nachzählen).
    - Captions für Instagram und TikTok, Titelvorschlag (gern zugespitzt, „(Day N/30)" erwünscht) und Beschreibung für YouTube Shorts.
    - Aufs Äußerste verdichten. Emojis nur wie im Playbook. Gefährliche Adressen im Text entschärfen (`[.]`).
