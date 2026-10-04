@@ -121,6 +121,7 @@ Für jede Szene baut die Sitzung ein eigenes Bild im agentic.schule-Look statt e
 - **Der Hook als eigenes Bild:** nur Text, groß und plakativ, etwa „Deine AI-Agenten gehören NICHT in die Cloud." Er läuft, solange der Hook gesprochen wird.
 - **Kein Emoji, keine Firmenlogos.** Icons als schlichte Linien-SVG.
 - **Material echt halten:** Befehle, Pfade und Dateinamen so, wie sie wirklich aussehen (etwa `ls ~/.claude/projects/-projektverzeichnis/` mit `.jsonl`-Dateien und `memory/`). Persönliche Pfade durch einen sprechenden Platzhalter ersetzen, Kundenprojekte nie zeigen.
+- **Vollbild-Variante:** Für Videos, in denen Johannes freigestellt vor dem Bild steht, rendert `--full` das Bild in 1080×1920. Der Inhalt sitzt dann zwischen y 230 und 950, darunter steht der Sprecher. Gemeinsames Stylesheet und Beispiel: `docs/video-bilder/mini-setup/`.
 - **Ablage:** Quellen unter `docs/video-bilder/tag<N>/` mit gemeinsamem `docs/video-bilder/base.css`, fertige Bilder als `~/Shots/tag<N>-video-<nr>-<name>.jpg`. Jedes Bild vor der Abgabe ansehen: kein ungewollter Zeilenumbruch, nichts überlappt.
 
 ### Format
