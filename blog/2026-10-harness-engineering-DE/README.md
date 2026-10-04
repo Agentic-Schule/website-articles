@@ -40,7 +40,7 @@ Claude Code ist so ein Harness. LangGraph ist einer. Das Deep-Research-Feature v
 
 ## Woher kommen die 98 %?
 
-Zurück zu den 98 %. Vier Behauptungen geistern dazu durch meine Tech-Bubble. Keine davon hält, was der Post verspricht.
+Zurück zu den 98 %. Vier Behauptungen geistern dazu durch meine Tech-Bubble. Keine davon hält, was der virale Post verspricht.
 
 - **„Claude Code ist zu 98 % keine KI."** Die Zahl stammt aus einer Community-Zerlegung, nicht von Anthropic. Richtig daran ist, dass der Harness viel mehr Code ist als das Modell-API dahinter. Falsch ist die Pointe. Die Schleife ist stumpfer Code, aber was in der Schleife entschieden wird, entscheidet das Modell. „Keine KI" verwechselt das Gerüst mit dem, der darin urteilt.
 - **„500.000 Zeilen Quellcode geleakt."** Dafür finde ich keine belastbare Primärquelle. Was kursiert, ist unbestätigt. Ich führe es hier als das, was es ist: ein Gerücht.
@@ -112,7 +112,7 @@ Der bekannteste Harness steuert einen Coding-Agenten. Seine Werkzeuge sind Datei
 
 - **Recherche-Agenten.** [OpenAIs Deep Research](https://platform.openai.com/docs/guides/deep-research) läuft denselben Loop, nur sind die Werkzeuge Websuche, Seiten holen und eine Python-Sandbox zum Rechnen. Der Loop plant Teilfragen, hangelt sich durch Quellen und schreibt am Ende einen zitierten Bericht. Kein Editor, keine Shell.
 - **Computer-Use.** Bei [Anthropics Computer Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool) und OpenAIs Operator sind die Werkzeuge ein Screenshot sowie Maus und Tastatur. Das Modell sieht nur Bilder vom Bildschirm und schickt Klicks. Ausgeführt wird in einer bereitgestellten Umgebung, nicht vom Modell selbst.
-- **Daten-Agenten.** [Snowflakes Cortex Analyst](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst) und [Databricks Genie](https://docs.databricks.com/aws/en/genie/) beantworten Datenfragen in natürlicher Sprache. Das Werkzeug ist SQL gegen das Warehouse. Bemerkenswert ist die Rechte-Schicht: Bei Databricks regelt laut Hersteller das bestehende Governance-System (Unity Catalog), was der Agent sehen darf. Es braucht keinen eigenen Modus, die Datenbank bringt ihre Rechte schon mit.
+- **Daten-Agenten.** [Snowflakes Cortex Analyst](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst) und [Databricks Genie](https://docs.databricks.com/aws/en/genie/) beantworten Datenfragen in natürlicher Sprache. Das Werkzeug ist SQL gegen das *Data Warehouse* (den zentralen Analyse-Datenspeicher). Bemerkenswert ist die Rechte-Schicht: Bei Databricks regelt laut Hersteller das bestehende Governance-System (Unity Catalog), was der Agent sehen darf. Es braucht keinen eigenen Modus, die Datenbank bringt ihre Rechte schon mit.
 - **Support-Agenten.** [Intercoms Fin](https://www.intercom.com/help/en/articles/8205718-set-up-and-test-fin) greift über Konnektoren auf interne Systeme zu, liest im CRM und schreibt dort auch, legt Leads an, bucht Termine. Bei Unsicherheit gibt es eine dokumentierte Eskalation an einen Menschen.
 
 Ein Muster zieht sich durch: Das Werkzeug ist eine Abfrage oder Aktion gegen ein Fachsystem. Die Rechte sind meist die Rechte dieses Fachsystems. Und bei folgenreichen Aktionen sitzt ein Mensch dazwischen. Merk dir dieses Muster, denn es führt direkt zum wunden Punkt.
@@ -129,7 +129,7 @@ Die erste Intuition dagegen ist naheliegend: Man fasst den fremden Text in Marki
 
 Richtig gefährlich wird es, wenn drei Zutaten zusammenkommen: fremder Inhalt, Zugriff auf private Daten und eine Möglichkeit, Daten nach außen zu schicken. Simon Willison nennt das die [*lethal trifecta*](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/), das tödliche Dreigespann. Hat ein Harness alle drei, wird aus einer harmlosen Injektion ein Datenabfluss.
 
-### Die eigene CI als Einfallstor
+### Fallbeispiel: die eigene CI als Einfallstor
 
 Wie real das ist, zeigt der [Clinejection-Vorfall](https://adnanthekhan.com/posts/clinejection/). Das Coding-Werkzeug Cline hatte einen GitHub-Workflow, der neue Issues von einem Claude-Agenten vorsortieren ließ. Der Titel des Issues wurde dabei ungeprüft direkt in den Prompt gesetzt:
 
@@ -139,14 +139,14 @@ Wie real das ist, zeigt der [Clinejection-Vorfall](https://adnanthekhan.com/post
 
 Dazu hatte der Agent Bash als Werkzeug und war mit `allowed_non_write_users: "*"` offen für jeden. Die Rechnung ist simpel und bitter: Jeder, der ein Issue öffnet, schreibt in den Titel eine Anweisung, und der Agent führt sie aus. Genau das geschah. Später tauchte sogar eine manipulierte Version des npm-Pakets auf, die beim Installieren ungefragt ein fremdes Agenten-Tool nachzog.
 
-> **⚠️ Die Falle, nüchtern benannt:** Das Loch entstand durch die Kombination aus fremdem Text im Prompt und einem Werkzeug mit zu weiten Rechten. Das Modell war dabei austauschbar. Ein Markierer um den Issue-Titel hätte daran wenig geändert. Wer `Bash` und „jeder darf" kombiniert, hat das Tor schon offen.
+> **⚠️ Die Falle:** Das Loch entstand durch die Kombination aus fremdem Text im Prompt und einem Werkzeug mit zu weiten Rechten. Das Modell war dabei austauschbar. Ein Markierer um den Issue-Titel hätte daran wenig geändert. Wer `Bash` und „jeder darf" kombiniert, hat das Tor schon offen.
 
 ### Was heute wirklich hilft
 
 Der Stand der Technik ist eine Schichtung mehrerer Maßnahmen. Von billig und sofort bis aufwendig und gründlich:
 
 - **Wenig Rechte (Least Privilege).** Gib dem Agenten nur die Werkzeuge, die er wirklich braucht. Kein `Bash`, wo ein enges Query-Werkzeug reicht. Keine Schreibrechte, wo Lesen genügt.
-- **Allowlists.** Grenze ein, wohin er darf: eine Liste erlaubter Domains, erlaubter Befehle, erlaubter Tabellen.
+- **_Allowlists_ (Positivlisten).** Grenze ein, wohin er darf: eine Liste erlaubter Domains, erlaubter Befehle, erlaubter Tabellen.
 - **Mensch bei folgenreichen Aktionen.** Alles, was Geld bewegt, löscht oder nach außen schickt, bekommt eine Bestätigung. Anthropic empfiehlt für [Computer-Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool) genau das, dazu eine isolierte Umgebung mit minimalen Rechten.
 - **Strukturelle Abwehr.** Die Forschung geht über Markierer hinaus. [CaMeL](https://arxiv.org/abs/2503.18813) von Google DeepMind trennt Daten- und Kontrollfluss so, dass fremder Inhalt den Programmablauf gar nicht erst steuern kann. Der Code liegt offen.
 - **Wächter-Modelle.** Ein zweites, spezialisiertes Modell prüft Ein- und Ausgaben als letzte Schicht. Metas quelloffenes [LlamaFirewall](https://arxiv.org/abs/2505.03574) ist so ein Baustein gegen Prompt Injection und entgleiste Agenten.
@@ -163,9 +163,9 @@ Für echte Arbeit aber hörst du an genau dieser Stelle auf, alles selbst zu bau
 
 ## Fazit
 
-Wenn dir das nächste Mal jemand „Claude Code ist zu 98 % keine KI" unter die Nase hält, weißt du, wo der Satz danebenliegt. Der Harness ist viel Code, ja. Aber er ist der stille Arbeiter, der die Urteile des Modells sicher ausführbar macht, oder eben nicht. Das Modell urteilt, der Harness setzt es um.
+Wenn dir das nächste Mal jemand „Claude Code ist zu 98 % keine KI" unter die Nase hält, weißt du, wo der Satz danebenliegt. Der Harness ist viel Code, ja. Aber er ist der stille Arbeiter, der die Urteile des Modells sicher ausführbar macht, oder eben nicht.
 
-Und Harness Engineering? Das ist nichts Neues und schon gar kein Grund für einen Zwei-Stunden-Kurs. Es ist der Boden, auf dem Prompt, Loop und Graph überhaupt erst stehen. Das Prompt bestimmt, wie du fragst. Die Schleife treibt eine Linie in die Tiefe. Der Graph fächert Arbeit in die Breite. Der Harness ist das, worin das alles läuft.
+Und Harness Engineering? Das ist nichts Neues und schon gar kein Grund für einen Zwei-Stunden-Kurs. Es ist die Grundlage, auf der Prompt, Loop und Graph überhaupt laufen. Das Prompt bestimmt, wie du fragst. Die Schleife arbeitet eine Aufgabe Schritt für Schritt ab. Der Graph verteilt unabhängige Arbeit auf mehrere Zweige. Der Harness ist das, worin das alles läuft.
 
 Mein Rat ist wie immer der undramatische: Bau den kleinen Loop einmal nach, mit zwei Werkzeugen und einem echten API-Key. Danach stell dir bei jedem Agenten, den du irgendwo anschließt, die eine Frage, die wirklich zählt: Was könnte der schlimmste Text, den dieser Agent je liest, ihn tun lassen? Deine Antwort darauf ist dein Harness Engineering.
 

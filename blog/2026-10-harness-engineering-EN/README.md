@@ -40,7 +40,7 @@ Claude Code is one such harness. LangGraph is one. OpenAI's Deep Research featur
 
 ## Where does the 98% come from?
 
-Back to the 98%. Four claims circulate around it in my tech bubble. None of them holds up to what the post promises.
+Back to the 98%. Four claims circulate around it in my tech bubble. None of them holds up to what the viral post promises.
 
 - **"Claude Code is 98% not AI."** The number comes from a community teardown, not from Anthropic. What is right is that the harness is far more code than the model API behind it. What is wrong is the punchline. The loop is dumb code, but what gets decided inside the loop is decided by the model. "Not AI" confuses the scaffolding with the thing that does the judging inside it.
 - **"500,000 lines of source code leaked."** I find no solid primary source for this. What circulates is unconfirmed. I list it here as what it is: a rumor.
@@ -112,7 +112,7 @@ The best-known harness steers a coding agent. Its tools are read a file, write a
 
 - **Research agents.** [OpenAI's Deep Research](https://platform.openai.com/docs/guides/deep-research) runs the same loop, except the tools are web search, fetching pages, and a Python sandbox for calculation. The loop plans sub-questions, works its way through sources, and writes a cited report at the end. No editor, no shell.
 - **Computer use.** With [Anthropic's Computer Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool) and OpenAI's Operator, the tools are a screenshot plus mouse and keyboard. The model only sees images of the screen and sends clicks. Execution happens in a provided environment, not in the model itself.
-- **Data agents.** [Snowflake's Cortex Analyst](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst) and [Databricks Genie](https://docs.databricks.com/aws/en/genie/) answer data questions in natural language. The tool is SQL against the warehouse. The permission layer is the notable part: with Databricks, per the vendor, the existing governance system (Unity Catalog) decides what the agent may see. No separate mode is needed; the database brings its permissions along.
+- **Data agents.** [Snowflake's Cortex Analyst](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst) and [Databricks Genie](https://docs.databricks.com/aws/en/genie/) answer data questions in natural language. The tool is SQL against the data warehouse. The permission layer is the notable part: with Databricks, per the vendor, the existing governance system (Unity Catalog) decides what the agent may see. No separate mode is needed; the database brings its permissions along.
 - **Support agents.** [Intercom's Fin](https://www.intercom.com/help/en/articles/8205718-set-up-and-test-fin) reaches internal systems through connectors, reads from the CRM and writes to it too, creates leads, books meetings. When unsure, there is a documented escalation to a human.
 
 One pattern runs through all of it: the tool is a query or action against a business system. The permissions are usually the permissions of that business system. And for consequential actions, a human sits in between. Remember this pattern, because it leads straight to the sore spot.
@@ -129,7 +129,7 @@ The first instinct against it is the obvious one: you fence the foreign text in 
 
 It gets truly dangerous when three ingredients come together: foreign content, access to private data, and a way to send data out. Simon Willison calls this the [*lethal trifecta*](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/). When a harness has all three, a harmless injection turns into a data leak.
 
-### Your own CI as the entry point
+### Case in point: your own CI as the entry point
 
 How real this is shows in the [Clinejection incident](https://adnanthekhan.com/posts/clinejection/). The coding tool Cline had a GitHub workflow that let a Claude agent triage new issues. The issue title was dropped straight into the prompt, unchecked:
 
@@ -139,7 +139,7 @@ How real this is shows in the [Clinejection incident](https://adnanthekhan.com/p
 
 On top of that, the agent had Bash as a tool and was open to anyone via `allowed_non_write_users: "*"`. The math is simple and bitter: anyone who opens an issue writes an instruction into the title, and the agent runs it. That is exactly what happened. Later a tampered version of the npm package even appeared that quietly pulled in a foreign agent tool on install.
 
-> **⚠️ The trap, named plainly:** the hole came from the combination of foreign text in the prompt and a tool with permissions that were too wide. The model was interchangeable here. A marker around the issue title would have changed little. Whoever combines `Bash` with "anyone may" has already left the gate open.
+> **⚠️ The trap:** the hole came from the combination of foreign text in the prompt and a tool with permissions that were too wide. The model was interchangeable here. A marker around the issue title would have changed little. Whoever combines `Bash` with "anyone may" has already left the gate open.
 
 ### What actually helps today
 
@@ -163,9 +163,9 @@ For real work, though, this is exactly where you stop building everything yourse
 
 ## Conclusion
 
-Next time someone holds "Claude Code is 98% not AI" under your nose, you know where the sentence goes wrong. The harness is a lot of code, yes. But it is the quiet worker that makes the model's judgments safely executable, or fails to. The model judges, the harness carries it out.
+Next time someone holds "Claude Code is 98% not AI" under your nose, you know where the sentence goes wrong. The harness is a lot of code, yes. But it is the quiet worker that makes the model's judgments safely executable, or fails to.
 
-And harness engineering? It is nothing new and certainly no reason for a two-hour course. It is the ground that prompt, loop, and graph stand on in the first place. The prompt decides how you ask. The loop drives a line into the depth. The graph fans work out across the breadth. The harness is what all of it runs inside.
+And harness engineering? It is nothing new and certainly no reason for a two-hour course. It is the basis that prompt, loop, and graph run on in the first place. The prompt decides how you ask. The loop works through a task step by step. The graph spreads independent work across several branches. The harness is what all of it runs inside.
 
 My advice is, as always, the undramatic one: rebuild the small loop once, with two tools and a real API key. Then, for every agent you wire up anywhere, ask yourself the one question that truly counts: what could the worst text this agent will ever read make it do? Your answer to that is your harness engineering.
 
