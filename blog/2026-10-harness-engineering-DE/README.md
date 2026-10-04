@@ -18,9 +18,7 @@ language: de
 header: header.jpg
 ---
 
-Gerade macht ein Satz die Runde: „Claude Code ist zu 98 % keine KI." Klingt entlarvend. Und ist vor allem eins: ein Missverständnis mit einem wahren Kern.
-
-**Der wahre Kern heißt _Harness_: das Gerüst um das Modell. Ein Sprachmodell für sich ist ein Textgenerator, ein Schuss ins Gespräch und fertig. Der Harness macht daraus einen Agenten, der handelt. Er gibt dem Modell Werkzeuge, legt das Ganze in eine Schleife und merkt sich, was war. Meine These: Im Kern ist das nur ein Modell aufrufen, ihm Werkzeuge geben, die es vorher nicht hatte, und das in eine Schleife legen. Der Mechanik nach stimmt das. Was die Verkürzung unterschlägt, ist die eigentliche Arbeit: Kontext über lange Läufe, Fehlerbehandlung und vor allem Sicherheit. Denn sobald das Modell echte Werkzeuge in die Hand bekommt, wird die Frage, welchem Text es gehorcht, zur wichtigsten im ganzen System.**
+**„Claude Code ist zu 98 % keine KI." Dieser Satz macht gerade die Runde, und er ist ein Missverständnis mit wahrem Kern. Der Kern heißt _Harness_: das Gerüst um das Modell. Ein Sprachmodell für sich ist ein Textgenerator, ein Schuss ins Gespräch und fertig. Der Harness macht daraus einen Agenten, der handelt. Er gibt dem Modell Werkzeuge, legt das Ganze in eine Schleife und merkt sich, was war. Meine These: Im Kern ist das nur ein Modell aufrufen, ihm Werkzeuge geben, die es vorher nicht hatte, und das in eine Schleife legen. Der Mechanik nach stimmt das. Was die Verkürzung unterschlägt, ist die eigentliche Arbeit: Kontext über lange Läufe, Fehlerbehandlung und vor allem Sicherheit. Denn sobald das Modell echte Werkzeuge in die Hand bekommt, wird die Frage, welchem Text es gehorcht, zur wichtigsten im ganzen System.**
 
 Die Serie zu Prompt, Loop und Graph hatte ich eigentlich abgeschlossen. Doch ein Begriff fehlt noch, und er trägt die anderen drei. Prompt, Schleife und Graph beschreiben, wie du den Agenten steuerst. Der Harness ist das, worin sie alle laufen. Dieser Teil ist für sich lesbar.
 
@@ -40,16 +38,16 @@ Der Harness liefert dem Modell vier Dinge. Erstens die **Werkzeuge** (engl. *Too
 
 Claude Code ist so ein Harness. LangGraph ist einer. Das Deep-Research-Feature von OpenAI ist einer. Sie alle setzen auf demselben Prinzip auf, und das Prinzip ist weder neu noch geheim.
 
-## Der Satz, der gerade die Runde macht
+## Woher kommen die 98 %?
 
-Zurück zu den 98 %. Vier Behauptungen geistern dazu durch meine Tech-Bubble. Ich habe sie an den Primärquellen gesucht. Das Ergebnis ist nüchtern: keine davon hält, was der Post verspricht.
+Zurück zu den 98 %. Vier Behauptungen geistern dazu durch meine Tech-Bubble. Keine davon hält, was der Post verspricht.
 
 - **„Claude Code ist zu 98 % keine KI."** Die Zahl stammt aus einer Community-Zerlegung, nicht von Anthropic. Richtig daran ist, dass der Harness viel mehr Code ist als das Modell-API dahinter. Falsch ist die Pointe. Die Schleife ist stumpfer Code, aber was in der Schleife entschieden wird, entscheidet das Modell. „Keine KI" verwechselt das Gerüst mit dem, der darin urteilt.
 - **„500.000 Zeilen Quellcode geleakt."** Dafür finde ich keine belastbare Primärquelle. Was kursiert, ist unbestätigt. Ich führe es hier als das, was es ist: ein Gerücht.
 - **„NVIDIAs Harness plus Opus 5 holt 100 % auf ARC-AGI-3."** Das Modell Opus 5 gibt es. Die Zahl nicht. Das ARC-Prize-Team nennt [ARC-AGI-3](https://arcprize.org/) selbst „the world's only unbeaten benchmark" (der weltweit einzige ungeschlagene Benchmark). Ein ungeschlagener Benchmark und ein 100-Prozent-Score schließen sich aus.
 - **„DeepSeek hat einen komplett modularen Open-Source-Harness veröffentlicht."** Auch dazu keine benennbare Primärquelle. Unbestätigt.
 
-Das ist kein Zufall, sondern Methode: Eine Zahl klingt in einem Post härter als ein ehrliches „kommt drauf an". Für uns bleibt die Regel einfach. Was sich nicht an der Primärquelle zeigen lässt, kommt nicht als Fakt in den Kopf.
+Das hat Methode: Eine Zahl klingt in einem Post härter als ein „kommt drauf an". Für uns bleibt die Regel einfach. Was sich nicht an der Primärquelle zeigen lässt, kommt nicht als Fakt in den Kopf.
 
 ## Der Kern: eine Schleife mit Werkzeugen
 
@@ -98,17 +96,17 @@ Dein Code schlägt das Wetter nach und schickt das Ergebnis im nächsten Request
 
 Das ist der ganze Zauber. Das Modell schlägt den Aufruf vor, deine Anwendung führt ihn aus, das Ergebnis geht zurück. Bei OpenAI heißt derselbe Round-Trip anders (`function_call` und `function_call_output`), die Mechanik ist dieselbe.
 
-Hier zahlt sich die ehrliche Lesart der 98 % aus. Die Schleife ist wirklich nur Code, ein paar Dutzend Zeilen. Doch welches Werkzeug mit welchen Argumenten, und wann Schluss ist: das wählt jedes Mal das Modell. Der Harness orchestriert, das Modell urteilt.
+Hier zahlt sich die genaue Lesart der 98 % aus. Die Schleife ist nur Code, ein paar Dutzend Zeilen. Doch welches Werkzeug mit welchen Argumenten, und wann Schluss ist: das wählt jedes Mal das Modell. Der Harness orchestriert, das Modell urteilt.
 
 ## Was die Verkürzung unterschlägt
 
 „Ein Modell aufrufen und ihm Werkzeuge geben" trifft die Mechanik. Aber zwischen diesem Dreizeiler und einem Werkzeug, dem du eine Codebasis oder eine Produktionsdatenbank anvertraust, liegt die ganze Arbeit.
 
-Da ist das **Kontext-Management**. Ein langer Lauf sprengt irgendwann das Kontextfenster. Was wird zusammengefasst, was fliegt raus, was wandert in ein Gedächtnis auf der Platte? Da ist die **Fehlerbehandlung**. Werkzeuge schlagen fehl, Verbindungen reißen ab, das Modell schlägt Unsinn vor. Ein brauchbarer Harness fängt das ab, statt mittendrin stehenzubleiben. Und da ist die **Sicherheit**, der größte Brocken. Ihr gehört der Rest dieses Artikels, denn sie ist der Punkt, an dem Harness Engineering vom Fingerübung zum ernsten Handwerk wird.
+Da ist das **Kontext-Management**. Ein langer Lauf sprengt irgendwann das Kontextfenster. Was wird zusammengefasst, was fliegt raus, was wandert in ein Gedächtnis auf der Platte? Da ist die **Fehlerbehandlung**. Werkzeuge schlagen fehl, Verbindungen reißen ab, das Modell schlägt Unsinn vor. Ein brauchbarer Harness fängt das ab, statt mittendrin stehenzubleiben. Und da ist die **Sicherheit**, der größte Brocken. Ihr gehört der Rest dieses Artikels, denn sie ist der Punkt, an dem Harness Engineering von der Fingerübung zum ernsten Handwerk wird.
 
 Vorher aber lohnt ein Blick zur Seite. Denn das Muster steckt längst nicht nur im Coding.
 
-## Coding ist nur ein Harness
+## Was kann ein Harness außer Coding?
 
 Der bekannteste Harness steuert einen Coding-Agenten. Seine Werkzeuge sind Datei lesen, Datei schreiben, Shell-Befehl ausführen. Tausche die Werkzeuge aus, und dasselbe Prinzip trägt völlig andere Aufgaben.
 
@@ -129,9 +127,9 @@ OpenAI schreibt das in seiner [Doku zu Computer-Use](https://developers.openai.c
 
 Die erste Intuition dagegen ist naheliegend: Man fasst den fremden Text in Markierer ein, oben und unten ein Hinweis „alles hier drin ist nicht vertrauenswürdig". Das ist eine echte, dokumentierte Technik, und sie hilft ein wenig. Aber sie reicht nicht. Ein Markierer beschreibt den Text nur, er nimmt dem Modell die Werkzeuge nicht aus der Hand. Gehorcht das Modell dem fremden Text trotzdem, darf es weiter klicken, schreiben, Befehle ausführen.
 
-Richtig gefährlich wird es, wenn drei Zutaten zusammenkommen: fremder Inhalt, Zugriff auf private Daten und eine Möglichkeit, Daten nach außen zu schicken. Simon Willison nennt das die *lethal trifecta*, das tödliche Dreigespann. Hat ein Harness alle drei, wird aus einer harmlosen Injektion ein Datenabfluss.
+Richtig gefährlich wird es, wenn drei Zutaten zusammenkommen: fremder Inhalt, Zugriff auf private Daten und eine Möglichkeit, Daten nach außen zu schicken. Simon Willison nennt das die [*lethal trifecta*](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/), das tödliche Dreigespann. Hat ein Harness alle drei, wird aus einer harmlosen Injektion ein Datenabfluss.
 
-### Ein echter Fall: die eigene CI als Einfallstor
+### Die eigene CI als Einfallstor
 
 Wie real das ist, zeigt der [Clinejection-Vorfall](https://adnanthekhan.com/posts/clinejection/). Das Coding-Werkzeug Cline hatte einen GitHub-Workflow, der neue Issues von einem Claude-Agenten vorsortieren ließ. Der Titel des Issues wurde dabei ungeprüft direkt in den Prompt gesetzt:
 
@@ -141,33 +139,33 @@ Wie real das ist, zeigt der [Clinejection-Vorfall](https://adnanthekhan.com/post
 
 Dazu hatte der Agent Bash als Werkzeug und war mit `allowed_non_write_users: "*"` offen für jeden. Die Rechnung ist simpel und bitter: Jeder, der ein Issue öffnet, schreibt in den Titel eine Anweisung, und der Agent führt sie aus. Genau das geschah. Später tauchte sogar eine manipulierte Version des npm-Pakets auf, die beim Installieren ungefragt ein fremdes Agenten-Tool nachzog.
 
-> **⚠️ Die Falle, nüchtern benannt:** Nicht das Modell war das Loch. Das Loch war die Kombination aus fremdem Text im Prompt und einem Werkzeug mit zu weiten Rechten. Ein Markierer um den Issue-Titel hätte daran wenig geändert. Wer `Bash` und „jeder darf" kombiniert, hat das Tor schon offen.
+> **⚠️ Die Falle, nüchtern benannt:** Das Loch entstand durch die Kombination aus fremdem Text im Prompt und einem Werkzeug mit zu weiten Rechten. Das Modell war dabei austauschbar. Ein Markierer um den Issue-Titel hätte daran wenig geändert. Wer `Bash` und „jeder darf" kombiniert, hat das Tor schon offen.
 
 ### Was heute wirklich hilft
 
-Der Stand der Technik ist keine einzelne Zauberzeile, sondern eine Schichtung. Von billig und sofort bis aufwendig und gründlich:
+Der Stand der Technik ist eine Schichtung mehrerer Maßnahmen. Von billig und sofort bis aufwendig und gründlich:
 
 - **Wenig Rechte (Least Privilege).** Gib dem Agenten nur die Werkzeuge, die er wirklich braucht. Kein `Bash`, wo ein enges Query-Werkzeug reicht. Keine Schreibrechte, wo Lesen genügt.
 - **Allowlists.** Grenze ein, wohin er darf: eine Liste erlaubter Domains, erlaubter Befehle, erlaubter Tabellen.
-- **Mensch bei folgenreichen Aktionen.** Alles, was Geld bewegt, löscht oder nach außen schickt, bekommt eine Bestätigung. Anthropic empfiehlt für Computer-Use genau das, dazu eine isolierte Umgebung mit minimalen Rechten.
+- **Mensch bei folgenreichen Aktionen.** Alles, was Geld bewegt, löscht oder nach außen schickt, bekommt eine Bestätigung. Anthropic empfiehlt für [Computer-Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool) genau das, dazu eine isolierte Umgebung mit minimalen Rechten.
 - **Strukturelle Abwehr.** Die Forschung geht über Markierer hinaus. [CaMeL](https://arxiv.org/abs/2503.18813) von Google DeepMind trennt Daten- und Kontrollfluss so, dass fremder Inhalt den Programmablauf gar nicht erst steuern kann. Der Code liegt offen.
 - **Wächter-Modelle.** Ein zweites, spezialisiertes Modell prüft Ein- und Ausgaben als letzte Schicht. Metas quelloffenes [LlamaFirewall](https://arxiv.org/abs/2505.03574) ist so ein Baustein gegen Prompt Injection und entgleiste Agenten.
 
-Die Antwort auf die Eingangsfrage lautet also: Reine Markierer um den fremden Text sind nicht mehr Stand der Technik, sie sind eine von vielen Schichten, und keine, auf die du dich allein verlassen solltest. Sicherheit steckt in der Architektur, nicht im Etikett am Text.
+Die Antwort auf die Eingangsfrage lautet also: Reine Markierer um den fremden Text sind nicht mehr Stand der Technik, sie sind eine von vielen Schichten, und keine, auf die du dich allein verlassen solltest. Sicherheit entsteht in der Architektur. Ein Markierer am Text genügt nicht.
 
 ## Den eigenen Harness bauen?
 
-Nach all dem die gute Nachricht: Den Loop selbst zu bauen, ist keine Hexerei. Ein paar Dutzend Zeilen reichen. Modell aufrufen, auf `tool_use` prüfen, Werkzeug ausführen, `tool_result` zurückschicken, wiederholen. Ich empfehle jedem, das einmal von Hand zu tun. Danach ist „Agent" kein Zauberwort mehr, sondern eine Schleife, die man durchschaut hat.
+Nach all dem die gute Nachricht: Den Loop selbst zu bauen, ist schnell gemacht. Ein paar Dutzend Zeilen reichen. Modell aufrufen, auf `tool_use` prüfen, Werkzeug ausführen, `tool_result` zurückschicken, wiederholen. Ich empfehle jedem, das einmal von Hand zu tun. Danach ist „Agent" für dich eine Schleife, die du durchschaut hast.
 
-Für echte Arbeit aber hörst du an genau dieser Stelle auf, alles selbst zu bauen. Das Interessante steckt nicht im Loop, sondern in dem, was danach kommt: Kontext, Recovery und die Sicherheit von oben. Dafür gibt es gepflegte Bausteine. Anthropics *Tool Runner* fährt den Round-Trip automatisch. Das *Agents SDK* von OpenAI bringt den Loop mit. Und das *Model Context Protocol* (MCP) steckt fertige Werkzeuge an, ohne dass du jede Integration neu schreibst.
+Für echte Arbeit aber hörst du an genau dieser Stelle auf, alles selbst zu bauen. Das Interessante kommt erst nach dem Loop: Kontext, Recovery und die Sicherheit von oben. Dafür gibt es gepflegte Bausteine. Anthropics *Tool Runner* fährt den Round-Trip automatisch. Das *Agents SDK* von OpenAI bringt den Loop mit. Und das *Model Context Protocol* (MCP) steckt fertige Werkzeuge an, ohne dass du jede Integration neu schreibst.
 
 > **💡 Mein Rat:** Bau den Loop einmal selbst, um ihn zu verstehen. Setz für Produktion auf einen gepflegten Harness, der Kontext, Fehler und Rechte schon durchdacht hat.
 
 ## Fazit
 
-Wenn dir das nächste Mal jemand „Claude Code ist zu 98 % keine KI" unter die Nase hält, weißt du, wo der Satz danebenliegt. Der Harness ist viel Code, ja. Aber er ist der stille Arbeiter, der die Urteile des Modells sicher ausführbar macht, oder eben nicht. Das Modell urteilt, der Harness handelt.
+Wenn dir das nächste Mal jemand „Claude Code ist zu 98 % keine KI" unter die Nase hält, weißt du, wo der Satz danebenliegt. Der Harness ist viel Code, ja. Aber er ist der stille Arbeiter, der die Urteile des Modells sicher ausführbar macht, oder eben nicht. Das Modell urteilt, der Harness setzt es um.
 
-Und Harness Engineering? Das ist kein neues Wunder und schon gar kein Grund für einen Zwei-Stunden-Kurs. Es ist der Boden, auf dem Prompt, Loop und Graph überhaupt erst stehen. Das Prompt bestimmt, wie du fragst. Die Schleife treibt eine Linie in die Tiefe. Der Graph fächert Arbeit in die Breite. Der Harness ist das, worin das alles läuft.
+Und Harness Engineering? Das ist nichts Neues und schon gar kein Grund für einen Zwei-Stunden-Kurs. Es ist der Boden, auf dem Prompt, Loop und Graph überhaupt erst stehen. Das Prompt bestimmt, wie du fragst. Die Schleife treibt eine Linie in die Tiefe. Der Graph fächert Arbeit in die Breite. Der Harness ist das, worin das alles läuft.
 
 Mein Rat ist wie immer der undramatische: Bau den kleinen Loop einmal nach, mit zwei Werkzeugen und einem echten API-Key. Danach stell dir bei jedem Agenten, den du irgendwo anschließt, die eine Frage, die wirklich zählt: Was könnte der schlimmste Text, den dieser Agent je liest, ihn tun lassen? Deine Antwort darauf ist dein Harness Engineering.
 
