@@ -229,7 +229,7 @@ Das Datenkabel der USV geht per USB direkt an einen **vorderen** Port des mini, 
 
 > **⚠️ Achtung:** Hängt die USV an einem Hub, fällt sie an Apple Silicon gern lautlos vom USB ab, ein bekannter APC-Fehler. macOS zeigt dann weiter „Netzstrom", und der Wächter ist blind. Direkt an einen vorderen Port, dann meldet `pmset -g batt` die `Back-UPS` zuverlässig.
 
-Wichtig ist die ganze Netzwerkkette. An derselben USV hängen auch der Switch und der Router, der Switch über ein Verlängerungskabel. So bleibt im Ausfall der Weg mini → Switch → Router stehen, der mini behält sein Internet, und meine SSH-Sitzung läuft einfach weiter. Kein WLAN nötig.
+Wichtig ist die ganze Netzwerkkette. An der USV des mini hängen auch der JetKVM und der Switch, der Switch über ein Verlängerungskabel. Fritzbox und Glasfaseranschluss hängen an einer zweiten USV. Fällt der Strom aus, bleibt so das ganze Netz aktiv: Die Fritzbox hält ihr WLAN, der mini erreicht sie über den Kabelweg mini → Switch → Fritzbox, und ich habe durchgehend Internet. Meine SSH-Sitzung läuft einfach weiter. Dieser Kabelweg ist die Grundlage dafür, dass auch die Warn-Mails im Ausfall noch rauskommen.
 
 Und wenn der Akku zur Neige geht? Ein kleiner Wächter übernimmt Mail und Abschaltung selbst. Das Skript `ups-notify.sh` läuft als System-Dienst (LaunchDaemon als root) und fragt alle 20 Sekunden `pmset -g batt` ab:
 
