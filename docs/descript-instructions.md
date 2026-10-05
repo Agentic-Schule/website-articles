@@ -29,11 +29,11 @@ Do not cut or change the spoken content any further. The edit from step 1 is fin
 
 FORMAT
 Convert the composition to a vertical video, 1080x1920 (9:16). No logo, no watermark, no borders, no emojis anywhere.
-The speaker footage is 3840x2160 and plays sideways, because the camera lies on its side. First rotate the speaker layer by 90 degrees CLOCKWISE (to the right) so the person stands upright, head at the top. The rotated layer is 2160x3840: scale it to exactly 50% (1080x1920) so it fills the frame. In split-screen scenes use the same rotated layer, scaled to fill the bottom half and cropped top and bottom. Apply this to every segment of the speaker clip and confirm for each: person upright, no black bars.
+The speaker footage is 3840x2160 and plays sideways, because the camera lies on its side. First rotate the speaker layer by 90 degrees CLOCKWISE (to the right) so the person stands upright, head at the top. The rotated layer is 2160x3840: scale it to exactly 50% (1080x1920) so it fills the frame. In split-screen scenes use the same rotated layer, scaled to fill the bottom half and cropped top and bottom, framed as described under LAYOUT. Apply this to every segment of the speaker clip and confirm for each: person upright, no black bars.
 
 LAYOUT (same in every scene)
 - Top half (y 0–960): the image for this scene. Fill the full width. Keep the important part in the middle of this area, not at the very top (the platform's progress bar sits there).
-- Bottom half (y 960–1920): the rotated speaker video (see FORMAT), scaled to fill the full width, cropped top and bottom. Keep head and shoulders, face in the upper part of this half. No black bars.
+- Bottom half (y 960–1920): the rotated speaker video (see FORMAT), scaled to fill the full width, cropped top and bottom. Keep head and shoulders. Eyes at about 40–50% of the half's height, head top just below the caption line at the divider (never under the captions). Apply the same framing to the 110% punch-in crops. No black bars.
 - Punch-in jump cuts: inside the speaker video, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds. No animated zoom.
 - Divider at y 960: an invisible boundary, NOT a drawn element. No line, no border, no frame, no bar, no shadow between the two halves; the image and the speaker video simply meet there. This is where all text goes. Nothing important in the bottom 300px (platform caption and username cover it) or at the right edge (buttons).
 
@@ -63,7 +63,7 @@ Ersetzt in der Vorlage für Schritt 2 den Block LAYOUT; die Untertitel stehen wi
 ```
 LAYOUT
 - Speaker scenes: the speaker video fills the full frame. Head in the upper third, no black bars.
-- Image scenes (split screen): top half (y 0–960) the image, full width. Bottom half (y 960–1920) the full speaker video, full width, cropped to fill, face in the upper part of this half. Hard edge at y 960: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
+- Image scenes (split screen): top half (y 0–960) the image, full width. Bottom half (y 960–1920) the full speaker video, full width, cropped to fill. Eyes at about 40–50% of the half's height, head top just below the caption line at the divider (never under the captions). Apply the same framing to the 110% punch-in crops. Hard edge at y 960: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
 - Video cutaways: fill the full frame, no speaker.
 - Hard cuts only. No animated zoom, no pan, no transitions.
 - Punch-in jump cuts: inside every speaker shot longer than about 4 s, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds.
