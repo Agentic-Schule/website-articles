@@ -226,7 +226,7 @@ An always-on machine has an enemy you rarely think about while coding: the power
 
 The UPS data cable goes over USB straight into a **front** port of the mini, not through a hub.
 
-> **⚠️ Caution:** On a hub, the UPS tends to silently drop off USB on Apple Silicon, a known APC bug. macOS then keeps showing "AC power" and the watcher is blind. Straight into a front port, and `pmset -g batt` reports the `Back-UPS` reliably.
+> **⚠️ Caution:** On a hub, the UPS tends to silently drop off USB on Apple Silicon. macOS then keeps showing "AC power" and the watcher is blind. Straight into a front port, and `pmset -g batt` reports the `Back-UPS` reliably.
 
 The whole network chain matters. The mini's UPS also powers the JetKVM and the switch, the switch via an extension cable. The Fritzbox router and the fiber connection hang on a second UPS. So during an outage the whole network stays up: the Fritzbox keeps its Wi-Fi, the mini reaches it over the wired path mini → switch → Fritzbox, and I have internet the whole time. My SSH session simply keeps running. That wired path is what lets the alert mails get out during the outage.
 

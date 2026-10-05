@@ -227,7 +227,7 @@ Ein always-on Rechner hat einen Feind, an den man beim Programmieren selten denk
 
 Das Datenkabel der USV geht per USB direkt an einen **vorderen** Port des mini, nicht über einen Hub.
 
-> **⚠️ Achtung:** Hängt die USV an einem Hub, fällt sie an Apple Silicon gern lautlos vom USB ab, ein bekannter APC-Fehler. macOS zeigt dann weiter „Netzstrom", und der Wächter ist blind. Direkt an einen vorderen Port, dann meldet `pmset -g batt` die `Back-UPS` zuverlässig.
+> **⚠️ Achtung:** Hängt die USV an einem Hub, fällt sie an Apple Silicon gern lautlos vom USB ab. macOS zeigt dann weiter „Netzstrom", und der Wächter ist blind. Direkt an einen vorderen Port, dann meldet `pmset -g batt` die `Back-UPS` zuverlässig.
 
 Wichtig ist die ganze Netzwerkkette. An der USV des mini hängen auch der JetKVM und der Switch, der Switch über ein Verlängerungskabel. Fritzbox und Glasfaseranschluss hängen an einer zweiten USV. Fällt der Strom aus, bleibt so das ganze Netz aktiv: Die Fritzbox hält ihr WLAN, der mini erreicht sie über den Kabelweg mini → Switch → Fritzbox, und ich habe durchgehend Internet. Meine SSH-Sitzung läuft einfach weiter. Dieser Kabelweg ist die Grundlage dafür, dass auch die Warn-Mails im Ausfall noch rauskommen.
 
