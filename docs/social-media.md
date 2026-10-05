@@ -116,7 +116,7 @@ Beispiel mit Skript, Drehliste und Underlord-Anweisungen: das Mac-mini-Setup-Vid
 
 ### Aufnahme
 
-- **Johannes nimmt direkt in Descript auf,** die Kamera hängt per HDMI am Rechner. Die Aufnahme ist 3840×2160, darin steht das Hochkant-Bild aufrecht in der Mitte, links und rechts schwarze Balken. Nutzbar ist etwa 1215×2160, also etwas mehr als das Zielformat 1080×1920. Descript skaliert die Ebene auf 1920 px Höhe, dann füllt das Hochkant-Bild die volle Breite und die Balken fallen aus dem Rahmen (Block „Format der Aufnahme" in [`docs/descript-instructions.md`](descript-instructions.md)). Mittig bleiben, keine Gesten zur Seite.
+- **Johannes nimmt direkt in Descript auf,** die Sony liegt hochkant auf dem Stativ und hängt per Elgato Cam Link 4K am Rechner. HDMI überträgt immer quer: Die Aufnahme kommt als 3840×2160 an, Johannes liegt darin auf der Seite. Um 90° im Uhrzeigersinn gedreht wird daraus 2160×3840, ein volles Hochkant-Bild in doppelter Zielauflösung. Die Drehung steht als erster Schritt in der Layout-Vorlage ([`docs/descript-instructions.md`](descript-instructions.md)). Mittig bleiben, keine Gesten zur Seite.
 - **Die Bildschirmaufnahme läuft die ganzen 25 Sekunden.** Das Browserfenster vorher schmal und hoch ziehen (etwa über die Handy-Ansicht der Entwicklertools), damit lange Zeilen umbrechen und die Schrift groß bleibt. Zeilennummern im Bild müssen zum Skript passen.
 - **Etwa 25 Sekunden.**
 
