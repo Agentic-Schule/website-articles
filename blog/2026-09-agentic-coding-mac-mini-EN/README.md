@@ -222,11 +222,9 @@ Setting up this Playwright MCP so that it stays unobtrusive, survives updates, a
 
 ## Power: shut down cleanly before the battery runs out
 
-An always-on machine has an enemy you rarely think about while coding: the power cut. If the supply dies mid-write, it hits the machine at the worst possible moment. So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6)**. Plenty of reserve, swappable batteries, and enough capacity to power the JetKVM and the switch alongside the mini.
+An always-on machine has an enemy you rarely think about while coding: the power cut. The mini is not a laptop that a battery carries through a power blip. Once the power is gone, everything is gone: the unsaved work, all running agents, the whole state. After that it's boot everything back up, window by window, session by session. So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6)**. Plenty of reserve, swappable batteries, and enough capacity to power the JetKVM and the switch alongside the mini.
 
-The UPS data cable goes over USB straight into a **front** port of the mini, not through a hub.
-
-> **⚠️ Caution:** On a hub, the UPS tends to silently drop off USB on Apple Silicon. macOS then keeps showing "AC power" and the watcher is blind. Straight into a front port, and `pmset -g batt` reports the `Back-UPS` reliably.
+The UPS data cable goes over USB into a **front** port of the mini. For reasons I can't explain, the connection on the rear ports was pretty unreliable; macOS kept losing sight of the UPS, which left the watcher blind. Since it sits in front, just like the JetKVM's keyboard, `pmset -g batt` reports the `Back-UPS` steadily. It doesn't look pretty, but it does the job.
 
 The whole network chain matters. The mini's UPS also powers the JetKVM and the switch, the switch via an extension cable. The Fritzbox router and the fiber connection hang on a second UPS. So during an outage the whole network stays up: the Fritzbox keeps its Wi-Fi, the mini reaches it over the wired path mini → switch → Fritzbox, and I have internet the whole time. My SSH session simply keeps running. That wired path is what lets the alert mails get out during the outage.
 
