@@ -107,6 +107,7 @@ Für Setup-Videos (eigenes Setup Schritt für Schritt, Vorbild sind die Hit-Reel
 
 - **Vollbild-Szenen:** Johannes füllt das ganze Bild, Kopf im oberen Drittel. Dafür hochkant drehen oder in 4K (siehe „Aufnahme").
 - **Bildszenen als Split-Screen:** oben das Bild, unten das Sprechervideo über die volle Breite, harte Kante bei y 960, keine Karte, kein Rahmen, keine abgerundeten Ecken.
+- **Rein- und Rauszoomen an Satzgrenzen** (engl. *Punch-in*): Innerhalb einer Sprecher-Einstellung an jedem Satzende ein harter Schnitt, der Ausschnitt wechselt zwischen 100 % und 110 %. So ändert sich das Bild alle paar Sekunden, und die Aufmerksamkeit bleibt. Kein animierter Zoom. Gilt auch im normalen Split-Screen für die untere Hälfte.
 - **Kein Freistellen.** Vor der schwarzen Kellerwand stellt Descript Johannes nicht sauber frei (helle Kleidung und Haare werden durchsichtig, dunkle Flecken bleiben). Split-Screen sieht deutlich sauberer aus.
 - **Untertitel im ganzen Video an der Trennlinie bei y 960,** in beiden Szenenarten, damit sie in den Split-Szenen nicht auf dem Gesicht liegen.
 - Eigene Aufnahmen (etwa der mini im Keller, das Handy mit der Claude-App) laufen im Vollbild ohne Sprecher.

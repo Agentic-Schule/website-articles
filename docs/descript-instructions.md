@@ -33,6 +33,7 @@ Convert the composition to a vertical video, 1080x1920 (9:16). No logo, no water
 LAYOUT (same in every scene)
 - Top half (y 0–960): the image for this scene. Fill the full width. Keep the important part in the middle of this area, not at the very top (the platform's progress bar sits there).
 - Bottom half (y 960–1920): the speaker video. The source is landscape 16:9: crop it to the center (cut left and right), keep head and shoulders, place the face in the upper part of this half. Fill the full width, no black bars.
+- Punch-in jump cuts: inside the speaker video, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds. No animated zoom.
 - Divider at y 960: an invisible boundary, NOT a drawn element. No line, no border, no frame, no bar, no shadow between the two halves; the image and the speaker video simply meet there. This is where all text goes. Nothing important in the bottom 300px (platform caption and username cover it) or at the right edge (buttons).
 
 CAPTIONS
@@ -63,6 +64,7 @@ LAYOUT
 - Speaker scenes: the speaker video fills the full frame. Head in the upper third, no black bars.
 - Image scenes (split screen): top half (y 0–960) the image, full width. Bottom half (y 960–1920) the full speaker video, full width, cropped to fill, face in the upper part of this half. Hard edge at y 960: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
 - Video cutaways: fill the full frame, no speaker.
-- Hard cuts only. No zoom, no pan, no transitions.
+- Hard cuts only. No animated zoom, no pan, no transitions.
+- Punch-in jump cuts: inside every speaker shot longer than about 4 s, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds.
 - Captions for the whole video centered on the divider at y 960, in every scene type.
 ```
