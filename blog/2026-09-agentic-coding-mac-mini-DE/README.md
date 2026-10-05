@@ -5,7 +5,7 @@ mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
 published: 2026-09-24
-lastModified: 2026-10-02
+lastModified: 2026-10-05
 keywords:
   - Agentic Coding
   - AI Agent
@@ -200,11 +200,11 @@ Ein Agent ist nur so gut wie die Umgebung, in der er arbeiten darf. Auf dem mini
 
 Drei Bausteine:
 
-**FileVault mit Remote-Entsperrung.** Die Platte ist verschlüsselt, so soll es sein. Nach einem Neustart hängt der mini aber im Pre-Boot-Lock. Erst wenn das FileVault-Passwort eingegeben ist, bootet er durch und die Dienste starten. Zu diesem Zeitpunkt gibt es noch kein Netzwerk, ein SSH-Login hilft also nicht. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es gibt mir aus der Ferne Bild und Tastatur bis hinunter zum Firmware- und Boot-Bildschirm. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, sonst bootet der Rechner nicht durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
+**FileVault mit Remote-Entsperrung.** Die Platte ist verschlüsselt, so soll es sein. Nach einem Neustart hängt der mini aber im Pre-Boot-Lock. Erst wenn das FileVault-Passwort eingegeben ist, bootet er durch und die Dienste starten. Zu diesem Zeitpunkt gibt es noch kein Netzwerk, ein SSH-Login hilft also nicht. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es gibt mir aus der Ferne Bild und Tastatur bis hinunter zum Firmware- und Boot-Bildschirm. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, sonst bootet der Rechner nicht durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt. Ich habe mich bewusst für den JetKVM entschieden, weil er **quelloffen** ist (GPL-2.0, [Code auf GitHub](https://github.com/jetkvm/kvm)). Viele KVM-over-IP-Geräte sind Closed Source. Bei einem Gerät, das Tastatur und Bildschirm über das Netz überträgt, will ich nachvollziehbaren Code.
 
 Für geplante Neustarts geht es auch ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren. Und `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch.
 
-> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Steck den JetKVM also vorne ein.
+> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Der Grund: hinten sitzen die Thunderbolt-Ports, und deren Stack ist am Pre-Boot-Screen noch nicht hochgefahren, eine darüber emulierte USB-Tastatur wird dort nicht erkannt. Steck den JetKVM-USB also vorne ein. Das Bild per HDMI darf hinten bleiben.
 
 **Docker ohne Docker Desktop.** Docker Desktop braucht einen GUI-Login, auf einer headless Maschine ein K.-o.-Kriterium. Stattdessen läuft **[colima](https://github.com/abiosoft/colima)** als System-Dienst (LaunchDaemon), der schon beim Booten startet. Unter der Haube dieselbe Technik wie Docker Desktop (Apples Virtualization.framework), mit Rosetta für **Intel-Images**, also für den ollen SQL Server, der leider nie nach ARM portiert wurde. Danke, Microsoft. So bekommt der Agent ein `docker` und `docker compose`, das einfach da ist.
 
@@ -220,6 +220,30 @@ Für geplante Neustarts geht es auch ohne Passwort: `sudo fdesetup authrestart` 
 Diesen Playwright-MCP so einzurichten, dass er unauffällig bleibt, Updates übersteht und nicht in die groben Bot-Filter gerät, ist ein Thema für sich. Den ganzen Weg beschreibe ich im eigenen Artikel:
 
 <a href="https://agentic.schule/blog/2026-09-agent-research-playwright-mcp"><img src="../2026-09-agent-research-playwright-mcp-DE/header.jpg" alt="Dein Agent wird bei der Recherche ausgesperrt? Gib ihm einen eigenen, unauffälligen Playwright-MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
+
+## Strom: sauber herunterfahren, bevor der Akku leer ist
+
+Ein always-on Rechner hat einen Feind, an den man beim Programmieren selten denkt: den Stromausfall. Reißt die Versorgung mitten im Schreiben ab, trifft es die Maschine im denkbar ungünstigsten Moment. Deshalb hängt der mini an einer USV (unterbrechungsfreie Stromversorgung, engl. *UPS*), einer **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6)**. Viel Reserve, austauschbare Batterien, und genug Leistung, um neben dem mini auch den JetKVM und den Switch mitzuversorgen.
+
+Das Datenkabel der USV geht per USB direkt an einen **vorderen** Port des mini, nicht über einen Hub.
+
+> **⚠️ Achtung:** Hängt die USV an einem Hub, fällt sie an Apple Silicon gern lautlos vom USB ab, ein bekannter APC-Fehler. macOS zeigt dann weiter „Netzstrom", und der Wächter ist blind. Direkt an einen vorderen Port, dann meldet `pmset -g batt` die `Back-UPS` zuverlässig.
+
+Wichtig ist die ganze Netzwerkkette. An derselben USV hängen auch der Switch und der Router, der Switch über ein Verlängerungskabel. So bleibt im Ausfall der Weg mini → Switch → Router stehen, der mini behält sein Internet, und meine SSH-Sitzung läuft einfach weiter. Kein WLAN nötig.
+
+Und wenn der Akku zur Neige geht? Ein kleiner Wächter übernimmt Mail und Abschaltung selbst. Das Skript `ups-notify.sh` läuft als System-Dienst (LaunchDaemon als root) und fragt alle 20 Sekunden `pmset -g batt` ab:
+
+1. Sobald der mini auf USV-Akku läuft, kommt eine Mail „STROMAUSFALL".
+2. Fällt der Akku auf 20 Prozent oder darunter, folgt eine zweite Mail „SHUTDOWN".
+3. Danach fährt der mini kontrolliert herunter (`shutdown -h now`).
+
+Kommt der Strom zurück, meldet eine Mail „Strom wieder da". Ein zweiter Wächter mailt, falls die USV ganz vom USB verschwindet, damit der erste nie unbemerkt blind läuft. Die Mails gehen über [Resend](https://resend.com) raus.
+
+Warum ein eigenes Skript und nicht die Bordmittel?
+
+> **⚠️ Das ist eine Falle:** Das macOS-eigene Auto-Shutdown bei niedrigem USV-Akku (`pmset -u haltremain/haltlevel/haltafter`) greift auf dem M4 nicht. Der Wert wird still ignoriert. Wer sich darauf verlässt, steht am Ende doch mit leerem Akku und hartem Aus da. Deshalb übernimmt das eigene Skript die Abschaltung, nachprüfbar und testbar.
+
+Der Grund für den ganzen Aufwand steht schon im Abschnitt [Deine Chats sind dein Kapital](#deine-chats-sind-dein-kapital). Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Und weil der Sync eine bidirektionale Spiegelung ist, repliziert er die kaputte Version brav auf die andere Maschine. Das ist die eigentliche Gefahr: Der Sync trägt den Schaden auf alle Geräte. Eine saubere Abschaltung verhindert genau das.
 
 ## Die Arbeit des Agenten im Browser ansehen
 

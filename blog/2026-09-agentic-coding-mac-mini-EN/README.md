@@ -5,7 +5,7 @@ mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
 published: 2026-09-24
-lastModified: 2026-10-02
+lastModified: 2026-10-05
 keywords:
   - Agentic Coding
   - AI Agent
@@ -199,11 +199,11 @@ An agent is only as good as the environment it's allowed to work in. On the mini
 
 Three building blocks:
 
-**FileVault with remote unlock.** The disk is encrypted, as it should be. But after a restart the mini hangs at the pre-boot lock. Only once the FileVault password is entered does it boot through and the services start. At that point there's no network yet, so an SSH login doesn't help. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It gives me picture and keyboard remotely, all the way down to the firmware and boot screen. On every restart I type the FileVault password through it once, otherwise the machine doesn't boot through. That keeps the disk encrypted and still lets me reach every boot step.
+**FileVault with remote unlock.** The disk is encrypted, as it should be. But after a restart the mini hangs at the pre-boot lock. Only once the FileVault password is entered does it boot through and the services start. At that point there's no network yet, so an SSH login doesn't help. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It gives me picture and keyboard remotely, all the way down to the firmware and boot screen. On every restart I type the FileVault password through it once, otherwise the machine doesn't boot through. That keeps the disk encrypted and still lets me reach every boot step. I deliberately chose the JetKVM because it is **open source** (GPL-2.0, [code on GitHub](https://github.com/jetkvm/kvm)). Many KVM-over-IP devices are closed source. For a device that transmits keyboard and screen over the network, I want auditable code.
 
 For planned restarts there's a way without the password: `sudo fdesetup authrestart` unlocks automatically on the next reboot without locking yourself out. And `pmset autorestart 1` brings the mini back up on its own after a power outage.
 
-> **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. So plug the JetKVM into a front port.
+> **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. The reason: the rear ports are Thunderbolt, and that stack isn't up yet at the pre-boot screen, so a USB keyboard emulated through it isn't recognized. So plug the JetKVM's USB into a front port. The video over HDMI can stay in the back.
 
 **Docker without Docker Desktop.** Docker Desktop needs a GUI login, on a headless machine a deal-breaker. Instead, **[colima](https://github.com/abiosoft/colima)** runs as a system service (LaunchDaemon) that starts at boot. Under the hood the same technology as Docker Desktop (Apple's Virtualization.framework), with Rosetta for **Intel images**, that is, for the old SQL Server that sadly was never ported to ARM. Thanks, Microsoft. So the agent gets a `docker` and `docker compose` that's simply there.
 
@@ -219,6 +219,30 @@ For planned restarts there's a way without the password: `sudo fdesetup authrest
 Setting up this Playwright MCP so that it stays unobtrusive, survives updates, and does not land in the crude bot filters is a topic of its own. I describe the whole path in a dedicated article:
 
 <a href="https://agentic.schule/en/blog/2026-09-agent-research-playwright-mcp"><img src="../2026-09-agent-research-playwright-mcp-EN/header.jpg" alt="Your agent gets locked out during research? Give it its own, unobtrusive Playwright MCP" style="display:block;margin:1.5em auto;width:50%;"></a>
+
+## Power: shut down cleanly before the battery runs out
+
+An always-on machine has an enemy you rarely think about while coding: the power cut. If the supply dies mid-write, it hits the machine at the worst possible moment. So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6)**. Plenty of reserve, swappable batteries, and enough capacity to power the JetKVM and the switch alongside the mini.
+
+The UPS data cable goes over USB straight into a **front** port of the mini, not through a hub.
+
+> **⚠️ Caution:** On a hub, the UPS tends to silently drop off USB on Apple Silicon, a known APC bug. macOS then keeps showing "AC power" and the watcher is blind. Straight into a front port, and `pmset -g batt` reports the `Back-UPS` reliably.
+
+The whole network chain matters. The switch and the router hang on the same UPS, the switch via an extension cable. That way the path mini → switch → router stays up during an outage, the mini keeps its internet, and my SSH session simply keeps running. No Wi-Fi needed.
+
+And when the battery runs low? A small watcher handles mail and shutdown itself. The script `ups-notify.sh` runs as a system service (a LaunchDaemon as root) and polls `pmset -g batt` every 20 seconds:
+
+1. As soon as the mini runs on UPS battery, a mail "STROMAUSFALL" (power cut) goes out.
+2. If the battery drops to 20 percent or below, a second mail "SHUTDOWN" follows.
+3. Then the mini shuts down in a controlled way (`shutdown -h now`).
+
+When power returns, a mail "Strom wieder da" (power back) arrives. A second watcher mails if the UPS disappears from USB entirely, so the first one never runs blind unnoticed. The mails go out via [Resend](https://resend.com).
+
+Why a custom script instead of the built-in tools?
+
+> **⚠️ This is a trap:** macOS's own auto-shutdown on low UPS battery (`pmset -u haltremain/haltlevel/haltafter`) doesn't take effect on the M4. The value is silently ignored. Rely on it, and you still end up with an empty battery and a hard cut. So the custom script does the shutdown, verifiable and testable.
+
+The reason for all this effort is already in the [Your Chats Are Your Capital](#your-chats-are-your-capital) section. A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes. And because the sync is a bidirectional mirror, it dutifully replicates the broken version to the other machine. That is the real danger: the sync spreads the damage to every device. A clean shutdown prevents exactly that.
 
 ## Viewing the Agent's Work in the Browser
 
