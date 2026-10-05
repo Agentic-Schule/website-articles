@@ -151,6 +151,26 @@ Für jede Szene baut die Sitzung ein eigenes Bild im agentic.schule-Look statt e
 - Alle drei Plattformen erzeugen zwar automatische Untertitel per Spracherkennung (Instagram, TikTok, YouTube Shorts; Deutsch wird überall unterstützt). Deren Anzeige, Stil und Position bestimmt aber die jeweilige Plattform bzw. der Zuschauer. Eingebrannte Untertitel sehen überall gleich aus und stehen dort, wo sie hingehören.
 - **Doppelte Untertitel vermeiden:** vor dem Posten in der Vorschau prüfen. Auf TikTok lassen sich die automatischen Untertitel bearbeiten oder entfernen.
 
+### Hook-Formeln
+
+Der Hook steht in der ersten Sekunde, gesprochen und als Bild, höchstens etwa zwölf gesprochene Wörter. Die Formeln stammen aus Vorlagen-Sammlungen für Kurzvideos (etwa [Opus Clip, Mai 2026](https://www.opus.pro/research/best-video-hooks-instagram)); deren Erfolgszahlen sind nicht überprüfbar, übernommen werden nur die Muster. Jede Formel ist auf Johannes' Ton zugeschnitten: souverän, keine Pannen-Erzählung, kein Hype-Vokabular („Das hat mich geschockt", „unfair", „Game Changer").
+
+| Formel | Muster | Beispiel |
+| --- | --- | --- |
+| Altes Werkzeug, neuer Zweck | „Dieses X gibt es seit <Jahr>. Unverzichtbar erst mit AI-Agenten." | „Dieses Git-Feature gibt es seit 2015. Unverzichtbar wurde es erst mit AI-Agenten." |
+| Ich-Setup mit „weil" | „Ich habe meinen AI-Agenten X gegeben, weil …" | „Ich habe meinen AI-Agenten einen eigenen Mac mini gegeben, weil ich meinen Laptop zuklappen will." |
+| Die meisten / ich | „Die meisten machen X. Ich mache Y." | „Die meisten lassen ihre Agenten im selben Ordner arbeiten. Ich gebe jedem seinen eigenen." |
+| Hyperkonkrete Situation | „Wenn <sehr konkrete Situation>, dann …" | „Wenn zwei AI-Agenten im selben Repo arbeiten, überschreiben sie sich gegenseitig die Dateien." |
+| Knobelaufgabe | „Findest du X in diesem Y?" | „Findest du den Angriff in diesem AI-Skill?" |
+| Warnung | „Bevor du X machst, kenn Y." | „Bevor du den zweiten Agenten startest, kenn diesen Git-Befehl." |
+| Widerspruch | „<Verbreitete Annahme> stimmt nicht." | „Deine AI-Agenten gehören NICHT in die Cloud." |
+| Konkretes Ergebnis | „<Konkretes Ergebnis> mit <einfachem Mittel>." | „Fünf Claude-Code-Sessions an einem Repo, ohne dass eine die andere stört." |
+| Weiterleiten | „Schick das jedem, der …" | „Schick das jedem, der noch mit `git stash` zwischen Branches springt." |
+
+- **„Ich habe X immer falsch gemacht, bis …" nicht wörtlich verwenden.** Die Pannen-Erzählung widerspricht dem souveränen Ton. Dieselbe Spannung liefern „Altes Werkzeug, neuer Zweck" und „Die meisten / ich": Es gibt eine bessere Art, und Johannes kennt sie.
+- Zahlen im Hook nur, wenn sie stimmen und etwas aussagen (das Jahr 2015 für `git worktree` steht in den Release Notes von Git 2.5).
+- Formel nicht zwei Tage hintereinander wiederholen.
+
 ### Skript-Aufbau (Knobelaufgabe)
 
 1. **Hook als Frage an den Zuschauer:** „Ich habe eine kleine Knobelaufgabe für dich. Findest du den Angriff in diesem AI-Skill?", gesprochen und als Text im Bild. Das Material ist dabei oben schon zu sehen.
