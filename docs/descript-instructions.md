@@ -53,3 +53,16 @@ THIS VIDEO
 
 After applying, report the start time of each scene.
 ```
+
+## Variante: Wechsel zwischen Vollbild und Split-Screen
+
+Ersetzt in der Vorlage für Schritt 2 den Block LAYOUT; die Untertitel stehen wie dort an der Trennlinie. Kein Freistellen (Green Screen, Chroma Key): vor der schwarzen Wand wird das Ergebnis fleckig.
+
+```
+LAYOUT
+- Speaker scenes: the speaker video fills the full frame. Head in the upper third, no black bars.
+- Image scenes (split screen): top half (y 0–960) the image, full width. Bottom half (y 960–1920) the full speaker video, full width, cropped to fill, face in the upper part of this half. Hard edge at y 960: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
+- Video cutaways: fill the full frame, no speaker.
+- Hard cuts only. No zoom, no pan, no transitions.
+- Captions for the whole video centered on the divider at y 960, in every scene type.
+```

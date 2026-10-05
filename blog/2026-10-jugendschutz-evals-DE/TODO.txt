@@ -1,0 +1,106 @@
+OFFEN VOR DER VERÖFFENTLICHUNG
+==============================
+
+Branch: 2026-10-jugendschutz-evals
+Artikel: README.md (deutsche Fassung, fertig geschrieben)
+
+
+1. KORPUS: UMLAUTE REPARIEREN  (Blocker, vor der Neumessung!)
+-------------------------------------------------------------
+Im Korpus sind Umlaute transliteriert: "waer" statt "wäre", "fuer" statt "für",
+"hauptstrasse" statt "hauptstraße". Betroffen sind rund 30 der 140 Testsätze und
+viele Begründungstexte.
+
+Das ist aus zwei Gründen falsch:
+
+  a) Es verstößt gegen die Regel für deutsche Texte (echte Umlaute, nie
+     transliterieren).
+  b) Es untergräbt den Zweck des Korpus. Es soll messen, wie Kinder wirklich
+     tippen, und Kinder tippen Umlaute. Aktuell misst es eine Schreibweise,
+     die es nicht gibt.
+
+Achtung bei der Reparatur: eine blinde Ersetzung von "ue"/"ae"/"oe"/"ss" zerstört
+Wörter wie "neue", "dass", "muss", "gruppe", "klasse", "passiert". Es braucht eine
+Wortliste, die durchgesehen wurde, mit Wortgrenzen.
+
+Reihenfolge: erst Umlaute reparieren, DANN neu messen. Andersherum sind die
+Messungen sofort wieder hinfällig.
+
+
+2. MESSUNGEN NEU ERZEUGEN
+-------------------------
+Die Rohdaten zu Jev sind beim Aufräumen verloren gegangen, und die übrigen Läufe
+stammen aus unterschiedlichen Konfigurationen (teils 2, teils 3 Wiederholungen,
+Gemma teils vom Server, teils lokal).
+
+Fertiges Skript liegt bereit:
+
+    cd ~/Work/haushoppe-headquarter/jugendschutz-evals
+    JEFF_REPO=<pfad-zum-jeff-checkout> JEV_API_KEY=<key> src/vollmessung.sh
+
+Es fährt alle Konfigurationen mit einheitlich drei Wiederholungen und hält immer
+nur EIN Modell im Speicher (sonst läuft der Mac mini aus dem Speicher und die
+Zeiten verfälschen sich gegenseitig).
+
+Danach die Zahlen im Artikel gegenprüfen. Betroffen sind diese Tabellen:
+  - "Was dabei herauskam" (Hauptvergleich der vier Modelle)
+  - "Eine kalibrierte Wahrscheinlichkeit ist kein Qualitätssiegel" (Schwellen)
+  - "Die Frageform wiegt schwerer als das Modell" (Auswahl gegen Batterie)
+  - "Wo die Entscheidungsmodelle gewinnen" (unauswertbar / instabil)
+
+Die Ollama-Versionstabelle ist davon NICHT betroffen, die Rohdaten dazu liegen
+unter ergebnisse/ollama-versionen/.
+
+
+3. JEV-API-SCHLÜSSEL ROTIEREN
+-----------------------------
+Der benutzte Schlüssel stand im Klartext in einer Chat-Sitzung und in der
+Shell-Historie. Er liegt in keiner Datei im Repo, sollte aber ersetzt werden:
+https://console.typesafe.ai/keys
+
+
+4. REPOSITORY VERÖFFENTLICHEN
+-----------------------------
+Der Artikel verlinkt auf
+https://github.com/learnly-school/jugendschutz-evals
+Das Repo existiert bisher nur lokal unter
+~/Work/haushoppe-headquarter/jugendschutz-evals (vier Commits, nichts gepusht).
+
+Vor dem Artikel veröffentlichen, sonst zeigt der Link ins Leere.
+
+
+5. BANNER
+---------
+header.jpg fehlt. Das Frontmatter verweist schon darauf.
+Vorgabe: docs/banner.md
+
+
+6. ENGLISCHE FASSUNG
+--------------------
+Noch nicht angelegt. Ordner wäre 2026-10-jugendschutz-evals-EN,
+strukturgleich (gleiche Überschriften, gleiche Reihenfolge).
+Die englischen Zitate aus den Modellkarten bleiben in beiden Fassungen
+zeichengenau im Original.
+
+
+7. LEKTORAT
+-----------
+Workflow vor dem Merge laufen lassen:
+
+    Workflow({ name: 'artikel-lektorat', args: ['<absoluter-pfad>/blog/2026-10-jugendschutz-evals-DE/README.md'] })
+
+
+OFFENE PRODUKT-ENTSCHEIDUNGEN (nicht Artikel, aber aus dem Eval entstanden)
+===========================================================================
+
+- Die Elternseite von learnly.school sagt zu, der Wächter fange "Adresse,
+  Telefonnummer" ab. Gemessen gehen sieben von zehn Datenfällen durch. Die
+  Formulierung hält nicht, was sie verspricht, und sollte korrigiert werden.
+
+- Dieselbe Seite räumt Schwäche nur bei "sehr leisen Sätzen, in denen ein Kind
+  nichts Konkretes nennt" ein. Übersehen werden aber auch explizite Sätze.
+  Die Einschränkung ist zu eng gefasst.
+
+- Produktion läuft auf Ollama 0.32.1, der Mac mini inzwischen auf 0.35.1. Von
+  den drei gemessenen Versionen ist 0.32.1 bei den Krisenfällen die beste.
+  Ob und wohin angeglichen wird, ist eine Entscheidung mit Jugendschutz-Folgen.
