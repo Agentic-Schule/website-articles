@@ -33,7 +33,7 @@ The speaker footage is 3840x2160 and plays sideways, because the camera lies on 
 
 LAYOUT (same in every scene)
 - Top half (y 0–960): the image for this scene. Fill the full width. Keep the important part in the middle of this area, not at the very top (the platform's progress bar sits there).
-- Bottom half (y 960–1920): the speaker video. The source is landscape 16:9: crop it to the center (cut left and right), keep head and shoulders, place the face in the upper part of this half. Fill the full width, no black bars.
+- Bottom half (y 960–1920): the rotated speaker video (see FORMAT), scaled to fill the full width, cropped top and bottom. Keep head and shoulders, face in the upper part of this half. No black bars.
 - Punch-in jump cuts: inside the speaker video, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds. No animated zoom.
 - Divider at y 960: an invisible boundary, NOT a drawn element. No line, no border, no frame, no bar, no shadow between the two halves; the image and the speaker video simply meet there. This is where all text goes. Nothing important in the bottom 300px (platform caption and username cover it) or at the right edge (buttons).
 

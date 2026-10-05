@@ -105,7 +105,7 @@ Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer 
 
 Für Setup-Videos (eigenes Setup Schritt für Schritt, Vorbild sind die Hit-Reels von @josephbchandler) wechseln zwei Szenenarten mit harten Schnitten: Johannes im Vollbild und Split-Screen mit einem Bild oben. Der Wechsel selbst sorgt für den Schnitt-Rhythmus alle paar Sekunden.
 
-- **Vollbild-Szenen:** Johannes füllt das ganze Bild, Kopf im oberen Drittel. Dafür hochkant drehen oder in 4K (siehe „Aufnahme").
+- **Vollbild-Szenen:** Johannes füllt das ganze Bild, Kopf im oberen Drittel. Die Kamera liegt dafür hochkant (siehe „Aufnahme").
 - **Bildszenen als Split-Screen:** oben das Bild, unten das Sprechervideo über die volle Breite, harte Kante bei y 960, keine Karte, kein Rahmen, keine abgerundeten Ecken.
 - **Rein- und Rauszoomen an Satzgrenzen** (engl. *Punch-in*): Innerhalb einer Sprecher-Einstellung an jedem Satzende ein harter Schnitt, der Ausschnitt wechselt zwischen 100 % und 110 %. So ändert sich das Bild alle paar Sekunden, und die Aufmerksamkeit bleibt. Kein animierter Zoom. Gilt auch im normalen Split-Screen für die untere Hälfte.
 - **Kein Freistellen.** Vor der schwarzen Kellerwand stellt Descript Johannes nicht sauber frei (helle Kleidung und Haare werden durchsichtig, dunkle Flecken bleiben). Split-Screen sieht deutlich sauberer aus.
