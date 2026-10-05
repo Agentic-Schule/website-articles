@@ -101,6 +101,18 @@ Jedes Video zeigt etwas. Das Bild ist durchgehend geteilt:
 
 Warum Split-Screen: Die Knobelaufgabe steht ab Sekunde 0 im Bild, der Zuschauer rät mit, während die Frage gestellt wird. Und er sieht immer, worüber gesprochen wird. Daten, dass Split-Screen besser läuft als Vollbild mit Schnitten, gibt es nicht; für die Knobelaufgabe ist es die natürliche Form.
 
+### Variante: Wechsel zwischen Vollbild und Split-Screen
+
+Für Setup-Videos (eigenes Setup Schritt für Schritt, Vorbild sind die Hit-Reels von @josephbchandler) wechseln zwei Szenenarten mit harten Schnitten: Johannes im Vollbild und Split-Screen mit einem Bild oben. Der Wechsel selbst sorgt für den Schnitt-Rhythmus alle paar Sekunden.
+
+- **Vollbild-Szenen:** Johannes füllt das ganze Bild, Kopf im oberen Drittel. Dafür hochkant drehen oder in 4K (siehe „Aufnahme").
+- **Bildszenen als Split-Screen:** oben das Bild, unten das Sprechervideo über die volle Breite, harte Kante bei y 960, keine Karte, kein Rahmen, keine abgerundeten Ecken.
+- **Kein Freistellen.** Vor der schwarzen Kellerwand stellt Descript Johannes nicht sauber frei (helle Kleidung und Haare werden durchsichtig, dunkle Flecken bleiben). Split-Screen sieht deutlich sauberer aus.
+- **Untertitel im ganzen Video an der Trennlinie bei y 960,** in beiden Szenenarten, damit sie in den Split-Szenen nicht auf dem Gesicht liegen.
+- Eigene Aufnahmen (etwa der mini im Keller, das Handy mit der Claude-App) laufen im Vollbild ohne Sprecher.
+
+Beispiel mit Skript, Drehliste und Underlord-Anweisungen: das Mac-mini-Setup-Video, Bilder unter `docs/video-bilder/mini-setup/`.
+
 ### Aufnahme
 
 - **Johannes wird im Querformat gedreht** und im Schnitt zugeschnitten: links und rechts weg, oben und unten bleibt. Mittig bleiben, keine Gesten zur Seite. Für die untere Hälfte (1080×960, fast quadratisch) reicht eine 1080p-Aufnahme. Ein Vollbild im Hochformat (1080×1920) bräuchte 4K, denn aus 16:9 bleibt dafür nur knapp ein Drittel der Breite.
@@ -121,7 +133,7 @@ Für jede Szene baut die Sitzung ein eigenes Bild im agentic.schule-Look statt e
 - **Der Hook als eigenes Bild:** nur Text, groß und plakativ, etwa „Deine AI-Agenten gehören NICHT in die Cloud." Er läuft, solange der Hook gesprochen wird.
 - **Kein Emoji, keine Firmenlogos.** Icons als schlichte Linien-SVG.
 - **Material echt halten:** Befehle, Pfade und Dateinamen so, wie sie wirklich aussehen (etwa `ls ~/.claude/projects/-projektverzeichnis/` mit `.jsonl`-Dateien und `memory/`). Persönliche Pfade durch einen sprechenden Platzhalter ersetzen, Kundenprojekte nie zeigen.
-- **Vollbild-Variante:** Für Videos, in denen Johannes freigestellt vor dem Bild steht, rendert `--full` das Bild in 1080×1920. Der Inhalt sitzt dann zwischen y 230 und 950, darunter steht der Sprecher. Gemeinsames Stylesheet und Beispiel: `docs/video-bilder/mini-setup/`.
+- **Bilder in 1080×1920:** `--full` rendert das Bild hochkant, der Inhalt sitzt zwischen y 230 und 950. Im Split-Screen verdeckt das Sprechervideo die untere Hälfte; ohne Sprecher füllt das Bild den ganzen Rahmen. Gemeinsames Stylesheet und Beispiel: `docs/video-bilder/mini-setup/`.
 - **Ablage:** Quellen unter `docs/video-bilder/tag<N>/` mit gemeinsamem `docs/video-bilder/base.css`, fertige Bilder als `~/Shots/tag<N>-video-<nr>-<name>.jpg`. Jedes Bild vor der Abgabe ansehen: kein ungewollter Zeilenumbruch, nichts überlappt.
 
 ### Format
