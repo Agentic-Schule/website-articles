@@ -17,11 +17,12 @@ Das Argument ist entweder eine **Tagesnummer** (`2`, `day 2`) oder ein **Slug** 
 ## Ablauf
 
 1. **Artikel lesen:** `blog/<slug>-DE/README.md` komplett. Alle Posts sind deutsch und verlinken die deutsche Fassung.
-2. **Den Kern und den Post-Typ finden:** Gibt es ein zeigbares Stück echtes Material (zwei Zeilen einer Datei, ein Befehl, eine Ausgabe), wird daraus die **Knobelaufgabe** („Siehst du …?"). Geht es um ein Setup, eine Erfahrung oder eine Meinung, wird es die **offene Frage** („Wo laufen eigentlich deine …?"). Nicht jeden Tag denselben Typ, und den Wortlaut variieren.
+2. **Den Kern und den Post-Typ finden:** Gibt es ein zeigbares Stück echtes Material (zwei Zeilen einer Datei, ein Befehl, eine Ausgabe), wird daraus die **Knobelaufgabe** („Siehst du …?"). Zeigt der Artikel ein eigenes, nachmachbares Setup, wird das Video ein **Setup-Video** nach „Skript-Aufbau (Setup-Video)" im Playbook (Wechsel Vollbild/Split, Aufruf mit Kommentar-Stichwort); die Text-Posts nehmen dann die offene Frage. Geht es um eine Erfahrung oder eine Meinung, wird es die **offene Frage** („Wo laufen eigentlich deine …?"). Nicht jeden Tag denselben Typ, und den Wortlaut variieren.
 3. **Entwerfen**, gemäß `docs/social-media.md` (Tag 1 dort ist das Muster):
    - LinkedIn-, X- und Bluesky-Post nach der passenden Vorlage im Playbook (Knobelaufgabe oder offene Frage), kurz, mit Link, höchstens ein passendes Emoji. X höchstens 280 Zeichen (Link zählt 23; nachzählen).
    - Bei der Knobelaufgabe eine Bildvorlage für LinkedIn und X: welche Datei, welche Zeilen wörtlich, was durch `[...]` ersetzt wird; der entscheidende Teil unten. Johannes macht den Screenshot im Editor. Bei der offenen Frage reicht das Header-Bild oder ein Foto.
    - Video-Skript (etwa 25 Sekunden, Schluss: „Den ganzen Artikel findest du auf meiner Website: agentic.schule") und Drehplan für den Split-Screen als Tabelle: Sekunde, oben (Bildschirm), Mitte (Text), Ton. Unten ist durchgehend Johannes.
+   - Beim Setup-Video stattdessen: Skript (45 bis 50 Sekunden) als Tabelle Satz für Satz mit Bild, Drehliste (Take und eigene Aufnahmen), gerenderte Bilder in 1080×1920 mit echten Ausgaben, Cover-Text und Antworttext für die Stichwort-Kommentare.
    - Bilder für die obere Videohälfte nach `docs/social-media.md` („Bilder für die obere Hälfte"): oben 200 px frei, Quellen unter `docs/video-bilder/tag<N>/`, Rendern mit `tools/render-video-image.mjs`.
    - Nach dem Dreh: zuerst die Schnitt-Anweisung für Underlord, nach Johannes' OK die Layout-Anweisung (Vorlagen in `docs/descript-instructions.md`).
    - Bluesky: Text wie auf X, höchstens 300 Zeichen inklusive voller URL (nachzählen).

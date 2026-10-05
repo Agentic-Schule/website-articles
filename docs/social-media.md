@@ -161,11 +161,31 @@ Für jede Szene baut die Sitzung ein eigenes Bild im agentic.schule-Look statt e
 
 Keine Vorstellung („Hallo, ich bin Johannes …"), kein „Tag N" im gesprochenen Text. Wer Johannes ist, steht im Profil.
 
+### Skript-Aufbau (Setup-Video)
+
+Für Artikel über ein eigenes Setup. Vorbild sind die beiden Hit-Reels von @josephbchandler (Oktober 2026). Ihre Flops hatten dieselbe Machart, zeigten aber Einordnung und Vergleich statt eines Setups. Den Unterschied macht also der Inhalt: ein konkretes, nachmachbares eigenes Setup mit echten Bildschirmen.
+
+1. **Ich-Hook mit „weil" und einem Alltagsproblem:** „Ich habe meinen AI-Agenten einen eigenen Mac mini gegeben, weil ich meinen Laptop zuklappen will, ohne dass sie aufhören zu arbeiten." Der Werkzeugname (Claude Code) fällt im ersten Satz.
+2. **Das Problem konkret:** zwei, drei Alltagssituationen („bis ich ihn zuklappe, in den Rucksack stecke oder der Akku leer ist").
+3. **Ein zweiter, emotionaler Grund:** meist Sicherheit („Auf meinem Laptop liegen meine Passwörter, meine Mails, mein ganzes Leben.").
+4. **Drei Schritte, jeder mit einem echten Bildschirm:** „Ich habe … Dann … Dann …". Echte Ausgaben vom eigenen Rechner (`pmset -g`, `tailscale status`, `tmux ls`), private Adressen maskiert.
+5. **„Und jetzt kommt das Wichtigste:"** ein einzelner Befehl oder Klick mit sichtbarem Ergebnis, am besten als echte Bildschirmaufnahme.
+6. **Das Gefühl in einem Satz:** „Fühlt sich an, als liefe alles auf meinem Handy. Läuft aber im Keller."
+7. **Aufruf mit Stichwort:** „Mein komplettes Setup steht Schritt für Schritt in meinem Artikel. Kostenlos. Kommentiere ‚Mini', und ich schicke ihn dir."
+
+- **Länge 45 bis 50 Sekunden.** Länger kostet Zuschauer am Ende. Nach dem Schnitt der Versprecher in einem zweiten Durchgang straffen: Pausen auf 0,2 s, Füllwörter wie „halt", „nun", „eigentlich", „endlich" raus.
+- **Cover mit Nutzen** in zwei, drei Wörtern („Claude Code 24/7"), kein Vergleich („Mac mini vs. Cloud").
+- **Drehen:** hochkant vor der schwarzen Kellerwand, kein schwarzes Shirt, ein Licht seitlich von hinten. Ein ganzer Durchlauf pro Take, Versprecher einfach wiederholen; Underlord nimmt den letzten vollständigen Durchlauf.
+- **Eigene Aufnahmen** (Gerät an seinem Platz, Laptop zuklappen, Befehl tippen, Handy) machen das Video echt. Für jede fehlende Aufnahme steht ein gerendertes Ersatzbild bereit.
+- Layout: „Variante: Wechsel zwischen Vollbild und Split-Screen" oben. Vollständiges Beispiel mit Drehliste und Underlord-Anweisungen: das Mac-mini-Setup-Video (Bilder unter `docs/video-bilder/mini-setup/`).
+
 ## Der Aufruf auf den Kurzvideo-Plattformen
 
-- **Überall derselbe Satz:** „Den ganzen Artikel findest du auf meiner Website: agentic.schule". Gesprochen am Ende des Videos, dazu `agentic.schule` als Text im Bild, und derselbe Satz in der Caption.
-- **Kein Kommentar-Keyword, keine DM-Automatisierung.** Die Website funktioniert auf jeder Plattform gleich, DMs nicht: Auf TikTok lässt sich ManyChat aus der EU nicht verbinden, DMs von Instagram an Nicht-Follower landen im Anfrage-Ordner, Shorts haben gar keinen DM-Weg, und Meta stuft „Kommentiere ein bestimmtes Wort" auf Facebook als *Comment Baiting* ein. Kommentare gehören laut Instagram ohnehin nicht zu den drei wichtigsten Ranking-Signalen.
-- **Voraussetzung:** Der neue Artikel steht auf agentic.schule ganz oben und ist ohne Suchen zu finden.
+Zwei Formen, je nach Video:
+
+- **Standard (Knobelaufgabe, offene Frage):** „Den ganzen Artikel findest du auf meiner Website: agentic.schule". Gesprochen am Ende des Videos, dazu `agentic.schule` als Text im Bild, und derselbe Satz in der Caption. Voraussetzung: Der neue Artikel steht auf agentic.schule ganz oben und ist ohne Suchen zu finden.
+- **Setup-Video: Kommentar-Stichwort.** „Kommentiere ‚Mini', und ich schicke ihn dir." Die Kommentare zählen als Interaktion. Beantwortet werden sie zunächst von Hand. Erst wenn sich die Kommentare häufen, richtet Johannes auf Instagram die Automation „Kommentar zu Nachricht" in der Meta Business Suite ein; Kommentare von davor bleiben Handarbeit.
+- **TikTok und YouTube haben keine Automation für Kommentare** (TikToks Stichwort-Antwort reagiert nur auf Direktnachrichten). Dort den Artikel-Link als ersten Kommentar anpinnen und auf das Stichwort antworten: „Danke! Der Link zum Artikel steht oben im angepinnten Kommentar." Den Wortlaut ab und zu variieren.
 - **Fragt jemand in den Kommentaren nach dem Link,** öffentlich mit der Adresse antworten.
 - **LinkedIn und X:** Der Link steht im Post.
 
