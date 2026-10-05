@@ -3,7 +3,7 @@
 Jedes Video entsteht in Descript in zwei Schritten. Die Social-Media-Sitzung schreibt für beide Schritte die Anweisungen an Underlord, Johannes gibt sie in Descript ein.
 
 1. **Schnitt.** Underlord löscht nur wörtlich genannte Stellen aus dem Rohtake: abgebrochene Versuche, Versprecher, Doppelungen. Nichts wird umformuliert oder neu eingesprochen. Underlord meldet danach die neue Länge und jeden Schnitt mit Zeitstempel.
-2. **Layout.** Erst wenn der Schnitt passt: Hochformat, Bilder, Untertitel, Audio. Die Anweisung besteht aus der Vorlage unten plus den Angaben für dieses Video (Szenen, Einblendungen, Korrekturen in den Untertiteln).
+2. **Layout.** Erst wenn der Schnitt passt. Die Aufnahme kommt als 3840×2160 mit dem Hochkant-Bild mittig zwischen schwarzen Balken; die Vorlage skaliert sie randlos ins Hochformat, gedreht wird nichts. Dann: Hochformat, Bilder, Untertitel, Audio. Die Anweisung besteht aus der Vorlage unten plus den Angaben für dieses Video (Szenen, Einblendungen, Korrekturen in den Untertiteln).
 
 ## Vorlage Schritt 1: Schnitt
 
@@ -29,6 +29,7 @@ Do not cut or change the spoken content any further. The edit from step 1 is fin
 
 FORMAT
 Convert the composition to a vertical video, 1080x1920 (9:16). No logo, no watermark, no borders, no emojis anywhere.
+The speaker footage is 3840x2160 with the upright portrait image in the center and black pillarbox bars left and right. Do not rotate it. Scale the speaker layer so that its height is exactly 1920 px (about 3413x1920), horizontally centered: the portrait image then fills the full 1080 px width and the bars fall outside the frame. In split-screen scenes use the same centered portrait image, scaled to fill the bottom half and cropped top and bottom. Confirm for every segment: no black bars, person upright.
 
 LAYOUT (same in every scene)
 - Top half (y 0–960): the image for this scene. Fill the full width. Keep the important part in the middle of this area, not at the very top (the platform's progress bar sits there).

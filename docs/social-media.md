@@ -116,7 +116,7 @@ Beispiel mit Skript, Drehliste und Underlord-Anweisungen: das Mac-mini-Setup-Vid
 
 ### Aufnahme
 
-- **Johannes wird im Querformat gedreht** und im Schnitt zugeschnitten: links und rechts weg, oben und unten bleibt. Mittig bleiben, keine Gesten zur Seite. Für die untere Hälfte (1080×960, fast quadratisch) reicht eine 1080p-Aufnahme. Ein Vollbild im Hochformat (1080×1920) bräuchte 4K, denn aus 16:9 bleibt dafür nur knapp ein Drittel der Breite.
+- **Johannes nimmt direkt in Descript auf,** die Kamera hängt per HDMI am Rechner. Die Aufnahme ist 3840×2160, darin steht das Hochkant-Bild aufrecht in der Mitte, links und rechts schwarze Balken. Nutzbar ist etwa 1215×2160, also etwas mehr als das Zielformat 1080×1920. Descript skaliert die Ebene auf 1920 px Höhe, dann füllt das Hochkant-Bild die volle Breite und die Balken fallen aus dem Rahmen (Block „Format der Aufnahme" in [`docs/descript-instructions.md`](descript-instructions.md)). Mittig bleiben, keine Gesten zur Seite.
 - **Die Bildschirmaufnahme läuft die ganzen 25 Sekunden.** Das Browserfenster vorher schmal und hoch ziehen (etwa über die Handy-Ansicht der Entwicklertools), damit lange Zeilen umbrechen und die Schrift groß bleibt. Zeilennummern im Bild müssen zum Skript passen.
 - **Etwa 25 Sekunden.**
 
