@@ -240,6 +240,42 @@ Why a custom script instead of the built-in tools?
 
 > **⚠️ This is a trap:** macOS's own auto-shutdown on low UPS battery (`pmset -u haltremain/haltlevel/haltafter`) doesn't take effect on the M4. The value is silently ignored. Rely on it, and you still end up with an empty battery and a hard cut. So the custom script does the shutdown, verifiable and testable.
 
+The core is a short loop. The three stages from above sit right inside it:
+
+```bash
+HALT_PCT="${HALT_PCT:-20}"   # shut down cleanly at <= X% UPS battery
+POLL="${POLL:-20}"           # seconds between checks
+
+state="init"                 # init | AC | UPS
+while :; do
+  batt="$(pmset -g batt)"
+  src="$(pm_src_of "$batt")" # "AC" or "UPS"
+  pct="$(pm_pct_of "$batt")" # battery level in percent
+
+  # Mail only on a real switch, in the background (the loop must never block on a mail)
+  if [ "$state" != "init" ] && [ "$src" != "$state" ]; then
+    if [ "$src" = "UPS" ]; then
+      notify "STROMAUSFALL - $HOST auf USV-Akku" "Now on battery (${pct}%). Shuts down at <= ${HALT_PCT}%."
+    else
+      notify "Strom wieder da - $HOST" "Back on mains power (${pct}%)."
+    fi
+  fi
+  state="$src"
+
+  # Low battery -> clean shutdown. Double-guarded: only on UPS AND low battery.
+  if [ "$src" = "UPS" ] && [ -n "$pct" ] && [ "$pct" -le "$HALT_PCT" ]; then
+    notify_now "SHUTDOWN - $HOST (Akku ${pct}%)" "Shutting down in a controlled way now."
+    /bin/sleep 2
+    /sbin/shutdown -h now "USV-Akku niedrig (${pct}%)"
+    exit 0
+  fi
+
+  /bin/sleep "$POLL"
+done
+```
+
+Two small helpers are factored out: `pm_src_of`/`pm_pct_of` read the source and battery level from `pmset -g batt`, and `notify`/`notify_now` send the mail via Resend, always in the background, so a network timeout can never block the shutdown. The secrets (Resend key, sender, recipient) live in a `resend.env` with `chmod 600`, not in the script.
+
 The reason for all this effort is already in the [Your Chats Are Your Capital](#your-chats-are-your-capital) section. A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes. And because the sync is a bidirectional mirror, it dutifully replicates the broken version to the other machine. That is the real danger: the sync spreads the damage to every device. A clean shutdown prevents exactly that.
 
 ## Viewing the Agent's Work in the Browser

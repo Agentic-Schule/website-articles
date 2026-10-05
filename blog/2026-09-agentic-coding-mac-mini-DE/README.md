@@ -241,6 +241,42 @@ Warum ein eigenes Skript und nicht die Bordmittel?
 
 > **⚠️ Das ist eine Falle:** Das macOS-eigene Auto-Shutdown bei niedrigem USV-Akku (`pmset -u haltremain/haltlevel/haltafter`) greift auf dem M4 nicht. Der Wert wird still ignoriert. Wer sich darauf verlässt, steht am Ende doch mit leerem Akku und hartem Aus da. Deshalb übernimmt das eigene Skript die Abschaltung, nachprüfbar und testbar.
 
+Der Kern ist eine kurze Schleife. Die drei Stufen von oben stehen direkt darin:
+
+```bash
+HALT_PCT="${HALT_PCT:-20}"   # bei <= X % USV-Akku sauber herunterfahren
+POLL="${POLL:-20}"           # Sekunden zwischen den Checks
+
+state="init"                 # init | AC | UPS
+while :; do
+  batt="$(pmset -g batt)"
+  src="$(pm_src_of "$batt")" # "AC" oder "UPS"
+  pct="$(pm_pct_of "$batt")" # Akkustand in Prozent
+
+  # Mail nur beim echten Wechsel, im Hintergrund (die Schleife darf nie auf einer Mail hängen)
+  if [ "$state" != "init" ] && [ "$src" != "$state" ]; then
+    if [ "$src" = "UPS" ]; then
+      notify "STROMAUSFALL - $HOST auf USV-Akku" "Läuft jetzt auf Akku (${pct}%). Fährt bei <= ${HALT_PCT}% herunter."
+    else
+      notify "Strom wieder da - $HOST" "Läuft wieder am Netzstrom (${pct}%)."
+    fi
+  fi
+  state="$src"
+
+  # Low Battery -> sauberes Shutdown. Doppelt abgesichert: nur auf USV UND Akku niedrig.
+  if [ "$src" = "UPS" ] && [ -n "$pct" ] && [ "$pct" -le "$HALT_PCT" ]; then
+    notify_now "SHUTDOWN - $HOST (Akku ${pct}%)" "Fährt jetzt kontrolliert herunter."
+    /bin/sleep 2
+    /sbin/shutdown -h now "USV-Akku niedrig (${pct}%)"
+    exit 0
+  fi
+
+  /bin/sleep "$POLL"
+done
+```
+
+Zwei kleine Helfer sind ausgelagert: `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` schicken die Mail über Resend, immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert. Die Secrets (Resend-Key, Absender, Empfänger) liegen in einer `resend.env` mit `chmod 600`, nicht im Skript.
+
 Der Grund für den ganzen Aufwand steht schon im Abschnitt [Deine Chats sind dein Kapital](#deine-chats-sind-dein-kapital). Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Und weil der Sync eine bidirektionale Spiegelung ist, repliziert er die kaputte Version brav auf die andere Maschine. Das ist die eigentliche Gefahr: Der Sync trägt den Schaden auf alle Geräte. Eine saubere Abschaltung verhindert genau das.
 
 ## Die Arbeit des Agenten im Browser ansehen
