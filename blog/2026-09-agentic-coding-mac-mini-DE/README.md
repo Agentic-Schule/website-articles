@@ -223,7 +223,9 @@ Diesen Playwright-MCP so einzurichten, dass er unauffällig bleibt, Updates übe
 
 ## Strom: sauber herunterfahren, bevor der Akku leer ist
 
-Ein always-on Rechner hat einen Feind, an den man beim Programmieren selten denkt: den Stromausfall. Der mini ist kein Laptop, den ein Akku über eine Stromschwankung trägt. Einmal Strom weg, und alles ist weg: die ungespeicherte Arbeit, alle laufenden Agenten, der ganze Zustand. Danach heißt es: alles wieder hochfahren, Fenster für Fenster, Session für Session. Deshalb hängt der mini an einer USV (unterbrechungsfreie Stromversorgung, engl. *UPS*), einer **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6)**. Viel Reserve, austauschbare Batterien, und genug Leistung, um neben dem mini auch den JetKVM und den Switch mitzuversorgen.
+Ein always-on Rechner hat einen Feind, an den man beim Programmieren selten denkt: den Stromausfall. Der mini ist kein Laptop, den ein Akku über eine Stromschwankung trägt. Einmal Strom weg, und alles ist weg: die ungespeicherte Arbeit, alle laufenden Agenten, der ganze Zustand. Danach heißt es: alles wieder hochfahren, Fenster für Fenster, Session für Session. Deshalb hängt der mini an einer USV (unterbrechungsfreie Stromversorgung, engl. *UPS*), einer **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=wohnfunke-21)**. Viel Reserve, austauschbare Batterien, und genug Leistung, um neben dem mini auch den JetKVM und den Switch mitzuversorgen.
+
+> **ℹ️ Hinweis:** Amazon-Links in diesem Artikel sind Affiliate-Links. Kaufst du darüber etwas, bekomme ich eine kleine Provision, für dich bleibt der Preis gleich.
 
 Das Datenkabel der USV geht per USB in einen **vorderen** Port des mini. Aus mir unerklärlichen Gründen war die Verbindung an den hinteren Ports ziemlich unzuverlässig, macOS verlor die USV immer wieder aus den Augen, und damit wurde der Wächter blind. Seit sie vorne steckt, genau wie die Tastatur des JetKVM, meldet `pmset -g batt` die `Back-UPS` stabil. Schick sieht das nicht aus, aber es erfüllt seinen Zweck.
 
