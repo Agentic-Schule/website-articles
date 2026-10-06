@@ -205,7 +205,7 @@ Three building blocks:
 
 For planned restarts there's a way without the password: `sudo fdesetup authrestart` unlocks automatically on the next reboot without locking yourself out. And `pmset autorestart 1` brings the mini back up on its own after a power outage.
 
-> **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. The reason: the rear ports are Thunderbolt, and that stack isn't up yet at the pre-boot screen, so a USB keyboard emulated through it isn't recognized. So plug the JetKVM's USB into a front port. The video over HDMI can stay in the back.
+> **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. My guess: the rear ports are Thunderbolt, whose controller isn't active yet at the pre-boot screen, so a USB keyboard emulated through it isn't recognized. So plug the JetKVM's USB into a front port. The video over HDMI can stay in the back.
 
 **Docker without Docker Desktop.** Docker Desktop needs a GUI login, on a headless machine a deal-breaker. Instead, **[colima](https://github.com/abiosoft/colima)** runs as a system service (LaunchDaemon) that starts at boot. Under the hood the same technology as Docker Desktop (Apple's Virtualization.framework), with Rosetta for **Intel images**, that is, for the old SQL Server that sadly was never ported to ARM. Thanks, Microsoft. So the agent gets a `docker` and `docker compose` that's simply there.
 
@@ -224,7 +224,7 @@ Setting up this Playwright MCP so that it stays unobtrusive, survives updates, a
 
 ## Power: shut down cleanly before the battery runs out
 
-An always-on machine has an enemy you rarely think about while coding: the power cut. The mini is not a laptop that a battery carries through a power blip. Once the power is gone, everything is gone: the unsaved work, all running agents, the whole state. After that it's boot everything back up, window by window, session by session. So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Plenty of reserve, swappable batteries, and enough capacity to power the JetKVM and the switch alongside the mini.
+An always-on machine has an enemy you rarely think about while coding: the power cut. The mini is not a laptop that a battery carries through a power blip. Once the power is gone, everything is gone: the unsaved work, all running agents, the whole state. After that it's boot everything back up, window by window, session by session. So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Plenty of reserve and enough capacity to power the JetKVM and the switch alongside the mini.
 
 The UPS data cable goes over USB into a **front** port of the mini. For reasons I can't explain, the connection on the rear ports was pretty unreliable; macOS kept losing sight of the UPS, which left the watcher blind. Since it sits in front, just like the JetKVM's keyboard, `pmset -g batt` reports the `Back-UPS` steadily. It doesn't look pretty, but it does the job.
 
@@ -240,7 +240,7 @@ When power returns, a mail "Strom wieder da" (power back) arrives. A second watc
 
 Why a custom script instead of the built-in tools?
 
-> **⚠️ This is a trap:** macOS's own auto-shutdown on low UPS battery (`pmset -u haltremain/haltlevel/haltafter`) doesn't take effect on the M4. The value is silently ignored. Rely on it, and you still end up with an empty battery and a hard cut. So the custom script does the shutdown, verifiable and testable.
+> **⚠️ Caution:** The built-in setting (`pmset -u haltremain/haltlevel/haltafter`) would trigger a shutdown on low battery. The custom script removes my uncertainty about whether that actually fires when it matters, and on top of that gives me the alert mails, a custom threshold, and a flow I can test.
 
 The core is a short loop. The three stages from above sit right inside it:
 

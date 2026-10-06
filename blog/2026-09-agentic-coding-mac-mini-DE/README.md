@@ -206,7 +206,7 @@ Drei Bausteine:
 
 Für geplante Neustarts geht es auch ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren. Und `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch.
 
-> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Der Grund: hinten sitzen die Thunderbolt-Ports, und deren Stack ist am Pre-Boot-Screen noch nicht hochgefahren, eine darüber emulierte USB-Tastatur wird dort nicht erkannt. Steck den JetKVM-USB also vorne ein. Das Bild per HDMI darf hinten bleiben.
+> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Meine Vermutung: Hinten sitzen die Thunderbolt-Ports, deren Controller am Pre-Boot-Screen noch nicht aktiv ist, sodass eine darüber emulierte USB-Tastatur dort nicht erkannt wird. Steck den JetKVM-USB also vorne ein. Das Bild per HDMI darf hinten bleiben.
 
 **Docker ohne Docker Desktop.** Docker Desktop braucht einen GUI-Login, auf einer headless Maschine ein K.-o.-Kriterium. Stattdessen läuft **[colima](https://github.com/abiosoft/colima)** als System-Dienst (LaunchDaemon), der schon beim Booten startet. Unter der Haube dieselbe Technik wie Docker Desktop (Apples Virtualization.framework), mit Rosetta für **Intel-Images**, also für den ollen SQL Server, der leider nie nach ARM portiert wurde. Danke, Microsoft. So bekommt der Agent ein `docker` und `docker compose`, das einfach da ist.
 
@@ -225,7 +225,7 @@ Diesen Playwright-MCP so einzurichten, dass er unauffällig bleibt, Updates übe
 
 ## Strom: sauber herunterfahren, bevor der Akku leer ist
 
-Ein always-on Rechner hat einen Feind, an den man beim Programmieren selten denkt: den Stromausfall. Der mini ist kein Laptop, den ein Akku über eine Stromschwankung trägt. Einmal Strom weg, und alles ist weg: die ungespeicherte Arbeit, alle laufenden Agenten, der ganze Zustand. Danach heißt es: alles wieder hochfahren, Fenster für Fenster, Session für Session. Deshalb hängt der mini an einer USV (unterbrechungsfreie Stromversorgung, engl. *UPS*), einer **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Viel Reserve, austauschbare Batterien, und genug Leistung, um neben dem mini auch den JetKVM und den Switch mitzuversorgen.
+Ein always-on Rechner hat einen Feind, an den man beim Programmieren selten denkt: den Stromausfall. Der mini ist kein Laptop, den ein Akku über eine Stromschwankung trägt. Einmal Strom weg, und alles ist weg: die ungespeicherte Arbeit, alle laufenden Agenten, der ganze Zustand. Danach heißt es: alles wieder hochfahren, Fenster für Fenster, Session für Session. Deshalb hängt der mini an einer USV (unterbrechungsfreie Stromversorgung, engl. *UPS*), einer **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Viel Reserve und genug Leistung, um neben dem mini auch den JetKVM und den Switch mitzuversorgen.
 
 Das Datenkabel der USV geht per USB in einen **vorderen** Port des mini. Aus mir unerklärlichen Gründen war die Verbindung an den hinteren Ports ziemlich unzuverlässig, macOS verlor die USV immer wieder aus den Augen, und damit wurde der Wächter blind. Seit sie vorne steckt, genau wie die Tastatur des JetKVM, meldet `pmset -g batt` die `Back-UPS` stabil. Schick sieht das nicht aus, aber es erfüllt seinen Zweck.
 
@@ -241,7 +241,7 @@ Kommt der Strom zurück, meldet eine Mail „Strom wieder da". Ein zweiter Wäch
 
 Warum ein eigenes Skript und nicht die Bordmittel?
 
-> **⚠️ Das ist eine Falle:** Das macOS-eigene Auto-Shutdown bei niedrigem USV-Akku (`pmset -u haltremain/haltlevel/haltafter`) greift auf dem M4 nicht. Der Wert wird still ignoriert. Wer sich darauf verlässt, steht am Ende doch mit leerem Akku und hartem Aus da. Deshalb übernimmt das eigene Skript die Abschaltung, nachprüfbar und testbar.
+> **⚠️ Achtung:** Die Bordmittel (`pmset -u haltremain/haltlevel/haltafter`) würden ein Shutdown bei niedrigem Akku auslösen. Das eigene Skript nimmt mir die Unsicherheit ab, ob das im Ernstfall wirklich greift, und liefert obendrein die Warn-Mails, eine eigene Schwelle und einen Ablauf, den ich testen kann.
 
 Der Kern ist eine kurze Schleife. Die drei Stufen von oben stehen direkt darin:
 
