@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
-published: 2026-10-13
+published: 2026-10-07
 keywords:
   - Mac mini
   - FileVault
@@ -40,7 +40,7 @@ Deshalb ist meine Festplatte mit **FileVault** verschlüsselt, Apples Festplatte
 
 ## Backups: auch verschlüsselt
 
-Verschlüsselung schützt vor fremdem Zugriff. Sie schützt nicht davor, dass eine Platte stirbt oder ein Agent Unsinn baut. Dafür braucht es Backups, regelmäßig und automatisch.
+Verschlüsselung schützt vor fremdem Zugriff. Gegen Datenverlust hilft sie nicht, und Datenverlust hat viele Ursachen: eine sterbende Platte, ein falscher Befehl, ein Agent, der Unsinn baut. Deshalb gehören Backups in jedes professionelle Setup, regelmäßig und automatisch. Sie sind keine Agenten-Spezialität, sie sind Grundhygiene.
 
 Bei mir übernimmt das **[Carbon Copy Cloner](https://bombich.com)** (CCC). Es sichert die Platte auf ein externes Laufwerk, nach Zeitplan, ohne dass ich daran denken muss. **Das Backup-Laufwerk ist genauso verschlüsselt wie die Hauptplatte.** Ein unverschlüsseltes Backup macht die Verschlüsselung der Hauptplatte wertlos. Wer die externe Platte mitgehen lässt, hätte sonst alles, was FileVault auf dem mini schützt.
 
@@ -67,7 +67,7 @@ Zwei Einstellungen nehmen dem Boot-Thema die Schärfe:
 - Für **geplante Neustarts** geht es sogar ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren.
 - `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch (die Passwort-Eingabe per KVM bleibt dann der eine manuelle Schritt).
 
-Gerade aus der Ferne zahlt sich das aus. Ich will im Urlaub nicht bangen, ob der mini nach einem Stromzucken wieder hochkommt, und erst recht keinen Angehörigen bitten müssen, in mein Haus zu fahren und den Rechner einzuschalten. Autorestart bringt ihn zurück, das FileVault-Passwort gebe ich per KVM vom Strand aus ein.
+Gerade aus der Ferne zahlt sich das aus. Ich will im Urlaub nicht bangen, ob der mini nach einem Stromzucken wieder hochkommt, und erst recht keinen Angehörigen bitten müssen, in mein Haus zu fahren und den Rechner einzuschalten. Autorestart bringt ihn zurück, das FileVault-Passwort gebe ich per KVM aus dem Bulli-Office ein.
 
 > **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren bei mir nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Woran das genau liegt, kann ich nicht sicher sagen. Die Konsequenz ist eindeutig: Steck den JetKVM-USB vorne ein, dann wird die Tastatur schon am Pre-Boot-Screen erkannt. Das Bild per HDMI darf hinten bleiben.
 
@@ -151,7 +151,9 @@ Der Dreh- und Angelpunkt ist dabei die KVM. Verschlüsselung ohne eine Möglichk
 
 Das ist einmal Einrichtungsaufwand und danach Ruhe. Mein Rat: Fang mit der Verschlüsselung an, die ist in zwei Klicks aktiviert und schützt sofort. Den Rest baust du in Ruhe dazu.
 
-**Fragen, Feedback, dein eigenes Setup?** Immer her damit, ich freue mich über jede Nachricht.
+Damit endet die Serie zur Bodenstation. Ich hoffe, sie hat dir geholfen, und du hast jetzt eine Basis, auf der deine Agenten rund um die Uhr laufen, abgesichert gegen Diebstahl, Neustart und Stromausfall.
+
+**Fragen, Feedback, dein eigenes Setup?** Immer her damit, ich freue mich über jede Nachricht. Kommen genug offene Fragen zusammen, hänge ich gern einen dritten Teil an.
 
 ---
 
