@@ -93,7 +93,7 @@ And when the battery runs low? A small watcher handles mail and shutdown itself.
 
 When power returns, a mail "Strom wieder da" (power back) arrives. A second watcher mails if the UPS disappears from USB entirely, so the first one never runs blind unnoticed. The mails go out via [Resend](https://resend.com).
 
-The technically savvy reader will now ask: Can't macOS do this itself? macOS does offer settings for it (`pmset -u haltremain/haltlevel/haltafter`) that are meant to shut down on a low UPS battery. On my M4 mini, though, that didn't trigger in testing. So my own script handles it, and that works reliably.
+The technically savvy reader will now ask: Can't macOS do this itself? macOS does offer settings for it (`pmset -u haltremain/haltlevel/haltafter`) that are meant to shut down on a low UPS battery. On my M4 mini, though, that didn't trigger in testing. It's not the only `pmset` setting you can't rely on under Apple Silicon. So my own script handles it, and that works reliably.
 
 > **💡 Note:** The script shuts down at my own threshold and sends me the warning mails beforehand. Above all, I can test the whole flow without waiting for a real power cut. You can't do that with a built-in setting.
 
