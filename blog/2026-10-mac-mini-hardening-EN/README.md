@@ -83,7 +83,7 @@ So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX7
 
 The UPS data cable goes over USB into a **front** port of the mini. For reasons I can't explain, the connection on the rear ports was pretty unreliable; macOS kept losing sight of the UPS, which left the watcher blind. Since it sits in front, just like the JetKVM's keyboard, `pmset -g batt` reports the `Back-UPS` steadily. It doesn't look pretty, but it does the job.
 
-The whole network chain matters. The mini's UPS also powers the JetKVM and the switch. The Fritzbox router and the fiber connection hang on a second UPS. So during an outage the whole network stays up: the mini reaches the Fritzbox over the wired path mini → switch → Fritzbox, and I have internet the whole time. My SSH session simply keeps running. That wired path is what lets the alert mails get out during the outage.
+The whole network chain matters. The mini's UPS also powers the JetKVM and the switch. The Fritzbox router and the fiber connection hang on a second UPS. So during an outage the whole network stays up: the mini reaches the Fritzbox over the wired path mini → switch → Fritzbox, and behind it the provider's fiber box. (Yes, I finally have fiber. 😎) The provider's signal doesn't depend on my house power; I only have to keep my own fiber box and the router running, which is exactly what the second UPS is for. So I keep surfing while the rest of the house is dark, and my SSH session simply keeps running. That wired path is what lets the alert mails get out during the outage.
 
 And when the battery runs low? A small watcher handles mail and shutdown itself. The script I named `ups-notify.sh` runs as a system service (a LaunchDaemon as root) and polls `pmset -g batt` every 20 seconds:
 
