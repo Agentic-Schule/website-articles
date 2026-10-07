@@ -3,7 +3,7 @@
 Jedes Video entsteht in Descript in zwei Schritten. Die Social-Media-Sitzung schreibt für beide Schritte die Anweisungen an Underlord, Johannes gibt sie in Descript ein.
 
 1. **Schnitt.** Underlord löscht nur wörtlich genannte Stellen aus dem Rohtake: abgebrochene Versuche, Versprecher, Doppelungen. Nichts wird umformuliert oder neu eingesprochen. Underlord meldet danach die neue Länge und jeden Schnitt mit Zeitstempel.
-2. **Layout.** Erst wenn der Schnitt passt. Die Aufnahme kommt als 3840×2160 und liegt auf der Seite (Kamera hochkant); die Vorlage dreht sie zuerst um 90° im Uhrzeigersinn und skaliert sie dann randlos ins Hochformat. Dann: Hochformat, Bilder, Untertitel, Audio. Die Anweisung besteht aus der Vorlage unten plus den Angaben für dieses Video (Szenen, Einblendungen, Korrekturen in den Untertiteln).
+2. **Layout.** Erst wenn der Schnitt passt. Die Aufnahme kommt als 3840×2160 und liegt auf der Seite (Kamera hochkant); die Vorlage dreht sie zuerst um 90° im Uhrzeigersinn, gedreht hat sie genau 2160×3840. Dann: Hochformat, Bilder, Untertitel, Audio. Die Anweisung besteht aus der Vorlage unten plus den Angaben für dieses Video (Szenen, Einblendungen, Korrekturen in den Untertiteln).
 
 ## Vorlage Schritt 1: Schnitt
 
@@ -22,25 +22,29 @@ Language: German. Do not re-record, regenerate or rephrase anything. Only delete
 
 ## Vorlage Schritt 2: Layout
 
+Export in 4K hochkant (2160×3840): Die gedrehte Aufnahme hat genau diese Größe, und die Videobilder werden in dieser Größe gerendert. Alle Pixelangaben stehen deshalb im 4K-Raster, die Untertitel in 140 pt. Zwei Szenenarten: Johannes im Vollbild und Split-Screen mit einem Bild oben. Bei der Knobelaufgabe laufen alle Szenen als Split-Screen. Kein Freistellen (Green Screen, Chroma Key): vor der schwarzen Wand wird das Ergebnis fleckig.
+
 ```
-STEP 2: VERTICAL LAYOUT, IMAGES, CAPTIONS, AUDIO
+STEP 2: FULLSCREEN AND SPLIT SCREEN, CAPTIONS, AUDIO
 
 Do not cut or change the spoken content any further. The edit from step 1 is final.
 
 FORMAT
-Convert the composition to a vertical video, 1080x1920 (9:16). No logo, no watermark, no borders, no emojis anywhere.
-The speaker footage is 3840x2160 and plays sideways, because the camera lies on its side. First rotate the speaker layer by 90 degrees CLOCKWISE (to the right) so the person stands upright, head at the top. The rotated layer is 2160x3840: scale it to exactly 50% (1080x1920) so it fills the frame. In split-screen scenes use the same rotated layer, scaled to fill the bottom half and cropped top and bottom, framed as described under LAYOUT. Apply this to every segment of the speaker clip and confirm for each: person upright, no black bars.
+Convert the composition to a vertical video, 2160x3840 (9:16). No logo, no watermark, no borders, no emojis anywhere.
+The speaker footage is 3840x2160 and plays sideways, because the camera lies on its side. First rotate the speaker layer by 90 degrees CLOCKWISE (to the right) so the person stands upright, head at the top. The rotated layer is 2160x3840: keep it at 100% so it fills the frame exactly. Apply this to every segment of the speaker clip and confirm for each: person upright, no black bars.
 
-LAYOUT (same in every scene)
-- Top half (y 0–960): the image for this scene. Fill the full width. Keep the important part in the middle of this area, not at the very top (the platform's progress bar sits there).
-- Bottom half (y 960–1920): the rotated speaker video (see FORMAT), scaled to fill the full width, cropped top and bottom. Keep head and shoulders. Eyes at about 40–50% of the half's height, head top just below the caption line at the divider (never under the captions). Apply the same framing to the 110% punch-in crops. No black bars.
-- Punch-in jump cuts: inside the speaker video, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds. No animated zoom.
-- Divider at y 960: an invisible boundary, NOT a drawn element. No line, no border, no frame, no bar, no shadow between the two halves; the image and the speaker video simply meet there. This is where all text goes. Nothing important in the bottom 300px (platform caption and username cover it) or at the right edge (buttons).
+LAYOUT
+- Speaker scenes: the rotated speaker video fills the full frame. Head in the upper third, no black bars.
+- Image scenes (split screen): top half (y 0–1920) the image, full width. Bottom half (y 1920–3840) the rotated speaker video, scaled to fill the full width, cropped top and bottom. Keep head and shoulders. Eyes at about 40–50% of the half's height, head top just below the caption line at the divider (never under the captions). Hard edge at y 1920: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
+- Photo and video cutaways: fill the full frame (crop to 9:16, no black bars), no speaker. Static crop only.
+- Hard cuts only. No animated zoom, no pan, no transitions.
+- Punch-in jump cuts: inside every speaker shot longer than about 4 s, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds. Apply the same head framing to the 110% crops.
+- Nothing important in the top 400px, the bottom 600px or at the right edge (platform overlays).
 
 CAPTIONS
-- Burned-in captions from the transcript, centered on the divider, for the whole video.
-- Font: Manrope, 70 pt, bold, white, with a dark outline or dark background box.
-- One line only. Show a few words at a time so the line never wraps.
+- Burned-in captions for the whole video, centered on the divider at y 1920, in every scene type.
+- Font: Manrope, 140 pt, bold, white, with a dark outline.
+- One line only, two to three words at a time, never wrapping.
 - Highlight the currently spoken word in pink, hex #E90464 (the agentic.schule magenta). All other words stay white.
 
 AUDIO
@@ -48,24 +52,12 @@ AUDIO
 - EQ: cut boominess at 50 Hz and 200 Hz, boost warmth at 800 Hz, presence at 3.5 kHz and air at 10 kHz.
 - No reverb. The voice stays dry and close.
 
-THIS VIDEO
-<Szenen: welches Bild ab welchem Satz, harte Schnitte, kein Zoom, kein Schwenk>
-<Einblendungen auf der Trennlinie, z. B. Hook in den ersten 3 Sekunden, "agentic.schule" in den letzten 5 Sekunden>
+THIS VIDEO (scene starts at the first word of each line)
+<Szenen: welches Bild ab welchem Satz, Vollbild oder Split-Screen>
 <Korrekturen in den Untertiteln>
 
-After applying, report the start time of each scene.
-```
+EXPORT
+Export at 2160x3840 (4K), not downscaled.
 
-## Variante: Wechsel zwischen Vollbild und Split-Screen
-
-Ersetzt in der Vorlage für Schritt 2 den Block LAYOUT; die Untertitel stehen wie dort an der Trennlinie. Kein Freistellen (Green Screen, Chroma Key): vor der schwarzen Wand wird das Ergebnis fleckig.
-
-```
-LAYOUT
-- Speaker scenes: the speaker video fills the full frame. Head in the upper third, no black bars.
-- Image scenes (split screen): top half (y 0–960) the image, full width. Bottom half (y 960–1920) the full speaker video, full width, cropped to fill. Eyes at about 40–50% of the half's height, head top just below the caption line at the divider (never under the captions). Apply the same framing to the 110% punch-in crops. Hard edge at y 960: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
-- Video cutaways: fill the full frame, no speaker.
-- Hard cuts only. No animated zoom, no pan, no transitions.
-- Punch-in jump cuts: inside every speaker shot longer than about 4 s, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds.
-- Captions for the whole video centered on the divider at y 960, in every scene type.
+After applying, report the start time and layout of each scene.
 ```

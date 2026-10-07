@@ -122,7 +122,7 @@ Beispiel mit Skript, Drehliste und Underlord-Anweisungen: das Mac-mini-Setup-Vid
 
 ### Schnitt in Descript
 
-Jedes Video läuft in Descript in zwei Schritten: erst der Schnitt (nur wörtlich genannte Stellen löschen), dann Hochformat, Bilder, Untertitel und Audio. Die Sitzung schreibt für beide Schritte die Anweisungen an Underlord. Vorlagen und Untertitel-Stil (Manrope, 70 pt, einzeilig) stehen in [`docs/descript-instructions.md`](descript-instructions.md).
+Jedes Video läuft in Descript in zwei Schritten: erst der Schnitt (nur wörtlich genannte Stellen löschen), dann Hochformat, Bilder, Untertitel und Audio. Die Sitzung schreibt für beide Schritte die Anweisungen an Underlord. Vorlagen und Untertitel-Stil (Manrope, 140 pt im 4K-Export, einzeilig) stehen in [`docs/descript-instructions.md`](descript-instructions.md).
 
 ### Bilder für die obere Hälfte
 
@@ -139,7 +139,7 @@ Für jede Szene baut die Sitzung ein eigenes Bild im agentic.schule-Look statt e
 
 ### Format
 
-- **Vertikal 9:16, bildfüllend, 1080×1920.** Keine Ränder, keine Balken, kein Rahmen. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.
+- **Vertikal 9:16, bildfüllend, Export in 4K hochkant (2160×3840).** Die gedrehte Aufnahme und die gerenderten Bilder haben genau diese Größe. Positionsangaben in diesem Playbook (etwa „y 960", „oben 200 px") beziehen sich auf das halbe Raster 1080×1920; in den Underlord-Anweisungen stehen sie verdoppelt. Keine Ränder, keine Balken, kein Rahmen. Instagram zeigt Reels mit Rändern seltener, und TikTok nennt Balken ausdrücklich als Problem.
 - **Kein Logo, kein Wasserzeichen, kein „Tag N" im Bild.** Instagram zeigt Reels mit Logos oder Wasserzeichen seltener. Das Branding kommt über das Profil.
 - **Wenig Text im Bild:** der Hook und die Untertitel. Instagram zeigt Reels seltener, deren Bild überwiegend mit Text bedeckt ist.
 - **Ränder frei halten.** Oben, unten und rechts liegt die Oberfläche der Plattformen (Fortschrittsbalken, Caption, Nutzername, Buttons).
