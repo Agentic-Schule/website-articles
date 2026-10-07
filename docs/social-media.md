@@ -43,6 +43,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 | LinkedIn | DE | zwei Sätze + Screenshot | reine URL im Post | Knobelfrage, kein Keyword |
 | X | DE | zwei Sätze + derselbe Screenshot, höchstens 280 Zeichen | im Post | Knobelfrage, kein Keyword |
 | Bluesky | DE | Text wie auf X + derselbe Screenshot, höchstens 300 Zeichen inklusive voller URL | im Post | wie auf X |
+| Threads | DE | Text wie auf X, etwas ausführlicher, höchstens 500 Zeichen, genau ein Themen-Tag am Ende | im Post, anklickbar | wie auf X |
 | TikTok | DE | vertikales Video | `agentic.schule` im Video und in der Caption | „Den ganzen Artikel findest du auf meiner Website: agentic.schule" |
 | Instagram Reels | DE | dasselbe Video | `agentic.schule` im Video und in der Caption | derselbe Satz |
 | YouTube Shorts | DE | dasselbe Video | in der Beschreibung, nicht klickbar | derselbe Satz |
@@ -349,8 +350,9 @@ Abonnieren: Hier gibt es regelmäßig fundierte Tipps zu AI.
 | LinkedIn | https://www.linkedin.com/in/johanneshoppe/ |
 | X | https://x.com/JohannesHoppe |
 | Bluesky | https://bsky.app/profile/johanneshoppe.de |
+| Threads | https://www.threads.com/@_johannes_hoppe_ |
 
-Nach jeder Veröffentlichung prüft die Sitzung ungefragt, ob der Tag auf allen sechs Kanälen erschienen ist, und meldet nur die Lücken. Bluesky über die öffentliche API, YouTube über den RSS-Feed, X und Instagram über den Playwright-MCP; LinkedIn (Login-Wand) und TikTok (Captcha) sind nicht prüfbar. Dabei auch die Texte gegen die Faktenregel lesen; YouTube-Titel sind davon ausgenommen (siehe YouTube Shorts).
+Nach jeder Veröffentlichung prüft die Sitzung ungefragt, ob der Tag auf allen sieben Kanälen erschienen ist, und meldet nur die Lücken. Bluesky über die öffentliche API, YouTube über den RSS-Feed, X, Threads und Instagram über den Playwright-MCP (Threads ist ausgeloggt lesbar); LinkedIn (Login-Wand) und TikTok (Captcha) sind nicht prüfbar. Dabei auch die Texte gegen die Faktenregel lesen; YouTube-Titel sind davon ausgenommen (siehe YouTube Shorts).
 
 ## Faktenregel
 
