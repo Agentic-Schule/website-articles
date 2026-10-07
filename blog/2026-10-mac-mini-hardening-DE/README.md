@@ -20,9 +20,7 @@ language: de
 header: header.jpg
 ---
 
-Eine Maschine, die nie ausgeht und von überall erreichbar ist, ist bequem. Sie ist aber auch ein physisches Gerät, das jemand mitnehmen kann, und sie hängt am Strom.
-
-**Dieser Artikel härtet die Bodenstation ab (engl. *Hardening*), gegen genau diese drei Fälle: Diebstahl, einen Neustart und einen Stromausfall. Das Werkzeug gegen Diebstahl ist Verschlüsselung, der Platte und der Backups. Der Preis dafür ist ein Passwort, das man genau im unpassendsten Moment eingeben muss: beim Booten, wenn es noch kein Netzwerk gibt. Deshalb ist ein fernbedienbares KVM-Gerät der Dreh- und Angelpunkt des ganzen Konzepts.**
+**Eine Maschine, die nie ausgeht und von überall erreichbar ist, ist bequem, aber auch ein physisches Gerät, das jemand mitnehmen kann, und sie hängt am Strom. Dieser Artikel härtet die Bodenstation ab (engl. *Hardening*), gegen genau diese drei Fälle: Diebstahl, einen Neustart und einen Stromausfall. Das Werkzeug gegen Diebstahl ist Verschlüsselung, der Platte und der Backups. Der Preis dafür ist ein Passwort, das man genau im unpassendsten Moment eingeben muss: beim Booten, wenn es noch kein Netzwerk gibt. Deshalb braucht es ein fernbedienbares KVM-Gerät (Keyboard, Video, Mouse, übers Netz), um dieses Passwort aus der Ferne einzugeben.**
 
 Das hier ist der zweite Teil zur Bodenstation. Im [ersten Artikel](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) ging es ums Warum und um das Setup. Jetzt geht es ums Absichern. Dieser Teil ist für sich lesbar.
 
@@ -38,21 +36,21 @@ Deshalb ist die Platte mit **FileVault** verschlüsselt, Apples Festplattenversc
 
 > **💡 Tipp:** FileVault schaltest du in den Systemeinstellungen unter *Datenschutz & Sicherheit → FileVault* ein. Einmal aktiviert, läuft die Verschlüsselung im Hintergrund, im Alltag merkst du nichts davon.
 
-## Backups, und zwar auch verschlüsselt
+## Backups: auch verschlüsselt
 
 Verschlüsselung schützt vor fremdem Zugriff. Sie schützt nicht davor, dass eine Platte stirbt oder ein Agent Unsinn baut. Dafür braucht es Backups, regelmäßig und automatisch.
 
 Bei mir übernimmt das **[Carbon Copy Cloner](https://bombich.com)** (CCC). Es sichert die Platte auf ein externes Laufwerk, nach Zeitplan, ohne dass ich daran denken muss. Entscheidend ist der zweite Teil: **Das Backup-Laufwerk ist genauso verschlüsselt wie die Hauptplatte.** Ein unverschlüsseltes Backup macht die Verschlüsselung der Hauptplatte wertlos. Wer die externe Platte mitgehen lässt, hätte sonst alles, was FileVault auf dem mini schützt.
 
-Das geht sauber zusammen: CCC ist laut Hersteller *„fully qualified for use with FileVault-protected volumes"*, also für FileVault-verschlüsselte Ziellaufwerke freigegeben (APFS, verschlüsselt). Du formatierst das Backup-Laufwerk als verschlüsseltes APFS, und CCC sichert dorthin. Platte weg, Backup weg: beide ohne Passwort wertlos.
+Das geht sauber zusammen: CCC ist laut Hersteller *„fully qualified for use with FileVault-protected volumes"*, also für FileVault-verschlüsselte Ziellaufwerke freigegeben (verschlüsseltes *APFS*, Apples Dateisystem). Du formatierst das Backup-Laufwerk als verschlüsseltes APFS, und CCC sichert dorthin. Platte weg, Backup weg: beide ohne Passwort wertlos.
 
 > **💡 Tipp:** Eine externe Platte verschlüsselst du im Festplattendienstprogramm (Format *APFS (verschlüsselt)*) oder per Rechtsklick im Finder. Das Passwort kannst du im Schlüsselbund hinterlegen, dann mountet die Platte für die geplanten Backups automatisch.
 
 ## Der Haken: ein Passwort zum ungünstigsten Zeitpunkt
 
-Jetzt kommt die Kehrseite der Verschlüsselung. Nach jedem Neustart hängt der mini im **Pre-Boot-Lock**: Erst wenn das FileVault-Passwort eingegeben ist, entschlüsselt sich die Platte, der Rechner bootet durch und die Dienste starten. Zu diesem Zeitpunkt gibt es noch **kein Netzwerk**. Ein SSH-Login hilft also nicht, und bei einer headless Maschine ohne Monitor und Tastatur ist man damit ausgesperrt.
+Jetzt kommt die Kehrseite der Verschlüsselung. Nach jedem Neustart hängt der mini im **Pre-Boot-Lock**: Erst wenn das FileVault-Passwort eingegeben ist, entschlüsselt sich die Platte, der Rechner bootet durch und die Dienste starten. Zu diesem Zeitpunkt gibt es noch **kein Netzwerk**. Ein SSH-Login hilft also nicht, und bei einer *headless* Maschine (ohne Monitor und Tastatur) ist man damit ausgesperrt.
 
-Genau hier wird aus einer Nebensache das zentrale Element. Ich brauche ein Bild und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
+Ich brauche ein Bild und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
 
 Ich habe mich bewusst für den JetKVM entschieden, weil er **quelloffen** ist (GPL-2.0, [Code auf GitHub](https://github.com/jetkvm/kvm)). Viele KVM-over-IP-Geräte sind Closed Source. Bei einem Gerät, das Tastatur und Bildschirm über das Netz überträgt, will ich nachvollziehbaren Code. Zu kaufen gibt es ihn direkt beim Hersteller über [jetkvm.com](https://jetkvm.com), dann aber mit Versand aus China und entsprechend langer Lieferzeit. Schneller geht es über [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): Versand durch Amazon, Lieferung in wenigen Tagen.
 
@@ -65,7 +63,7 @@ Zwei Einstellungen nehmen dem Boot-Thema die Schärfe:
 
 > **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Meine Vermutung: Hinten sitzen die Thunderbolt-Ports, deren Controller am Pre-Boot-Screen noch nicht aktiv ist, sodass eine darüber emulierte USB-Tastatur dort nicht erkannt wird. Steck den JetKVM-USB also vorne ein. Das Bild per HDMI darf hinten bleiben.
 
-Damit ist der rote Faden gelegt: Verschlüsselung und verschlüsselte Backups kosten jeweils ein Passwort beim Boot, und die KVM ist das, was mich dieses Passwort aus der Ferne eingeben lässt. Ohne sie wäre eine verschlüsselte, headless Maschine ein Widerspruch in sich.
+Verschlüsselung und verschlüsselte Backups kosten jeweils ein Passwort beim Boot, und die KVM gibt es mir aus der Ferne ein. Ohne sie wäre eine verschlüsselte, headless Maschine ein Widerspruch in sich.
 
 ## Stromversorgung: sauber herunterfahren, bevor der Akku leer ist
 
@@ -125,11 +123,11 @@ done
 
 Zwei kleine Helfer sind ausgelagert: `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` schicken die Mail über Resend, immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert. Die Secrets (Resend-Key, Absender, Empfänger) liegen in einer `resend.env` mit `chmod 600`, nicht im Skript.
 
-Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Und weil der Sync eine bidirektionale Spiegelung ist, repliziert er die kaputte Version brav auf die andere Maschine. Das ist die eigentliche Gefahr: Der Sync trägt den Schaden auf alle Geräte. Eine saubere Abschaltung verhindert genau das.
+Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung verhindert genau das.
 
 ## Fazit
 
-Drei Risiken, drei Antworten, und ein gemeinsamer Nenner. **Diebstahl** entschärft die Verschlüsselung, der Platte und der Backups. Der **Neustart** wird beherrschbar, weil ich das FileVault-Passwort per KVM aus der Ferne eintippe. Den **Stromausfall** fängt die USV ab, und ein kleines Skript fährt rechtzeitig und sauber herunter.
+Drei Risiken, drei Antworten. **Diebstahl** entschärft die Verschlüsselung, der Platte und der Backups. Der **Neustart** wird beherrschbar, weil ich das FileVault-Passwort per KVM aus der Ferne eintippe. Den **Stromausfall** fängt die USV ab, und ein kleines Skript fährt rechtzeitig und sauber herunter.
 
 Der Dreh- und Angelpunkt ist dabei die KVM. Verschlüsselung ohne eine Möglichkeit, das Passwort beim Boot einzugeben, wäre auf einer headless Maschine eine Sackgasse. Erst die KVM macht aus „verschlüsselt" und „headless" ein Paar, das zusammenpasst.
 

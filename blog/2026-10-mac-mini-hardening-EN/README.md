@@ -20,9 +20,7 @@ language: en
 header: header.jpg
 ---
 
-A machine that never turns off and is reachable from anywhere is convenient. It is also a physical device someone can carry away, and it depends on power.
-
-**This article hardens the ground station against exactly these three cases: theft, a restart, and a power cut. The tool against theft is encryption, of the disk and of the backups. The price for it is a password you have to enter at the most inconvenient moment: at boot, when there is no network yet. That is why a remotely controllable KVM device is the linchpin of the whole concept.**
+**A machine that never turns off and is reachable from anywhere is convenient, but also a physical device someone can carry away, and it depends on power. This article hardens the ground station against exactly these three cases: theft, a restart, and a power cut. The tool against theft is encryption, of the disk and of the backups. The price for it is a password you have to enter at the most inconvenient moment: at boot, when there is no network yet. That is why you need a remotely controllable KVM device (keyboard, video, mouse, over the network) to enter that password from afar.**
 
 This is the second part about the ground station. The [first article](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini) covered the why and the setup. Now it's about hardening it. This part stands on its own.
 
@@ -38,21 +36,21 @@ So the disk is encrypted with **FileVault**, Apple's full-disk encryption in mac
 
 > **💡 Tip:** You turn FileVault on in System Settings under *Privacy & Security → FileVault*. Once enabled, the encryption runs in the background; you notice nothing in daily use.
 
-## Backups, encrypted too
+## Backups: encrypted too
 
 Encryption protects against unauthorized access. It does not protect against a disk dying or an agent doing something stupid. That calls for backups, regular and automatic.
 
 In my case, **[Carbon Copy Cloner](https://bombich.com)** (CCC) handles it. It backs the disk up to an external drive, on a schedule, without me having to think about it. The second part is the decisive one: **the backup drive is encrypted just like the main disk.** An unencrypted backup makes the main disk's encryption worthless. Whoever walks off with the external drive would otherwise have everything FileVault protects on the mini.
 
-This fits together cleanly: per the vendor, CCC is *"fully qualified for use with FileVault-protected volumes"*, that is, cleared for FileVault-encrypted destination drives (encrypted APFS). You format the backup drive as encrypted APFS, and CCC backs up to it. Machine gone, backup gone: both worthless without the password.
+This fits together cleanly: per the vendor, CCC is *"fully qualified for use with FileVault-protected volumes"*, that is, cleared for FileVault-encrypted destination drives (encrypted *APFS*, Apple's file system). You format the backup drive as encrypted APFS, and CCC backs up to it. Machine gone, backup gone: both worthless without the password.
 
 > **💡 Tip:** You encrypt an external drive in Disk Utility (format *APFS (Encrypted)*) or via right-click in Finder. You can store the password in the keychain, so the drive mounts automatically for the scheduled backups.
 
 ## The catch: a password at the worst possible moment
 
-Now the flip side of encryption. After every restart the mini hangs at the **pre-boot lock**: only once the FileVault password is entered does the disk decrypt, the machine boot through, and the services start. At that point there is **no network** yet. An SSH login doesn't help, and on a headless machine with no monitor and keyboard you are locked out.
+Now the flip side of encryption. After every restart the mini hangs at the **pre-boot lock**: only once the FileVault password is entered does the disk decrypt, the machine boot through, and the services start. At that point there is **no network** yet. An SSH login doesn't help, and on a *headless* machine (no monitor and keyboard) you are locked out.
 
-This is exactly where a side issue becomes the central one. I need a picture and a keyboard all the way down to the boot screen, remotely. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It connects to the mini over USB and presents itself there as a keyboard, and it captures the video over HDMI. On every restart I type the FileVault password through it once, and the mini boots through. That keeps the disk encrypted and still lets me reach every boot step.
+I need a picture and a keyboard all the way down to the boot screen, remotely. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It connects to the mini over USB and presents itself there as a keyboard, and it captures the video over HDMI. On every restart I type the FileVault password through it once, and the mini boots through. That keeps the disk encrypted and still lets me reach every boot step.
 
 I deliberately chose the JetKVM because it is **open source** (GPL-2.0, [code on GitHub](https://github.com/jetkvm/kvm)). Many KVM-over-IP devices are closed source. For a device that transmits keyboard and screen over the network, I want auditable code. You can buy it directly from the maker at [jetkvm.com](https://jetkvm.com), but then it ships from China with a correspondingly long wait. It's faster via [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): dispatched by Amazon, delivered within a few days.
 
@@ -65,7 +63,7 @@ Two settings take the edge off the boot problem:
 
 > **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. My guess: the rear ports are Thunderbolt, whose controller isn't active yet at the pre-boot screen, so a USB keyboard emulated through it isn't recognized. So plug the JetKVM's USB into a front port. The video over HDMI can stay in the back.
 
-That lays the common thread: encryption and encrypted backups each cost a password at boot, and the KVM is what lets me enter that password remotely. Without it, an encrypted, headless machine would be a contradiction in terms.
+Encryption and encrypted backups each cost a password at boot, and the KVM is what lets me enter that password remotely. Without it, an encrypted, headless machine would be a contradiction in terms.
 
 ## Power: shut down cleanly before the battery runs out
 
@@ -125,11 +123,11 @@ done
 
 Two small helpers are factored out: `pm_src_of`/`pm_pct_of` read the source and battery level from `pmset -g batt`, and `notify`/`notify_now` send the mail via Resend, always in the background, so a network timeout can never block the shutdown. The secrets (Resend key, sender, recipient) live in a `resend.env` with `chmod 600`, not in the script.
 
-Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes. And because the sync is a bidirectional mirror, it dutifully replicates the broken version to the other machine. That is the real danger: the sync spreads the damage to every device. A clean shutdown prevents exactly that.
+Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes. The mini continuously mirrors its files to my other devices (how that works is in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)). That mirror then also replicates the broken version, and the damage ends up on every machine. A clean shutdown prevents exactly that.
 
 ## Conclusion
 
-Three risks, three answers, and one common denominator. **Theft** is defused by encryption, of the disk and of the backups. The **restart** becomes manageable because I type the FileVault password remotely via the KVM. The **power cut** is caught by the UPS, and a small script shuts the mini down in time and cleanly.
+Three risks, three answers. **Theft** is defused by encryption, of the disk and of the backups. The **restart** becomes manageable because I type the FileVault password remotely via the KVM. The **power cut** is caught by the UPS, and a small script shuts the mini down in time and cleanly.
 
 The linchpin in all this is the KVM. Encryption without a way to enter the password at boot would be a dead end on a headless machine. Only the KVM makes "encrypted" and "headless" a pair that fits together.
 
