@@ -1,10 +1,23 @@
 <!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../base.css"><link rel="stylesheet" href="../mini-setup/full.css"><style>
 .zone{align-items:center;text-align:center;gap:60px}
 h1{font-size:170px;font-weight:900;letter-spacing:-5px;line-height:.92;text-transform:uppercase}
-svg{width:520px;height:auto;filter:drop-shadow(0 0 40px rgba(233,4,100,.45))}
+svg{width:600px;height:auto;filter:drop-shadow(0 0 50px rgba(233,4,100,.35))}
 </style></head><body><div class="grid"></div><div class="zone">
-<svg viewBox="0 0 260 130" fill="none"><defs><linearGradient id="g" x1="0" y1="0" x2="260" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a06bff"/><stop offset="1" stop-color="#e90464"/></linearGradient></defs>
-<rect x="8" y="8" width="214" height="114" rx="22" stroke="url(#g)" stroke-width="14"/><rect x="230" y="42" width="22" height="46" rx="8" fill="url(#g)"/>
-<line x1="40" y1="110" x2="190" y2="20" stroke="#e90464" stroke-width="16" stroke-linecap="round"/></svg>
+<svg viewBox="0 0 320 160" fill="none">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a06bff"/><stop offset="1" stop-color="#e90464"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="20" x2="0" y2="140" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity=".07"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+<radialGradient id="red" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#ff2a6d"/><stop offset="1" stop-color="#c8004f"/></radialGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="10" y="14" width="268" height="132" rx="30" fill="#1a1226"/>
+<rect x="10" y="14" width="268" height="132" rx="30" fill="url(#glass)"/>
+<rect x="10" y="14" width="268" height="132" rx="30" stroke="url(#g)" stroke-width="12"/>
+<path d="M286 56 h8 a14 14 0 0 1 14 14 v20 a14 14 0 0 1 -14 14 h-8 z" fill="url(#g)"/>
+<g stroke="#ffffff" stroke-opacity=".12" stroke-width="3" stroke-dasharray="7 7">
+<rect x="89" y="36" width="51" height="88" rx="10"/><rect x="148" y="36" width="51" height="88" rx="10"/><rect x="207" y="36" width="51" height="88" rx="10"/>
+</g>
+<rect x="30" y="36" width="51" height="88" rx="10" fill="url(#red)" filter="url(#glow)"/>
+</svg>
 <h1>Kein<br><span class="accent">Akku.</span></h1>
 </div></body></html>
