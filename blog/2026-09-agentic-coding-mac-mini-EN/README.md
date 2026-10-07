@@ -238,9 +238,9 @@ And when the battery runs low? A small watcher handles mail and shutdown itself.
 
 When power returns, a mail "Strom wieder da" (power back) arrives. A second watcher mails if the UPS disappears from USB entirely, so the first one never runs blind unnoticed. The mails go out via [Resend](https://resend.com).
 
-Why a custom script instead of the built-in tools?
+Why a custom script at all?
 
-> **⚠️ Caution:** The built-in setting (`pmset -u haltremain/haltlevel/haltafter`) would trigger a shutdown on low battery. The custom script removes my uncertainty about whether that actually fires when it matters, and on top of that gives me the alert mails, a custom threshold, and a flow I can test.
+> **💡 Note:** macOS can shut down on its own when the UPS battery runs low (`pmset -u haltremain/haltlevel/haltafter`). I still shut the mini down myself, at my own threshold. That way I don't wait for the operating system to react; the mini is already cleanly down before that. On top of that I get the alert mails and a flow I can test.
 
 The core is a short loop. The three stages from above sit right inside it:
 

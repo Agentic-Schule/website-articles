@@ -239,9 +239,9 @@ Und wenn der Akku zur Neige geht? Ein kleiner Wächter übernimmt Mail und Absch
 
 Kommt der Strom zurück, meldet eine Mail „Strom wieder da". Ein zweiter Wächter mailt, falls die USV ganz vom USB verschwindet, damit der erste nie unbemerkt blind läuft. Die Mails gehen über [Resend](https://resend.com) raus.
 
-Warum ein eigenes Skript und nicht die Bordmittel?
+Warum trotzdem ein eigenes Skript?
 
-> **⚠️ Achtung:** Die Bordmittel (`pmset -u haltremain/haltlevel/haltafter`) würden ein Shutdown bei niedrigem Akku auslösen. Das eigene Skript nimmt mir die Unsicherheit ab, ob das im Ernstfall wirklich greift, und liefert obendrein die Warn-Mails, eine eigene Schwelle und einen Ablauf, den ich testen kann.
+> **💡 Hinweis:** macOS kann bei niedrigem USV-Akku auch von selbst herunterfahren (`pmset -u haltremain/haltlevel/haltafter`). Ich fahre den mini trotzdem selbst herunter, bei meiner eigenen Schwelle. So warte ich nicht erst ab, bis das Betriebssystem reagiert; der mini ist schon vorher sauber unten. Dazu bekomme ich die Warn-Mails und einen Ablauf, den ich testen kann.
 
 Der Kern ist eine kurze Schleife. Die drei Stufen von oben stehen direkt darin:
 
