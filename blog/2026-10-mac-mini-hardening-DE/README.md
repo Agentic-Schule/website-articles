@@ -40,7 +40,7 @@ Deshalb ist meine Festplatte mit **FileVault** verschlüsselt, Apples Festplatte
 
 ## Backups: auch verschlüsselt
 
-Verschlüsselung schützt vor fremdem Zugriff. Sie schützt nicht davor, dass eine Platte stirbt oder ein Agent Unsinn baut. Dafür braucht es Backups, regelmäßig und automatisch.
+Verschlüsselung schützt vor fremdem Zugriff. Gegen Datenverlust hilft sie nicht, und Datenverlust hat viele Ursachen: eine sterbende Platte, ein falscher Befehl, ein Agent, der Unsinn baut. Deshalb gehören Backups in jedes professionelle Setup, regelmäßig und automatisch. Sie sind keine Agenten-Spezialität, sie sind Grundhygiene.
 
 Bei mir übernimmt das **[Carbon Copy Cloner](https://bombich.com)** (CCC). Es sichert die Platte auf ein externes Laufwerk, nach Zeitplan, ohne dass ich daran denken muss. **Das Backup-Laufwerk ist genauso verschlüsselt wie die Hauptplatte.** Ein unverschlüsseltes Backup macht die Verschlüsselung der Hauptplatte wertlos. Wer die externe Platte mitgehen lässt, hätte sonst alles, was FileVault auf dem mini schützt.
 

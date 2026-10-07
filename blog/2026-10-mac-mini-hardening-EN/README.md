@@ -40,7 +40,7 @@ So my disk is encrypted with **FileVault**, Apple's full-disk encryption in macO
 
 ## Backups: encrypted too
 
-Encryption protects against unauthorized access. It does not protect against a disk dying or an agent doing something stupid. That calls for backups, regular and automatic.
+Encryption protects against unauthorized access. It doesn't help against data loss, and data loss has many causes: a dying disk, a wrong command, an agent doing something stupid. That's why backups belong in every professional setup, regular and automatic. They're not an agent-specific thing; they're basic hygiene.
 
 In my case, **[Carbon Copy Cloner](https://bombich.com)** (CCC) handles it. It backs the disk up to an external drive, on a schedule, without me having to think about it. **The backup drive is encrypted just like the main disk.** An unencrypted backup makes the main disk's encryption worthless. Whoever walks off with the external drive would otherwise have everything FileVault protects on the mini.
 
