@@ -1,0 +1,142 @@
+---
+title: 'Mac mini Hardening: Encryption, Backups, Boot and Power'
+author: Johannes Hoppe
+mail: johannes.hoppe@haushoppe-its.de
+bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
+bioHeading: About the author
+published: 2026-10-13
+keywords:
+  - Mac mini
+  - FileVault
+  - Disk encryption
+  - Backup
+  - Carbon Copy Cloner
+  - UPS
+  - Power outage
+  - JetKVM
+  - KVM over IP
+  - Agentic Coding
+language: en
+header: header.jpg
+---
+
+A machine that never turns off and is reachable from anywhere is convenient. It is also a physical device someone can carry away, and it depends on power.
+
+**This article hardens the ground station against exactly these three cases: theft, a restart, and a power cut. The tool against theft is encryption, of the disk and of the backups. The price for it is a password you have to enter at the most inconvenient moment: at boot, when there is no network yet. That is why a remotely controllable KVM device is the linchpin of the whole concept.**
+
+This is the second part about the ground station. The [first article](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini) covered the why and the setup. Now it's about hardening it. This part stands on its own.
+
+## Contents
+
+[[toc]]
+
+## Encrypting the disk
+
+The mini sits in my cabinet, next to the NAS, the Fritzbox, and the switch. It is small, it is quiet, and that also makes it easy to carry away. The disk holds half my working life: repos, keys, the agent sessions from [Your Chats Are Your Capital](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini#your-chats-are-your-capital). Without protection, whoever takes the box would have all of it.
+
+So the disk is encrypted with **FileVault**, Apple's full-disk encryption in macOS. For me that is basic hygiene, not just on an always-on machine. The benefit is easy to state: if the device is taken while powered off or locked, the disk is useless without my password. The thief gets hardware, not data.
+
+> **💡 Tip:** You turn FileVault on in System Settings under *Privacy & Security → FileVault*. Once enabled, the encryption runs in the background; you notice nothing in daily use.
+
+## Backups, encrypted too
+
+Encryption protects against unauthorized access. It does not protect against a disk dying or an agent doing something stupid. That calls for backups, regular and automatic.
+
+In my case, **[Carbon Copy Cloner](https://bombich.com)** (CCC) handles it. It backs the disk up to an external drive, on a schedule, without me having to think about it. The second part is the decisive one: **the backup drive is encrypted just like the main disk.** An unencrypted backup makes the main disk's encryption worthless. Whoever walks off with the external drive would otherwise have everything FileVault protects on the mini.
+
+This fits together cleanly: per the vendor, CCC is *"fully qualified for use with FileVault-protected volumes"*, that is, cleared for FileVault-encrypted destination drives (encrypted APFS). You format the backup drive as encrypted APFS, and CCC backs up to it. Machine gone, backup gone: both worthless without the password.
+
+> **💡 Tip:** You encrypt an external drive in Disk Utility (format *APFS (Encrypted)*) or via right-click in Finder. You can store the password in the keychain, so the drive mounts automatically for the scheduled backups.
+
+## The catch: a password at the worst possible moment
+
+Now the flip side of encryption. After every restart the mini hangs at the **pre-boot lock**: only once the FileVault password is entered does the disk decrypt, the machine boot through, and the services start. At that point there is **no network** yet. An SSH login doesn't help, and on a headless machine with no monitor and keyboard you are locked out.
+
+This is exactly where a side issue becomes the central one. I need a picture and a keyboard all the way down to the boot screen, remotely. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It connects to the mini over USB and presents itself there as a keyboard, and it captures the video over HDMI. On every restart I type the FileVault password through it once, and the mini boots through. That keeps the disk encrypted and still lets me reach every boot step.
+
+I deliberately chose the JetKVM because it is **open source** (GPL-2.0, [code on GitHub](https://github.com/jetkvm/kvm)). Many KVM-over-IP devices are closed source. For a device that transmits keyboard and screen over the network, I want auditable code. You can buy it directly from the maker at [jetkvm.com](https://jetkvm.com), but then it ships from China with a correspondingly long wait. It's faster via [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): dispatched by Amazon, delivered within a few days.
+
+> **ℹ️ Note:** Amazon links in this article are affiliate links. If you buy through them, I get a small commission, at no extra cost to you.
+
+Two settings take the edge off the boot problem:
+
+- For **planned restarts** it even works without a password: `sudo fdesetup authrestart` unlocks automatically on the next reboot, without locking yourself out.
+- `pmset autorestart 1` brings the mini back up on its own after a power cut (entering the password via the KVM then stays the one manual step).
+
+> **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. My guess: the rear ports are Thunderbolt, whose controller isn't active yet at the pre-boot screen, so a USB keyboard emulated through it isn't recognized. So plug the JetKVM's USB into a front port. The video over HDMI can stay in the back.
+
+That lays the common thread: encryption and encrypted backups each cost a password at boot, and the KVM is what lets me enter that password remotely. Without it, an encrypted, headless machine would be a contradiction in terms.
+
+## Power: shut down cleanly before the battery runs out
+
+That leaves the third case, the power cut. The mini is not a laptop that a battery carries through a power blip. Once the power is gone, everything is gone: the unsaved work, all running agents, the whole state. After that it's boot everything back up, window by window, session by session (and type the FileVault password once via the KVM).
+
+So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Plenty of reserve and enough capacity to power the JetKVM and the switch alongside the mini.
+
+The UPS data cable goes over USB into a **front** port of the mini. For reasons I can't explain, the connection on the rear ports was pretty unreliable; macOS kept losing sight of the UPS, which left the watcher blind. Since it sits in front, just like the JetKVM's keyboard, `pmset -g batt` reports the `Back-UPS` steadily. It doesn't look pretty, but it does the job.
+
+The whole network chain matters. The mini's UPS also powers the JetKVM and the switch, the switch via an extension cable. The Fritzbox router and the fiber connection hang on a second UPS. So during an outage the whole network stays up: the Fritzbox keeps its Wi-Fi, the mini reaches it over the wired path mini → switch → Fritzbox, and I have internet the whole time. My SSH session simply keeps running. That wired path is what lets the alert mails get out during the outage.
+
+And when the battery runs low? A small watcher handles mail and shutdown itself. The script `ups-notify.sh` runs as a system service (a LaunchDaemon as root) and polls `pmset -g batt` every 20 seconds:
+
+1. As soon as the mini runs on UPS battery, a mail "STROMAUSFALL" (power cut) goes out.
+2. If the battery drops to 20 percent or below, a second mail "SHUTDOWN" follows.
+3. Then the mini shuts down in a controlled way (`shutdown -h now`).
+
+When power returns, a mail "Strom wieder da" (power back) arrives. A second watcher mails if the UPS disappears from USB entirely, so the first one never runs blind unnoticed. The mails go out via [Resend](https://resend.com).
+
+So why a custom script?
+
+> **💡 Note:** macOS can shut down on its own when the UPS battery runs low (`pmset -u haltremain/haltlevel/haltafter`). I still shut the mini down myself, at my own threshold. That way I don't wait for the operating system to react; the mini is already cleanly down before that. On top of that I get the alert mails and a flow I can test.
+
+The core is a short loop. The three stages from above sit right inside it:
+
+```bash
+HALT_PCT="${HALT_PCT:-20}"   # shut down cleanly at <= X% UPS battery
+POLL="${POLL:-20}"           # seconds between checks
+
+state="init"                 # init | AC | UPS
+while :; do
+  batt="$(pmset -g batt)"
+  src="$(pm_src_of "$batt")" # "AC" or "UPS"
+  pct="$(pm_pct_of "$batt")" # battery level in percent
+
+  # Mail only on a real switch, in the background (the loop must never block on a mail)
+  if [ "$state" != "init" ] && [ "$src" != "$state" ]; then
+    if [ "$src" = "UPS" ]; then
+      notify "STROMAUSFALL - $HOST auf USV-Akku" "Now on battery (${pct}%). Shuts down at <= ${HALT_PCT}%."
+    else
+      notify "Strom wieder da - $HOST" "Back on mains power (${pct}%)."
+    fi
+  fi
+  state="$src"
+
+  # Low battery -> clean shutdown. Double-guarded: only on UPS AND low battery.
+  if [ "$src" = "UPS" ] && [ -n "$pct" ] && [ "$pct" -le "$HALT_PCT" ]; then
+    notify_now "SHUTDOWN - $HOST (Akku ${pct}%)" "Shutting down in a controlled way now."
+    /bin/sleep 2
+    /sbin/shutdown -h now "USV-Akku niedrig (${pct}%)"
+    exit 0
+  fi
+
+  /bin/sleep "$POLL"
+done
+```
+
+Two small helpers are factored out: `pm_src_of`/`pm_pct_of` read the source and battery level from `pmset -g batt`, and `notify`/`notify_now` send the mail via Resend, always in the background, so a network timeout can never block the shutdown. The secrets (Resend key, sender, recipient) live in a `resend.env` with `chmod 600`, not in the script.
+
+Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes. And because the sync is a bidirectional mirror, it dutifully replicates the broken version to the other machine. That is the real danger: the sync spreads the damage to every device. A clean shutdown prevents exactly that.
+
+## Conclusion
+
+Three risks, three answers, and one common denominator. **Theft** is defused by encryption, of the disk and of the backups. The **restart** becomes manageable because I type the FileVault password remotely via the KVM. The **power cut** is caught by the UPS, and a small script shuts the mini down in time and cleanly.
+
+The linchpin in all this is the KVM. Encryption without a way to enter the password at boot would be a dead end on a headless machine. Only the KVM makes "encrypted" and "headless" a pair that fits together.
+
+This is a one-time setup effort and quiet afterwards. My advice: start with encryption; it's enabled in two clicks and protects immediately. The rest you add at your own pace.
+
+**Questions, feedback, your own setup?** Always welcome, I'm glad about every message.
+
+---
+
+*Curious about agentic work in practice? In the workshops at [agentic.schule](https://agentic.schule) and [angular.schule](https://angular.schule) we show how modern AI agents change everyday development.*

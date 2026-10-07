@@ -1,5 +1,5 @@
 ---
-title: 'Klaut mir ruhig den Mac mini: Verschlüsselung, Backups und Strom'
+title: 'Mac mini Hardening: Verschlüsselung, Backups, Boot und Strom'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
@@ -22,7 +22,7 @@ header: header.jpg
 
 Eine Maschine, die nie ausgeht und von überall erreichbar ist, ist bequem. Sie ist aber auch ein physisches Gerät, das jemand mitnehmen kann, und sie hängt am Strom.
 
-**Dieser Artikel härtet die Bodenstation gegen genau diese drei Fälle ab: Diebstahl, einen Neustart und einen Stromausfall. Das Werkzeug gegen Diebstahl ist Verschlüsselung, der Platte und der Backups. Der Preis dafür ist ein Passwort, das man genau im unpassendsten Moment eingeben muss: beim Booten, wenn es noch kein Netzwerk gibt. Deshalb ist ein fernbedienbares KVM-Gerät der Dreh- und Angelpunkt des ganzen Konzepts.**
+**Dieser Artikel härtet die Bodenstation ab (engl. *Hardening*), gegen genau diese drei Fälle: Diebstahl, einen Neustart und einen Stromausfall. Das Werkzeug gegen Diebstahl ist Verschlüsselung, der Platte und der Backups. Der Preis dafür ist ein Passwort, das man genau im unpassendsten Moment eingeben muss: beim Booten, wenn es noch kein Netzwerk gibt. Deshalb ist ein fernbedienbares KVM-Gerät der Dreh- und Angelpunkt des ganzen Konzepts.**
 
 Das hier ist der zweite Teil zur Bodenstation. Im [ersten Artikel](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) ging es ums Warum und um das Setup. Jetzt geht es ums Absichern. Dieser Teil ist für sich lesbar.
 
@@ -42,7 +42,7 @@ Deshalb ist die Platte mit **FileVault** verschlüsselt, Apples Festplattenversc
 
 Verschlüsselung schützt vor fremdem Zugriff. Sie schützt nicht davor, dass eine Platte stirbt oder ein Agent Unsinn baut. Dafür braucht es Backups, regelmäßig und automatisch.
 
-Bei mir übernimmt das **[Carbon Copy Cloner](https://bombich.com)** (CCC). Es sichert die Platte auf ein externes Laufwerk, nach Zeitplan, ohne dass ich daran denken muss. Entscheidend ist der zweite Teil: **Das Backup-Laufwerk ist genauso verschlüsselt wie die Hauptplatte.** Ein unverschlüsseltes Backup wäre das offene Scheunentor hinter der verschlossenen Haustür. Wer die externe Platte mitgehen lässt, hätte sonst alles, was die FileVault-Platte so sorgfältig schützt.
+Bei mir übernimmt das **[Carbon Copy Cloner](https://bombich.com)** (CCC). Es sichert die Platte auf ein externes Laufwerk, nach Zeitplan, ohne dass ich daran denken muss. Entscheidend ist der zweite Teil: **Das Backup-Laufwerk ist genauso verschlüsselt wie die Hauptplatte.** Ein unverschlüsseltes Backup macht die Verschlüsselung der Hauptplatte wertlos. Wer die externe Platte mitgehen lässt, hätte sonst alles, was FileVault auf dem mini schützt.
 
 Das geht sauber zusammen: CCC ist laut Hersteller *„fully qualified for use with FileVault-protected volumes"*, also für FileVault-verschlüsselte Ziellaufwerke freigegeben (APFS, verschlüsselt). Du formatierst das Backup-Laufwerk als verschlüsseltes APFS, und CCC sichert dorthin. Platte weg, Backup weg: beide ohne Passwort wertlos.
 
