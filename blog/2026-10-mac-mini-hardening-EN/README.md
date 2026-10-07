@@ -50,6 +50,10 @@ Which drive? I prefer a classic spinning hard disk over an SSD. An SSD that sits
 
 In concrete terms, I use a 3.5-inch desktop drive with its own power supply, such as the [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21). This format offers the large capacities at the best price, with room to spare for full backups. The separate power supply is no drawback: a 3.5-inch disk needs more power than a USB port delivers. In my setup it runs off the UPS rather than the mini, more on that shortly. I've used Western Digital for years and haven't had a drive die on me yet. Whether that's representative, I can't say. The WD Elements comes from 4 to over 20 TB; pick the size to match your internal disk.
 
+> **ℹ️ Note:** Amazon links in this article are affiliate links. If you buy through them, I get a small commission, at no extra cost to you.
+
+CCC doesn't just mirror the current state. Through *snapshots*, point-in-time captures of the APFS file system, it also keeps older versions. That's why the drive should be noticeably larger than your data: Bombich recommends roughly twice the capacity of the source. The payoff: if an agent wipes or mangles a file, you restore it from an earlier version.
+
 > **💡 Tip:** You encrypt an external drive in Disk Utility (format *APFS (Encrypted)*) or via right-click in Finder. You can store the password in the keychain, so the drive mounts automatically for the scheduled backups.
 
 ## The catch: a password at the worst possible moment
@@ -60,16 +64,14 @@ I need a screen and a keyboard all the way down to the boot screen, remotely. My
 
 I deliberately chose the JetKVM because it is **open source** (GPL-2.0, [code on GitHub](https://github.com/jetkvm/kvm)). Many KVM-over-IP devices are closed source. For a device that transmits keyboard and screen over the network, I want auditable code. You can buy it directly from the maker at [jetkvm.com](https://jetkvm.com), but then it ships from China with a correspondingly long wait. It's faster via [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): dispatched by Amazon, delivered within a few days.
 
-> **ℹ️ Note:** Amazon links in this article are affiliate links. If you buy through them, I get a small commission, at no extra cost to you.
-
 Two settings take the edge off the boot problem:
 
 - For **planned restarts** it even works without a password: `sudo fdesetup authrestart` unlocks automatically on the next reboot, without locking yourself out.
-- `pmset autorestart 1` brings the mini back up on its own after a power cut (entering the password via the KVM then stays the one manual step).
+- `pmset autorestart 1` brings the mini back up on its own after a power cut. Without this setting it would stay off, waiting for the physical power button you can't reach remotely. Entering the FileVault password via the KVM then stays the one manual step.
 
 Remotely especially, this pays off. On vacation I don't want to worry about whether the mini comes back up after a power blip, and I certainly don't want to ask a relative to drive to my house and switch the machine on. Autorestart brings it back; I type the FileVault password via the KVM from the camper van.
 
-> **💡 Practical tip:** At that early boot stage, only the mini's **front** USB ports work for me; the rear ones come up later. I can't say for certain why. The consequence is clear: plug the JetKVM's USB into a front port, and the keyboard is recognized at the pre-boot screen. The video over HDMI can stay in the back.
+> **💡 Practical tip:** At that early boot stage, only the mini's **front** USB ports work for me; the rear ones come up later. I can't say for certain why. So plug the JetKVM's USB into a front port, and the keyboard is recognized at the pre-boot screen. The video over HDMI can stay in the back.
 
 Encryption and encrypted backups each require a password at boot, and the KVM is what lets me enter that password remotely. Without it, an encrypted, headless machine would be a contradiction in terms.
 

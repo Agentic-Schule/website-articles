@@ -50,6 +50,10 @@ Welche Platte? Ich bevorzuge eine klassische, sich drehende Festplatte, keine SS
 
 Konkret nehme ich eine 3,5-Zoll-Desktop-Platte mit eigenem Netzteil, etwa die [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21). In diesem Format gibt es die großen Kapazitäten zum besten Preis, genug Platz für volle Backups. Das eigene Netzteil ist dabei kein Nachteil: Eine 3,5-Zoll-Platte braucht mehr Strom, als ein USB-Port liefert. Bei mir hängt sie deshalb an der USV statt am mini, dazu gleich mehr. Western Digital setze ich seit Jahren ein, bisher ist mir keine Platte gestorben. Ob das repräsentativ ist, weiß ich nicht. Die WD Elements gibt es von 4 bis über 20 TB, wähl die Größe passend zu deiner internen Platte.
 
+> **ℹ️ Hinweis:** Amazon-Links in diesem Artikel sind Affiliate-Links. Kaufst du darüber etwas, bekomme ich eine kleine Provision, für dich bleibt der Preis gleich.
+
+CCC spiegelt nicht nur den aktuellen Stand. Über *Snapshots*, Momentaufnahmen des APFS-Dateisystems, hält es auch ältere Versionen vor. Dafür sollte die Platte deutlich größer sein als deine Daten: Bombich empfiehlt rund die doppelte Kapazität der Quelle. Der Gewinn: Zerschießt oder löscht ein Agent eine Datei, holst du sie aus einer früheren Version zurück.
+
 > **💡 Tipp:** Eine externe Platte verschlüsselst du im Festplattendienstprogramm (Format *APFS (verschlüsselt)*) oder per Rechtsklick im Finder. Das Passwort kannst du im Schlüsselbund hinterlegen, dann mountet die Platte für die geplanten Backups automatisch.
 
 ## Der Haken: ein Passwort zum ungünstigsten Zeitpunkt
@@ -59,17 +63,14 @@ Jetzt kommt die Kehrseite der Verschlüsselung. Nach jedem Neustart hängt der m
 Ich brauche einen Bildschirm und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät. KVM steht für *Keyboard, Video, Mouse*: Tastatur, Bild und Maus übers Netzwerk. Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
 
 Ich habe mich bewusst für den JetKVM entschieden, weil er **quelloffen** ist (GPL-2.0, [Code auf GitHub](https://github.com/jetkvm/kvm)). Viele KVM-over-IP-Geräte sind Closed Source. Bei einem Gerät, das Tastatur und Bildschirm über das Netz überträgt, will ich nachvollziehbaren Code. Zu kaufen gibt es ihn direkt beim Hersteller über [jetkvm.com](https://jetkvm.com), dann aber mit Versand aus China und entsprechend langer Lieferzeit. Schneller geht es über [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): Versand durch Amazon, Lieferung in wenigen Tagen.
-
-> **ℹ️ Hinweis:** Amazon-Links in diesem Artikel sind Affiliate-Links. Kaufst du darüber etwas, bekomme ich eine kleine Provision, für dich bleibt der Preis gleich.
-
 Zwei Einstellungen nehmen dem Boot-Thema die Schärfe:
 
 - Für **geplante Neustarts** geht es sogar ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren.
-- `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch (die Passwort-Eingabe per KVM bleibt dann der eine manuelle Schritt).
+- `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch. Ohne diese Einstellung bliebe er aus und wartete auf den physischen Startknopf, den du aus der Ferne nicht erreichst. Das FileVault-Passwort per KVM bleibt dann der eine manuelle Schritt.
 
-Gerade aus der Ferne zahlt sich das aus. Ich will im Urlaub nicht bangen, ob der mini nach einem Stromzucken wieder hochkommt, und erst recht keinen Angehörigen bitten müssen, in mein Haus zu fahren und den Rechner einzuschalten. Autorestart bringt ihn zurück, das FileVault-Passwort gebe ich per KVM aus dem Bulli-Office ein.
+Gerade aus der Ferne zahlt sich das aus. Ich will im Urlaub nicht bangen, ob der mini nach einem Stromzucken wieder hochkommt, und erst recht keinen Angehörigen bitten müssen, zu meinem Haus zu fahren und den Rechner einzuschalten. Autorestart bringt ihn zurück, das FileVault-Passwort gebe ich per KVM aus dem Bulli-Office ein.
 
-> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren bei mir nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Woran das genau liegt, kann ich nicht sicher sagen. Die Konsequenz ist eindeutig: Steck den JetKVM-USB vorne ein, dann wird die Tastatur schon am Pre-Boot-Screen erkannt. Das Bild per HDMI darf hinten bleiben.
+> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren bei mir nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Woran das genau liegt, kann ich nicht sicher sagen. Steck den JetKVM-USB also vorne ein, dann wird die Tastatur schon am Pre-Boot-Screen erkannt. Das Bild per HDMI darf hinten bleiben.
 
 Verschlüsselung und verschlüsselte Backups verlangen beim Booten jeweils ein Passwort, und die KVM lässt mich es aus der Ferne eingeben. Ohne sie wäre eine verschlüsselte, headless Maschine ein Widerspruch in sich.
 
