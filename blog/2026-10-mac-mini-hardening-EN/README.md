@@ -77,9 +77,9 @@ Encryption and encrypted backups each require a password at boot, and the KVM is
 
 ## Power: shut down cleanly before the battery runs out
 
-That leaves the third case, the power cut. Most developers today work on a laptop, and that makes an old spectre disappear: a thunderstorm rolls in, and you worry whether the power is about to flicker. The battery carries you over every fluctuation; you don't even notice it. The mini is different. It has no battery, it forgives you nothing. Once the power is gone, everything is gone: the unsaved work, all running agents, the whole state. After that it's boot everything back up, window by window, session by session (and type the FileVault password once via the KVM).
+That leaves the third case, the power cut. Most developers today work on a laptop, and that makes an old spectre disappear: a thunderstorm rolls in, and you worry whether the power is about to flicker. The battery carries you over every fluctuation; you don't even notice it. The mini is different. It has no battery, it forgives you nothing. Once the power is gone, everything is gone: the unsaved work, all running agents, the whole state. **Brutal.** After that it's boot everything back up, window by window, session by session (and type the FileVault password once via the KVM).
 
-So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Plenty of reserve and enough capacity to power the JetKVM and the switch alongside the mini.
+So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Plenty of reserve and enough capacity to power the JetKVM and the switch alongside the mini. APC is simply the standard for UPSes, boring in the best way: you buy one, and it runs for years without you thinking about it again. Exactly my kind of thing.
 
 The UPS data cable goes over USB into a **front** port of the mini. For reasons I can't explain, the connection on the rear ports was pretty unreliable; macOS kept losing sight of the UPS, which left the watcher blind. Since it sits in front, just like the JetKVM's keyboard, `pmset -g batt` reports the `Back-UPS` steadily. It doesn't look pretty, but it does the job.
 
