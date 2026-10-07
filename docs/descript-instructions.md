@@ -22,7 +22,7 @@ Language: German. Do not re-record, regenerate or rephrase anything. Only delete
 
 ## Vorlage Schritt 2: Layout
 
-Export in 4K hochkant (2160×3840): Die gedrehte Aufnahme hat genau diese Größe, und die Videobilder werden in dieser Größe gerendert. Alle Pixelangaben stehen deshalb im 4K-Raster, die Untertitel in 140 pt. Zwei Szenenarten: Johannes im Vollbild und Split-Screen mit einem Bild oben. Bei der Knobelaufgabe laufen alle Szenen als Split-Screen. Kein Freistellen (Green Screen, Chroma Key): vor der schwarzen Wand wird das Ergebnis fleckig.
+Export in 4K hochkant (2160×3840): Die gedrehte Aufnahme hat genau diese Größe, und die Videobilder werden in dieser Größe gerendert. Alle Pixelangaben stehen deshalb im 4K-Raster, die Untertitel in 140 pt. Den Export stellt Johannes selbst ein, die Anweisung erwähnt ihn nicht. Zwei Szenenarten: Johannes im Vollbild und Split-Screen mit einem Bild oben. Bei der Knobelaufgabe laufen alle Szenen als Split-Screen. Kein Freistellen (Green Screen, Chroma Key): vor der schwarzen Wand wird das Ergebnis fleckig.
 
 ```
 STEP 2: FULLSCREEN AND SPLIT SCREEN, CAPTIONS, AUDIO
@@ -55,9 +55,6 @@ AUDIO
 THIS VIDEO (scene starts at the first word of each line)
 <Szenen: welches Bild ab welchem Satz, Vollbild oder Split-Screen>
 <Korrekturen in den Untertiteln>
-
-EXPORT
-Export at 2160x3840 (4K), not downscaled.
 
 After applying, report the start time and layout of each scene.
 ```
