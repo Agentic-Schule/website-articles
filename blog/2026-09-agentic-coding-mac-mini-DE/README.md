@@ -200,7 +200,7 @@ Ein Agent ist nur so gut wie die Umgebung, in der er arbeiten darf. Auf dem mini
 
 Drei Bausteine:
 
-**FileVault und der Boot.** Die Platte ist mit FileVault verschlüsselt. Nach einem Neustart hängt der mini im Pre-Boot-Lock, noch bevor es Netzwerk gibt, ein SSH-Login hilft also nicht. Ich entsperre ihn aus der Ferne über ein KVM-over-IP-Gerät und tippe das Passwort einmal ein. Wie das genau geht, dazu verschlüsselte Backups und eine USV gegen Stromausfall, steht im Folgeartikel [Mac mini Hardening](https://agentic.schule/blog/2026-10-mac-mini-hardening).
+**FileVault und der Boot.** Die Platte ist mit FileVault verschlüsselt. Nach einem Neustart hängt der mini im Pre-Boot-Lock, noch bevor es Netzwerk gibt, ein SSH-Login hilft also nicht. Ich entsperre ihn aus der Ferne über ein KVM-over-IP-Gerät (Keyboard, Video, Mouse) und tippe das Passwort einmal ein. Wie das genau geht, dazu verschlüsselte Backups und eine USV (unterbrechungsfreie Stromversorgung) gegen Stromausfall, steht im Folgeartikel [Mac mini Hardening](https://agentic.schule/blog/2026-10-mac-mini-hardening).
 
 **Docker ohne Docker Desktop.** Docker Desktop braucht einen GUI-Login, auf einer headless Maschine ein K.-o.-Kriterium. Stattdessen läuft **[colima](https://github.com/abiosoft/colima)** als System-Dienst (LaunchDaemon), der schon beim Booten startet. Unter der Haube dieselbe Technik wie Docker Desktop (Apples Virtualization.framework), mit Rosetta für **Intel-Images**, also für den ollen SQL Server, der leider nie nach ARM portiert wurde. Danke, Microsoft. So bekommt der Agent ein `docker` und `docker compose`, das einfach da ist.
 
