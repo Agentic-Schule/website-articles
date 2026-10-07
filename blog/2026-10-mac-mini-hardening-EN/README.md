@@ -62,6 +62,8 @@ Now the flip side of encryption. After every restart the mini hangs at the **pre
 
 I need a screen and a keyboard all the way down to the boot screen, remotely. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device. KVM stands for *keyboard, video, mouse*: all three over the network. It connects to the mini over USB and presents itself there as a keyboard, and it captures the video over HDMI. On every restart I type the FileVault password through it once, and the mini boots through. That keeps the disk encrypted and still lets me reach every boot step.
 
+![Illustration in the agentic.schule style: on the left a stylized keyboard with a glowing purple frame and a glowing magenta Enter key, connected by a magenta dotted line with a globe icon to a silver Mac mini on the right, above which a password field with six dots floats.](artikel-kvm.jpg "A keyboard across the network, right up to the password prompt: that's what the KVM is for.")
+
 I deliberately chose the JetKVM because it is **open source** (GPL-2.0, [code on GitHub](https://github.com/jetkvm/kvm)). Many KVM-over-IP devices are closed source. For a device that transmits keyboard and screen over the network, I want auditable code. You can buy it directly from the maker at [jetkvm.com](https://jetkvm.com), but then it ships from China with a correspondingly long wait. It's faster via [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): dispatched by Amazon, delivered within a few days.
 
 Two settings take the edge off the boot problem:
@@ -78,6 +80,8 @@ Encryption and encrypted backups each require a password at boot, and the KVM is
 ## Power: shut down cleanly before the battery runs out
 
 That leaves the third case, the power cut. Most developers today work on a laptop, and that makes an old spectre disappear: a thunderstorm rolls in, and you worry whether the power is about to flicker. The battery carries you over every fluctuation; you don't even notice it. The mini is different. It has no battery, it forgives you nothing. Once the power is gone, everything is gone: the unsaved work, all running agents, the whole state. **Brutal.** After that it's boot everything back up, window by window, session by session (and type the FileVault password once via the KVM).
+
+![Illustration in the agentic.schule style: on the left a stylized UPS with a glowing purple frame, a green status bar and a green power icon, connected by a magenta dotted line with a lightning-bolt icon to a silver Mac mini on the right.](artikel-usv.jpg "The UPS sits between the wall socket and the mini. When the power drops, the mini doesn't notice at first.")
 
 So the mini runs on a UPS (uninterruptible power supply), an **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Plenty of reserve and enough capacity to power the JetKVM and the switch alongside the mini. APC is simply the standard for UPSes, boring in the best way: you buy one, and it runs for years without you thinking about it again. Exactly my kind of thing.
 
