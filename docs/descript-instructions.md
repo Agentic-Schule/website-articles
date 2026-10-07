@@ -35,7 +35,7 @@ The speaker footage is 3840x2160 and plays sideways, because the camera lies on 
 
 LAYOUT
 - Speaker scenes: the rotated speaker video fills the full frame. Head in the upper third, no black bars.
-- Image scenes (split screen): top half (y 0–1920) the image, full width. Bottom half (y 1920–3840) the rotated speaker video, scaled to fill the full width, cropped top and bottom. Keep head and shoulders. Eyes at about 40–50% of the half's height, head top just below the caption line at the divider (never under the captions). Hard edge at y 1920: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
+- Image scenes (split screen): top half (y 0–1920) the image, full width. Bottom half (y 1920–3840) the rotated speaker video, scaled to fill the full width, cropped top and bottom. Keep head and shoulders. Eyes at 33–38% of the half's height, measured from the divider down; never lower than 40%. The top of the head may touch the caption line, the face must stay below the captions. Hard edge at y 1920: no line, no border, no rounded corners, no shadow. No cut-out, no Green Screen, no chroma key anywhere.
 - Photo and video cutaways: fill the full frame (crop to 9:16, no black bars), no speaker. Static crop only.
 - Hard cuts only. No animated zoom, no pan, no transitions.
 - Punch-in jump cuts: inside every speaker shot longer than about 4 s, add a hard cut at each sentence end and alternate the crop between 100% and 110% (face stays centered), so the frame changes every 2 to 5 seconds. Apply the same head framing to the 110% crops.
