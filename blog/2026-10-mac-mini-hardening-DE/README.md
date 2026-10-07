@@ -94,7 +94,7 @@ Kommt der Strom zurück, meldet eine Mail „Strom wieder da". Ein zweiter Wäch
 
 Der technisch versierte Leser wird sich jetzt fragen: Kann macOS das nicht von allein? macOS bietet dafür Einstellungen (`pmset -u haltremain/haltlevel/haltafter`), die bei niedrigem USV-Akku herunterfahren sollen. Auf meinem M4-mini hat das im Test aber nicht ausgelöst. Deshalb macht es mein eigenes Skript, und das klappt zuverlässig.
 
-> **💡 Hinweis:** Das Skript fährt bei meiner eigenen Schwelle herunter und schickt mir vorher die Warn-Mails. Den ganzen Ablauf kann ich testen.
+> **💡 Hinweis:** Das Skript fährt bei meiner eigenen Schwelle herunter und schickt mir vorher die Warn-Mails. Vor allem aber kann ich den ganzen Ablauf testen, ohne auf einen echten Stromausfall zu warten. Bei einer eingebauten Einstellung geht das nicht.
 
 Der Kern ist eine kurze Schleife. Die drei Stufen von oben stehen direkt darin:
 
@@ -130,7 +130,29 @@ while :; do
 done
 ```
 
-Zwei kleine Helfer sind ausgelagert: `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` schicken die Mail über Resend, immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert.
+Die Helfer dazu sind klein genug, dass du dir alles selbst zusammenbauen kannst. `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` verschicken die Mail über [Resend](https://resend.com), immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert:
+
+```bash
+# pmset -g batt parsen: Quelle (AC/UPS) und Akkustand in Prozent
+pm_src_of() { case "$1" in *"'AC Power'"*) echo AC ;; *) echo UPS ;; esac; }
+pm_pct_of() { printf '%s' "$1" | grep -oE '[0-9]+%' | head -1 | tr -d '%'; }
+
+# Mail über Resend; API-Key, Absender und Empfänger kommen aus dem Environment
+_resend_post() {
+  curl -s -o /dev/null -w '%{http_code}' --max-time "${3:-15}" \
+    -X POST https://api.resend.com/emails \
+    -H "Authorization: Bearer ${RESEND_API_KEY}" -H "Content-Type: application/json" \
+    -d "{\"from\":\"${RESEND_FROM}\",\"to\":\"${RESEND_TO}\",\"subject\":\"${1}\",\"text\":\"${2}\"}"
+}
+
+# blockierend, drei Versuche gegen kurzen Netz-Schluckauf
+resend_send()    { for i in 1 2 3; do case "$(_resend_post "$1" "$2" 15)" in 2*) return 0 ;; esac; /bin/sleep 10; done; return 1; }
+# einmal, kurzer Timeout, im Hintergrund (für den Shutdown-Pfad)
+resend_send_bg() { ( _resend_post "$1" "$2" 5 >/dev/null 2>&1 ) & }
+
+notify()     { resend_send "$1" "$2" & }    # Übergangs-Mail, retryt im Hintergrund
+notify_now() { resend_send_bg "$1" "$2"; }  # Shutdown-Mail: einmal, kurz, im Hintergrund
+```
 
 Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, die Datei, in der die laufende Agenten-Session Zeile für Zeile protokolliert wird. Im schlimmsten Fall bleibt sie bei null Bytes. Das ist mir nach abrupten Neustarts schon mehrfach passiert, und zwar immer dann, wenn genau in dem Moment geschrieben wurde. Bei fleißigen Agenten ist das ständig der Fall. Und es bleibt nicht lokal: Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung mitigiert das.
 

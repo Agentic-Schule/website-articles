@@ -95,7 +95,7 @@ When power returns, a mail "Strom wieder da" (power back) arrives. A second watc
 
 The technically savvy reader will now ask: Can't macOS do this itself? macOS does offer settings for it (`pmset -u haltremain/haltlevel/haltafter`) that are meant to shut down on a low UPS battery. On my M4 mini, though, that didn't trigger in testing. So my own script handles it, and that works reliably.
 
-> **💡 Note:** The script shuts down at my own threshold and sends me the warning mails beforehand. And I can test the whole flow.
+> **💡 Note:** The script shuts down at my own threshold and sends me the warning mails beforehand. Above all, I can test the whole flow without waiting for a real power cut. You can't do that with a built-in setting.
 
 The core is a short loop. The three stages from above sit right inside it:
 
@@ -131,7 +131,29 @@ while :; do
 done
 ```
 
-Two small helpers are factored out: `pm_src_of`/`pm_pct_of` read the source and battery level from `pmset -g batt`, and `notify`/`notify_now` send the mail via Resend, always in the background, so a network timeout can never block the shutdown.
+The helpers are small enough that you can assemble the whole thing yourself. `pm_src_of`/`pm_pct_of` read the source and battery level from `pmset -g batt`, and `notify`/`notify_now` send the mail via [Resend](https://resend.com), always in the background, so a network timeout can never block the shutdown:
+
+```bash
+# parse pmset -g batt: power source (AC/UPS) and battery level in percent
+pm_src_of() { case "$1" in *"'AC Power'"*) echo AC ;; *) echo UPS ;; esac; }
+pm_pct_of() { printf '%s' "$1" | grep -oE '[0-9]+%' | head -1 | tr -d '%'; }
+
+# mail via Resend; API key, sender, and recipient come from the environment
+_resend_post() {
+  curl -s -o /dev/null -w '%{http_code}' --max-time "${3:-15}" \
+    -X POST https://api.resend.com/emails \
+    -H "Authorization: Bearer ${RESEND_API_KEY}" -H "Content-Type: application/json" \
+    -d "{\"from\":\"${RESEND_FROM}\",\"to\":\"${RESEND_TO}\",\"subject\":\"${1}\",\"text\":\"${2}\"}"
+}
+
+# blocking, three tries against a brief network hiccup
+resend_send()    { for i in 1 2 3; do case "$(_resend_post "$1" "$2" 15)" in 2*) return 0 ;; esac; /bin/sleep 10; done; return 1; }
+# once, short timeout, in the background (for the shutdown path)
+resend_send_bg() { ( _resend_post "$1" "$2" 5 >/dev/null 2>&1 ) & }
+
+notify()     { resend_send "$1" "$2" & }    # transition mail, retries in the background
+notify_now() { resend_send_bg "$1" "$2"; }  # shutdown mail: once, short, in the background
+```
 
 Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, the file in which the running agent session is logged line by line. In the worst case it's left at zero bytes. That's happened to me several times after an abrupt reboot, always when a write landed at that exact moment. With busy agents, that's constantly the case. And it doesn't stay local: the mini continuously mirrors its files to my other devices (how that works is in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)). That mirror then also replicates the broken version, and the damage ends up on every machine. A clean shutdown mitigates that.
 
