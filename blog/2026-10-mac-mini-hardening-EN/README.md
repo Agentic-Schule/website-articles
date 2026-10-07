@@ -52,7 +52,7 @@ CCC can back up to an encrypted drive for this: you format the external drive as
 
 Now the flip side of encryption. After every restart the mini hangs at the **pre-boot lock**: only once the FileVault password is entered does the disk decrypt, the machine boot through, and the services start. At that point there is **no network** yet. An SSH login doesn't help, and on a *headless* machine (no monitor and keyboard) you are locked out.
 
-I need a screen and a keyboard all the way down to the boot screen, remotely. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It connects to the mini over USB and presents itself there as a keyboard, and it captures the video over HDMI. On every restart I type the FileVault password through it once, and the mini boots through. That keeps the disk encrypted and still lets me reach every boot step.
+I need a screen and a keyboard all the way down to the boot screen, remotely. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device. KVM stands for *keyboard, video, mouse*: all three over the network. It connects to the mini over USB and presents itself there as a keyboard, and it captures the video over HDMI. On every restart I type the FileVault password through it once, and the mini boots through. That keeps the disk encrypted and still lets me reach every boot step.
 
 I deliberately chose the JetKVM because it is **open source** (GPL-2.0, [code on GitHub](https://github.com/jetkvm/kvm)). Many KVM-over-IP devices are closed source. For a device that transmits keyboard and screen over the network, I want auditable code. You can buy it directly from the maker at [jetkvm.com](https://jetkvm.com), but then it ships from China with a correspondingly long wait. It's faster via [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): dispatched by Amazon, delivered within a few days.
 
@@ -127,7 +127,17 @@ done
 
 Two small helpers are factored out: `pm_src_of`/`pm_pct_of` read the source and battery level from `pmset -g batt`, and `notify`/`notify_now` send the mail via Resend, always in the background, so a network timeout can never block the shutdown.
 
-Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes. That's happened to me more than once: Mac suddenly off, chats gone. The mini continuously mirrors its files to my other devices (how that works is in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)). That mirror then also replicates the broken version, and the damage ends up on every machine. A clean shutdown mitigates that.
+Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes: Mac off, chats gone. Here's the real trap: the mini continuously mirrors its files to my other devices (how that works is in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)). That mirror then also replicates the broken version, and the damage ends up on every machine. A clean shutdown mitigates that.
+
+## The setup to replicate
+
+The components I use:
+
+- **UPS:** [APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21) — keeps the mini, the JetKVM, and the switch running through a power cut.
+- **KVM over IP:** [JetKVM](https://jetkvm.com), open source. Directly from the maker, or faster via [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21).
+- **Backup software:** [Carbon Copy Cloner](https://bombich.com) — backs up to an external drive on a schedule.
+- **Backup drive:** an external SSD or HDD, formatted as encrypted *APFS*.
+- **Encryption:** FileVault, included in macOS.
 
 ## Conclusion
 

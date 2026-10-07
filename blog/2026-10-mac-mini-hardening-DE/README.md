@@ -52,7 +52,7 @@ CCC kann dafür auf ein verschlüsseltes Laufwerk sichern: Du formatierst das ex
 
 Jetzt kommt die Kehrseite der Verschlüsselung. Nach jedem Neustart hängt der mini im **Pre-Boot-Lock**: Erst wenn das FileVault-Passwort eingegeben ist, entschlüsselt sich die Platte, der Rechner bootet durch und die Dienste starten. Zu diesem Zeitpunkt gibt es noch **kein Netzwerk**. Ein SSH-Login hilft also nicht, und bei einer *headless* Maschine (ohne Monitor und Tastatur) ist man damit ausgesperrt.
 
-Ich brauche einen Bildschirm und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
+Ich brauche einen Bildschirm und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät. KVM steht für *Keyboard, Video, Mouse*: Tastatur, Bild und Maus übers Netzwerk. Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
 
 Ich habe mich bewusst für den JetKVM entschieden, weil er **quelloffen** ist (GPL-2.0, [Code auf GitHub](https://github.com/jetkvm/kvm)). Viele KVM-over-IP-Geräte sind Closed Source. Bei einem Gerät, das Tastatur und Bildschirm über das Netz überträgt, will ich nachvollziehbaren Code. Zu kaufen gibt es ihn direkt beim Hersteller über [jetkvm.com](https://jetkvm.com), dann aber mit Versand aus China und entsprechend langer Lieferzeit. Schneller geht es über [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): Versand durch Amazon, Lieferung in wenigen Tagen.
 
@@ -127,7 +127,17 @@ done
 
 Zwei kleine Helfer sind ausgelagert: `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` schicken die Mail über Resend, immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert.
 
-Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Das ist mir schon mehrfach passiert: Mac plötzlich aus, Chats weg. Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung mitigiert das.
+Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes: Mac aus, Chats weg. Das ist die eigentliche Falle: Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung mitigiert das.
+
+## Das Setup zum Nachbauen
+
+Die Komponenten, die bei mir im Einsatz sind:
+
+- **USV:** [APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21) — hält den mini samt JetKVM und Switch bei Stromausfall am Laufen.
+- **KVM-over-IP:** [JetKVM](https://jetkvm.com), quelloffen. Direkt beim Hersteller oder schneller über [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21).
+- **Backup-Software:** [Carbon Copy Cloner](https://bombich.com) — sichert nach Zeitplan auf ein externes Laufwerk.
+- **Backup-Laufwerk:** eine externe SSD oder HDD, als verschlüsseltes *APFS* formatiert.
+- **Verschlüsselung:** FileVault, in macOS enthalten.
 
 ## Fazit
 
