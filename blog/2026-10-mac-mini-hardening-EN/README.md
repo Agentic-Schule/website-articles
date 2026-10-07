@@ -151,7 +151,9 @@ The linchpin in all this is the KVM. Encryption without a way to enter the passw
 
 This is a one-time setup effort and quiet afterwards. My advice: start with encryption; it's enabled in two clicks and protects immediately. The rest you add at your own pace.
 
-**Questions, feedback, your own setup?** Always welcome, I'm glad about every message.
+That brings the ground station series to a close. I hope it helped, and that you now have a base your agents can run on around the clock, secured against theft, restart, and power loss.
+
+**Questions, feedback, your own setup?** Always welcome, I'm glad about every message. If enough open questions pile up, I'll happily add a third part.
 
 ---
 

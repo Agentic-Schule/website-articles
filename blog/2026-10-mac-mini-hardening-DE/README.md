@@ -151,7 +151,9 @@ Der Dreh- und Angelpunkt ist dabei die KVM. Verschlüsselung ohne eine Möglichk
 
 Das ist einmal Einrichtungsaufwand und danach Ruhe. Mein Rat: Fang mit der Verschlüsselung an, die ist in zwei Klicks aktiviert und schützt sofort. Den Rest baust du in Ruhe dazu.
 
-**Fragen, Feedback, dein eigenes Setup?** Immer her damit, ich freue mich über jede Nachricht.
+Damit endet die Serie zur Bodenstation. Ich hoffe, sie hat dir geholfen, und du hast jetzt eine Basis, auf der deine Agenten rund um die Uhr laufen, abgesichert gegen Diebstahl, Neustart und Stromausfall.
+
+**Fragen, Feedback, dein eigenes Setup?** Immer her damit, ich freue mich über jede Nachricht. Kommen genug offene Fragen zusammen, hänge ich gern einen dritten Teil an.
 
 ---
 
