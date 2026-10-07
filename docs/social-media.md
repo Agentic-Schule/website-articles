@@ -10,7 +10,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 
 - **30 Artikel über AI für Entwickler, auf Deutsch.** Jeder Tag ist ein kleiner Tipp mit einem ausführlichen, fachlich fundierten Artikel dahinter. Alles, was gezeigt wird, hat Johannes selbst ausprobiert.
 - **Qualität vor Takt.** Ein neuer Tag erscheint etwa jeden Tag oder jeden zweiten Tag. Dauert ein Artikel länger, kommt der nächste Tag eben später. Lücken im Kalender sind ausdrücklich erlaubt.
-- **„Tag N" zählt die Artikel**, nicht die Videos und nicht die Kalendertage. Ein zweites Video zum selben Artikel trägt dieselbe Nummer (Tag 2 hat zwei Videos zum Mac-mini-Artikel). Die Nummer springt bei einer Lücke nicht. Welcher Artikel welcher Tag ist, entscheidet Johannes beim Posten. Stand: Tag 1 bösartige AI-Skills, Tag 2 Mac mini, Tag 3 git worktrees.
+- **„Tag N" zählt die Artikel**, nicht die Videos und nicht die Kalendertage. Ein weiteres Video zum selben Artikel und eine Fortsetzung desselben Themas tragen dieselbe Nummer (Tag 2: Mac-mini-Artikel mit mehreren Videos plus Teil 2 „Mac mini Hardening“). Die Nummer springt bei einer Lücke nicht. Welcher Artikel welcher Tag ist, entscheidet Johannes beim Posten. Stand: Tag 1 bösartige AI-Skills, Tag 2 Mac mini (Teil 1 und Teil 2 Hardening), Tag 3 git worktrees.
 - **Artikel mit Datum in der Zukunft sind gewollt.** Die Website zeigt sie sofort an, damit Suchmaschinen sie schon vor ihrem Tag indexieren können. Das `published:`-Datum steuert nur Anzeige und Sortierung. Kein Hinweis darauf nötig.
 - **Die Artikel erscheinen weiterhin zweisprachig** (`-DE` und `-EN`). Die Posts verlinken immer die deutsche Fassung.
 
