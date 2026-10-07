@@ -91,9 +91,9 @@ Und wenn der Akku zur Neige geht? Ein kleiner Wächter übernimmt Mail und Absch
 
 Kommt der Strom zurück, meldet eine Mail „Strom wieder da". Ein zweiter Wächter mailt, falls die USV ganz vom USB verschwindet, damit der erste nie unbemerkt blind läuft. Die Mails gehen über [Resend](https://resend.com) raus.
 
-Der technisch versierte Leser wird sich jetzt fragen: Kann macOS das nicht von allein? Ja, über `pmset -u haltremain/haltlevel/haltafter`. Aber darauf allein verlasse ich mich nicht.
+Der technisch versierte Leser wird sich jetzt fragen: Kann macOS das nicht von allein? macOS bietet dafür Einstellungen (`pmset -u haltremain/haltlevel/haltafter`), die bei niedrigem USV-Akku herunterfahren sollen. Auf meinem M4-mini hat das im Test aber nicht ausgelöst. Deshalb macht es mein eigenes Skript, und das klappt zuverlässig.
 
-> **💡 Hinweis:** Mein Skript fährt den mini bei meiner eigenen Schwelle herunter, also schon bevor das Betriebssystem reagieren müsste. Dazu bekomme ich die Warn-Mails und einen Ablauf, den ich testen kann.
+> **💡 Hinweis:** Das Skript fährt bei meiner eigenen Schwelle herunter und schickt mir vorher die Warn-Mails. Den ganzen Ablauf kann ich testen.
 
 Der Kern ist eine kurze Schleife. Die drei Stufen von oben stehen direkt darin:
 
