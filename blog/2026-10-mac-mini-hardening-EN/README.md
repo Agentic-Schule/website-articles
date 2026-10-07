@@ -4,7 +4,7 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
-published: 2026-10-13
+published: 2026-10-07
 keywords:
   - Mac mini
   - FileVault
@@ -40,7 +40,7 @@ So my disk is encrypted with **FileVault**, Apple's full-disk encryption in macO
 
 ## Backups: encrypted too
 
-Encryption protects against unauthorized access. It does not protect against a disk dying or an agent doing something stupid. That calls for backups, regular and automatic.
+Encryption protects against unauthorized access. It doesn't help against data loss, and data loss has many causes: a dying disk, a wrong command, an agent doing something stupid. That's why backups belong in every professional setup, regular and automatic. They're not an agent-specific thing; they're basic hygiene.
 
 In my case, **[Carbon Copy Cloner](https://bombich.com)** (CCC) handles it. It backs the disk up to an external drive, on a schedule, without me having to think about it. **The backup drive is encrypted just like the main disk.** An unencrypted backup makes the main disk's encryption worthless. Whoever walks off with the external drive would otherwise have everything FileVault protects on the mini.
 
@@ -67,7 +67,7 @@ Two settings take the edge off the boot problem:
 - For **planned restarts** it even works without a password: `sudo fdesetup authrestart` unlocks automatically on the next reboot, without locking yourself out.
 - `pmset autorestart 1` brings the mini back up on its own after a power cut (entering the password via the KVM then stays the one manual step).
 
-Remotely especially, this pays off. On vacation I don't want to worry about whether the mini comes back up after a power blip, and I certainly don't want to ask a relative to drive to my house and switch the machine on. Autorestart brings it back; I type the FileVault password via the KVM from the beach.
+Remotely especially, this pays off. On vacation I don't want to worry about whether the mini comes back up after a power blip, and I certainly don't want to ask a relative to drive to my house and switch the machine on. Autorestart brings it back; I type the FileVault password via the KVM from the camper van.
 
 > **💡 Practical tip:** At that early boot stage, only the mini's **front** USB ports work for me; the rear ones come up later. I can't say for certain why. The consequence is clear: plug the JetKVM's USB into a front port, and the keyboard is recognized at the pre-boot screen. The video over HDMI can stay in the back.
 
@@ -151,7 +151,9 @@ The linchpin in all this is the KVM. Encryption without a way to enter the passw
 
 This is a one-time setup effort and quiet afterwards. My advice: start with encryption; it's enabled in two clicks and protects immediately. The rest you add at your own pace.
 
-**Questions, feedback, your own setup?** Always welcome, I'm glad about every message.
+That brings the ground station series to a close. I hope it helped, and that you now have a base your agents can run on around the clock, secured against theft, restart, and power loss.
+
+**Questions, feedback, your own setup?** Always welcome, I'm glad about every message. If enough open questions pile up, I'll happily add a third part.
 
 ---
 
