@@ -20,7 +20,7 @@ language: de
 header: header.jpg
 ---
 
-**Eine Maschine, die nie ausgeht und von überall erreichbar ist, ist bequem, aber auch ein physisches Gerät, das jemand mitnehmen kann, und sie hängt am Strom. Dieser Artikel härtet die Bodenstation ab (engl. *Hardening*), gegen genau diese drei Fälle: Diebstahl, einen Neustart und einen Stromausfall. Das Werkzeug gegen Diebstahl ist Verschlüsselung, der Platte und der Backups. Der Preis dafür ist ein Passwort, das man genau im unpassendsten Moment eingeben muss: beim Booten, wenn es noch kein Netzwerk gibt. Deshalb braucht es ein fernbedienbares KVM-Gerät (Keyboard, Video, Mouse, übers Netz), um dieses Passwort aus der Ferne einzugeben.**
+**Meine Bodenstation läuft rund um die Uhr und ist von überall erreichbar. Bequem, ja. Aber sie ist auch ein physisches Gerät, das jemand mitnehmen kann, und sie hängt am Strom. Dieser Artikel härtet sie gegen drei Fälle ab: Diebstahl, einen Neustart und einen Stromausfall. Dabei steckt ein Widerspruch im Kern: Ausgerechnet die Verschlüsselung, die bei Diebstahl schützt, sperrt mich beim nächsten Neustart selbst aus, und zwar genau dann, wenn ich nicht davorsitze. Wie ich trotzdem jederzeit an die Maschine komme, zeige ich hier.**
 
 Das hier ist der zweite Teil zur Bodenstation. Im [ersten Artikel](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini) ging es ums Warum und um das Setup. Jetzt geht es ums Absichern. Dieser Teil ist für sich lesbar.
 
@@ -30,9 +30,11 @@ Das hier ist der zweite Teil zur Bodenstation. Im [ersten Artikel](https://agent
 
 ## Die Platte verschlüsseln
 
-Der mini steht bei mir im Kabelschrank, neben NAS, Fritzbox und Switch. Er ist klein, er ist leise, und genau das macht ihn auch leicht wegzutragen. Auf der Platte liegt mein halbes Arbeitsleben: Repos, Keys, die Agenten-Sessions aus [Deine Chats sind dein Kapital](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#deine-chats-sind-dein-kapital). Wer die Kiste mitnimmt, hätte ohne Schutz all das in der Hand.
+Der mini steht bei mir im Kabelschrank, neben NAS, Fritzbox und Switch. Er ist klein, er ist leise, und genau das macht ihn auch leicht wegzutragen. Auf der Platte liegt mein halbes Arbeitsleben: Repos, Keys, die Agenten-Sessions aus [Deine Chats sind dein Kapital](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini#deine-chats-sind-dein-kapital). Wer den mini physisch entfernt, hätte ohne Schutz all das in der Hand.
 
-Deshalb ist die Platte mit **FileVault** verschlüsselt, Apples Festplattenverschlüsselung in macOS. Für mich gehört das zum guten Ton, nicht nur auf einem always-on Rechner. Der Gewinn ist einfach zu erklären: Wird das Gerät im ausgeschalteten oder gesperrten Zustand entwendet, ist die Platte ohne mein Passwort nur Datenmüll. Der Dieb bekommt Hardware, keine Daten.
+![Metallregal mit der Hardware der Bodenstation: eine schwarze APC-USV mit grün leuchtender Statusleiste, davor ein silberner Mac mini, links unten ein JetKVM mit kleinem Farbdisplay, oben hinten ein NETGEAR-Switch mit grünen Port-LEDs, dazwischen zahlreiche schwarze und weiße Kabel.](bodenstation.jpg "Mini, USV, JetKVM und Switch in voller Pracht. Staub inklusive.")
+
+Deshalb ist meine Festplatte mit **FileVault** verschlüsselt, Apples Festplattenverschlüsselung in macOS. Für mich gehört das zum guten Ton, nicht nur auf einem always-on Rechner. Der Gewinn ist einfach zu erklären: Wird das Gerät im ausgeschalteten oder gesperrten Zustand entwendet, ist die Platte ohne mein Passwort nur Datenmüll. Der Dieb bekommt Hardware, keine Daten.
 
 > **💡 Tipp:** FileVault schaltest du in den Systemeinstellungen unter *Datenschutz & Sicherheit → FileVault* ein. Einmal aktiviert, läuft die Verschlüsselung im Hintergrund, im Alltag merkst du nichts davon.
 
@@ -40,9 +42,9 @@ Deshalb ist die Platte mit **FileVault** verschlüsselt, Apples Festplattenversc
 
 Verschlüsselung schützt vor fremdem Zugriff. Sie schützt nicht davor, dass eine Platte stirbt oder ein Agent Unsinn baut. Dafür braucht es Backups, regelmäßig und automatisch.
 
-Bei mir übernimmt das **[Carbon Copy Cloner](https://bombich.com)** (CCC). Es sichert die Platte auf ein externes Laufwerk, nach Zeitplan, ohne dass ich daran denken muss. Entscheidend ist der zweite Teil: **Das Backup-Laufwerk ist genauso verschlüsselt wie die Hauptplatte.** Ein unverschlüsseltes Backup macht die Verschlüsselung der Hauptplatte wertlos. Wer die externe Platte mitgehen lässt, hätte sonst alles, was FileVault auf dem mini schützt.
+Bei mir übernimmt das **[Carbon Copy Cloner](https://bombich.com)** (CCC). Es sichert die Platte auf ein externes Laufwerk, nach Zeitplan, ohne dass ich daran denken muss. **Das Backup-Laufwerk ist genauso verschlüsselt wie die Hauptplatte.** Ein unverschlüsseltes Backup macht die Verschlüsselung der Hauptplatte wertlos. Wer die externe Platte mitgehen lässt, hätte sonst alles, was FileVault auf dem mini schützt.
 
-Das geht sauber zusammen: CCC ist laut Hersteller *„fully qualified for use with FileVault-protected volumes"*, also für FileVault-verschlüsselte Ziellaufwerke freigegeben (verschlüsseltes *APFS*, Apples Dateisystem). Du formatierst das Backup-Laufwerk als verschlüsseltes APFS, und CCC sichert dorthin. Platte weg, Backup weg: beide ohne Passwort wertlos.
+CCC kann dafür auf ein verschlüsseltes Laufwerk sichern: Du formatierst das externe Laufwerk als verschlüsseltes *APFS* (Apples Dateisystem), und CCC sichert dorthin.
 
 > **💡 Tipp:** Eine externe Platte verschlüsselst du im Festplattendienstprogramm (Format *APFS (verschlüsselt)*) oder per Rechtsklick im Finder. Das Passwort kannst du im Schlüsselbund hinterlegen, dann mountet die Platte für die geplanten Backups automatisch.
 
@@ -50,7 +52,7 @@ Das geht sauber zusammen: CCC ist laut Hersteller *„fully qualified for use wi
 
 Jetzt kommt die Kehrseite der Verschlüsselung. Nach jedem Neustart hängt der mini im **Pre-Boot-Lock**: Erst wenn das FileVault-Passwort eingegeben ist, entschlüsselt sich die Platte, der Rechner bootet durch und die Dienste starten. Zu diesem Zeitpunkt gibt es noch **kein Netzwerk**. Ein SSH-Login hilft also nicht, und bei einer *headless* Maschine (ohne Monitor und Tastatur) ist man damit ausgesperrt.
 
-Ich brauche ein Bild und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
+Ich brauche einen Bildschirm und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
 
 Ich habe mich bewusst für den JetKVM entschieden, weil er **quelloffen** ist (GPL-2.0, [Code auf GitHub](https://github.com/jetkvm/kvm)). Viele KVM-over-IP-Geräte sind Closed Source. Bei einem Gerät, das Tastatur und Bildschirm über das Netz überträgt, will ich nachvollziehbaren Code. Zu kaufen gibt es ihn direkt beim Hersteller über [jetkvm.com](https://jetkvm.com), dann aber mit Versand aus China und entsprechend langer Lieferzeit. Schneller geht es über [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): Versand durch Amazon, Lieferung in wenigen Tagen.
 
@@ -61,21 +63,23 @@ Zwei Einstellungen nehmen dem Boot-Thema die Schärfe:
 - Für **geplante Neustarts** geht es sogar ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren.
 - `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch (die Passwort-Eingabe per KVM bleibt dann der eine manuelle Schritt).
 
-> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Meine Vermutung: Hinten sitzen die Thunderbolt-Ports, deren Controller am Pre-Boot-Screen noch nicht aktiv ist, sodass eine darüber emulierte USB-Tastatur dort nicht erkannt wird. Steck den JetKVM-USB also vorne ein. Das Bild per HDMI darf hinten bleiben.
+Gerade aus der Ferne zahlt sich das aus. Ich will im Urlaub nicht bangen, ob der mini nach einem Stromzucken wieder hochkommt, und erst recht keinen Angehörigen bitten müssen, in mein Haus zu fahren und den Rechner einzuschalten. Autorestart bringt ihn zurück, das FileVault-Passwort gebe ich per KVM vom Strand aus ein.
 
-Verschlüsselung und verschlüsselte Backups kosten jeweils ein Passwort beim Boot, und die KVM gibt es mir aus der Ferne ein. Ohne sie wäre eine verschlüsselte, headless Maschine ein Widerspruch in sich.
+> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren bei mir nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Woran das genau liegt, kann ich nicht sicher sagen. Die Konsequenz ist eindeutig: Steck den JetKVM-USB vorne ein, dann wird die Tastatur schon am Pre-Boot-Screen erkannt. Das Bild per HDMI darf hinten bleiben.
+
+Verschlüsselung und verschlüsselte Backups verlangen beim Booten jeweils ein Passwort, und die KVM lässt mich es aus der Ferne eingeben. Ohne sie wäre eine verschlüsselte, headless Maschine ein Widerspruch in sich.
 
 ## Stromversorgung: sauber herunterfahren, bevor der Akku leer ist
 
-Bleibt der dritte Fall, der Stromausfall. Der mini ist kein Laptop, den ein Akku über eine Stromschwankung trägt. Einmal Strom weg, und alles ist weg: die ungespeicherte Arbeit, alle laufenden Agenten, der ganze Zustand. Danach heißt es: alles wieder hochfahren, Fenster für Fenster, Session für Session (und einmal das FileVault-Passwort per KVM eintippen).
+Bleibt der dritte Fall, der Stromausfall. Die meisten Entwickler arbeiten heute am Laptop, und damit ist ein altes Schreckgespenst verschwunden: Es gewittert, und man bangt, ob gleich der Strom zuckt. Der Akku trägt über jede Schwankung hinweg, man merkt sie nicht einmal. Beim mini ist das anders. Er hat keinen Akku, er verzeiht dir nichts. Einmal Strom weg, und alles ist weg: die ungespeicherte Arbeit, alle laufenden Agenten, der ganze Zustand. Danach heißt es: alles wieder hochfahren, Fenster für Fenster, Session für Session (und einmal das FileVault-Passwort per KVM eintippen).
 
 Deshalb hängt der mini an einer USV (unterbrechungsfreie Stromversorgung, engl. *UPS*), einer **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Viel Reserve und genug Leistung, um neben dem mini auch den JetKVM und den Switch mitzuversorgen.
 
 Das Datenkabel der USV geht per USB in einen **vorderen** Port des mini. Aus mir unerklärlichen Gründen war die Verbindung an den hinteren Ports ziemlich unzuverlässig, macOS verlor die USV immer wieder aus den Augen, und damit wurde der Wächter blind. Seit sie vorne steckt, genau wie die Tastatur des JetKVM, meldet `pmset -g batt` die `Back-UPS` stabil. Schick sieht das nicht aus, aber es erfüllt seinen Zweck.
 
-Wichtig ist die ganze Netzwerkkette. An der USV des mini hängen auch der JetKVM und der Switch, der Switch über ein Verlängerungskabel. Fritzbox und Glasfaseranschluss hängen an einer zweiten USV. Fällt der Strom aus, bleibt so das ganze Netz aktiv: Die Fritzbox hält ihr WLAN, der mini erreicht sie über den Kabelweg mini → Switch → Fritzbox, und ich habe durchgehend Internet. Meine SSH-Sitzung läuft einfach weiter. Dieser Kabelweg ist die Grundlage dafür, dass auch die Warn-Mails im Ausfall noch rauskommen.
+Wichtig ist die ganze Netzwerkkette. An der USV des mini hängen auch der JetKVM und der Switch. Fritzbox und Glasfaseranschluss hängen an einer zweiten USV. Fällt der Strom aus, bleibt so das ganze Netz aktiv: Der mini erreicht die Fritzbox über den Kabelweg mini → Switch → Fritzbox, und ich habe durchgehend Internet. Meine SSH-Sitzung läuft einfach weiter. Dieser Kabelweg ist die Grundlage dafür, dass auch die Warn-Mails im Ausfall noch rauskommen.
 
-Und wenn der Akku zur Neige geht? Ein kleiner Wächter übernimmt Mail und Abschaltung selbst. Das Skript `ups-notify.sh` läuft als System-Dienst (LaunchDaemon als root) und fragt alle 20 Sekunden `pmset -g batt` ab:
+Und wenn der Akku zur Neige geht? Ein kleiner Wächter übernimmt Mail und Abschaltung selbst. Das Skript, dem ich den Namen `ups-notify.sh` gegeben habe, läuft als System-Dienst (LaunchDaemon als root) und fragt alle 20 Sekunden `pmset -g batt` ab:
 
 1. Sobald der mini auf USV-Akku läuft, kommt eine Mail „STROMAUSFALL".
 2. Fällt der Akku auf 20 Prozent oder darunter, folgt eine zweite Mail „SHUTDOWN".
@@ -83,9 +87,9 @@ Und wenn der Akku zur Neige geht? Ein kleiner Wächter übernimmt Mail und Absch
 
 Kommt der Strom zurück, meldet eine Mail „Strom wieder da". Ein zweiter Wächter mailt, falls die USV ganz vom USB verschwindet, damit der erste nie unbemerkt blind läuft. Die Mails gehen über [Resend](https://resend.com) raus.
 
-Warum trotzdem ein eigenes Skript?
+Der technisch versierte Leser wird sich jetzt fragen: Kann macOS das nicht von allein? Ja, über `pmset -u haltremain/haltlevel/haltafter`. Aber darauf allein verlasse ich mich nicht.
 
-> **💡 Hinweis:** macOS kann bei niedrigem USV-Akku auch von selbst herunterfahren (`pmset -u haltremain/haltlevel/haltafter`). Ich fahre den mini trotzdem selbst herunter, bei meiner eigenen Schwelle. So warte ich nicht erst ab, bis das Betriebssystem reagiert; der mini ist schon vorher sauber unten. Dazu bekomme ich die Warn-Mails und einen Ablauf, den ich testen kann.
+> **💡 Hinweis:** Mein Skript fährt den mini bei meiner eigenen Schwelle herunter, also schon bevor das Betriebssystem reagieren müsste. Dazu bekomme ich die Warn-Mails und einen Ablauf, den ich testen kann.
 
 Der Kern ist eine kurze Schleife. Die drei Stufen von oben stehen direkt darin:
 
@@ -121,13 +125,13 @@ while :; do
 done
 ```
 
-Zwei kleine Helfer sind ausgelagert: `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` schicken die Mail über Resend, immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert. Die Secrets (Resend-Key, Absender, Empfänger) liegen in einer `resend.env` mit `chmod 600`, nicht im Skript.
+Zwei kleine Helfer sind ausgelagert: `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` schicken die Mail über Resend, immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert.
 
-Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung verhindert genau das.
+Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Das ist mir schon mehrfach passiert: Mac plötzlich aus, Chats weg. Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung mitigiert das.
 
 ## Fazit
 
-Drei Risiken, drei Antworten. **Diebstahl** entschärft die Verschlüsselung, der Platte und der Backups. Der **Neustart** wird beherrschbar, weil ich das FileVault-Passwort per KVM aus der Ferne eintippe. Den **Stromausfall** fängt die USV ab, und ein kleines Skript fährt rechtzeitig und sauber herunter.
+**Diebstahl** entschärft die Verschlüsselung, der Platte und der Backups. Der **Neustart** wird beherrschbar, weil ich das FileVault-Passwort per KVM aus der Ferne eintippe. Den **Stromausfall** fängt die USV ab, und ein kleines Skript fährt rechtzeitig und sauber herunter.
 
 Der Dreh- und Angelpunkt ist dabei die KVM. Verschlüsselung ohne eine Möglichkeit, das Passwort beim Boot einzugeben, wäre auf einer headless Maschine eine Sackgasse. Erst die KVM macht aus „verschlüsselt" und „headless" ein Paar, das zusammenpasst.
 
