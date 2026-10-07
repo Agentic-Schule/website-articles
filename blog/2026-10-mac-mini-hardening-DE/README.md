@@ -48,7 +48,7 @@ CCC kann dafür auf ein verschlüsseltes Laufwerk sichern: Du formatierst das ex
 
 Welche Platte? Ich bevorzuge eine klassische, sich drehende Festplatte, keine SSD. Eine SSD, die lange stromlos im Schrank liegt, kann mit der Zeit Daten verlieren, weil die Ladung in den Speicherzellen wegsickert. Wie schnell das praktisch passiert, ist umstritten, aber für ein Backup, das monatelang unberührt liegt, gehe ich das Risiko nicht ein.
 
-Konkret nehme ich eine 3,5-Zoll-Desktop-Platte mit eigenem Netzteil, etwa die [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21). In diesem Format gibt es die großen Kapazitäten zum besten Preis, und die Laufwerke sind auf Dauerbetrieb ausgelegt. Das eigene Netzteil ist dabei kein Nachteil: Eine 3,5-Zoll-Platte braucht mehr Strom, als ein USB-Port liefert, und im Schrank steht ohnehin eine Steckdose bereit. So zieht die Platte ihren Strom aus der Wand statt über den mini. Western Digital ist meine Gewohnheit, kein Dogma. Die WD Elements gibt es von 4 bis über 20 TB, wähl die Größe passend zu deiner internen Platte.
+Konkret nehme ich eine 3,5-Zoll-Desktop-Platte mit eigenem Netzteil, etwa die [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21). In diesem Format gibt es die großen Kapazitäten zum besten Preis, genug Platz für volle Backups. Das eigene Netzteil ist dabei kein Nachteil: Eine 3,5-Zoll-Platte braucht mehr Strom, als ein USB-Port liefert, und im Schrank steht ohnehin eine Steckdose bereit. So zieht die Platte ihren Strom aus der Wand statt über den mini. Western Digital ist meine Gewohnheit, kein Dogma. Die WD Elements gibt es von 4 bis über 20 TB, wähl die Größe passend zu deiner internen Platte.
 
 > **💡 Tipp:** Eine externe Platte verschlüsselst du im Festplattendienstprogramm (Format *APFS (verschlüsselt)*) oder per Rechtsklick im Finder. Das Passwort kannst du im Schlüsselbund hinterlegen, dann mountet die Platte für die geplanten Backups automatisch.
 
@@ -131,15 +131,15 @@ done
 
 Zwei kleine Helfer sind ausgelagert: `pm_src_of`/`pm_pct_of` lesen Quelle und Akkustand aus `pmset -g batt`, `notify`/`notify_now` schicken die Mail über Resend, immer im Hintergrund, damit ein Netz-Timeout nie den Shutdown blockiert.
 
-Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, im schlimmsten Fall auf null Bytes. Das ist mir nach abrupten Neustarts schon mehrfach passiert, und zwar immer dann, wenn genau in dem Moment geschrieben wurde. Bei fleißigen Agenten ist das ständig der Fall. Und es bleibt nicht lokal: Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung mitigiert das.
+Warum der ganze Aufwand? Ein harter Stromausfall kann die gerade aktive Session-`.jsonl` abschneiden, die Datei, in der die laufende Agenten-Session Zeile für Zeile protokolliert wird. Im schlimmsten Fall bleibt sie bei null Bytes. Das ist mir nach abrupten Neustarts schon mehrfach passiert, und zwar immer dann, wenn genau in dem Moment geschrieben wurde. Bei fleißigen Agenten ist das ständig der Fall. Und es bleibt nicht lokal: Der mini spiegelt seine Dateien laufend auf meine anderen Geräte (wie das läuft, steht in [Teil 1](https://agentic.schule/blog/2026-09-agentic-coding-mac-mini)). Diese Spiegelung repliziert dann auch die kaputte Version, und der Schaden landet auf allen Maschinen. Eine saubere Abschaltung mitigiert das.
 
-## Das Setup zum Nachbauen
+## Das Setup nachbauen
 
 Die Komponenten, die bei mir im Einsatz sind:
 
-- **USV:** [APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21) — hält den mini samt JetKVM und Switch bei Stromausfall am Laufen.
+- **USV:** [APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21). Hält den mini samt JetKVM und Switch bei Stromausfall am Laufen.
 - **KVM-over-IP:** [JetKVM](https://jetkvm.com), quelloffen. Direkt beim Hersteller oder schneller über [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21).
-- **Backup-Software:** [Carbon Copy Cloner](https://bombich.com) — sichert nach Zeitplan auf ein externes Laufwerk.
+- **Backup-Software:** [Carbon Copy Cloner](https://bombich.com). Sichert nach Zeitplan auf ein externes Laufwerk.
 - **Backup-Laufwerk:** eine drehende 3,5-Zoll-Festplatte wie die [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21), als verschlüsseltes *APFS* formatiert.
 - **Verschlüsselung:** FileVault, in macOS enthalten.
 

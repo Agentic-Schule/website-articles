@@ -48,7 +48,7 @@ CCC can back up to an encrypted drive for this: you format the external drive as
 
 Which drive? I prefer a classic spinning hard disk over an SSD. An SSD that sits unpowered in a drawer for a long time can lose data over time, as the charge in the memory cells leaks away. How quickly that happens in practice is debated, but for a backup that sits untouched for months, I don't take the risk.
 
-In concrete terms, I use a 3.5-inch desktop drive with its own power supply, such as the [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21). This format offers the large capacities at the best price, and the drives are built for continuous operation. The separate power supply is no drawback: a 3.5-inch disk needs more power than a USB port delivers, and in the cabinet there's a socket anyway. So the drive draws its power from the wall instead of through the mini. Western Digital is my habit, not a rule. The WD Elements comes from 4 to over 20 TB; pick the size to match your internal disk.
+In concrete terms, I use a 3.5-inch desktop drive with its own power supply, such as the [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21). This format offers the large capacities at the best price, with room to spare for full backups. The separate power supply is no drawback: a 3.5-inch disk needs more power than a USB port delivers, and in the cabinet there's a socket anyway. So the drive draws its power from the wall instead of through the mini. Western Digital is my habit, not a rule. The WD Elements comes from 4 to over 20 TB; pick the size to match your internal disk.
 
 > **💡 Tip:** You encrypt an external drive in Disk Utility (format *APFS (Encrypted)*) or via right-click in Finder. You can store the password in the keychain, so the drive mounts automatically for the scheduled backups.
 
@@ -131,15 +131,15 @@ done
 
 Two small helpers are factored out: `pm_src_of`/`pm_pct_of` read the source and battery level from `pmset -g batt`, and `notify`/`notify_now` send the mail via Resend, always in the background, so a network timeout can never block the shutdown.
 
-Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, in the worst case to zero bytes. That's happened to me several times after an abrupt reboot, always when a write landed at that exact moment. With busy agents, that's constantly the case. And it doesn't stay local: the mini continuously mirrors its files to my other devices (how that works is in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)). That mirror then also replicates the broken version, and the damage ends up on every machine. A clean shutdown mitigates that.
+Why all this effort? A hard power cut can truncate the currently active session `.jsonl`, the file in which the running agent session is logged line by line. In the worst case it's left at zero bytes. That's happened to me several times after an abrupt reboot, always when a write landed at that exact moment. With busy agents, that's constantly the case. And it doesn't stay local: the mini continuously mirrors its files to my other devices (how that works is in [part 1](https://agentic.schule/en/blog/2026-09-agentic-coding-mac-mini)). That mirror then also replicates the broken version, and the damage ends up on every machine. A clean shutdown mitigates that.
 
-## The setup to replicate
+## Replicate the setup
 
 The components I use:
 
-- **UPS:** [APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21) — keeps the mini, the JetKVM, and the switch running through a power cut.
+- **UPS:** [APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21). Keeps the mini, the JetKVM, and the switch running through a power cut.
 - **KVM over IP:** [JetKVM](https://jetkvm.com), open source. Directly from the maker, or faster via [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21).
-- **Backup software:** [Carbon Copy Cloner](https://bombich.com) — backs up to an external drive on a schedule.
+- **Backup software:** [Carbon Copy Cloner](https://bombich.com). Backs up to an external drive on a schedule.
 - **Backup drive:** a spinning 3.5-inch hard disk such as the [WD Elements Desktop](https://www.amazon.de/dp/B07FNK6QMT?tag=agentic-21), formatted as encrypted *APFS*.
 - **Encryption:** FileVault, included in macOS.
 
