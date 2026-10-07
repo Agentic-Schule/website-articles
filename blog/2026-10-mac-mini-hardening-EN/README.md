@@ -67,7 +67,7 @@ Two settings take the edge off the boot problem:
 - For **planned restarts** it even works without a password: `sudo fdesetup authrestart` unlocks automatically on the next reboot, without locking yourself out.
 - `pmset autorestart 1` brings the mini back up on its own after a power cut (entering the password via the KVM then stays the one manual step).
 
-Remotely especially, this pays off. On vacation I don't want to worry about whether the mini comes back up after a power blip, and I certainly don't want to ask a relative to drive to my house and switch the machine on. Autorestart brings it back; I type the FileVault password via the KVM from the beach.
+Remotely especially, this pays off. On vacation I don't want to worry about whether the mini comes back up after a power blip, and I certainly don't want to ask a relative to drive to my house and switch the machine on. Autorestart brings it back; I type the FileVault password via the KVM from the camper van.
 
 > **💡 Practical tip:** At that early boot stage, only the mini's **front** USB ports work for me; the rear ones come up later. I can't say for certain why. The consequence is clear: plug the JetKVM's USB into a front port, and the keyboard is recognized at the pre-boot screen. The video over HDMI can stay in the back.
 

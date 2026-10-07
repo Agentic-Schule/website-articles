@@ -67,7 +67,7 @@ Zwei Einstellungen nehmen dem Boot-Thema die Schärfe:
 - Für **geplante Neustarts** geht es sogar ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren.
 - `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch (die Passwort-Eingabe per KVM bleibt dann der eine manuelle Schritt).
 
-Gerade aus der Ferne zahlt sich das aus. Ich will im Urlaub nicht bangen, ob der mini nach einem Stromzucken wieder hochkommt, und erst recht keinen Angehörigen bitten müssen, in mein Haus zu fahren und den Rechner einzuschalten. Autorestart bringt ihn zurück, das FileVault-Passwort gebe ich per KVM vom Strand aus ein.
+Gerade aus der Ferne zahlt sich das aus. Ich will im Urlaub nicht bangen, ob der mini nach einem Stromzucken wieder hochkommt, und erst recht keinen Angehörigen bitten müssen, in mein Haus zu fahren und den Rechner einzuschalten. Autorestart bringt ihn zurück, das FileVault-Passwort gebe ich per KVM aus dem Bulli-Office ein.
 
 > **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren bei mir nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Woran das genau liegt, kann ich nicht sicher sagen. Die Konsequenz ist eindeutig: Steck den JetKVM-USB vorne ein, dann wird die Tastatur schon am Pre-Boot-Screen erkannt. Das Bild per HDMI darf hinten bleiben.
 
