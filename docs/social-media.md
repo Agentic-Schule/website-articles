@@ -43,7 +43,7 @@ Der Skill `/social-post` (siehe `.claude/skills/social-post/SKILL.md`) führt du
 | LinkedIn | DE | zwei Sätze + Screenshot | reine URL im Post | Knobelfrage, kein Keyword |
 | X | DE | zwei Sätze + derselbe Screenshot, höchstens 280 Zeichen | im Post | Knobelfrage, kein Keyword |
 | Bluesky | DE | Text wie auf X + derselbe Screenshot, höchstens 300 Zeichen inklusive voller URL | im Post | wie auf X |
-| Threads | DE | Text wie auf X, etwas ausführlicher, höchstens 500 Zeichen, genau ein Themen-Tag am Ende | im Post, anklickbar | wie auf X |
+| Threads | DE | Text wie auf X, etwas ausführlicher, höchstens 500 Zeichen, genau ein Themen-Tag am Ende (beim Tippen aus der Vorschlagsliste anklicken, sonst bleibt es reiner Text) | im Post, anklickbar | wie auf X |
 | TikTok | DE | vertikales Video | `agentic.schule` im Video und in der Caption | „Den ganzen Artikel findest du auf meiner Website: agentic.schule" |
 | Instagram Reels | DE | dasselbe Video | `agentic.schule` im Video und in der Caption | derselbe Satz |
 | YouTube Shorts | DE | dasselbe Video | in der Beschreibung, nicht klickbar | derselbe Satz |
