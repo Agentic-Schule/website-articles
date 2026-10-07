@@ -5,7 +5,7 @@ mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
 bioHeading: About the author
 published: 2026-09-24
-lastModified: 2026-10-02
+lastModified: 2026-10-07
 keywords:
   - Agentic Coding
   - AI Agent
@@ -199,11 +199,7 @@ An agent is only as good as the environment it's allowed to work in. On the mini
 
 Three building blocks:
 
-**FileVault with remote unlock.** The disk is encrypted, as it should be. But after a restart the mini hangs at the pre-boot lock. Only once the FileVault password is entered does it boot through and the services start. At that point there's no network yet, so an SSH login doesn't help. My solution is a **[JetKVM](https://jetkvm.com)**, a small KVM-over-IP device (keyboard, video, and mouse over the network). It gives me picture and keyboard remotely, all the way down to the firmware and boot screen. On every restart I type the FileVault password through it once, otherwise the machine doesn't boot through. That keeps the disk encrypted and still lets me reach every boot step.
-
-For planned restarts there's a way without the password: `sudo fdesetup authrestart` unlocks automatically on the next reboot without locking yourself out. And `pmset autorestart 1` brings the mini back up on its own after a power outage.
-
-> **💡 Practical tip:** At that early boot stage only the mini's **front** USB ports work; the rear ones come up later. So plug the JetKVM into a front port.
+**FileVault and the boot.** The disk is encrypted with FileVault. After a restart the mini hangs at the pre-boot lock, before there's a network, so an SSH login doesn't help. I unlock it remotely over a KVM-over-IP device (keyboard, video, mouse) and type the password once. How exactly, plus encrypted backups and a UPS (uninterruptible power supply) against power cuts, is covered in the follow-up [Mac mini Hardening](https://agentic.schule/en/blog/2026-10-mac-mini-hardening).
 
 **Docker without Docker Desktop.** Docker Desktop needs a GUI login, on a headless machine a deal-breaker. Instead, **[colima](https://github.com/abiosoft/colima)** runs as a system service (LaunchDaemon) that starts at boot. Under the hood the same technology as Docker Desktop (Apple's Virtualization.framework), with Rosetta for **Intel images**, that is, for the old SQL Server that sadly was never ported to ARM. Thanks, Microsoft. So the agent gets a `docker` and `docker compose` that's simply there.
 

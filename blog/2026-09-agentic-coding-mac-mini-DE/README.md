@@ -5,7 +5,7 @@ mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe ist Trainer und Berater für moderne Web-Entwicklung. In den Workshops von <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> und <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> geht es praxisnah um Angular – und zunehmend um agentische Entwicklung mit KI-Agenten wie Claude Code.'
 bioHeading: Über den Autor
 published: 2026-09-24
-lastModified: 2026-10-02
+lastModified: 2026-10-07
 keywords:
   - Agentic Coding
   - AI Agent
@@ -200,11 +200,7 @@ Ein Agent ist nur so gut wie die Umgebung, in der er arbeiten darf. Auf dem mini
 
 Drei Bausteine:
 
-**FileVault mit Remote-Entsperrung.** Die Platte ist verschlüsselt, so soll es sein. Nach einem Neustart hängt der mini aber im Pre-Boot-Lock. Erst wenn das FileVault-Passwort eingegeben ist, bootet er durch und die Dienste starten. Zu diesem Zeitpunkt gibt es noch kein Netzwerk, ein SSH-Login hilft also nicht. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät (Tastatur, Bild und Maus übers Netzwerk). Es gibt mir aus der Ferne Bild und Tastatur bis hinunter zum Firmware- und Boot-Bildschirm. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, sonst bootet der Rechner nicht durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
-
-Für geplante Neustarts geht es auch ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren. Und `pmset autorestart 1` holt den mini nach einem Stromausfall von selbst wieder hoch.
-
-> **💡 Praxis-Tipp:** Zu diesem frühen Boot-Zeitpunkt funktionieren nur die **vorderen** USB-Anschlüsse des mini, die hinteren kommen erst später. Steck den JetKVM also vorne ein.
+**FileVault und der Boot.** Die Platte ist mit FileVault verschlüsselt. Nach einem Neustart hängt der mini im Pre-Boot-Lock, noch bevor es Netzwerk gibt, ein SSH-Login hilft also nicht. Ich entsperre ihn aus der Ferne über ein KVM-over-IP-Gerät (Keyboard, Video, Mouse) und tippe das Passwort einmal ein. Wie das genau geht, dazu verschlüsselte Backups und eine USV (unterbrechungsfreie Stromversorgung) gegen Stromausfall, steht im Folgeartikel [Mac mini Hardening](https://agentic.schule/blog/2026-10-mac-mini-hardening).
 
 **Docker ohne Docker Desktop.** Docker Desktop braucht einen GUI-Login, auf einer headless Maschine ein K.-o.-Kriterium. Stattdessen läuft **[colima](https://github.com/abiosoft/colima)** als System-Dienst (LaunchDaemon), der schon beim Booten startet. Unter der Haube dieselbe Technik wie Docker Desktop (Apples Virtualization.framework), mit Rosetta für **Intel-Images**, also für den ollen SQL Server, der leider nie nach ARM portiert wurde. Danke, Microsoft. So bekommt der Agent ein `docker` und `docker compose`, das einfach da ist.
 
