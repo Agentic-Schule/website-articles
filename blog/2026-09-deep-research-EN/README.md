@@ -129,7 +129,31 @@ export const meta = {
   ],
 };
 
-// The five review dimensions. The prompts are shortened here (beginning … end).
+// Target file(s) via args: a path or a list of paths.
+const files = Array.isArray(args) ? args : [args];
+
+// Structured returns, so no parsing is needed.
+const FINDINGS_SCHEMA = {
+  type: 'object', required: ['findings'],
+  properties: { findings: { type: 'array', items: {
+    type: 'object', required: ['line', 'quote', 'issue', 'severity', 'isFactual'],
+    properties: {
+      line: { type: 'integer' }, quote: { type: 'string' }, issue: { type: 'string' },
+      severity: { type: 'string', enum: ['BLOCKER', 'SOLLTE', 'NICE-TO-HAVE'] },
+      isFactual: { type: 'boolean' }, claimToVerify: { type: 'string' },
+    },
+  } } },
+};
+const VERDICT_SCHEMA = {
+  type: 'object', required: ['stands', 'verdict'],
+  properties: {
+    stands: { type: 'boolean' },
+    verdict: { type: 'string', enum: ['FACT-FALSE', 'FACT-CORRECT', 'FACT-UNVERIFIED'] },
+    source: { type: 'string' },
+  },
+};
+
+// The five review dimensions. The prompts are heavily shortened here.
 const DIMENSIONS = [
   { key: 'floskeln', prompt: `Review dimension: STYLE & LLM CLICHÉS (Johannes' "AI tells"). Report every hit:
 - em dash inserted as a stylistic device. …
@@ -158,13 +182,25 @@ Invent nothing, and invent no plausible-sounding counter-facts.
 
 Verdict: FACT-FALSE, FACT-CORRECT (false alarm) or FACT-UNVERIFIED (no source found).`;
 
+// Each file × each dimension makes one review task.
+const items = files.flatMap((f) => DIMENSIONS.map((d) => ({ f, d })));
+
 // Flow: Review → fact-check per finding (no barrier) → synthesis.
+phase('Review');
 const reviewed = await pipeline(
   items,
-  (it)  => agent(dimensionPrompt(it),       { phase: 'Review',     schema: FINDINGS_SCHEMA }),
+  (it) => agent(`TARGET FILE: ${it.f}\n\n${it.d.prompt}`,
+            { label: `review:${it.d.key}`, phase: 'Review', schema: FINDINGS_SCHEMA })
+          .then((r) => ({ findings: (r && r.findings) || [] })),
   (res) => parallel(res.findings.map((fd) => () =>
-           agent(verifyPrompt(fd),           { phase: 'Fact-check', schema: VERDICT_SCHEMA }))),
+            agent(verifyPrompt(fd), { phase: 'Fact-check', schema: VERDICT_SCHEMA })
+              .then((v) => ({ ...fd, verdict: v })))),
 );
+
+// Synthesis: keep only the confirmed findings.
+phase('Synthesis');
+const kept = reviewed.flat().filter((x) => x.verdict && x.verdict.stands);
+return { findings: kept };
 ```
 
 Because of their length, I've heavily shortened the five dimensions' prompts here. And it's a personal prompt: not everyone writes blog articles about AI, so your own should reflect your own wishes. If you want my full prompts, write to me and I'll send them by mail.

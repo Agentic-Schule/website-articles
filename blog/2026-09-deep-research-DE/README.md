@@ -129,7 +129,31 @@ export const meta = {
   ],
 };
 
-// Die fünf Prüfdimensionen. Die Prompts sind hier gekürzt (Anfang … Ende).
+// Zieldatei(en) über args: ein Pfad oder eine Liste von Pfaden.
+const files = Array.isArray(args) ? args : [args];
+
+// Strukturierte Rückgaben, damit kein Parsen nötig ist.
+const FINDINGS_SCHEMA = {
+  type: 'object', required: ['findings'],
+  properties: { findings: { type: 'array', items: {
+    type: 'object', required: ['line', 'quote', 'issue', 'severity', 'isFactual'],
+    properties: {
+      line: { type: 'integer' }, quote: { type: 'string' }, issue: { type: 'string' },
+      severity: { type: 'string', enum: ['BLOCKER', 'SOLLTE', 'NICE-TO-HAVE'] },
+      isFactual: { type: 'boolean' }, claimToVerify: { type: 'string' },
+    },
+  } } },
+};
+const VERDICT_SCHEMA = {
+  type: 'object', required: ['stands', 'verdict'],
+  properties: {
+    stands: { type: 'boolean' },
+    verdict: { type: 'string', enum: ['FAKT-FALSCH', 'FAKT-KORREKT', 'FAKT-UNBESTAETIGT'] },
+    source: { type: 'string' },
+  },
+};
+
+// Die fünf Prüfdimensionen. Die Prompts sind hier stark verkürzt.
 const DIMENSIONS = [
   { key: 'floskeln', prompt: `Prüfdimension: STIL & LLM-FLOSKELN (Johannes' "AI-Tells"). Melde jeden Treffer:
 - Gedankenstrich-Einschub (Halbgeviert oder Geviert) als Stilmittel. …
@@ -158,13 +182,25 @@ Erfinde nichts und erfinde keine plausibel klingenden Gegen-Fakten.
 
 Verdikt: FAKT-FALSCH, FAKT-KORREKT (Fehlalarm) oder FAKT-UNBESTAETIGT (keine Quelle auffindbar).`;
 
+// Jede Datei × jede Dimension ergibt einen Prüfauftrag.
+const items = files.flatMap((f) => DIMENSIONS.map((d) => ({ f, d })));
+
 // Ablauf: Lektorat → Faktencheck pro Befund (ohne Barriere) → Synthese.
+phase('Lektorat');
 const reviewed = await pipeline(
   items,
-  (it)  => agent(dimensionPrompt(it),       { phase: 'Lektorat',    schema: FINDINGS_SCHEMA }),
+  (it) => agent(`ZIELDATEI: ${it.f}\n\n${it.d.prompt}`,
+            { label: `lektorat:${it.d.key}`, phase: 'Lektorat', schema: FINDINGS_SCHEMA })
+          .then((r) => ({ findings: (r && r.findings) || [] })),
   (res) => parallel(res.findings.map((fd) => () =>
-           agent(verifyPrompt(fd),           { phase: 'Faktencheck', schema: VERDICT_SCHEMA }))),
+            agent(verifyPrompt(fd), { phase: 'Faktencheck', schema: VERDICT_SCHEMA })
+              .then((v) => ({ ...fd, verdict: v })))),
 );
+
+// Synthese: nur die bestätigten Befunde behalten.
+phase('Synthese');
+const kept = reviewed.flat().filter((x) => x.verdict && x.verdict.stands);
+return { befunde: kept };
 ```
 
 Aufgrund des Umfangs habe ich die Prompts der fünf Dimensionen hier stark verkürzt. Und es ist ein persönlicher Prompt: Nicht jeder schreibt Blog-Artikel über AI, dein eigener sollte deine eigenen Wünsche abbilden. Willst du meine Prompts vollständig, schreib mich an, dann schicke ich sie dir per Mail.
