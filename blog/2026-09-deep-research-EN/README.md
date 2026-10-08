@@ -117,7 +117,7 @@ Checklist item 1 compares the claim only against the supplied quote. Item 2 is a
 
 That's why, once a body of facts stands, another workflow comes in that I built myself: a fact-check pass. It takes on the finished, merged text, quotes included, and checks it freshly against the primary sources. It looks for claims, for alleged facts, and for alleged quotes, and checks each one against the source. Default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible.
 
-This is the core. The five review dimensions are shortened; what exactly they look for is my secret ingredient:
+This is the core:
 
 ```js
 export const meta = {
@@ -129,13 +129,20 @@ export const meta = {
   ],
 };
 
-// The five review dimensions. What each one looks for (their prompts) is shortened: my secret ingredient.
+// The five review dimensions. The prompts are shortened here (beginning … end).
 const DIMENSIONS = [
-  { key: 'floskeln',   prompt: /* LLM clichés & tone */ '…' },
-  { key: 'fakten',     prompt: /* factual claims */ '…' },
-  { key: 'begriffe',   prompt: /* term introduction & reader perspective */ '…' },
-  { key: 'standalone', prompt: /* standalone comprehensibility */ '…' },
-  { key: 'struktur',   prompt: /* structure & formalities */ '…' },
+  { key: 'floskeln', prompt: `Review dimension: STYLE & LLM CLICHÉS (Johannes' "AI tells"). Report every hit:
+- em dash inserted as a stylistic device. …
+… What the list marks as "explicitly allowed" is NOT a finding.` },
+  { key: 'fakten', prompt: `Review dimension: FACTUAL CLAIMS. Extract every strong, verifiable claim and mark it with isFactual=true plus a precise claimToVerify. …
+… Never assert that something is wrong without a primary source.` },
+  { key: 'begriffe', prompt: `Review dimension: TERM INTRODUCTION & READER PERSPECTIVE. The article must make sense to a reader who has ONLY this text. …
+… Where exactly does the uninitiated reader stumble, and which introduction is missing?` },
+  { key: 'standalone', prompt: `Review dimension: STANDALONE COMPREHENSIBILITY. Assume the reader has read ONLY this one article, no other part of the series. …
+… plus the minimal addition that would make the spot stand on its own.` },
+  { key: 'struktur', prompt: `Review dimension: STRUCTURE & FORMALITIES of the writing guide. Check:
+- bold thesis right after the frontmatter; then "## Contents" with [[toc]]. …
+… If no EN version exists, skip this point without comment.` },
 ];
 
 // The core: every factual finding is checked individually and adversarially at the SOURCE.
@@ -159,6 +166,8 @@ const reviewed = await pipeline(
            agent(verifyPrompt(fd),           { phase: 'Fact-check', schema: VERDICT_SCHEMA }))),
 );
 ```
+
+Because of their length, I've shortened the five dimensions' prompts here, beginning and end each. And it's a personal prompt: not everyone writes blog articles about AI, so your own should reflect your own wishes. If you want my full prompts, write to me and I'll send them by mail.
 
 The quotes especially: often they aren't quoted exactly, just summarized. Then the follow-up applies: is that a quote? Then show me the exact spot. And again you find that some things slipped through. You can run this pass several times, until what stands there actually matches reality.
 
