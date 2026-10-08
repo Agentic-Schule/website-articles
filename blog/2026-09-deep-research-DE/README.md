@@ -79,11 +79,11 @@ Der Gewinn: Der Agent liest die Seite dann wie ein Mensch und zitiert den exakte
 
 ## Der Faktencheck: jede Behauptung gegen die Quelle
 
-Wenn dann endlich eine Faktenlage dasteht, kommt ein weiterer Workflow, den ich mir gebaut habe: ein Lektorat. Die drei Prüfer in der Recherche gehen je Quelle isoliert vor. Dieses Lektorat nimmt sich den fertig zusammengeführten Text vor, samt Zitaten, und prüft ihn gegen die Primärquellen. Es sucht nach Behauptungen, nach angeblichen Fakten und nach angeblichen Zitaten und prüft jede einzeln an der Quelle. Grundhaltung Zweifel: Eine Behauptung gilt erst als gesichert, wenn die Quelle sie wörtlich deckt, nicht schon, wenn sie plausibel klingt.
+Eigentlich sollte Deep Research mit seiner Prüfstufe doch halluzinationsfrei sein. Ist es aber nicht, und der Grund ist strukturell. **Die drei Prüfer in der Recherche vergleichen jede Behauptung nur gegen das Zitat, das der Fetch-Agent selbst mitgeliefert hat, und suchen per Websuche nach Widerspruch. Die Originalseite lesen sie dabei nicht noch einmal. Hat der Agent das Zitat gleich miterfunden, passt die erfundene Behauptung zum erfundenen Zitat, und sie besteht die Prüfung. Die Recherche prüft sich also teils gegen sich selbst, statt frisch an der Quelle.**
+
+Deshalb kommt bei mir, wenn eine Faktenlage dasteht, ein weiterer Workflow, den ich mir gebaut habe: ein Lektorat. Es nimmt sich den fertig zusammengeführten Text vor, samt Zitaten, und prüft ihn frisch gegen die Primärquellen. Es sucht nach Behauptungen, nach angeblichen Fakten und nach angeblichen Zitaten und prüft jede einzeln an der Quelle. Grundhaltung Zweifel: Eine Behauptung gilt erst als gesichert, wenn die Quelle sie wörtlich deckt, nicht schon, wenn sie plausibel klingt.
 
 Besonders die Zitate: Oft sind sie nicht exakt zitiert, sondern nur zusammengefasst. Dann gilt die Nachfrage: Ist das ein Zitat? Dann zeig mir bitte genau die Stelle. Und wieder stellst du fest, dass einiges durchgerutscht ist. Diesen Durchlauf kannst du mehrfach laufen lassen, bis das, was dasteht, auch der Realität entspricht.
-
-Das ist kein theoretisches Beispiel. In diesem Artikel stand zuerst, die Suchvorschauen kämen aus dem Cache von DuckDuckGo oder Google. Der wahre Kern stimmt: Ein Auszug kann veralten, Anthropics [Websuche-Doku](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/web-search-tool) weist zu jedem Treffer ein `page_age` aus. Der konkrete Mechanismus aber, ein Cache von DuckDuckGo oder Google, stand dort nirgends und war frei erfunden. Der Faktencheck hat ihn gestrichen. So schleicht sich Halluzination ein: ein richtiger Kern, umwickelt mit erfundenen Details.
 
 ## Die wichtigste Erkenntnis: der Autor prüft selbst
 

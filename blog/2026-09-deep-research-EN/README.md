@@ -79,11 +79,11 @@ The payoff: the agent then reads the page like a human and quotes the exact word
 
 ## The fact-check: every claim against the source
 
-Once a body of facts finally stands, another workflow comes in that I built myself: a fact-check pass. The three reviewers in the research work per source, in isolation. This pass takes on the finished, merged text, quotes included, and checks it against the primary sources. It looks for claims, for alleged facts, and for alleged quotes, and checks each one against the source. Default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible.
+By rights, Deep Research with its verification stage should be hallucination-free. It isn't, and the reason is structural. **The three reviewers in the research only compare each claim against the quote the fetch agent itself supplied, and they web-search for contradiction. They don't read the original page again. If the agent made up the quote along with the claim, the invented claim matches the invented quote, and it passes the check. So the research partly checks itself against itself, instead of freshly against the source.**
+
+That's why, once a body of facts stands, another workflow comes in that I built myself: a fact-check pass. It takes on the finished, merged text, quotes included, and checks it freshly against the primary sources. It looks for claims, for alleged facts, and for alleged quotes, and checks each one against the source. Default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible.
 
 The quotes especially: often they aren't quoted exactly, just summarized. Then the follow-up applies: is that a quote? Then show me the exact spot. And again you find that some things slipped through. You can run this pass several times, until what stands there actually matches reality.
-
-This is not a theoretical example. In this article it first said the search previews came from the cache of DuckDuckGo or Google. The true core holds: an excerpt can go stale, and Anthropic's [web search docs](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/web-search-tool) list a `page_age` for every hit. But the concrete mechanism, a cache of DuckDuckGo or Google, was nowhere in there and was made up. The fact-check cut it. That's how hallucination sneaks in: a correct core, wrapped in invented details.
 
 ## The most important insight: the author checks it himself
 
