@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(60% 55% at 74% 42%, rgba(98,38,176,0.34), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(233,4,100,0.16), transparent 60%),
+      linear-gradient(155deg,#241a33 0%,#1b1525 58%,#0d0913 100%);
+    color:#fff; position:relative;
+  }
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .brand { position:absolute; top:60px; left:78px; height:56px; width:auto; z-index:2; }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:620px; }
+  h1 { font-size:60px; line-height:1.06; font-weight:800; letter-spacing:-1.2px; margin:22px 0 0; }
+  h1 .accent { background:linear-gradient(92deg,#a06bff 0%,#e90464 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { margin-top:24px; font-size:26px; font-weight:500; color:#c4b8d6; letter-spacing:-.2px; line-height:1.35; }
+  .by { margin-top:38px; font-size:19px; color:#8f84a6; }
+  .by b { color:#cfc3e6; font-weight:600; }
+  .art { position:absolute; right:44px; top:0; height:675px; width:520px; }
+  .q { font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight:800; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <img class="brand" src="logo-agentic-schule.png" alt="agentic.schule">
+  <div class="wrap">
+    <div class="left">
+      <h1>Lass deinen Agenten<br><span class="accent">nicht halluzinieren</span></h1>
+      <div class="sub">Deep Research, eine klare Regel<br>und ein Faktencheck an der Primärquelle</div>
+      <div class="by">von <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <!--
+    Rechte Illustration: ein Roboter (Lila = das Normale/der Agent) umgeben von
+    Magenta-Fragezeichen (der Kern: die Verwirrung, die Halluzination).
+  -->
+  <div class="art">
+    <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#9a6cff" stop-opacity="0.42"/>
+          <stop offset="55%" stop-color="#e90464" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#e90464" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Glow hinter dem Roboterkopf -->
+      <circle cx="268" cy="330" r="200" fill="url(#glow)"/>
+
+      <!-- Antenne mit magenta Signal -->
+      <line x1="262" y1="262" x2="262" y2="222" stroke="#9a6cff" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="262" cy="216" r="8" fill="#e90464" style="filter:drop-shadow(0 0 10px rgba(233,4,100,0.8))"/>
+
+      <!-- Roboterkopf -->
+      <rect x="172" y="262" width="180" height="172" rx="30" fill="#211830" stroke="#9a6cff" stroke-width="2"/>
+      <!-- Ohren/Bolzen -->
+      <rect x="162" y="316" width="10" height="46" rx="4" fill="#7a2ec9"/>
+      <rect x="352" y="316" width="10" height="46" rx="4" fill="#7a2ec9"/>
+
+      <!-- Gesichts-Panel -->
+      <rect x="196" y="292" width="132" height="104" rx="16" fill="#171022" stroke="rgba(154,108,255,0.28)" stroke-width="1.5"/>
+      <!-- Augen (lila, neutral) -->
+      <circle cx="232" cy="328" r="12" fill="#c3a3ff"/>
+      <circle cx="292" cy="328" r="12" fill="#c3a3ff"/>
+      <circle cx="236" cy="324" r="3.2" fill="#fff" opacity="0.55"/>
+      <circle cx="296" cy="324" r="3.2" fill="#fff" opacity="0.55"/>
+      <!-- Mund: wellig = Unsicherheit -->
+      <path d="M226 366 q 11 -10 22 0 t 22 0 t 22 0" stroke="#9a6cff" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+      <!-- Fragezeichen: Magenta = der Punkt (Verwirrung/Halluzination), ein paar lila in der Tiefe -->
+      <text class="q" x="360" y="232" font-size="128" fill="#e90464" opacity="0.96" style="filter:drop-shadow(0 0 16px rgba(233,4,100,0.55))">?</text>
+      <text class="q" x="104" y="262" font-size="86" fill="#e90464" opacity="0.72">?</text>
+      <text class="q" x="398" y="384" font-size="58" fill="#e90464" opacity="0.6">?</text>
+      <text class="q" x="300" y="252" font-size="40" fill="#e90464" opacity="0.8">?</text>
+      <text class="q" x="150" y="516" font-size="72" fill="#9a6cff" opacity="0.36">?</text>
+      <text class="q" x="338" y="532" font-size="50" fill="#b98cff" opacity="0.32">?</text>
+    </svg>
+  </div>
+</body>
+</html>

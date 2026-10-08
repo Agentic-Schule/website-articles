@@ -18,7 +18,7 @@ language: de
 header: header.jpg
 ---
 
-**Ein Agent, der im Netz recherchiert, erfindet gern plausible Details: Config-Pfade, Parameter-Namen, ganze Ursachen. Das klingt überzeugend und ist trotzdem falsch. In diesem Artikel zeige ich, wie du das in den Griff bekommst: mit einer klaren Regel, mit sauberem Deep Research, mit einem Werkzeug, das Quellen wirklich liest, und mit einem letzten Durchlauf, der jeden Fakt an der Primärquelle gegenprüft.**
+**Ein Agent, der im Netz recherchiert, erfindet gern plausible Details: Config-Pfade, Parameter-Namen, ganze Ursachen. Das klingt überzeugend und ist trotzdem falsch. In diesem Artikel zeige ich, wie du das in den Griff bekommst: mit einer klaren Regel, mit Deep Research, mit einem Werkzeug, das Quellen wirklich liest, und mit einem letzten Durchlauf, der jeden Fakt an der Primärquelle gegenprüft.**
 
 ## Inhalt
 
@@ -30,7 +30,7 @@ Ein Sprachmodell sagt das wahrscheinlichste nächste Wort voraus. Es hat keinen 
 
 Das Gefährliche ist nicht offensichtlicher Unsinn. Das Gefährliche sind die kleinen, plausiblen Details: ein Konfigurations-Pfad, der genauso heißen könnte, ein Parameter, den es so geben könnte, eine Begründung nach dem Muster „X passiert, weil Y". Solche Sätze überstehen einen schnellen Blick. Sie landen in der Doku oder im Code, und erst Wochen später merkst du, dass die Hälfte erfunden war.
 
-Dagegen hilft kein einzelner Trick, sondern eine Kette von Vorkehrungen. Fangen wir bei der billigsten an.
+Dagegen hilft kein einzelner Trick. Es braucht eine Kette von Vorkehrungen. Fangen wir bei der billigsten an.
 
 ## Die erste Verteidigung: eine klare Regel
 
@@ -60,18 +60,18 @@ Deep Research klingt nach Magie, ist aber ein nüchterner Ablauf. Im Kern ist es
 1. **Zerlegen:** Die Frage wird in mehrere Teilfragen aufgespalten, typischerweise eine Handvoll verschiedener Blickwinkel.
 2. **Suchen:** Für jeden Blickwinkel läuft eine eigene Suche, parallel statt nacheinander.
 3. **Holen:** Die gefundenen Treffer werden entdoppelt, die aussichtsreichsten Quellen tatsächlich abgerufen, und aus ihnen werden überprüfbare Einzelbehauptungen herausgezogen.
-4. **Prüfen:** Jede Behauptung wird adversarial geprüft. Mehrere unabhängige Prüfer versuchen, sie zu *widerlegen*, mit der Grundhaltung Zweifel. Hält eine Behauptung nicht stand, fliegt sie raus.
+4. **Prüfen:** Jede Behauptung wird *adversarial* geprüft (gegnerisch, mit dem Ziel zu widerlegen). Mehrere unabhängige Prüfer gehen sie mit der Grundhaltung Zweifel an. Hält eine Behauptung nicht stand, fliegt sie raus.
 5. **Zusammenfassen:** Erst was die Prüfung übersteht, wird zusammengeführt, nach Vertrauen sortiert und mit Quellen belegt.
 
-Die vierte Stufe macht den Unterschied. Eine Recherche ohne Prüfung ist nur eine längere, selbstbewusstere Vermutung. Der ganze Aufwand dient einem Zweck: Behauptungen sollen scheitern dürfen, bevor sie es in die Antwort schaffen.
+Auf die vierte Stufe kommt es an. Eine Recherche ohne Prüfung ist nur eine längere, selbstbewusstere Vermutung. Der ganze Aufwand dient einem Zweck: Behauptungen sollen scheitern dürfen, bevor sie es in die Antwort schaffen.
 
 ## Der Playwright-MCP: Quellen wirklich lesen
 
-Eine Prüfung ist nur so gut wie der Zugriff auf die Quelle. Und genau hier klemmt es oft. Viele Seiten blocken automatisierte Zugriffe, ein direkter Abruf läuft in eine Bot-Erkennung oder in eine leere Seite. Was macht ein ausgesperrter Agent dann? Im harmlosen Fall nimmt er den Snippet-Text der Suchmaschine. Das ist kein Beleg, und oft nicht einmal aktuell: Diese Snippets stammen aus dem Cache der Such-API (DuckDuckGo, Google, je nachdem, was der Agent standardmäßig nutzt) und zeigen mitunter einen alten Stand, nicht die Seite, die er eigentlich prüfen soll. Besser ist da die zweite Möglichkeit: Er meldet zurück, dass der Abruf nicht geklappt hat. Damit kann ich arbeiten. Der schlechteste Fall aber ist, dass er die Sperre verschweigt und die Antwort einfach frei erfindet. Genau das passiert nach meiner Beobachtung immer wieder.
+Eine Prüfung ist nur so gut wie der Zugriff auf die Quelle. Und genau hier klemmt es oft. Viele Seiten blocken automatisierte Zugriffe, ein direkter Abruf läuft in eine Bot-Erkennung oder in eine leere Seite. Was macht ein ausgesperrter Agent dann? Im harmlosen Fall nimmt er den *Snippet*-Text der Suchmaschine, einen kurzen Auszug. Das ist kein Beleg, und oft nicht einmal aktuell: So ein Auszug kann einen älteren Stand zeigen, nicht die Seite, die der Agent eigentlich prüfen soll. Besser ist da die zweite Möglichkeit: Er meldet zurück, dass der Abruf nicht geklappt hat. Damit kann ich arbeiten. Der schlechteste Fall aber ist, dass er die Sperre verschweigt und die Antwort einfach frei erfindet. Genau das passiert nach meiner Beobachtung immer wieder.
 
 Meine Lösung dafür ist ein eigener, unauffälliger Playwright-MCP. Er steuert einen echten Browser, ruft die Seite wie ein Mensch auf und liest den tatsächlichen Seitentext aus. So zitiert der Agent den exakten Wortlaut der Quelle, statt eine Zusammenfassung aus zweiter Hand. Wie das Ganze aufgebaut ist, habe ich in einem eigenen Artikel beschrieben: [Gib deinem Agenten einen eigenen, unauffälligen Playwright-MCP](https://agentic.schule/blog/2026-09-agent-research-playwright-mcp).
 
-Doch auch mit dem besten Werkzeug bleibt eine Lücke. Die Recherche-Agenten reichen ihre Funde nach oben an die Hauptunterhaltung weiter, und diese Funde können halluziniert sein. Deshalb gilt die wichtigste Anweisung der Hauptunterhaltung selbst: Prüfe jede Quelle noch einmal nach, bevor du sie aufschreibst. Verlass dich nicht auf die Zusammenfassung des Unter-Agenten, öffne die Quelle. Lässt du das weg, schummeln sich immer wieder halluzinierte Fragmente in das Rechercheergebnis. Dieser eine Satz im Auftrag an die orchestrierende Sitzung verhindert mehr falsche Fakten als jede andere Einzelmaßnahme.
+Doch auch mit dem besten Werkzeug bleibt eine Lücke. Die Recherche-Agenten reichen ihre Funde nach oben an die Hauptunterhaltung weiter, und diese Funde können halluziniert sein. Deshalb gilt die wichtigste Anweisung der Hauptunterhaltung selbst: Prüfe jede Quelle noch einmal nach, bevor du sie aufschreibst. Verlass dich nicht auf die Zusammenfassung des Unter-Agenten, öffne die Quelle. Lässt du das weg, schummeln sich immer wieder halluzinierte Fragmente in das Rechercheergebnis. Dieser eine Satz im Auftrag an die orchestrierende Sitzung verhindert nach meiner Erfahrung besonders viele falsche Fakten.
 
 ## Zum Schluss: jeden Fakt gegenprüfen
 
@@ -79,11 +79,11 @@ Bleibt ein letzter Durchlauf, wenn der Text schon steht. Bevor etwas veröffentl
 
 Das ist derselbe adversariale Ansatz wie in der Recherche, nur am anderen Ende der Kette. Die Recherche filtert, bevor geschrieben wird. Der Faktencheck filtert, bevor veröffentlicht wird. Was durch die erste Stufe geschlüpft ist, fängt die zweite. Diesen Durchlauf kannst du für jeden Inhalt einsetzen, den ein Agent für dich erzeugt hat, nicht nur für Artikel.
 
-Und ganz am Ende steht ein Mensch. Das finale Lektorat macht immer noch der Autor, der *Human in the Loop* (der Mensch, der im Prozess bleibt). Er ist das letzte *Quality Gate*, die abschließende Qualitätskontrolle. Ich lese alle Quellen noch einmal quer, bevor etwas unter meinem Namen erscheint, damit ich für jeden Satz geradestehen kann, den ich mit Hilfe meiner Agenten geschrieben habe. Das macht den großen Unterschied. Wer AI-Slop nur durchreicht, darf sich nicht wundern, wenn am Ende fachlich nichts stimmt.
+Und ganz am Ende steht ein Mensch. Das finale Lektorat macht immer noch der Autor, der *Human in the Loop* (der Mensch, der im Prozess bleibt). Er ist das letzte *Quality Gate*, die abschließende Qualitätskontrolle. Ich lese alle Quellen noch einmal quer, bevor etwas unter meinem Namen erscheint, damit ich für jeden Satz geradestehen kann, den ich mit Hilfe meiner Agenten geschrieben habe. Das macht den großen Unterschied. Wer *AI-Slop* (ungeprüften, minderwertigen KI-Output) nur durchreicht, darf sich nicht wundern, wenn am Ende fachlich nichts stimmt.
 
 ## Fazit
 
-Gegen Halluzinationen gibt es keinen einzelnen Schalter, sondern vier Schichten, die zusammenwirken. Eine **Regel** nimmt dem Modell die Erlaubnis zu raten. **Deep Research** mit eingebauter Prüfung lässt Behauptungen scheitern, bevor sie in die Antwort kommen. Ein **Werkzeug wie der Playwright-MCP** sorgt dafür, dass wirklich die Quelle gelesen wird und nicht ein Snippet. Und ein **Faktencheck** am Schluss prüft jeden verbliebenen Fakt gegen die Primärquelle. Keine Schicht allein reicht. Zusammen halten sie den Agenten bei der Wahrheit, und das letzte Wort hat ohnehin der Mensch.
+Eine einzelne Maßnahme reicht gegen Halluzinationen nicht. Vier Schichten wirken zusammen. Eine **Regel** nimmt dem Modell die Erlaubnis zu raten. **Deep Research** mit eingebauter Prüfung lässt Behauptungen scheitern, bevor sie in die Antwort kommen. Ein **Werkzeug wie der Playwright-MCP** sorgt dafür, dass wirklich die Quelle gelesen wird und nicht ein Snippet. Und ein **Faktencheck** am Schluss prüft jeden verbliebenen Fakt gegen die Primärquelle. Keine Schicht allein reicht. Zusammen halten sie den Agenten bei der Wahrheit, und das letzte Wort hat ohnehin der Mensch.
 
 Mein Rat: Fang mit der Regel an, die ist in fünf Minuten in deiner `CLAUDE.md` und wirkt sofort. Den Rest baust du nach und nach dazu.
 
