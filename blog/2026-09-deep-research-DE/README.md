@@ -18,7 +18,7 @@ language: de
 header: header.jpg
 ---
 
-**Gescheite Recherche mit AI klingt einfach: Befehl absetzen, Ergebnis abholen. Ich nutze dafür Claude Code und den Befehl `/deep-research`, im Prinzip läuft das in jeder Agenten-Umgebung (engl. *Harness*) gleich. Und in jedem wird fleißig halluziniert. Dieser Artikel zeigt, warum das passiert und was dagegen hilft: eine klare Regel, ein Werkzeug, das Quellen wirklich liest, ein Faktencheck an der Primärquelle, und am Ende der Autor selbst.**
+**Gescheite Recherche mit AI klingt einfach: Befehl absetzen, Ergebnis abholen. Ich nutze dafür Claude Code und den Befehl `/deep-research`, im Prinzip läuft das in jeder Agenten-Umgebung (engl. *Harness*) gleich. Und in jedem wird fleißig halluziniert. Dieser Artikel zeigt, warum das passiert und was dagegen hilft: eine globale Regel (in der globalen `CLAUDE.md`), ein Werkzeug, das Quellen wirklich liest, ein Faktencheck an der Primärquelle, und am Ende der Autor selbst.**
 
 ## Inhalt
 
@@ -50,9 +50,9 @@ Im besten Fall meldet er es zurück: diese Quelle konnte ich nicht lesen. Dann w
 
 Das liegt in der Natur der LLMs. Sie liefern kein gesichertes Wissen. Sie erzeugen Text, der plausibel klingt. Das muss man immer mitdenken: Es kann auch völliger Mumpitz sein. Die Ergebnisse kommen zurück, und du hast ein Problem.
 
-## Die erste Gegenmaßnahme: eine klare Regel
+## Die erste Gegenmaßnahme: eine globale Regel
 
-Damit ich nicht bei jeder Recherche sagen muss „prüf das bitte alles selbst", habe ich eine globale Regel hinterlegt, die von vornherein Misstrauen sät. In meiner globalen `CLAUDE.md`, die in jeder Sitzung mitläuft, steht sie im exakten Wortlaut:
+Damit ich nicht bei jeder Recherche sagen muss „prüf das bitte alles selbst", habe ich eine globale Regel hinterlegt, die von vornherein Misstrauen sät. In meiner globalen `CLAUDE.md` (sie liegt unter `~/.claude/CLAUDE.md`), die in jeder Sitzung mitläuft, steht sie im exakten Wortlaut:
 
 ```markdown
 ## CRITICAL: Web Research Agents Hallucinate
@@ -67,7 +67,7 @@ Damit ich nicht bei jeder Recherche sagen muss „prüf das bitte alles selbst",
 - The difference between "we observed X" and "X happens because Y" is critical
 ```
 
-Die Regel verlangt zweierlei: beobachtet und vermutet auseinanderhalten, und Unbekanntes als unbekannt benennen, statt die Lücke mit einer schönen Erklärung zu stopfen. Das nimmt dem Modell die Erlaubnis zu raten. Und sie erreicht genau die richtigen: Jeder Recherche-Subagent lädt diese globale `CLAUDE.md` beim Start mit, nicht nur die Hauptunterhaltung.
+Die Regel verlangt zweierlei: beobachtet und vermutet auseinanderhalten, und Unbekanntes als unbekannt benennen, statt die Lücke mit einer schönen Erklärung zu stopfen. Das nimmt dem Modell die Erlaubnis zu raten. Und sie erreicht genau die richtigen: Jeder Recherche-Subagent lädt diese globale `CLAUDE.md` beim Start mit, nicht nur die Hauptunterhaltung. Die Datei ist ganz normaler Text, Claude darf diese Regel bei Bedarf also auch selbst anpassen und erweitern.
 
 Das hilft enorm. Du wirst sehen: Da kommt richtig viel zutage, was sonst durchgerutscht wäre.
 

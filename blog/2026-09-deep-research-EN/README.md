@@ -18,7 +18,7 @@ language: en
 header: header.jpg
 ---
 
-**Decent research with AI sounds easy: fire off a command, pick up the result. I use Claude Code and the `/deep-research` command for it, and in principle it works the same in any agent environment (a *harness*). And in every one of them, there is plenty of hallucinating. This article shows why that happens and what helps against it: a clear rule, a tool that really reads the source, a fact-check at the primary source, and in the end the author himself.**
+**Decent research with AI sounds easy: fire off a command, pick up the result. I use Claude Code and the `/deep-research` command for it, and in principle it works the same in any agent environment (a *harness*). And in every one of them, there is plenty of hallucinating. This article shows why that happens and what helps against it: a global rule (in the global `CLAUDE.md`), a tool that really reads the source, a fact-check at the primary source, and in the end the author himself.**
 
 ## Contents
 
@@ -50,9 +50,9 @@ In the best case it reports back: I couldn't read this source. Then the main con
 
 That is in the nature of LLMs. They don't deliver secured knowledge. They produce text that sounds plausible. You always have to keep that in mind: it can also be complete nonsense. The results come back, and you have a problem.
 
-## The first countermeasure: a clear rule
+## The first countermeasure: a global rule
 
-So that I don't have to say "please check all of this yourself" on every research run, I've put down a global rule that sows distrust from the start. In my global `CLAUDE.md`, which runs along in every session, it reads, in its exact wording:
+So that I don't have to say "please check all of this yourself" on every research run, I've put down a global rule that sows distrust from the start. In my global `CLAUDE.md` (it sits at `~/.claude/CLAUDE.md`), which runs along in every session, it reads, in its exact wording:
 
 ```markdown
 ## CRITICAL: Web Research Agents Hallucinate
@@ -67,7 +67,7 @@ So that I don't have to say "please check all of this yourself" on every researc
 - The difference between "we observed X" and "X happens because Y" is critical
 ```
 
-The rule demands two things: keep observed and assumed apart, and name the unknown as unknown instead of plugging the gap with a nice explanation. That takes away the model's permission to guess. And it reaches exactly the right ones: every research subagent loads this global `CLAUDE.md` at startup, not just the main conversation.
+The rule demands two things: keep observed and assumed apart, and name the unknown as unknown instead of plugging the gap with a nice explanation. That takes away the model's permission to guess. And it reaches exactly the right ones: every research subagent loads this global `CLAUDE.md` at startup, not just the main conversation. The file is plain text, so Claude is free to adjust and extend this rule itself when needed.
 
 That helps a lot. You'll see: a great deal comes to light that would otherwise have slipped through.
 
