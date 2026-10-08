@@ -30,7 +30,7 @@ Du sagst deiner Hauptunterhaltung: recherchiere etwas zu einem Thema. Das kann e
 
 Dafür startet die Hauptunterhaltung einen Workflow. In Claude Code genügt ein Befehl: `/deep-research <deine Frage>`. Das ist Claude Codes einziger mitgelieferter Workflow, und er läuft nur, wenn ich ihn selbst auslöse, nicht wenn das Modell nebenbei auf die Idee kommt. Eine tiefe Recherche kostet Zeit und Tokens, das entscheide ich bewusst. Welche Claude-Code-Befehle sich sonst noch lohnen, steht in [10 Claude-Code-Befehle, die du kennen solltest](https://agentic.schule/blog/2026-10-claude-code-commands).
 
-Die Grundlage sind Suchergebnisse einer Suchmaschine: zu jedem Treffer eine Adresse und eine kleine Suchvorschau. Damit werden dann die Subagenten beauftragt, die Seiten tatsächlich zu lesen. So weit würde es ein Mensch genauso machen. Der Workflow von Claude Code läuft dabei in fünf Stufen:
+Die Grundlage sind Suchergebnisse einer Suchmaschine: zu jedem Treffer eine Adresse und eine kleine Suchvorschau. Damit werden dann die Subagenten beauftragt, die Seiten tatsächlich zu lesen. So weit würde es ein Mensch genauso machen. Technisch ist `/deep-research` ein *Dynamic Workflow* von Claude Code: Claude schreibt dafür ein Orchestrierungs-Skript, das die Arbeit auf viele Subagenten auffächert. Wie so ein Graph aufgebaut ist, steht in [Graph Engineering](https://agentic.schule/blog/2026-10-graph-engineering). Der Workflow läuft dabei in fünf Stufen:
 
 1. **Zerlegen:** Die Frage wird in fünf Teilfragen aufgespalten, fünf verschiedene Blickwinkel.
 2. **Suchen:** Pro Blickwinkel läuft ein eigener Such-Agent, alle fünf parallel.

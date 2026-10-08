@@ -30,7 +30,7 @@ You tell your main conversation: research something on a topic. That can be a li
 
 For that, the main conversation starts a workflow. In Claude Code a single command is enough: `/deep-research <your question>`. It's Claude Code's only bundled workflow, and it runs only when I trigger it myself, not when the model takes it up on the side. Deep research costs time and tokens; I decide that deliberately. Which other Claude Code commands are worth knowing, I collected in [10 Claude Code Commands You Should Know](https://agentic.schule/en/blog/2026-10-claude-code-commands).
 
-The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. Claude Code's workflow runs in five stages:
+The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. Technically, `/deep-research` is one of Claude Code's *Dynamic Workflows*: Claude writes an orchestration script for it that fans the work out across many subagents. How such a graph is built, I covered in [Graph Engineering](https://agentic.schule/en/blog/2026-10-graph-engineering). The workflow runs in five stages:
 
 1. **Decompose:** The question is split into five sub-questions, five different angles.
 2. **Search:** For each angle a separate search agent runs, all five in parallel.
