@@ -153,6 +153,9 @@ const VERDICT_SCHEMA = {
   },
 };
 
+// Shared instruction that precedes every dimension.
+const SHARED = `You are a very thorough editor and fact-checker for Johannes Hoppe's blog articles (agentic.schule). They appear under his name and must sound like him, not like a language model. Read the TARGET FILE in full, plus the writing guide CLAUDE.md. You change NOTHING, you only report, structured: per finding a line number, verbatim quote, the flaw, the rule broken, a severity, and a fix suggestion. For a verifiable factual claim: set isFactual=true and claimToVerify.`;
+
 // The five review dimensions. The prompts are heavily shortened here.
 const DIMENSIONS = [
   { key: 'floskeln', prompt: `Review dimension: STYLE & LLM CLICHÉS (Johannes' "AI tells"). Report every hit:
@@ -168,6 +171,13 @@ const DIMENSIONS = [
 - bold thesis right after the frontmatter; then "## Contents" with [[toc]]. …
 … If no EN version exists, skip this point without comment.` },
 ];
+
+// Prompt per dimension: shared instruction + target file + the (shortened) dimension.
+const dimensionPrompt = (it) => `${SHARED}
+
+TARGET FILE: ${it.f}
+
+${it.d.prompt}`;
 
 // The core: every factual finding is checked individually and adversarially at the SOURCE.
 const verifyPrompt = (fd) => `
@@ -189,7 +199,7 @@ const items = files.flatMap((f) => DIMENSIONS.map((d) => ({ f, d })));
 phase('Review');
 const reviewed = await pipeline(
   items,
-  (it) => agent(`TARGET FILE: ${it.f}\n\n${it.d.prompt}`,
+  (it) => agent(dimensionPrompt(it),
             { label: `review:${it.d.key}`, phase: 'Review', schema: FINDINGS_SCHEMA })
           .then((r) => ({ findings: (r && r.findings) || [] })),
   (res) => parallel(res.findings.map((fd) => () =>
