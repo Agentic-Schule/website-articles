@@ -167,7 +167,7 @@ const reviewed = await pipeline(
 );
 ```
 
-Aufgrund des Umfangs habe ich die Prompts der fünf Dimensionen hier gekürzt, jeweils Anfang und Ende. Und es ist ein persönlicher Prompt: Nicht jeder schreibt Blog-Artikel über AI, dein eigener sollte deine eigenen Wünsche abbilden. Willst du meine Prompts vollständig, schreib mich an, dann schicke ich sie dir per Mail.
+Aufgrund des Umfangs habe ich die Prompts der fünf Dimensionen hier stark verkürzt. Und es ist ein persönlicher Prompt: Nicht jeder schreibt Blog-Artikel über AI, dein eigener sollte deine eigenen Wünsche abbilden. Willst du meine Prompts vollständig, schreib mich an, dann schicke ich sie dir per Mail.
 
 Übrigens finde ich es immer noch arschcool, dass diese Workflows in JavaScript definiert werden. Wer mag, bringt also noch Ablaufsteuerung und Ähnliches hinein und macht das Ganze zu einem Gesamtkunstwerk.
 
