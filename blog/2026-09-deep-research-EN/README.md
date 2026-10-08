@@ -30,7 +30,7 @@ You tell your main conversation: research something on a topic. That can be a li
 
 For that, the main conversation starts a workflow. In Claude Code a single command is enough: `/deep-research <your question>`. It's Claude Code's only bundled workflow, and it runs only when I trigger it myself, not when the model takes it up on the side. Deep research costs time and tokens; I decide that deliberately. Which other Claude Code commands are worth knowing, I collected in [10 Claude Code Commands You Should Know](https://agentic.schule/en/blog/2026-10-claude-code-commands).
 
-The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. Technically, `/deep-research` is one of Claude Code's *Dynamic Workflows*: Claude writes an orchestration script for it that fans the work out across many subagents. How such a graph is built, I covered in [Graph Engineering](https://agentic.schule/en/blog/2026-10-graph-engineering). The workflow runs in five stages:
+The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. Technically, `/deep-research` fans the work out across many subagents through an orchestration script. Together they form a graph. How such a graph is built, and how you write such scripts yourself, I covered in [Graph Engineering](https://agentic.schule/en/blog/2026-10-graph-engineering). The workflow runs in five stages:
 
 1. **Decompose:** The question is split into five sub-questions, five different angles.
 2. **Search:** For each angle a separate search agent runs, all five in parallel.
@@ -44,9 +44,9 @@ The basis is the results of a search engine: for each hit an address and a small
 
 This works as long as the pages can be read. Only lately more and more websites block crawlers, and with them your bot. Then the agent simply sees nothing. Now several things can happen:
 
-![Graphic in the agentic.schule style with three rows: green check „REPORTS BACK", orange minus „CUTS CORNERS", magenta cross „HALLUCINATES".](drei-faelle.jpg "Three reactions to a block. Only the first is usable; the third is the dangerous one.")
+![Graphic in the agentic.schule style with three rows: green check “REPORTS BACK”, orange minus “CUTS CORNERS”, magenta cross “HALLUCINATES”.](drei-faelle.jpg "Three reactions to a block. Only the first is usable; the third is the dangerous one.")
 
-In the best case it reports back: I couldn't read this source. Then the main conversation knows. But it can also happen that it simply takes the search preview and thinks up the rest, half cutting corners, half hallucinating. And the preview need not even be current: every search result carries an age (`page_age`), so it can show an older state. The worst case: it invents the answer completely. None of it is true.
+In the best case it reports back: I couldn't read this source. Then the main conversation knows. But it can also happen that it takes the search preview and thinks up the rest, half cutting corners, half hallucinating. And the preview need not even be current: every search result carries an age (`page_age`), so it can show an older state. The worst case: it invents the answer completely. None of it is true.
 
 That is in the nature of LLMs. They don't deliver secured knowledge. They produce text that sounds plausible. You always have to keep that in mind: it can also be complete nonsense. The results come back, and you have a problem.
 
@@ -69,23 +69,23 @@ So that I don't have to say "please check all of this yourself" on every researc
 
 The rule demands two things: keep observed and assumed apart, and name the unknown as unknown instead of plugging the gap with a nice explanation. That takes away the model's permission to guess. And it reaches exactly the right ones: every research subagent loads this global `CLAUDE.md` at startup, not just the main conversation. The file is plain text, so Claude is free to adjust and extend this rule itself when needed.
 
-That helps a lot. You'll see: a great deal comes to light that would otherwise have slipped through.
+That helps noticeably. A lot comes to light that would otherwise have slipped through.
 
 ## Not getting locked out: the Playwright MCP
 
-Against the lockout itself, something can be done too. I gave Claude its own Playwright MCP that disguises itself as well as possible. It is no longer recognizable from afar as an automated tool, because the telltale browser flags are deactivated, and so it gets through most sites. That eases the problem considerably, but it doesn't solve it. How exactly that works, I described in a separate article: [Give your agent its own, unobtrusive Playwright MCP](https://agentic.schule/en/blog/2026-09-agent-research-playwright-mcp).
+Against the lockout itself, something can be done too. I gave Claude its own Playwright MCP (Playwright drives a real browser) that disguises itself as well as possible. It is no longer recognizable from afar as an automated tool, because the telltale browser flags are deactivated, and so it gets through most sites. That eases the problem considerably, but it doesn't solve it. How exactly that works, I described in a separate article: [Give your agent its own, unobtrusive Playwright MCP](https://agentic.schule/en/blog/2026-09-agent-research-playwright-mcp).
 
 The payoff: the agent then reads the page like a human and quotes the exact wording of the source instead of a second-hand summary. Even so, a gap remains. The findings flow up to the main conversation, and it has to check every source itself before it adopts it. That is exactly what the rule from above handles, without my having to say it each time.
 
 ## The fact-check: every claim against the source
 
-By rights, Deep Research with its verification stage should be hallucination-free. It isn't, and the reason is structural. **The three reviewers in the research only compare each claim against the quote the fetch agent itself supplied, and they web-search for contradiction. They don't read the original page again. If the agent made up the quote along with the claim, the invented claim matches the invented quote, and it passes the check. So the research partly checks itself against itself, instead of freshly against the source.**
+By rights, Deep Research with its verification stage should be hallucination-free. It isn't, and the reason is structural. **The three reviewers in the research only compare each claim against the quote the agent from the fetch stage (stage 3) itself supplied, and they web-search for contradiction. They don't read the original page again. If the agent made up the quote along with the claim, the invented claim matches the invented quote, and it passes the check. So the research partly checks itself against itself, instead of freshly against the source.**
 
 That's why, once a body of facts stands, another workflow comes in that I built myself: a fact-check pass. It takes on the finished, merged text, quotes included, and checks it freshly against the primary sources. It looks for claims, for alleged facts, and for alleged quotes, and checks each one against the source. Default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible.
 
 The quotes especially: often they aren't quoted exactly, just summarized. Then the follow-up applies: is that a quote? Then show me the exact spot. And again you find that some things slipped through. You can run this pass several times, until what stands there actually matches reality.
 
-## The most important insight: the author checks it himself
+## The last line of defense: the author checks it himself
 
 You still can't fully trust it. When Claude has done the rough work for an article, I read all the sources myself once more, crosswise, in the end. I check whether what is claimed there as a fact actually appears that way in the source. Only then do I release the text for reading.
 
