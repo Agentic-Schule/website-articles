@@ -169,6 +169,8 @@ const reviewed = await pipeline(
 
 Aufgrund des Umfangs habe ich die Prompts der fünf Dimensionen hier gekürzt, jeweils Anfang und Ende. Und es ist ein persönlicher Prompt: Nicht jeder schreibt Blog-Artikel über AI, dein eigener sollte deine eigenen Wünsche abbilden. Willst du meine Prompts vollständig, schreib mich an, dann schicke ich sie dir per Mail.
 
+Übrigens finde ich es immer noch arschcool, dass diese Workflows in JavaScript definiert werden. Wer mag, bringt also noch Ablaufsteuerung und Ähnliches hinein und macht das Ganze zu einem Gesamtkunstwerk.
+
 Besonders die Zitate: Oft sind sie nicht exakt zitiert, sondern nur zusammengefasst. Dann gilt die Nachfrage: Ist das ein Zitat? Dann zeig mir bitte genau die Stelle. Und wieder stellst du fest, dass einiges durchgerutscht ist. Diesen Durchlauf kannst du mehrfach laufen lassen, bis das, was dasteht, auch der Realität entspricht.
 
 ## Die letzte Instanz: der Autor prüft selbst
