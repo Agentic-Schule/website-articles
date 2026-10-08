@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:675px; overflow:hidden; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(60% 55% at 74% 42%, rgba(98,38,176,0.34), transparent 60%),
+      radial-gradient(50% 60% at 22% 95%, rgba(233,4,100,0.16), transparent 60%),
+      linear-gradient(155deg,#241a33 0%,#1b1525 58%,#0d0913 100%);
+    color:#fff; position:relative;
+  }
+  .grid { position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1.4px, transparent 1.4px);
+    background-size:34px 34px; mask-image:linear-gradient(120deg,#000,transparent 70%); }
+  .brand { position:absolute; top:60px; left:78px; height:56px; width:auto; z-index:2; }
+  .wrap { position:absolute; inset:0; display:flex; align-items:center; padding:0 78px; }
+  .left { width:620px; }
+  h1 { font-size:60px; line-height:1.06; font-weight:800; letter-spacing:-1.2px; margin:22px 0 0; }
+  h1 .accent { background:linear-gradient(92deg,#a06bff 0%,#e90464 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { margin-top:24px; font-size:27px; font-weight:500; color:#c4b8d6; letter-spacing:-.2px; }
+  .by { margin-top:40px; font-size:19px; color:#8f84a6; }
+  .by b { color:#cfc3e6; font-weight:600; }
+  .art { position:absolute; right:44px; top:0; height:675px; width:520px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <img class="brand" src="logo-agentic-schule.png" alt="agentic.schule">
+  <div class="wrap">
+    <div class="left">
+      <h1>Harness<br><span class="accent">Engineering</span></h1>
+      <div class="sub">What really runs around the model</div>
+      <div class="by">by <b>Johannes Hoppe</b></div>
+    </div>
+  </div>
+
+  <!--
+    Illustration: the model (magenta core, the point) sits inside the harness —
+    a purple loop ring with tools plugged in. Purple = scaffolding/normal, magenta = core.
+  -->
+  <div class="art">
+    <svg width="520" height="675" viewBox="0 0 520 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e90464" stop-opacity="0.55"/>
+          <stop offset="48%" stop-color="#9a6cff" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#6226b0" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ff3d86"/>
+          <stop offset="100%" stop-color="#e90464"/>
+        </linearGradient>
+        <marker id="loop" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 5 L0 10 z" fill="#b98cff"/>
+        </marker>
+      </defs>
+
+      <circle cx="260" cy="337" r="185" fill="url(#glow)"/>
+
+      <circle cx="260" cy="337" r="150" fill="none" stroke="#6226b0" stroke-width="10" opacity="0.35"/>
+      <path d="M260 187 A150 150 0 1 1 110 337" fill="none" stroke="#b98cff" stroke-width="5"
+            stroke-linecap="round" stroke-dasharray="3 16" marker-end="url(#loop)"/>
+
+      <g fill="#241a33" stroke="#9a6cff" stroke-width="2.5">
+        <rect x="236" y="165" width="48" height="44" rx="11"/>
+        <rect x="383" y="233" width="48" height="44" rx="11"/>
+        <rect x="383" y="397" width="48" height="44" rx="11"/>
+        <rect x="236" y="465" width="48" height="44" rx="11"/>
+        <rect x="89"  y="397" width="48" height="44" rx="11"/>
+        <rect x="89"  y="233" width="48" height="44" rx="11"/>
+      </g>
+      <g stroke="#b98cff" stroke-width="2.4" stroke-linecap="round" fill="none">
+        <path d="M250 187 h20 M250 194 h20"/>
+        <path d="M397 255 h20 M407 248 v14"/>
+        <path d="M397 419 l9 9 9 -9"/>
+        <path d="M250 487 h20 M250 494 h12"/>
+        <path d="M103 419 h20 M103 426 h20"/>
+        <path d="M103 255 h20 M113 248 v14"/>
+      </g>
+
+      <circle cx="260" cy="337" r="58" fill="url(#core)"/>
+      <circle cx="260" cy="337" r="58" fill="none" stroke="#ff8ab6" stroke-width="2" opacity="0.6"/>
+      <text x="260" y="331" text-anchor="middle" font-size="19" font-weight="800" fill="#fff" font-family="-apple-system,'SF Pro Display',Helvetica,Arial,sans-serif">Model</text>
+      <text x="260" y="353" text-anchor="middle" font-size="12.5" font-weight="600" fill="rgba(255,255,255,0.82)" font-family="-apple-system,'SF Pro Display',Helvetica,Arial,sans-serif">judges</text>
+    </svg>
+  </div>
+</body>
+</html>
