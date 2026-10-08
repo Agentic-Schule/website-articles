@@ -18,23 +18,41 @@ language: en
 header: header.jpg
 ---
 
-**An agent that researches the web is happy to invent plausible details: config paths, parameter names, whole causes. It sounds convincing and is wrong all the same. In this article I show how you get this under control: with a clear rule, with Deep Research, with a tool that really reads the source, and with a final pass that checks every fact against the primary source.**
+**Decent research with AI sounds easy: fire off a command, pick up the result. I use Claude Code and the `/deep-research` command for it, and in principle it works the same in any agent environment (a *harness*). And in every one of them, there is plenty of hallucinating. This article shows why that happens and what helps against it: a clear rule, a tool that really reads the source, a fact-check at the primary source, and in the end the author himself.**
 
 ## Contents
 
 [[toc]]
 
-## Why agents hallucinate
+## How does the research work?
 
-A language model predicts the most likely next word. It has no built-in notion of "true". When it lacks a piece of information, it fills the gap with something that looks plausible. With a research agent that is especially treacherous. It gets the task of finding something out on the web and, in the end, reports back a tidy result. Whether that result is correct, you can't tell by looking at it.
+You tell your main conversation: research something on a topic. That can be a library for programming or a fact for an article. You want the AI to take some work off your hands.
 
-The dangerous part isn't obvious nonsense. The dangerous part is the small, plausible details: a config path that could just as well be named that way, a parameter that could exist like that, a reason along the lines of "X happens because Y". Such sentences survive a quick glance. They land in the docs or in the code, and only weeks later do you notice that half of it was made up.
+For that, the main conversation starts a workflow. In Claude Code a single command is enough: `/deep-research <your question>`. I set this command up myself, and in such a way that only I trigger it, not the model on the side. Deep research costs time and tokens; I decide that deliberately.
 
-No single trick helps against this. It takes a chain of precautions. Let's start with the cheapest one.
+The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. My workflow runs in five stages:
 
-## The first line of defense: a clear rule
+1. **Decompose:** The question is split into five sub-questions, five different angles.
+2. **Search:** For each angle a separate search agent runs, all five in parallel.
+3. **Fetch:** The hits are de-duplicated, then for each source a separate agent retrieves the page and pulls out the verifiable individual claims, up to fifteen sources, each in its own context. That way a weak source doesn't infect the others.
+4. **Verify:** Every claim gets three independent reviewers who approach it *adversarially* (in an opposing manner, with the goal of refuting it). Only when two of three refute it does it fly out.
+5. **Synthesize:** Only what survives the check is merged, ranked by confidence, and backed with sources.
 
-The cheapest measure costs nothing but a few lines of text. In my global `CLAUDE.md`, which runs along in every session, there is a rule that addresses exactly this problem. Here in its exact wording:
+![Diagram in the agentic.schule style: from a magnifying-glass icon for the search, three dotted lines lead to three agent icons, each connected by its own line to its own document. Text: ONE AGENT. ONE SOURCE.](ein-agent.jpg "Deep Research fans out: one agent per source, each in its own context.")
+
+## Where does the hallucination come from?
+
+This works as long as the pages can be read. Only lately more and more websites block crawlers, and with them your bot. Then the agent simply sees nothing. Now several things can happen:
+
+![Graphic in the agentic.schule style with three rows: green check „REPORTS BACK", orange minus „CUTS CORNERS", magenta cross „HALLUCINATES".](drei-faelle.jpg "Three reactions to a block. Only the first is usable; the third is the dangerous one.")
+
+In the best case it reports back: I couldn't read this source. Then the main conversation knows. But it can also happen that it simply takes the search preview and thinks up the rest, half cutting corners, half hallucinating. And the preview need not even be current: every search result carries an age (`page_age`), so it can show an older state. The worst case: it invents the answer completely. None of it is true.
+
+That is in the nature of LLMs. They don't deliver secured knowledge. They produce text that sounds plausible. You always have to keep that in mind: it can also be complete nonsense. The results come back, and you have a problem.
+
+## The first countermeasure: a clear rule
+
+So that I don't have to say "please check all of this yourself" on every research run, I've put down a global rule that sows distrust from the start. In my global `CLAUDE.md`, which runs along in every session, it reads, in its exact wording:
 
 ```markdown
 ## CRITICAL: Web Research Agents Hallucinate
@@ -49,43 +67,35 @@ The cheapest measure costs nothing but a few lines of text. In my global `CLAUDE
 - The difference between "we observed X" and "X happens because Y" is critical
 ```
 
-Why does this help? Because the rule forces the agent to keep two things apart that it likes to blur on its own: observed and assumed. "We saw X" is something different from "X happens because Y". The rule also demands that the unknown be named as unknown, instead of plugging the gap with a nice explanation. That takes away the model's permission to guess. And it reaches exactly the right ones: every research subagent loads this global `CLAUDE.md` at startup, not just the main conversation (only the built-in Explore and Plan agents skip it).
+The rule demands two things: keep observed and assumed apart, and name the unknown as unknown instead of plugging the gap with a nice explanation. That takes away the model's permission to guess. And it reaches exactly the right ones: every research subagent loads this global `CLAUDE.md` at startup, not just the main conversation.
 
-But a rule is only as good as its observance. The next step is to build the research itself so that checking is baked in.
+That helps a lot. You'll see: a great deal comes to light that would otherwise have slipped through.
 
-## How Deep Research works
+## Not getting locked out: the Playwright MCP
 
-Deep Research sounds like magic, but it is a sober procedure. At its core it is a loop of searching, reading, and checking before anything gets summarized at the end. In Claude Code a single command is enough: `/deep-research <your question>`. I set this command up myself, and in such a way that only I trigger it, not the model on the side. Deep research costs time and tokens; I decide that deliberately. Behind it runs my workflow in five stages:
+Against the lockout itself, something can be done too. I gave Claude its own Playwright MCP that disguises itself as well as possible. It is no longer recognizable from afar as an automated tool, because the telltale browser flags are deactivated, and so it gets through most sites. That eases the problem considerably, but it doesn't solve it. How exactly that works, I described in a separate article: [Give your agent its own, unobtrusive Playwright MCP](https://agentic.schule/en/blog/2026-09-agent-research-playwright-mcp).
 
-1. **Decompose:** The question is split into several sub-questions, typically a handful of different angles.
-2. **Search:** For each angle a separate search runs, in parallel rather than one after another.
-3. **Fetch:** The hits are de-duplicated, the most promising sources are actually retrieved, and verifiable individual claims are pulled out of them.
-4. **Verify:** Every claim is checked *adversarially* (in an opposing manner, with the goal of refuting it). Several independent reviewers approach it with a default stance of doubt. If a claim doesn't hold up, it's out.
-5. **Synthesize:** Only what survives the check is merged, ranked by confidence, and backed with sources.
+The payoff: the agent then reads the page like a human and quotes the exact wording of the source instead of a second-hand summary. Even so, a gap remains. The findings flow up to the main conversation, and it has to check every source itself before it adopts it. That is exactly what the rule from above handles, without my having to say it each time.
 
-The fourth stage is what counts. Research without checking is just a longer, more confident guess. The whole effort serves one purpose: claims should be allowed to fail before they make it into the answer.
+## The fact-check: every claim against the source
 
-## The Playwright MCP: actually reading the source
+Once a body of facts finally stands, another workflow comes in that I built myself: a fact-check pass. The three reviewers in the research work per source, in isolation. This pass takes on the finished, merged text, quotes included, and checks it against the primary sources. It looks for claims, for alleged facts, and for alleged quotes, and checks each one against the source. Default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible.
 
-A check is only as good as the access to the source. And this is exactly where it often gets stuck. Many sites block automated access; a direct fetch runs into bot detection or into an empty page. What does a locked-out agent do then? In the harmless case it takes the search engine's *snippet* text, a short excerpt. That is no proof, and often not even current: such an excerpt can show an older state, not the page the agent is actually supposed to check. Better is the second option: it reports back that the fetch didn't work. I can work with that. The worst case, though, is that it conceals the block and simply invents the answer. That, in my observation, happens again and again.
+The quotes especially: often they aren't quoted exactly, just summarized. Then the follow-up applies: is that a quote? Then show me the exact spot. And again you find that some things slipped through. You can run this pass several times, until what stands there actually matches reality.
 
-My solution for this is my own, unobtrusive Playwright MCP. It drives a real browser, opens the page like a human, and reads out the actual page text. That way the agent quotes the exact wording of the source instead of a second-hand summary. How the whole thing is built, I described in a separate article: [Give your agent its own, unobtrusive Playwright MCP](https://agentic.schule/en/blog/2026-09-agent-research-playwright-mcp).
+This is not a theoretical example. In this article it first said the search previews came from the cache of DuckDuckGo or Google. The true core holds: an excerpt can go stale, and Anthropic's [web search docs](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/web-search-tool) list a `page_age` for every hit. But the concrete mechanism, a cache of DuckDuckGo or Google, was nowhere in there and was made up. The fact-check cut it. That's how hallucination sneaks in: a correct core, wrapped in invented details.
 
-But even with the best tool a gap remains. The research agents hand their findings up to the main conversation, and these findings can be hallucinated. That's why the most important instruction applies to the main conversation itself: check every source again before you write it down. Don't rely on the sub-agent's summary, open the source. If you leave that out, hallucinated fragments keep sneaking into the research result. This one sentence in the order to the orchestrating session prevents, in my experience, especially many false facts.
+## The most important insight: the author checks it himself
 
-## Finally: check every fact
+You still can't fully trust it. When Claude has done the rough work for an article, I read all the sources myself once more, crosswise, in the end. I check whether what is claimed there as a fact actually appears that way in the source. Only then do I release the text for reading.
 
-That leaves a last pass, once the text already stands. Before anything is published, a dedicated fact-check goes through the finished version, pulls out every factual claim, and checks each one against the primary source. Here too with the default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible.
-
-It's the same adversarial approach as in the research, just at the other end of the chain. The research filters before anything is written. The fact-check filters before anything is published. What slipped through the first stage, the second one catches. You can use this pass for any content an agent produced for you, not just for articles.
-
-And at the very end stands a human. The final editing is still done by the author, the *Human in the Loop* (the human who stays in the process). He is the last *Quality Gate*, the final quality control. I read all the sources once more, crosswise, before anything appears under my name, so that I can stand behind every sentence I wrote with the help of my agents. That makes the big difference. Whoever just passes *AI slop* (unverified, low-quality AI output) through shouldn't be surprised when, in the end, nothing is technically correct.
+In the end, then, the author still has the job of checking the whole thing for plausibility. The final editing is done by the human, the *Human in the Loop* (the human who stays in the process). If you follow all of this, it's a great relief for the work, and in my opinion you get well-founded results. If you leave it out, in the end it's glorious *AI slop* (unverified, low-quality AI output), and you know that one well enough already.
 
 ## Conclusion
 
-A single measure isn't enough against hallucinations. Four layers work together. A **rule** takes away the model's permission to guess. **Deep Research** with built-in checking lets claims fail before they enter the answer. A **tool like the Playwright MCP** makes sure the source is really read and not a snippet. And a **fact-check** at the end verifies every remaining fact against the primary source. No layer alone is enough. Together they keep the agent close to the truth, and the last word belongs to the human anyway.
+A single measure isn't enough against hallucinations. Four layers work together. A **rule** takes away the model's permission to guess. A **disguised Playwright MCP** makes sure the source is really read and not a preview. A **fact-check** verifies every claim against the primary source. And the **author** reads it over himself at the end. Together they keep the agent close to the truth, and the last word belongs to the human anyway.
 
-My advice: start with the rule; it's in your `CLAUDE.md` in five minutes and works immediately. The rest you add bit by bit.
+My advice: start with the rule; it's in your `CLAUDE.md` in five minutes and works immediately. The rest you add bit by bit. And this article here? It's hopefully hallucination-free. 😅
 
 **Questions, feedback, your own setup?** Always welcome, I'm glad about every message.
 
