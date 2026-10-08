@@ -43,7 +43,7 @@ Die günstigste Maßnahme kostet nichts außer ein paar Zeilen Text. In meiner g
 
 **HARD RULES:**
 - **NEVER** write research agent output directly into documentation or code without verifying it
-- **ALWAYS** verify claims against actual source code, bundled docs, or observed behavior (run the command, read the log, check the output)
+- **ALWAYS** verify claims against actual source code, bundled docs, or observed behavior (read the log, check the output)
 - **NEVER** state something as fact unless directly observed — if the cause is unknown, say "unknown"
 - **NEVER** invent plausible-sounding explanations to fill gaps in understanding
 - The difference between "we observed X" and "X happens because Y" is critical
