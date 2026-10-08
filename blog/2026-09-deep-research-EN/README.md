@@ -95,7 +95,7 @@ In the end, then, the author still has the job of checking the whole thing for p
 
 A single measure isn't enough against hallucinations. Four layers work together. A **rule** takes away the model's permission to guess. A **disguised Playwright MCP** makes sure the source is really read and not a preview. A **fact-check** verifies every claim against the primary source. And the **author** reads it over himself at the end. Together they keep the agent close to the truth, and the last word belongs to the human anyway.
 
-My advice: start with the rule; it's in your `CLAUDE.md` in five minutes and works immediately. The rest you add bit by bit. And this article here? It's hopefully hallucination-free. 😅
+My advice: start with the rule. Have Claude add it to your global `CLAUDE.md`, and it works immediately. The rest you add bit by bit. And this article here? It's hopefully hallucination-free. 😅
 
 **Questions, feedback, your own setup?** Always welcome, I'm glad about every message.
 

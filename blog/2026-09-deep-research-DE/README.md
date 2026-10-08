@@ -95,7 +95,7 @@ Am Ende hat der Autor also immer noch die Aufgabe, das Ganze auf Plausibilität 
 
 Eine einzelne Maßnahme reicht gegen Halluzinationen nicht. Vier Schichten wirken zusammen. Eine **Regel** nimmt dem Modell die Erlaubnis zu raten. Ein **getarnter Playwright-MCP** sorgt dafür, dass wirklich die Quelle gelesen wird und nicht eine Vorschau. Ein **Faktencheck** prüft jede Behauptung gegen die Primärquelle. Und der **Autor** liest am Schluss selbst gegen. Zusammen halten sie den Agenten bei der Wahrheit, und das letzte Wort hat ohnehin der Mensch.
 
-Mein Rat: Fang mit der Regel an, die ist in fünf Minuten in deiner `CLAUDE.md` und wirkt sofort. Den Rest baust du nach und nach dazu. Und dieser Artikel hier? Der ist hoffentlich halluzinationsfrei. 😅
+Mein Rat: Fang mit der Regel an. Lass Claude sie in deine globale `CLAUDE.md` eintragen, dann wirkt sie sofort. Den Rest baust du nach und nach dazu. Und dieser Artikel hier? Der ist hoffentlich halluzinationsfrei. 😅
 
 **Fragen, Feedback, dein eigenes Setup?** Immer her damit, ich freue mich über jede Nachricht.
 
