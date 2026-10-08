@@ -153,6 +153,9 @@ const VERDICT_SCHEMA = {
   },
 };
 
+// Gemeinsamer Auftrag, der vor jeder Dimension steht.
+const SHARED = `Du bist ein sehr gründlicher Lektor und Fact-Checker für Blog-Artikel von Johannes Hoppe (agentic.schule). Die Artikel erscheinen unter seinem Namen und müssen nach ihm klingen, nicht nach einem Sprachmodell. Lies die ZIELDATEI komplett, dazu die Schreibrichtlinie CLAUDE.md. Du änderst NICHTS, du berichtest nur strukturiert: je Befund Zeilennummer, wörtliches Zitat, Mangel, verletzte Regel, Schweregrad und Korrekturvorschlag. Bei einer überprüfbaren Tatsachenbehauptung: isFactual=true und claimToVerify setzen.`;
+
 // Die fünf Prüfdimensionen. Die Prompts sind hier stark verkürzt.
 const DIMENSIONS = [
   { key: 'floskeln', prompt: `Prüfdimension: STIL & LLM-FLOSKELN (Johannes' "AI-Tells"). Melde jeden Treffer:
@@ -168,6 +171,13 @@ const DIMENSIONS = [
 - Fette These direkt nach dem Frontmatter; danach "## Inhalt" mit [[toc]]. …
 … Existiert keine EN-Fassung, überspringe diesen Punkt kommentarlos.` },
 ];
+
+// Prompt je Dimension: gemeinsamer Auftrag + Zieldatei + die (verkürzte) Dimension.
+const dimensionPrompt = (it) => `${SHARED}
+
+ZIELDATEI: ${it.f}
+
+${it.d.prompt}`;
 
 // Der Kern: jeder Faktenbefund wird einzeln und adversarial an der QUELLE geprüft.
 const verifyPrompt = (fd) => `
@@ -189,7 +199,7 @@ const items = files.flatMap((f) => DIMENSIONS.map((d) => ({ f, d })));
 phase('Lektorat');
 const reviewed = await pipeline(
   items,
-  (it) => agent(`ZIELDATEI: ${it.f}\n\n${it.d.prompt}`,
+  (it) => agent(dimensionPrompt(it),
             { label: `lektorat:${it.d.key}`, phase: 'Lektorat', schema: FINDINGS_SCHEMA })
           .then((r) => ({ findings: (r && r.findings) || [] })),
   (res) => parallel(res.findings.map((fd) => () =>
