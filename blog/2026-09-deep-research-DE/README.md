@@ -49,7 +49,7 @@ Die günstigste Maßnahme kostet nichts außer ein paar Zeilen Text. In meiner g
 - The difference between "we observed X" and "X happens because Y" is critical
 ```
 
-Warum hilft das? Weil die Regel den Agenten zwingt, zwei Dinge auseinanderzuhalten, die er von sich aus gern vermischt: beobachtet und vermutet. „Wir haben X gesehen" ist etwas anderes als „X passiert, weil Y". Die Regel verlangt außerdem, dass Unbekanntes als unbekannt benannt wird, statt die Lücke mit einer schönen Erklärung zu stopfen. Das nimmt dem Modell die Erlaubnis zu raten.
+Warum hilft das? Weil die Regel den Agenten zwingt, zwei Dinge auseinanderzuhalten, die er von sich aus gern vermischt: beobachtet und vermutet. „Wir haben X gesehen" ist etwas anderes als „X passiert, weil Y". Die Regel verlangt außerdem, dass Unbekanntes als unbekannt benannt wird, statt die Lücke mit einer schönen Erklärung zu stopfen. Das nimmt dem Modell die Erlaubnis zu raten. Und sie erreicht genau die richtigen: Jeder Recherche-Subagent lädt diese globale `CLAUDE.md` beim Start mit, nicht nur die Hauptkonversation (nur die eingebauten Explore- und Plan-Agenten überspringen sie).
 
 Eine Regel ist aber nur so gut wie ihre Befolgung. Der nächste Schritt ist, die Recherche selbst so zu bauen, dass Prüfen fest eingebaut ist.
 
