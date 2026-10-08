@@ -62,7 +62,11 @@ Jetzt kommt die Kehrseite der Verschlüsselung. Nach jedem Neustart hängt der m
 
 Ich brauche einen Bildschirm und eine Tastatur bis hinunter zum Boot-Screen, aus der Ferne. Meine Lösung ist ein **[JetKVM](https://jetkvm.com)**, ein kleines KVM-over-IP-Gerät. KVM steht für *Keyboard, Video, Mouse*: Tastatur, Bild und Maus übers Netzwerk. Es hängt per USB am mini und meldet sich dort als Tastatur an, dazu greift es das Bild per HDMI ab. Bei jedem Neustart tippe ich darüber einmal das FileVault-Passwort ein, und der mini bootet durch. So bleibt die Platte verschlüsselt, und ich komme trotzdem an jeden Boot-Schritt.
 
+![Illustration im agentic.schule-Look: Links eine stilisierte Tastatur mit lila leuchtendem Rahmen und einer magenta leuchtenden Enter-Taste, verbunden über eine magenta gepunktete Linie mit einem Globus-Symbol zu einem silbernen Mac mini rechts, über dem ein Passwortfeld mit sechs Punkten schwebt.](artikel-kvm.jpg "Tastatur übers Netz bis zum Passwort-Prompt: Genau dafür sorgt die KVM.")
+
 Ich habe mich bewusst für den JetKVM entschieden, weil er **quelloffen** ist (GPL-2.0, [Code auf GitHub](https://github.com/jetkvm/kvm)). Viele KVM-over-IP-Geräte sind Closed Source. Bei einem Gerät, das Tastatur und Bildschirm über das Netz überträgt, will ich nachvollziehbaren Code. Zu kaufen gibt es ihn direkt beim Hersteller über [jetkvm.com](https://jetkvm.com), dann aber mit Versand aus China und entsprechend langer Lieferzeit. Schneller geht es über [Amazon](https://www.amazon.de/dp/B0GHQCSN3W?tag=agentic-21): Versand durch Amazon, Lieferung in wenigen Tagen.
+
+![Foto: Eine Hand hält den JetKVM, ein kleines schwarzes KVM-over-IP-Gerät mit Farbdisplay, auf dem die Versions-Info steht (System 0.2.8, Application 0.5.9). Oben steckt ein Netzwerkkabel, im Hintergrund ein Kabelbündel in grünem Licht.](kvm-foto.jpg "Der JetKVM in echt: passt in die Handfläche und hängt per Netzwerkkabel am Rest der Welt.")
 Zwei Einstellungen nehmen dem Boot-Thema die Schärfe:
 
 - Für **geplante Neustarts** geht es sogar ohne Passwort: `sudo fdesetup authrestart` entsperrt beim nächsten Reboot automatisch, ohne sich auszusperren.
@@ -78,7 +82,11 @@ Verschlüsselung und verschlüsselte Backups verlangen beim Booten jeweils ein P
 
 Bleibt der dritte Fall, der Stromausfall. Die meisten Entwickler arbeiten heute am Laptop, und damit ist ein altes Schreckgespenst verschwunden: Es gewittert, und man bangt, ob gleich der Strom zuckt. Der Akku trägt über jede Schwankung hinweg, man merkt sie nicht einmal. Beim mini ist das anders. Er hat keinen Akku, er verzeiht dir nichts. Einmal Strom weg, und alles ist weg: die ungespeicherte Arbeit, alle laufenden Agenten, der ganze Zustand. **Brutal!** Danach heißt es: alles wieder hochfahren, Fenster für Fenster, Session für Session (und einmal das FileVault-Passwort per KVM eintippen).
 
+![Illustration im agentic.schule-Look: Links eine stilisierte USV mit lila leuchtendem Rahmen, grüner Statusleiste und grünem Einschaltsymbol, verbunden über eine magenta gepunktete Linie mit einem Blitz-Symbol zu einem silbernen Mac mini rechts.](artikel-usv.jpg "Zwischen Steckdose und mini sitzt die USV. Fällt der Strom, merkt der mini davon erst einmal nichts.")
+
 Deshalb hängt der mini an einer USV (unterbrechungsfreie Stromversorgung, engl. *UPS*), einer **[APC Back-UPS BX750MI-GR](https://www.amazon.de/dp/B08G8V85X6?tag=agentic-21)**. Viel Reserve und genug Leistung, um neben dem mini auch den JetKVM und den Switch mitzuversorgen. APC ist bei USVs schlicht der Standard, langweilig im besten Sinn: So ein Gerät kaufst du einmal, dann läuft es jahrelang, ohne dass du dich noch darum kümmerst. Genau mein Ding.
+
+![Foto: Nahaufnahme der schwarzen APC-USV im Kabelschrank. Der Einschaltknopf und eine senkrechte Statusleiste leuchten grün, unten das APC-Logo, ringsum Kabel in grünem Licht.](usv-foto.jpg "Die APC im Kabelschrank: leuchtet grün vor sich hin und tut einfach ihren Dienst.")
 
 Das Datenkabel der USV geht per USB in einen **vorderen** Port des mini. Aus mir unerklärlichen Gründen war die Verbindung an den hinteren Ports ziemlich unzuverlässig, macOS verlor die USV immer wieder aus den Augen, und damit wurde der Wächter blind. Seit sie vorne steckt, genau wie die Tastatur des JetKVM, meldet `pmset -g batt` die `Back-UPS` stabil. Schick sieht das nicht aus, aber es erfüllt seinen Zweck.
 
