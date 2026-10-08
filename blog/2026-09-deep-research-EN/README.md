@@ -28,17 +28,17 @@ header: header.jpg
 
 You tell your main conversation: research something on a topic. That can be a library for programming or a fact for an article. You want the AI to take some work off your hands.
 
-For that, the main conversation starts a workflow. In Claude Code a single command is enough: `/deep-research <your question>`. I set this command up myself, and in such a way that only I trigger it, not the model on the side. Deep research costs time and tokens; I decide that deliberately.
+For that, the main conversation starts a workflow. In Claude Code a single command is enough: `/deep-research <your question>`. It's Claude Code's only bundled workflow, and it runs only when I trigger it myself, not when the model takes it up on the side. Deep research costs time and tokens; I decide that deliberately. Which other Claude Code commands are worth knowing, I collected in [10 Claude Code Commands You Should Know](https://agentic.schule/en/blog/2026-10-claude-code-commands).
 
-The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. My workflow runs in five stages:
+The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. Claude Code's workflow runs in five stages:
 
 1. **Decompose:** The question is split into five sub-questions, five different angles.
 2. **Search:** For each angle a separate search agent runs, all five in parallel.
-3. **Fetch:** The hits are de-duplicated, then for each source a separate agent retrieves the page and pulls out the verifiable individual claims, up to fifteen sources, each in its own context. That way a weak source doesn't infect the others.
+3. **Fetch:** The hits are de-duplicated, then for each source a separate agent retrieves the page and pulls out the verifiable individual claims, up to fifteen sources, each in its own context. That way the agents stay isolated from one another while reading.
 4. **Verify:** Every claim gets three independent reviewers who approach it *adversarially* (in an opposing manner, with the goal of refuting it). Only when two of three refute it does it fly out.
 5. **Synthesize:** Only what survives the check is merged, ranked by confidence, and backed with sources.
 
-![Diagram in the agentic.schule style: from a magnifying-glass icon for the search, three dotted lines lead to three agent icons, each connected by its own line to its own document. Text: ONE AGENT. ONE SOURCE.](ein-agent.jpg "Deep Research fans out: one agent per source, each in its own context.")
+![Diagram in the agentic.schule style: from a magnifying-glass icon for the search, three dotted lines lead to three agent icons, each connected by its own line to its own document. Text: ONE AGENT. ONE SOURCE.](ein-agent.jpg "In Deep Research, the reading of each source is always done by a single agent, isolated from the others.")
 
 ## Where does the hallucination come from?
 

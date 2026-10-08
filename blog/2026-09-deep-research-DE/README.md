@@ -28,17 +28,17 @@ header: header.jpg
 
 Du sagst deiner Hauptunterhaltung: recherchiere etwas zu einem Thema. Das kann eine Library fürs Programmieren sein oder ein Fakt für einen Artikel. Die AI soll dir Arbeit abnehmen.
 
-Dafür startet die Hauptunterhaltung einen Workflow. In Claude Code genügt ein Befehl: `/deep-research <deine Frage>`. Diesen Befehl habe ich mir selbst angelegt, und zwar so, dass nur ich ihn auslöse und nicht das Modell nebenbei. Eine tiefe Recherche kostet Zeit und Tokens, das entscheide ich bewusst.
+Dafür startet die Hauptunterhaltung einen Workflow. In Claude Code genügt ein Befehl: `/deep-research <deine Frage>`. Das ist Claude Codes einziger mitgelieferter Workflow, und er läuft nur, wenn ich ihn selbst auslöse, nicht wenn das Modell nebenbei auf die Idee kommt. Eine tiefe Recherche kostet Zeit und Tokens, das entscheide ich bewusst. Welche Claude-Code-Befehle sich sonst noch lohnen, steht in [10 Claude-Code-Befehle, die du kennen solltest](https://agentic.schule/blog/2026-10-claude-code-commands).
 
-Die Grundlage sind Suchergebnisse einer Suchmaschine: zu jedem Treffer eine Adresse und eine kleine Suchvorschau. Damit werden dann die Subagenten beauftragt, die Seiten tatsächlich zu lesen. So weit würde es ein Mensch genauso machen. Mein Workflow läuft dabei in fünf Stufen:
+Die Grundlage sind Suchergebnisse einer Suchmaschine: zu jedem Treffer eine Adresse und eine kleine Suchvorschau. Damit werden dann die Subagenten beauftragt, die Seiten tatsächlich zu lesen. So weit würde es ein Mensch genauso machen. Der Workflow von Claude Code läuft dabei in fünf Stufen:
 
 1. **Zerlegen:** Die Frage wird in fünf Teilfragen aufgespalten, fünf verschiedene Blickwinkel.
 2. **Suchen:** Pro Blickwinkel läuft ein eigener Such-Agent, alle fünf parallel.
-3. **Holen:** Die Treffer werden entdoppelt, dann holt für jede Quelle ein eigener Agent die Seite und zieht die überprüfbaren Einzelbehauptungen heraus, bis zu fünfzehn Quellen, jede in ihrem eigenen Kontext. So steckt eine schwache Quelle die anderen nicht an.
+3. **Holen:** Die Treffer werden entdoppelt, dann holt für jede Quelle ein eigener Agent die Seite und zieht die überprüfbaren Einzelbehauptungen heraus, bis zu fünfzehn Quellen, jede in ihrem eigenen Kontext. So sind die Agenten beim Durchlesen isoliert voneinander.
 4. **Prüfen:** Jede Behauptung bekommt drei unabhängige Prüfer, die sie *adversarial* angehen (gegnerisch, mit dem Ziel zu widerlegen). Erst wenn zwei von dreien sie widerlegen, fliegt sie raus.
 5. **Zusammenfassen:** Nur was die Prüfung übersteht, wird zusammengeführt, nach Vertrauen sortiert und mit Quellen belegt.
 
-![Diagramm im agentic.schule-Look: Von einem Lupen-Symbol für die Suche führen drei gepunktete Linien zu drei Agenten-Symbolen, jedes mit einer eigenen Linie zu einem eigenen Dokument. Text: EIN AGENT. EINE QUELLE.](ein-agent.jpg "Deep Research fächert auf: pro Quelle ein eigener Agent, jeder in seinem eigenen Kontext.")
+![Diagramm im agentic.schule-Look: Von einem Lupen-Symbol für die Suche führen drei gepunktete Linien zu drei Agenten-Symbolen, jedes mit einer eigenen Linie zu einem eigenen Dokument. Text: EIN AGENT. EINE QUELLE.](ein-agent.jpg "Bei Deep Research übernimmt die Durchsicht jeder Quelle immer ein einzelner Agent, isoliert von den anderen.")
 
 ## Woher kommt die Halluzination?
 
