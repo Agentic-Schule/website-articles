@@ -58,3 +58,19 @@ THIS VIDEO (scene starts at the first word of each line)
 
 After applying, report the start time and layout of each scene.
 ```
+
+## Sonderfall: „Wellis raus"
+
+Nur wenn Johannes „Wellis raus" sagt: Seine Wellensittiche sind im Hintergrund zu hören. Ihre Rufe liegen laut Studien (Tu 2011, Farabaugh 1998) fast ausschließlich bei 2–4 kHz, also im Bereich, der der Stimme ihre Klarheit gibt. Deshalb dort nur sanft absenken und die Klarheit knapp darüber bei 5,5 kHz zurückholen. Ersetzt in Schritt 2 den Block AUDIO:
+
+```
+AUDIO
+- There are budgies chirping in the background (mainly 2–4 kHz). Keep the voice clear:
+- Studio Sound at 85% intensity.
+- EQ: cut boominess at 50 Hz and 200 Hz, cut -2 dB at 350 Hz (medium Q) against muddiness, boost warmth at 800 Hz.
+- Gentle wide cut of -1.5 dB centered at 3 kHz (wide Q, roughly 2–4 kHz). No presence boost at 3.5 kHz.
+- Presence boost of +3 dB at 5.5 kHz (medium Q), above the birds' range.
+- Air boost of +2 dB at 10 kHz.
+- In the pauses between sentences, where only the birds are audible, lower the background to silence.
+- No reverb. The voice stays dry and close.
+```
