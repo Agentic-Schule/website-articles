@@ -169,6 +169,8 @@ const reviewed = await pipeline(
 
 Because of their length, I've shortened the five dimensions' prompts here, beginning and end each. And it's a personal prompt: not everyone writes blog articles about AI, so your own should reflect your own wishes. If you want my full prompts, write to me and I'll send them by mail.
 
+By the way, I still think it's damn cool that these workflows are defined in JavaScript. If you like, you can bring in control flow and the like, and turn the whole thing into a work of art.
+
 The quotes especially: often they aren't quoted exactly, just summarized. Then the follow-up applies: is that a quote? Then show me the exact spot. And again you find that some things slipped through. You can run this pass several times, until what stands there actually matches reality.
 
 ## The last line of defense: the author checks it himself
