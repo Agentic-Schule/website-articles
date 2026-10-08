@@ -26,9 +26,9 @@ header: header.jpg
 
 ## Wie läuft die Recherche ab?
 
-Du sagst deiner Hauptunterhaltung: recherchiere etwas zu einem Thema. Das kann beispielsweise eine Library fürs Programmieren sein oder ein Fakt für einen Artikel. Die AI soll dir Arbeit abnehmen.
+Du sagst deiner Hauptunterhaltung: recherchiere etwas zu einem Thema. Das lässt sich prinzipiell auf sehr verschiedene Arten anstoßen. Je nach Modell greift die AI zum Beispiel zu `WebFetch` und liest ein paar Seiten. Ein stärkeres Modell baut sich dafür auch spontan einen dynamischen Workflow, der die Arbeit auffächert. Da ist die AI sehr frei. Willst du es strukturierter, nimmst du stattdessen einen vorgefertigten Workflow, den Claude schon dabei hat.
 
-Dafür startet die Hauptunterhaltung einen Workflow. In Claude Code genügt ein Befehl: `/deep-research <deine Frage>`. Das ist Claude Codes einziger mitgelieferter Workflow. Eine tiefe Recherche kostet Zeit und Tokens. Deshalb ist er so angelegt, dass man ihn von Hand auslöst. Das Modell kommt nicht von allein auf die Idee. Welche Claude-Code-Befehle sich sonst noch lohnen, steht in [10 Claude-Code-Befehle, die du kennen solltest](https://agentic.schule/blog/2026-10-claude-code-commands).
+In Claude Code genügt dafür ein Befehl: `/deep-research <deine Frage>`. Das ist Claude Codes einziger mitgelieferter Workflow. Eine tiefe Recherche kostet Zeit und Tokens. Deshalb ist er so angelegt, dass man ihn von Hand auslöst. Das Modell kennt den Befehl natürlich, es kann ihn dir vorschlagen und sogar den Aufruf vorbereiten. Ausführen musst du selbst. Welche Claude-Code-Befehle sich sonst noch lohnen, steht in [10 Claude-Code-Befehle, die du kennen solltest](https://agentic.schule/blog/2026-10-claude-code-commands).
 
 Die Grundlage sind Suchergebnisse einer Suchmaschine: zu jedem Treffer eine Adresse und eine kleine Suchvorschau. Damit werden dann die Subagenten beauftragt, die Seiten tatsächlich zu lesen. So weit würde es ein Mensch genauso machen. Technisch fächert `/deep-research` die Arbeit über ein Orchestrierungs-Skript auf viele Subagenten auf. Zusammen bilden sie einen Graphen. Wie so ein Graph aufgebaut ist und wie man solche Skripte selbst schreibt, steht in [Graph Engineering](https://agentic.schule/blog/2026-10-graph-engineering). Der Workflow läuft dabei in fünf Stufen:
 
@@ -115,7 +115,7 @@ Structured output only. Evidence MUST be specific.
 
 Punkt 1 der Checkliste gleicht die Behauptung nur gegen das gelieferte Zitat ab. Punkt 2 ist eine Websuche nach Widerspruch. Ein erneutes Laden der Originalseite steht nirgends.
 
-Deshalb kommt bei mir, wenn eine Faktenlage dasteht, ein weiterer Workflow, den ich mir gebaut habe: ein Lektorat. Es nimmt sich den fertig zusammengeführten Text vor, samt Zitaten, und prüft ihn frisch gegen die Primärquellen. Es sucht nach Behauptungen, nach angeblichen Fakten und nach angeblichen Zitaten und prüft jede einzeln an der Quelle. Grundhaltung Zweifel: Eine Behauptung gilt erst als gesichert, wenn die Quelle sie wörtlich deckt, nicht schon, wenn sie plausibel klingt.
+Deshalb habe ich mir einen weiteren Workflow gebaut: ein Lektorat. Es nimmt sich den fertig zusammengeführten Text vor, samt Zitaten, und prüft ihn frisch gegen die Primärquellen. Es sucht nach Behauptungen, nach angeblichen Fakten und nach angeblichen Zitaten und prüft jede einzeln an der Quelle. Grundhaltung Zweifel: Eine Behauptung gilt erst als gesichert, wenn die Quelle sie wörtlich deckt, nicht schon, wenn sie plausibel klingt. Plausibel zählt nicht. LLMs gaukeln dir ständig Plausibles vor.
 
 So sieht der Kern aus:
 
@@ -218,6 +218,8 @@ Aufgrund des Umfangs habe ich die Prompts der fünf Dimensionen hier stark verk�
 Übrigens finde ich es immer noch arschcool, dass diese Workflows in JavaScript definiert werden. Wer mag, bringt also noch Ablaufsteuerung und Ähnliches hinein und macht das Ganze zu einem Gesamtkunstwerk.
 
 Besonders die Zitate: Oft sind sie nicht exakt zitiert, sondern nur zusammengefasst. Dann gilt die Nachfrage: Ist das ein Zitat? Dann zeig mir bitte genau die Stelle. Und wieder stellst du fest, dass einiges durchgerutscht ist. Diesen Durchlauf kannst du mehrfach laufen lassen, bis das, was dasteht, auch der Realität entspricht.
+
+Eine Voraussetzung gibt es: Die Quellen müssen irgendwo festgehalten sein, als Link direkt im Markdown oder in einer eigenen Datei. Sonst geht schnell verloren, was die Quelle überhaupt war, und der Faktencheck hat nichts mehr zum Nachschlagen. Wenn du meine Artikel öfter liest, ist dir sicher aufgefallen: Viele haben Links zum Original. Jetzt weißt du, warum. Und natürlich bin ich immer noch Fachautor. Es gehört zu meinem Beruf, gescheit zu zitieren. Und zu recherchieren.
 
 ## Die letzte Instanz: der Autor prüft selbst
 

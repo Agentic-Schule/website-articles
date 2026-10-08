@@ -26,9 +26,9 @@ header: header.jpg
 
 ## How does the research work?
 
-You tell your main conversation: research something on a topic. That can be, for example, a library for programming or a fact for an article. You want the AI to take some work off your hands.
+You tell your main conversation: research something on a topic. In principle you can kick that off in very different ways. Depending on the model, the AI might reach for `WebFetch` and read a few pages. A stronger model can also spin up a dynamic workflow on the spot that fans the work out. The AI is quite free here. If you want it more structured, you instead take a prebuilt workflow that Claude already ships.
 
-For that, the main conversation starts a workflow. In Claude Code a single command is enough: `/deep-research <your question>`. It's Claude Code's only bundled workflow. Deep research costs time and tokens. That's why it's designed to be triggered by hand. The model doesn't start it on its own. Which other Claude Code commands are worth knowing, I collected in [10 Claude Code Commands You Should Know](https://agentic.schule/en/blog/2026-10-claude-code-commands).
+In Claude Code a single command is enough for that: `/deep-research <your question>`. It's Claude Code's only bundled workflow. Deep research costs time and tokens. That's why it's designed to be triggered by hand. The model knows the command, of course, it can suggest it to you and even prepare the call. Running it is up to you. Which other Claude Code commands are worth knowing, I collected in [10 Claude Code Commands You Should Know](https://agentic.schule/en/blog/2026-10-claude-code-commands).
 
 The basis is the results of a search engine: for each hit an address and a small search preview. The subagents are then tasked with actually reading the pages. So far a human would do it the same way. Technically, `/deep-research` fans the work out across many subagents through an orchestration script. Together they form a graph. How such a graph is built, and how you write such scripts yourself, I covered in [Graph Engineering](https://agentic.schule/en/blog/2026-10-graph-engineering). The workflow runs in five stages:
 
@@ -115,7 +115,7 @@ Structured output only. Evidence MUST be specific.
 
 Checklist item 1 compares the claim only against the supplied quote. Item 2 is a web search for contradiction. Reading the original page again appears nowhere.
 
-That's why, once a body of facts stands, another workflow comes in that I built myself: a fact-check pass. It takes on the finished, merged text, quotes included, and checks it freshly against the primary sources. It looks for claims, for alleged facts, and for alleged quotes, and checks each one against the source. Default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible.
+That's why I built myself another workflow: a fact-check pass. It takes on the finished, merged text, quotes included, and checks it freshly against the primary sources. It looks for claims, for alleged facts, and for alleged quotes, and checks each one against the source. Default stance of doubt: a claim counts as secured only when the source covers it word for word, not already when it sounds plausible. Plausible doesn't count. LLMs are constantly trying to pass off plausible-sounding things as real.
 
 This is the core:
 
@@ -218,6 +218,8 @@ Because of their length, I've heavily shortened the five dimensions' prompts her
 By the way, I still think it's damn cool that these workflows are defined in JavaScript. If you like, you can bring in control flow and the like, and turn the whole thing into a work of art.
 
 The quotes especially: often they aren't quoted exactly, just summarized. Then the follow-up applies: is that a quote? Then show me the exact spot. And again you find that some things slipped through. You can run this pass several times, until what stands there actually matches reality.
+
+There's one prerequisite: the sources have to be recorded somewhere, as a link right in the Markdown or in a separate file. Otherwise it's quickly lost what the source even was, and the fact-check has nothing left to look up. If you read my articles more often, you've surely noticed: many of them have links to the original. Now you know why. And of course I'm still a professional author. Citing properly is part of my job. And so is doing the research.
 
 ## The last line of defense: the author checks it himself
 
