@@ -1,5 +1,5 @@
 ---
-title: 'WebMCP: The Website Hands the Agent Its Tools'
+title: 'WebMCP: Your Existing Web App Becomes AI-Ready'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://agentic.schule"><img src="/img/logo-agentic-schule.png" alt="agentic.schule logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 220px;"></a>Johannes Hoppe is a trainer and consultant for modern web development. The workshops at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a> and <a href="https://agentic.schule" style="text-decoration: underline;"><b>agentic.schule</b></a> focus on Angular in practice – and increasingly on agentic development with AI agents like Claude Code.'
@@ -18,9 +18,9 @@ language: en
 header: header.jpg
 ---
 
-There is a new technology that lets you make existing web applications AI-ready with little effort. It's called WebMCP, and in this article we try it out together. Don't worry: you need no new backend and no model of your own for it.
+"Just add some AI to it." The classic answer is your own chatbot, with your own backend and your own model. And you pay for every _token_ your visitors burn (the unit AI models bill in), even when they use your chatbot for small talk. But it also works the other way around!
 
-**The trick is a reversal. A classic AI chatbot belongs to the operator: their own backend, their own model, and the operator pays for every token. WebMCP turns that around. The visitor brings their own assistant, for example ChatGPT, and you only register your existing client logic as tools. That makes practically any app AI-ready. This is the low-hanging fruit for AI in existing applications, and that is exactly what excites me about it.**
+**With WebMCP, the visitor brings their own AI assistant. Your web app offers it your functions as _tools_, and the agent calls them directly instead of feeling its way through the HTML. You need no backend and no model of your own for it. And the user decides which AI processes their input. That is how you make an existing web app _AI-ready_ with little effort, meaning ready to be operated by an AI agent.**
 
 In this first part we clarify what WebMCP is, how it relates to the MCP from Claude Code, what already works today, and where the catches are. This is part 1 of two, meant for any web developer. [Part 2](https://agentic.schule/en/blog/2026-10-webmcp-angular) then shows the concrete implementation in Angular. Each part stands on its own.
 
@@ -58,14 +58,14 @@ WebMCP is the client-side answer to that. The tools live in the script of the ru
 
 ### Who brings the assistant?
 
-Here is the shift in perspective at which WebMCP clicks. A classic chatbot belongs to the operator: they build the widget, run a model in the background, and pay for every token a visitor consumes. With WebMCP it works the other way around. The visitor brings their own assistant, for example ChatGPT in their desktop browser, and that assistant does the inference at the visitor's expense. The site only contributes the tools. It needs no model of its own, no chat server, no API bill. It provides capabilities, not compute time.
+Here is the shift in perspective at which WebMCP clicks. A classic chatbot belongs to the operator: they build the widget, run a model in the background, and pay for every token a visitor consumes. With WebMCP it works the other way around. The visitor brings their own assistant, for example ChatGPT in the built-in browser of the desktop app, and that assistant does the inference at the visitor's expense. The site only contributes the tools. It needs no model of its own, no chat server, no API bill. It only provides the capabilities; the compute time is the visitor's.
 
 |  | Classic chatbot | WebMCP |
 | --- | --- | --- |
 | Runs the model | the website operator | the visitor (their assistant) |
 | Pays the tokens | the operator | the visitor |
 | Data protection | the operator decides which AI processes the input | the visitor decides which AI processes their input |
-| Backend needed | yes: server plus model | no: only tool declarations in the frontend |
+| Backend needed | yes: server plus model | no AI backend; the tool action runs against your existing app code |
 | Assistant's context | only what the operator gives it | the visitor's full context |
 | Other tools | none | the visitor's, freely combined |
 
@@ -76,11 +76,6 @@ For the operator this solves a nagging problem along the way. A classic chatbot 
 And the tech stack shrinks. No chat backend, no hosted model, no abuse defense around it. What remains are the tool declarations in the frontend, and that is all it takes.
 
 So WebMCP shifts who pays for the AI and who controls it: away from the operator, toward the visitor and their agent. The operator gains an assistant that can often do more than anything they would ever have built into a chat widget.
-
-A short summary:
-
-- **MCP server:** server-side, for actions behind the application. You run a server and replicate auth and state.
-- **WebMCP:** client-side, for actions in the running page. Your existing frontend code becomes the tool, the UI stays in sync.
 
 ## Registering a tool: two ways
 
@@ -114,7 +109,7 @@ WebMCP needs two sides: a web app that declares tools, and an assistant that cal
 
 **Assistants that can call tools:**
 
-- **ChatGPT Desktop:** the most concrete path for real visitors. In the built-in browser of the desktop app, the two assistants ChatGPT Work (the workplace variant) and Codex (OpenAI's coding agent) discover and use the tools of the open page. OpenAI calls it "Site tools". It needs a Sol model (GPT-5.6 Sol or GPT-6 Sol); GPT-5.6 Luna currently has WebMCP disabled. Availability also depends on rollout and, in enterprise workspaces, on an admin approval, and every tool invocation goes through a safety check first.
+- **ChatGPT Desktop:** the most concrete path for real visitors. In the built-in browser of the desktop app, the two assistants ChatGPT Work (the workplace variant) and Codex (OpenAI's coding agent) discover and use the tools of the open page. OpenAI calls it "Site tools". It needs a model that OpenAI supports for this (currently from the Sol line; the Luna variant has WebMCP disabled); which models these are is in [OpenAI's Site tools docs](https://learn.chatgpt.com/docs/webmcp). Availability also depends on rollout and, in enterprise workspaces, on an admin approval, and every tool invocation goes through a safety check first.
 - **Brave:** experimental support in its own AI chat, _Leo_. The evidence is an open issue, not a finished feature.
 - **Meta Ray-Ban Display:** announced ("coming soon"), off by default, to be enabled per device.
 
@@ -159,19 +154,21 @@ It gets more comfortable with the [Model Context Tool Inspector Extension](https
 
 ## Where does it still snag?
 
-Every praised tool has its catches. With WebMCP there are three.
+Every praised tool has its catches. With WebMCP there are four.
 
-**First: it is experimental, literally so.** The APIs can change even outside of major version jumps. The status of the specification is a _Draft Community Group Report_, that is the early draft of a working group, not the official W3C standards track. Whoever builds today builds on shifting ground.
+**First: it is experimental, literally so.** The APIs can change even outside of major version jumps. The status of the specification is a _Draft Community Group Report_, that is the early draft of a working group, not the official W3C standards track. Whoever builds today has to expect changes.
 
-**Second: it is not yet a cross-platform feature.** Productive use hangs on the Chromium browsers. As long as Firefox and Safari only record a position, you will not reach every user with it.
+**Second: it is not yet a cross-platform feature.** Productive use hangs on the Chromium browsers. As long as Firefox and Safari only record a position, you will not reach every user with it. And the real paths today are all desktop: ChatGPT Desktop, the Chrome flag, the origin trials, and the Inspector extension. There is no mobile access yet.
 
-**Third: does WebMCP really solve the prompt injection problem?** Partly. The agent no longer has to sift through the free text of the page to operate it, and that text was a classic entry point. But the risk has not vanished, it only shifts. Because the tool descriptions and a tool's return values are text as well, and the page controls that text. On a trustworthy page that is no problem. A malicious page, though, can slip the agent tools with misleading descriptions. The protection is therefore carried by the user, who keeps control over the tool calls; the technology alone is not enough. The working group tracks these questions in a dedicated [Security & Privacy Questionnaire](https://github.com/webmachinelearning/webmcp/blob/main/security-privacy-questionnaire.md).
+**Third: does WebMCP really solve the prompt injection problem?** Partly. The agent no longer has to sift through the free text of the page to operate it, and that text was a classic entry point. But the risk has not vanished, it only shifts. Because the tool descriptions and a tool's return values are text as well, and the page controls that text. On a trustworthy page that is no problem. A malicious page, though, can slip the agent tools with misleading descriptions. And the very chaining that makes it appealing is the flip side: through the assistant the visitor brought along, a malicious page can reach that assistant's calendar or inbox. The protection is therefore carried by the user, who keeps control over the tool calls; the technology alone is not enough. The working group tracks these questions in a dedicated [Security & Privacy Questionnaire](https://github.com/webmachinelearning/webmcp/blob/main/security-privacy-questionnaire.md).
+
+**Fourth: you give up control.** The data-protection advantage from the table has a flip side for you as the operator: you no longer decide which model processes your users' input. And every registered tool is open to whatever assistant a visitor brings along, including mutating ones like sending mail. Classic forms you protect against bots with Turnstile and the like. WebMCP, though, explicitly invites bots to call tools, and a spam protection that lets good bots through while stopping bad ones does not, to my knowledge, exist yet.
 
 ## Conclusion
 
 WebMCP is a concept I am happy to look at more closely. It reverses the interaction between agent and web app: the page hands the agent the tools, instead of letting itself be felt out. For anyone who knows MCP from Claude Code, the classification is easy: WebMCP is the client-side counterpart that uses your existing code in the browser and keeps the UI in sync.
 
-What convinces me most about it: WebMCP is the easiest way to bring AI into an existing web application. The app is already there. You attach your existing client logic to it as tools, and practically any application becomes AI-ready. For that you first have to realize how much effort the previous path takes: your own backend, your own model, your own abuse defense. The "bring your own assistant" approach clears all of that away. That, for me, is the point that tips the scales.
+What convinces me most about it: WebMCP is the easiest way to bring AI into an existing web application. The app is already there. You attach your existing client logic to it as tools, and practically any application becomes AI-ready. For that you first have to realize how much effort the previous path takes: your own backend, your own model, your own abuse defense. The "bring your own assistant" approach clears all of that away. That, for me, is the decisive point.
 
 For production it is still too early. For a prototype, an internal tool, or simply for learning, right now is the right time. My recommendation: try it from both sides. As a visitor, open a page with tools in the built-in browser of ChatGPT Desktop and let the assistant operate it. As a developer, set the Chrome flag and call your tools through the Inspector extension or one of the [Google demos](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/demos). After a short while you will have a feel for whether this is a future for you.
 
