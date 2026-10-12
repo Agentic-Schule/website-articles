@@ -189,17 +189,23 @@ With the pin, every session depends on a local service. At startup, Claude Code 
 
 Network and API are perfectly fine at that point. A freshly started session even works, because a dying proxy first removes itself from `~/.claude.json`. The running sessions, however, keep pointing at the dead port until the proxy is back. The cause is in the proxy's log at `~/.claude-swap-backup/pin-proxy/daemon.log`.
 
-The proxy takes care of a lot by itself. It consists of three processes and hands over to a successor without a gap during an update. It is not a `launchd` service, though. If all three processes end at once, for example through a `SIGTERM` to the whole group, nobody restarts it. On my machine, a small watchdog takes care of that, again as a LaunchDaemon, this time every 30 seconds:
+The proxy takes care of a lot by itself. It consists of three processes and hands over to a successor without a gap during an update. It is not a `launchd` service, though. If its processes end, for example through a `SIGTERM`, nobody restarts it. On my machine, a small watchdog takes care of that, again as a LaunchDaemon, this time every 30 seconds:
 
 ```bash
 #!/bin/bash
 # cswap-pin-watch.sh: brings the pin proxy back when it stops answering
 export HOME=/Users/YOUR-NAME
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/bin:/bin"
+PORT=62860   # your fixed pin port, see below
 
-cswap pin 2>/dev/null | grep -q '^Cloud account' || exit 0   # no pin set
-cswap pin --get_port >/dev/null 2>&1 && exit 0                # proxy answers
-cswap pin --heal                                               # proxy gone: restart it
+alive() { curl -s -m 5 "http://127.0.0.1:$PORT/health" | grep -q '"pin_proxy": true'; }
+
+alive && exit 0
+sleep 15; alive && exit 0   # a handover to the successor takes up to ~30 s
+sleep 15; alive && exit 0
+plutil -extract remoteControl.pinnedEmail raw -o - \
+  "$HOME/.claude-swap-backup/settings.json" >/dev/null 2>&1 || exit 0   # no pin set
+cswap pin --heal            # proxy gone: restart it
 ```
 
 ```xml
@@ -213,18 +219,19 @@ cswap pin --heal                                               # proxy gone: res
 <string>YOUR-NAME</string>
 <key>StartInterval</key>
 <integer>30</integer>
-<key>AbandonProcessGroup</key>
-<true/>
+<key>ProcessType</key>
+<string>Standard</string>
 ```
 
-`AbandonProcessGroup` prevents `launchd` from also ending the freshly started proxy processes when the watchdog exits. According to `man launchd.plist`, `launchd` otherwise kills all remaining processes in the job's process group.
+The watchdog queries the proxy's `/health` endpoint. An open port alone is not enough, because a hung proxy accepts connections and still never answers. Only when three requests fail over half a minute does the proxy count as down, and only then does `cswap pin --heal` run. The watchdog reads the pin straight from the file where `cswap` stores it. `ProcessType` is set to `Standard` because, according to `man launchd.plist`, `launchd` otherwise throttles the job ("throttling its CPU usage and I/O bandwidth"). On my machine the watchdog also sends an email whenever it steps in.
 
-There are two traps:
+There are three traps:
 
-- **`cswap pin --state` does not detect the outage.** Once the proxy has ended, its entry in `~/.claude.json` is gone, and `--state` reports "OK". `--get_port` is reliable: it reads the port from the running proxy's record and opens a connection. If nothing answers, it exits with code 1.
-- **Only call `cswap pin --heal` when the proxy is really gone.** On a healthy proxy it starts a second process that fails on the occupied port and, while cleaning up, removes the running proxy's record along with its entry in `~/.claude.json`. The running sessions keep working, but new sessions start without the pin. To repair it, run `cswap pin --clear` and then `cswap pin 1`.
+- **`cswap pin --state` does not detect the outage.** Once the proxy has ended, its entry in `~/.claude.json` is gone, and `--state` reports "OK".
+- **`cswap pin --get_port` is no sign of life.** It reads the port from the proxy's record (`proxy.json`) and only then opens a connection. During a regular handover to the successor, this record is briefly missing. `--get_port` then reports an outage even though the proxy is about to carry on.
+- **Only call `cswap pin --heal` after a confirmed outage.** With an intact record it answers "Nothing to heal". But if the record is missing while the proxy is still working, `--heal` starts a second process. That process releases the reserve for gapless handovers and then fails on the occupied port. A proxy without a record ends itself after a few minutes anyway, and the watchdog then restarts it. Until then, best leave everything alone, above all `cswap pin --clear`. A subsequent `cswap pin 1` fails on the still occupied port and resets the pin to "no pin". Without a pin, the watchdog no longer heals.
 
-Also fix the port, for example with `cswap pin --set_port 62860`. A restarted proxy then always lands on the port the running sessions point at.
+Also fix the port, namely to the one your sessions use right now: `cswap pin --set_port "$(cswap pin --get_port)"`. The value applies from the proxy's next start. A restarted proxy then always lands where the running sessions point.
 
 ## False Alarm: The Agents Suspect an Attack
 
@@ -268,7 +275,7 @@ But for all the joy about the seamless switch: there are a few things you should
 - **There is no explicit approval.** The rule for third-party developers is broadly worded: "developers may not collect, store, or intermediate Claude.ai credentials or session tokens" ([Claude Code docs, "Legal and compliance"](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use)). Taken literally, it would hit any tool that stores a token. My reading is that it targets products routing other users through their subscriptions. Anthropic reserves the right to enforce measures "without prior notice".
 - **More accounts don't mean unlimited.** Once all accounts are at the threshold, `cswap auto` finds no target and reports it with exit code 3 ("no viable target / all exhausted"), according to `cswap auto --help`. And every additional subscription costs its full price.
 - **The pin depends on an open pull request.** Until PR #210 is merged, `cswap pin` only runs from your own fork. But I like forking anyway.
-- **The pin proxy is a single point of failure.** If it is not running, all sessions stop. The watchdog shortens the outage to the time until its next run.
+- **The pin proxy is a single point of failure.** If it is not running, all sessions stop. The watchdog shortens an outage to about a minute: up to 30 seconds until the next run, half a minute of confirmation, then the restart.
 - **Your own forks need maintenance.** With every upstream update: read the diff, reinstall. Or ignore it, because after all: never change a running system.
 - **The proxy sees the Anthropic traffic in plain text.** That is true of every TLS-inspection proxy, including the ones in corporate networks. As far as I can tell, neither tool contains malicious code. But better not trust me on that; do your own checks, ideally with Claude. :-)
 
