@@ -180,6 +180,53 @@ Mit `--once` macht der Befehl genau einen Durchlauf und beendet sich. Die Mindes
 
 Im Alltag ist das Ergebnis unspektakulär, und so soll es sein. Irgendwann erreicht Konto 1 die Schwelle, der Dienst schaltet auf das praktisch unberührte Konto 2, und ich arbeite weiter. Ich merke davon nichts. Geiler Scheiß! :D
 
+Ein Dienst fehlt allerdings noch, und der ist wichtiger als der Auto-Switch.
+
+## Den Pin-Proxy am Leben halten
+
+Mit dem Pin hängt jede Session an einem lokalen Dienst. Claude Code übernimmt die Proxy-Adresse beim Start aus `~/.claude.json` fest in den eigenen Prozess. Verschwindet der Proxy, scheitert in **allen** laufenden Sessions jeder Aufruf ans Modell:
+
+> **❌ Fehlermeldung:** `Connection refused — a firewall or proxy may be blocking it (ECONNREFUSED) · Retrying in 4s · attempt 4/10`
+
+Netz und API sind dabei völlig in Ordnung. Eine frisch gestartete Session funktioniert sogar, denn ein sterbender Proxy trägt sich vorher aus `~/.claude.json` aus. Die laufenden Sessions zeigen aber weiter auf den toten Port, bis der Proxy zurück ist. Die Ursache steht im Log des Proxys unter `~/.claude-swap-backup/pin-proxy/daemon.log`.
+
+Der Proxy kümmert sich um vieles selbst. Er besteht aus drei Prozessen und übergibt bei einem Update lückenlos an einen Nachfolger. Ein `launchd`-Dienst ist er aber nicht. Beenden sich alle drei Prozesse zugleich, etwa durch ein `SIGTERM` an die ganze Gruppe, startet ihn niemand neu. Dafür sorgt bei mir ein kleiner Wächter, wieder als LaunchDaemon, diesmal alle 30 Sekunden:
+
+```bash
+#!/bin/bash
+# cswap-pin-watch.sh: holt den Pin-Proxy zurück, wenn er nicht mehr antwortet
+export HOME=/Users/DEIN-NAME
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/bin:/bin"
+
+cswap pin 2>/dev/null | grep -q '^Cloud account' || exit 0   # kein Pin gesetzt
+cswap pin --get_port >/dev/null 2>&1 && exit 0                # Proxy antwortet
+cswap pin --heal                                               # Proxy weg: neu starten
+```
+
+```xml
+<key>Label</key>
+<string>cswap-pin-watch</string>
+<key>ProgramArguments</key>
+<array>
+  <string>/Users/DEIN-NAME/bin/cswap-pin-watch.sh</string>
+</array>
+<key>UserName</key>
+<string>DEIN-NAME</string>
+<key>StartInterval</key>
+<integer>30</integer>
+<key>AbandonProcessGroup</key>
+<true/>
+```
+
+`AbandonProcessGroup` verhindert, dass `launchd` beim Ende des Wächters auch die frisch gestarteten Proxy-Prozesse beendet. Laut `man launchd.plist` räumt `launchd` sonst alle Prozesse aus der Prozessgruppe des Jobs ab.
+
+Zwei Fallen gibt es dabei:
+
+- **`cswap pin --state` erkennt den Ausfall nicht.** Nach dem Ende des Proxys ist der Eintrag in `~/.claude.json` entfernt, und `--state` meldet „OK“. Verlässlich ist `--get_port`: Es liest den Port aus dem Datensatz des laufenden Proxys und baut eine Verbindung auf. Antwortet nichts, endet es mit Exit-Code 1.
+- **`cswap pin --heal` nur aufrufen, wenn der Proxy wirklich weg ist.** Auf einem gesunden Proxy startet es einen zweiten Prozess, der am belegten Port scheitert und beim Aufräumen den Datensatz des laufenden Proxys samt Eintrag in `~/.claude.json` entfernt. Die laufenden Sessions arbeiten weiter, neue Sessions starten aber ohne Pin. Repariert ist das mit `cswap pin --clear` und danach `cswap pin 1`.
+
+Leg außerdem den Port fest, zum Beispiel mit `cswap pin --set_port 62860`. Dann landet ein neu gestarteter Proxy immer auf dem Port, auf den die laufenden Sessions zeigen.
+
 ## Fehlalarm: Die Agenten wittern einen Angriff
 
 Meine Agenten machten gerade einen `/deep-research`, als sie **Alarm** schlugen. Sie hielten die abgerufenen Inhalte für manipuliert und führten die Proxy-Umgebungsvariablen und die fremde CA als Beleg für einen Angriff an.
@@ -222,6 +269,7 @@ Doch bei aller Freude über den nahtlosen Wechsel: Ein paar Punkte solltest du k
 - **Eine ausdrückliche Freigabe gibt es nicht.** Die Regel für Drittentwickler ist weit gefasst: „developers may not collect, store, or intermediate Claude.ai credentials or session tokens" ([Claude-Code-Doku, „Legal and compliance“](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use)). Wörtlich genommen träfe sie jedes Tool, das einen Token speichert. Gemeint sind nach meiner Lesart Produkte, die fremde Nutzer über ihre Abos leiten. Anthropic behält sich vor, Maßnahmen „without prior notice" durchzusetzen.
 - **Mehr Konten heißt nicht unendlich.** Sind alle Konten an der Schwelle, findet `cswap auto` kein Ziel mehr und meldet das laut `cswap auto --help` mit Exit-Code 3 („no viable target / all exhausted“). Und jedes weitere Abo kostet seinen vollen Preis.
 - **Der Pin hängt an einem offenen Pull Request.** Bis PR #210 gemergt ist, läuft `cswap pin` nur aus dem eigenen Fork. Aber ich forke ja eh gerne.
+- **Der Pin-Proxy ist ein zentraler Ausfallpunkt.** Läuft er nicht, stehen alle Sessions. Der Wächter verkürzt den Ausfall auf die Zeit bis zu seinem nächsten Durchlauf.
 - **Eigene Forks kosten Pflege.** Bei jedem Upstream-Update heißt es: Diff lesen, neu installieren. Oder ignorieren, denn never change a running system.
 - **Der Proxy sieht den Anthropic-Verkehr im Klartext.** Das gilt für jeden Proxy mit TLS-Inspektion, auch für die in Firmennetzen. Soweit ich das überblicke, enthalten beide Tools keinen schädlichen Code. Aber vertrau da besser nicht mir, sondern mach deine eigenen Prüfungen, gern mit Claude. :-)
 
