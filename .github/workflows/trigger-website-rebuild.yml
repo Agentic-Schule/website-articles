@@ -1,0 +1,29 @@
+# Startet nach jedem erfolgreichen GitHub-Pages-Build dieses Repos den Deploy der
+# Website (Agentic-Schule/agentic-schule-website), damit neue oder geänderte Artikel
+# sofort erscheinen und nicht erst mit dem nächtlichen Lauf. Die Website leert danach
+# selbst den Cloudflare-Cache.
+#
+# Token: WEBSITE_DISPATCH_TOKEN, fine-grained PAT der Organisation Agentic-Schule,
+# nur Repo agentic-schule-website, Berechtigung Actions: Read and write.
+name: Trigger website rebuild
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+
+jobs:
+  trigger:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Website-Deploy starten
+        env:
+          GH_TOKEN: ${{ secrets.WEBSITE_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::WEBSITE_DISPATCH_TOKEN fehlt, Website wird nicht neu gebaut."
+            exit 0
+          fi
+          gh workflow run deploy.yml --repo Agentic-Schule/agentic-schule-website --ref main
