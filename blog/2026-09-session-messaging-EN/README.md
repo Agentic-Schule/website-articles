@@ -46,18 +46,16 @@ Back to the message. That it only transports text sounds like a weakness, but it
 
 ## How you use it
 
-In practice you simply say what the other session should know, and Claude takes care of the rest, from picking the right session to phrasing the message:
+In practice you say in plain text what the other session should know, and Claude takes care of the rest, from picking the right session to phrasing the message. You name the session directly or describe it:
 
 > **🛠️ Try it yourself**
 > ```text
-> Ask the session working on the migration whether it is done
+> Tell the frontend session that the schema has changed
 > ```
 
-If you want to name the target session precisely, mention it with `@` and the first letters of its name, the same way you mention a subagent:
+That's the way I recommend. It's simple and it works reliably, Claude finds the matching session itself. A description does the job just as well: "Ask the session working on the migration whether it is done."
 
-```text
-Tell @api-worker that the schema migration is done
-```
+There is also the `@` mention, where you address the session with `@` and the first letters of its name, the same way as a subagent (`Tell @api-worker that the schema migration is done`). For me it almost never works in practice, so I stick with plain text.
 
 If it plays dumb and claims it cannot do this (yes, that happens), just name the tools: `ListAgents` to find the other session, `SendMessage` to deliver the message. After that it hopefully works.
 
