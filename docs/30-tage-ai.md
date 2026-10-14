@@ -11,11 +11,11 @@
 | 2 | `2026-10-mac-mini-hardening` | Mac mini Hardening: Verschlüsselung, Backups, Boot und Strom (Fortsetzung von Tag 2) |
 | 3 | `2026-09-agentic-coding-git-worktrees` | Ein Stamm, viele Äste: git worktrees für parallele KI-Agenten |
 | 4 | `2026-09-deep-research` | Deep Research: Lass deinen Agenten nicht halluzinieren |
+| 5 | `2026-09-agentic-coding-auto-account-switch` | Agentic Coding rund um die Uhr: Mehrere Claude-Max-Abos ausreizen |
 
 ## Ohne öffentliche Tag-Nummer (liefen vor dem Serien-Neustart)
 
 - `2026-09-agent-research-playwright-mcp` — Dein AI-Agent wird bei der Recherche ausgesperrt? Gib ihm einen eigenen, unauffälligen Playwright-MCP
-- `2026-09-agentic-coding-auto-account-switch` — Agentic Coding rund um die Uhr: Mehrere Claude-Max-Abos ausreizen
 
 ## Weitere Artikel im Repo (Tag-Nummer bei der Social-Session)
 
