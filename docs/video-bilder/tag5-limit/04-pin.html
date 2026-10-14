@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../base.css"><link rel="stylesheet" href="../mini-setup/full.css"><link rel="stylesheet" href="big.css"></head><body><div class="grid"></div><div class="zone"><style>.zone{gap:26px}h1{font-size:76px}.card{text-align:left;width:960px}.code{white-space:pre;font-size:25px;line-height:1.45;padding:24px 28px}</style><h1>cswap-pin</h1><div class="card"><div class="bar"><i></i><i></i><i></i></div><div class="code mono"><span class="p">$</span> cswap pin 1
+<span class="g"># lokaler Proxy, HTTPS_PROXY + eigene CA</span>
+<span class="g"># in ~/.claude.json (env)</span>
+
+Claude Code ──▶ <span class="f">pin-proxy</span> ──▶ api.anthropic.com
+  /v1/messages      → <span class="f">aktives Konto</span>
+  Remote Control    → <span class="p">gepinnt: Konto 1</span>
+  Artefakte         → <span class="p">gepinnt: Konto 1</span>
+  alle anderen Hosts → blinder Tunnel
+
+<span class="p">$</span> curl -s 127.0.0.1:$PORT/health
+{"pin_proxy": true}</div></div></div></body></html>
