@@ -16,9 +16,9 @@ language: de
 header: header.jpg
 ---
 
-Deine Agenten arbeiten an überschneidenden Aufgaben, etwa an zwei Features für dasselbe Projekt. Agent A hat eine Nachricht für Agent B. Bisher musstest du dabei den Postboten spielen, mit Kopieren und Einfügen. Damit ist jetzt Schluss.
+Deine Agenten arbeiten an überschneidenden Aufgaben, etwa an zwei Features für dasselbe Projekt. Agent A hat eine Nachricht für Agent B. Bisher musstest du sie von Hand übertragen, mit Kopieren und Einfügen. Damit ist jetzt Schluss.
 
-**Seit August können sich Claude-Code-Sitzungen gegenseitig Nachrichten schicken. Claude reicht die Erkenntnis selbst weiter, statt dass du sie von einem Fenster ins nächste kopierst (oder eine Datei als Briefkasten missbrauchst).**
+**Seit August können sich Claude-Code-Sitzungen gegenseitig Nachrichten schicken. Claude reicht die Erkenntnis selbst weiter, statt dass du sie von einem Fenster ins nächste kopierst oder über eine Zwischendatei schiebst.**
 
 Das Feature heißt *Cross-Session Messaging* (Nachrichten über Sitzungsgrenzen hinweg), es ist standardmäßig an, und es ist bewusst schmal gebaut: Es überträgt Text, sonst nichts.
 
@@ -26,7 +26,7 @@ Das Feature heißt *Cross-Session Messaging* (Nachrichten über Sitzungsgrenzen 
 
 [[toc]]
 
-## Was das Feature tut
+## Was tut das Feature?
 
 Die Mechanik besteht aus zwei neuen Werkzeugen: `ListAgents` findet heraus, welche Sitzungen erreichbar sind, `SendMessage` stellt die Nachricht zu. Beide ruft Claude selbst auf, du tippst keines davon.
 
@@ -42,9 +42,9 @@ Bevor es praktisch wird, die eine Einschränkung, die alles andere erklärt:
 
 Übertragen wird also **nur Text**. Keine Historie, keine Dateien, kein Kontext. Wer erwartet, dass die andere Sitzung anschließend weiß, worüber die erste den ganzen Vormittag nachgedacht hat, erwartet das Falsche. Die Doku nennt für diesen Fall auch gleich das richtige Werkzeug: „resume the session instead", also `--resume` beziehungsweise `/resume`. Und wer den bisherigen Verlauf mitnehmen und von dort aus in eine andere Richtung weiterarbeiten will, nimmt `/branch`, das laut Beschreibung „a branch of the current conversation at this point" anlegt (nicht zu verwechseln mit `/fork`, das die Konversation in eine neue Hintergrund-Sitzung kopiert).
 
-Zurück zur Nachricht. Dass sie nur Text überträgt, klingt nach einer Schwäche, ist aber genau der Grund, warum das Feature so praktisch ist: Eine Nachricht ist ein Zuruf. Kurz, klar, ohne Ballast. Und für das, was überleben soll, gibt es weiterhin die Festplatte: Notizen, Recherche-Archive, Dateien im Repository.
+Zurück zur Nachricht. Dass sie nur Text überträgt, klingt nach einer Schwäche, ist aber genau der Grund, warum das Feature so praktisch ist: Eine Nachricht ist ein kurzer Zuruf ohne Ballast. Und für das, was überleben soll, gibt es weiterhin die Festplatte: Notizen, Recherche-Archive, Dateien im Repository.
 
-## So benutzt du es
+## Eine Sitzung ansprechen
 
 In der Praxis sagst du im Freitext, was die andere Sitzung wissen soll, und Claude kümmert sich um den Rest, vom Heraussuchen der richtigen Sitzung bis zum Formulieren der Nachricht. Du nennst die Sitzung dabei beim Namen oder beschreibst sie:
 
@@ -63,7 +63,7 @@ Wer selbst nachsehen will, wer gerade erreichbar ist, tippt `/list-agents`. Die 
 
 Die eigene Inbox-Adresse zeigt übrigens `/status` in der Zeile „Peer address".
 
-## Der Name ist die Adresse
+## Adressierung: der Name ist die Adresse
 
 Damit zur Frage, die sich sofort stellt: Woher kommt der Name, unter dem eine Sitzung angesprochen wird? Die Antwort: aus dem Namen der Konversation! Claude Code vergibt beim Start einen lesbaren Vorschlag (der oft ziemlich nutzlos ist), und du kannst ihn jederzeit ändern:
 
@@ -71,11 +71,11 @@ Damit zur Frage, die sich sofort stellt: Woher kommt der Name, unter dem eine Si
 - `claude --name <name>` setzt den Namen schon beim Start.
 - Nimmst du einen Plan an, benennt sich die Sitzung automatisch nach dessen Inhalt.
 
-Dass der Konversationsname wirklich die Adresse ist, sieht man an den Fehlerbehebungen im Changelog. Dort steht wörtlich, dass ein zurückgesetzter `/rename`-Name „broke addressing the session by its new name". Wer also mehrere Sitzungen parallel fährt, sollte ihnen früh sprechende Namen geben. Das ist der eigentliche Trick an dem Feature.
+Dass der Konversationsname wirklich die Adresse ist, sieht man an den Fehlerbehebungen im Changelog. Dort steht wörtlich, dass ein zurückgesetzter `/rename`-Name „broke addressing the session by its new name". Wer also mehrere Sitzungen parallel fährt, sollte ihnen früh sprechende Namen geben.
 
 > **💡 Tipp:** Heißen zwei Sitzungen gleich, reicht der Name nicht mehr. `ListAgents` hängt in dem Fall ein kurzes Kürzel in eckigen Klammern an, und erst damit landet die Nachricht bei der richtigen. Sprechende Namen sparen dir diesen Umweg.
 
-## Wie eine Nachricht ankommt
+## Wie kommt eine Nachricht an?
 
 Die Zustellung ist rücksichtsvoller gebaut, als man erwartet. Arbeitet die Ziel-Sitzung gerade, liest Claude die Nachricht **zwischen zwei Werkzeug-Aufrufen**, ein laufendes Werkzeug wird also nie unterbrochen. Ist die Sitzung im Leerlauf, hat also ihre Runde beendet und nichts in der Warteschlange, startet die Nachricht dort eine neue Runde.
 
@@ -106,19 +106,19 @@ Das ist eine Anmeldung, kein Dauerabo und kein Polling. Im Changelog heißt der 
 
 Zwei Einschränkungen gehören dazu. Es gibt nur dieses eine Ereignis, nämlich Leerlauf oder Ende, und keine frei wählbaren Auslöser. Und es funktioniert nur zwischen Sitzungen auf derselben Maschine.
 
-## Was dich schützt
+## Was schützt dich?
 
 Ein Feature, bei dem andere Sitzungen Text in deine schreiben, wirft berechtigte Fragen auf. Die Antworten stehen in der Doku, und sie sind beruhigend konkret.
 
-**Der Weg bleibt lokal.** Nachrichten zwischen Sitzungen auf derselben Maschine laufen über einen Socket pro Sitzung, wörtlich „never through Anthropic servers".
+**Der Weg bleibt lokal, solange beide Sitzungen auf derselben Maschine laufen.** Diese Nachrichten laufen über einen Socket pro Sitzung, wörtlich „never through Anthropic servers". Geht eine Nachricht dagegen an eine Sitzung auf einem anderen Rechner oder in der Cloud, läuft sie „through Anthropic servers", über die Remote-Control-Verbindung des anderen Rechners beziehungsweise direkt in die Cloud-Sitzung.
 
 **Rechte bleiben getrennt.** Die Doku formuliert es als harte Grenze: „Permission boundaries stay per-session." Claude ist angewiesen, keine andere Sitzung um etwas zu bitten, das in der eigenen Sitzung verboten wäre, und die empfangende Sitzung wendet ihre eigenen Regeln auf alles an, worum die Nachricht bittet.
 
 **Du bestimmst, was hereinkommt.** Die Einstellung `crossSessionInbound` kennt drei Werte: `accept` stellt zu, `hold` legt die Nachricht beiseite, bis du sie freigibst, `refuse` verwirft sie ohne Zustellung. Wählen kannst du das auch im `/config`-Dialog.
 
-**Die Maschinengrenze lässt sich verriegeln.** Mit `isolatePeerMachines: true` verlangt Claude Code deine ausdrückliche Zustimmung, bevor eine Nachricht den Rechner verlässt, und zwar selbst im `bypassPermissions`-Modus.
+**Die Maschinengrenze lässt sich verriegeln.** Mit `isolatePeerMachines: true` verlangt Claude Code deine ausdrückliche Zustimmung, bevor eine Nachricht den Rechner verlässt, und zwar selbst im `bypassPermissions`-Modus, der sonst alle Rückfragen übergeht.
 
-**Ganz abschalten geht auch**, in beide Richtungen getrennt: `crossSessionInbound: "refuse"` fürs Empfangen, Deny-Regeln für `SendMessage` und `ListAgents` fürs Senden. Für Organisationen lässt sich beides zentral über die Managed Settings setzen. Ein Detail, das man dabei kennen sollte: Wer `SendMessage` verbietet, nimmt sich auch die Nachrichten an die eigenen Subagenten und an die Mitglieder eines Agenten-Teams, weil dasselbe Werkzeug alle drei Wege bedient.
+**Ganz abschalten geht auch**, in beide Richtungen getrennt: `crossSessionInbound: "refuse"` fürs Empfangen, Deny-Regeln für `SendMessage` und `ListAgents` fürs Senden. Für Organisationen lässt sich beides zentral über die *Managed Settings* (zentral von der Organisation verwaltete Vorgaben) setzen. Ein Detail, das man dabei kennen sollte: Wer `SendMessage` verbietet, nimmt sich auch die Nachrichten an die eigenen Subagenten und an die Mitglieder eines Agenten-Teams, weil dasselbe Werkzeug alle drei Wege bedient.
 
 ## Grenzen: was fest eingebaut ist
 
@@ -130,7 +130,7 @@ Ein paar Eigenschaften des Kanals sind fest eingebaut, und alle drei ergeben Sin
 
 **Schleifen laufen sich tot.** Wiederholungen an dieselbe Sitzung werden gedrosselt, identische Nachrichten innerhalb kurzer Zeit verworfen, und die Warteschlange fasst höchstens fünfzig Nachrichten. Die Doku sagt trocken: „A message loop between two sessions therefore stops on its own." Zwei Sitzungen, die sich gegenseitig hochschaukeln, sind also ein gelöstes Problem.
 
-## Wann du etwas anderes nehmen solltest
+## Wann nimmst du etwas anderes?
 
 Die Doku grenzt das Feature selbst ab, und diese Liste ist es wert, gelesen zu werden, bevor man alles mit Nachrichten löst:
 

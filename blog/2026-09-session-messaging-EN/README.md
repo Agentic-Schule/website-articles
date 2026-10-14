@@ -16,9 +16,9 @@ language: en
 header: header.jpg
 ---
 
-Your agents are working on overlapping tasks, say on two features for the same project. Agent A has a message for agent B. Until now, you had to play the postman, with copy and paste. That is over.
+Your agents are working on overlapping tasks, say on two features for the same project. Agent A has a message for agent B. Until now, you had to move it by hand, with copy and paste. That is over.
 
-**Since August, Claude Code sessions can message each other. Claude passes the finding along itself, instead of you copying it from one window into the next (or abusing a file as a mailbox).**
+**Since August, Claude Code sessions can message each other. Claude passes the finding along itself, instead of you copying it from one window into the next or shoving it through an intermediate file.**
 
 The feature is called cross-session messaging, it is on by default, and it is deliberately built narrow: it transports text, nothing else.
 
@@ -26,7 +26,7 @@ The feature is called cross-session messaging, it is on by default, and it is de
 
 [[toc]]
 
-## What the feature does
+## What does the feature do?
 
 The mechanics come down to two new tools: `ListAgents` finds out which sessions are reachable, `SendMessage` delivers the message. Claude calls both of them itself, you type neither.
 
@@ -42,9 +42,9 @@ Before we get practical, the one restriction that explains everything else:
 
 So what gets transported is **text only**. No history, no files, no context. Anyone expecting the other session to know afterwards what the first one spent all morning thinking about is expecting the wrong thing. For that case, the docs name the right tool right away: "resume the session instead", so `--resume` or `/resume`. And if you want to take the conversation so far with you and continue from there in a different direction, use `/branch`, which per its description creates "a branch of the current conversation at this point" (not to be confused with `/fork`, which copies the conversation into a new background session).
 
-Back to the message. That it only transports text sounds like a weakness, but it is exactly why the feature is so practical: a message is a shout. Short, clear, without ballast. And for whatever needs to survive, there is still the hard disk: notes, research archives, files in the repository.
+Back to the message. That it only transports text sounds like a weakness, but it is exactly why the feature is so practical: a message is a short shout without ballast. And for whatever needs to survive, there is still the hard disk: notes, research archives, files in the repository.
 
-## How you use it
+## Message a session
 
 In practice you say in plain text what the other session should know, and Claude takes care of the rest, from picking the right session to phrasing the message. You name the session directly or describe it:
 
@@ -63,7 +63,7 @@ If you want to look for yourself who is reachable right now, type `/list-agents`
 
 Your own inbox address, by the way, is shown by `/status` in the "Peer address" row.
 
-## The name is the address
+## Addressing: the name is the address
 
 Which brings us to the question that comes up immediately: where does the name come from that a session is addressed by? The answer: from the name of the conversation! Claude Code assigns a readable suggestion at startup (often a fairly useless one), and you can change it at any time:
 
@@ -71,11 +71,11 @@ Which brings us to the question that comes up immediately: where does the name c
 - `claude --name <name>` sets the name right at startup.
 - When you accept a plan, the session names itself after its content.
 
-That the conversation name really is the address shows in the bug fixes in the changelog. It says verbatim that a reverted `/rename` name "broke addressing the session by its new name". So anyone running several sessions in parallel should give them meaningful names early. That is the actual trick to this feature.
+That the conversation name really is the address shows in the bug fixes in the changelog. It says verbatim that a reverted `/rename` name "broke addressing the session by its new name". So anyone running several sessions in parallel should give them meaningful names early.
 
 > **💡 Tip:** When two sessions share a name, the name alone is no longer enough. `ListAgents` then appends a short reference in square brackets, and only with that does the message reach the right one. Meaningful names save you that detour.
 
-## How a message arrives
+## How does a message arrive?
 
 Delivery is built more considerately than you would expect. If the target session is working, Claude reads the message **between two tool calls**, so a running tool is never interrupted. If the session is idle, meaning it finished its turn with nothing queued, the message starts a new turn there.
 
@@ -106,19 +106,19 @@ That is a subscription, not a standing order and not polling. In the changelog t
 
 Two restrictions come with it. There is only this one event, namely idle or exit, and no freely chosen triggers. And it only works between sessions on the same machine.
 
-## What protects you
+## What protects you?
 
 A feature where other sessions write text into yours raises fair questions. The answers are in the docs, and they are reassuringly concrete.
 
-**The route stays local.** Messages between sessions on the same machine travel over a per-session socket, verbatim "never through Anthropic servers".
+**The route stays local as long as both sessions run on the same machine.** Those messages travel over a per-session socket, verbatim "never through Anthropic servers". A message to a session on another machine or in the cloud, by contrast, travels "through Anthropic servers", over the other machine's Remote Control connection or straight to the cloud session.
 
 **Permissions stay separate.** The docs put it as a hard boundary: "Permission boundaries stay per-session." Claude is instructed never to ask another session for something that would be forbidden in its own session, and the receiving session applies its own rules to whatever the message asks for.
 
 **You decide what comes in.** The `crossSessionInbound` setting knows three values: `accept` delivers, `hold` sets the message aside until you approve it, `refuse` drops it without delivery. You can also pick this in the `/config` dialog.
 
-**The machine boundary can be locked.** With `isolatePeerMachines: true`, Claude Code requires your explicit approval before a message leaves the machine, and it does so even in `bypassPermissions` mode.
+**The machine boundary can be locked.** With `isolatePeerMachines: true`, Claude Code requires your explicit approval before a message leaves the machine, and it does so even in `bypassPermissions` mode, which otherwise skips all prompts.
 
-**Turning it off entirely works too**, separately in each direction: `crossSessionInbound: "refuse"` for receiving, deny rules for `SendMessage` and `ListAgents` for sending. Organizations can set both centrally through managed settings. One detail worth knowing: denying `SendMessage` also takes away messages to your own subagents and to the members of an agent team, because the same tool serves all three routes.
+**Turning it off entirely works too**, separately in each direction: `crossSessionInbound: "refuse"` for receiving, deny rules for `SendMessage` and `ListAgents` for sending. Organizations can set both centrally through the *managed settings* (settings an organization administers centrally). One detail worth knowing: denying `SendMessage` also takes away messages to your own subagents and to the members of an agent team, because the same tool serves all three routes.
 
 ## Limits: what is built in
 
@@ -130,7 +130,7 @@ A few properties of the channel are built in for good, and all three make sense:
 
 **Loops run themselves into the ground.** Repeats to the same session are rate-limited, identical messages within a short window are dropped, and the queue holds at most fifty messages. The docs put it dryly: "A message loop between two sessions therefore stops on its own." Two sessions egging each other on are a solved problem.
 
-## When to use something else
+## When should you use something else?
 
 The docs draw the boundaries themselves, and this list is worth reading before you solve everything with messages:
 
