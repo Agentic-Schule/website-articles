@@ -46,18 +46,16 @@ Zurück zur Nachricht. Dass sie nur Text überträgt, klingt nach einer Schwäch
 
 ## So benutzt du es
 
-In der Praxis sagst du einfach, was die andere Sitzung wissen soll, und Claude kümmert sich um den Rest, vom Heraussuchen der richtigen Sitzung bis zum Formulieren der Nachricht:
+In der Praxis sagst du im Freitext, was die andere Sitzung wissen soll, und Claude kümmert sich um den Rest, vom Heraussuchen der richtigen Sitzung bis zum Formulieren der Nachricht. Du nennst die Sitzung dabei beim Namen oder beschreibst sie:
 
 > **🛠️ Selbst ausprobieren**
 > ```text
-> Frag die Sitzung, die an der Migration arbeitet, ob sie durch ist
+> Sag der Frontend-Session, dass sich das Schema geändert hat
 > ```
 
-Willst du die Ziel-Sitzung genau benennen, erwähnst du sie mit `@` und den ersten Buchstaben ihres Namens, so wie du einen Subagenten erwähnst:
+Das ist der Weg, den ich empfehle. Er ist einfach und greift zuverlässig, Claude sucht die passende Sitzung selbst heraus. Eine Umschreibung tut es genauso: „Frag die Sitzung, die an der Migration arbeitet, ob sie durch ist.“
 
-```text
-Sag @api-worker, dass die Schema-Migration durch ist
-```
+Es gibt daneben die `@`-Erwähnung, bei der du die Sitzung mit `@` und den ersten Buchstaben ihres Namens ansprichst, so wie einen Subagenten (`Sag @api-worker, dass die Schema-Migration durch ist`). Bei mir greift die in der Praxis so gut wie nie, deshalb bleibe ich beim Freitext.
 
 Stellt er sich dumm und behauptet, er könne das nicht (ja, das kommt vor), nenn ihm einfach die Werkzeuge beim Namen: `ListAgents`, um die andere Sitzung zu finden, `SendMessage`, um die Nachricht zuzustellen. Danach klappt es hoffentlich.
 
