@@ -24,7 +24,7 @@ Vor einem KI-Chat für Kinder sitzt ein Wächter. Ein kleines Modell, das jede N
 
 **Also haben wir es gemessen: 140 erfundene Kindernachrichten, drei Modelle, zwei Bauweisen. Das Ergebnis hat unsere Erwartung in beide Richtungen verfehlt. Die neue Gattung der Entscheidungsmodelle gewinnt deutlich, aber nur in ihrer gehosteten Variante. Und der interessanteste Befund betrifft weder Gemma noch Jev, sondern die Version des Inferenz-Servers.**
 
-Dieser Artikel zeigt, wie so ein Eval entsteht, welche Entwurfsentscheidungen das Ergebnis tragen und was dabei herauskam. Korpus, Prüfstand und Rohdaten liegen offen unter [learnly-school/jugendschutz-evals](https://github.com/learnly-school/jugendschutz-evals). Wer die Zahlen anzweifelt, kann sie nachfahren.
+Dieser Artikel zeigt, wie so ein Eval entsteht, welche Entwurfsentscheidungen das Ergebnis tragen und was dabei herauskam. Korpus, Prüfstand und Rohdaten liegen offen unter [learnly-school/learnly-jugendschutz-evals](https://github.com/learnly-school/learnly-jugendschutz-evals). Wer die Zahlen anzweifelt, kann sie nachfahren.
 
 ## Inhalt
 

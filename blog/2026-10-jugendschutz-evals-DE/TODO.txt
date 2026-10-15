@@ -35,7 +35,7 @@ Gemma teils vom Server, teils lokal).
 
 Fertiges Skript liegt bereit:
 
-    cd ~/Work/haushoppe-headquarter/jugendschutz-evals
+    cd ~/Work/haushoppe-headquarter/learnly-jugendschutz-evals
     JEFF_REPO=<pfad-zum-jeff-checkout> JEV_API_KEY=<key> src/vollmessung.sh
 
 Es fährt alle Konfigurationen mit einheitlich drei Wiederholungen und hält immer
@@ -59,14 +59,12 @@ Shell-Historie. Er liegt in keiner Datei im Repo, sollte aber ersetzt werden:
 https://console.typesafe.ai/keys
 
 
-4. REPOSITORY VERÖFFENTLICHEN
+4. REPOSITORY (ERLEDIGT)
 -----------------------------
 Der Artikel verlinkt auf
-https://github.com/learnly-school/jugendschutz-evals
-Das Repo existiert bisher nur lokal unter
-~/Work/haushoppe-headquarter/jugendschutz-evals (vier Commits, nichts gepusht).
-
-Vor dem Artikel veröffentlichen, sonst zeigt der Link ins Leere.
+https://github.com/learnly-school/learnly-jugendschutz-evals
+Das Repo ist öffentlich und gepusht. Der alte Name jugendschutz-evals wird von
+GitHub weitergeleitet, trotzdem gehört überall der neue Name hin.
 
 
 5. BANNER
