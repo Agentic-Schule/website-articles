@@ -12,7 +12,7 @@ language: de
 
 **Lorem ipsum dolor sit amet, consectetur adipiscing elit.** Dieser Artikel existiert nur für Tests der agentic.schule-Website: die Blog-Pipeline vom Markdown über den Build bis zum Rendering und den Sprung zu einer Überschrift per Anker-Link.
 
-<!-- Der e2e-Test `e2e/scroll-preserve.spec.ts` der Website öffnet /blog/2026-07-lorem-ipsum-testartikel#sprungziel. Die Überschrift „Sprungziel“ nicht umbenennen. Die drei großen Bilder davor haben keine Maßangaben: Sie laden nach dem Text und schieben das Sprungziel nach unten, wie in echten Artikeln. -->
+<!-- Die e2e-Tests `e2e/scroll-preserve.spec.ts` und `e2e/hydration.spec.ts` der Website nutzen diesen Artikel. `scroll-preserve` öffnet /blog/2026-07-lorem-ipsum-testartikel#sprungziel. Die Überschrift „Sprungziel“ nicht umbenennen. Die drei großen Bilder davor haben keine Maßangaben: Sie laden nach dem Text und schieben das Sprungziel nach unten, wie in echten Artikeln. -->
 
 ## Inhalt
 
@@ -27,6 +27,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 - Code-Highlighting
 - Listen und Überschriften
 - Anker-Sprung über nachladende Bilder hinweg
+- Eingebettetes Video mit Klick-zum-Laden
 
 ## Ein bisschen Code
 
@@ -99,3 +100,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+
+## Eingebettetes Video
+
+Der Player lädt erst nach dem Klick auf den Button (Klick-zum-Laden). Der e2e-Test prüft, dass der Klick nach der Hydration funktioniert.
+
+<iframe src="https://www.youtube.com/embed/iYYRH4apXDo" title="Testvideo" style="width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px;" allowfullscreen loading="lazy"></iframe>
