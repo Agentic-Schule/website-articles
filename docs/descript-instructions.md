@@ -142,7 +142,9 @@ Diese Grenzen meldet Underlord selbst in seinen Berichten. Sie gehören in die N
 
 ## Descript über MCP
 
-Descript bietet einen MCP-Server unter `https://api.descript.com/v2/mcp` ([Doku](https://help.descript.com/api-and-mcp/mcp)). Er ist hier **nicht eingerichtet**, und das bleibt so, bis Johannes zustimmt. Zwei Punkte sprechen dagegen: Importe und Underlord-Bearbeitungen verbrauchen laut Descript auch über MCP Medienminuten und AI-Credits, und ein fertiges Video lässt sich über die Verbindung nicht herunterladen, ohne es zu veröffentlichen. Der Export bleibt also ohnehin in der App.
+Descript bietet einen MCP-Server unter `https://api.descript.com/v2/mcp` ([Doku](https://help.descript.com/api-and-mcp/mcp)). Er ist hier **nicht eingerichtet**, und das bleibt so, bis Johannes zustimmt. Underlord wird in der App bedient, mit den Vorlagen aus diesem Dokument. Über die MCP-Verbindung ließe sich ein fertiges Video auch nicht herunterladen, ohne es zu veröffentlichen; der Export bleibt in der App.
+
+Die Medienminuten und AI-Credits für Underlord zahlt die Descript-Subscription. Sie ist dafür hochgesetzt, die Arbeit läuft also ohne Rücksicht auf ein Guthaben.
 
 ## Sonderfall: „Wellis raus"
 
