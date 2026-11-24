@@ -54,6 +54,7 @@ Die globalen Regeln aus `~/.claude/CLAUDE.md` gelten zusätzlich, besonders: kei
 - **Kein Gedankenstrich-Einschub als Stilmittel.** Statt eines dramatischen Strichs entweder zwei ganze Sätze oder ein Semikolon. Ein Strich ist ganz selten erlaubt, wenn er sich wirklich anbietet; die Länge des Strichs ist egal. Der Grund: der Gedankenstrich gilt heute als typisches LLM-Zeichen.
 - **Keine „nicht X, sondern Y"-Antithese als rhetorischer Effekt.** Als rein sachliche Technik-Aussage ist „nicht permanent, sondern nur bei Bedarf" in Ordnung.
 - Keine Zusammenfassungs- und Autoritätsfloskeln („Kurz gesagt" als Deckel, „Es ist wichtig zu verstehen", „In einer Welt, in der …"). Signalphrasen wie „Konkret heißt das:", „Die gute Nachricht:", „Die Lösung:" sind dagegen echter Teil des Stils.
+- **Kein Mittelpunkt (·).** Weder als Trennzeichen noch sonst, er gilt als typisches Merkmal maschinell geschriebener Texte. Einzige Ausnahme: wörtlich zitierte Programmausgaben, die den Punkt selbst enthalten. Sie stehen exakt im Originalwortlaut als Inline-Code oder Code-Block; das kennzeichnet die Ausnahme. `tools/check-typography.mjs` läuft vor jedem Build und bricht bei einem Mittelpunkt außerhalb von Code ab.
 - **Weitere KI-Floskeln** (Modewörter, Standard-Einstiege und -Schlüsse, Bild statt Aussage, leere Verstärker, Dreierreihen, „von X bis Y"-Spannen) stehen mit DE/EN-Wortlisten in [`docs/ki-floskeln.md`](docs/ki-floskeln.md). Ein Wort ist erst dann eine Floskel, wenn es nichts aussagt.
 
 ## Emojis und Kästen

@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Check typography
+        run: node tools/check-typography.mjs
+
       - name: Build
         run: |
           cd build
