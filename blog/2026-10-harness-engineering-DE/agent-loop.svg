@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 340" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6226B0"/>
+    </marker>
+    <marker id="arrowv" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9a6cff"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="980" height="340" fill="#ffffff"/>
+
+  <!-- return arc along the top: from Werkzeug ausführen back to Modell aufrufen -->
+  <path d="M790 150 L790 40 L119 40 L119 148" fill="none" stroke="#9a6cff" stroke-width="2.5" stroke-dasharray="2 9" marker-end="url(#arrowv)"/>
+  <text x="454" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#9a6cff">Schleife: Ergebnis zurück ins Gespräch</text>
+
+  <!-- 1 Modell aufrufen -->
+  <rect x="24" y="150" width="190" height="84" rx="14" fill="#f3eefb" stroke="#6226B0" stroke-width="2"/>
+  <text x="119" y="186" text-anchor="middle" font-size="19" font-weight="700" fill="#241a33">Modell aufrufen</text>
+  <text x="119" y="211" text-anchor="middle" font-size="14" fill="#5a5168">Kontext + Werkzeuge</text>
+
+  <!-- 2 Werkzeug? -->
+  <polygon points="360,192 440,142 520,192 440,242" fill="#fdeef4" stroke="#E90464" stroke-width="2"/>
+  <text x="440" y="187" text-anchor="middle" font-size="17" font-weight="700" fill="#241a33">Werkzeug-</text>
+  <text x="440" y="208" text-anchor="middle" font-size="17" font-weight="700" fill="#241a33">Aufruf?</text>
+
+  <!-- 3 Werkzeug ausführen -->
+  <rect x="640" y="150" width="300" height="84" rx="14" fill="#f3eefb" stroke="#6226B0" stroke-width="2"/>
+  <text x="790" y="186" text-anchor="middle" font-size="19" font-weight="700" fill="#241a33">Werkzeug ausführen</text>
+  <text x="790" y="211" text-anchor="middle" font-size="14" fill="#5a5168">dein Code führt es aus</text>
+
+  <!-- 4 fertig -->
+  <rect x="640" y="268" width="300" height="60" rx="14" fill="#241a33"/>
+  <text x="790" y="296" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">fertig: Antwort</text>
+  <text x="790" y="316" text-anchor="middle" font-size="13" fill="#c4b8d6">Text ohne Werkzeug-Aufruf</text>
+
+  <!-- arrows -->
+  <path d="M214 192 L354 192" fill="none" stroke="#6226B0" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M520 192 L636 192" fill="none" stroke="#6226B0" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="578" y="182" text-anchor="middle" font-size="14" font-weight="700" fill="#6226B0">ja</text>
+  <path d="M440 242 L440 298 L636 298" fill="none" stroke="#6226B0" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="462" y="276" font-size="14" font-weight="700" fill="#6226B0">nein</text>
+</svg>
